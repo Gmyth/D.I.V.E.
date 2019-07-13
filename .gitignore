@@ -55,8 +55,14 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
-/Cyberpunk2078/Library
-/Cyberpunk2078/Temp
-/Cyberpunk2078/obj
-/Cyberpunk2078/.idea
-/Cyberpunk2078/Logs
+src/Cyberpunk2078_Protorype/Library
+src/Cyberpunk2078_Protorype/Temp
+src/Cyberpunk2078_Protorype/obj
+src/Cyberpunk2078_Protorype/.idea
+src/Cyberpunk2078_Protorype/Logs
+
+src/Cyberpunk2078/Library
+src/Cyberpunk2078/Temp
+src/Cyberpunk2078/obj
+src/Cyberpunk2078/.idea
+src/Cyberpunk2078/Logs
