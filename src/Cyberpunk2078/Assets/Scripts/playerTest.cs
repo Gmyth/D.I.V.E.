@@ -7,7 +7,7 @@ public class playerTest : MonoBehaviour
 {
     // Start is called before the first frame update
     private Rigidbody2D rb2d;
-    private float maxSpeed = 6;
+    private float maxSpeed = 12;
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
@@ -44,7 +44,7 @@ public class playerTest : MonoBehaviour
         {
             Vector2 direction = other.transform.position - transform.position;
             direction = direction.normalized;
-            CameraManager.Instance.addTempTarget(other.gameObject, 0.5f);
+             //CameraManager.Instance.addTempTarget(other.gameObject, 0.5f);
             other.gameObject.GetComponent<Rigidbody2D>().AddForce(direction *2000);
 
         }

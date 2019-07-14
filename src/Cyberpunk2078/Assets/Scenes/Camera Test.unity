@@ -694,7 +694,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smoothTimeY: 0.2
   smoothTimeX: 0.2
-  smoothTimeZoomIn: 0.4
+  smoothTimeZoomIn: 0.6
   smoothTimeZoomOut: 0.1
   zoomSensity: 20
   bounds: 0
