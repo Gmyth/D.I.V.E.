@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-[CreateAssetMenuAttribute(fileName = "PSAirborne", menuName = "Player State/Airborne")]
+[CreateAssetMenuAttribute(fileName = "PS_Airborne", menuName = "Player State/Airborne")]
 public class PSAirborne : PlayerState
 {
     [SerializeField] private int index_PSIdle;

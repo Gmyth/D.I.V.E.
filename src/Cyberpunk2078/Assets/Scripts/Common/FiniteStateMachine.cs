@@ -4,9 +4,9 @@
 public abstract class FiniteStateMachine<T> : ScriptableObject where T : State
 {
     [SerializeField] protected T[] states;
-    [SerializeField] protected int startingState;
+    [SerializeField] protected int startingStateIndex;
 
-    protected int currentStateIndex;
+    protected int currentStateIndex = -1;
 
 
     public Event2<int> OnCurrentStateChange { get; } = new Event2<int>();
@@ -28,15 +28,15 @@ public abstract class FiniteStateMachine<T> : ScriptableObject where T : State
     {
         get
         {
-            return states[currentStateIndex];
+            return currentStateIndex >= 0 ? states[currentStateIndex] : null;
         }
     }
 
 
-    public virtual void OnMachineStart()
-    {
-        CurrentStateIndex = startingState;
-    }
+    public abstract void Boot();
+    public abstract void ShutDown();
 
-    public virtual void OnMachineStop() { }
+
+    public virtual void OnMachineBoot() { }
+    public virtual void OnMachineShutDown() { }
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
-public class Dummy : Component
+
+public class Dummy : MonoBehaviour
 {
 }

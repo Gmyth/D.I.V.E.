@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c7fb3557db6d9941b71ba0e28b66382, type: 3}
+  m_Name: FSM_Player
+  m_EditorClassIdentifier: 
+  states:
+  - {fileID: 11400000, guid: 1f5a5df26622724449e8ee666ea576e8, type: 2}
+  - {fileID: 11400000, guid: 531c560b882ac6c4ca48c6a17302ffda, type: 2}
+  - {fileID: 11400000, guid: 87ba1f1090a576f4782e22b96476ba07, type: 2}
+  - {fileID: 11400000, guid: aa7df077ace2d48499604b6ef854a728, type: 2}
+  - {fileID: 11400000, guid: 340a0d8c2cbb0244eb114a8f571028b6, type: 2}
+  - {fileID: 11400000, guid: debdaf5f6f3197f448fedb1f37b6bb26, type: 2}
+  - {fileID: 11400000, guid: a55377c465f90514985b86500023d02e, type: 2}
+  - {fileID: 11400000, guid: 9865c5edfb1ca6b4fae01aeff0ea331f, type: 2}
+  - {fileID: 11400000, guid: 761f8d42afcfa7846bc0034ba0c28233, type: 2}
+  startingStateIndex: 0

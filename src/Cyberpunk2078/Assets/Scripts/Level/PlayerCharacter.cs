@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerCharacter : Dummy
 {
+    [SerializeField] private FSMPlayer fsm;
+
     private StatisticSystem statistic;
     private new Rigidbody rigidbody;
 
@@ -17,13 +20,13 @@ public class PlayerCharacter : Dummy
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
+
+        fsm.Initialize(this);
+        fsm.Boot();
     }
 
     private void Update()
     {
-        transform.Translate(Vector3.forward * Input.GetAxis("Horizontal"));
-
-        if (Input.GetButtonDown("Jump"))
-            rigidbody.AddForce(Vector3.up);
+        fsm.Update();
     }
 }
