@@ -16201,8 +16201,8 @@ GameObject:
   - component: {fileID: 1910994052}
   - component: {fileID: 1910994051}
   - component: {fileID: 1910994050}
-  - component: {fileID: 1910994049}
   - component: {fileID: 1910994048}
+  - component: {fileID: 1910994049}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -16223,8 +16223,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fsm: {fileID: 11400000, guid: f29e5d094a60c0d4d8af4f6bc916247e, type: 2}
---- !u!61 &1910994049
-BoxCollider2D:
+--- !u!70 &1910994049
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -16237,18 +16237,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.16}
-    newSize: {x: 0.16, y: 0.16}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
   m_Size: {x: 0.14, y: 0.14}
-  m_EdgeRadius: 0
+  m_Direction: 0
 --- !u!50 &1910994050
 Rigidbody2D:
   serializedVersion: 4
