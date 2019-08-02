@@ -15,9 +15,18 @@ public class PSJumping2 : PlayerState
     {
         if (playerCharacter.GetComponent<Rigidbody2D>().velocity.y == 0)
         {
-            RaycastHit2D hitM = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f, -0.35f, 0f), -playerCharacter.transform.up, 0.5f);
-            RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.1f, -0.35f, 0f), -playerCharacter.transform.up, 0.5f);
-            RaycastHit2D hitL = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.1f, -0.35f, 0f), -playerCharacter.transform.up, 0.5f);
+            RaycastHit2D hitM = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f, -0.5f, 0f), -playerCharacter.transform.up, 0.5f);
+            RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.1f, -0.5f, 0f), -playerCharacter.transform.up, 0.5f);
+            RaycastHit2D hitL = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.1f, -0.5f, 0f), -playerCharacter.transform.up, 0.5f);
+
+            Debug.LogWarning(hitM.collider);
+            Debug.LogWarning(hitM.transform.CompareTag("Ground"));
+
+            Debug.LogWarning(hitR.collider);
+            Debug.LogWarning(hitR.transform.CompareTag("Ground"));
+
+            Debug.LogWarning(hitL.collider);
+            Debug.LogWarning(hitL.transform.CompareTag("Ground"));
 
             if ((hitM.collider && hitM.transform.CompareTag("Ground")) || (hitR.collider && hitR.transform.CompareTag("Ground")) || (hitL.collider && hitL.transform.CompareTag("Ground")))
             {

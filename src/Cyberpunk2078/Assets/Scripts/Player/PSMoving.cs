@@ -4,6 +4,7 @@
 [CreateAssetMenuAttribute(fileName = "PS_Moving", menuName = "Player State/Moving")]
 public class PSMoving : PlayerState
 {
+    [SerializeField] private float speed_factor = 3;
     [SerializeField] private int index_PSIdle;
     [SerializeField] private int index_PSAttackGH1;
     [SerializeField] private int index_PSAttackGH2;
@@ -41,6 +42,8 @@ public class PSMoving : PlayerState
 
         float x = Input.GetAxis("Horizontal");
 
+        Debug.LogWarning(x);
+
         if (x == 0)
             return index_PSIdle;
 
@@ -66,7 +69,7 @@ public class PSMoving : PlayerState
 
         Vector2 V = playerCharacter.GetComponent<Rigidbody2D>().velocity;
 
-        V.x = direction * 10;
+        V.x = direction * speed_factor;
         playerCharacter.GetComponent<Rigidbody2D>().velocity = V;
     }
 }
