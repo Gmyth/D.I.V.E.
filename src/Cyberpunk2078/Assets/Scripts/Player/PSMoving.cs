@@ -66,10 +66,10 @@ public class PSMoving : PlayerState
     internal void Move(float axis)
     {
         int direction = axis > 0 ? 1 : -1;
-
-        Vector2 V = playerCharacter.GetComponent<Rigidbody2D>().velocity;
-
-        V.x = direction * speed_factor;
-        playerCharacter.GetComponent<Rigidbody2D>().velocity = V;
+        PhysicsInputHelper(axis,speed_factor);
+//        Vector2 V = playerCharacter.GetComponent<Rigidbody2D>().velocity;
+//
+//        V.x = direction * speed_factor;
+//        playerCharacter.GetComponent<Rigidbody2D>().velocity = V;
     }
 }

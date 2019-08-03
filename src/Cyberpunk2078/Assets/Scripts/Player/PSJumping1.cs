@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenuAttribute(fileName = "PS_Jumping1", menuName = "Player State/Attack Jumping 1")]
 public class PSJumping1 : PlayerState
 {
-    [SerializeField] private float jumpForce = 3f;
+    [SerializeField] private float jumpForce = 8;
     [SerializeField] private int index_PSIdle;
     [SerializeField] private int index_PSMoving;
     [SerializeField] private int index_Jumping2;
@@ -16,39 +16,41 @@ public class PSJumping1 : PlayerState
     public override int Update()
     {
         float Vy = playerCharacter.GetComponent<Rigidbody2D>().velocity.y;
-
-        if (Vy == 0)
-        {
-            RaycastHit2D hitM = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f, -0.35f, 0f), -playerCharacter.transform.up, 0.5f);
-            RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.1f, -0.35f, 0f), -playerCharacter.transform.up, 0.5f);
-            RaycastHit2D hitL = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.1f, -0.35f, 0f), -playerCharacter.transform.up, 0.5f);
-
-            if ((hitM.collider && hitM.transform.CompareTag("Ground")) || (hitR.collider && hitR.transform.CompareTag("Ground")) || (hitL.collider && hitL.transform.CompareTag("Ground")))
+        float h = Input.GetAxis("Horizontal");
+        //Still support Horizontal update during jumping, delete following to kill Horizzontal input
+        PhysicsInputHelper(h);
+       
+        if (isGrounded() && Vy < 0)
             {
-                if (Input.GetAxis("Horizontal") == 0)
+                // Landed
+                if (h == 0)
                     return index_PSIdle;
 
                 return index_PSMoving;
-            }
         }
-        else if (Vy < jumpForce / 5)
+        
+        //Player is sill in air
+        if (Vy < jumpForce / 5)
         {
+            // prevent misclicking
             if (Input.GetButtonDown("Jump"))
+                // second_jump
                 return index_Jumping2;
         }
 
-        isJumpKeyDown = Input.GetButtonDown("Jump");
+        //isJumpKeyDown = Input.GetButtonDown("Jump");
 
         return Index;
     }
 
     public override void OnStateEnter()
     {
+        //Perform jump
         isJumpKeyDown = true;
-
-        Vector2 V = playerCharacter.GetComponent<Rigidbody2D>().velocity;
-
-        V.y = jumpForce;
-        playerCharacter.GetComponent<Rigidbody2D>().velocity = V;
+        var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
+        // kill any Y-axis speed
+        rb2d.velocity = new Vector2 (rb2d.velocity.x, 0);
+        // Add Verticial Speed
+        rb2d.AddForce(playerCharacter.transform.up * jumpForce * 100);
     }
 }
