@@ -38,6 +38,23 @@ public abstract class PlayerState : State
 
         return false;
     }
+    
+    //Check player is close to wall
+    public bool isCloseToWall()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0.1f,0f,0f),playerCharacter.transform.right,0.1f);
+        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(-0.1f,0f,0f),-playerCharacter.transform.right,0.1f);
+        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f,-0f,0f), playerCharacter.transform.right * 0.5f, Color.red);
+        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0.1f,-0f,0f), -playerCharacter.transform.right * 0.5f, Color.yellow);
+        
+        if ((hit.collider != null && hit.transform.CompareTag("Ground") )||
+            (hit1.collider != null && hit1.transform.CompareTag("Ground") ))
+        {
+            return true;
+        }
+
+        return false;
+    }
 
     // Function : Keyboard Input => Physics Velocity, And Friction Calculation
     public void PhysicsInputHelper(float h, float maxSpeed  = 9)

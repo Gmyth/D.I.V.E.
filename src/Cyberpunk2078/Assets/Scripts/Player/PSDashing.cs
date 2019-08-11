@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenuAttribute(fileName = "PS_Jumping1", menuName = "Player State/Attack Jumping 1")]
-public class PSJumping1 : PlayerState
+[CreateAssetMenuAttribute(fileName = "PS_Dashing", menuName = "Player State/Dashing")]
+public class PSDashing : PlayerState
 {
     [SerializeField] private float jumpForce = 8;
     [SerializeField] private int index_PSIdle;
@@ -19,7 +19,7 @@ public class PSJumping1 : PlayerState
         float Vy = rb2d.velocity.y;
         float h = Input.GetAxis("Horizontal");
         //Still support Horizontal update during jumping, delete following to kill Horizzontal input
-         PhysicsInputHelper(h);
+        PhysicsInputHelper(h);
         
         if (isCloseToWall())
         {
@@ -27,12 +27,12 @@ public class PSJumping1 : PlayerState
         }
         
         if (isGrounded() && Vy < 0)
-            {
-                // Landed
-                if (h == 0)
-                    return index_PSIdle;
+        {
+            // Landed
+            if (h == 0)
+                return index_PSIdle;
 
-                return index_PSMoving;
+            return index_PSMoving;
         }
         
         //Player is sill in air

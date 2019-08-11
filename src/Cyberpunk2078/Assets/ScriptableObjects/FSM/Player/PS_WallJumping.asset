@@ -9,10 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 001d169824502af48b4a81027a991d4f, type: 3}
-  m_Name: PS_Jumping2
+  m_Script: {fileID: 11500000, guid: d1e9c19f531ef1e4394a7e9ec2cb363e, type: 3}
+  m_Name: PS_WallJumping
   m_EditorClassIdentifier: 
-  jumpForce: 5.6
+  jumpForce: 6
+  jumpSpeed: 11
+  stickWallTime: 0.5
+  wallCheckCoolDown: 0.1
   index_PSIdle: 0
   index_PSMoving: 1
-  index_WallJumping: 9
+  index_Jumping2: 8
