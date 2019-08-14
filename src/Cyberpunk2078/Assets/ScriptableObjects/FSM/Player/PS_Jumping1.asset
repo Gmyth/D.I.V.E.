@@ -16,4 +16,5 @@ MonoBehaviour:
   index_PSIdle: 0
   index_PSMoving: 1
   index_Jumping2: 8
-  index_WallJumping: 9
+  index_PSWallJumping: 9
+  index_PSDashing: 10

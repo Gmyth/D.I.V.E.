@@ -11,6 +11,7 @@ public class PSMoving : PlayerState
     [SerializeField] private int index_PSAttackGU;
     [SerializeField] private int index_PSAttackGD;
     [SerializeField] private int index_PSJumping1;
+    [SerializeField] private int index_PSDashing;
 
 
     public override int Update()
@@ -26,6 +27,9 @@ public class PSMoving : PlayerState
 
             return index_PSAttackGH1;
         }
+        
+        if (Input.GetAxis("Dashing") != 0)
+            return index_PSDashing;
 
         if (Input.GetAxis("Attack2") > 0)
         {

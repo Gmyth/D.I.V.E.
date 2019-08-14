@@ -103,12 +103,12 @@ public class CameraManager : MonoBehaviour {
 
 	void FixedUpdate()
 	{
-		float x = 0;
-		float y = 0;
+		float xOffset = 0;
+		float yOffset = 0;
 		if (shake)
 		{
-			x = Random.Range(-1f, 1f) * shakeMagnitude;
-			y = Random.Range(-1f, 1f) * shakeMagnitude;
+			xOffset = Random.Range(-1f, 1f) * shakeMagnitude;
+			yOffset = Random.Range(-1f, 1f) * shakeMagnitude;
 		}
 		var camera = GetComponent<Camera>();
 		switch (currentState)
@@ -117,78 +117,14 @@ public class CameraManager : MonoBehaviour {
 				float posy = transform.position.y;
 				float posx = transform.position.x;
 				
-				// get two players boundary, the smallest and largest;
-				getPlayerBoundary(); 
-				
-				// get two camera boundary, the smallest and largest;
-				getCameraBoundary(); 
-				
-				// calculate the distance between two player to determine the zoom
-				float playerDistance = (currentLargestPlayer - currentSmallestPlayer).magnitude; 	
-				float cameraBound = (currentLargestWindow - currentSmallestWindow).magnitude;
-
-				Vector2 compareLargest = (currentLargestPlayer - currentLargestWindow);
-				Vector2 compareSmallest = (currentSmallestPlayer - currentSmallestWindow);
-				if (zoomInChasing)
-				{
-					// if current camera size is too small for moving objects,boost up
-					camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize, camera.orthographicSize + 4f, ref tempVelocity,smoothTimeZoomIn);
-					if (compareLargest.x + camera.orthographicSize * 0.15 < 0
-					    && compareLargest.y + camera.orthographicSize * 0.15 < 0
-					    && compareSmallest.x - camera.orthographicSize * 0.15 > 0
-					    && compareSmallest.y - camera.orthographicSize * 0.15 > 0)
-					{
-						zoomInChasing = false;
-					}
-				}
-				else
-				{
-					if (compareLargest.x > 0 || compareLargest.y > 0)
-					{
-						// if one player 's position even larger than the bounds;
-						// give the breath time between zoom out and in
-						if (lastZoomIn + 0.5f < Time.unscaledTime && camera.orthographicSize < maxCameraSize)
-						{
-							//camera.orthographicSize += 0.05f;
-							camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize,
-								camera.orthographicSize + 4f, ref tempVelocity, smoothTimeX);
-							lastZoomOut = Time.unscaledTime;
-							zoomInChasing = true;
-						}
-
-					}
-					else if (compareSmallest.x < 0 || compareSmallest.y < 0)
-					{
-						// or one player 's position even larger than the bounds;
-						if (lastZoomIn + 0.5f < Time.unscaledTime && camera.orthographicSize < maxCameraSize)
-						{
-							//gameObject.GetComponent<Camera>().orthographicSize += 0.05f;
-							camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize,
-								camera.orthographicSize + 4f, ref tempVelocity, smoothTimeX);
-							lastZoomOut = Time.unscaledTime;
-							zoomInChasing = true;
-						}
-
-					}
-					else if (playerDistance + zoomSensity < cameraBound && lastZoomOut + 0.3f < Time.unscaledTime)
-					{
-						// we are safe to zoom in now
-						//camera.orthographicSize -= 0.03f;
-						camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize,
-							camera.orthographicSize - 4f, ref tempVelocity, smoothTimeZoomIn);
-						lastZoomIn = Time.unscaledTime;
-					}
-				}
-
-
-				Vector2 center = new Vector2((currentSmallestPlayer.x+currentLargestPlayer.x)/2,(currentSmallestPlayer.y+currentLargestPlayer.y)/2);
+				Vector2 center = mainTarget.transform.position;
 				posx = Mathf.SmoothDamp(transform.position.x,center.x, ref velocity.x,smoothTimeX);
 				posy = Mathf.SmoothDamp(transform.position.y,center.y, ref velocity.y, smoothTimeY);
-				transform.position = new Vector3(posx + x, posy + y, transform.position.z);
+				transform.position = new Vector3(posx + xOffset, posy + yOffset, transform.position.z);
 				if (bounds)
 				{
-					transform.position = new Vector3(Mathf.Clamp(transform.position.x, minCameraPos.x, maxCameraPos.x)+x,
-						Mathf.Clamp(transform.position.y, minCameraPos.y, maxCameraPos.y)+y,
+					transform.position = new Vector3(Mathf.Clamp(transform.position.x, minCameraPos.x, maxCameraPos.x)+xOffset,
+						Mathf.Clamp(transform.position.y, minCameraPos.y, maxCameraPos.y)+yOffset,
 						transform.position.z
 					);
 				}
@@ -198,14 +134,14 @@ public class CameraManager : MonoBehaviour {
 				camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize,cameraSizeOnFocusing, ref tempVelocity, smoothTimeX/10);
 				posx = Mathf.SmoothDamp(transform.position.x,target.position.x, ref velocity.x,smoothTimeX/5);
 				posy = Mathf.SmoothDamp(transform.position.y,target.position.y, ref velocity.y, smoothTimeY/5);
-				transform.position = new Vector3(posx + x, posy + y, transform.position.z);
+				transform.position = new Vector3(posx + xOffset, posy + yOffset, transform.position.z);
 				break;
 
             case CameraState.Overview:
                 camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize, 15f, ref tempVelocity, smoothTimeX * 2);
                 posx = Mathf.SmoothDamp(transform.position.x, 0f, ref velocity.x, smoothTimeX);
                 posy = Mathf.SmoothDamp(transform.position.y, 0f, ref velocity.y, smoothTimeY);
-                transform.position = new Vector3(posx + x, posy + y, transform.position.z);
+                transform.position = new Vector3(posx + xOffset, posy + yOffset, transform.position.z);
                 break;
 
         }

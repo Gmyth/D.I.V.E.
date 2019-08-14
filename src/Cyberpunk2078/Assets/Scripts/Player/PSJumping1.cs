@@ -10,7 +10,8 @@ public class PSJumping1 : PlayerState
     [SerializeField] private int index_PSIdle;
     [SerializeField] private int index_PSMoving;
     [SerializeField] private int index_Jumping2;
-    [SerializeField] private int index_WallJumping;
+    [SerializeField] private int index_PSWallJumping;
+    [SerializeField] private int index_PSDashing;
     private bool isJumpKeyDown = false;
 
     public override int Update()
@@ -23,7 +24,7 @@ public class PSJumping1 : PlayerState
         
         if (isCloseToWall())
         {
-            return index_WallJumping;
+            return index_PSWallJumping;
         }
         
         if (isGrounded() && Vy < 0)
@@ -43,11 +44,14 @@ public class PSJumping1 : PlayerState
                 // second_jump
                 return index_Jumping2;
         }
+        
+        if (Input.GetAxis("Dashing") != 0)
+            return index_PSDashing;
 
        
 
         //isJumpKeyDown = Input.GetButtonDown("Jump");
-
+        
         return Index;
     }
 

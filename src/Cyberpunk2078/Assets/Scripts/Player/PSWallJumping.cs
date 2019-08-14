@@ -11,7 +11,8 @@ public class PSWallJumping: PlayerState
     [SerializeField] private float wallCheckCoolDown = 0.25f;
     [SerializeField] private int index_PSIdle;
     [SerializeField] private int index_PSMoving;
-    [SerializeField] private int index_Jumping2;
+    [SerializeField] private int index_PSJumping2;
+    [SerializeField] private int index_PSDashing;
     private bool isJumpKeyDown = false;
 
     private bool onWall = false;
@@ -71,6 +72,9 @@ public class PSWallJumping: PlayerState
             }
             
         }
+        
+        if (Input.GetAxis("Dashing") != 0)
+            return index_PSDashing;
 
         //Player is sill in air
 //        if (Vy < jumpForce / 5)

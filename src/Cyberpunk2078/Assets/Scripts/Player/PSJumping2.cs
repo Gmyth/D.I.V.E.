@@ -9,8 +9,8 @@ public class PSJumping2 : PlayerState
     [SerializeField] private float jumpForce = 3f;
     [SerializeField] private int index_PSIdle;
     [SerializeField] private int index_PSMoving;
-    [SerializeField] private int index_WallJumping;
-
+    [SerializeField] private int index_PSWallJumping;
+    [SerializeField] private int index_PSDashing;
     public override int Update()
     {
         float Vy = playerCharacter.GetComponent<Rigidbody2D>().velocity.y;
@@ -27,8 +27,11 @@ public class PSJumping2 : PlayerState
         
         if (isCloseToWall())
         {
-            return index_WallJumping;
+            return index_PSWallJumping;
         }
+        
+        if (Input.GetAxis("Dashing") != 0)
+            return index_PSDashing;
         return Index;
     }
 

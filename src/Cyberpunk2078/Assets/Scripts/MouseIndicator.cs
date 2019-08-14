@@ -25,7 +25,10 @@ public class MouseIndicator : MonoBehaviour
 
     public Vector2 getAttackDirection()
     { 
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        return   (mousePos - (Vector2) transform.position).normalized;
+        transform.position = player.transform.position;
+        var mousePosInScreen = Input.mousePosition;
+        mousePosInScreen.z = -10; // select distance = 10 units from the camera
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(mousePosInScreen);
+        return   -(mousePos - (Vector2) transform.position).normalized;
     }
 }

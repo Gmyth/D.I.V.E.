@@ -18,3 +18,4 @@ MonoBehaviour:
   index_PSAttackGU: 5
   index_PSAttackGD: 6
   index_PSJumping1: 7
+  index_PSDashing: 10
