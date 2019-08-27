@@ -24,9 +24,9 @@ public abstract class PlayerState : State
     //Player Ground check
     public bool isGrounded()
     {
-        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,-0.2f,0f),-playerCharacter.transform.up,0.5f);
-        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.1f,-0.2f,0f),-playerCharacter.transform.up,0.5f);
-        RaycastHit2D hit2 = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.1f,-0.2f,0f),-playerCharacter.transform.up,0.5f);
+        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,-0.4f,0f),-playerCharacter.transform.up,0.5f);
+        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.4f,-0.4f,0f),-playerCharacter.transform.up,0.5f);
+        RaycastHit2D hit2 = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.4f,-0.4f,0f),-playerCharacter.transform.up,0.5f);
      
         if ((hit.collider != null && hit.transform.CompareTag("Ground") )||
             (hit1.collider != null && hit1.transform.CompareTag("Ground") )||
