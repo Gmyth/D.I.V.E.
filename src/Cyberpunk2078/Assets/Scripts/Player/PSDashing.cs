@@ -13,7 +13,9 @@ public class PSDashing : PlayerState
     
   
     [SerializeField] private float dashDelayTime = 0.05f; // time from button press to actual dash
-    
+
+    [SerializeField] private float dashReleaseDelayTime = 0.05f; // time from button press to actual dash
+
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSMoving;
     [SerializeField] private int indexJumping2;
@@ -40,7 +42,7 @@ public class PSDashing : PlayerState
         }
         
         
-        if (lastDashSecond + dashReleaseTime < Time.unscaledTime)
+        if (lastDashSecond + dashReleaseTime + dashDelayTime < Time.unscaledTime)
         {
             // the dash has already ended
             if (hyperSpeed)
@@ -49,7 +51,7 @@ public class PSDashing : PlayerState
                 rb2d.velocity = rb2d.velocity * 0f;
             }
             
-        } else if (lastDashSecond + dashReleaseTime + dashDelayTime< Time.unscaledTime)
+        } else if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.unscaledTime)
         {
             // the dash has already ended
             rb2d.drag = defaultDrag;
