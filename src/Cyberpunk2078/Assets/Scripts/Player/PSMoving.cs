@@ -5,6 +5,7 @@
 public class PSMoving : PlayerState
 {
     [SerializeField] private float speed_factor = 3;
+    [SerializeField] private float acceleration_factor = 20;
     [SerializeField] private int index_PSIdle;
     [SerializeField] private int index_PSAttackGH1;
     [SerializeField] private int index_PSAttackGH2;
@@ -70,7 +71,7 @@ public class PSMoving : PlayerState
     internal void Move(float axis)
     {
         int direction = axis > 0 ? 1 : -1;
-        PhysicsInputHelper(axis,speed_factor);
+        PhysicsInputHelper(axis,speed_factor,acceleration_factor);
 //        Vector2 V = playerCharacter.GetComponent<Rigidbody2D>().velocity;
 //
 //        V.x = direction * speed_factor;

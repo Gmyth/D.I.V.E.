@@ -57,7 +57,7 @@ public abstract class PlayerState : State
     }
 
     // Function : Keyboard Input => Physics Velocity, And Friction Calculation
-    public void PhysicsInputHelper(float h, float maxSpeed  = 9)
+    public void PhysicsInputHelper(float h, float maxSpeed  = 9,  float Acceleration  = 20)
     {
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();     
         // calculate speed on X axis
@@ -65,7 +65,7 @@ public abstract class PlayerState : State
             // has horizontal input 
             if (Mathf.Abs(rb2d.velocity.x) < maxSpeed)
             {
-                var direction = Vector3.right * h * 20f;
+                var direction = Vector3.right * h * Acceleration;
                 if (direction.x * rb2d.velocity.x < 0)
                 {
                     direction = direction * 4f;
