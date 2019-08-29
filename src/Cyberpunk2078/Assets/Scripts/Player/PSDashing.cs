@@ -48,20 +48,20 @@ public class PSDashing : PlayerState
             if (hyperSpeed)
             {
                 hyperSpeed = false;
-                rb2d.velocity = rb2d.velocity * 0f;
+                rb2d.velocity = rb2d.velocity * 1f;
             }
-            
-        } else if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.unscaledTime)
+        }
+        else if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.unscaledTime)
         {
             // the dash has already ended
             rb2d.drag = defaultDrag;
             rb2d.gravityScale = 3;
-            PhysicsInputHelper(h);
         }
         else {
             //prevent ground-hitting shifting 
             RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,1.5f);
-     
+            PhysicsInputHelper(h);
+
             if (hit1.collider != null && hit1.transform.CompareTag("Ground") )
             {
                 rb2d.velocity = new Vector2(0,0);

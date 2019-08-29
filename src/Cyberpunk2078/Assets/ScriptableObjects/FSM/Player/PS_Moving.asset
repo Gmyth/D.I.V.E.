@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d52a7593960bdd4090046793c01f063, type: 3}
   m_Name: PS_Moving
   m_EditorClassIdentifier: 
-  speed_factor: 9
+  speed_factor: 10
+  acceleration_factor: 50
   index_PSIdle: 0
   index_PSAttackGH1: 3
   index_PSAttackGH2: 4
