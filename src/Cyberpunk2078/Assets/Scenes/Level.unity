@@ -15821,8 +15821,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ce697647442de64393896f36daa7445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothTimeY: 0.2
-  smoothTimeX: 0.2
+  smoothSmallestTimeY: 0
+  smoothSmallestTimeX: 0
+  smoothLargestTimeY: 0
+  smoothLargestTimeX: 0
+  characterWindowBoundaryX: 0.8
+  characterWindowBoundaryY: 0.8
   smoothTimeZoomIn: 0.6
   smoothTimeZoomOut: 0.1
   zoomSensity: 20

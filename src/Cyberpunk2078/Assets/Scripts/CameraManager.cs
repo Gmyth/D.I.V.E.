@@ -17,15 +17,25 @@ public class CameraManager : MonoBehaviour {
 	private float tempVelocity;
 	private Vector2 velocity; // the speed reference for camera
 	[Header("Camera")]
-	
-	// the smooth time for camera change the position on Y - axis, the larger number will slow the camera moving speed. 0 will be response instantly 
-	[SerializeField]private float smoothTimeY; 
+
+    // the smooth time for camera change the position on Y - axis, the larger number will slow the camera moving speed. 0 will be response instantly 
+    [SerializeField] private float smoothSmallestTimeY;
+
+    // the smooth time for camera change the position on X - axis, the larger number will slow the camera moving speed. 0 will be response instantly 
+    [SerializeField] private float smoothSmallestTimeX;
+
+
+    // the smooth time for camera change the position on Y - axis, the larger number will slow the camera moving speed. 0 will be response instantly 
+    [SerializeField]private float smoothLargestTimeY; 
 	
 	// the smooth time for camera change the position on X - axis, the larger number will slow the camera moving speed. 0 will be response instantly 
-	[SerializeField]private float smoothTimeX; 
-	
-	// the smooth time for camera to zoom in, the larger number will slow the camera moving speed. 0 will be response instantly 
-	[SerializeField]private float smoothTimeZoomIn; 
+	[SerializeField]private float smoothLargestTimeX;
+
+    [SerializeField] private float characterWindowBoundaryX;
+    [SerializeField] private float characterWindowBoundaryY;
+
+    // the smooth time for camera to zoom in, the larger number will slow the camera moving speed. 0 will be response instantly 
+    [SerializeField]private float smoothTimeZoomIn; 
 	
 	// the smooth time for camera to zoom out , the larger number will slow the camera moving speed. 0 will be response instantly 
 	[SerializeField]private float smoothTimeZoomOut; 
@@ -116,10 +126,11 @@ public class CameraManager : MonoBehaviour {
 			case CameraState.Idle:
 				float posy = transform.position.y;
 				float posx = transform.position.x;
-				
-				Vector2 center = mainTarget.transform.position;
-				posx = Mathf.SmoothDamp(transform.position.x,center.x, ref velocity.x,smoothTimeX);
-				posy = Mathf.SmoothDamp(transform.position.y,center.y, ref velocity.y, smoothTimeY);
+                getCameraBoundary();
+                Vector2 center = mainTarget.transform.position;
+
+				posx = Mathf.SmoothDamp(transform.position.x,center.x, ref velocity.x, smoothSmallestTimeX);
+				posy = Mathf.SmoothDamp(transform.position.y,center.y, ref velocity.y, smoothSmallestTimeY);
 				transform.position = new Vector3(posx + xOffset, posy + yOffset, transform.position.z);
 				if (bounds)
 				{
@@ -131,16 +142,16 @@ public class CameraManager : MonoBehaviour {
 				break;
 			
 			case CameraState.Focusing:
-				camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize,cameraSizeOnFocusing, ref tempVelocity, smoothTimeX/10);
-				posx = Mathf.SmoothDamp(transform.position.x,target.position.x, ref velocity.x,smoothTimeX/5);
-				posy = Mathf.SmoothDamp(transform.position.y,target.position.y, ref velocity.y, smoothTimeY/5);
+				camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize,cameraSizeOnFocusing, ref tempVelocity, smoothSmallestTimeX / 10);
+				posx = Mathf.SmoothDamp(transform.position.x,target.position.x, ref velocity.x, smoothSmallestTimeX / 5);
+				posy = Mathf.SmoothDamp(transform.position.y,target.position.y, ref velocity.y, smoothSmallestTimeY / 5);
 				transform.position = new Vector3(posx + xOffset, posy + yOffset, transform.position.z);
 				break;
 
             case CameraState.Overview:
-                camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize, 15f, ref tempVelocity, smoothTimeX * 2);
-                posx = Mathf.SmoothDamp(transform.position.x, 0f, ref velocity.x, smoothTimeX);
-                posy = Mathf.SmoothDamp(transform.position.y, 0f, ref velocity.y, smoothTimeY);
+                camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize, 15f, ref tempVelocity, smoothSmallestTimeX * 2);
+                posx = Mathf.SmoothDamp(transform.position.x, 0f, ref velocity.x, smoothSmallestTimeX);
+                posy = Mathf.SmoothDamp(transform.position.y, 0f, ref velocity.y, smoothSmallestTimeY);
                 transform.position = new Vector3(posx + xOffset, posy + yOffset, transform.position.z);
                 break;
 
@@ -253,8 +264,8 @@ public class CameraManager : MonoBehaviour {
 		//var upperLeftScreen = new Vector3(Screen.width*0.15f, Screen.height*0.75f, 0 );
 //		var upperRightScreen = new Vector3(Screen.width*0.90f + camera.orthographicSize*8, Screen.height*0.90f + camera.orthographicSize*4, 0);
 //		var lowerLeftScreen = new Vector3(Screen.width*0.10f - camera.orthographicSize*8, Screen.height*0.10f - camera.orthographicSize*4, 0);
-		var upperRightScreen = new Vector3(Screen.width*0.80f + camera.orthographicSize*8, Screen.height*0.80f + camera.orthographicSize*4, 0);
-		var lowerLeftScreen = new Vector3(Screen.width*0.20f - camera.orthographicSize*8, Screen.height*0.20f - camera.orthographicSize*4, 0);
+		var upperRightScreen = new Vector3(Screen.width * characterWindowBoundaryX, Screen.height * (1 - characterWindowBoundaryY) , 0);
+		var lowerLeftScreen = new Vector3(Screen.width * (1- characterWindowBoundaryX) , Screen.height * characterWindowBoundaryY, 0);
 		//var lowerRightScreen = new Vector3(Screen.width*0.85f, Screen.height*0.25f, 0);
    
 		//Corner locations in world coordinates
@@ -264,6 +275,8 @@ public class CameraManager : MonoBehaviour {
 
 		currentLargestWindow = upperRight;
 		currentSmallestWindow = lowerLeft;
+        print("UPPER RIGHT: " + upperRight);
+        print("LOWERLEFT:" + lowerLeft);
 	}
 	
 	//release the added target after x seconds
