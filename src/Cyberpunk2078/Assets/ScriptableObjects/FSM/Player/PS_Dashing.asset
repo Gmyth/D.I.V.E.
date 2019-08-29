@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da1912fa620d08248a90011b84e6ebff, type: 3}
   m_Name: PS_Dashing
   m_EditorClassIdentifier: 
-  dashForce: 12
-  dashReleaseTime: 0.18
-  index_PSIdle: 0
-  index_PSMoving: 1
-  index_Jumping2: 8
-  index_WallJumping: 9
+  dashForce: 20
+  dashReleaseTime: 0.3
+  inDashingDragFactor: 6
+  dashDelayTime: 0.075
+  indexPSIdle: 0
+  indexPSMoving: 0
+  indexJumping2: 0
+  indexWallJumping: 0

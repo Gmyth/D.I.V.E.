@@ -7,6 +7,9 @@ using UnityEngine;
 public class PSJumping1 : PlayerState
 {
     [SerializeField] private float jumpForce = 8;
+    
+    [SerializeField] private float speed_factor = 3;
+    [SerializeField] private float acceleration_factor = 20;
     [SerializeField] private int index_PSIdle;
     [SerializeField] private int index_PSMoving;
     [SerializeField] private int index_Jumping2;
@@ -20,7 +23,7 @@ public class PSJumping1 : PlayerState
         float Vy = rb2d.velocity.y;
         float h = Input.GetAxis("Horizontal");
         //Still support Horizontal update during jumping, delete following to kill Horizzontal input
-         PhysicsInputHelper(h);
+         PhysicsInputHelper(h,speed_factor,acceleration_factor);
         
         if (isCloseToWall())
         {
