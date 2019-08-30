@@ -123,7 +123,7 @@ public class FSMPlayer : FiniteStateMachine<PlayerState>
             //}
             //else
             {
-                Debug.Log(LogUtility.MakeLogStringFormat("FSMPLayer", "Make transition from state {0} to {1}", currentStateIndex, value));
+                //Debug.Log(LogUtility.MakeLogStringFormat("FSMPLayer", "Make transition from state {0} to {1}", currentStateIndex, value));
 
                 int previousStateIndex = currentStateIndex;
 
