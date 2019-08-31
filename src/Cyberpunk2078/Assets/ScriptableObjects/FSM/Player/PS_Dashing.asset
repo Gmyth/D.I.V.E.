@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dashForce: 20
   dashReleaseTime: 0.3
-  inDashingDragFactor: 20
+  inDashingDragFactor: 50
   dashDelayTime: 0.075
   dashReleaseDelayTime: 0.05
   indexPSIdle: 0

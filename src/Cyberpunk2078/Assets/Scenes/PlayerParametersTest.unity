@@ -15942,11 +15942,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ce697647442de64393896f36daa7445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothTimeY: 0.2
-  smoothTimeX: 0.2
-  smoothTimeZoomIn: 0.6
-  smoothTimeZoomOut: 0.1
-  zoomSensity: 20
+  smoothSmallestTimeY: 0.5
+  smoothSmallestTimeX: 0.5
+  smoothLargestTimeY: 2
+  smoothLargestTimeX: 2
+  characterWindowBoundaryX: 0.2
+  characterWindowBoundaryY: 0.2
+  defaultFieldOfView: 60
+  smoothTimeZoom: 4
+  offsetX: 0
+  offsetY: 0
   bounds: 0
   maxCameraPos: {x: 0, y: 0, z: 0}
   minCameraPos: {x: 0, y: 0, z: 0}

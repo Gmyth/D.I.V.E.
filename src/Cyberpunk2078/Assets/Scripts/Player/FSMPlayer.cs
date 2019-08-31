@@ -42,8 +42,8 @@ public abstract class PlayerState : State
     //Check player is close to wall
     public bool isCloseToWall()
     {
-        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0.1f,0f,0f),playerCharacter.transform.right,0.1f);
-        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(-0.1f,0f,0f),-playerCharacter.transform.right,0.1f);
+        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0f,0f,0f),playerCharacter.transform.right,1f);
+        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0.1f,0f,0f),-playerCharacter.transform.right,1f);
         Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f,-0f,0f), playerCharacter.transform.right * 0.5f, Color.red);
         Debug.DrawRay(playerCharacter.transform.position + new Vector3(0.1f,-0f,0f), -playerCharacter.transform.right * 0.5f, Color.yellow);
         
