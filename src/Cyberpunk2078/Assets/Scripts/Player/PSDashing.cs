@@ -59,7 +59,7 @@ public class PSDashing : PlayerState
         }
         else {
             //prevent ground-hitting shifting 
-            RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,1.5f);
+            RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,1f);
 
             if (hit1.collider != null && hit1.transform.CompareTag("Ground") )
             {
