@@ -47,8 +47,6 @@ public class PSMoving : PlayerState
 
         float x = Input.GetAxis("Horizontal");
 
-        Debug.LogWarning(x);
-
         if (x == 0)
             return index_PSIdle;
 

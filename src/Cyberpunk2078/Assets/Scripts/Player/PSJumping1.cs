@@ -22,7 +22,7 @@ public class PSJumping1 : PlayerState
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
         float h = Input.GetAxis("Horizontal");
-        //Still support Horizontal update during jumping, delete following to kill Horizzontal input
+        //Still support Horizontal update during jumping, delete following to kill Horizontal input
          PhysicsInputHelper(h,speed_factor,acceleration_factor);
         
         if (isCloseToWall())

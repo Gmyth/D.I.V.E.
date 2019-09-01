@@ -339,16 +339,13 @@ public class CameraManager : MonoBehaviour {
 		{
 			if (indicator.influenceRange >= (pos - (Vector2) indicator.transform.position).magnitude)
 			{
-				print("caputured!");
 				if (found && targetIndicator.influenceLevel > indicator.influenceLevel)
 				{
 					//found new indicator with higher priority 
-					print("caputured!");
 					targetIndicator = indicator;
 				}
 				else if (!found)
 				{
-					print("caputured!");
 					targetIndicator = indicator;
 					found = true;
 				}

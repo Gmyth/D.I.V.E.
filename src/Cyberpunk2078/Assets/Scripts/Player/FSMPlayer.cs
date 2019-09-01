@@ -24,9 +24,9 @@ public abstract class PlayerState : State
     //Player Ground check
     public bool isGrounded()
     {
-        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,0.4f,0f),-playerCharacter.transform.up,0.5f);
-        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.4f,0.4f,0f),-playerCharacter.transform.up,0.5f);
-        RaycastHit2D hit2 = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.4f,0.4f,0f),-playerCharacter.transform.up,0.5f);
+        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,-0.4f,0f),-playerCharacter.transform.up,0.5f);
+        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.4f,-0.4f,0f),-playerCharacter.transform.up,0.5f);
+        RaycastHit2D hit2 = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.4f,-0.4f,0f),-playerCharacter.transform.up,0.5f);
      
         if ((hit.collider != null && hit.transform.CompareTag("Ground") )||
             (hit1.collider != null && hit1.transform.CompareTag("Ground") )||
@@ -42,8 +42,8 @@ public abstract class PlayerState : State
     //Check player is close to wall
     public bool isCloseToWall()
     {
-        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0f,0f,0f),playerCharacter.transform.right,1f);
-        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0.1f,0f,0f),-playerCharacter.transform.right,1f);
+        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0f,0f,0f),playerCharacter.transform.right,0.1f);
+        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0.1f,0f,0f),-playerCharacter.transform.right,0.1f);
         Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f,-0f,0f), playerCharacter.transform.right * 0.5f, Color.red);
         Debug.DrawRay(playerCharacter.transform.position + new Vector3(0.1f,-0f,0f), -playerCharacter.transform.right * 0.5f, Color.yellow);
         
@@ -123,7 +123,7 @@ public class FSMPlayer : FiniteStateMachine<PlayerState>
             //}
             //else
             {
-                //Debug.Log(LogUtility.MakeLogStringFormat("FSMPLayer", "Make transition from state {0} to {1}", currentStateIndex, value));
+                Debug.Log(LogUtility.MakeLogStringFormat("FSMPLayer", "Make transition from state {0} to {1}", currentStateIndex, value));
 
                 int previousStateIndex = currentStateIndex;
 

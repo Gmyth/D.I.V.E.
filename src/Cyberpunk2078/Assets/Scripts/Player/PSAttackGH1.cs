@@ -31,7 +31,5 @@ public class PSAttackGH1 : PlayerState
 
         playerCharacter.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 
-
-        Debug.Log("ATTACK_GH1");
     }
 }
