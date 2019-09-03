@@ -1,0 +1,26 @@
+﻿[
+	{
+		"ID": "1",
+		"Type": "T",
+		"Actor": "Nash",
+		"Image": "N",
+		"Text": "This is a bad [r] Dream[-].",
+		"Next": "2",
+		"Sound": "N",
+		"Effect": "N",
+		"Chapter": "1",
+		"Scene": "1-1"
+	},
+	{
+		"ID": "2",
+		"Type": "T",
+		"Actor": "Ray",
+		"Image": "N",
+		"Text": "We will pull it through.",
+		"Next": "-1",
+		"Sound": "N",
+		"Effect": "N",
+		"Chapter": "1",
+		"Scene": "1-1"
+	}
+]
