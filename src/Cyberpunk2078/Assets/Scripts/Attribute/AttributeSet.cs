@@ -51,6 +51,7 @@ public class EventOnAttributeChange : UnityEvent<AttributeType, float, float> { 
 
 
     [SerializeField] private Attribute[] serializedAttributes;
+
     private Dictionary<AttributeType, float> attributes = new Dictionary<AttributeType, float>();
 
 
