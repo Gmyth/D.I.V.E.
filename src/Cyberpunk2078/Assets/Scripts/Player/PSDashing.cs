@@ -48,7 +48,7 @@ public class PSDashing : PlayerState
             if (hyperSpeed)
             {
                 hyperSpeed = false;
-                rb2d.velocity = rb2d.velocity * 1f;
+                rb2d.velocity = rb2d.velocity * 0.1f;
             }
         }
         else if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.unscaledTime)
