@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1e9c19f531ef1e4394a7e9ec2cb363e, type: 3}
   m_Name: PS_WallJumping
   m_EditorClassIdentifier: 
-  jumpForce: 6
+  jumpForce: 5
   jumpSpeed: 11
-  stickWallTime: 0.5
-  wallCheckCoolDown: 0.1
+  stickWallTime: 1
+  wallCheckCoolDown: 0.2
   index_PSIdle: 0
   index_PSMoving: 1
   index_PSJumping2: 8

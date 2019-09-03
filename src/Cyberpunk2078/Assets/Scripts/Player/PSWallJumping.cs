@@ -112,14 +112,5 @@ public class PSWallJumping: PlayerState
         rb2d.AddForce(playerCharacter.transform.up * jumpForce * 100);
     }
     
-    public bool RightSideTest()
-    {
-        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0.1f,0f,0f),playerCharacter.transform.right,0.1f);
-        
-        if (hit.collider != null && hit.transform.CompareTag("Ground") )
-        {
-            return true;
-        }
-        return false;
-    }
+
 }

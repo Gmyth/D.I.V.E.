@@ -16,6 +16,9 @@ public class PSDashing : PlayerState
 
     [SerializeField] private float dashReleaseDelayTime = 0.05f; // time from button press to actual dash
 
+    [SerializeField] private float fallingMoveSpeed = 5;
+    [SerializeField] private float fallingMoveAcceleration = 10;
+
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSMoving;
     [SerializeField] private int indexJumping2;
@@ -50,12 +53,14 @@ public class PSDashing : PlayerState
                 hyperSpeed = false;
                 rb2d.velocity = rb2d.velocity * 0.1f;
             }
+            PhysicsInputHelper(h, fallingMoveSpeed, fallingMoveAcceleration);
         }
         else if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.unscaledTime)
         {
             // the dash has already ended
             rb2d.drag = defaultDrag;
             rb2d.gravityScale = 3;
+            PhysicsInputHelper(h, fallingMoveSpeed, fallingMoveAcceleration);
         }
         else {
             //prevent ground-hitting shifting 

@@ -25,12 +25,12 @@ public abstract class PlayerState : State
     public bool isGrounded()
     {
         RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,0,0f),-playerCharacter.transform.up,0.5f);
-        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.1f,0f,0f),-playerCharacter.transform.up,0.5f);
-        RaycastHit2D hit2 = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.1f,0f,0f),-playerCharacter.transform.up,0.5f);
+        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.2f,0f,0f),-playerCharacter.transform.up,0.5f);
+        RaycastHit2D hit2 = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.2f,0f,0f),-playerCharacter.transform.up,0.5f);
      
         Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f,0f,0f), -playerCharacter.transform.up * 0.5f, Color.red);
-        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0.1f,0f,0f), -playerCharacter.transform.up * 0.5f, Color.yellow);
-        Debug.DrawRay(playerCharacter.transform.position + new Vector3(-0.1f,0f,0f), -playerCharacter.transform.up * 0.5f, Color.green);
+        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0.2f,0f,0f), -playerCharacter.transform.up * 0.5f, Color.yellow);
+        Debug.DrawRay(playerCharacter.transform.position + new Vector3(-0.2f,0f,0f), -playerCharacter.transform.up * 0.5f, Color.green);
         
         if ((hit.collider != null && hit.transform.CompareTag("Ground"))||
             (hit1.collider != null && hit1.transform.CompareTag("Ground"))||
@@ -46,10 +46,10 @@ public abstract class PlayerState : State
     //Check player is close to wall
     public bool isCloseToWall()
     {
-        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0f,0.5f,0f),playerCharacter.transform.right,0.5f);
-        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0f,0.5f,0f),-playerCharacter.transform.right,0.5f);
-        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f,0.5f,0f), playerCharacter.transform.right * 0.5f, Color.red);
-        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f,0.5f,0f), -playerCharacter.transform.right * 0.5f, Color.yellow);
+        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0f,0.5f,0f),playerCharacter.transform.right,0.6f);
+        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0f,0.5f,0f),-playerCharacter.transform.right,0.6f);
+        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f,0.5f,0f), playerCharacter.transform.right * 0.6f, Color.red);
+        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f,0.5f,0f), -playerCharacter.transform.right * 0.6f, Color.yellow);
         
         if ((hit.collider != null && hit.transform.CompareTag("Ground") )||
             (hit1.collider != null && hit1.transform.CompareTag("Ground") ))
@@ -57,6 +57,17 @@ public abstract class PlayerState : State
             return true;
         }
 
+        return false;
+    }
+
+    public bool RightSideTest()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f, 0.5f, 0f), playerCharacter.transform.right, 0.6f);
+
+        if (hit.collider != null && hit.transform.CompareTag("Ground"))
+        {
+            return true;
+        }
         return false;
     }
 
