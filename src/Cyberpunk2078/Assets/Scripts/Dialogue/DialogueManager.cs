@@ -7,16 +7,26 @@ using System;
 
 
 public class DialogueManager: Singleton<DialogueManager>
-{   
+{
+    private TextDict[] Dict;
     private DialogueData[] dialogues;
 
     public void InitDialogue()
     {
-        string path = Application.dataPath + "/StreamingAssets" + "/Dia.json";
+        string path = Application.dataPath + "/StreamingAssets" + "/Dialogue.json";
         string jsonString = File.ReadAllText(path);
         string fixedJsonString = JsonHelper.fixJson(jsonString);
         dialogues = JsonHelper.FromJson<DialogueData>(fixedJsonString);
-        Debug.Log(dialogues);
+        Debug.Log(dialogues[0].Actor);
+    }
+
+    public void InitUIText()
+    {
+        string path = Application.dataPath + "/StreamingAssets" + "/Dictionary.json";
+        string jsonString = File.ReadAllText(path);
+        string fixedJsonString = JsonHelper.fixJson(jsonString);
+        Dict = JsonHelper.FromJson<TextDict>(fixedJsonString);
+        Debug.Log(Dict[11].Text);
     }
 }
 
@@ -33,5 +43,13 @@ public class DialogueData
     public string Chapter;
     public string Scene;
 
+}
+
+[Serializable]
+public class TextDict
+{
+    public int ID;
+    public string Text;
+    public string Type;
 }
 
