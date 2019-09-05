@@ -9,6 +9,8 @@ public class DialogueTest : MonoBehaviour
     {
         DialogueManager.Instance.InitDialogue();
         DialogueManager.Instance.InitUIText();
+        
+        Debug.Log("DialogueLoaded");
     }
 
     // Update is called once per frame
@@ -16,4 +18,6 @@ public class DialogueTest : MonoBehaviour
     {
 
     }
+
+    
 }
