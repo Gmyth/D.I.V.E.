@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DialogueDetection : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class DialogueDetection : MonoBehaviour
         if (other.gameObject.name == "Player")
         {
             other.gameObject.GetComponent<DialoguePlayer>().inDialogueZone = false;
+            other.gameObject.GetComponent<DialoguePlayer>().isDialogueOngoing = false;
             GUIManager.Singleton.Close("DialogueUI");
         }
     }

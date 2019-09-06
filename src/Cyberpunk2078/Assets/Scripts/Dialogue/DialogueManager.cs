@@ -4,12 +4,15 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.UI;
 using System;
+using UnityEngine.Events;
 
 
 public class DialogueManager: Singleton<DialogueManager>
 {
     private TextDict[] Dict;
     private DialogueData[] dialogues;
+
+    public UnityEvent DialogueEnd;
 
     public void InitDialogue()
     {
@@ -51,21 +54,28 @@ public class DialogueManager: Singleton<DialogueManager>
         // now this function returns
     }
 
-    public IEnumerator PlayDialogue(int index)
+    /// <summary>
+    /// Play a sequence of dialogue
+    /// </summary>
+    /// <param name="index"> The start id of dialogues </param>
+    /// <param name="transform"> The actor's transform </param>
+    /// <returns></returns>
+    public IEnumerator PlayDialogue(int index, Transform transform)
     {
         GUIDialogue dialogueWin = (GUIDialogue)GUIManager.Singleton.Open("DialogueUI");
-        dialogueWin.SetText(dialogues[index].Text, dialogues[index].Actor);
+        dialogueWin.SetText(dialogues[index].Text, dialogues[index].Actor, transform);
         yield return null;
         while(dialogues[index].Next != "-1")
         {
             Debug.Log("Enter Loop");
             yield return waitForKeyPress(KeyCode.G);
             int nextDialogue = Convert.ToInt32(dialogues[index].Next);
-            dialogueWin.SetText(dialogues[nextDialogue].Text, dialogues[index].Actor);
+            dialogueWin.SetText(dialogues[nextDialogue].Text, dialogues[nextDialogue].Actor, transform);
             index = nextDialogue;
         }
         yield return waitForKeyPress(KeyCode.G);
         GUIManager.Singleton.Close("DialogueUI");
+        DialogueEnd.Invoke();      
     }
 }
 
