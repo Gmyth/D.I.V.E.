@@ -6,9 +6,13 @@ using UnityEngine;
 [CreateAssetMenuAttribute(fileName = "PS_Attack_GD", menuName = "Player State/Attack GD")]
 public class PSAttackGD : PlayerState
 {
+    [Header("Configuration")]
     [SerializeField] private float recoveryTime = 0.5f;
+
+    [Header("Connected States")]
     [SerializeField] private int index_PSIdle;
     [SerializeField] private int index_PSMoving;
+
     private float t0 = 0;
 
 

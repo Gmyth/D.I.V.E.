@@ -17,11 +17,12 @@ public class PSJumping1 : PlayerState
     {
         float Vy = playerCharacter.GetComponent<Rigidbody2D>().velocity.y;
         float h = Input.GetAxis("Horizontal");
+        
         //Still support Horizontal update during jumping, delete following to kill Horizzontal input
         PhysicsInputHelper(h);
        
         if (isGrounded() && Vy < 0)
-            {
+        {
                 // Landed
                 if (h == 0)
                     return index_PSIdle;
