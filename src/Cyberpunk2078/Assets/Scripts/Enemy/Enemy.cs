@@ -7,6 +7,36 @@ public class Enemy : Dummy
 {
     [SerializeField] private FSMEnemy fsm;
 
+    [Header("Configuration")]
+    [SerializeField] private int bulletID = 0;
+    [SerializeField] private float fireInterval;
+    [SerializeField] private float bulletSpeed;
+
+
+    public int BulletID
+    {
+        get
+        {
+            return bulletID;
+        }
+    }
+
+    public float FireInterval
+    {
+        get
+        {
+            return fireInterval;
+        }
+    }
+
+    public float BulletSpeed
+    {
+        get
+        {
+            return bulletSpeed;
+        }
+    }
+
 
     private void Start()
     {

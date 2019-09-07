@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public abstract class EnemyState : State
+public abstract class EnemyState<T> : State where T : Dummy
 {
-    protected Dummy dummy;
+    protected T dummy;
 
 
 
-    public virtual void Initialize(int index, Dummy dummy)
+    public virtual void Initialize(int index, T dummy)
     {
         Index = index;
         this.dummy = dummy;
@@ -22,11 +22,35 @@ public abstract class EnemyState : State
     public virtual void OnStateEnter() { }
     //public virtual void OnStateReset() { }
     public virtual void OnStateQuit() { }
+
+
+    protected PlayerCharacter IsPlayerInSight(float range)
+    {
+        PlayerCharacter player = PlayerCharacter.Singleton;
+
+
+        if (!player)
+            return null;
+
+
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(dummy.transform.position, player.transform.position - dummy.transform.position, Vector2.Distance(dummy.transform.position, player.transform.position));
+        
+        if (raycastHit2D.collider.gameObject != player.gameObject)
+            return null;
+
+
+        return player;
+    }
+}
+
+
+public abstract class DroneState : EnemyState<Enemy>
+{
 }
 
 
 [CreateAssetMenuAttribute(fileName = "FSM_Enemy", menuName = "State Machine/Enemy")]
-public class FSMEnemy : FiniteStateMachine<EnemyState>
+public class FSMEnemy : FiniteStateMachine<DroneState>
 {
     public override int CurrentStateIndex
     {
@@ -61,7 +85,7 @@ public class FSMEnemy : FiniteStateMachine<EnemyState>
     }
 
 
-    public void Initialize(Dummy dummy)
+    public void Initialize(Enemy dummy)
     {
         for (int i = 0; i < states.Length; ++i)
             states[i].Initialize(i, dummy);

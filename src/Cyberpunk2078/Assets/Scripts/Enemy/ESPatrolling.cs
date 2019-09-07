@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 [CreateAssetMenuAttribute(fileName = "ES_Patrolling", menuName = "Enemy State/Patrolling")]
-public class ESPatrolling : EnemyState
+public class ESPatrolling : DroneState
 {
     [Header("Configuration")]
     [SerializeField] private Vector3[] patrolPoints;
@@ -15,6 +15,7 @@ public class ESPatrolling : EnemyState
     [Header("Connected States")]
     [SerializeField] private int index_ESIdle = -1;
     [SerializeField] private int index_ESAlert = -1;
+    [SerializeField] private int index_ESChasing = -1;
 
     private Rigidbody2D rigidbody;
     private Seeker seeker;
@@ -23,14 +24,18 @@ public class ESPatrolling : EnemyState
     private Path currentPath = null;
     private int indexWayPoint = 0;
     private float t0 = 0;
+    private float tf = 0;
 
 
-    public override void Initialize(int index, Dummy dummy)
+    public override void Initialize(int index, Enemy dummy)
     {
         base.Initialize(index, dummy);
 
         rigidbody = dummy.GetComponent<Rigidbody2D>();
         seeker = dummy.GetComponent<Seeker>();
+
+        t0 = 0;
+        tf = 0;
     }
 
     public override int Update()
@@ -60,7 +65,21 @@ public class ESPatrolling : EnemyState
             }
         }
 
-        // TODO: Player detection
+        
+        PlayerCharacter player = IsPlayerInSight(10);
+        
+        if (player && Time.time - tf >= dummy.FireInterval)
+        {
+            LinearMovement bullet = ObjectRecycler.Singleton.GetObject<Bullet>(dummy.BulletID).GetComponent<LinearMovement>();
+            bullet.speed = dummy.BulletSpeed;
+            bullet.initialPosition = dummy.transform.position;
+            bullet.orientation = (player.transform.position - bullet.initialPosition).normalized;
+
+            bullet.gameObject.SetActive(true);
+
+            tf = Time.time;
+        }
+
 
         return Index;
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [CreateAssetMenuAttribute(fileName = "ES_Idle", menuName = "Enemy State/Idle")]
-public class ESIdle : EnemyState
+public class ESIdle : DroneState
 {
     [Header("Connected States")]
     [SerializeField] private int index_ESAlert;

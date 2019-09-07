@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [CreateAssetMenuAttribute(fileName = "ES_Guard", menuName = "Enemy State/Guard")]
-public class ESGuard : EnemyState
+public class ESGuard : DroneState
 {
     [Header("Configuration")]
     [SerializeField] private float minTurnTime = 3f;

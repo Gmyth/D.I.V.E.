@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class PlayerCharacter : Dummy
 {
+    public static PlayerCharacter Singleton { get; private set; } = null;
+
+
     [SerializeField] private FSMPlayer fsm;
 
     private StatisticSystem statistic;
@@ -19,6 +22,16 @@ public class PlayerCharacter : Dummy
 
     private void Awake()
     {
+        if (Singleton)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+
+        Singleton = this;
+
+
         rigidbody = GetComponent<Rigidbody>();
 
         fsm.Initialize(this);
@@ -28,5 +41,12 @@ public class PlayerCharacter : Dummy
     private void Update()
     {
         fsm.Update();
+    }
+
+
+    private void OnDestroy()
+    {
+        if (Singleton == this)
+            Singleton = null;
     }
 }
