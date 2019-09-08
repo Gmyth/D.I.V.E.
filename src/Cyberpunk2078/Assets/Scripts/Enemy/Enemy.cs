@@ -48,4 +48,11 @@ public class Enemy : Dummy
     {
         fsm.Update();
     }
+
+
+    public override float ApplyDamage(float rawDamage)
+    {
+        Debug.Log(LogUtility.MakeLogStringFormat("Enemy", "Take {0} damage.", rawDamage));
+        return rawDamage;
+    }
 }

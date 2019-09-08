@@ -1,5 +1,5 @@
 ﻿
 public interface IDamageable
 {
-    int ApplyDamage(int rawDamage);
+    float ApplyDamage(float rawDamage);
 }

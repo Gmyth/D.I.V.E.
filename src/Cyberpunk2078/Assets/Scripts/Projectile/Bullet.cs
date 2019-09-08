@@ -20,5 +20,18 @@ public class Bullet : Recyclable
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (isFriendly)
+        {
+            if (other.tag == "Dummy")
+            {
+                other.GetComponent<PlayerCharacter>().ApplyDamage(rawDamage);
+                Die();
+            }
+        }
+        else if (other.tag == "Player")
+        {
+            other.GetComponent<PlayerCharacter>().ApplyDamage(rawDamage);
+            Die();
+        }
     }
 }

@@ -20,6 +20,13 @@ public class PlayerCharacter : Dummy
     }
 
 
+    public override float ApplyDamage(float rawDamage)
+    {
+        Debug.Log(LogUtility.MakeLogStringFormat("PlayerCharacter", "Take {0} damage.", rawDamage));
+        return rawDamage;
+    }
+
+
     private void Awake()
     {
         if (Singleton)
