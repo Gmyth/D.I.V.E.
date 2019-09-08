@@ -1,0 +1,75 @@
+﻿[
+	{
+		"ID": "1",
+		"Text": "Game Start",
+		"Type": "UI"
+	},
+	{
+		"ID": "2",
+		"Text": "Pause",
+		"Type": "UI"
+	},
+	{
+		"ID": "3",
+		"Text": "Settings",
+		"Type": "UI"
+	},
+	{
+		"ID": "4",
+		"Text": "Run",
+		"Type": " Run away…"
+	},
+	{
+		"ID": "5",
+		"Text": "Time is ticking out",
+		"Type": "Pop"
+	},
+	{
+		"ID": "6",
+		"Text": "Today is a wonderful day",
+		"Type": "Dialogue"
+	},
+	{
+		"ID": "7",
+		"Text": "",
+		"Type": ""
+	},
+	{
+		"ID": "8",
+		"Text": "",
+		"Type": ""
+	},
+	{
+		"ID": "9",
+		"Text": "",
+		"Type": ""
+	},
+	{
+		"ID": "10",
+		"Text": "",
+		"Type": ""
+	},
+	{
+		"ID": "11",
+		"Text": "",
+		"Type": ""
+	},
+	{
+		"ID": "12",
+		"Text": "",
+		"Type": ""
+	},
+	{
+		"ID": "13",
+		"Text": "",
+		"Type": "pub"
+	},
+	{
+		"ID": "14",
+		"Text": "",
+		"Type": ""
+	},
+	{
+		"ID": ""
+	}
+]
