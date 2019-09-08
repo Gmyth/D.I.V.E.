@@ -6,18 +6,18 @@ using UnityEngine.Events;
 public class DialogueDetection : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("Press A to talk");
         if(other.gameObject.name == "Player")
@@ -26,15 +26,18 @@ public class DialogueDetection : MonoBehaviour
         }
     }
 
-    void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         Debug.Log("Exit");
-        if (other.gameObject.name == "Player")
+        switch (other.gameObject.name)
         {
-            other.gameObject.GetComponent<DialoguePlayer>().inDialogueZone = false;
-            other.gameObject.GetComponent<DialoguePlayer>().isDialogueOngoing = false;
-            GUIManager.Singleton.Close("DialogueUI");
+            case "Player":
+                other.gameObject.GetComponent<DialoguePlayer>().inDialogueZone = false;
+                other.gameObject.GetComponent<DialoguePlayer>().isDialogueOngoing = false;
+                GUIManager.Singleton.Close("DialogueUI");
+                break;
+            default:
+                break;
         }
     }
-
 }

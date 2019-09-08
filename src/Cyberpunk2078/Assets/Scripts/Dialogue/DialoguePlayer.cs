@@ -15,16 +15,15 @@ public class DialoguePlayer : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.G))
-        {
-            if(inDialogueZone == true && isDialogueOngoing == false)
-            {
-                StartCoroutine(DialogueManager.Instance.PlayDialogue(0, gameObject.transform));
-                isDialogueOngoing = true;
-            }
-        }
+        if (!Input.GetKeyDown(KeyCode.G)) return;
+
+        if (inDialogueZone != true || isDialogueOngoing != false) return;
+
+        StartCoroutine(DialogueManager.Instance.PlayDialogue(0, gameObject.transform));
+
+        isDialogueOngoing = true;
     }
 
     public void SetDialogueOngoing(bool boolean)

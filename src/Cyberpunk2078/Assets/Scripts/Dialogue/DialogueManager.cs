@@ -5,6 +5,7 @@ using System.IO;
 using UnityEngine.UI;
 using System;
 using UnityEngine.Events;
+// ReSharper disable All
 
 
 public class DialogueManager: Singleton<DialogueManager>
@@ -13,6 +14,7 @@ public class DialogueManager: Singleton<DialogueManager>
     private DialogueData[] dialogues;
 
     public UnityEvent DialogueEnd;
+    public UnityEvent KeyPressed;
 
     public void InitDialogue()
     {
@@ -69,6 +71,12 @@ public class DialogueManager: Singleton<DialogueManager>
         {
             Debug.Log("Enter Loop");
             yield return waitForKeyPress(KeyCode.G);
+            if (dialogueWin.CheckAnimateCoroutine())
+            {
+                dialogueWin.SetTextSpeed(0.05f/1000000);
+                yield return waitForKeyPress(KeyCode.G);
+                dialogueWin.SetTextSpeed(0.05f);
+            }
             int nextDialogue = Convert.ToInt32(dialogues[index].Next);
             dialogueWin.SetText(dialogues[nextDialogue].Text, dialogues[nextDialogue].Actor, transform);
             index = nextDialogue;
