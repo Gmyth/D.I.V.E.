@@ -1,7 +1,7 @@
 ﻿[
 	{
 		"ID": "0",
-		"Type": "T",
+		"Type": "N",
 		"Actor": "Nash",
 		"Image": "N",
 		"Text": "This is a bad {color:red}Dream{color:end}.",
@@ -13,7 +13,7 @@
 	},
 	{
 		"ID": "1",
-		"Type": "T",
+		"Type": "N",
 		"Actor": "Ray",
 		"Image": "N",
 		"Text": "We will pull it through.",
@@ -25,7 +25,7 @@
 	},
 	{
 		"ID": "2",
-		"Type": "T",
+		"Type": "N",
 		"Actor": "Nash",
 		"Image": "N",
 		"Text": "No we can't!",
@@ -37,7 +37,7 @@
 	},
 	{
 		"ID": "3",
-		"Type": "T",
+		"Type": "N",
 		"Actor": "Ray",
 		"Image": "N",
 		"Text": "Believe your self!",

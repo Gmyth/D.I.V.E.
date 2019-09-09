@@ -109,6 +109,10 @@ public class GUIDialogue : GUIWindow
 
     }
 
+    public void DisplayOption(string text, string actor)
+    {
+
+    }
 
     public void SetText(string text, string actor)
     {
@@ -117,7 +121,7 @@ public class GUIDialogue : GUIWindow
         textBoxDict[actor].GetComponent<TextMeshProUGUI>().text = actor + ":" + text;
     }
 
-    public void SetText(string text, string actor, Transform transform)
+    public void DisplayDialogue(string text, string actor, Transform transform)
     {
         CheckActor(actor);
 

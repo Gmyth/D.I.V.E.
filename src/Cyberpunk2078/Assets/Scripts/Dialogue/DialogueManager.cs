@@ -16,6 +16,12 @@ public class DialogueManager: Singleton<DialogueManager>
     public UnityEvent DialogueEnd;
     public UnityEvent KeyPressed;
 
+    public enum DialogueType
+    {
+        Normal = 0,
+        Option,
+        Unknown
+    }
     public void InitDialogue()
     {
         string path = Application.dataPath + "/StreamingAssets" + "/Dialogue.json";
@@ -65,8 +71,18 @@ public class DialogueManager: Singleton<DialogueManager>
     public IEnumerator PlayDialogue(int index, Transform transform)
     {
         GUIDialogue dialogueWin = (GUIDialogue)GUIManager.Singleton.Open("DialogueUI");
-        dialogueWin.SetText(dialogues[index].Text, dialogues[index].Actor, transform);
+
+        if (CheckDialogueType(index) == DialogueType.Normal)
+            dialogueWin.DisplayDialogue(dialogues[index].Text, dialogues[index].Actor, transform);
+        else if(CheckDialogueType(index) == DialogueType.Option)
+        {
+            
+        }
+        else
+            yield break;
+
         yield return null;
+
         while(dialogues[index].Next != "-1")
         {
             Debug.Log("Enter Loop");
@@ -78,14 +94,29 @@ public class DialogueManager: Singleton<DialogueManager>
                 dialogueWin.SetTextSpeed(0.05f);
             }
             int nextDialogue = Convert.ToInt32(dialogues[index].Next);
-            dialogueWin.SetText(dialogues[nextDialogue].Text, dialogues[nextDialogue].Actor, transform);
+
+            if (CheckDialogueType(index) == DialogueType.Normal)
+                dialogueWin.DisplayDialogue(dialogues[nextDialogue].Text, dialogues[nextDialogue].Actor, transform);
+
             index = nextDialogue;
         }
         yield return waitForKeyPress(KeyCode.G);
         GUIManager.Singleton.Close("DialogueUI");
         DialogueEnd.Invoke();      
     }
+    private DialogueType CheckDialogueType(int index)
+    {
+        if (dialogues[index].Type == "N" || dialogues[index].Type == "Normal")
+            return DialogueType.Normal;
+        else if(dialogues[index].Type == "O" || dialogues[index].Type == "Option")
+            return DialogueType.Option;
+        else
+            return DialogueType.Unknown;
+    }
 }
+
+    
+
 
 [Serializable]
 public class DialogueData
