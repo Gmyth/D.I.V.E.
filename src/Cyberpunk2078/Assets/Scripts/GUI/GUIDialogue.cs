@@ -129,6 +129,12 @@ public class GUIDialogue : GUIWindow
 
     }
 
+    private void LoadImage(string actor)
+    {
+        Sprite img = ResourceUtility.GetPrefab<Sprite>("Portraits/" + actor) as Sprite;
+        textBoxList[0].GetComponentInChildren<Image>().overrideSprite = img;
+    }
+
     private IEnumerator AnimateText(string actor, string text)
     {
         isCoroutineRunning = true;
@@ -145,7 +151,7 @@ public class GUIDialogue : GUIWindow
         TMP_TextInfo textInfo = dialogueBox.textInfo;
         int totalCharacters = dialogueBox.textInfo.characterCount;
 
-       
+        LoadImage(actor);
 
         //Base color for our text.
         Color32 c0 = dialogueBox.color;
