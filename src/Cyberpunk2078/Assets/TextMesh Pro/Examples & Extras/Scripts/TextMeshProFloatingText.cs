@@ -88,7 +88,7 @@ namespace TMPro.Examples
         //{
         //    if (SpawnType == 0)
         //    {
-        //        m_textMeshPro.SetText("{0}", m_frame);
+        //        m_textMeshPro.DisplayDialogue("{0}", m_frame);
         //    }
         //    else
         //    {
@@ -125,7 +125,7 @@ namespace TMPro.Examples
 
                 int_counter = (int)current_Count;
                 m_textMeshPro.text = int_counter.ToString();
-                //m_textMeshPro.SetText("{0}", (int)current_Count);
+                //m_textMeshPro.DisplayDialogue("{0}", (int)current_Count);
 
                 m_textMeshPro.color = new Color32(start_color.r, start_color.g, start_color.b, (byte)alpha);
 
