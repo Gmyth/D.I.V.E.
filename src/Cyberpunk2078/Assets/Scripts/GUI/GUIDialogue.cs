@@ -20,7 +20,7 @@ public class GUIDialogue : GUIWindow
     private readonly Dictionary<string, TMP_Text> textBoxDict = new Dictionary<string, TMP_Text>();
 
     //store existing boxes for management
-    private readonly List<TMP_Text> textBoxList = new List<TMP_Text>();
+    private readonly List<GameObject> textBoxList = new List<GameObject>();
 
     private GuiDialogueMode mode;
 
@@ -83,12 +83,12 @@ public class GUIDialogue : GUIWindow
                     //if it is the first TeshMeshPro dialogue box
                     if (textBoxList.Count == 0)
                     {
-                        TMP_Text textBoxPro = Instantiate(ResourceUtility.GetGUIPrefab<TMP_Text>("TextBoxPro"), transform, false);
-                        textBoxList.Add(textBoxPro);
+                        GameObject dialogueBox = Instantiate(ResourceUtility.GetGUIPrefab<GameObject>("Dialogue"), transform, false);
+                        textBoxList.Add(dialogueBox);
                     }
                     //if textBoxDict don't has the actor, add it (Only allow actor to appear once in dict)
                     if (!textBoxDict.ContainsKey(actor))
-                        textBoxDict.Add(actor, textBoxList[0]);
+                        textBoxDict.Add(actor, textBoxList[0].GetComponentInChildren<TMP_Text>());
                     break;
                 }
             case GuiDialogueMode.Multiple:
@@ -103,10 +103,12 @@ public class GUIDialogue : GUIWindow
         if (Camera.main == null) return;
         Vector2 actorCoordinates = Camera.main.WorldToScreenPoint(transform.position);
 
-        actorCoordinates.y += 40;
+        actorCoordinates.y += 120;
 
-        textBoxDict[actor].GetComponent<RectTransform>().position = actorCoordinates;
+        textBoxList[0].GetComponent<Transform>().position = actorCoordinates;
+
     }
+
 
     public void SetText(string text, string actor)
     {
@@ -123,7 +125,7 @@ public class GUIDialogue : GUIWindow
 
         if (animateCoroutine != null)
             StopCoroutine(animateCoroutine);
-        animateCoroutine = StartCoroutine(AnimateText(actor, actor + ":" + text));
+        animateCoroutine = StartCoroutine(AnimateText(actor, actor + ":\n" + text));
 
     }
 
@@ -135,6 +137,7 @@ public class GUIDialogue : GUIWindow
         dialogueBox.ForceMeshUpdate();
 
         dialogueBox.fontSize = FontSize;
+        dialogueBox.alignment = TextAlignmentOptions.TopJustified;
 
         specialCommands = BuildSpecialCommandList(text);
 
