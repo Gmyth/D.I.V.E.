@@ -87,16 +87,6 @@ public abstract class PlayerState : State
         return _direction;
     }
 
-    public bool RightSideTest()
-    {
-        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f, 0.5f, 0f), playerCharacter.transform.right, 0.6f);
-
-        if (hit.collider != null && hit.transform.CompareTag("Ground"))
-        {
-            return true;
-        }
-        return false;
-    }
 
     // Function : Keyboard Input => Physics Velocity, And Friction Calculation
     public void PhysicsInputHelper(float h, float maxSpeed  = 9,  float Acceleration  = 20)
