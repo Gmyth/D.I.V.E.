@@ -19,9 +19,12 @@ public class PSJumping1 : PlayerState
 
     public override int Update()
     {
+        playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
         float h = Input.GetAxis("Horizontal");
+        flip = h < 0;
+        
         //Still support Horizontal update during jumping, delete following to kill Horizzontal input
          PhysicsInputHelper(h,speed_factor,acceleration_factor);
         
@@ -60,6 +63,7 @@ public class PSJumping1 : PlayerState
 
     public override void OnStateEnter()
     {
+        anim.Play("MainCharacter_Jump", -1, 0f);
         //Perform jump
         isJumpKeyDown = true;
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();

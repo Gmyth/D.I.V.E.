@@ -17,6 +17,7 @@ public class PSMoving : PlayerState
 
     public override int Update()
     {
+        
         if (Input.GetAxis("Attack1") > 0)
         {
             float y = Input.GetAxis("Vertical");
@@ -47,11 +48,13 @@ public class PSMoving : PlayerState
 
         float x = Input.GetAxis("Horizontal");
 
-        Debug.LogWarning(x);
-
+        
+        flip = x <= 0;
         if (x == 0)
+            
             return index_PSIdle;
-
+        
+        playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
         Move(x);
 
 
@@ -65,6 +68,7 @@ public class PSMoving : PlayerState
     public override void OnStateEnter()
     {
         Move(Input.GetAxis("Horizontal"));
+        anim.Play("MainCharacter_Run", -1, 0f);
     }
 
 
