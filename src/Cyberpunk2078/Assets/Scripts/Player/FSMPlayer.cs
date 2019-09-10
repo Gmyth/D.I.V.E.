@@ -4,13 +4,16 @@
 public abstract class PlayerState : State
 {
     protected PlayerCharacter playerCharacter;
-    
+    protected Animator anim;
+
+    protected bool flip;
 
 
     public virtual void Initialize(int index, PlayerCharacter playerCharacter)
     {
         Index = index;
         this.playerCharacter = playerCharacter;
+        anim = playerCharacter.GetComponent<Animator>();
     }
 
 
@@ -24,9 +27,9 @@ public abstract class PlayerState : State
     //Player Ground check
     public bool isGrounded()
     {
-        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,0,0f),-playerCharacter.transform.up,0.5f);
-        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.2f,0f,0f),-playerCharacter.transform.up,0.5f);
-        RaycastHit2D hit2 = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.2f,0f,0f),-playerCharacter.transform.up,0.5f);
+        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,-0.2f,0f),-playerCharacter.transform.up,1f);
+        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.1f,-0.2f,0f),-playerCharacter.transform.up,1f);
+        RaycastHit2D hit2 = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.1f,-0.2f,0f),-playerCharacter.transform.up,1f);
      
         Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f,0f,0f), -playerCharacter.transform.up * 0.5f, Color.red);
         Debug.DrawRay(playerCharacter.transform.position + new Vector3(0.2f,0f,0f), -playerCharacter.transform.up * 0.5f, Color.yellow);
@@ -43,13 +46,25 @@ public abstract class PlayerState : State
         return false;
     }
     
+    //Check the Wall is on left or right
+    public bool RightSideTest()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0.1f,0f,0f),playerCharacter.transform.right,0.4f);
+        
+        if (hit.collider != null && hit.transform.CompareTag("Ground") )
+        {
+            return true;
+        }
+        return false;
+    }
+    
     //Check player is close to wall
     public bool isCloseToWall()
     {
-        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0f,0.5f,0f),playerCharacter.transform.right,0.6f);
-        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0f,0.5f,0f),-playerCharacter.transform.right,0.6f);
-        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f,0.5f,0f), playerCharacter.transform.right * 0.6f, Color.red);
-        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f,0.5f,0f), -playerCharacter.transform.right * 0.6f, Color.yellow);
+        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0.1f,0f,0f),playerCharacter.transform.right,0.4f);
+        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(-0.1f,0f,0f),-playerCharacter.transform.right,0.4f);
+        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f,-0f,0f), playerCharacter.transform.right * 0.5f, Color.red);
+        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0.1f,-0f,0f), -playerCharacter.transform.right * 0.5f, Color.yellow);
         
         if ((hit.collider != null && hit.transform.CompareTag("Ground") )||
             (hit1.collider != null && hit1.transform.CompareTag("Ground") ))
@@ -58,6 +73,18 @@ public abstract class PlayerState : State
         }
 
         return false;
+    }
+    
+    //if player is grounded, the direction to down left/right & down side are not allowed
+    public Vector2 getDirectionCorrection(Vector2 _direction)
+    {
+        if (isGrounded() && _direction.y < 0)
+        {
+            Vector2 corDir = new Vector2(_direction.x * 2, 0);
+            return corDir;
+        }
+
+        return _direction;
     }
 
     public bool RightSideTest()
@@ -132,8 +159,7 @@ public class FSMPlayer : FiniteStateMachine<PlayerState>
         {
             if (value != currentStateIndex)
             //{
-            //    Debug.Log(LogUtility.MakeLogStringFormat("FSMPLayer", "Reset on state {0}", currentStateIndex));
-
+               // Debug.Log(LogUtility.MakeLogStringFormat("FSMPLayer", "Reset on state {0}", currentStateIndex));
             //    CurrentState.OnStateReset();
             //}
             //else

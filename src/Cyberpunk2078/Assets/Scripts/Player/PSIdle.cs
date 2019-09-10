@@ -53,8 +53,9 @@ public class PSIdle : PlayerState
 
     public override void OnStateEnter()
     {
+       
+        anim.Play("MainCharacter_Idle", -1, 0f);
         Vector2 V = playerCharacter.GetComponent<Rigidbody2D>().velocity;
-
         V.x = 0;
         playerCharacter.GetComponent<Rigidbody2D>().velocity = V;
     }
