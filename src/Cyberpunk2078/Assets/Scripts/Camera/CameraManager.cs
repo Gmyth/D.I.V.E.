@@ -339,9 +339,11 @@ public class CameraManager : MonoBehaviour {
 		{
 			if (indicator.influenceRange >= (pos - (Vector2) indicator.transform.position).magnitude)
 			{
+
 				if (found && targetIndicator.influenceLevel > indicator.influenceLevel)
 				{
 					//found new indicator with higher priority 
+
 					targetIndicator = indicator;
 				}
 				else if (!found)
