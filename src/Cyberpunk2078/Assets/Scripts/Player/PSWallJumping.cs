@@ -44,39 +44,66 @@ public class PSWallJumping: PlayerState
 
         if (onWall)
         {
+            //Sticked , ok to perform wall jump again
             if (Input.GetButtonDown("Jump"))
             {
                 onWall = false;
                 lastOnWallTime = Time.unscaledTime;
                 rb2d.gravityScale = 3;
                 //re active jumping
-                if (RightSideTest()) rb2d.velocity = new Vector2 (-jumpSpeed, 0);
-                else rb2d.velocity = new Vector2 (jumpSpeed, 0);
+                if (RightSideTest())
+                {
+                    flip = true;
+                    rb2d.velocity = new Vector2(-jumpSpeed, 0);
+                }
+                else
+                {
+                    flip = false; 
+                    rb2d.velocity = new Vector2 (jumpSpeed, 0);
+                }
                 sideWallJump();
             }
         }
+        
 
         if (!onWall && isCloseToWall() && Time.unscaledTime > lastOnWallTime + wallCheckCoolDown )
         {
-            //stick again
+            //Not stick yet, ok to perform wall jump again
             if (Input.GetButtonDown("Jump"))
             {
+                
                 lastOnWallTime = Time.unscaledTime;
                 rb2d.gravityScale = 3;
-                //re active jumping
-                if (RightSideTest()) rb2d.velocity = new Vector2 (-jumpSpeed, 0);
-                else rb2d.velocity = new Vector2 (jumpSpeed, 0);
+                
+                //Check the wall is on the left or right
+                if (RightSideTest())
+                {
+                    //right
+                    flip = true;
+                    rb2d.velocity = new Vector2(-jumpSpeed, 0);
+                }
+                else
+                {
+                    //left
+                    flip = false; 
+                    rb2d.velocity = new Vector2 (jumpSpeed, 0);
+                }
+                
+                // Perform wall jump
                 sideWallJump();
             }else{
                 OnStateEnter();
             }
             
         }
+        // flip sprite for correct facing 
+        playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
         
+        // perform Dashing
         if (Input.GetAxis("Dashing") != 0)
             return index_PSDashing;
 
-        //Player is sill in air
+        // Player is sill in air,  wall jumping + second jump are not allowed!
 //        if (Vy < jumpForce / 5)
 //        {
 //            // prevent misclicking
@@ -92,34 +119,35 @@ public class PSWallJumping: PlayerState
 
     public override void OnStateEnter()
     {
+        // Set flip
+        flip = !RightSideTest();
+        
         //kill speed
         onWall = true;
+        
+        // Animation
+        anim.Play("MainCharacter_WallJump", -1, 0f);
+
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-        //rb2d.velocity = new Vector2 (0, 0);
-        //kill Gravity
-        ///rb2d.gravityScale = 0;
         lastStickTime = Time.unscaledTime;
     }
 
     private void sideWallJump()
     {
         //Perform jump
+        anim.Play("MainCharacter_Jump", -1, 0f);
+        
+        // prevent applying force twice
         isJumpKeyDown = true;
+        
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
+        
         // kill any Y-axis speed
         rb2d.velocity = new Vector2 (rb2d.velocity.x, 0);
-        // Add Verticial Speed
+        
+        // Add Vertical Speed
         rb2d.AddForce(playerCharacter.transform.up * jumpForce * 100);
     }
     
-    public bool RightSideTest()
-    {
-        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0.1f,0f,0f),playerCharacter.transform.right,0.1f);
-        
-        if (hit.collider != null && hit.transform.CompareTag("Ground") )
-        {
-            return true;
-        }
-        return false;
-    }
+
 }
