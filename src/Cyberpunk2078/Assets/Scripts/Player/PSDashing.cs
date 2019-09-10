@@ -52,11 +52,10 @@ public class PSDashing : PlayerState
             // the dash has already ended
             // ok for move input
             PhysicsInputHelper(h);
-
         }
         else {
             //prevent ground-hitting shifting 
-            RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,0.5f);
+            RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,0.3f);
             if (hit1.collider != null && hit1.transform.CompareTag("Ground"))
             {
                 // kill all speed
@@ -71,22 +70,17 @@ public class PSDashing : PlayerState
                 
                 // Disable trails
                 playerCharacter.GetComponent<GhostSprites>().RenderOnMotion = false;
-                
                 // Landed
                 if (h == 0)
                     // not moving
                     return indexPSIdle;
                 return indexPSMoving;
             }
+            
         }
-
-
-
-//        if (Input.GetAxis("Dashing") != 0 && lastDashSecond+dashReleaseTime < Time.unscaledTime)
-//            OnStateEnter();
-
+        
         // Player is grounded and dash has finished
-        if (isGrounded() && Vy <= 0 && lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime  < Time.unscaledTime)
+        if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime  < Time.unscaledTime)
         {
             // reset drag & gravity 
             rb2d.drag = defaultDrag;
@@ -109,32 +103,6 @@ public class PSDashing : PlayerState
                 return indexPSIdle;
             return indexPSMoving;
         }
-        
-        // Player is sill in air and Dash finished
-        if (!isGrounded() && lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.unscaledTime)
-        {
-            // reset drag & gravity 
-            rb2d.drag = defaultDrag;
-            rb2d.gravityScale = 3;
-            // reset player facing
-            playerCharacter.transform.right = Vector3.right;
-            // reset sprite flip
-            playerCharacter.GetComponent<SpriteRenderer>().flipY = false;
-            // Kill Trail
-            playerCharacter.GetComponent<GhostSprites>().Occupied = false;
-            
-            // Listening to move input
-            PhysicsInputHelper(h);
-            
-            // prevent mis-clicking
-            if (Input.GetButtonDown("Jump") && lastDashSecond+dashReleaseTime < Time.unscaledTime)
-                // second_jump
-                return indexJumping2;
-        }
-
-       
-
-        //isJumpKeyDown = Input.GetButtonDown("Jump");
 
         return Index;
     }
