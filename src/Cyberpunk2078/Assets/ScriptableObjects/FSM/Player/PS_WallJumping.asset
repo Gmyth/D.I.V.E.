@@ -18,5 +18,5 @@ MonoBehaviour:
   wallCheckCoolDown: 0.1
   index_PSIdle: 0
   index_PSMoving: 1
-  index_PSJumping2: 8
-  index_PSDashing: 10
+  index_PSJumping2: 7
+  index_PSDashing: 6

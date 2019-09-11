@@ -4,46 +4,24 @@
 [CreateAssetMenuAttribute(fileName = "PS_Moving", menuName = "Player State/Moving")]
 public class PSMoving : PlayerState
 {
-    [SerializeField] private float speed_factor = 3;
-    [SerializeField] private float acceleration_factor = 20;
-    [SerializeField] private int index_PSIdle;
-    [SerializeField] private int index_PSAttackGH1;
-    [SerializeField] private int index_PSAttackGH2;
-    [SerializeField] private int index_PSAttackGU;
-    [SerializeField] private int index_PSAttackGD;
-    [SerializeField] private int index_PSJumping1;
-    [SerializeField] private int index_PSDashing;
-
+    [SerializeField] private float speedFactor = 3;
+    [SerializeField] private float accelerationFactor = 20;
+    [SerializeField] private int indexPSIdle;
+    [SerializeField] private int indexPSAttackGH;
+    [SerializeField] private int indexPSJumping1;
+    [SerializeField] private int indexPSDashing;
+    [SerializeField] private int indexPSAirborne;
 
     public override int Update()
     {
         
         if (Input.GetAxis("Attack1") > 0)
         {
-            float y = Input.GetAxis("Vertical");
-
-            if (y > 0)
-                return index_PSAttackGU;
-            else if (y < 0)
-                return index_PSAttackGD;
-
-            return index_PSAttackGH1;
+            return indexPSAttackGH;
         }
         
         if (Input.GetAxis("Dashing") != 0)
-            return index_PSDashing;
-
-        if (Input.GetAxis("Attack2") > 0)
-        {
-            float y = Input.GetAxis("Vertical");
-
-            if (y > 0)
-                return index_PSAttackGU;
-            else if (y < 0)
-                return index_PSAttackGD;
-
-            return index_PSAttackGH2;
-        }
+            return indexPSDashing;
 
 
         float x = Input.GetAxis("Horizontal");
@@ -52,14 +30,14 @@ public class PSMoving : PlayerState
         flip = x <= 0;
         if (x == 0)
             
-            return index_PSIdle;
+            return indexPSIdle;
         
         playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
         Move(x);
 
 
         if (Input.GetAxis("Jump") > 0)
-            return index_PSJumping1;
+            return indexPSJumping1;
 
         return Index;
     }
@@ -75,7 +53,7 @@ public class PSMoving : PlayerState
     internal void Move(float axis)
     {
         int direction = axis > 0 ? 1 : -1;
-        PhysicsInputHelper(axis,speed_factor,acceleration_factor);
+        PhysicsInputHelper(axis,speedFactor,accelerationFactor);
 //        Vector2 V = playerCharacter.GetComponent<Rigidbody2D>().velocity;
 //
 //        V.x = direction * speed_factor;

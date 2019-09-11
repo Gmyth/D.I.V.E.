@@ -44,23 +44,23 @@ public class MouseIndicator : MonoBehaviour
     { 
         transform.position = player.transform.position;
         var mousePosInScreen = Input.mousePosition;
-        mousePosInScreen.z = -10; // select distance = 10 units from the camera
+        mousePosInScreen.z = 10; // select distance = 10 units from the camera
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(mousePosInScreen);
-        return   getTranslatedDirection(-(mousePos - (Vector2) transform.position).normalized);
+        return   (mousePos - (Vector2) transform.position).normalized;
     }
     
-    public Vector2 getTranslatedDirection(Vector2 direction)
-    {
-        // the direction parameter must be normalized
-        foreach (var scaler in directionRef)
-        {
-            if (Mathf.Abs(Vector2.Angle(scaler, direction)) < 23f)
-            {
-                return scaler;
-            }
-        }
-        
-        // should not reach here
-        return Vector2.zero;
-    }
+//    public Vector2 getTranslatedDirection(Vector2 direction)
+//    {
+//        // the direction parameter must be normalized
+//        foreach (var scaler in directionRef)
+//        {
+//            if (Mathf.Abs(Vector2.Angle(scaler, direction)) < 23f)
+//            {
+//                return scaler;
+//            }
+//        }
+//        
+//        // should not reach here
+//        return Vector2.zero;
+//    }
 }

@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23800471f8c787b4782bfaf6c47b2054, type: 3}
-  m_Name: PS_Attack_GH2
+  m_Script: {fileID: 11500000, guid: ba0c75e83ed2c1f4b8280f226a138802, type: 3}
+  m_Name: PS_Attack_GH
   m_EditorClassIdentifier: 
-  recoveryTime: 0.5
-  index_PSIdle: 0
-  index_PSMoving: 1
+  pushForce: 2
+  recoveryTime: 0.25
+  indexPSIdle: 0
+  indexPSMoving: 1
+  SplashFX: {fileID: 410230216056590749, guid: 02377b4fd7417384d82806fc49d0d6da, type: 3}

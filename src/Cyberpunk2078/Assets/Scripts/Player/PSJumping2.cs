@@ -13,18 +13,31 @@ public class PSJumping2 : PlayerState
     [SerializeField] private int index_PSMoving;
     [SerializeField] private int index_PSWallJumping;
     [SerializeField] private int index_PSDashing;
+    [SerializeField] private int indexPSAttackGH;
+    [SerializeField] private int indexPSAirborne;
     public override int Update()
     {
         float Vy = playerCharacter.GetComponent<Rigidbody2D>().velocity.y;
         float h = Input.GetAxis("Horizontal");
         //Still support Horizontal update during jumping, delete following to kill Horizzontal input
         PhysicsInputHelper(h,speed_factor,acceleration_factor);
+        
+        if (!isGrounded()&& Vy < 0)
+        {
+            return indexPSAirborne;
+        }
+        
         if (isGrounded())
             {
                 if (Input.GetAxis("Horizontal") == 0)
                     return index_PSIdle;
 
                 return index_PSMoving;
+        }
+        
+        if (Input.GetAxis("Attack1") > 0)
+        {
+            return indexPSAttackGH;
         }
         
         if (isCloseToWall())

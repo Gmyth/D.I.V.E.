@@ -13,6 +13,9 @@ public class PSWallJumping: PlayerState
     [SerializeField] private int index_PSMoving;
     [SerializeField] private int index_PSJumping2;
     [SerializeField] private int index_PSDashing;
+    [SerializeField] private int indexPSAttackGH;
+    [SerializeField] private int indexPSAirborne;
+    
     private bool isJumpKeyDown = false;
 
     private bool onWall = false;
@@ -39,6 +42,11 @@ public class PSWallJumping: PlayerState
                 return index_PSIdle;
 
             return index_PSMoving;
+        }
+        
+        if (Input.GetAxis("Attack1") > 0)
+        {
+            return indexPSAttackGH;
         }
 
 

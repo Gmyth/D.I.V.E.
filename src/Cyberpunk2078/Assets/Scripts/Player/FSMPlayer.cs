@@ -42,6 +42,18 @@ public abstract class PlayerState : State
         return false;
     }
     
+    //Player Ground Normal Vector, Used for Dash direction correction
+    public Vector2 GroundNormal()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,-0.2f,0f),-playerCharacter.transform.up,1f);
+
+        if (hit.collider != null && hit.transform.CompareTag("Ground") ) {
+            return hit.normal;
+        }
+        
+        return Vector2.zero;
+    }
+    
     //Check the Wall is on left or right
     public bool RightSideTest()
     {
@@ -72,17 +84,22 @@ public abstract class PlayerState : State
     }
     
     //if player is grounded, the direction to down left/right & down side are not allowed
-    public Vector2 getDirectionCorrection(Vector2 _direction)
+    public Vector2 getDirectionCorrection(Vector2 _direction, Vector2 _norm)
     {
-        if (isGrounded() && _direction.y < 0)
+        if (Vector2.Angle(_direction, _norm) < 55)
         {
-            Vector2 corDir = new Vector2(_direction.x * 2, 0);
-            return corDir;
+            // Allowed for free dash
+            return _direction;
         }
-
-        return _direction;
+        // need to be on the axis of perpendicular to norm
+        Vector2 corDir  = Vector2.Perpendicular(_norm);
+        if (_direction.x * corDir.x > 0) return corDir;
+            
+        return -corDir;
     }
 
+    
+    
     // Function : Keyboard Input => Physics Velocity, And Friction Calculation
     public void PhysicsInputHelper(float h, float maxSpeed  = 9,  float Acceleration  = 20)
     {
@@ -115,17 +132,6 @@ public abstract class PlayerState : State
             // reduce speed,friction
             rb2d.AddForce(new Vector2(-rb2d.velocity.x * 4, 0f));
         }
-        
-//        if (rb2d.velocity.x > 0.2f)
-//        {
-//            GetComponent<SpriteRenderer>().flipX = false;
-//            atkBoxGroup.transform.localScale = new Vector3(1, 1, 1);
-//        }
-//        else if(rb2d.velocity.x < -0.2f)
-//        {
-//            atkBoxGroup.transform.localScale = new Vector3(-1, 1, 1);
-//            GetComponent<SpriteRenderer>().flipX = true;
-//        }
     }
 }
 

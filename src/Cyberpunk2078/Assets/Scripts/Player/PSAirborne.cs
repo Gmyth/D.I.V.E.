@@ -4,21 +4,40 @@
 [CreateAssetMenuAttribute(fileName = "PS_Airborne", menuName = "Player State/Airborne")]
 public class PSAirborne : PlayerState
 {
-    [SerializeField] private int index_PSIdle;
-    [SerializeField] private int index_PSMoving;
+    [SerializeField] private int indexPSIdle;
+    [SerializeField] private int indexPSMoving;
+    [SerializeField] private int indexPSAttackGH;
+    [SerializeField] private int indexPSWallJumping;
+    [SerializeField] private int indexPSJumping2;
+    [SerializeField] private int indexPSDashing;
 
 
     public override int Update()
     {
-        Transform transform = playerCharacter.transform;
-
-        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0f, -0.2f, 0f), -transform.up, 0.5f);
-        RaycastHit2D hit1 = Physics2D.Raycast(transform.position + new Vector3(0.1f, -0.2f, 0f), -transform.up, 0.5f);
-        RaycastHit2D hit2 = Physics2D.Raycast(transform.position + new Vector3(-0.1f, -0.2f, 0f), -transform.up, 0.5f);
-
-        if (hit.collider && hit.transform.CompareTag("Ground") || hit1.collider && hit1.transform.CompareTag("Ground") || hit2.collider && hit2.transform.CompareTag("Ground"))
-            return Input.GetAxis("Horizontal") * Input.GetAxis("Vertical") == 0 ? index_PSIdle : index_PSMoving;
-
+        if (Input.GetAxis("Attack1") > 0)
+        {
+            return indexPSAttackGH;
+        }
+        
+        if (isCloseToWall())
+        {
+            return indexPSWallJumping;
+        }
+        
+        if (Input.GetAxis("Jump") > 0)
+            return indexPSJumping2;
+        
+        if (Input.GetAxis("Dashing") != 0)
+            return indexPSDashing;
+        
+        if (isGrounded())
+            return Input.GetAxis("Horizontal") != 0?indexPSMoving:indexPSIdle;
+        
         return Index;
+    }
+    
+    public override void OnStateEnter()
+    {
+        anim.Play("MainCharacter_Airborne", -1, 0f);
     }
 }
