@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 
-public class Dummy : MonoBehaviour
+public abstract class Dummy : MonoBehaviour, IDamageable
 {
+    public abstract float ApplyDamage(float rawDamage);
 }

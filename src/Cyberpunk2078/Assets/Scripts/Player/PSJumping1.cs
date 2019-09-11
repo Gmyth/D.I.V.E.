@@ -7,7 +7,7 @@ using UnityEngine;
 public class PSJumping1 : PlayerState
 {
     [SerializeField] private float jumpForce = 8;
-    
+
     [SerializeField] private float speedFactor = 3;
     [SerializeField] private float accelerationFactor = 20;
     [SerializeField] private int indexPSIdle;
@@ -27,21 +27,21 @@ public class PSJumping1 : PlayerState
         float Vy = rb2d.velocity.y;
         float h = Input.GetAxis("Horizontal");
         flip = h < 0;
-        
+
         //Still support Horizontal update during jumping, delete following to kill Horizzontal input
          PhysicsInputHelper(h,speedFactor,accelerationFactor);
-        
+
         if (isCloseTo("Ground"))
         {
             return indexPSWallJumping;
         }
-        
+
         if (Input.GetAxis("Vertical") > 0 && isCloseTo("Ladder") )
         {
             // up is pressed
             return indexPSClimb;
         }
-        
+
         if (!isGrounded()&& Vy < 0)
         {
                 return indexPSAirborne;
@@ -60,7 +60,7 @@ public class PSJumping1 : PlayerState
         {
             return indexPSAttackGH;
         }
-        
+
         //Player is sill in air
         if (Vy < jumpForce / 5)
         {
@@ -69,14 +69,14 @@ public class PSJumping1 : PlayerState
                 // second_jump
                 return indexJumping2;
         }
-        
+
         if (Input.GetAxis("Dashing") != 0)
             return indexPSDashing;
 
-       
+
 
         //isJumpKeyDown = Input.GetButtonDown("Jump");
-        
+
         return Index;
     }
 
