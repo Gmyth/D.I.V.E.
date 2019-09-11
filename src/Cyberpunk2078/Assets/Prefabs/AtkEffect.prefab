@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 2522831470202031612}
   - component: {fileID: 6747979262206514802}
   - component: {fileID: 5700880811736564374}
+  - component: {fileID: 8782620589037814962}
   m_Layer: 0
   m_Name: Splash 1
   m_TagString: Untagged
@@ -131,3 +132,26 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8782620589037814962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3377514880507992092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2251b651ddeed2489815f26b026e905, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trailSize: 5
+  spacing: 1
+  color: {r: 100.94237, g: 54.73353, b: 15.712729, a: 0.078431375}
+  ghostMaterial:
+  - {fileID: 0}
+  ghostSpriteSortingOrder: 0
+  renderOnMotion: 1
+  colorAlphaOverride: 1
+  alphaFluctuationOverride: 0.584
+  Occupied: 1
+  alphaFluctuationDivisor: 10

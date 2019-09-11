@@ -11,6 +11,7 @@ public class PSAttackGH: PlayerState
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSMoving;
     [SerializeField] private int indexPSAirborne;
+    [SerializeField] private float EnergyConsume = -10; 
     
     [SerializeField] private GameObject SplashFX; 
     private float t0 = 0;
@@ -34,6 +35,9 @@ public class PSAttackGH: PlayerState
 //            rb2d.gravityScale = 3;
 
             // Landed
+                     
+            // Kill Trail
+            playerCharacter.GetComponent<GhostSprites>().Occupied = false;
             if (h == 0)
                 // not moving
             
@@ -45,6 +49,9 @@ public class PSAttackGH: PlayerState
         {
             rb2d.drag = defaultDrag;
             rb2d.gravityScale = 3;
+                     
+            // Kill Trail
+            playerCharacter.GetComponent<GhostSprites>().Occupied = false;
             
             if (!isGrounded()&& Vy < 0)
             {
@@ -62,6 +69,15 @@ public class PSAttackGH: PlayerState
 
     public override void OnStateEnter()
     {
+        if (!Player.CurrentPlayer.ApplyEnergyChange(EnergyConsume))
+        {
+            // Energy is not enough, Cancel dash
+            t0 += 100 + Time.time ;
+            return;
+        }
+        
+        playerCharacter.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        playerCharacter.GetComponent<GhostSprites>().Occupied = true;
         
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         t0 = Time.time;

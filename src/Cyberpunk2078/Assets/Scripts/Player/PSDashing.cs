@@ -11,6 +11,7 @@ public class PSDashing : PlayerState
     [SerializeField] private float dashReleaseTime = 0.22f; // time to recover rb2d setting after dashing process finished
     [SerializeField] private float dashReleaseDelayTime = 0.05f; // time from dash finish to actual controllable
     [SerializeField] private float inDashingDragFactor = 3; // In-dash drag factor
+    [SerializeField] private float EnergyConsume = -70; // In-dash drag factor
     
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSMoving;
@@ -22,14 +23,27 @@ public class PSDashing : PlayerState
     private bool hyperSpeed;
     private float defaultDrag;
     private bool readyToPush;
+    private bool Apply = true;
 
 
     public override int Update()
     {
+        
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
         float h = Input.GetAxis("Horizontal");
         //Still support Horizontal update during jumping, delete following to kill Horizzontal input
+
+        if (!Apply)
+        {
+            if (!isGrounded())
+            {
+                return indexPSAirborne;
+            }
+            
+            if (h == 0) return indexPSIdle;
+            return indexPSMoving;
+        }
 
         if (lastDashSecond + dashDelayTime < Time.unscaledTime && readyToPush)
         {
@@ -113,6 +127,14 @@ public class PSDashing : PlayerState
 
     public override void OnStateEnter()
     {
+        if (!Player.CurrentPlayer.ApplyEnergyChange(EnergyConsume))
+        {
+            // Energy is not enough, Cancel dash
+            Apply = false;
+            return;
+        }
+
+        Apply = true;
         //Dash has been pressed, set all config first
         //After delay is over, dash perform
         
@@ -122,7 +144,7 @@ public class PSDashing : PlayerState
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         
         // Record the default Drag of rb2d
-        defaultDrag = defaultDrag == 0 ? rb2d.drag:defaultDrag;
+        defaultDrag = rb2d.drag;
         readyToPush = true;
         
         // Kill all initial speed
