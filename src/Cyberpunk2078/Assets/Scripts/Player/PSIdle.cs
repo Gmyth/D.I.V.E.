@@ -9,6 +9,7 @@ public class PSIdle : PlayerState
     [SerializeField] private int indexPSJumping1;
     [SerializeField] private int indexPSDashing;
     [SerializeField] private int indexPSAirborne;
+    [SerializeField] private int indexPSClimb;
     public override int Update()
     {
         if (Input.GetAxis("Attack1") > 0)
@@ -27,6 +28,12 @@ public class PSIdle : PlayerState
 //
 //            return index_PSAttackGH2;
 //        }
+
+        if (isCloseTo("Ladder") && Input.GetAxis("Vertical") > 0 )
+        {
+            // up is pressed
+            return indexPSClimb;
+        }
 
         if (Input.GetAxis("Horizontal") != 0)
             return indexPSMoving;

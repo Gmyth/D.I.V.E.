@@ -15,7 +15,7 @@ public class PSWallJumping: PlayerState
     [SerializeField] private int index_PSDashing;
     [SerializeField] private int indexPSAttackGH;
     [SerializeField] private int indexPSAirborne;
-    
+    [SerializeField] private int indexPSClimb;
     private bool isJumpKeyDown = false;
 
     private bool onWall = false;
@@ -59,7 +59,7 @@ public class PSWallJumping: PlayerState
                 lastOnWallTime = Time.unscaledTime;
                 rb2d.gravityScale = 3;
                 //re active jumping
-                if (RightSideTest())
+                if (RightSideTest("Ground"))
                 {
                     flip = true;
                     rb2d.velocity = new Vector2(-jumpSpeed, 0);
@@ -74,17 +74,16 @@ public class PSWallJumping: PlayerState
         }
         
 
-        if (!onWall && isCloseToWall() && Time.unscaledTime > lastOnWallTime + wallCheckCoolDown )
+        if (!onWall && isCloseTo("Ground") && Time.unscaledTime > lastOnWallTime + wallCheckCoolDown )
         {
             //Not stick yet, ok to perform wall jump again
             if (Input.GetButtonDown("Jump"))
             {
-                
                 lastOnWallTime = Time.unscaledTime;
                 rb2d.gravityScale = 3;
                 
                 //Check the wall is on the left or right
-                if (RightSideTest())
+                if (RightSideTest("Ground"))
                 {
                     //right
                     flip = true;
@@ -103,6 +102,12 @@ public class PSWallJumping: PlayerState
                 OnStateEnter();
             }
             
+        }
+        
+        
+        if (isCloseTo("Ladder")  )
+        {
+            return indexPSClimb;
         }
         // flip sprite for correct facing 
         playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
@@ -128,7 +133,7 @@ public class PSWallJumping: PlayerState
     public override void OnStateEnter()
     {
         // Set flip
-        flip = !RightSideTest();
+        flip = !RightSideTest("Ground");
         
         //kill speed
         onWall = true;

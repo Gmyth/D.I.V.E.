@@ -10,7 +10,7 @@ public class PSAirborne : PlayerState
     [SerializeField] private int indexPSWallJumping;
     [SerializeField] private int indexPSJumping2;
     [SerializeField] private int indexPSDashing;
-
+    [SerializeField] private int indexPSClimb;
 
     public override int Update()
     {
@@ -19,7 +19,13 @@ public class PSAirborne : PlayerState
             return indexPSAttackGH;
         }
         
-        if (isCloseToWall())
+        if (isCloseTo("Ladder") && Input.GetAxis("Vertical") > 0 )
+        {
+            // up is pressed
+            return indexPSClimb;
+        }
+        
+        if (isCloseTo("Ground"))
         {
             return indexPSWallJumping;
         }

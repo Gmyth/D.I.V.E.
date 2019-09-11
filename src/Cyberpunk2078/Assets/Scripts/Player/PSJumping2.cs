@@ -15,6 +15,7 @@ public class PSJumping2 : PlayerState
     [SerializeField] private int index_PSDashing;
     [SerializeField] private int indexPSAttackGH;
     [SerializeField] private int indexPSAirborne;
+    [SerializeField] private int indexPSClimb;
     public override int Update()
     {
         float Vy = playerCharacter.GetComponent<Rigidbody2D>().velocity.y;
@@ -25,6 +26,12 @@ public class PSJumping2 : PlayerState
         if (!isGrounded()&& Vy < 0)
         {
             return indexPSAirborne;
+        }
+        
+        if (isCloseTo("Ladder") && Input.GetAxis("Vertical") > 0 )
+        {
+            // up is pressed
+            return indexPSClimb;
         }
         
         if (isGrounded())
@@ -40,7 +47,7 @@ public class PSJumping2 : PlayerState
             return indexPSAttackGH;
         }
         
-        if (isCloseToWall())
+        if (isCloseTo("Ground"))
         {
             return index_PSWallJumping;
         }

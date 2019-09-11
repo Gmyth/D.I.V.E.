@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenuAttribute(fileName = "PS_Attack_GH1", menuName = "Player State/Attack GH1")]
+[CreateAssetMenuAttribute(fileName = "PS_Attack_GH", menuName = "Player State/Attack GH")]
 public class PSAttackGH: PlayerState
 {
     [SerializeField] private float pushForce = 2f;
@@ -30,8 +30,8 @@ public class PSAttackGH: PlayerState
             rb2d.velocity = new Vector2(0,0);
             
             // reset drag & gravity 
-            rb2d.drag = defaultDrag;
-            rb2d.gravityScale = 3;
+//            rb2d.drag = defaultDrag;
+//            rb2d.gravityScale = 3;
 
             // Landed
             if (h == 0)
@@ -79,9 +79,9 @@ public class PSAttackGH: PlayerState
         playerCharacter.GetComponent<SpriteRenderer>().flipX = direction.x < 0;
         Destroy(obj,0.3f);
         //kill gravity
-        rb2d.gravityScale = 0;
-        defaultDrag = rb2d.drag;
-        rb2d.drag = 0;
+//        rb2d.gravityScale = 0;
+//        defaultDrag = rb2d.drag;
+//        rb2d.drag = 0;
         
         //Camera Tricks
         CameraManager.Instance.Shaking(0.04f,0.1f);

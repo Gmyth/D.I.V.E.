@@ -17,6 +17,7 @@ public class PSJumping1 : PlayerState
     [SerializeField] private int indexPSDashing;
     [SerializeField] private int indexPSAttackGH;
     [SerializeField] private int indexPSAirborne;
+    [SerializeField] private int indexPSClimb;
     private bool isJumpKeyDown = false;
 
     public override int Update()
@@ -30,11 +31,16 @@ public class PSJumping1 : PlayerState
         //Still support Horizontal update during jumping, delete following to kill Horizzontal input
          PhysicsInputHelper(h,speedFactor,accelerationFactor);
         
-        if (isCloseToWall())
+        if (isCloseTo("Ground"))
         {
             return indexPSWallJumping;
         }
         
+        if (isCloseTo("Ladder") && Input.GetAxis("Vertical") > 0 )
+        {
+            // up is pressed
+            return indexPSClimb;
+        }
         
         if (!isGrounded()&& Vy < 0)
         {

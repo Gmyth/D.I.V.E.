@@ -55,11 +55,11 @@ public abstract class PlayerState : State
     }
     
     //Check the Wall is on left or right
-    public bool RightSideTest()
+    public bool RightSideTest(string tag)
     {
         RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0.1f,0f,0f),playerCharacter.transform.right,0.4f);
         
-        if (hit.collider != null && hit.transform.CompareTag("Ground") )
+        if (hit.collider != null && hit.transform.CompareTag(tag) )
         {
             return true;
         }
@@ -67,21 +67,22 @@ public abstract class PlayerState : State
     }
     
     //Check player is close to wall
-    public bool isCloseToWall()
+    public bool isCloseTo(string tag)
     {
-        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0.1f,0f,0f),playerCharacter.transform.right,0.4f);
-        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(-0.1f,0f,0f),-playerCharacter.transform.right,0.4f);
-        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f,-0f,0f), playerCharacter.transform.right * 0.5f, Color.red);
-        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0.1f,-0f,0f), -playerCharacter.transform.right * 0.5f, Color.yellow);
+        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0.1f,0f,0f),playerCharacter.transform.right,0.35f);
+        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(-0.1f,0f,0f),-playerCharacter.transform.right,0.35f);
+        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f,-0f,0f), playerCharacter.transform.right * 0.35f, Color.red);
+        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0.1f,-0f,0f), -playerCharacter.transform.right * 0.35f, Color.yellow);
         
-        if ((hit.collider != null && hit.transform.CompareTag("Ground") )||
-            (hit1.collider != null && hit1.transform.CompareTag("Ground") ))
+        if ((hit.collider != null && hit.transform.CompareTag(tag) )||
+            (hit1.collider != null && hit1.transform.CompareTag(tag) ))
         {
             return true;
         }
 
         return false;
     }
+    
     
     //if player is grounded, the direction to down left/right & down side are not allowed
     public Vector2 getDirectionCorrection(Vector2 _direction, Vector2 _norm)
