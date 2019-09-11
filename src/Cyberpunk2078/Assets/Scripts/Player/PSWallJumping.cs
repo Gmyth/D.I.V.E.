@@ -105,7 +105,7 @@ public class PSWallJumping: PlayerState
         }
         
         
-        if (isCloseTo("Ladder")  )
+        if (Input.GetAxis("Vertical") > 0 && isCloseTo("Ladder"))
         {
             return indexPSClimb;
         }

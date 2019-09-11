@@ -29,7 +29,7 @@ public class PSIdle : PlayerState
 //            return index_PSAttackGH2;
 //        }
 
-        if (isCloseTo("Ladder") && Input.GetAxis("Vertical") > 0 )
+        if (Input.GetAxis("Vertical") > 0  &&  isCloseTo("Ladder"))
         {
             // up is pressed
             return indexPSClimb;

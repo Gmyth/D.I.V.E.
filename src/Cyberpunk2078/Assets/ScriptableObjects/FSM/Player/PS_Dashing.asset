@@ -21,3 +21,4 @@ MonoBehaviour:
   indexPSMoving: 1
   indexJumping2: 5
   indexWallJumping: 7
+  indexPSAirborne: 2

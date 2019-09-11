@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Dummy
   - Ground
+  - PlayerAtk
+  - Shield
+  - Ladder
   layers:
   - Default
   - TransparentFX

@@ -28,7 +28,7 @@ public class PSJumping2 : PlayerState
             return indexPSAirborne;
         }
         
-        if (isCloseTo("Ladder") && Input.GetAxis("Vertical") > 0 )
+        if (Input.GetAxis("Vertical") > 0  && isCloseTo("Ladder") )
         {
             // up is pressed
             return indexPSClimb;

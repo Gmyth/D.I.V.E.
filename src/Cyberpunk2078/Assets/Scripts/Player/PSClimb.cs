@@ -34,15 +34,16 @@ public class PSClimb : PlayerState
 
         if (!isCloseTo("Ladder"))
         {
-            
+            anim.speed = 1;
             rb2d.gravityScale = 3;
             return indexPSIdle;
         }
 
         if (Input.GetAxis("Jump") > 0)
         {
-                rb2d.gravityScale = 3;
-                return indexPSJumping1;
+            anim.speed = 1;
+            rb2d.gravityScale = 3;
+            return indexPSJumping1;
         }
             
         return Index;

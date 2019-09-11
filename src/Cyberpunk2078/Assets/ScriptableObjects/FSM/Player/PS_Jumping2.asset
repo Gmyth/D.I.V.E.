@@ -19,3 +19,6 @@ MonoBehaviour:
   index_PSMoving: 1
   index_PSWallJumping: 7
   index_PSDashing: 6
+  indexPSAttackGH: 3
+  indexPSAirborne: 2
+  indexPSClimb: 8
