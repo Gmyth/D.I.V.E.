@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da1912fa620d08248a90011b84e6ebff, type: 3}
+  m_Name: PS_Dashing
+  m_EditorClassIdentifier: 
+  dashForce: 40
+  dashReleaseTime: 0.3
+  inDashingDragFactor: 6
+  dashDelayTime: 0.085
+  dashReleaseDelayTime: 0.1
+  indexPSIdle: 0
+  indexPSMoving: 0
+  indexJumping2: 0
+  indexWallJumping: 0

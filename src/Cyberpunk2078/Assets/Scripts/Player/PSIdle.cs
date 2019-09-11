@@ -10,7 +10,7 @@ public class PSIdle : PlayerState
     [SerializeField] private int index_PSAttackGU;
     [SerializeField] private int index_PSAttackGD;
     [SerializeField] private int index_PSJumping1;
-
+    [SerializeField] private int index_PSDashing;
 
     public override int Update()
     {
@@ -43,14 +43,19 @@ public class PSIdle : PlayerState
 
         if (Input.GetAxis("Jump") > 0)
             return index_PSJumping1;
+        
+        if (Input.GetAxis("Dashing") != 0)
+            return index_PSDashing;
+
 
         return Index;
     }
 
     public override void OnStateEnter()
     {
+       
+        anim.Play("MainCharacter_Idle", -1, 0f);
         Vector2 V = playerCharacter.GetComponent<Rigidbody2D>().velocity;
-
         V.x = 0;
         playerCharacter.GetComponent<Rigidbody2D>().velocity = V;
     }

@@ -1,0 +1,42 @@
+{
+  "id": 1,
+  "actors": [
+    {
+      "id": 1,
+      "name": "John"
+    },
+    {
+      "id": 2,
+      "name": "Emily"
+    }
+  ],
+  "conversations": [
+    {
+      "id": 1,
+      "title": "In the village",
+      "cues": [
+        {
+          "id": 1,
+          "actor": 1,
+          "conversant": 2,
+          "text": "Excuse me, do you know something about cave outside the village?",
+          "next_cue": 2
+        },
+        {
+          "id": 2,
+          "actor": 2,
+          "conversant": 1,
+          "text": "I don't know",
+          "next_cue": 3
+        },
+        {
+          "id": 3,
+          "actor": 1,
+          "conversant": 2,
+          "text": "Oh Thank you...",
+          "next_cue": -1
+        }
+      ]
+    }
+  ]
+}

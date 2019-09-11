@@ -13,5 +13,9 @@ MonoBehaviour:
   m_Name: PS_Jumping2
   m_EditorClassIdentifier: 
   jumpForce: 5.6
+  speed_factor: 9
+  acceleration_factor: 20
   index_PSIdle: 0
   index_PSMoving: 1
+  index_PSWallJumping: 9
+  index_PSDashing: 10

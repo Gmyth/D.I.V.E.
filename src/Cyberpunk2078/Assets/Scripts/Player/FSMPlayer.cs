@@ -4,13 +4,16 @@
 public abstract class PlayerState : State
 {
     protected PlayerCharacter playerCharacter;
-    
+    protected Animator anim;
+
+    protected bool flip;
 
 
     public virtual void Initialize(int index, PlayerCharacter playerCharacter)
     {
         Index = index;
         this.playerCharacter = playerCharacter;
+        anim = playerCharacter.GetComponent<Animator>();
     }
 
 
@@ -30,9 +33,50 @@ public abstract class PlayerState : State
 
         return hitM.collider != null && hitM.transform.CompareTag("Ground") || hitR.collider != null && hitR.transform.CompareTag("Ground") || hitL.collider != null && hitL.transform.CompareTag("Ground");
     }
+    
+    //Check the Wall is on left or right
+    public bool RightSideTest()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0.1f,0f,0f),playerCharacter.transform.right,0.4f);
+        
+        if (hit.collider != null && hit.transform.CompareTag("Ground") )
+        {
+            return true;
+        }
+        return false;
+    }
+    
+    //Check player is close to wall
+    public bool isCloseToWall()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0.1f,0f,0f),playerCharacter.transform.right,0.4f);
+        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(-0.1f,0f,0f),-playerCharacter.transform.right,0.4f);
+        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f,-0f,0f), playerCharacter.transform.right * 0.5f, Color.red);
+        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0.1f,-0f,0f), -playerCharacter.transform.right * 0.5f, Color.yellow);
+        
+        if ((hit.collider != null && hit.transform.CompareTag("Ground") )||
+            (hit1.collider != null && hit1.transform.CompareTag("Ground") ))
+        {
+            return true;
+        }
+
+        return false;
+    }
+    
+    //if player is grounded, the direction to down left/right & down side are not allowed
+    public Vector2 getDirectionCorrection(Vector2 _direction)
+    {
+        if (isGrounded() && _direction.y < 0)
+        {
+            Vector2 corDir = new Vector2(_direction.x * 2, 0);
+            return corDir;
+        }
+
+        return _direction;
+    }
 
     // Function : Keyboard Input => Physics Velocity, And Friction Calculation
-    public void PhysicsInputHelper(float h, float maxSpeed  = 9)
+    public void PhysicsInputHelper(float h, float maxSpeed  = 9,  float Acceleration  = 20)
     {
         Rigidbody2D rb2d = playerCharacter.GetComponent<Rigidbody2D>();
 
@@ -42,8 +86,7 @@ public abstract class PlayerState : State
             // has horizontal input 
             if (Mathf.Abs(rb2d.velocity.x) < maxSpeed)
             {
-                Vector2 direction = Vector2.right * h * 20f;
-
+                var direction = Vector3.right * h * Acceleration;
                 if (direction.x * rb2d.velocity.x < 0)
                     direction = direction * 4f;
                 
@@ -101,8 +144,7 @@ public class FSMPlayer : FiniteStateMachine<PlayerState>
         {
             if (value != currentStateIndex)
             //{
-            //    Debug.Log(LogUtility.MakeLogStringFormat("FSMPLayer", "Reset on state {0}", currentStateIndex));
-
+               // Debug.Log(LogUtility.MakeLogStringFormat("FSMPLayer", "Reset on state {0}", currentStateIndex));
             //    CurrentState.OnStateReset();
             //}
             //else

@@ -7,20 +7,32 @@ using UnityEngine;
 public class PSJumping1 : PlayerState
 {
     [SerializeField] private float jumpForce = 8;
+    
+    [SerializeField] private float speed_factor = 3;
+    [SerializeField] private float acceleration_factor = 20;
     [SerializeField] private int index_PSIdle;
     [SerializeField] private int index_PSMoving;
     [SerializeField] private int index_Jumping2;
+    [SerializeField] private int index_PSWallJumping;
+    [SerializeField] private int index_PSDashing;
     private bool isJumpKeyDown = false;
-
 
     public override int Update()
     {
-        float Vy = playerCharacter.GetComponent<Rigidbody2D>().velocity.y;
+        playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
+        var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
+        float Vy = rb2d.velocity.y;
         float h = Input.GetAxis("Horizontal");
+        flip = h < 0;
         
         //Still support Horizontal update during jumping, delete following to kill Horizzontal input
-        PhysicsInputHelper(h);
-       
+         PhysicsInputHelper(h,speed_factor,acceleration_factor);
+        
+        if (isCloseToWall())
+        {
+            return index_PSWallJumping;
+        }
+        
         if (isGrounded() && Vy < 0)
         {
                 // Landed
@@ -38,14 +50,20 @@ public class PSJumping1 : PlayerState
                 // second_jump
                 return index_Jumping2;
         }
+        
+        if (Input.GetAxis("Dashing") != 0)
+            return index_PSDashing;
+
+       
 
         //isJumpKeyDown = Input.GetButtonDown("Jump");
-
+        
         return Index;
     }
 
     public override void OnStateEnter()
     {
+        anim.Play("MainCharacter_Jump", -1, 0f);
         //Perform jump
         isJumpKeyDown = true;
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();

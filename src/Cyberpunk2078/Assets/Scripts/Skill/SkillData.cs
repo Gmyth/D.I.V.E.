@@ -8,7 +8,6 @@ using UnityEngine;
     [SerializeField] private Sprite icon;
     [SerializeField] private AttributeSet attributes;
 
-
     public override int Index
     {
         get
