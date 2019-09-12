@@ -12213,6 +12213,8 @@ GameObject:
   - component: {fileID: 398166142}
   - component: {fileID: 398166141}
   - component: {fileID: 398166140}
+  - component: {fileID: 398166144}
+  - component: {fileID: 398166143}
   m_Layer: 0
   m_Name: Stairs Face-Left
   m_TagString: Ground
@@ -12245,7 +12247,7 @@ TilemapCollider2D:
   m_Density: 1
   m_Material: {fileID: 6200000, guid: 589b9ad0c8b270f4690993d1995a10af, type: 2}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
@@ -13850,6 +13852,40 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &398166143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 398166138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffa11510f39fafe40acc459f07f26078, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialWaitTime: 0.1
+  platformType: 1
+  stairAngle: 45
+--- !u!251 &398166144
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 398166138}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 45
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 0
 --- !u!1 &418126589
 GameObject:
   m_ObjectHideFlags: 0
@@ -13862,9 +13898,11 @@ GameObject:
   - component: {fileID: 418126593}
   - component: {fileID: 418126592}
   - component: {fileID: 418126591}
+  - component: {fileID: 418126594}
+  - component: {fileID: 418126595}
   m_Layer: 0
   m_Name: One-way Collision Platform
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13894,7 +13932,7 @@ TilemapCollider2D:
   m_Density: 1
   m_Material: {fileID: 6200000, guid: 589b9ad0c8b270f4690993d1995a10af, type: 2}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
@@ -15729,6 +15767,40 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!251 &418126594
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 418126589}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 45
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
+--- !u!114 &418126595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 418126589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffa11510f39fafe40acc459f07f26078, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialWaitTime: 0.1
+  platformType: 0
+  stairAngle: 0
 --- !u!1 &543993339
 GameObject:
   m_ObjectHideFlags: 0
@@ -16098,7 +16170,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1589422726}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 128, y: -14.1, z: 0}
+  m_LocalPosition: {x: 183.7, y: 16.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1674611630318583672}
@@ -16445,7 +16517,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1910994047}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.16, y: -0.08, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 1589422727}
@@ -16490,6 +16562,7 @@ MonoBehaviour:
   renderOnMotion: 1
   colorAlphaOverride: 0
   alphaFluctuationOverride: 0
+  Occupied: 0
   alphaFluctuationDivisor: 0
 --- !u!1 &1674611629890415570
 GameObject:

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d611e7e5a94bf5a4a8aee93e1edddd50, type: 3}
   m_Name: PS_Jumping1
   m_EditorClassIdentifier: 
-  jumpForce: 7.5
+  jumpForce: 8
   speed_factor: 8
   acceleration_factor: 50
   index_PSIdle: 0
