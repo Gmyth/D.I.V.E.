@@ -16,6 +16,7 @@ public class PSDashing : PlayerState
     [SerializeField] private int indexPSMoving;
     [SerializeField] private int indexJumping2;
     [SerializeField] private int indexWallJumping;
+    [SerializeField] private int indexPSAirborne;
     
     private float lastDashSecond;
     private bool hyperSpeed;
@@ -55,7 +56,7 @@ public class PSDashing : PlayerState
         }
         else {
             //prevent ground-hitting shifting 
-            RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,0.3f);
+            RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,0.5f);
             if (hit1.collider != null && hit1.transform.CompareTag("Ground"))
             {
                 // kill all speed
@@ -98,9 +99,12 @@ public class PSDashing : PlayerState
             // Kill Trail
             playerCharacter.GetComponent<GhostSprites>().Occupied = false;
             
-            // Landed
-            if (h == 0)
-                return indexPSIdle;
+            if (!isGrounded())
+            {
+                return indexPSAirborne;
+            }
+            
+            if (h == 0) return indexPSIdle;
             return indexPSMoving;
         }
 
@@ -142,7 +146,7 @@ public class PSDashing : PlayerState
         var mouse = GameObject.FindObjectOfType<MouseIndicator>();
         
         //get Mouse direction
-        Vector3 direction = getDirectionCorrection(mouse.getAttackDirection());
+        Vector3 direction = getDirectionCorrection(mouse.getAttackDirection(),GroundNormal());
         
         //set correct Y flip based on mouse direction
         if (direction.x < 0 && direction.y != 0) playerCharacter.GetComponent<SpriteRenderer>().flipY = true;

@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5af9b2c1920bdff4085fcf15f3847c70, type: 3}
   m_Name: PS_Idle
   m_EditorClassIdentifier: 
-  index_PSMoving: 1
-  index_PSAttackGH1: 3
-  index_PSAttackGH2: 4
-  index_PSAttackGU: 5
-  index_PSAttackGD: 6
-  index_PSJumping1: 7
-  index_PSDashing: 10
+  indexPSMoving: 1
+  indexPSAttackGH: 3
+  indexPSJumping1: 4
+  indexPSDashing: 6
+  indexPSAirborne: 2
+  indexPSClimb: 8

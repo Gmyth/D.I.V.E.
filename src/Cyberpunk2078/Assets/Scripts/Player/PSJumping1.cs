@@ -7,14 +7,17 @@ using UnityEngine;
 public class PSJumping1 : PlayerState
 {
     [SerializeField] private float jumpForce = 8;
-    
-    [SerializeField] private float speed_factor = 3;
-    [SerializeField] private float acceleration_factor = 20;
-    [SerializeField] private int index_PSIdle;
-    [SerializeField] private int index_PSMoving;
-    [SerializeField] private int index_Jumping2;
-    [SerializeField] private int index_PSWallJumping;
-    [SerializeField] private int index_PSDashing;
+
+    [SerializeField] private float speedFactor = 3;
+    [SerializeField] private float accelerationFactor = 20;
+    [SerializeField] private int indexPSIdle;
+    [SerializeField] private int indexPSMoving;
+    [SerializeField] private int indexJumping2;
+    [SerializeField] private int indexPSWallJumping;
+    [SerializeField] private int indexPSDashing;
+    [SerializeField] private int indexPSAttackGH;
+    [SerializeField] private int indexPSAirborne;
+    [SerializeField] private int indexPSClimb;
     private bool isJumpKeyDown = false;
 
     public override int Update()
@@ -24,40 +27,56 @@ public class PSJumping1 : PlayerState
         float Vy = rb2d.velocity.y;
         float h = Input.GetAxis("Horizontal");
         flip = h < 0;
-        
-        //Still support Horizontal update during jumping, delete following to kill Horizzontal input
-         PhysicsInputHelper(h,speed_factor,acceleration_factor);
-        
-        if (isCloseToWall())
-        {
-            return index_PSWallJumping;
-        }
-        
-        if (isGrounded() && Vy < 0)
-            {
-                // Landed
-                if (h == 0)
-                    return index_PSIdle;
 
-                return index_PSMoving;
+        //Still support Horizontal update during jumping, delete following to kill Horizzontal input
+         PhysicsInputHelper(h,speedFactor,accelerationFactor);
+
+        if (isCloseTo("Ground"))
+        {
+            return indexPSWallJumping;
         }
-        
+
+        if (Input.GetAxis("Vertical") > 0 && isCloseTo("Ladder") )
+        {
+            // up is pressed
+            return indexPSClimb;
+        }
+
+        if (!isGrounded()&& Vy < 0)
+        {
+                return indexPSAirborne;
+        }
+
+        if (isGrounded())
+        {
+            // Landed
+            if (h == 0)
+                return indexPSIdle;
+
+            return indexPSMoving;
+        }
+
+        if (Input.GetAxis("Attack1") > 0)
+        {
+            return indexPSAttackGH;
+        }
+
         //Player is sill in air
         if (Vy < jumpForce / 5)
         {
             // prevent misclicking
             if (Input.GetButtonDown("Jump"))
                 // second_jump
-                return index_Jumping2;
+                return indexJumping2;
         }
-        
-        if (Input.GetAxis("Dashing") != 0)
-            return index_PSDashing;
 
-       
+        if (Input.GetAxis("Dashing") != 0)
+            return indexPSDashing;
+
+
 
         //isJumpKeyDown = Input.GetButtonDown("Jump");
-        
+
         return Index;
     }
 

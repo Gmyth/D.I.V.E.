@@ -17,5 +17,8 @@ MonoBehaviour:
   acceleration_factor: 50
   index_PSIdle: 0
   index_PSMoving: 1
-  index_PSWallJumping: 9
-  index_PSDashing: 10
+  index_PSWallJumping: 7
+  index_PSDashing: 6
+  indexPSAttackGH: 3
+  indexPSAirborne: 2
+  indexPSClimb: 8

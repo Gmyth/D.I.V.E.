@@ -4,48 +4,45 @@
 [CreateAssetMenuAttribute(fileName = "PS_Idle", menuName = "Player State/Idle")]
 public class PSIdle : PlayerState
 {
-    [SerializeField] private int index_PSMoving;
-    [SerializeField] private int index_PSAttackGH1;
-    [SerializeField] private int index_PSAttackGH2;
-    [SerializeField] private int index_PSAttackGU;
-    [SerializeField] private int index_PSAttackGD;
-    [SerializeField] private int index_PSJumping1;
-    [SerializeField] private int index_PSDashing;
-
+    [SerializeField] private int indexPSMoving;
+    [SerializeField] private int indexPSAttackGH;
+    [SerializeField] private int indexPSJumping1;
+    [SerializeField] private int indexPSDashing;
+    [SerializeField] private int indexPSAirborne;
+    [SerializeField] private int indexPSClimb;
     public override int Update()
     {
         if (Input.GetAxis("Attack1") > 0)
         {
-            float y = Input.GetAxis("Vertical");
-
-            if (y > 0)
-                return index_PSAttackGU;
-            else if (y < 0)
-                return index_PSAttackGD;
-
-            return index_PSAttackGH1;
+            return indexPSAttackGH;
         }
 
-        if (Input.GetAxis("Attack2") > 0)
+//        if (Input.GetAxis("Attack2") > 0)
+//        {
+//            float y = Input.GetAxis("Vertical");
+//
+//            if (y > 0)
+//                return index_PSAttackGU;
+//            else if (y < 0)
+//                return index_PSAttackGD;
+//
+//            return index_PSAttackGH2;
+//        }
+
+        if (Input.GetAxis("Vertical") > 0  &&  isCloseTo("Ladder"))
         {
-            float y = Input.GetAxis("Vertical");
-
-            if (y > 0)
-                return index_PSAttackGU;
-            else if (y < 0)
-                return index_PSAttackGD;
-
-            return index_PSAttackGH2;
+            // up is pressed
+            return indexPSClimb;
         }
 
         if (Input.GetAxis("Horizontal") != 0)
-            return index_PSMoving;
+            return indexPSMoving;
 
         if (Input.GetAxis("Jump") > 0)
-            return index_PSJumping1;
+            return indexPSJumping1;
         
         if (Input.GetAxis("Dashing") != 0)
-            return index_PSDashing;
+            return indexPSDashing;
 
 
         return Index;

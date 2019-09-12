@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d611e7e5a94bf5a4a8aee93e1edddd50, type: 3}
   m_Name: PS_Jumping1
   m_EditorClassIdentifier: 
-  jumpForce: 8
-  speed_factor: 8
-  acceleration_factor: 50
-  index_PSIdle: 0
-  index_PSMoving: 1
-  index_Jumping2: 8
-  index_PSWallJumping: 9
-  index_PSDashing: 10
+  jumpForce: 7.5
+  speedFactor: 3
+  accelerationFactor: 20
+  indexPSIdle: 0
+  indexPSMoving: 1
+  indexJumping2: 5
+  indexPSWallJumping: 7
+  indexPSDashing: 6
+  indexPSAttackGH: 3
+  indexPSAirborne: 2
+  indexPSClimb: 8
