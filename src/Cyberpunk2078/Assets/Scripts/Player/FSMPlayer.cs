@@ -3,9 +3,9 @@
 
 public abstract class PlayerState : State
 {
+    public string Name;
     protected PlayerCharacter playerCharacter;
     protected Animator anim;
-
     protected bool flip;
 
 

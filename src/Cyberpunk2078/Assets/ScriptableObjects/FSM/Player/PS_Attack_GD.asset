@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 080427f34bb9d0242bae196f30417107, type: 3}
   m_Name: PS_Attack_GD
   m_EditorClassIdentifier: 
+  Name: AttackGD
   recoveryTime: 0.5
   index_PSIdle: 0
   index_PSMoving: 1

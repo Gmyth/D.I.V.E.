@@ -9,9 +9,12 @@ public class PlayerCharacter : Dummy
 
 
     [SerializeField] private FSMPlayer fsm;
-
+    
+    
     private StatisticSystem statistic;
     private new Rigidbody rigidbody;
+
+    public PlayerState State => fsm.CurrentState;
 
 
     public PlayerCharacter(Player player)

@@ -9,6 +9,8 @@ TagManager:
   - PlayerAtk
   - Shield
   - Ladder
+  - Bullet
+  - PlayerAttack
   layers:
   - Default
   - TransparentFX

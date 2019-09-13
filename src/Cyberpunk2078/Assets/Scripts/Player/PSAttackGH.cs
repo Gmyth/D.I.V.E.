@@ -47,7 +47,7 @@ public class PSAttackGH: PlayerState
         
         if (Time.time - t0 > recoveryTime)
         {
-            rb2d.drag = defaultDrag;
+            //rb2d.drag = defaultDrag;
             rb2d.gravityScale = 3;
                      
             // Kill Trail

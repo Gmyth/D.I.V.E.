@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da1912fa620d08248a90011b84e6ebff, type: 3}
   m_Name: PS_Dashing
   m_EditorClassIdentifier: 
+  Name: Dash
   dashForce: 40
   dashDelayTime: 0.085
   dashReleaseTime: 0.3

@@ -30,8 +30,18 @@ public class Bullet : Recyclable
         }
         else if (other.tag == "Player")
         {
-            other.GetComponent<PlayerCharacter>().ApplyDamage(rawDamage);
+            if (other.GetComponent<PlayerCharacter>().State.Name != "Dash")
+            {
+                other.GetComponent<PlayerCharacter>().ApplyDamage(rawDamage);
+            }
             Die();
         }
+        
+        else if (other.tag == "PlayerAttack")
+        {
+            
+            Die();
+        }
+        
     }
 }

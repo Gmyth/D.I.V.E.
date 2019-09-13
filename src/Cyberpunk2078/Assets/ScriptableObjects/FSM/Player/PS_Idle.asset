@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5af9b2c1920bdff4085fcf15f3847c70, type: 3}
   m_Name: PS_Idle
   m_EditorClassIdentifier: 
+  Name: Idle
   indexPSMoving: 1
   indexPSAttackGH: 3
   indexPSJumping1: 4
