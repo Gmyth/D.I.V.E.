@@ -24,7 +24,7 @@ public class Bullet : Recyclable
         {
             if (other.tag == "Dummy")
             {
-                other.GetComponent<PlayerCharacter>().ApplyDamage(rawDamage);
+                other.GetComponent<Dummy>().ApplyDamage(rawDamage);
                 Die();
             }
         }

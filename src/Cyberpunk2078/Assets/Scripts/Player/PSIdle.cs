@@ -10,6 +10,8 @@ public class PSIdle : PlayerState
     [SerializeField] private int indexPSDashing;
     [SerializeField] private int indexPSAirborne;
     [SerializeField] private int indexPSClimb;
+
+
     public override int Update()
     {
         if (Input.GetAxis("Attack1") > 0)
@@ -50,7 +52,6 @@ public class PSIdle : PlayerState
 
     public override void OnStateEnter()
     {
-       
         anim.Play("MainCharacter_Idle", -1, 0f);
         Vector2 V = playerCharacter.GetComponent<Rigidbody2D>().velocity;
         V.x = 0;
