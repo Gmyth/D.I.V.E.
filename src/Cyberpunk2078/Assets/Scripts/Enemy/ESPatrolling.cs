@@ -1,14 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Pathfinding;
+﻿using Pathfinding;
 using UnityEngine;
 
 
-[CreateAssetMenuAttribute(fileName = "ES_Patrolling", menuName = "Enemy State/Patrolling")]
-public class ESPatrolling : DroneState
+public interface IPatroller
+{
+    int NumPatrolPoints { get; }
+    RangedWeaponConfiguration PatrolFiringConfiguration { get; }
+
+    Vector3 GetPatrolPoint(int index);
+}
+
+
+public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatroller
 {
     [Header("Configuration")]
-    [SerializeField] private Vector3[] patrolPoints;
     [SerializeField] private float speed = 5;
     [SerializeField] private float delay = 0;
 
@@ -27,12 +32,12 @@ public class ESPatrolling : DroneState
     private float tf = 0;
 
 
-    public override void Initialize(int index, Enemy dummy)
+    public override void Initialize(T enemy)
     {
-        base.Initialize(index, dummy);
+        base.Initialize(enemy);
 
-        rigidbody = dummy.GetComponent<Rigidbody2D>();
-        seeker = dummy.GetComponent<Seeker>();
+        rigidbody = enemy.GetComponent<Rigidbody2D>();
+        seeker = enemy.GetComponent<Seeker>();
 
         t0 = 0;
         tf = 0;
@@ -42,7 +47,7 @@ public class ESPatrolling : DroneState
     {
         if (currentPath != null)
         {
-            float distance = Vector2.Distance(currentPath.vectorPath[indexWayPoint], dummy.transform.position);
+            float distance = Vector2.Distance(currentPath.vectorPath[indexWayPoint], enemy.transform.position);
 
             if (distance < 0.2f)
                 ++indexWayPoint;
@@ -52,34 +57,39 @@ public class ESPatrolling : DroneState
             {
                 rigidbody.velocity = Vector2.zero;
 
-                indexTargetPatrolPoint = (indexTargetPatrolPoint + 1) % patrolPoints.Length;
+                indexTargetPatrolPoint = (indexTargetPatrolPoint + 1) % enemy.NumPatrolPoints;
 
-                seeker.StartPath(dummy.transform.position, patrolPoints[indexTargetPatrolPoint]);
+                seeker.StartPath(enemy.transform.position, enemy.GetPatrolPoint(indexTargetPatrolPoint));
                 currentPath = null;
             }
             else
             {
-                Vector2 direction = (currentPath.vectorPath[indexWayPoint] - dummy.transform.position).normalized;
+                Vector2 direction = (currentPath.vectorPath[indexWayPoint] - enemy.transform.position).normalized;
 
                 rigidbody.AddForce(direction * speed * Time.deltaTime);
             }
         }
 
-        
-        PlayerCharacter player = IsPlayerInSight(10);
-        
-        if (player && Time.time - tf >= dummy.FireInterval)
+
+        RangedWeaponConfiguration firingConfiguration = enemy.PatrolFiringConfiguration;
+
+        if (firingConfiguration.FiringInterval > 0)
         {
-            LinearMovement bullet = ObjectRecycler.Singleton.GetObject<Bullet>(dummy.BulletID).GetComponent<LinearMovement>();
-            bullet.speed = dummy.BulletSpeed;
-            bullet.initialPosition = dummy.transform.position;
-            bullet.orientation = (player.transform.position - bullet.initialPosition).normalized;
+            PlayerCharacter player = IsPlayerInSight(10);
 
-            bullet.gameObject.SetActive(true);
+            if (player && Time.time - tf >= firingConfiguration.FiringInterval)
+            {
+                LinearMovement bullet = ObjectRecycler.Singleton.GetObject<LinearMovement>(firingConfiguration.BulletID);
+                bullet.speed = firingConfiguration.BulletSpeed;
+                bullet.initialPosition = enemy.transform.position;
+                bullet.orientation = (player.transform.position - bullet.initialPosition).normalized;
 
-            tf = Time.time;
+                bullet.gameObject.SetActive(true);
+
+                tf = Time.time;
+            }
         }
-
+        
 
         return Index;
     }
@@ -89,7 +99,7 @@ public class ESPatrolling : DroneState
     {
         seeker.pathCallback = StartPatrolling;
 
-        seeker.StartPath(dummy.transform.position, patrolPoints[indexTargetPatrolPoint]);
+        seeker.StartPath(enemy.transform.position, enemy.GetPatrolPoint(indexTargetPatrolPoint));
         currentPath = null;
     }
 

@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa0d8e2178f9f764795ddf31da4b31bc, type: 3}
-  m_Name: FSM_EnemyTest
+  m_Script: {fileID: 11500000, guid: dcf0e81a3663f484aa84473a341b87c4, type: 3}
+  m_Name: DroneState_Patrolling
   m_EditorClassIdentifier: 
-  states:
-  - {fileID: 11400000, guid: 64ec02acc14ce41469d0019891949ac8, type: 2}
-  startingStateIndex: 0
+  speed: 100
+  delay: 0
+  index_ESIdle: -1
+  index_ESAlert: -1
+  index_ESChasing: -1

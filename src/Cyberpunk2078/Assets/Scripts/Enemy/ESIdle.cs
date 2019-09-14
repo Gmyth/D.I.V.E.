@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 [CreateAssetMenuAttribute(fileName = "ES_Idle", menuName = "Enemy State/Idle")]
-public class ESIdle : DroneState
+public class ESIdle : EnemyState
 {
     [Header("Connected States")]
     [SerializeField] private int index_ESAlert;

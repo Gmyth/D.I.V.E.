@@ -1,27 +1,37 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 
-public abstract class EnemyState<T> : State where T : Dummy
+public abstract class EnemyState : State
 {
-    protected T dummy;
-
-
-
-    public virtual void Initialize(int index, T dummy)
+    public virtual void Initialize(int index, Enemy enemy)
     {
         Index = index;
-        this.dummy = dummy;
     }
 
 
-    public abstract int Update();
-
-
-    public virtual void OnStateEnter() { }
+    public override void OnStateEnter() { }
     //public virtual void OnStateReset() { }
-    public virtual void OnStateQuit() { }
+    public override void OnStateQuit() { }
+}
+
+
+public abstract class EnemyState<T> : EnemyState where T : Enemy
+{
+    protected T enemy;
+
+
+    public override void Initialize(int index, Enemy enemy)
+    {
+        base.Initialize(index, enemy);
+
+        Initialize((T)enemy);
+    }
+
+
+    public virtual void Initialize(T enemy)
+    {
+        this.enemy = enemy;
+    }
 
 
     protected PlayerCharacter IsPlayerInSight(float range)
@@ -33,24 +43,19 @@ public abstract class EnemyState<T> : State where T : Dummy
             return null;
 
 
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(dummy.transform.position, player.transform.position - dummy.transform.position, Vector2.Distance(dummy.transform.position, player.transform.position));
-        
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(enemy.transform.position, player.transform.position - enemy.transform.position, Vector2.Distance(enemy.transform.position, player.transform.position));
+
         if (!raycastHit2D.collider || raycastHit2D.collider.gameObject != player.gameObject)
             return null;
 
-        
+
         return player;
     }
 }
 
 
-public abstract class DroneState : EnemyState<Enemy>
-{
-}
-
-
 [CreateAssetMenuAttribute(fileName = "FSM_Enemy", menuName = "State Machine/Enemy")]
-public class FSMEnemy : FiniteStateMachine<DroneState>
+public class FSMEnemy : FiniteStateMachine<EnemyState>
 {
     public override int CurrentStateIndex
     {
@@ -63,13 +68,16 @@ public class FSMEnemy : FiniteStateMachine<DroneState>
         {
             if (value != currentStateIndex)
             //{
-            //    Debug.Log(LogUtility.MakeLogStringFormat("FSMPLayer", "Reset on state {0}", currentStateIndex));
-
+#if UNITY_EDITOR
+            //    Debug.Log(LogUtility.MakeLogStringFormat(GetType().Name, "Reset on state {0}", currentStateIndex));
+#endif
             //    CurrentState.OnStateReset();
             //}
             //else
             {
-                Debug.Log(LogUtility.MakeLogStringFormat("FSMEnemy", "Make transition from state {0} to {1}", currentStateIndex, value));
+#if UNITY_EDITOR
+                Debug.Log(LogUtility.MakeLogStringFormat(GetType().Name, "Make transition from state {0} to {1}", currentStateIndex, value));
+#endif
 
                 int previousStateIndex = currentStateIndex;
 
@@ -85,10 +93,10 @@ public class FSMEnemy : FiniteStateMachine<DroneState>
     }
 
 
-    public void Initialize(Enemy dummy)
+    public void Initialize(Enemy enemy)
     {
         for (int i = 0; i < states.Length; ++i)
-            states[i].Initialize(i, dummy);
+            states[i].Initialize(i, enemy);
 
         currentStateIndex = -1;
     }
@@ -119,7 +127,6 @@ public class FSMEnemy : FiniteStateMachine<DroneState>
 
     public void Update()
     {
-
         if (currentStateIndex >= 0)
             CurrentStateIndex = CurrentState.Update();
     }

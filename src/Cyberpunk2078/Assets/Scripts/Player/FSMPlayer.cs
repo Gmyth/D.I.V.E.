@@ -13,16 +13,15 @@ public abstract class PlayerState : State
     {
         Index = index;
         this.playerCharacter = playerCharacter;
+
         anim = playerCharacter.GetComponent<Animator>();
     }
 
 
-    public abstract int Update();
-
-
-    public virtual void OnStateEnter() { }
+    public override void OnStateEnter() { }
     //public virtual void OnStateReset() { }
-    public virtual void OnStateQuit() { }
+    public override void OnStateQuit() { }
+
 
     //Player Ground check
     public bool isGrounded()

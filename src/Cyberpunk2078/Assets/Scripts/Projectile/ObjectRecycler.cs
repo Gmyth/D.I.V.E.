@@ -31,10 +31,12 @@ public class ObjectRecycler : MonoBehaviour
         if (recycledObjects[id].Count > 0)
             return recycledObjects[id].Pop().GetComponent<T>();
 
+
         T obj = Instantiate(prefabs[id].GetComponent<T>(), recyclePosition, Quaternion.identity, transform.GetChild(id));
 
         if (obj)
             obj.GetComponent<Recyclable>().id = id;
+
 
         return obj;
     }
