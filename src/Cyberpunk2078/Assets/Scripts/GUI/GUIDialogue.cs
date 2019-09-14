@@ -559,6 +559,9 @@ public class GUIDialogue : GUIWindow
             if (CurrentTimelineManager.isTheLastTimeline) {
                 CurrentTimelineManager.OnTimelineEnd();
             }
+            else {
+                CurrentTimelineManager.PlayNextTimeline();
+            }
             return false;
         }
     }

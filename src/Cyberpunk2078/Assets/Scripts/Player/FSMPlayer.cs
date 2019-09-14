@@ -145,6 +145,7 @@ public abstract class PlayerState : State
 [CreateAssetMenuAttribute(fileName = "FSM_Player", menuName = "State Machine/Player")]
 public class FSMPlayer : FiniteStateMachine<PlayerState>
 {
+
     public override int CurrentStateIndex
     {
         get

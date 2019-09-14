@@ -30,7 +30,7 @@ public class TimelineManager : MonoBehaviour
     public void OnTimelineEnd()
     {
         //When timeline end
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
 
         //Recover gameplay
     }
