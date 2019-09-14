@@ -53,23 +53,26 @@ public class DialogueManager: Singleton<DialogueManager>
     private IEnumerator waitForKeyPress(KeyCode key, GUIDialogue win = null)
     {
         bool done = false;
+        float coolDown = 0f;
         while (!done) // essentially a "while true", but with a bool to break out naturally
         {
-            if(win  != null){
-                if (Input.GetKeyDown(key) && win.CheckAnimateCoroutine() == false)
+            if (win  != null){
+                if (coolDown >= 1 && Input.GetKeyDown(key) && win.CheckAnimateCoroutine() == false)
                 {
                     done = true; // breaks the loop
+                    coolDown = 0f;
                 }
                 yield return null; // wait until next frame, then continue execution from here (loop continues)
             }
             else{
-                if (Input.GetKeyDown(key))
+                if (coolDown >= 1 && Input.GetKeyDown(key))
                 {
                     done = true; // breaks the loop
+                    coolDown = 0f;
                 }
                 yield return null; // wait until next frame, then continue execution from here (loop continues)
             }
-            
+            coolDown += Time.deltaTime;
         }
 
         // now this function returns
@@ -109,9 +112,9 @@ public class DialogueManager: Singleton<DialogueManager>
             yield return waitForKeyPress(KeyCode.G);
             if (dialogueWin.CheckAnimateCoroutine())
             {
-                dialogueWin.SetTextSpeed(0.05f / 10000000);        
+                dialogueWin.SetSkip(true);        
                 yield return waitForKeyPress(KeyCode.G, dialogueWin);
-                dialogueWin.SetTextSpeed(0.05f / 10000000);
+                dialogueWin.SetSkip(false);
             }
 
             int nextDialogue = Convert.ToInt32(dialogues[index].Next);

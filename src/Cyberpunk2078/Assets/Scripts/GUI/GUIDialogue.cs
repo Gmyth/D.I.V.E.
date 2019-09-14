@@ -32,6 +32,9 @@ public class GUIDialogue : GUIWindow
     //Keep tracks of our commands.
     private List<SpecialCommand> specialCommands;
 
+    //Use true to skip lines
+    private bool skip = false;
+
     //This means we can change the dialogue live and the shaking text animation will adjust itself to the new content!
     private bool hasTextChanged = false;
 
@@ -213,11 +216,22 @@ public class GUIDialogue : GUIWindow
             }
 
             i++;
-            yield return new WaitForSeconds(SpeedText);
+
+            if (!skip)
+            {
+                yield return new WaitForSeconds(SpeedText);
+            }
+            
         }
 
         Debug.Log("Done animating!");
         isCoroutineRunning = false;
+        yield return null;
+    }
+
+    public void SetSkip(bool skip)
+    {
+        this.skip = skip;
     }
 
     private void UpdateVertexColors(Color32[] newVertexColors, int vertexIndex, Color32 color, TMP_Text dialogueBox)
