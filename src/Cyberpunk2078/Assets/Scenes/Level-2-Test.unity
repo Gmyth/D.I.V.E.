@@ -18820,6 +18820,12 @@ PrefabInstance:
       propertyPath: patrolFiringConfiguration.bulletSpeed
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: fsm
+      value: 
+      objectReference: {fileID: 11400000, guid: 9d18d5e8443ea3f4bb1d22e819d941f7,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!4 &2108814077 stripped
