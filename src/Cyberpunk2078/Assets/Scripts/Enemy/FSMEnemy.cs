@@ -35,10 +35,10 @@ public abstract class EnemyState<T> : State where T : Dummy
 
         RaycastHit2D raycastHit2D = Physics2D.Raycast(dummy.transform.position, player.transform.position - dummy.transform.position, Vector2.Distance(dummy.transform.position, player.transform.position));
         
-        if (raycastHit2D.collider.gameObject != player.gameObject)
+        if (!raycastHit2D.collider || raycastHit2D.collider.gameObject != player.gameObject)
             return null;
 
-
+        
         return player;
     }
 }

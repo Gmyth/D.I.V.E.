@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ES_Patrolling
   m_EditorClassIdentifier: 
   patrolPoints:
-  - {x: -3, y: 6.5, z: 0}
-  - {x: 2, y: 6.5, z: 0}
+  - {x: 161.5, y: 4.5, z: 0}
+  - {x: 161.5, y: 0, z: 0}
   speed: 100
   delay: 0
   index_ESIdle: -1

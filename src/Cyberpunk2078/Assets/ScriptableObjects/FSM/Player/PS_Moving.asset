@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PS_Moving
   m_EditorClassIdentifier: 
   speedFactor: 8
-  accelerationFactor: 20
+  accelerationFactor: 50
   indexPSIdle: 0
   indexPSAttackGH: 3
   indexPSJumping1: 4
