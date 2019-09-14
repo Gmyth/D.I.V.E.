@@ -11,6 +11,7 @@ public class PSDashing : PlayerState
     [SerializeField] private float dashReleaseTime = 0.22f; // time to recover rb2d setting after dashing process finished
     [SerializeField] private float dashReleaseDelayTime = 0.05f; // time from dash finish to actual controllable
     [SerializeField] private float inDashingDragFactor = 3; // In-dash drag factor
+    [SerializeField] private float EnergyConsume = -70; // In-dash drag factor
     
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSMoving;
@@ -18,18 +19,32 @@ public class PSDashing : PlayerState
     [SerializeField] private int indexWallJumping;
     [SerializeField] private int indexPSAirborne;
     
+    
     private float lastDashSecond;
     private bool hyperSpeed;
     private float defaultDrag;
     private bool readyToPush;
+    private bool Apply = true;
 
 
     public override int Update()
     {
+        
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
         float h = Input.GetAxis("Horizontal");
         //Still support Horizontal update during jumping, delete following to kill Horizzontal input
+
+        if (!Apply)
+        {
+            if (!isGrounded())
+            {
+                return indexPSAirborne;
+            }
+            
+            if (h == 0) return indexPSIdle;
+            return indexPSMoving;
+        }
 
         if (lastDashSecond + dashDelayTime < Time.unscaledTime && readyToPush)
         {
@@ -46,17 +61,28 @@ public class PSDashing : PlayerState
             {
                 // kill speed after dash
                 hyperSpeed = false;
+                rb2d.drag = defaultDrag;
                 rb2d.velocity = rb2d.velocity * 0.1f;
             }
+            setAtkBox(false);
+            
+            //enable Collision
+            //Physics.IgnoreLayerCollision(10, 11,false);
+            
         } else if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.unscaledTime)
         {
             // the dash has already ended
             // ok for move input
             PhysicsInputHelper(h);
+            setAtkBox(false);
+                        
+            //enable Collision
+            playerCharacter.transform.right = Vector3.right;
+            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Dummy"),false);
         }
         else {
             //prevent ground-hitting shifting 
-            RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,0.5f);
+            RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,1f);
             if (hit1.collider != null && hit1.transform.CompareTag("Ground"))
             {
                 // kill all speed
@@ -71,6 +97,12 @@ public class PSDashing : PlayerState
                 
                 // Disable trails
                 playerCharacter.GetComponent<GhostSprites>().RenderOnMotion = false;
+                
+                setAtkBox(false);
+                
+                //enable Collision
+                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Dummy"),false);
+                
                 // Landed
                 if (h == 0)
                     // not moving
@@ -104,6 +136,8 @@ public class PSDashing : PlayerState
                 return indexPSAirborne;
             }
             
+            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Dummy"),false);
+            
             if (h == 0) return indexPSIdle;
             return indexPSMoving;
         }
@@ -113,6 +147,14 @@ public class PSDashing : PlayerState
 
     public override void OnStateEnter()
     {
+        if (!Player.CurrentPlayer.ApplyEnergyChange(EnergyConsume))
+        {
+            // Energy is not enough, Cancel dash
+            Apply = false;
+            return;
+        }
+
+        Apply = true;
         //Dash has been pressed, set all config first
         //After delay is over, dash perform
         
@@ -122,7 +164,7 @@ public class PSDashing : PlayerState
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         
         // Record the default Drag of rb2d
-        defaultDrag = defaultDrag == 0 ? rb2d.drag:defaultDrag;
+        defaultDrag = rb2d.drag;
         readyToPush = true;
         
         // Kill all initial speed
@@ -131,6 +173,9 @@ public class PSDashing : PlayerState
         
         // Kill gravity 
         rb2d.gravityScale = 0;
+        
+        //Disable Collision
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Dummy"));
         
         // Strong Drag during dashing
         rb2d.drag *= inDashingDragFactor;
@@ -155,7 +200,16 @@ public class PSDashing : PlayerState
         playerCharacter.transform.right = direction;
         rb2d.AddForce(direction * dashForce * 100f);
         
+
+        
         //Camera Tricks
         CameraManager.Instance.Shaking(0.08f,0.15f);
+
+        setAtkBox(true);
+    }
+
+    private void setAtkBox(bool value)
+    {
+        playerCharacter.dashAtkBox.SetActive(value);
     }
 }

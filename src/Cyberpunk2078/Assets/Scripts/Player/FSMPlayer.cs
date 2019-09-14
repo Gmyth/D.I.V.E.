@@ -3,9 +3,9 @@
 
 public abstract class PlayerState : State
 {
+    public string Name;
     protected PlayerCharacter playerCharacter;
     protected Animator anim;
-
     protected bool flip;
 
 
@@ -13,6 +13,7 @@ public abstract class PlayerState : State
     {
         Index = index;
         this.playerCharacter = playerCharacter;
+        Player.CreatePlayer();
         anim = playerCharacter.GetComponent<Animator>();
     }
 
@@ -30,8 +31,13 @@ public abstract class PlayerState : State
         RaycastHit2D hitM = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,-0.2f,0f),-playerCharacter.transform.up,1f);
         RaycastHit2D hitL = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.1f,-0.2f,0f),-playerCharacter.transform.up,1f);
         RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.1f,-0.2f,0f),-playerCharacter.transform.up,1f);
-
-        return hitM.collider != null && hitM.transform.CompareTag("Ground") || hitR.collider != null && hitR.transform.CompareTag("Ground") || hitL.collider != null && hitL.transform.CompareTag("Ground");
+        if (hitM.collider != null && hitM.transform.CompareTag("Ground") || hitR.collider != null && hitR.transform.CompareTag("Ground") || hitL.collider != null && hitL.transform.CompareTag("Ground"))
+        {
+            Player.CurrentPlayer.SecondJumpReady = true;
+            return true;
+        }
+    
+        return false;
     }
 
     //Player Ground Normal Vector, Used for Dash direction correction

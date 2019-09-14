@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b952237cc932fb43b97173bdb9c05c6, type: 3}
   m_Name: PS_Climb
   m_EditorClassIdentifier: 
+  Name: Climb
   climbSpeed: 3
   indexPSIdle: 0
   indexPSMoving: 1

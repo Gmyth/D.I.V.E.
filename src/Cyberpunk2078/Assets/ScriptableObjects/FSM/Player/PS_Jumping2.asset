@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 001d169824502af48b4a81027a991d4f, type: 3}
   m_Name: PS_Jumping2
   m_EditorClassIdentifier: 
+  Name: Jump2
   jumpForce: 5.6
   speed_factor: 9
   acceleration_factor: 20

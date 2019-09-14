@@ -14,7 +14,9 @@ public class PSMoving : PlayerState
     [SerializeField] private int indexPSClimb;
     public override int Update()
     {
-        
+        // Energy Recover
+        Player.CurrentPlayer.EnergyRecover(Time.time);
+
         if (Input.GetAxis("Attack1") > 0)
         {
             return indexPSAttackGH;
