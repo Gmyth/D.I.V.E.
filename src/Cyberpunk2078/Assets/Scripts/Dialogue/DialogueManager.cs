@@ -5,6 +5,7 @@ using System.IO;
 using UnityEngine.UI;
 using System;
 using UnityEngine.Events;
+using UnityEngine.Playables;
 // ReSharper disable All
 
 
@@ -15,6 +16,8 @@ public class DialogueManager: Singleton<DialogueManager>
 
     public UnityEvent DialogueEnd;
     public UnityEvent KeyPressed;
+
+    private TimelineManager currentTimelineManager;
 
     public enum DialogueType
     {
@@ -47,19 +50,34 @@ public class DialogueManager: Singleton<DialogueManager>
     {
         return dialogues[index];
     }
-    private IEnumerator waitForKeyPress(KeyCode key)
+    private IEnumerator waitForKeyPress(KeyCode key, GUIDialogue win = null)
     {
         bool done = false;
         while (!done) // essentially a "while true", but with a bool to break out naturally
         {
-            if (Input.GetKeyDown(key))
-            {
-                done = true; // breaks the loop
+            if(win  != null){
+                if (Input.GetKeyDown(key) && win.CheckAnimateCoroutine() == false)
+                {
+                    done = true; // breaks the loop
+                }
+                yield return null; // wait until next frame, then continue execution from here (loop continues)
             }
-            yield return null; // wait until next frame, then continue execution from here (loop continues)
+            else{
+                if (Input.GetKeyDown(key))
+                {
+                    done = true; // breaks the loop
+                }
+                yield return null; // wait until next frame, then continue execution from here (loop continues)
+            }
+            
         }
 
         // now this function returns
+    }
+
+    public void SetTimelineManager(TimelineManager timelineManager) 
+    {
+        currentTimelineManager = timelineManager;
     }
 
     /// <summary>
@@ -72,6 +90,8 @@ public class DialogueManager: Singleton<DialogueManager>
     {
         GUIDialogue dialogueWin = (GUIDialogue)GUIManager.Singleton.Open("DialogueUI");
 
+        dialogueWin.CurrentTimelineManager = currentTimelineManager;
+        
         if (CheckDialogueType(index) == DialogueType.Normal)
             dialogueWin.DisplayDialogue(dialogues[index].Text, dialogues[index].Actor, transform);
         else if(CheckDialogueType(index) == DialogueType.Option)
@@ -89,10 +109,11 @@ public class DialogueManager: Singleton<DialogueManager>
             yield return waitForKeyPress(KeyCode.G);
             if (dialogueWin.CheckAnimateCoroutine())
             {
-                dialogueWin.SetTextSpeed(0.05f/1000000);
-                yield return waitForKeyPress(KeyCode.G);
-                dialogueWin.SetTextSpeed(0.05f);
+                dialogueWin.SetTextSpeed(0.05f / 10000000);        
+                yield return waitForKeyPress(KeyCode.G, dialogueWin);
+                dialogueWin.SetTextSpeed(0.05f / 10000000);
             }
+
             int nextDialogue = Convert.ToInt32(dialogues[index].Next);
 
             if (CheckDialogueType(index) == DialogueType.Normal)
@@ -100,7 +121,7 @@ public class DialogueManager: Singleton<DialogueManager>
 
             index = nextDialogue;
         }
-        yield return waitForKeyPress(KeyCode.G);
+        yield return waitForKeyPress(KeyCode.G, dialogueWin);
         GUIManager.Singleton.Close("DialogueUI");
         DialogueEnd.Invoke();      
     }
