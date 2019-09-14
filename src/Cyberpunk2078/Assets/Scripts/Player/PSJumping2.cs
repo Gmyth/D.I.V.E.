@@ -23,6 +23,9 @@ public class PSJumping2 : PlayerState
         //Still support Horizontal update during jumping, delete following to kill Horizzontal input
         PhysicsInputHelper(h,speed_factor,acceleration_factor);
         
+        // Energy Recover
+        Player.CurrentPlayer.EnergyRecover(Time.time);
+        
         if (!isGrounded()&& Vy < 0)
         {
             return indexPSAirborne;
@@ -59,6 +62,8 @@ public class PSJumping2 : PlayerState
 
     public override void OnStateEnter()
     {
+        anim.Play("MainCharacter_Jump", -1, 0f);
+        
         //Perform jump
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         // kill any Y-axis speed

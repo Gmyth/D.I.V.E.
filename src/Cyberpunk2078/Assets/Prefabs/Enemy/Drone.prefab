@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4422422707932968806}
   - component: {fileID: 4422422707932968827}
   - component: {fileID: 4422422707932968807}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Drone
   m_TagString: Dummy
   m_Icon: {fileID: 0}
@@ -60,6 +60,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -164,3 +165,6 @@ MonoBehaviour:
   bulletID: 0
   fireInterval: 1
   bulletSpeed: 10
+  DamageCD: 0
+  Health: 100
+  HealthCap: 100

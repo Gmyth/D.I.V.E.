@@ -14,6 +14,9 @@ public class PSAirborne : PlayerState
 
     public override int Update()
     {
+        // Energy Recover
+        Player.CurrentPlayer.EnergyRecover(Time.time);
+        
         if (Input.GetAxis("Attack1") > 0)
         {
             return indexPSAttackGH;
@@ -29,9 +32,14 @@ public class PSAirborne : PlayerState
         {
             return indexPSWallJumping;
         }
-        
-        if (Input.GetAxis("Jump") > 0)
+
+        if (Input.GetAxis("Jump") > 0 && Player.CurrentPlayer.SecondJumpReady)
+        {
+            
+            Player.CurrentPlayer.SecondJumpReady = false;
             return indexPSJumping2;
+        }
+
         
         if (Input.GetAxis("Dashing") != 0)
             return indexPSDashing;
@@ -44,6 +52,7 @@ public class PSAirborne : PlayerState
     
     public override void OnStateEnter()
     {
+        // Add Ghost trail
         anim.Play("MainCharacter_Airborne", -1, 0f);
     }
 }

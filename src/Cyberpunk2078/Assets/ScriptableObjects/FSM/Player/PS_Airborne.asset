@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72cf113563362349bd6fd3931dd9870, type: 3}
   m_Name: PS_Airborne
   m_EditorClassIdentifier: 
+  Name: Airborne
   indexPSIdle: 0
   indexPSMoving: 1
   indexPSAttackGH: 3

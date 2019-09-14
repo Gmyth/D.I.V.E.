@@ -15,6 +15,9 @@ public class PSClimb : PlayerState
     {
         var v = Input.GetAxis("Vertical");
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
+        
+        // Energy Recover
+        Player.CurrentPlayer.EnergyRecover(Time.time);
 
         if (v == 0)
         {

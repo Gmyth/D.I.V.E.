@@ -27,6 +27,9 @@ public class PSJumping1 : PlayerState
         float Vy = rb2d.velocity.y;
         float h = Input.GetAxis("Horizontal");
         flip = h < 0;
+        
+        // Energy Recover
+        Player.CurrentPlayer.EnergyRecover(Time.time);
 
         //Still support Horizontal update during jumping, delete following to kill Horizzontal input
          PhysicsInputHelper(h,speedFactor,accelerationFactor);

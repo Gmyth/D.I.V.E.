@@ -1,7 +1,16 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 
 public abstract class Dummy : MonoBehaviour, IDamageable
 {
-    public abstract float ApplyDamage(float rawDamage);
+    public void Start()
+    {
+        
+    }
+
+
+    public abstract float ApplyDamage(int instanceId, float rawDamage, bool overWrite = false);
+
+    public abstract void Dead();
 }
