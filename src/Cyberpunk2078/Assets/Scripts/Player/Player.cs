@@ -21,9 +21,9 @@ public class Player
 
     public bool SecondJumpReady;
     
-    public int Health { get; private set; }
+    public float Health { get; private set; }
     
-    public int HealthCap { get; private set; }
+    public float HealthCap { get; private set; }
 
     public float EnergyCap { get; private set; }
     
@@ -67,10 +67,13 @@ public class Player
 
     }
     
-    public bool ApplyHealthChange(int amount)
+    public bool ApplyHealthChange(float amount)
     {
         if (Health < amount) return false;
         Health = Mathf.Max(Mathf.Min(amount + Health, HealthCap), 0);
+        GameObject.Find("Health1").GetComponent<SpriteRenderer>().color = Health > 0? Color.white : Color.clear;
+        GameObject.Find("Health2").GetComponent<SpriteRenderer>().color = Health > 1? Color.white : Color.clear;
+        GameObject.Find("Health3").GetComponent<SpriteRenderer>().color = Health > 3? Color.white : Color.clear;
         return true;
     }
 

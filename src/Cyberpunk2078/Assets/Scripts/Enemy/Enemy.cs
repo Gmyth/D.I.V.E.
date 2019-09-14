@@ -11,6 +11,13 @@ public class Enemy : Dummy
     [SerializeField] private int bulletID = 0;
     [SerializeField] private float fireInterval;
     [SerializeField] private float bulletSpeed;
+    [SerializeField] private float DamageCD;
+    private Dictionary<int, float> damageList = new Dictionary<int, float>();
+    
+    public float Health;
+
+    public float HealthCap = 1;
+
 
 
     public int BulletID
@@ -40,6 +47,7 @@ public class Enemy : Dummy
 
     private void Start()
     {
+        Health = HealthCap;
         fsm.Initialize(this);
         fsm.Boot();
     }
@@ -50,9 +58,48 @@ public class Enemy : Dummy
     }
 
 
-    public override float ApplyDamage(float rawDamage)
+    public override float ApplyDamage(int instanceId,float rawDamage, bool overWrite)
     {
-        Debug.Log(LogUtility.MakeLogStringFormat("Enemy", "Take {0} damage.", rawDamage));
+        float value;
+        if (damageList.TryGetValue(instanceId,out value) && overWrite)
+        {
+            // Already hit by this attack but ok for damage again
+            if (value + DamageCD < Time.time)
+            {
+                Debug.Log(LogUtility.MakeLogStringFormat("Enemy", "Take {0} damage.", rawDamage));
+                Health = Mathf.Max(Mathf.Min(Health - rawDamage, HealthCap), 0);;
+                if (Health == 0)
+                {
+                    // dead
+                    Dead();
+                }
+            }
+        }
+        else
+        {
+            // new attack coming
+            damageList.Add(instanceId,Time.time);
+            Debug.Log(LogUtility.MakeLogStringFormat("Enemy", "Take {0} damage.", rawDamage));
+            Health = Mathf.Max(Mathf.Min(Health - rawDamage, HealthCap), 0);;
+            if (Health == 0)
+            {
+                // dead
+                Dead();
+            }
+        }
+
+
         return rawDamage;
+    }
+
+    public override void Dead()
+    {
+        var Boom = ObjectRecycler.Singleton.GetObject<SingleEffect>(3);
+        Boom.transform.position = transform.position;
+        Boom.gameObject.SetActive(true);
+        Boom.transform.localScale = Vector3.one;
+        
+        gameObject.GetComponent<SpriteRenderer>().color = Color.clear;
+        Destroy(gameObject, 0.5f);
     }
 }

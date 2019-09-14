@@ -1,0 +1,7 @@
+In case you want to scale down sprites and keep good and smooth quality, use the well known software Adobe Photoshop.
+
+From there, go to the upper menu tab and click "Image>Image Size". Then adjust the Width and Height to your heart's content.
+
+Finally, on the lower part of this same window click and choose "Bicubic Sharper (best for reduction)".
+
+Save and Voilá!

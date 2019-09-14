@@ -100,6 +100,6 @@ public class PSAttackGH: PlayerState
 //        rb2d.drag = 0;
         
         //Camera Tricks
-        CameraManager.Instance.Shaking(0.04f,0.1f);
+        CameraManager.Instance.Shaking(0.03f,0.05f);
     }
 }

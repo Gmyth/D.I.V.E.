@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4068907203328250}
   - component: {fileID: 212533044408923898}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sprite
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 50648738036934500}
   - component: {fileID: 114593199792259714}
   - component: {fileID: 114855312389811496}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bullet_01
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ MonoBehaviour:
   lifeSpan: 5
   isFriendly: 0
   numHits: 1
-  rawDamage: 100
+  rawDamage: 1
 --- !u!114 &114855312389811496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,7 +196,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5142312173105769809}
   - component: {fileID: 2044208287619261789}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: InfluenceeCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
