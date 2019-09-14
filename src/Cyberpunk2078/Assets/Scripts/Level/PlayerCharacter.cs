@@ -9,9 +9,14 @@ public class PlayerCharacter : Dummy
 
 
     [SerializeField] private FSMPlayer fsm;
-
+    
+    
     private StatisticSystem statistic;
     private new Rigidbody rigidbody;
+
+    public GameObject dashAtkBox;
+
+    public PlayerState State => fsm.CurrentState;
 
 
     public PlayerCharacter(Player player)
@@ -20,9 +25,10 @@ public class PlayerCharacter : Dummy
     }
 
 
-    public override float ApplyDamage(float rawDamage)
+    public override float ApplyDamage(int instanceId,float rawDamage, bool overWrite = false)
     {
         Debug.Log(LogUtility.MakeLogStringFormat("PlayerCharacter", "Take {0} damage.", rawDamage));
+        Player.CurrentPlayer.ApplyHealthChange(-rawDamage);
         return rawDamage;
     }
 
@@ -38,6 +44,8 @@ public class PlayerCharacter : Dummy
 
         Singleton = this;
 
+        dashAtkBox = GetComponentInChildren<Attack>().gameObject;
+        dashAtkBox.SetActive(false);
 
         rigidbody = GetComponent<Rigidbody>();
 
@@ -50,7 +58,11 @@ public class PlayerCharacter : Dummy
         fsm.Update();
     }
 
-
+    public override void Dead()
+    {
+        //game over
+    }
+    
     private void OnDestroy()
     {
         if (Singleton == this)

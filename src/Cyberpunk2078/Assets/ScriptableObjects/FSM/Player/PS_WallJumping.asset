@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1e9c19f531ef1e4394a7e9ec2cb363e, type: 3}
   m_Name: PS_WallJumping
   m_EditorClassIdentifier: 
+  Name: WallJump
   jumpForce: 6
   jumpSpeed: 8
   stickWallTime: 1

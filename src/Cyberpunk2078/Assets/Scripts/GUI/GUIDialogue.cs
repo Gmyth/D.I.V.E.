@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 // ReSharper disable All
@@ -30,6 +31,9 @@ public class GUIDialogue : GUIWindow
 
     //Keep tracks of our commands.
     private List<SpecialCommand> specialCommands;
+
+    //Use true to skip lines
+    private bool skip = false;
 
     //This means we can change the dialogue live and the shaking text animation will adjust itself to the new content!
     private bool hasTextChanged = false;
@@ -107,6 +111,10 @@ public class GUIDialogue : GUIWindow
 
         textBoxList[0].GetComponent<Transform>().position = actorCoordinates;
 
+    }
+
+    public bool GetTypeWriterStat(){
+        return isCoroutineRunning;
     }
 
     public void DisplayOption(string text, string actor)
@@ -208,11 +216,22 @@ public class GUIDialogue : GUIWindow
             }
 
             i++;
-            yield return new WaitForSeconds(SpeedText);
+
+            if (!skip)
+            {
+                yield return new WaitForSeconds(SpeedText);
+            }
+            
         }
 
         Debug.Log("Done animating!");
         isCoroutineRunning = false;
+        yield return null;
+    }
+
+    public void SetSkip(bool skip)
+    {
+        this.skip = skip;
     }
 
     private void UpdateVertexColors(Color32[] newVertexColors, int vertexIndex, Color32 color, TMP_Text dialogueBox)
@@ -346,7 +365,7 @@ public class GUIDialogue : GUIWindow
         }
     }
 
-
+    public TimelineManager CurrentTimelineManager;
     //Where you will execute your command!
     private void ExecuteCommand(SpecialCommand command, TMP_Text teshMeshPro)
     {
@@ -371,6 +390,11 @@ public class GUIDialogue : GUIWindow
             else
             {
                 isColorizing = false;
+            }
+        }
+        else if (command.Name == "action") {
+            if (command.Values[0] == "play") {
+                CurrentTimelineManager.PlayNextTimeline();
             }
         }
     }
@@ -532,6 +556,9 @@ public class GUIDialogue : GUIWindow
         }
         else
         {
+            if (CurrentTimelineManager.isTheLastTimeline) {
+                CurrentTimelineManager.OnTimelineEnd();
+            }
             return false;
         }
     }

@@ -25,6 +25,10 @@ public class PSWallJumping: PlayerState
     public override int Update()
     {
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
+        
+        // Energy Recover
+        Player.CurrentPlayer.EnergyRecover(Time.time);
+        
         if (onWall && Time.unscaledTime > lastStickTime + stickWallTime)
         {
             //stick over, falling start
