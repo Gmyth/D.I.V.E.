@@ -113,7 +113,7 @@ public class Drone : Enemy, IPatroller
                 Gizmos.DrawSphere(patrolPoint, 0.1f);
 
             for (int i = 0; i < patrolPoints.Length - 1; ++i)
-                LogUtility.DrawGizmoArrow(patrolPoints[0], patrolPoints[1]);
+                LogUtility.DrawGizmoArrow(patrolPoints[i], patrolPoints[i + 1]);
         }
     }
 #endif
