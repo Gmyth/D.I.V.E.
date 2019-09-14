@@ -53,7 +53,7 @@ public class DialogueManager: Singleton<DialogueManager>
     private IEnumerator waitForKeyPress(KeyCode key, GUIDialogue win = null)
     {
         bool done = false;
-        float coolDown = 0f;
+        float coolDown = 1f;
         while (!done) // essentially a "while true", but with a bool to break out naturally
         {
             if (win  != null){
