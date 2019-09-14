@@ -5985,8 +5985,6 @@ PlayableDirector:
     value: {fileID: 0}
   - key: {fileID: -232200750987784496, guid: 44e266bbaad18dc4aada4a37aa9293a2, type: 2}
     value: {fileID: 325029687}
-  - key: {fileID: -1862284414436117999, guid: 3cf59cecc1298ea41a4f9d900942e2ed, type: 2}
-    value: {fileID: 0}
   - key: {fileID: 1337571916673978120, guid: 3cf59cecc1298ea41a4f9d900942e2ed, type: 2}
     value: {fileID: 325029687}
   m_ExposedReferences:
@@ -6278,6 +6276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f3deaff79aaf5e419bac73d1c3689ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTheLastTimeline: 0
   timelines: []
   currentIndex: 0
 --- !u!1 &527764642
@@ -14965,6 +14964,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f3deaff79aaf5e419bac73d1c3689ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTheLastTimeline: 0
   timelines: []
   currentIndex: 0
 --- !u!61 &836119285
@@ -15001,7 +15001,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 836119283}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 137.67, y: -2.88, z: 0}
+  m_LocalPosition: {x: 142.84, y: 70.85, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 325029686}
@@ -17572,24 +17572,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Events:
     m_Signals:
-    - {fileID: 11400000, guid: ce8fe9c41ce200b41acac905a191c6e2, type: 2}
     - {fileID: 11400000, guid: 19ee28f1c00e1f347a1bc30d73af2ee8, type: 2}
     m_Events:
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 836119284}
-          m_MethodName: OnTimelineEnd
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 4
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
     - m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 836119284}
@@ -17654,7 +17638,7 @@ PlayableDirector:
   - key: {fileID: 0}
     value: {fileID: 1839855609}
   - key: {fileID: -1862284414436117999, guid: e4344e205c6cc3c4fafdb7135f09c3ca, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 790662298}
   - key: {fileID: 3940253095319083586, guid: e4344e205c6cc3c4fafdb7135f09c3ca, type: 2}
     value: {fileID: 1839855609}
   m_ExposedReferences:

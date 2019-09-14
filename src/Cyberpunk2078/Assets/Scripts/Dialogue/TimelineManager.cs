@@ -6,6 +6,8 @@ using UnityEngine.Playables;
 public class TimelineManager : MonoBehaviour
 {
 
+    public bool isTheLastTimeline = false;
+
     [SerializeField] private PlayableDirector[] timelines;
     [SerializeField] private int currentIndex = 0;
     
@@ -36,26 +38,31 @@ public class TimelineManager : MonoBehaviour
     public void PlayCurrentTimeline() 
     {
         timelines[currentIndex].Play();
+        if (currentIndex == timelines.Length - 1) {
+            isTheLastTimeline = true;
+        }
     }
 
     public void PlayNextTimeline()
     {
         currentIndex++;
-        if (currentIndex <= timelines.Length) {
-            timelines[currentIndex].Play();
+        if (currentIndex < timelines.Length) {
+            PlayCurrentTimeline();
         }
         else {
+            currentIndex = 0;
             Debug.LogError("Next Timeline is null");
         }
     }
 
     public void PlayTimelineInIndex(int index) 
     {
-        if (index <= timelines.Length) {
+        if (index < timelines.Length) {
             currentIndex = index;
-            timelines[index].Play();
+            PlayCurrentTimeline();
         }
         else {
+            currentIndex = 0;
             Debug.LogError("No Timeline in index " + index);
         }
     }
