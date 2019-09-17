@@ -46,4 +46,5 @@ public abstract class Dummy : MonoBehaviour, IDamageable
 
 public abstract class Enemy : Dummy
 {
+    AttributeSet attributes;
 }

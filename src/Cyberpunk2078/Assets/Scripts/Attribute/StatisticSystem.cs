@@ -2,34 +2,59 @@
 using System.Collections.Generic;
 using UnityEngine.Events;
 
+
 public enum AttributeType : int
 {
     WalkSpeed_c0 = 0x100,
-    JumpPower_c0 = 0x200,
-    MaxHp_c0 = 0x300,
-    CriticalChance_cp0 = 0x400,
-    CriticalDamage_cp0 = 0x500,
-    BaseDamage_c0 = 0x600,
-    BaseDamage_cp0 = 0x610,
-    AttackSpeed_cp0 = 0x700,
 
-    HealingPower_cp0 = 0xF10,
+    JumpPower_c0 = 0x200,
+
+    MaxHp_c0 = 0x300,
+
+    MaxSp_c0 = 0x400,
+    
+    MeleeDamage_c0 = 0x1000,
+
+    MeleeDamage1_c0 = 0x1100,
+
+    MeleeDamage2_c0 = 0x1200,
+
+    MeleeDamage3_c0 = 0x1300,
+
+    RangedDamage_c0 = 0x2000,
+
+    RangedDamage1_c0 = 0x2000,
+
+    RangedDamage2_c0 = 0x2000,
+
+    RangedDamage3_c0 = 0x2000,
 }
+
 
 public enum StatisticType : int
 {
     WalkSpeed = 0x1,
     JumpPower = 0x2,
     MaxHp = 0x3,
-    CriticalChance = 0x4,
-    CriticalDamage = 0x5,
-    BaseDamage = 0x6,
-    AttackSpeed = 0x7,
+    MaxSp = 0x4,
+
+    MeleeDamage = 0x10,
+    MeleeDamage1 = 0x11,
+    MeleeDamage2 = 0x12,
+    MeleeDamage3 = 0x13,
+
+    RangedDamage = 0x20,
+    RangedDamage1 = 0x21,
+    RangedDamage2 = 0x22,
+    RangedDamage3 = 0x23,
 
     Hp = 0xF0,
+    Sp = 0xF1,
 }
 
+
 public class EventOnStatisticChange : UnityEvent<StatisticType, float, float> { }
+
 
 public class StatisticSystem
 {
@@ -47,22 +72,6 @@ public class StatisticSystem
 
             case StatisticType.MaxHp:
                 return AttributeSet.Sum(AttributeType.MaxHp_c0, attributeSets);
-
-
-            case StatisticType.CriticalChance:
-                return AttributeSet.Sum(AttributeType.CriticalChance_cp0, attributeSets);
-
-
-            case StatisticType.CriticalDamage:
-                return AttributeSet.Sum(AttributeType.CriticalDamage_cp0, attributeSets);
-
-
-            case StatisticType.BaseDamage:
-                return AttributeSet.Sum(AttributeType.BaseDamage_cp0, attributeSets);
-
-
-            case StatisticType.AttackSpeed:
-                return AttributeSet.Sum(AttributeType.AttackSpeed_cp0, attributeSets);
 
 
             default:
@@ -142,6 +151,7 @@ public class StatisticSystem
         }
     }
 
+
     private StatisticSystem()
     {
     }
@@ -163,6 +173,7 @@ public class StatisticSystem
             if (attributeSet != null && attributeSet.OnAttributeChange != null)
                 attributeSet.OnAttributeChange.RemoveListener(UpdateChangedStatistics);
     }
+
 
     public float Sum(AttributeType type)
     {
@@ -205,16 +216,6 @@ public class StatisticSystem
     //        return statusEffect;
     //    }
 
-    public override string ToString()
-    {
-        string s = "";
-
-        foreach (KeyValuePair<StatisticType, float> statistic in statistics)
-            s += ";" + statistic.Key + ":" + statistic.Value;
-
-        return string.Format("Stat: {0}\nTalent: {1}\n\n", s.Substring(1), attributeSets); //, statusEffects);
-    }
-
     public float CalculateModified(StatisticType type, params IAttributeCollection[] modifiers)
     {
         IAttributeCollection[] args = new IAttributeCollection[attributeSets.Length + modifiers.Length];
@@ -231,6 +232,17 @@ public class StatisticSystem
         Array.Copy(modifiers, 0, args, attributeSets.Length, modifiers.Length);
 
         return CalculateAll(args);
+    }
+
+
+    public override string ToString()
+    {
+        string s = "";
+
+        foreach (KeyValuePair<StatisticType, float> statistic in statistics)
+            s += ";" + statistic.Key + ":" + statistic.Value;
+
+        return string.Format("Stat: {0}\nTalent: {1}\n\n", s.Substring(1), attributeSets); //, statusEffects);
     }
 
 

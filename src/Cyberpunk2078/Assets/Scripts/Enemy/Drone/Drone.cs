@@ -12,6 +12,7 @@ public class Drone : Enemy, IPatroller
     [SerializeField] private Vector3[] patrolPoints;
     public RangedWeaponConfiguration patrolFiringConfiguration;
 
+    [Header("")]
     [SerializeField] private float DamageCD;
     private Dictionary<int, float> damageList = new Dictionary<int, float>();
 
