@@ -78,7 +78,7 @@ public class PSDashing : PlayerState
                         
             //enable Collision
             playerCharacter.transform.right = Vector3.right;
-            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Dummy"),false);
+            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Dummy"), false);
         }
         else {
             //prevent ground-hitting shifting 

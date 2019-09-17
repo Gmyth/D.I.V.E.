@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2000
   delay: 0
+  idleAnimation: L2Cleaner_Idle
+  patrollingAnimation: L2Cleaner_Run
   index_ESIdle: -1
   index_ESAlert: 1

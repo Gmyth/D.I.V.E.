@@ -15,7 +15,10 @@ MonoBehaviour:
   chasingSpeed: 3
   attackRange: 1
   attackHeight: 1
-  motionTime: 2
-  animationState: 
+  attackDamage: 1
+  motionTime: 1
+  idleAnimation: L2Cleaner_Idle
+  chasingAnimation: L2Cleaner_Run
+  attackAnimation: L2Cleaner_Melee
   stateIndex_targetLoss: -1
   stateIndex_afterAttack: -1

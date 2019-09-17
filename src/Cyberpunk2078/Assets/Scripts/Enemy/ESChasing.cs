@@ -5,26 +5,56 @@ public abstract class ESChasingAttack<T> : EnemyState<T> where T : Enemy
 {
     [Header("Configuration")]
     [SerializeField] private float chasingSpeed;
-    [SerializeField] private float attackRange;
-    [SerializeField] private float attackHeight;
+    [SerializeField][Min(0)] private float attackRange;
+    [SerializeField][Min(0)] private float attackHeight;
+    [SerializeField][Min(0)] private float attackDamage = 1;
     [SerializeField] private float motionTime;
-    [SerializeField] private string animationState = "";
+    [SerializeField] private string idleAnimation = "";
+    [SerializeField] private string chasingAnimation = "";
+    [SerializeField] private string attackAnimation = "";
 
     [Header("Connected States")]
     [SerializeField] private int stateIndex_targetLoss = -1;
     [SerializeField] private int stateIndex_afterAttack = -1;
 
     private int previousStateIndex;
+
+    private SpriteRenderer renderer;
     private Rigidbody2D rigidbody;
     private Animator animator;
 
+    private bool isMoving = false;
     private float t = 0;
+
+
+    private bool IsMoving
+    {
+        get
+        {
+            return isMoving;
+        }
+
+        set
+        {
+            if (value != isMoving)
+            {
+                if (value)
+                {
+                    if (chasingAnimation != "")
+                        animator.Play(chasingAnimation);
+                }
+                else if (idleAnimation != "")
+                    animator.Play(idleAnimation);
+            }
+        }
+    }
 
 
     public override void Initialize(T enemy)
     {
         base.Initialize(enemy);
 
+        renderer = enemy.GetComponent<SpriteRenderer>();
         rigidbody = enemy.GetComponent<Rigidbody2D>();
         animator = enemy.GetComponent<Animator>();
     }
@@ -50,20 +80,36 @@ public abstract class ESChasingAttack<T> : EnemyState<T> where T : Enemy
                 {
                     rigidbody.velocity = Vector2.zero;
 
+                    IsMoving = false;
+
 
                     if (playerPosition.y - enemyPosition.y <= attackHeight) // Check if the target is low enough to get hit
                     {
+                        Vector2 direction = d > 0 ? Vector2.right : Vector2.left;
+
+                        Vector3 scale = enemy.transform.localScale;
+                        scale.x = Mathf.Sign(d) * Mathf.Abs(scale.x);
+
+                        enemy.transform.localScale = scale;
+
                         t = Time.time;
 
-                        if (animationState != "")
-                            animator.Play(animationState, -1, 0f);
+                        if (attackAnimation != "")
+                            animator.Play(attackAnimation, -1, 0f);
                     }
                 }
                 else
                 {
                     Vector2 direction = d > 0 ? Vector2.right : Vector2.left;
 
+                    Vector3 scale = enemy.transform.localScale;
+                    scale.x = Mathf.Sign(d) * Mathf.Abs(scale.x);
+
+                    enemy.transform.localScale = scale;
+
                     rigidbody.velocity = direction * chasingSpeed;
+
+                    IsMoving = true;
                 }
 
 
@@ -84,7 +130,17 @@ public abstract class ESChasingAttack<T> : EnemyState<T> where T : Enemy
 
     public override void OnStateEnter(State previousState)
     {
+        enemy.currentAttackDamage = CalculateAttackDamage(attackDamage);
+
+        isMoving = false;
+
         previousStateIndex = previousState.Index;
         t = float.MaxValue;
+    }
+
+
+    protected virtual float CalculateAttackDamage(float baseDamage)
+    {
+        return baseDamage;
     }
 }

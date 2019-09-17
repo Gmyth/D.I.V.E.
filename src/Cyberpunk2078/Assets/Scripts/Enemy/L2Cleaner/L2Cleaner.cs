@@ -10,7 +10,8 @@ public class L2Cleaner : Enemy, IPatroller
 
     public override float ApplyDamage(int instanceId, float rawDamage, bool overWrite = false)
     {
-        throw new System.NotImplementedException();
+        Debug.LogWarning(LogUtility.MakeLogStringFormat(gameObject.name, "Take {0} damage", rawDamage));
+        return rawDamage;
     }
 
     public override void Dead()

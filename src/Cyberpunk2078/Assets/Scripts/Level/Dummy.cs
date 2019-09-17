@@ -49,9 +49,10 @@ public abstract class Enemy : Dummy
     [SerializeField] protected FSMEnemy fsm;
     [SerializeField] protected StatisticSystem statistics;
     [SerializeField] protected Zone guardZone;
+    [SerializeField] protected HitBox[] hitBoxes;
 
     [HideInInspector] public PlayerCharacter currentTarget;
-
+    [HideInInspector] public float currentAttackDamage = 0;
 
     public float this[StatisticType type]
     {
@@ -75,6 +76,18 @@ public abstract class Enemy : Dummy
         {
             return 10f;
         }
+    }
+
+
+    protected void EnableHitBox(int index)
+    {
+        hitBoxes[index].damage = currentAttackDamage;
+        hitBoxes[index].gameObject.SetActive(true);
+    }
+
+    protected void DisableHitBox(int index)
+    {
+        hitBoxes[index].gameObject.SetActive(false);
     }
 
 
