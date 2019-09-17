@@ -171,8 +171,8 @@ public class CameraManager : MonoBehaviour {
 				posY = Mathf.SmoothDamp(transform.position.y,center.y, ref velocity.y, smoothTimeY);
 				transform.position = new Vector3(posX + oX + shakeX, posY + oY + shakeY, transform.position.z);
 				
-				if(targetIndicator && targetIndicator.changeSize) camera.fieldOfView = Mathf.SmoothDamp(camera.fieldOfView, targetIndicator.targetCameraSize, ref tempVelocity, targetIndicator.smoothZoomTime);
-				else camera.fieldOfView = Mathf.SmoothDamp(camera.fieldOfView, defaultFieldOfView, ref tempVelocity, smoothTimeZoom);
+				if(targetIndicator && targetIndicator.changeSize) camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize, targetIndicator.targetCameraSize, ref tempVelocity, targetIndicator.smoothZoomTime);
+				else camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize, defaultFieldOfView, ref tempVelocity, smoothTimeZoom);
 				break;
 			
 			case CameraState.Focusing:

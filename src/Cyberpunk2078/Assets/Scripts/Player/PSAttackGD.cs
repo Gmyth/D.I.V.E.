@@ -34,8 +34,6 @@ public class PSAttackGD : PlayerState
         t0 = Time.time;
 
         playerCharacter.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-
-
-        Debug.Log("ATTACK_GD");
+        
     }
 }

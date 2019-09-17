@@ -9,13 +9,15 @@ using UnityEditor.IMGUI.Controls;
 [CustomEditor(typeof(DataTable), true, isFallback = true)]
 public class DataTableEditor : Editor
 {
-    private DataTableEditorWindow editorWindow;
-
-
     public override void OnInspectorGUI()
     {
         if (GUILayout.Button("EDIT"))
-            ((DataTableEditorWindow)EditorWindow.GetWindow(typeof(DataTableEditorWindow))).serializedEntries = serializedObject.FindProperty("serializedEntries");
+        {
+            DataTableEditorWindow window = (DataTableEditorWindow)EditorWindow.GetWindow(typeof(DataTableEditorWindow));
+
+            window.serializedEntries = serializedObject.FindProperty("serializedEntries");
+            window.titleContent = new GUIContent(serializedObject.targetObject.name);
+        }
     }
 }
 
@@ -25,20 +27,33 @@ public class DataTableEditorWindow : EditorWindow
     private const float buttonWidth = 20;
 
 
+    [MenuItem("Window/Data Tables")]
+    static void ShowWindow()
+    {
+        DataTableEditorWindow window = GetWindow<DataTableEditorWindow>();
+
+
+        window.titleContent = new GUIContent("Data Tables");
+        window.Show();
+    }
+
+
+    private TreeViewState tableState;
+    private TableView table;
+
     public SerializedProperty serializedEntries;
 
-    private TreeView treeView;
-    private TreeViewState treeViewState;
 
-    private MultiColumnHeader header;
-    private MultiColumnHeaderState headerState;
+    private void OnEnable()
+    {
+    }
 
-
-    void OnGUI()
+    private void OnGUI()
     {
         if (serializedEntries == null)
         {
-            header = null;
+            titleContent = new GUIContent("Data Tables");
+            table = null;
         }
         else
         {
@@ -49,7 +64,9 @@ public class DataTableEditorWindow : EditorWindow
 
             contentPosition.width = buttonWidth;
             if (GUI.Button(contentPosition, "+"))
+            {
                 serializedEntries.InsertArrayElementAtIndex(N);
+            }
 
             contentPosition.x += buttonWidth;
             if (GUI.Button(contentPosition, "-") && N > 0)
@@ -61,33 +78,36 @@ public class DataTableEditorWindow : EditorWindow
 
 
             if (serializedEntries.arraySize == 0)
-                header = null;
+                table = null;
             else
             {
-                if (header == null)
+                if (table == null)
                 {
-                    SerializedProperty property = serializedEntries.GetArrayElementAtIndex(0);
+                    //SerializedProperty property = serializedEntries.GetArrayElementAtIndex(0);
 
-                    List<MultiColumnHeaderState.Column> list = new List<MultiColumnHeaderState.Column>();
+                    //List<MultiColumnHeaderState.Column> list = new List<MultiColumnHeaderState.Column>();
 
-                    property.NextVisible(true);
+                    //property.NextVisible(true);
 
-                    list.Add(new MultiColumnHeaderState.Column() { allowToggleVisibility = true, autoResize = true, canSort = true, headerContent = new GUIContent(property.name), minWidth = 20, maxWidth = 100 });
-
-
-                    while (property.NextVisible(false))
-                        list.Add(new MultiColumnHeaderState.Column() { allowToggleVisibility = true, autoResize = true, canSort = true, headerContent = new GUIContent(property.name), minWidth = 20, maxWidth = 100 });
-
-                    contentPosition.width = 1000;
+                    //list.Add(new MultiColumnHeaderState.Column() { allowToggleVisibility = true, autoResize = true, canSort = true, headerContent = new GUIContent(property.name), minWidth = 20, maxWidth = 100 });
 
 
-                    header = new MultiColumnHeader(new MultiColumnHeaderState(list.ToArray()));
+                    //while (property.NextVisible(false))
+                    //    list.Add(new MultiColumnHeaderState.Column() { allowToggleVisibility = true, autoResize = true, canSort = true, headerContent = new GUIContent(property.name), minWidth = 20, maxWidth = 100 });
 
-                    header.ResizeToFit();
+                    //contentPosition.width = 1000;
+
+                    if (tableState == null)
+                        tableState = new TreeViewState();
+
+
+                    table = new TableView(tableState, serializedEntries);
                 }
-                
 
-                header.OnGUI(contentPosition, 0);
+
+                contentPosition.height = position.height - contentPosition.height - 15;
+
+                table.OnGUI(contentPosition);
             }
         }
     }

@@ -14,23 +14,15 @@ public class PSIdle : PlayerState
 
     public override int Update()
     {
+        // Energy Recover
+        Player.CurrentPlayer.EnergyRecover(Time.time);
+        
+        
         if (Input.GetAxis("Attack1") > 0)
         {
             return indexPSAttackGH;
         }
-
-//        if (Input.GetAxis("Attack2") > 0)
-//        {
-//            float y = Input.GetAxis("Vertical");
-//
-//            if (y > 0)
-//                return index_PSAttackGU;
-//            else if (y < 0)
-//                return index_PSAttackGD;
-//
-//            return index_PSAttackGH2;
-//        }
-
+        
         if (Input.GetAxis("Vertical") > 0  &&  isCloseTo("Ladder"))
         {
             // up is pressed
