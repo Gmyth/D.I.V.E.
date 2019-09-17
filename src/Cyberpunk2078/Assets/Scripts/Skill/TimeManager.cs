@@ -20,10 +20,11 @@ public class TimeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Time.time > endTime)
+        if (Time.unscaledTime > endTime)
         { 
             Time.timeScale += (1f / releaseSmoothTime) * Time.unscaledDeltaTime;
             Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
+            Time.fixedDeltaTime = Time.timeScale * 0.02f;
         }
         
     }
@@ -32,13 +33,13 @@ public class TimeManager : MonoBehaviour
     {
         Time.timeScale = slowMotionFactor;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
-        startTime = Time.time;
+        startTime = Time.unscaledTime;
         endTime = startTime + duration;
     }
     
     public void endSlowMotion()
     {
 
-        endTime = Time.time;;
+        endTime = Time.unscaledTime;;
     }
 }

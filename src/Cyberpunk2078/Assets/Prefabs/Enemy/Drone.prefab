@@ -115,7 +115,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -161,11 +161,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9553af93f378ad844ad92cff0a4c1a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolPoints: []
-  fsm: {fileID: 11400000, guid: 2a8581baf4110af4f932a613ab71e8db, type: 2}
-  bulletID: 0
-  fireInterval: 1
-  bulletSpeed: 10
+  fsm: {fileID: 11400000, guid: cefee7bfa762bfc43a840f144dadd3b9, type: 2}
+  patrolPoints:
+  - {x: 161.5, y: 4.5, z: 0}
+  - {x: 161.5, y: -3, z: 0}
+  - {x: 165.5, y: 4.5, z: 0}
+  patrolFiringConfiguration:
+    firingInterval: 2
+    bulletID: 0
+    bulletSpeed: 12
   DamageCD: 0
   Health: 100
   HealthCap: 100
