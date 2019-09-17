@@ -41,17 +41,20 @@ public class Bullet : Recyclable
         {
             if (other.GetComponent<PlayerCharacter>().State.Name != "Dash")
             {
-                other.GetComponent<PlayerCharacter>().ApplyDamage(GetInstanceID(),rawDamage);
+                other.GetComponent<PlayerCharacter>().ApplyDamage(GetInstanceID(), rawDamage);
+                CameraManager.Instance.Shaking(0.20f, 0.05f);
+                var Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
+                Hit.gameObject.SetActive(true);
+                Hit.transform.right = transform.right;
+                Hit.transform.position =
+                    other.transform.position + (transform.position - other.transform.position) * 0.5f;
+                Hit.transform.localScale = Vector3.one;
+            }
+            else {
+                TimeManager.Instance.startSlowMotion(1f);
             }
             
-            CameraManager.Instance.Shaking(0.20f,0.05f);
-            
-            var Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
-            Hit.gameObject.SetActive(true);
-            Hit.transform.right = transform.right;
-            Hit.transform.position =
-                other.transform.position + (transform.position  - other.transform.position) * 0.5f;
-            Hit.transform.localScale = Vector3.one;
+           
             Die();
         }
         
