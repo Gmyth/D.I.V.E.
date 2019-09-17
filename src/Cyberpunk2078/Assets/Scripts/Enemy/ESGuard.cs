@@ -1,15 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 
-[CreateAssetMenuAttribute(fileName = "ES_Guard", menuName = "Enemy State/Guard")]
-public class ESGuard : DroneState
+public interface IGuardian
 {
-    [Header("Configuration")]
-    [SerializeField] private float minTurnTime = 3f;
-    [SerializeField] private float maxTurnTime = 6f;
+    float MinTurnTime { get; }
+    float MaxTurnTime { get; }
+}
 
+
+public abstract class ESGuard<T> : EnemyState<T> where T : Enemy, IGuardian
+{
     [Header("Connected States")]
     [SerializeField] private int index_ESIdle = -1;
     [SerializeField] private int index_ESAlert = -1;
@@ -23,7 +23,7 @@ public class ESGuard : DroneState
         {
             // TODO: Turn
 
-            t0 += Random.Range(minTurnTime, maxTurnTime);
+            t0 += Random.Range(enemy.MinTurnTime, enemy.MaxTurnTime);
         }
 
         // TODO: Player detection
@@ -33,6 +33,6 @@ public class ESGuard : DroneState
 
     public override void OnStateEnter()
     {
-        t0 = Time.time + Random.Range(minTurnTime, maxTurnTime);
+        t0 = Time.time + Random.Range(enemy.MinTurnTime, enemy.MaxTurnTime);
     }
 }

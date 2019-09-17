@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: WallJump
   jumpForce: 6
-  jumpSpeed: 11
-  stickWallTime: 0.5
-  wallCheckCoolDown: 0.1
+  jumpSpeed: 8
+  stickWallTime: 1
+  wallCheckCoolDown: 0.2
   index_PSIdle: 0
   index_PSMoving: 1
   index_PSJumping2: 7
