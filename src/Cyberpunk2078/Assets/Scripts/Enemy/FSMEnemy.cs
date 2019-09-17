@@ -3,15 +3,59 @@
 
 public abstract class EnemyState : State
 {
+    public static PlayerCharacter FindAvailableTarget(Vector3 enemyPosition, float range)
+    {
+        PlayerCharacter player = PlayerCharacter.Singleton;
+
+        Vector3 playerPosition = player.transform.position;
+
+
+        float d = Vector2.Distance(enemyPosition, playerPosition);
+
+        if (d <= range)
+        {
+            RaycastHit2D raycastHit2D = Physics2D.Raycast(enemyPosition, playerPosition - enemyPosition, d);
+
+            if (raycastHit2D.collider && raycastHit2D.collider.gameObject == player.gameObject)
+                return player;
+        }
+
+
+        return null;
+    }
+
+
+    public static PlayerCharacter FindAvailableTarget(Vector3 enemyPosition, float range, Zone guardZone)
+    {
+        PlayerCharacter player = PlayerCharacter.Singleton;
+
+        Vector3 playerPosition = player.transform.position;
+
+
+        float d = Vector2.Distance(enemyPosition, playerPosition);
+
+        if (d <= range && guardZone.Contains(playerPosition))
+        {
+            RaycastHit2D raycastHit2D = Physics2D.Raycast(enemyPosition, playerPosition - enemyPosition, d);
+
+            if (raycastHit2D.collider && raycastHit2D.collider.gameObject == player.gameObject)
+                return player;
+        }
+
+
+        return null;
+    }
+
+
     public virtual void Initialize(int index, Enemy enemy)
     {
         Index = index;
     }
 
 
-    public override void OnStateEnter() { }
+    public override void OnStateEnter(State previousState) { }
     //public virtual void OnStateReset() { }
-    public override void OnStateQuit() { }
+    public override void OnStateQuit(State nextState) { }
 }
 
 
@@ -36,9 +80,12 @@ public abstract class EnemyState<T> : EnemyState where T : Enemy
 
     protected PlayerCharacter IsPlayerInSight(float range)
     {
-        PlayerCharacter player = PlayerCharacter.Singleton;
+        return IsPlayerInSight(PlayerCharacter.Singleton, range);
+    }
 
 
+    protected PlayerCharacter IsPlayerInSight(PlayerCharacter player, float range)
+    {
         if (!player)
             return null;
 
@@ -81,11 +128,11 @@ public class FSMEnemy : FiniteStateMachine<EnemyState>
 
                 int previousStateIndex = currentStateIndex;
 
-                CurrentState.OnStateQuit();
+                CurrentState.OnStateQuit(states[value]);
 
                 currentStateIndex = value;
 
-                CurrentState.OnStateEnter();
+                CurrentState.OnStateEnter(states[previousStateIndex]);
 
                 OnCurrentStateChange.Invoke(currentStateIndex, previousStateIndex);
             }
@@ -107,7 +154,7 @@ public class FSMEnemy : FiniteStateMachine<EnemyState>
 
         currentStateIndex = startingStateIndex;
 
-        CurrentState.OnStateEnter();
+        CurrentState.OnStateEnter(CurrentState);
 
         OnCurrentStateChange.Invoke(currentStateIndex, -1);
     }
@@ -116,7 +163,7 @@ public class FSMEnemy : FiniteStateMachine<EnemyState>
     {
         int previousStateIndex = currentStateIndex;
 
-        CurrentState.OnStateQuit();
+        CurrentState.OnStateQuit(null);
 
         currentStateIndex = -1;
 

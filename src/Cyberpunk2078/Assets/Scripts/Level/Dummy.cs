@@ -46,5 +46,46 @@ public abstract class Dummy : MonoBehaviour, IDamageable
 
 public abstract class Enemy : Dummy
 {
-    AttributeSet attributes;
+    [SerializeField] protected FSMEnemy fsm;
+    [SerializeField] protected StatisticSystem statistics;
+    [SerializeField] protected Zone guardZone;
+
+    [HideInInspector] public PlayerCharacter currentTarget;
+
+
+    public float this[StatisticType type]
+    {
+        get
+        {
+            return statistics[type];
+        }
+    }
+
+    public Zone GuardZone
+    {
+        get
+        {
+            return guardZone;
+        }
+    }
+
+    public float SightRange
+    {
+        get
+        {
+            return 10f;
+        }
+    }
+
+
+    protected virtual void Start()
+    {
+        fsm.Initialize(this);
+        fsm.Boot();
+    }
+
+    protected virtual void FixedUpdate()
+    {
+        fsm.Update();
+    }
 }

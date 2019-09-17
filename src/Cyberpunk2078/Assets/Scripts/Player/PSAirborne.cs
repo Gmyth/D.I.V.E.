@@ -50,7 +50,7 @@ public class PSAirborne : PlayerState
         return Index;
     }
     
-    public override void OnStateEnter()
+    public override void OnStateEnter(State previousState)
     {
         // Add Ghost trail
         anim.Play("MainCharacter_Airborne", -1, 0f);

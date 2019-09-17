@@ -6,8 +6,6 @@ using UnityEngine;
 [RequireComponent(typeof(Seeker))]
 public class Drone : Enemy, IPatroller
 {
-    [SerializeField] private FSMEnemy fsm;
-
     [Header("Patrolling")]
     [SerializeField] private Vector3[] patrolPoints;
     public RangedWeaponConfiguration patrolFiringConfiguration;
@@ -91,17 +89,11 @@ public class Drone : Enemy, IPatroller
     }
 
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         Health = HealthCap;
-
-        fsm.Initialize(this);
-        fsm.Boot();
-    }
-
-    private void FixedUpdate()
-    {
-        fsm.Update();
     }
 
 

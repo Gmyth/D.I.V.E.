@@ -29,7 +29,7 @@ public class PSAttackGD : PlayerState
         return Index;
     }
 
-    public override void OnStateEnter()
+    public override void OnStateEnter(State previousState)
     {
         t0 = Time.time;
 

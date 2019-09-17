@@ -18,9 +18,9 @@ public abstract class PlayerState : State
     }
 
 
-    public override void OnStateEnter() { }
+    public override void OnStateEnter(State previousState) { }
     //public virtual void OnStateReset() { }
-    public override void OnStateQuit() { }
+    public override void OnStateQuit(State nextState) { }
 
 
     //Player Ground check
@@ -163,11 +163,11 @@ public class FSMPlayer : FiniteStateMachine<PlayerState>
 
                 int previousStateIndex = currentStateIndex;
 
-                CurrentState.OnStateQuit();
+                CurrentState.OnStateQuit(states[value]);
 
                 currentStateIndex = value;
 
-                CurrentState.OnStateEnter();
+                CurrentState.OnStateEnter(states[previousStateIndex]);
 
                 OnCurrentStateChange.Invoke(currentStateIndex, previousStateIndex);
             }
@@ -189,7 +189,7 @@ public class FSMPlayer : FiniteStateMachine<PlayerState>
 
         currentStateIndex = startingStateIndex;
 
-        CurrentState.OnStateEnter();
+        CurrentState.OnStateEnter(CurrentState);
 
         OnCurrentStateChange.Invoke(currentStateIndex, -1);
     }
@@ -198,7 +198,7 @@ public class FSMPlayer : FiniteStateMachine<PlayerState>
     {
         int previousStateIndex = currentStateIndex;
 
-        CurrentState.OnStateQuit();
+        CurrentState.OnStateQuit(null);
 
         currentStateIndex = -1;
 
@@ -209,7 +209,6 @@ public class FSMPlayer : FiniteStateMachine<PlayerState>
 
     public void Update()
     {
-
         if (currentStateIndex >= 0)
             CurrentStateIndex = CurrentState.Update();
     }

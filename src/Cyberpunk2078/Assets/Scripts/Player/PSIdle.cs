@@ -42,7 +42,7 @@ public class PSIdle : PlayerState
         return Index;
     }
 
-    public override void OnStateEnter()
+    public override void OnStateEnter(State previousState)
     {
         anim.Play("MainCharacter_Idle", -1, 0f);
         Vector2 V = playerCharacter.GetComponent<Rigidbody2D>().velocity;
