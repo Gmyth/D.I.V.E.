@@ -37,6 +37,10 @@ public class Bullet : Recyclable
                 Die();
             }
         }
+        else if (other.tag == "Hunch" && other.GetComponent<PlayerCharacter>().State.Name != "Dash")
+        {
+            TimeManager.Instance.startSlowMotion(0.2f);
+        }
         else if (other.tag == "Player")
         {
             if (other.GetComponent<PlayerCharacter>().State.Name != "Dash")
@@ -50,15 +54,10 @@ public class Bullet : Recyclable
                     other.transform.position + (transform.position - other.transform.position) * 0.5f;
                 Hit.transform.localScale = Vector3.one;
             }
-            else {
-                TimeManager.Instance.startSlowMotion(1f);
-            }
-            
-           
             Die();
         }
         
-        else if (other.tag == "PlayerAttack")
+        else if (other.tag == "PlayerAttack" || other.tag == "Ground")
         {
             if (other.name != "DashAtkBox")
             {

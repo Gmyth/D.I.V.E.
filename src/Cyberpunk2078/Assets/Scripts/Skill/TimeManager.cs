@@ -22,7 +22,7 @@ public class TimeManager : MonoBehaviour
     {
         if (Time.time > endTime)
         { 
-            Time.timeScale += (1f / releaseSmoothTime) * Time.deltaTime;
+            Time.timeScale += (1f / releaseSmoothTime) * Time.unscaledDeltaTime;
             Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
         }
         

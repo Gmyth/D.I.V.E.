@@ -66,7 +66,7 @@ public class ESPatrolling : DroneState
         }
 
         
-        PlayerCharacter player = IsPlayerInSight(10);
+        PlayerCharacter player = IsPlayerInSight(100);
         
         if (player && Time.time - tf >= dummy.FireInterval)
         {
