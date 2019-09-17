@@ -7,7 +7,8 @@ using UnityEngine.SpatialTracking;
 public enum CameraState
 {
 	Idle = 0, // the normal state of camera, in this state, camera will automatically adjust the position and scope for 4 players
-	Focusing, // focus at a point.
+	Focusing,// focus at a point.
+    Release,
     Reset
 }
 
@@ -195,6 +196,9 @@ public class CameraManager : MonoBehaviour {
 	            
 	            transform.position = new Vector3(posX + offsetX + shakeX, posY + offsetY + shakeY, transform.position.z);
                 break;
+            case CameraState.Release:
+                break;
+
             
         }
 	}
@@ -219,6 +223,11 @@ public class CameraManager : MonoBehaviour {
 		target = _target;
 		currentState = CameraState.Focusing;
 	}
+
+    public void release()
+    {
+        currentState = CameraState.Release;
+    }
 
 
     public void reset()

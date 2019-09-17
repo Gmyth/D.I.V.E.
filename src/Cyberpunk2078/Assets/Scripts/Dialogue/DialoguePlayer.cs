@@ -30,4 +30,15 @@ public class DialoguePlayer : MonoBehaviour
     {
         isDialogueOngoing = boolean;
     }
+
+    public bool isInDialogue;
+    public TimelineManager currentTimelineManager;
+    public void PrepareTimeline(TimelineManager tm)
+    {
+        isInDialogue = true;
+        currentTimelineManager = tm;
+        PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 9;
+
+    }
+
 }

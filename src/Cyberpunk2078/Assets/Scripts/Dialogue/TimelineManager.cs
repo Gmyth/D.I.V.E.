@@ -6,7 +6,10 @@ using UnityEngine.Playables;
 public class TimelineManager : MonoBehaviour
 {
 
+    public bool isPlayInstantly = false;
     public bool isTheLastTimeline = false;
+
+    public bool isPlaying = false;
 
     [SerializeField] private PlayableDirector[] timelines;
     [SerializeField] private int currentIndex = 0;
@@ -19,12 +22,16 @@ public class TimelineManager : MonoBehaviour
 
     public void OnTimelineStart() 
     {
-        //When timeline start
+        if (!isPlaying)
+        {
+            //When timeline start
 
-        GetComponent<Collider2D>().enabled = false;
-        //Stop gameplay
+            GetComponent<Collider2D>().enabled = false;
+            //Stop gameplay
 
-        PlayTimelineInIndex(0);
+            PlayTimelineInIndex(0);
+            isPlaying = true;
+        }
     }
 
     public void OnTimelineEnd()
@@ -76,7 +83,11 @@ public class TimelineManager : MonoBehaviour
     {
         if (other.gameObject.name == "Player")
         {
-            OnTimelineStart();
+            if (isPlayInstantly)
+            {
+                OnTimelineStart();
+            }
+            other.gameObject.GetComponent<DialoguePlayer>().PrepareTimeline(this);
         }
     }
 

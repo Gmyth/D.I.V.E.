@@ -5,16 +5,16 @@ using UnityEngine;
 [CreateAssetMenuAttribute(fileName = "PS_No_Input", menuName = "Player State/No Input")]
 public class PSNoInput : PlayerState
 {
-    public TimelineManager currentTimeline;
+    //public TimelineManager currentTimeline;
 
     public override int Update()
     {
         if (isGrounded())
         {
             Rigidbody2D rb2d = playerCharacter.gameObject.GetComponent<Rigidbody2D>();
-            if (rb2d.velocity == Vector2.zero)
+            if (rb2d.velocity == Vector2.zero && !playerCharacter.gameObject.GetComponent<DialoguePlayer>().currentTimelineManager.isPlayInstantly)
             {
-                //currentTimeline.OnTimelineStart();
+                playerCharacter.gameObject.GetComponent<DialoguePlayer>().currentTimelineManager.OnTimelineStart();
                 Debug.Log(LogUtility.MakeLogString("PSNoInput", "Timeline Start"));
             }
         }
@@ -25,11 +25,13 @@ public class PSNoInput : PlayerState
 
     public override void OnStateEnter()
     {
-        //kill all speed
+        KillSpeed();
+    }
+
+    public void KillSpeed()
+    {
         Rigidbody2D rb2d = playerCharacter.gameObject.GetComponent<Rigidbody2D>();
         rb2d.velocity = Vector2.zero;
-
-      
     }
 
 

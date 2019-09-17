@@ -10,7 +10,6 @@ public class PlayerCharacter : Dummy
 
     [SerializeField] private FSMPlayer fsm;
     
-    
     private StatisticSystem statistic;
     private new Rigidbody rigidbody;
 
@@ -18,6 +17,10 @@ public class PlayerCharacter : Dummy
 
     public PlayerState State => fsm.CurrentState;
 
+    public FSMPlayer GetFSM()
+    {
+        return fsm;
+    }
 
     public PlayerCharacter(Player player)
     {
