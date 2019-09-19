@@ -93,6 +93,7 @@ public class DialogueManager: Singleton<DialogueManager>
     {
         GUIDialogue dialogueWin = (GUIDialogue)GUIManager.Singleton.Open("DialogueUI");
 
+        dialogueWin.GetComponent<Canvas>().worldCamera = Camera.main;
 
         dialogueWin.CurrentTimelineManager = currentTimelineManager;
         
