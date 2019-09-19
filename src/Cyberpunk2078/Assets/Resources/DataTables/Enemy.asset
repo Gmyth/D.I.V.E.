@@ -17,5 +17,7 @@ MonoBehaviour:
     name: Cleaner
     attributes:
       serializedAttributes:
+      - type: 768
+        value: 1
       - type: 1280
-        value: 10
+        value: 6

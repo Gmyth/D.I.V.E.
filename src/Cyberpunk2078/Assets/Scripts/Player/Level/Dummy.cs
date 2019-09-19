@@ -92,9 +92,11 @@ public abstract class Enemy : Dummy
     protected virtual void Start()
     {
         data = DataTableManager.singleton.GetEnemyData(typeID);
-        statistics = new StatisticSystem(data.Attributes);
 
-        Debug.LogWarning(this[StatisticType.SightRange]);
+
+        statistics = new StatisticSystem(data.Attributes);
+        statistics[StatisticType.Hp] = statistics[StatisticType.MaxHp];
+
 
         fsm.Initialize(this);
         fsm.Boot();

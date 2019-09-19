@@ -82,6 +82,7 @@ public class StatisticSystem
         return statistics;
     }
 
+
     /// <summary>
     /// An event triggered whenever a certain statistic in this system changes 
     /// </summary>
