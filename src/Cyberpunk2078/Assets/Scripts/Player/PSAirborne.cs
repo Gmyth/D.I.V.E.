@@ -33,7 +33,7 @@ public class PSAirborne : PlayerState
             return indexPSWallJumping;
         }
 
-        if (Input.GetAxis("Jump") > 0 && Player.CurrentPlayer.SecondJumpReady)
+        if (Input.GetButtonDown("Jump") && Player.CurrentPlayer.SecondJumpReady)
         {
             
             Player.CurrentPlayer.SecondJumpReady = false;

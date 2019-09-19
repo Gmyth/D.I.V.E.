@@ -9,17 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d611e7e5a94bf5a4a8aee93e1edddd50, type: 3}
-  m_Name: PS_Jumping1
+  m_Script: {fileID: 11500000, guid: 001d169824502af48b4a81027a991d4f, type: 3}
+  m_Name: PS_Jumping2
   m_EditorClassIdentifier: 
-  jumpForce: 5
-  speedFactor: 7
-  accelerationFactor: 30
-  indexPSIdle: 0
-  indexPSMoving: 1
-  indexJumping2: 5
-  indexPSWallJumping: 7
-  indexPSDashing: 6
+  Name: 
+  jumpForce: 4
+  speed_factor: 7
+  acceleration_factor: 30
+  index_PSIdle: 0
+  index_PSMoving: 1
+  index_PSWallJumping: 7
+  index_PSDashing: 6
   indexPSAttackGH: 3
   indexPSAirborne: 2
   indexPSClimb: 8
