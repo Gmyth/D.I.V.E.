@@ -391,8 +391,12 @@ public class GUIDialogue : GUIWindow
             }
         }
         else if (command.Name == "action") {
-            if (command.Values[0] == "play") {
+            if (command.Values[0] == "continue") {
                 CurrentTimelineManager.PlayNextTimeline();
+            }
+            else if (command.Values[0] == "end")
+            {
+                CurrentTimelineManager.isTheLastDialogue = true;
             }
         }
     }
@@ -555,7 +559,7 @@ public class GUIDialogue : GUIWindow
         else
         {
             if (CurrentTimelineManager.isTheLastTimeline) {
-                CurrentTimelineManager.OnTimelineEnd();
+                //CurrentTimelineManager.OnTimelineEnd(1);
             }
             else {
                 CurrentTimelineManager.PlayNextTimeline();

@@ -33,12 +33,19 @@ public class DialoguePlayer : MonoBehaviour
 
     public bool isInDialogue;
     public TimelineManager currentTimelineManager;
-    public void PrepareTimeline(TimelineManager tm)
+    public void PrepareForTimeline(TimelineManager tm)
     {
         isInDialogue = true;
         currentTimelineManager = tm;
         PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 9;
 
+    }
+
+    public void EndTimelineWithPlayerExitState(int playerExitState)
+    {
+        isInDialogue = false;
+        currentTimelineManager = null;
+        PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = playerExitState;
     }
 
 }

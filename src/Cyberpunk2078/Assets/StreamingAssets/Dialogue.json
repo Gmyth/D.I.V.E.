@@ -28,7 +28,7 @@
 		"Type": "N",
 		"Actor": "Nash",
 		"Image": "N",
-		"Text": "I cannot be {color:red}catched{color:end}{action:play}!",
+		"Text": "I cannot be {color:red}catched{color:end}{action:end}!",
 		"Next": "-1",
 		"Sound": "N",
 		"Effect": "N",

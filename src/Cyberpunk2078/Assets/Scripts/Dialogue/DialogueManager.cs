@@ -127,6 +127,9 @@ public class DialogueManager: Singleton<DialogueManager>
         }
         yield return waitForKeyPress(KeyCode.G, dialogueWin);
         GUIManager.Singleton.Close("DialogueUI");
+        if (currentTimelineManager.CheckEndState()) {
+            currentTimelineManager.OnTimelineEnd(1);
+        }
         DialogueEnd.Invoke();      
     }
     private DialogueType CheckDialogueType(int index)
