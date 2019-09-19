@@ -58,6 +58,8 @@ public class GUIDialogue : GUIWindow
     //Useful for letting the player accelerate the speed animation.
     public float SpeedText = 0.05f;
 
+    public Transform dialogueTransform;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -104,12 +106,8 @@ public class GUIDialogue : GUIWindow
     }
     private void AssignTextBoxPos(string actor, Transform transform)
     {
-        if (Camera.main == null) return;
-        Vector2 actorCoordinates = Camera.main.WorldToScreenPoint(transform.position);
 
-        actorCoordinates.y += 120;
-
-        textBoxList[0].GetComponent<Transform>().position = actorCoordinates;
+        textBoxList[0].GetComponent<Transform>().position = dialogueTransform.position;
 
     }
 

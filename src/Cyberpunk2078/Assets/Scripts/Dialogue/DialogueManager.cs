@@ -89,9 +89,10 @@ public class DialogueManager: Singleton<DialogueManager>
     /// <param name="index"> The start id of dialogues </param>
     /// <param name="transform"> The actor's transform </param>
     /// <returns></returns>
-    public IEnumerator PlayDialogue(int index, Transform transform)
+    public IEnumerator PlayDialogue(int index, Transform transform = null)
     {
         GUIDialogue dialogueWin = (GUIDialogue)GUIManager.Singleton.Open("DialogueUI");
+
 
         dialogueWin.CurrentTimelineManager = currentTimelineManager;
         

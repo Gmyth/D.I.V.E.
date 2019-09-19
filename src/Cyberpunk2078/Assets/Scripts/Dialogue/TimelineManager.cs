@@ -94,7 +94,7 @@ public class TimelineManager : MonoBehaviour
     public void PlayDialogue(int index)
     {
         DialogueManager.Instance.SetTimelineManager(this);
-        StartCoroutine(DialogueManager.Instance.PlayDialogue(index, transform));
+        StartCoroutine(DialogueManager.Instance.PlayDialogue(index));
     }
 
 }

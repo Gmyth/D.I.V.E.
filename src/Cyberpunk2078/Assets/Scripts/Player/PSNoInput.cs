@@ -12,7 +12,7 @@ public class PSNoInput : PlayerState
         if (isGrounded())
         {
             Rigidbody2D rb2d = playerCharacter.gameObject.GetComponent<Rigidbody2D>();
-            if (rb2d.velocity == Vector2.zero && !playerCharacter.gameObject.GetComponent<DialoguePlayer>().currentTimelineManager.isPlayInstantly)
+            if (isGrounded() && !playerCharacter.gameObject.GetComponent<DialoguePlayer>().currentTimelineManager.isPlayInstantly)
             {
                 playerCharacter.gameObject.GetComponent<DialoguePlayer>().currentTimelineManager.OnTimelineStart();
                 Debug.Log(LogUtility.MakeLogString("PSNoInput", "Timeline Start"));
@@ -32,6 +32,7 @@ public class PSNoInput : PlayerState
     {
         Rigidbody2D rb2d = playerCharacter.gameObject.GetComponent<Rigidbody2D>();
         rb2d.velocity = Vector2.zero;
+        rb2d.simulated = false;
     }
 
 
