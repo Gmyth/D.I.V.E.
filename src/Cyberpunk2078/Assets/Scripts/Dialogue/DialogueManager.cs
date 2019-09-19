@@ -50,6 +50,7 @@ public class DialogueManager: Singleton<DialogueManager>
     {
         return dialogues[index];
     }
+
     private IEnumerator waitForKeyPress(KeyCode key, GUIDialogue win = null)
     {
         bool done = false;
@@ -87,9 +88,8 @@ public class DialogueManager: Singleton<DialogueManager>
     /// Play a sequence of dialogue
     /// </summary>
     /// <param name="index"> The start id of dialogues </param>
-    /// <param name="transform"> The actor's transform </param>
     /// <returns></returns>
-    public IEnumerator PlayDialogue(int index, Transform transform = null)
+    public IEnumerator PlayDialogue(int index)
     {
         GUIDialogue dialogueWin = (GUIDialogue)GUIManager.Singleton.Open("DialogueUI");
 
@@ -98,7 +98,7 @@ public class DialogueManager: Singleton<DialogueManager>
         dialogueWin.CurrentTimelineManager = currentTimelineManager;
         
         if (CheckDialogueType(index) == DialogueType.Normal)
-            dialogueWin.DisplayDialogue(dialogues[index].Text, dialogues[index].Actor, transform);
+            dialogueWin.DisplayDialogue(dialogues[index].Text, dialogues[index].Actor);
         else if(CheckDialogueType(index) == DialogueType.Option)
         {
             
@@ -110,8 +110,11 @@ public class DialogueManager: Singleton<DialogueManager>
 
         while(dialogues[index].Next != "-1")
         {
-            Debug.Log("Enter Loop");
+            Debug.Log(LogUtility.MakeLogStringFormat("DialogueManager","Enter Loop"));
+
+            //wait for next line
             yield return waitForKeyPress(KeyCode.G);
+
             if (dialogueWin.CheckAnimateCoroutine())
             {
                 dialogueWin.SetSkip(true);        
@@ -122,11 +125,19 @@ public class DialogueManager: Singleton<DialogueManager>
             int nextDialogue = Convert.ToInt32(dialogues[index].Next);
 
             if (CheckDialogueType(index) == DialogueType.Normal)
-                dialogueWin.DisplayDialogue(dialogues[nextDialogue].Text, dialogues[nextDialogue].Actor, transform);
+                dialogueWin.DisplayDialogue(dialogues[nextDialogue].Text, dialogues[nextDialogue].Actor);
+            else if (CheckDialogueType(index) == DialogueType.Option)
+            {
+
+            }
+            else
+                yield break;
 
             index = nextDialogue;
         }
+
         yield return waitForKeyPress(KeyCode.G, dialogueWin);
+
         GUIManager.Singleton.Close("DialogueUI");
         if (currentTimelineManager.CheckEndState()) {
             currentTimelineManager.OnTimelineEnd(1);
