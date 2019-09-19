@@ -13,7 +13,9 @@ public enum AttributeType : int
 
     MaxSp_c0 = 0x400,
 
-    SightRange_c0 = 0x500,
+    SpRecovery_c0 = 0x500,
+
+    SightRange_c0 = 0xA00,
     
     Damage_c0 = 0x1000,
 }
@@ -25,7 +27,8 @@ public enum StatisticType : int
     JumpPower = 0x2,
     MaxHp = 0x3,
     MaxSp = 0x4,
-    SightRange = 0x5,
+    SpRecovery_c0 = 0x5,
+    SightRange = 0xA,
 
     Damage = 0x10,
 

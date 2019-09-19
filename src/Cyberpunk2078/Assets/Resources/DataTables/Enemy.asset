@@ -19,5 +19,5 @@ MonoBehaviour:
       serializedAttributes:
       - type: 768
         value: 1
-      - type: 1280
+      - type: 2560
         value: 6

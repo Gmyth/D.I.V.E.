@@ -29,7 +29,7 @@ public class L2Cleaner : Enemy, IPatroller
         Boom.transform.localScale = Vector3.one;
 
         gameObject.SetActive(false);
-        Destroy(gameObject, 0.5f);
+        Destroy(gameObject);
     }
 
 

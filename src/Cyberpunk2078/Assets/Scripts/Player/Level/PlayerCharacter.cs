@@ -24,7 +24,7 @@ public class PlayerCharacter : Dummy
 
     public PlayerCharacter(Player player)
     {
-        statistic = new StatisticSystem(player.Inventory);
+        statistic = new StatisticSystem(player.attributes, player.inventory);
     }
 
 
@@ -46,11 +46,19 @@ public class PlayerCharacter : Dummy
 
 
         Singleton = this;
+    }
+
+    private void Start()
+    {
+
+
 
         dashAtkBox = GetComponentInChildren<Attack>().gameObject;
         dashAtkBox.SetActive(false);
 
+
         rigidbody = GetComponent<Rigidbody>();
+
 
         fsm.Initialize(this);
         fsm.Boot();
