@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -80,66 +81,19 @@ public class PSDashing : PlayerState
             playerCharacter.transform.right = Vector3.right;
             Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Dummy"), false);
         }
-        else {
-            //prevent ground-hitting shifting 
-            RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,1f);
-            if (hit1.collider != null && hit1.transform.CompareTag("Ground"))
-            {
-                // kill all speed
-                rb2d.velocity = new Vector2(0,0);
-                
-                //reset direction
-                playerCharacter.transform.right = Vector3.right;
-                
-                // reset drag & gravity 
-                rb2d.drag = defaultDrag;
-                rb2d.gravityScale = 3;
-                
-                // Disable trails
-                playerCharacter.GetComponent<GhostSprites>().RenderOnMotion = false;
-                
-                setAtkBox(false);
-                
-                //enable Collision
-                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Dummy"),false);
-                
-                // Landed
-                if (h == 0)
-                    // not moving
-                    return indexPSIdle;
-                return indexPSMoving;
-            }
-            
+        
+        //prevent ground-hitting shifting 
+        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,1f);
+        if (hit1.collider != null && hit1.transform.CompareTag("Ground"))
+        {
+            return reset();
         }
+            
         
         // Player is grounded and dash has finished
         if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime  < Time.time)
         {
-            // reset drag & gravity 
-            rb2d.drag = defaultDrag;
-            rb2d.gravityScale = 3;
-            
-            // Listening to move input
-            PhysicsInputHelper(h);
-            
-            // reset player facing
-            playerCharacter.transform.right = Vector3.right;
-            
-            // reset sprite flip
-            playerCharacter.GetComponent<SpriteRenderer>().flipY = false;
-            
-            // Kill Trail
-            playerCharacter.GetComponent<GhostSprites>().Occupied = false;
-            
-            if (!isGrounded())
-            {
-                return indexPSAirborne;
-            }
-            
-            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Dummy"),false);
-            
-            if (h == 0) return indexPSIdle;
-            return indexPSMoving;
+            return reset();
         }
 
         return Index;
@@ -211,5 +165,41 @@ public class PSDashing : PlayerState
     private void setAtkBox(bool value)
     {
         playerCharacter.dashAtkBox.SetActive(value);
+    }
+
+    
+    // Safe Function for state quit 
+    private int reset()
+    {
+        var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
+        float h = Input.GetAxis("Horizontal");
+        
+        // reset drag & gravity 
+        rb2d.drag = defaultDrag;
+        rb2d.gravityScale = 3;
+        
+        // Listening to move input
+        PhysicsInputHelper(h);
+        
+        // reset player facing
+        playerCharacter.transform.right = Vector3.right;
+            
+        // reset sprite flip
+        playerCharacter.GetComponent<SpriteRenderer>().flipY = false;
+            
+        // Kill Trail
+        playerCharacter.GetComponent<GhostSprites>().Occupied = false;
+        
+        setAtkBox(false);
+        
+        if (!isGrounded())
+        {
+            return indexPSAirborne;
+        }
+            
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Dummy"),false);
+            
+        if (h == 0) return indexPSIdle;
+        return indexPSMoving;
     }
 }
