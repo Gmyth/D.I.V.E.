@@ -10,6 +10,7 @@ public class TimelineManager : MonoBehaviour
     public bool isTheLastTimeline = false;
 
     public bool isPlaying = false;
+    public bool isTheLastDialogue = false;
 
     [SerializeField] private PlayableDirector[] timelines;
     [SerializeField] private int currentIndex = 0;
@@ -34,12 +35,13 @@ public class TimelineManager : MonoBehaviour
         }
     }
 
-    public void OnTimelineEnd()
+    public void OnTimelineEnd(int playerExitState)
     {
         //When timeline end
         //gameObject.SetActive(false);
 
         //Recover gameplay
+        player.EndTimelineWithPlayerExitState(playerExitState);
     }
 
     public void PlayCurrentTimeline() 
@@ -79,6 +81,7 @@ public class TimelineManager : MonoBehaviour
         timelines[currentIndex].Pause();
     }
 
+    private DialoguePlayer player;
     private void OnTriggerEnter2D(Collider2D other) 
     {
         if (other.gameObject.name == "Player")
@@ -87,7 +90,8 @@ public class TimelineManager : MonoBehaviour
             {
                 OnTimelineStart();
             }
-            other.gameObject.GetComponent<DialoguePlayer>().PrepareTimeline(this);
+            player = other.gameObject.GetComponent<DialoguePlayer>();
+            player.PrepareForTimeline(this);
         }
     }
 
@@ -95,6 +99,10 @@ public class TimelineManager : MonoBehaviour
     {
         DialogueManager.Instance.SetTimelineManager(this);
         StartCoroutine(DialogueManager.Instance.PlayDialogue(index));
+    }
+
+    public bool CheckEndState() {
+        return isTheLastTimeline && isTheLastDialogue;
     }
 
 }

@@ -15,7 +15,7 @@ public class PlayerTransformSync : MonoBehaviour
     }
 
     public void PlayAnimation(string name) {
-        player.GetComponent<Animator>().Play(name);
+        player.GetComponent<Animator>().Play("MainCharacter_" + name);
     }
 
 }
