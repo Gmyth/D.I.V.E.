@@ -60,6 +60,10 @@ public class GUIDialogue : GUIWindow
 
     public Transform dialogueTransform;
 
+    public GameObject DialogueBox;
+
+    public GameObject DialogueIllustration;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -80,34 +84,41 @@ public class GUIDialogue : GUIWindow
         }
     }
 
-    private void CheckActor(string actor)
-    {
-        switch (mode)
-        {
-            case GuiDialogueMode.Default:
-                {
-                    //if it is the first TeshMeshPro dialogue box
-                    if (textBoxList.Count == 0)
-                    {
-                        GameObject dialogueBox = Instantiate(ResourceUtility.GetGUIPrefab<GameObject>("Dialogue"), transform, false);
-                        textBoxList.Add(dialogueBox);
-                    }
-                    //if textBoxDict don't has the actor, add it (Only allow actor to appear once in dict)
-                    if (!textBoxDict.ContainsKey(actor))
-                        textBoxDict.Add(actor, textBoxList[0].GetComponentInChildren<TMP_Text>());
-                    break;
-                }
-            case GuiDialogueMode.Multiple:
-                break;
+    //private void CheckActor(string actor)
+    //{
+    //    switch (mode)
+    //    {
+    //        case GuiDialogueMode.Default:
+    //            {
+    //                //if it is the first TeshMeshPro dialogue box
+    //                if (textBoxList.Count == 0)
+    //                {
+    //                    GameObject dialogueBox = Instantiate(ResourceUtility.GetGUIPrefab<GameObject>("Dialogue"), transform, false);
+    //                    textBoxList.Add(dialogueBox);
+    //                }
+    //                //if textBoxDict don't has the actor, add it (Only allow actor to appear once in dict)
+    //                if (!textBoxDict.ContainsKey(actor))
+    //                    textBoxDict.Add(actor, textBoxList[0].GetComponentInChildren<TMP_Text>());
+    //                break;
+    //            }
+    //        case GuiDialogueMode.Multiple:
+    //            break;
 
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-    }
+    //        default:
+    //            throw new ArgumentOutOfRangeException();
+    //    }
+    //}
+
     private void AssignTextBoxPos(string actor, Transform transform)
     {
+        if (Camera.main == null) return;
+        Vector2 actorCoordinates = Camera.main.WorldToScreenPoint(transform.position);
 
-        textBoxList[0].GetComponent<Transform>().position = dialogueTransform.position;
+        actorCoordinates.y += 120;
+        actorCoordinates.x -= 400;
+
+        textBoxList[0].GetComponent<Transform>().position = actorCoordinates;
+        //textBoxList[0].GetComponent<Transform>().position = dialogueTransform.position;
 
     }
 
@@ -122,16 +133,18 @@ public class GUIDialogue : GUIWindow
 
     public void SetText(string text, string actor)
     {
-        CheckActor(actor);
+        //CheckActor(actor);
 
-        textBoxDict[actor].GetComponent<TextMeshProUGUI>().text = actor + ":" + text;
+
+        DialogueBox.GetComponent<TextMeshProUGUI>().text = actor + ":" + text;
     }
 
     public void DisplayDialogue(string text, string actor, Transform transform)
     {
-        CheckActor(actor);
+        //CheckActor(actor);
 
-        AssignTextBoxPos(actor, transform);
+        if (transform != null) 
+            AssignTextBoxPos(actor, transform);
 
         if (animateCoroutine != null)
             StopCoroutine(animateCoroutine);
@@ -142,13 +155,13 @@ public class GUIDialogue : GUIWindow
     private void LoadImage(string actor)
     {
         Sprite img = ResourceUtility.GetPrefab<Sprite>("Portraits/" + actor) as Sprite;
-        textBoxList[0].GetComponentInChildren<Image>().overrideSprite = img;
+        DialogueIllustration.GetComponent<Image>().overrideSprite = img;
     }
 
     private IEnumerator AnimateText(string actor, string text)
     {
         isCoroutineRunning = true;
-        TMP_Text dialogueBox = textBoxDict[actor].GetComponent<TextMeshProUGUI>();
+        TMP_Text dialogueBox = DialogueBox.GetComponent<TextMeshProUGUI>();
         dialogueBox.text = StripAllCommands(text);
         dialogueBox.ForceMeshUpdate();
 
