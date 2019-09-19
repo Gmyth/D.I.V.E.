@@ -903,10 +903,10 @@ TilemapCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 215355582}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 6200000, guid: 589b9ad0c8b270f4690993d1995a10af, type: 2}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -15305,7 +15305,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 790662296}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 121.61, y: -5.11, z: 0}
+  m_LocalPosition: {x: -0.5, y: -4.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 839984878}
@@ -17270,7 +17270,7 @@ Transform:
   m_GameObject: {fileID: 1477570372}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children:
   - {fileID: 700782736}
   m_Father: {fileID: 790662297}
@@ -18853,7 +18853,7 @@ MonoBehaviour:
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 4
+            m_IntArgument: 3
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
@@ -18914,6 +18914,8 @@ PlayableDirector:
     value: {fileID: 1839855609}
   - key: {fileID: -508677794534568105, guid: e4344e205c6cc3c4fafdb7135f09c3ca, type: 2}
     value: {fileID: 1477570375}
+  - key: {fileID: 8971225975951380177, guid: e4344e205c6cc3c4fafdb7135f09c3ca, type: 2}
+    value: {fileID: 790662300}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &1870126545

@@ -11,6 +11,7 @@ public class PSNoInput : PlayerState
     {
         if (isGrounded())
         {
+            KillSpeed();
             Rigidbody2D rb2d = playerCharacter.gameObject.GetComponent<Rigidbody2D>();
             if (isGrounded() && !playerCharacter.gameObject.GetComponent<DialoguePlayer>().currentTimelineManager.isPlayInstantly)
             {
@@ -25,7 +26,13 @@ public class PSNoInput : PlayerState
 
     public override void OnStateEnter()
     {
-        KillSpeed();
+        //KillSpeed();
+        playerCharacter.gameObject.GetComponent<Rigidbody2D>().gravityScale = 3;
+    }
+
+    public override void OnStateQuit()
+    {
+        playerCharacter.gameObject.GetComponent<Rigidbody2D>().simulated = true;
     }
 
     public void KillSpeed()
