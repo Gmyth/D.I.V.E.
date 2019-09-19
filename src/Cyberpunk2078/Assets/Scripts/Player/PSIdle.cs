@@ -10,6 +10,8 @@ public class PSIdle : PlayerState
     [SerializeField] private int indexPSDashing;
     [SerializeField] private int indexPSAirborne;
     [SerializeField] private int indexPSClimb;
+
+
     public override int Update()
     {
         // Energy Recover
@@ -40,9 +42,8 @@ public class PSIdle : PlayerState
         return Index;
     }
 
-    public override void OnStateEnter()
+    public override void OnStateEnter(State previousState)
     {
-       
         anim.Play("MainCharacter_Idle", -1, 0f);
         Vector2 V = playerCharacter.GetComponent<Rigidbody2D>().velocity;
         V.x = 0;

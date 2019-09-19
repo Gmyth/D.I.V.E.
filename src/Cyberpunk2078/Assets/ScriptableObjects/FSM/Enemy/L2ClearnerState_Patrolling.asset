@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4db54c6f88576c04a99a6d4e51948e17, type: 3}
+  m_Name: L2ClearnerState_Patrolling
+  m_EditorClassIdentifier: 
+  speed: 2000
+  delay: 0
+  idleAnimation: L2Cleaner_Idle
+  patrollingAnimation: L2Cleaner_Run
+  index_ESIdle: -1
+  index_ESAlert: 1

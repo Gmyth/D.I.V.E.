@@ -6,8 +6,6 @@ using UnityEngine;
 [RequireComponent(typeof(Seeker))]
 public class Drone : Enemy, IPatroller
 {
-    [SerializeField] private FSMEnemy fsm;
-
     [Header("Patrolling")]
     [SerializeField] private Vector3[] patrolPoints;
     public RangedWeaponConfiguration patrolFiringConfiguration;
@@ -65,7 +63,6 @@ public class Drone : Enemy, IPatroller
         else
         {
             // new attack coming
-            damageList.Add(instanceId, Time.time);
             Debug.Log(LogUtility.MakeLogStringFormat("Enemy", "Take {0} damage.", rawDamage));
             Health = Mathf.Max(Mathf.Min(Health - rawDamage, HealthCap), 0); ;
             if (Health == 0)
@@ -74,6 +71,9 @@ public class Drone : Enemy, IPatroller
                 Dead();
             }
         }
+        
+        if (!damageList.ContainsKey(instanceId)) damageList.Add(instanceId, Time.time);
+        else damageList[instanceId] = Time.time;
 
 
         return rawDamage;
@@ -91,17 +91,11 @@ public class Drone : Enemy, IPatroller
     }
 
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         Health = HealthCap;
-
-        fsm.Initialize(this);
-        fsm.Boot();
-    }
-
-    private void FixedUpdate()
-    {
-        fsm.Update();
     }
 
 

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d2cd80912e43614582d5b421b6f9d92, type: 3}
+  m_Name: L2ClearnerState_ChasingSlash
+  m_EditorClassIdentifier: 
+  chasingSpeed: 3
+  attackRange: 1
+  attackHeight: 1
+  attackDamage: 1
+  motionTime: 1
+  idleAnimation: L2Cleaner_Idle
+  chasingAnimation: L2Cleaner_Run
+  attackAnimation: L2Cleaner_Melee
+  stateIndex_targetLoss: -1
+  stateIndex_afterAttack: -1

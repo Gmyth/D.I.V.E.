@@ -16,6 +16,8 @@ public class PSJumping2 : PlayerState
     [SerializeField] private int indexPSAttackGH;
     [SerializeField] private int indexPSAirborne;
     [SerializeField] private int indexPSClimb;
+
+
     public override int Update()
     {
         float Vy = playerCharacter.GetComponent<Rigidbody2D>().velocity.y;
@@ -60,7 +62,8 @@ public class PSJumping2 : PlayerState
         return Index;
     }
 
-    public override void OnStateEnter()
+
+    public override void OnStateEnter(State previousState)
     {
         anim.Play("MainCharacter_Jump", -1, 0f);
         

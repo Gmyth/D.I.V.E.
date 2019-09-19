@@ -24,13 +24,13 @@ public class PSNoInput : PlayerState
     }
 
 
-    public override void OnStateEnter()
+    public override void OnStateEnter(State previousState)
     {
         //KillSpeed();
         playerCharacter.gameObject.GetComponent<Rigidbody2D>().gravityScale = 3;
     }
 
-    public override void OnStateQuit()
+    public override void OnStateQuit(State nextState)
     {
         playerCharacter.gameObject.GetComponent<Rigidbody2D>().simulated = true;
     }
@@ -41,6 +41,4 @@ public class PSNoInput : PlayerState
         rb2d.velocity = Vector2.zero;
         rb2d.simulated = false;
     }
-
-
 }

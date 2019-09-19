@@ -83,7 +83,7 @@ public class PSJumping1 : PlayerState
         return Index;
     }
 
-    public override void OnStateEnter()
+    public override void OnStateEnter(State previousState)
     {
         anim.Play("MainCharacter_Jump", -1, 0f);
         //Perform jump

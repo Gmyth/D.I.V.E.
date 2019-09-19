@@ -52,7 +52,7 @@ public class PSClimb : PlayerState
         return Index;
     }
 
-    public override void OnStateEnter()
+    public override void OnStateEnter(State previousState)
     {
         playerCharacter.GetComponent<SpriteRenderer>().flipX = !RightSideTest("Ladder");
         

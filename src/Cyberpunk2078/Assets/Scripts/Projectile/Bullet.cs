@@ -25,7 +25,7 @@ public class Bullet : Recyclable
             if (other.tag == "Dummy")
             {
                 CameraManager.Instance.Shaking(0.20f,0.05f);
-                other.GetComponent<PlayerCharacter>().ApplyDamage(GetInstanceID(),rawDamage);
+                other.GetComponent<Dummy>().ApplyDamage(GetInstanceID(),rawDamage);
                 var Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
                 Hit.transform.position =
                     other.transform.position - (other.transform.position - transform.position) * 0.2f;
@@ -37,28 +37,35 @@ public class Bullet : Recyclable
                 Die();
             }
         }
+        else if (other.tag == "Hunch" && other.GetComponent<PlayerCharacter>().State.Name == "Dash")
+        {
+            TimeManager.Instance.startSlowMotion(0.3f);
+        }
         else if (other.tag == "Player")
         {
             if (other.GetComponent<PlayerCharacter>().State.Name != "Dash")
             {
-                other.GetComponent<PlayerCharacter>().ApplyDamage(GetInstanceID(),rawDamage);
+                other.GetComponent<PlayerCharacter>().ApplyDamage(GetInstanceID(), rawDamage);
+                CameraManager.Instance.Shaking(0.20f, 0.05f);
+                var Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
+                Hit.gameObject.SetActive(true);
+                Hit.transform.right = transform.right;
+                Hit.transform.position =
+                    other.transform.position + (transform.position - other.transform.position) * 0.5f;
+                Hit.transform.localScale = Vector3.one;
+                Die();   
             }
-            
-            CameraManager.Instance.Shaking(0.20f,0.05f);
-            
-            var Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
-            Hit.gameObject.SetActive(true);
-            Hit.transform.right = transform.right;
-            Hit.transform.position =
-                other.transform.position + (transform.position  - other.transform.position) * 0.5f;
-            Hit.transform.localScale = Vector3.one;
-            Die();
+
         }
         
         else if (other.tag == "PlayerAttack")
         {
             if (other.name != "DashAtkBox")
             {
+                
+                gameObject.GetComponent<LinearMovement>().orientation *= -1;
+                isFriendly = true;
+                
                 CameraManager.Instance.Shaking(0.10f,0.05f);
                 var Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
                 Hit.gameObject.SetActive(true);
@@ -67,8 +74,15 @@ public class Bullet : Recyclable
                     other.transform.position + (transform.position  - other.transform.position) * 0.5f;
                 Hit.transform.localScale = Vector3.one;
             }
+            else
+            {
+                TimeManager.Instance.startSlowMotion(0.3f); 
+            }
 
+        }else if (other.tag == "Ground")
+        {
+            Die();
         }
-        
+
     }
 }

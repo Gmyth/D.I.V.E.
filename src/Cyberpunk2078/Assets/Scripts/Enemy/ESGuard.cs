@@ -31,7 +31,7 @@ public abstract class ESGuard<T> : EnemyState<T> where T : Enemy, IGuardian
         return Index;
     }
 
-    public override void OnStateEnter()
+    public override void OnStateEnter(State previousState)
     {
         t0 = Time.time + Random.Range(enemy.MinTurnTime, enemy.MaxTurnTime);
     }

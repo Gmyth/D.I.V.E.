@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-[CreateAssetMenuAttribute(fileName = "PS_WallJumping", menuName = "Player State/Wall Jumping")]
+﻿using UnityEngine;
 
+
+[CreateAssetMenuAttribute(fileName = "PS_WallJumping", menuName = "Player State/Wall Jumping")]
 public class PSWallJumping: PlayerState
 {
     [SerializeField] private float jumpForce = 4.5f;
@@ -102,10 +101,11 @@ public class PSWallJumping: PlayerState
                 
                 // Perform wall jump
                 sideWallJump();
-            }else{
-                OnStateEnter();
             }
-            
+            else
+            {
+                OnStateEnter(this);
+            }
         }
         
         
@@ -134,7 +134,7 @@ public class PSWallJumping: PlayerState
         return Index;
     }
 
-    public override void OnStateEnter()
+    public override void OnStateEnter(State previousState)
     {
         // Set flip
         flip = !RightSideTest("Ground");

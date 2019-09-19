@@ -9,7 +9,7 @@ public abstract class State : ScriptableObject
     public abstract int Update();
 
 
-    public abstract void OnStateEnter();
+    public abstract void OnStateEnter(State previousState);
     //public abstract void OnStateReset();
-    public abstract void OnStateQuit();
+    public abstract void OnStateQuit(State nextState);
 }

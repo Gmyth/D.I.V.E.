@@ -67,7 +67,7 @@ public class PSAttackGH: PlayerState
         return Index;
     }
 
-    public override void OnStateEnter()
+    public override void OnStateEnter(State previousState)
     {
         if (!Player.CurrentPlayer.ApplyEnergyChange(EnergyConsume))
         {

@@ -50,7 +50,7 @@ public class PSMoving : PlayerState
     }
 
 
-    public override void OnStateEnter()
+    public override void OnStateEnter(State previousState)
     {
         Move(Input.GetAxis("Horizontal"));
         anim.Play("MainCharacter_Run", -1, 0f);
