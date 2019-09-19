@@ -33,6 +33,8 @@ public class PSNoInput : PlayerState
     public override void OnStateQuit(State nextState)
     {
         playerCharacter.gameObject.GetComponent<Rigidbody2D>().simulated = true;
+        playerCharacter.gameObject.GetComponent<Rigidbody2D>().gravityScale = 3;
+        playerCharacter.gameObject.GetComponent<Rigidbody2D>().drag = 1;
     }
 
     public void KillSpeed()
