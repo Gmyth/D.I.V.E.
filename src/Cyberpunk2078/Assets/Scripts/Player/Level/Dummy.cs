@@ -38,6 +38,9 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer), typeof(Rigidbody2D), typeof(Collision2D))]
 public abstract class Dummy : MonoBehaviour, IDamageable
 {
+    [SerializeField] protected StatisticSystem statistics;
+
+
     public abstract float ApplyDamage(int instanceId, float rawDamage, bool overWrite = false);
 
     public abstract void Dead();
@@ -46,13 +49,16 @@ public abstract class Dummy : MonoBehaviour, IDamageable
 
 public abstract class Enemy : Dummy
 {
+    [SerializeField] protected int typeID;
     [SerializeField] protected FSMEnemy fsm;
-    [SerializeField] protected StatisticSystem statistics;
     [SerializeField] protected Zone guardZone;
     [SerializeField] protected HitBox[] hitBoxes;
 
+    private EnemyData data;
+
     [HideInInspector] public PlayerCharacter currentTarget;
     [HideInInspector] public float currentAttackDamage = 0;
+
 
     public float this[StatisticType type]
     {
@@ -67,14 +73,6 @@ public abstract class Enemy : Dummy
         get
         {
             return guardZone;
-        }
-    }
-
-    public float SightRange
-    {
-        get
-        {
-            return 10f;
         }
     }
 
@@ -93,6 +91,11 @@ public abstract class Enemy : Dummy
 
     protected virtual void Start()
     {
+        data = DataTableManager.singleton.GetEnemyData(typeID);
+        statistics = new StatisticSystem(data.Attributes);
+
+        Debug.LogWarning(this[StatisticType.SightRange]);
+
         fsm.Initialize(this);
         fsm.Boot();
     }

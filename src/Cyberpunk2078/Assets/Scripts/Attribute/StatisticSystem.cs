@@ -12,22 +12,10 @@ public enum AttributeType : int
     MaxHp_c0 = 0x300,
 
     MaxSp_c0 = 0x400,
+
+    SightRange_c0 = 0x500,
     
-    MeleeDamage_c0 = 0x1000,
-
-    MeleeDamage1_c0 = 0x1100,
-
-    MeleeDamage2_c0 = 0x1200,
-
-    MeleeDamage3_c0 = 0x1300,
-
-    RangedDamage_c0 = 0x2000,
-
-    RangedDamage1_c0 = 0x2000,
-
-    RangedDamage2_c0 = 0x2000,
-
-    RangedDamage3_c0 = 0x2000,
+    Damage_c0 = 0x1000,
 }
 
 
@@ -37,16 +25,9 @@ public enum StatisticType : int
     JumpPower = 0x2,
     MaxHp = 0x3,
     MaxSp = 0x4,
+    SightRange = 0x5,
 
-    MeleeDamage = 0x10,
-    MeleeDamage1 = 0x11,
-    MeleeDamage2 = 0x12,
-    MeleeDamage3 = 0x13,
-
-    RangedDamage = 0x20,
-    RangedDamage1 = 0x21,
-    RangedDamage2 = 0x22,
-    RangedDamage3 = 0x23,
+    Damage = 0x10,
 
     Hp = 0xF0,
     Sp = 0xF1,
@@ -72,6 +53,10 @@ public class StatisticSystem
 
             case StatisticType.MaxHp:
                 return AttributeSet.Sum(AttributeType.MaxHp_c0, attributeSets);
+
+
+            case StatisticType.SightRange:
+                return AttributeSet.Sum(AttributeType.SightRange_c0, attributeSets);
 
 
             default:

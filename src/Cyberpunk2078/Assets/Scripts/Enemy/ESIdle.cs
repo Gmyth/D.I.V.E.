@@ -20,7 +20,7 @@ public class ESIdle : EnemyState
 
     public override int Update()
     {
-        enemy.currentTarget = FindAvailableTarget(enemy.transform.position, enemy.SightRange, enemy.GuardZone);
+        enemy.currentTarget = FindAvailableTarget(enemy.transform.position, enemy[StatisticType.SightRange], enemy.GuardZone);
 
         if (enemy.currentTarget)
             return index_ESAlert;

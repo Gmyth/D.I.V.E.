@@ -9,16 +9,16 @@ using UnityEditor.IMGUI.Controls;
 [CustomEditor(typeof(DataTable), true, isFallback = true)]
 public class DataTableEditor : Editor
 {
-    public override void OnInspectorGUI()
-    {
-        if (GUILayout.Button("EDIT"))
-        {
-            DataTableEditorWindow window = (DataTableEditorWindow)EditorWindow.GetWindow(typeof(DataTableEditorWindow));
+    //public override void OnInspectorGUI()
+    //{
+    //    if (GUILayout.Button("EDIT"))
+    //    {
+    //        DataTableEditorWindow window = (DataTableEditorWindow)EditorWindow.GetWindow(typeof(DataTableEditorWindow));
 
-            window.serializedEntries = serializedObject.FindProperty("serializedEntries");
-            window.titleContent = new GUIContent(serializedObject.targetObject.name);
-        }
-    }
+    //        window.serializedEntries = serializedObject.FindProperty("serializedEntries");
+    //        window.titleContent = new GUIContent(serializedObject.targetObject.name);
+    //    }
+    //}
 }
 
 

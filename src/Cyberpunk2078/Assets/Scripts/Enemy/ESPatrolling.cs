@@ -77,7 +77,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
 
         if (index_ESAlert >= 0)
         {
-            enemy.currentTarget = FindAvailableTarget(enemyPosition, enemy.SightRange, enemy.GuardZone);
+            enemy.currentTarget = FindAvailableTarget(enemyPosition, enemy[StatisticType.SightRange], enemy.GuardZone);
 
             if (enemy.currentTarget)
             {

@@ -12,7 +12,7 @@ public class DataTableManager
 
     private DataTableManager()
     {
-        foreach (DataTable dataPage in Resources.LoadAll<DataTable>("DataTable"))
+        foreach (DataTable dataPage in Resources.LoadAll<DataTable>("DataTables"))
             dataTables.Add(dataPage.name, dataPage);
     }
 
@@ -42,5 +42,10 @@ public class DataTableManager
     public ItemData GetItemData(int id)
     {
         return GetData<ItemData>("Item", id);
+    }
+
+    public EnemyData GetEnemyData(int id)
+    {
+        return GetData<EnemyData>("Enemy", id);
     }
 }
