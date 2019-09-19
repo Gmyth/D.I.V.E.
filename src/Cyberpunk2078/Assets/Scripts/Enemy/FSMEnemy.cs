@@ -14,7 +14,7 @@ public abstract class EnemyState : State
 
         if (d <= range)
         {
-            RaycastHit2D raycastHit2D = Physics2D.Raycast(enemyPosition, playerPosition - enemyPosition, d);
+            RaycastHit2D raycastHit2D = Physics2D.Raycast(enemyPosition, playerPosition - enemyPosition, d, 1 << LayerMask.NameToLayer("Player"));
 
             if (raycastHit2D.collider && raycastHit2D.collider.gameObject == player.gameObject)
                 return player;
@@ -36,7 +36,7 @@ public abstract class EnemyState : State
 
         if (d <= range && guardZone.Contains(playerPosition))
         {
-            RaycastHit2D raycastHit2D = Physics2D.Raycast(enemyPosition, playerPosition - enemyPosition, d);
+            RaycastHit2D raycastHit2D = Physics2D.Raycast(enemyPosition, playerPosition - enemyPosition, d, 1 << LayerMask.NameToLayer("Player"));
 
             if (raycastHit2D.collider && raycastHit2D.collider.gameObject == player.gameObject)
                 return player;
@@ -89,8 +89,8 @@ public abstract class EnemyState<T> : EnemyState where T : Enemy
         if (!player)
             return null;
 
-
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(enemy.transform.position, player.transform.position - enemy.transform.position, Vector2.Distance(enemy.transform.position, player.transform.position));
+        
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(enemy.transform.position, player.transform.position - enemy.transform.position, Vector2.Distance(enemy.transform.position, player.transform.position), 1 << LayerMask.NameToLayer("Player"));
 
         if (!raycastHit2D.collider || raycastHit2D.collider.gameObject != player.gameObject)
             return null;

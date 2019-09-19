@@ -37,7 +37,7 @@ public class Bullet : Recyclable
                 Die();
             }
         }
-        else if (other.tag == "Hunch" && other.GetComponent<PlayerCharacter>().State.Name == "Dash")
+        else if (other.tag == "Hunch" && other.GetComponentInParent<PlayerCharacter>().State.Name == "Dash")
         {
             TimeManager.Instance.startSlowMotion(0.3f);
         }
