@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+
 // ReSharper disable All
 
 public enum GuiDialogueMode
@@ -14,6 +15,12 @@ public enum GuiDialogueMode
     Default = 0,
     Multiple
 }
+public enum DisplayMode
+{
+    Up = 0,
+    Down
+}
+
 
 public class GUIDialogue : GUIWindow
 {
@@ -23,65 +30,69 @@ public class GUIDialogue : GUIWindow
     //store existing boxes for management
     private readonly List<GameObject> textBoxList = new List<GameObject>();
 
-    private GuiDialogueMode mode;
+    //private GuiDialogueMode mode;
 
     //the typewriter coroutine
     private Coroutine animateCoroutine;
-    private bool isCoroutineRunning = false;
 
     //Keep tracks of our commands.
     private List<SpecialCommand> specialCommands;
 
-    //Use true to skip lines
-    private bool skip = false;
-
     //This means we can change the dialogue live and the shaking text animation will adjust itself to the new content!
     private bool hasTextChanged = false;
 
-    //if true, paint with color c0, else paint with color c1
-    private bool isColorizing = false;
+    [Header("States")]
 
-    //palace holder for alternative color
-    private Color32 c1 = new Color32(255,255,255,255);
+    [SerializeField] private bool isAnimatingText = false;
+
+    //Use true to skip lines
+    [SerializeField] private bool skip = false;
+
+    //if true, paint with color c0, else paint with color c1
+    [SerializeField] private bool isColorizing = false;
 
     //Make the text shakes, if true before animating.
-    public bool isTextShaking = true;
+    [SerializeField] private bool isTextShaking = true;
+
+    [Header("TextMesh Pro")]
+    //palace holder for alternative color
+    [SerializeField] private Color32 c1 = new Color32(255,255,255,255);
 
     //Font Size
-    public float FontSize = 12f;
+    [SerializeField] private float FontSize = 12f;
 
+    public DisplayMode displayMode; 
+
+    //The Speed the text is animated on screen. Waits 0.05 seconds before animating the next character.
+    //Useful for letting the player accelerate the speed animation.
+    [SerializeField] private float SpeedText = 0.05f;
+
+    [Header("Prefabs")]
+
+    [SerializeField] private Transform dialoguePositionDown;
+    [SerializeField] private Transform dialoguePositionUp;
+
+    [SerializeField] private GameObject textMeshPro;
+
+    [SerializeField] private GameObject dialogueBox;
+
+    [SerializeField] private GameObject dialogueIllustration;
+
+    [Header("Related to Shaking Animation")]
     //Related to Shaking Animation.
     public float AngleMultiplier = 1.0f;
     public float CurveScale = 1.0f;
 
-    //The Speed the text is animated on screen. Waits 0.05 seconds before animating the next character.
-    //Useful for letting the player accelerate the speed animation.
-    public float SpeedText = 0.05f;
-
-    public Transform dialogueTransform;
-
-    public GameObject DialogueBox;
-
-    public GameObject DialogueIllustration;
-
     // Start is called before the first frame update
     private void Start()
     {
-        mode = GuiDialogueMode.Default;
+        //mode = GuiDialogueMode.Default;
     }
 
     // Update is called once per frame
     private void Update()
     {
-        //Simple controls to accelerate the text speed.
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SpeedText *= 100;
-        }
-        else if (Input.GetKeyUp(KeyCode.Space))
-        {
-            SpeedText = 0.05f;
-        }
+
     }
 
     //private void CheckActor(string actor)
@@ -109,42 +120,40 @@ public class GUIDialogue : GUIWindow
     //    }
     //}
 
-    private void AssignTextBoxPos(string actor, Transform transform)
+    private void SetDialoguePosition()
     {
-        if (Camera.main == null) return;
-        Vector2 actorCoordinates = Camera.main.WorldToScreenPoint(transform.position);
+        //if (Camera.main == null) return;
+        //Vector2 actorCoordinates = Camera.main.WorldToScreenPoint(transform.position);
 
-        actorCoordinates.y += 120;
-        actorCoordinates.x -= 400;
+        //actorCoordinates.y += 120;
+        //actorCoordinates.x -= 400;
 
-        textBoxList[0].GetComponent<Transform>().position = actorCoordinates;
-        //textBoxList[0].GetComponent<Transform>().position = dialogueTransform.position;
 
+
+        //textBoxList[0].GetComponent<Transform>().position = actorCoordinates;
+        //textBoxList[0].GetComponent<Transform>().position = dialoguePositionDown.position;
+       
+        if (displayMode == DisplayMode.Down)
+            dialogueBox.GetComponent<Transform>().SetPositionAndRotation(dialoguePositionDown.position, dialoguePositionDown.rotation);
+        else if(displayMode == DisplayMode.Up)
+            dialogueBox.GetComponent<Transform>().SetPositionAndRotation(dialoguePositionUp.position, dialoguePositionUp.rotation);
     }
 
-    public bool GetTypeWriterStat(){
-        return isCoroutineRunning;
+    public bool GetAnimatingStatus(){
+        return isAnimatingText;
     }
 
-    public void DisplayOption(string text, string actor)
-    {
-
-    }
-
-    public void SetText(string text, string actor)
-    {
-        //CheckActor(actor);
-
-
-        DialogueBox.GetComponent<TextMeshProUGUI>().text = actor + ":" + text;
-    }
-
-    public void DisplayDialogue(string text, string actor, Transform transform)
+    public void DisplayDialogue(string text, string actor)
     {
         //CheckActor(actor);
 
-        if (transform != null) 
-            AssignTextBoxPos(actor, transform);
+        if (text == null)
+        {
+            Debug.Log(LogUtility.MakeLogStringFormat("GUIDialogue", "Error: The text to be displayed is null"));
+            return;
+        }
+
+        SetDialoguePosition();
 
         if (animateCoroutine != null)
             StopCoroutine(animateCoroutine);
@@ -155,13 +164,13 @@ public class GUIDialogue : GUIWindow
     private void LoadImage(string actor)
     {
         Sprite img = ResourceUtility.GetPrefab<Sprite>("Portraits/" + actor) as Sprite;
-        DialogueIllustration.GetComponent<Image>().overrideSprite = img;
+        dialogueIllustration.GetComponent<Image>().overrideSprite = img;
     }
 
     private IEnumerator AnimateText(string actor, string text)
     {
-        isCoroutineRunning = true;
-        TMP_Text dialogueBox = DialogueBox.GetComponent<TextMeshProUGUI>();
+        isAnimatingText = true;
+        TMP_Text dialogueBox = textMeshPro.GetComponent<TextMeshProUGUI>();
         dialogueBox.text = StripAllCommands(text);
         dialogueBox.ForceMeshUpdate();
 
@@ -236,7 +245,7 @@ public class GUIDialogue : GUIWindow
         }
 
         Debug.Log("Done animating!");
-        isCoroutineRunning = false;
+        isAnimatingText = false;
         yield return null;
     }
 
@@ -376,6 +385,7 @@ public class GUIDialogue : GUIWindow
         }
     }
 
+    [Header("Timeline")]
     public TimelineManager CurrentTimelineManager;
     //Where you will execute your command!
     private void ExecuteCommand(SpecialCommand command, TMP_Text teshMeshPro)
@@ -561,7 +571,7 @@ public class GUIDialogue : GUIWindow
 
     public bool CheckAnimateCoroutine()
     {
-        if (isCoroutineRunning)
+        if (isAnimatingText)
         {
             return true;
         }

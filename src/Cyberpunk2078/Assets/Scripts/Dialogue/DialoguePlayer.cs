@@ -21,7 +21,7 @@ public class DialoguePlayer : MonoBehaviour
 
         if (inDialogueZone != true || isDialogueOngoing != false) return;
 
-        StartCoroutine(DialogueManager.Instance.PlayDialogue(0, gameObject.transform));
+        StartCoroutine(DialogueManager.Instance.PlayDialogue(0));
 
         isDialogueOngoing = true;
     }
