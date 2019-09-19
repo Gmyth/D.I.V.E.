@@ -150,6 +150,24 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
 
     public override void OnStateEnter(State previousState)
     {
+        Vector3 enemyPosition = enemy.transform.position;
+
+
+        indexTargetPatrolPoint = 0;
+        float m = Vector3.Distance(enemyPosition, enemy.GetPatrolPoint(indexTargetPatrolPoint));
+
+        for (int i = 1; i < enemy.NumPatrolPoints; ++i)
+        {
+            float d = Vector3.Distance(enemyPosition, enemy.GetPatrolPoint(i));
+
+            if (d < m)
+            {
+                indexTargetPatrolPoint = i;
+                m = d;
+            }
+        }
+
+
         seeker.pathCallback = StartPatrolling;
 
         seeker.StartPath(enemy.transform.position, enemy.GetPatrolPoint(indexTargetPatrolPoint));

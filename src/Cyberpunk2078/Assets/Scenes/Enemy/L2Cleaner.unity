@@ -515,8 +515,8 @@ MonoBehaviour:
   fsm: {fileID: 11400000, guid: 154365c1720e224438a00dcfebd7516c, type: 2}
   guardZone:
     type: 0
-    center: {x: 10, y: 5}
-    w: 5
+    center: {x: 15, y: 5}
+    w: 10
     h: 5
   hitBoxes:
   - {fileID: 1572086336}

@@ -46,7 +46,7 @@ public class PSDashing : PlayerState
             return indexPSMoving;
         }
 
-        if (lastDashSecond + dashDelayTime < Time.unscaledTime && readyToPush)
+        if (lastDashSecond + dashDelayTime < Time.time && readyToPush)
         {
             // Press delay ends. time to actual dash
             readyToPush = false;
@@ -54,7 +54,7 @@ public class PSDashing : PlayerState
         }
         
         
-        if (lastDashSecond + dashReleaseTime + dashDelayTime < Time.unscaledTime)
+        if (lastDashSecond + dashReleaseTime + dashDelayTime < Time.time)
         {
             // the dash has already ended
             if (hyperSpeed)
@@ -69,7 +69,7 @@ public class PSDashing : PlayerState
             //enable Collision
             //Physics.IgnoreLayerCollision(10, 11,false);
             
-        } else if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.unscaledTime)
+        } else if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.time)
         {
             // the dash has already ended
             // ok for move input
@@ -113,7 +113,7 @@ public class PSDashing : PlayerState
         }
         
         // Player is grounded and dash has finished
-        if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime  < Time.unscaledTime)
+        if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime  < Time.time)
         {
             // reset drag & gravity 
             rb2d.drag = defaultDrag;
@@ -160,7 +160,7 @@ public class PSDashing : PlayerState
         
         // Add Ghost trail
         playerCharacter.GetComponent<GhostSprites>().Occupied = true;
-        lastDashSecond = Time.unscaledTime;
+        lastDashSecond = Time.time;
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         
         // Record the default Drag of rb2d

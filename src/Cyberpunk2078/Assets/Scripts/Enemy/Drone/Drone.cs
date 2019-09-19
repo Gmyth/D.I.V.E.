@@ -63,7 +63,6 @@ public class Drone : Enemy, IPatroller
         else
         {
             // new attack coming
-            damageList.Add(instanceId, Time.time);
             Debug.Log(LogUtility.MakeLogStringFormat("Enemy", "Take {0} damage.", rawDamage));
             Health = Mathf.Max(Mathf.Min(Health - rawDamage, HealthCap), 0); ;
             if (Health == 0)
@@ -72,6 +71,9 @@ public class Drone : Enemy, IPatroller
                 Dead();
             }
         }
+        
+        if (!damageList.ContainsKey(instanceId)) damageList.Add(instanceId, Time.time);
+        else damageList[instanceId] = Time.time;
 
 
         return rawDamage;

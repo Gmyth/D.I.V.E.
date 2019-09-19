@@ -11,6 +11,7 @@ TagManager:
   - Ladder
   - Bullet
   - PlayerAttack
+  - Hunch
   layers:
   - Default
   - TransparentFX
