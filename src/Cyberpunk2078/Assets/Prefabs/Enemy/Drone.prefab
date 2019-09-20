@@ -161,15 +161,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9553af93f378ad844ad92cff0a4c1a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fsm: {fileID: 11400000, guid: cefee7bfa762bfc43a840f144dadd3b9, type: 2}
+  fsm: {fileID: 11400000, guid: 7caa8b84ed0fa374a8a1db0c15e3f1e9, type: 2}
+  guardZone:
+    type: 0
+    center: {x: 0, y: 0}
+    w: 0
+    h: 0
+  hitBoxes: []
+  currentTarget: {fileID: 0}
+  currentAttackDamage: 0
   patrolPoints:
   - {x: 161.5, y: 4.5, z: 0}
   - {x: 161.5, y: -3, z: 0}
-  - {x: 165.5, y: 4.5, z: 0}
   patrolFiringConfiguration:
     firingInterval: 2
     bulletID: 0
     bulletSpeed: 12
   DamageCD: 0
-  Health: 100
-  HealthCap: 100
+  Health: 5
+  HealthCap: 5

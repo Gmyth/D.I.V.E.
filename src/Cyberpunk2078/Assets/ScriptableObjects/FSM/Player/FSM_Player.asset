@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: FSM_Player
   m_EditorClassIdentifier: 
   states:
-  - {fileID: 11400000, guid: 1f5a5df26622724449e8ee666ea576e8, type: 2}
-  - {fileID: 11400000, guid: 531c560b882ac6c4ca48c6a17302ffda, type: 2}
-  - {fileID: 11400000, guid: 87ba1f1090a576f4782e22b96476ba07, type: 2}
-  - {fileID: 11400000, guid: aa7df077ace2d48499604b6ef854a728, type: 2}
-  - {fileID: 11400000, guid: 9865c5edfb1ca6b4fae01aeff0ea331f, type: 2}
-  - {fileID: 11400000, guid: 761f8d42afcfa7846bc0034ba0c28233, type: 2}
-  - {fileID: 11400000, guid: f2360f02f234e2449911581e712639c8, type: 2}
-  - {fileID: 11400000, guid: b243c3bce28c9fa49bbf670a3104caa3, type: 2}
-  - {fileID: 11400000, guid: 1aff01a0c1cb2f44aa5a74c058e89f4a, type: 2}
+  - {fileID: 11400000, guid: 0743fda78706c5a4186cdf1705815d47, type: 2}
+  - {fileID: 11400000, guid: e04c004279aaee64396e829c04fe492e, type: 2}
+  - {fileID: 11400000, guid: 3a19861b2f75c4744bd60877e08ae506, type: 2}
+  - {fileID: 11400000, guid: 1b3be66a1be059e47b9ec53b29beae0f, type: 2}
+  - {fileID: 11400000, guid: ff3db9902e05c6e4f8ea003a7a281da7, type: 2}
+  - {fileID: 11400000, guid: 805997025e0a3894482672077f33f8c4, type: 2}
+  - {fileID: 11400000, guid: cd9e9127689fbd145bc6a487094eca48, type: 2}
+  - {fileID: 11400000, guid: 774e44cca19d2074189840161f8a5d42, type: 2}
+  - {fileID: 11400000, guid: 1bac88007e938c54a923d4ce77d03bbf, type: 2}
   - {fileID: 11400000, guid: b12d3039a9cf2c540926fd51798f129a, type: 2}
   startingStateIndex: 0

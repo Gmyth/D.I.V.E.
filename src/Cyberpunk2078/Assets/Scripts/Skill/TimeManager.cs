@@ -22,8 +22,8 @@ public class TimeManager : MonoBehaviour
     {
         if (Time.unscaledTime > endTime)
         { 
-            Time.timeScale += (1f / releaseSmoothTime) * Time.unscaledDeltaTime;
-            Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
+            var newScale = Time.timeScale + (1f / releaseSmoothTime) * Time.unscaledDeltaTime;
+            Time.timeScale = Mathf.Clamp(newScale, 0f, 1f);
             Time.fixedDeltaTime = Time.timeScale * 0.02f;
         }
         
@@ -39,7 +39,6 @@ public class TimeManager : MonoBehaviour
     
     public void endSlowMotion()
     {
-
         endTime = Time.unscaledTime;;
     }
 }

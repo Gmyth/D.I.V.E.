@@ -67,8 +67,7 @@ public class PSDashing : PlayerState
             }
             setAtkBox(false);
             
-            //enable Collision
-            //Physics.IgnoreLayerCollision(10, 11,false);
+
             
         } else if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.time)
         {
@@ -76,7 +75,7 @@ public class PSDashing : PlayerState
             // ok for move input
             PhysicsInputHelper(h);
             setAtkBox(false);
-                        
+            
             //enable Collision
             playerCharacter.transform.right = Vector3.right;
             Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Dummy"), false);
@@ -86,18 +85,31 @@ public class PSDashing : PlayerState
         RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,1f);
         if (hit1.collider != null && hit1.transform.CompareTag("Ground"))
         {
-            return reset();
+            if (!isGrounded())
+            {
+                return indexPSAirborne;
+            }
+
+            if (h == 0) return indexPSIdle;
+            return indexPSMoving;
         }
             
         
         // Player is grounded and dash has finished
         if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime  < Time.time)
         {
-            return reset();
+            if (!isGrounded())
+            {
+                return indexPSAirborne;
+            }
+
+            if (h == 0) return indexPSIdle;
+            return indexPSMoving;
         }
 
         return Index;
     }
+
 
     public override void OnStateEnter(State previousState)
     {
@@ -135,6 +147,12 @@ public class PSDashing : PlayerState
         rb2d.drag *= inDashingDragFactor;
     }
 
+
+    public override void OnStateQuit(State nextState)
+    {
+        reset();
+    }
+
     private void forceApply()
     {
         // Fix sprite flip on X-axis
@@ -154,8 +172,6 @@ public class PSDashing : PlayerState
         playerCharacter.transform.right = direction;
         rb2d.AddForce(direction * dashForce * 100f);
         
-
-        
         //Camera Tricks
         CameraManager.Instance.Shaking(0.08f,0.15f);
 
@@ -169,7 +185,7 @@ public class PSDashing : PlayerState
 
     
     // Safe Function for state quit 
-    private int reset()
+    private void reset()
     {
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float h = Input.GetAxis("Horizontal");
@@ -192,14 +208,7 @@ public class PSDashing : PlayerState
         
         setAtkBox(false);
         
-        if (!isGrounded())
-        {
-            return indexPSAirborne;
-        }
-            
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Dummy"),false);
-            
-        if (h == 0) return indexPSIdle;
-        return indexPSMoving;
+        
     }
 }

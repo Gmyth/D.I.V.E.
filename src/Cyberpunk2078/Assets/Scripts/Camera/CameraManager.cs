@@ -16,25 +16,20 @@ public class CameraManager : MonoBehaviour {
 
 	// Use this for initialization
 	public static CameraManager Instance;
-	private float tempVelocity;
+	private float zoomVelocity;
 	private Vector2 velocity; // the speed reference for camera
 	[Header("Camera")]
 
     // the smooth time for camera change the position on Y - axis, the larger number will slow the camera moving speed. 0 will be response instantly 
-    [SerializeField] private float smoothSmallestTimeY;
+    [SerializeField] private float smoothTimeY;
 
     // the smooth time for camera change the position on X - axis, the larger number will slow the camera moving speed. 0 will be response instantly 
-    [SerializeField] private float smoothSmallestTimeX;
+    [SerializeField] private float smoothTimeX;
 
-
-    // the smooth time for camera change the position on Y - axis, the larger number will slow the camera moving speed. 0 will be response instantly 
-    [SerializeField]private float smoothLargestTimeY; 
-	
-	// the smooth time for camera change the position on X - axis, the larger number will slow the camera moving speed. 0 will be response instantly 
-	[SerializeField]private float smoothLargestTimeX;
-
-    [SerializeField] private float characterWindowBoundaryX;
-    [SerializeField] private float characterWindowBoundaryY;
+    [SerializeField] private float characterWindowFreeBoundaryX;
+    [SerializeField] private float characterWindowFreeBoundaryY;
+    
+    [SerializeField] private float CameraChaseDelay;
 
     // the smooth time for camera to zoom in, the larger number will slow the camera moving speed. 0 will be response instantly 
 	
@@ -49,6 +44,8 @@ public class CameraManager : MonoBehaviour {
 	private GameObject mainTarget;
 	private List<CameraIndicator> indicatorList;
 	
+	
+
 	[Header("CameraBounds")]
 	[SerializeField]private bool bounds;
 	[SerializeField]private Vector3 maxCameraPos;
@@ -61,28 +58,39 @@ public class CameraManager : MonoBehaviour {
 	
 	/*	private bool shaking;*/
 	private bool shake;
+	private bool shakeRefreshing;
+	
+	/*	private bool flashIn;*/
+	private bool flash;
+	private bool flashRefreshing;
+	private bool flashOut;
+	
 	// currently the smallest magnitude it allowed is 0.01f;
 	private float shakeMagnitude; 
 	
-	private bool refeshing;
 	
 	
 	//Focusing related
 	private Transform target;
-	
-	private float lastZoomOut; // record the last second for zooming out
+
+	private float defaultSize;
 	private float lastZoomIn; // record the last second for zooming in
+	private float ZoomDuration; // record the last second for zooming in
+	private float targetZoomSize;
+	private float smoothTimeQZ;
+
+	
 	
 	// The helper function return value
-	private Vector2 currentSmallestPlayer; // position of player on lower left corner
-	private Vector2 currentLargestPlayer; // position of player on upper upper corner
-	private Vector2 currentSmallestWindow; // position of camera on lower left corner
-	private Vector2 currentLargestWindow; // position of camera on upper upper corner
-	
+	private Vector2 currentSmallestTolerancePos; // position of smallest TolerancePos that allow character to move without Camera Correction
+	private Vector2 currentLargestTolerancePos; // position of largest TolerancePos that allow character to move without Camera Correction
+
+
 	private bool zoomInChasing; // the need of chasing character for a while 
 	private CameraState currentState = CameraState.Reset;
 	void Start ()
 	{
+		defaultSize = Camera.main.orthographicSize;
 		mainTarget = GameObject.FindGameObjectWithTag("Player");
 		targetList = new List<GameObject>();
 		indicatorList = new List<CameraIndicator>();
@@ -121,7 +129,7 @@ public class CameraManager : MonoBehaviour {
 		indicatorList = GameObject.FindObjectsOfType<CameraIndicator>().ToList();
 	}
 
-	void FixedUpdate()
+	void LateUpdate()
 	{
 		float shakeX = 0;
 		float shakeY = 0;
@@ -136,50 +144,100 @@ public class CameraManager : MonoBehaviour {
 			case CameraState.Idle:
 				//Apply indicator config if indicator exists
 				var targetIndicator = findCloestIndicator();
-				if(targetIndicator) getCameraBoundary (targetIndicator.characterWindowBoundaryX,targetIndicator.characterWindowBoundaryY);
-				else getCameraBoundary (characterWindowBoundaryX,characterWindowBoundaryY);
+				float oX = targetIndicator && targetIndicator.changeOffset ? targetIndicator.offsetX : offsetX;
+				float oY = targetIndicator && targetIndicator.changeOffset ? targetIndicator.offsetY : offsetY;
 				
-				float smallestSTY = targetIndicator && targetIndicator.changeMoveSpeed ? targetIndicator.smoothSmallestTimeY : smoothSmallestTimeY;
-				float smallestSTX = targetIndicator && targetIndicator.changeMoveSpeed ? targetIndicator.smoothSmallestTimeX : smoothSmallestTimeX;
+				if(targetIndicator && targetIndicator.changeWindow){ 
+					getCameraBoundary (targetIndicator.characterWindowFreeBoundaryX, targetIndicator.characterWindowFreeBoundaryY, oX, oY);
+					
+				}
+				else
+				{
+					getCameraBoundary (characterWindowFreeBoundaryX, characterWindowFreeBoundaryY,oX,oY);
+				}
 				
-				float largestSTY = targetIndicator && targetIndicator.changeMoveSpeed ? targetIndicator.smoothLargestTimeY : smoothLargestTimeY;
-				float largestSTX = targetIndicator && targetIndicator.changeMoveSpeed ? targetIndicator.smoothLargestTimeX : smoothLargestTimeX;
+				smoothTimeY = targetIndicator && targetIndicator.changeMoveSpeed ? targetIndicator.smoothTimeY : smoothTimeY;
+				smoothTimeX = targetIndicator && targetIndicator.changeMoveSpeed ? targetIndicator.smoothTimeX : smoothTimeX;
 				
 				float posY = transform.position.y;
 				float posX = transform.position.x;
 
-				float oX = targetIndicator ? targetIndicator.offsetX : offsetX;
-				float oY = targetIndicator ? targetIndicator.offsetY : offsetY;
 				
                 Vector2 center = mainTarget.transform.position;
 				
 				//calculate the responsible smooth time based on the distance between character and Screen center
-				float smoothTimeX = largestSTX - (largestSTX - smallestSTX) * getCurrentSmoothTimePer(center.x, currentLargestWindow.x, currentSmallestWindow.x);
-				float smoothTimeY = largestSTY - (largestSTY - smallestSTY) * getCurrentSmoothTimePer(center.y, currentLargestWindow.y, currentSmallestWindow.y);
-				
-								
+
+
+
 				if(targetIndicator && targetIndicator.bounds)
 				{
-//					transform.position = new Vector3(Mathf.Clamp(transform.position.x, targetIndicator.minCameraPos.x, targetIndicator.maxCameraPos.x)+ targetIndicator.offsetX,
-//						Mathf.Clamp(transform.position.y, targetIndicator.minCameraPos.y, targetIndicator.maxCameraPos.y)+targetIndicator.offsetY,
-//						transform.position.z
-//					);
 					center.x = Mathf.Min(Mathf.Max(center.x,targetIndicator.minCameraPos.x),targetIndicator.maxCameraPos.x);
 					center.y = Mathf.Min(Mathf.Max(center.y,targetIndicator.minCameraPos.y),targetIndicator.maxCameraPos.y);
 				}
 				
-				posX = Mathf.SmoothDamp(transform.position.x,center.x, ref velocity.x, smoothTimeX);
-				posY = Mathf.SmoothDamp(transform.position.y,center.y, ref velocity.y, smoothTimeY);
-				transform.position = new Vector3(posX + oX + shakeX, posY + oY + shakeY, transform.position.z);
+				Vector2 targetPos = new Vector2(
+					posX + getDstMovement(center.x,currentLargestTolerancePos.x,currentSmallestTolerancePos.x),
+					posY + getDstMovement(center.y,currentLargestTolerancePos.y,currentSmallestTolerancePos.y)
+					);
+					
+				//velocity = Vector2.zero;
+
+				posX = Mathf.SmoothDamp(transform.position.x,targetPos.x, ref velocity.x, smoothTimeX);
+				posY = Mathf.SmoothDamp(transform.position.y,targetPos.y, ref velocity.y, smoothTimeY);
 				
-				if(targetIndicator && targetIndicator.changeSize) camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize, targetIndicator.targetCameraSize, ref tempVelocity, targetIndicator.smoothZoomTime);
-				else camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize, defaultFieldOfView, ref tempVelocity, smoothTimeZoom);
+
+				transform.position = new Vector3(posX + shakeX, posY + shakeY, transform.position.z);
+
+				if (targetIndicator && targetIndicator.changeSize)
+				{
+					defaultSize = targetIndicator.targetCameraSize;
+					if (flash)
+					{
+						if (!flashOut)
+						{
+							// zoom in to target ZoomSize
+							camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize,targetZoomSize, ref zoomVelocity, smoothTimeQZ);
+						}
+						else
+						{
+							//zoom out to origin ZoomSize
+							camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize,defaultSize, ref zoomVelocity, smoothTimeQZ);
+						}
+					}
+					else
+					{
+						// back to normal
+						camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize, targetIndicator.targetCameraSize, ref zoomVelocity, targetIndicator.smoothZoomTime);
+					}
+				}
+				else
+				{
+					defaultSize = defaultFieldOfView;
+					if (flash)
+					{
+						if (!flashOut)
+						{
+							// zoom in to target ZoomSize
+							camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize,targetZoomSize, ref zoomVelocity, smoothTimeQZ);
+						}
+						else
+						{
+							//zoom out to origin ZoomSize
+							camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize,defaultSize, ref zoomVelocity, smoothTimeQZ);
+						}
+					}
+					else
+					{
+						// back to normal
+						camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize, defaultFieldOfView, ref zoomVelocity, smoothTimeZoom);
+					}
+				}
 				break;
 			
 			case CameraState.Focusing:
-				camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize,cameraSizeOnFocusing, ref tempVelocity, smoothSmallestTimeX / 10);
-				posX = Mathf.SmoothDamp(transform.position.x,target.position.x, ref velocity.x, smoothSmallestTimeX / 5);
-				posY = Mathf.SmoothDamp(transform.position.y,target.position.y, ref velocity.y, smoothSmallestTimeY / 5);
+				camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize,cameraSizeOnFocusing, ref zoomVelocity, smoothTimeX / 10);
+				posX = Mathf.SmoothDamp(transform.position.x,target.position.x, ref velocity.x, smoothTimeX / 5);
+				posY = Mathf.SmoothDamp(transform.position.y,target.position.y, ref velocity.y, smoothTimeY / 5);
 				transform.position = new Vector3(posX + offsetX + shakeX, posY + offsetY + shakeY, transform.position.z);
 				break;
 
@@ -196,6 +254,7 @@ public class CameraManager : MonoBehaviour {
 	            
 	            transform.position = new Vector3(posX + offsetX + shakeX, posY + offsetY + shakeY, transform.position.z);
                 break;
+            
             case CameraState.Release:
                 break;
 
@@ -203,20 +262,18 @@ public class CameraManager : MonoBehaviour {
         }
 	}
 	
-//	void OnDrawGizmos()
-//	{
-//		// Draw a yellow sphere at the transform's position
-//		//Vector3 center = new Vector3((currentSmallestPlayer.x+currentLargestPlayer.x)/2,(currentSmallestPlayer.y+currentLargestPlayer.y)/2,1f); // get current center of players
-//		Gizmos.color = Color.red;
-//
-//		Gizmos.DrawSphere(new Vector3(currentSmallestWindow.x,currentSmallestWindow.y,1f),0.5f);
-//		
-//		Gizmos.color = Color.blue;
-//		Gizmos.DrawSphere(new Vector3(currentLargestWindow.x,currentLargestWindow.y,1f),0.5f);
-//		
-//		//Gizmos.color = Color.yellow;
-//		//Gizmos.DrawSphere(center, 1);
-//	}
+	void OnDrawGizmos()
+	{
+		// Draw a yellow sphere at the transform's position
+		//Vector3 center = new Vector3((currentSmallestPlayer.x+currentLargestPlayer.x)/2,(currentSmallestPlayer.y+currentLargestPlayer.y)/2,1f); // get current center of players
+		
+		
+		Gizmos.color =  new Color (0.5f, 0.8f, 0, .5f);
+		Vector3 center = (currentLargestTolerancePos - currentSmallestTolerancePos) / 2 + currentSmallestTolerancePos;
+		Gizmos.DrawCube (center, currentLargestTolerancePos - currentSmallestTolerancePos); 
+
+		//Gizmos.DrawSphere(center, 1);
+	}
 
 	public void focusAt(Transform _target)
 	{
@@ -234,13 +291,72 @@ public class CameraManager : MonoBehaviour {
 	{
 		currentState = CameraState.Reset;
 	}
-	
-	
-	public void Shaking(float strength,float duration)
+
+
+    public void flashIn(float targetSize, float smoothTime, float inDuration, float outDuration)
+    {
+	    if (!flash)
+	    {
+		    flashRefreshing = false;
+		    flash = true;
+		    targetZoomSize = targetSize;
+		    smoothTimeQZ = smoothTime;
+		    StartCoroutine(flashRelease(inDuration,outDuration));
+	    }
+	    else
+	    {
+		    targetZoomSize = targetSize;
+		    smoothTimeQZ = smoothTime;
+		    flashRefreshing = true; // refresh current Coroutine
+	    }
+    }
+    
+    IEnumerator flashRelease(float inDuration,float outDuration)
+    {
+	    int counter = 0;
+	    while (counter * 0.01f < inDuration)
+	    {
+		    // Zoom in Duration
+		    
+		    if (flashRefreshing)
+		    {
+			    //get refreshed
+			    counter = 0;
+			    flashRefreshing = false; 
+		    }
+		    yield return new WaitForSeconds(0.01f);
+		    counter++;
+	    }
+	    
+	    // flash out start
+	    flashOut = true;
+	    counter = 0;
+	    
+	    while (counter * 0.01f < outDuration)
+	    {
+		    // Zoom in Duration
+		    if (flashRefreshing)
+		    {
+			    //get refreshed
+			    counter = 0;
+			    flashRefreshing = false;
+			    break;
+		    }
+		    yield return new WaitForSeconds(0.01f);
+		    counter++;
+	    }
+	    
+	    flash = false;
+	    flashOut = false;
+	    yield return null;
+    }
+
+
+    public void Shaking(float strength,float duration)
 	{
 		if (!shake)
 		{
-			refeshing = false;
+			shakeRefreshing = false;
 			shake = true;
 			shakeMagnitude = strength;
 			StartCoroutine(shakeRelease(duration));
@@ -248,7 +364,7 @@ public class CameraManager : MonoBehaviour {
 		else
 		{
 			shakeMagnitude = strength;
-			refeshing = true; // refresh current Coroutine
+			shakeRefreshing = true; // refresh current Coroutine
 		}
 	}
 
@@ -257,11 +373,11 @@ public class CameraManager : MonoBehaviour {
 		int counter = 0;
 		while (counter * 0.01f < duration)
 		{
-			if (refeshing)
+			if (shakeRefreshing)
 			{
 				//get refreshed
 				counter = 0;
-				refeshing = false; 
+				shakeRefreshing = false; 
 			}
 			yield return new WaitForSeconds(0.01f);
 			counter++;
@@ -270,83 +386,51 @@ public class CameraManager : MonoBehaviour {
 		yield return null;
 	}
 
-	// helper function
-	private void getPlayerBoundary()
-	{
-		float smallestX = 9999;
-		float smallestY = 9999;
-		float largestX = -9999;
-		float largestY = -9999;
-		foreach (var player in targetList)
-		{
-			var temp = player.transform.position;
-			if (temp.x < smallestX)
-			{
-				smallestX = temp.x;
-			}
-			if (temp.x > largestX)
-			{
-				largestX = temp.x;
-			}
-			
-			if (temp.y < smallestY)
-			{
-				smallestY = temp.y;
-			}
-			if (temp.y > largestY)
-			{
-				largestY = temp.y;
-			}
-		}
-		currentLargestPlayer = new Vector2(largestX,largestY);
-		currentSmallestPlayer = new Vector2(smallestX,smallestY);
-	}
-
-	private void getCameraBoundary(float boundaryX, float boundaryY)
+	private void getCameraBoundary(float boundaryX, float boundaryY, float oX, float oY)
 	{
 		// Screens coordinate corner location
 		var camera = GetComponent<Camera>();
-		//var upperLeftScreen = new Vector3(Screen.width*0.15f, Screen.height*0.75f, 0 );
-//		var upperRightScreen = new Vector3(Screen.width*0.90f + camera.orthographicSize*8, Screen.height*0.90f + camera.orthographicSize*4, 0);
-//		var lowerLeftScreen = new Vector3(Screen.width*0.10f - camera.orthographicSize*8, Screen.height*0.10f - camera.orthographicSize*4, 0);
+
 		var upperRightScreen = new Vector3(Screen.width * boundaryX, Screen.height * boundaryY , -10);
 		var lowerLeftScreen = new Vector3(Screen.width * (1 - boundaryX) , Screen.height * (1 - boundaryY), -10);
-		//var lowerRightScreen = new Vector3(Screen.width*0.85f, Screen.height*0.25f, 0);
-   
+
 		//Corner locations in world coordinates
-		
 		Vector2 upperRight = camera.ScreenToWorldPoint(upperRightScreen);
 		Vector2 lowerLeft = camera.ScreenToWorldPoint(lowerLeftScreen);
-
-		currentLargestWindow = lowerLeft;
-		currentSmallestWindow = upperRight;
+		Vector2 offset = new Vector2(oX,oY);
+		currentSmallestTolerancePos = upperRight + offset;
+		currentLargestTolerancePos = lowerLeft + offset;
 	}
-
-	private float getCurrentSmoothTimePer(float pos, float largest,float smallest)
+	
+	
+	private float getDstMovement(float pos, float larges,float smallest)
 	{
-
-		if (pos > largest || pos < smallest) return 1;
 		
-		float interval = (largest - smallest)/2;
-
-		float absPos = pos > smallest + interval ? pos - interval - smallest : pos - smallest;
-
-		float percentage = absPos / interval;
+		if (pos < smallest)
+		{
+			return pos - smallest;
+		}
 		
-		return 1 - percentage;
+		if (pos > larges)
+		{
+			return pos - larges;
+		}
+
+		return 0f;
 
 	}
+
 
 	private CameraIndicator findCloestIndicator()
 	{
 		//function for locating closet indicator in range
 		if (indicatorList.Count == 0) return null;
-		Vector2 pos = transform.position;
+		Vector2 pos = mainTarget.transform.position;
 		var targetIndicator = indicatorList[0];
 		bool found = false;
 		foreach (var indicator in indicatorList)
 		{
-			if (indicator.influenceRange >= (pos - (Vector2) indicator.transform.position).magnitude)
+			if (indicator.inRange(pos))
 			{
 
 				if (found && targetIndicator.influenceLevel > indicator.influenceLevel)

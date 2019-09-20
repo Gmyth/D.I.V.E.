@@ -38,7 +38,6 @@ public class Drone : Enemy, IPatroller
 
     Vector3 IPatroller.GetPatrolPoint(int index)
     {
-        Debug.Log(index);
         return patrolPoints[index];
     }
 
