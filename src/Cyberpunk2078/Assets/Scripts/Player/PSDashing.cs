@@ -16,7 +16,7 @@ public class PSDashing : PlayerState
     
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSMoving;
-    [SerializeField] private int indexJumping2;
+    [SerializeField] private int indexPSJumping2;
     [SerializeField] private int indexWallJumping;
     [SerializeField] private int indexPSAirborne;
     
@@ -47,6 +47,12 @@ public class PSDashing : PlayerState
             return indexPSMoving;
         }
 
+        if (Input.GetButtonDown("Jump") && Player.CurrentPlayer.SecondJumpReady)
+        {
+            Player.CurrentPlayer.SecondJumpReady = false;
+            return indexPSJumping2;
+        }
+
         if (lastDashSecond + dashDelayTime < Time.time && readyToPush)
         {
             // Press delay ends. time to actual dash
@@ -65,6 +71,7 @@ public class PSDashing : PlayerState
                 rb2d.drag = defaultDrag;
                 rb2d.velocity = rb2d.velocity * 0.1f;
             }
+            PhysicsInputHelper(h);
             setAtkBox(false);
             
 
@@ -85,6 +92,7 @@ public class PSDashing : PlayerState
         RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,1f);
         if (hit1.collider != null && hit1.transform.CompareTag("Ground"))
         {
+            PhysicsInputHelper(h);
             if (!isGrounded())
             {
                 return indexPSAirborne;
@@ -98,6 +106,7 @@ public class PSDashing : PlayerState
         // Player is grounded and dash has finished
         if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime  < Time.time)
         {
+            PhysicsInputHelper(h);
             if (!isGrounded())
             {
                 return indexPSAirborne;
@@ -150,43 +159,6 @@ public class PSDashing : PlayerState
 
     public override void OnStateQuit(State nextState)
     {
-        reset();
-    }
-
-    private void forceApply()
-    {
-        // Fix sprite flip on X-axis
-        playerCharacter.GetComponent<SpriteRenderer>().flipX = false;
-        // Play Animation
-        anim.Play("MainCharacter_Dashing", -1, 0f);
-        var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-        var mouse = GameObject.FindObjectOfType<MouseIndicator>();
-        
-        //get Mouse direction
-        Vector3 direction = getDirectionCorrection(mouse.getAttackDirection(),GroundNormal());
-        
-        //set correct Y flip based on mouse direction
-        if (direction.x < 0 && direction.y != 0) playerCharacter.GetComponent<SpriteRenderer>().flipY = true;
-        
-        //Apply force to character
-        playerCharacter.transform.right = direction;
-        rb2d.AddForce(direction * dashForce * 100f);
-        
-        //Camera Tricks
-        CameraManager.Instance.Shaking(0.08f,0.15f);
-
-        setAtkBox(true);
-    }
-
-    private void setAtkBox(bool value)
-    {
-        playerCharacter.dashAtkBox.SetActive(value);
-    }
-
-    
-    // Safe Function for state quit 
-    private void reset()
-    {
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float h = Input.GetAxis("Horizontal");
         
@@ -209,6 +181,38 @@ public class PSDashing : PlayerState
         setAtkBox(false);
         
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Dummy"),false);
-        
+
     }
+
+    private void forceApply()
+    {
+        // Fix sprite flip on X-axis
+        playerCharacter.GetComponent<SpriteRenderer>().flipX = false;
+        // Play Animation
+        anim.Play("MainCharacter_Dashing", -1, 0f);
+        var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
+        var mouse = GameObject.FindObjectOfType<MouseIndicator>();
+        
+        //get Mouse direction
+        Vector3 direction = getDirectionCorrection(mouse.getAttackDirection(),GroundNormal());
+        
+        //set correct Y flip based on mouse direction
+        if (direction.x < 0 && direction.y != 0) playerCharacter.GetComponent<SpriteRenderer>().flipY = true;
+        
+        //Apply force to character
+        playerCharacter.transform.right = direction;
+        rb2d.AddForce(direction * dashForce * 8000f * Time.deltaTime);
+        
+        //Camera Tricks
+        CameraManager.Instance.Shaking(0.08f,0.15f);
+
+        setAtkBox(true);
+    }
+
+    private void setAtkBox(bool value)
+    {
+        playerCharacter.dashAtkBox.SetActive(value);
+    }
+
+    
 }
