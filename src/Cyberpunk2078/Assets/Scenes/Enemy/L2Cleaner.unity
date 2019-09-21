@@ -2882,12 +2882,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ce697647442de64393896f36daa7445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothSmallestTimeY: 0.2
-  smoothSmallestTimeX: 0.7
-  smoothLargestTimeY: 1.5
-  smoothLargestTimeX: 1.5
-  characterWindowBoundaryX: 0.35
-  characterWindowBoundaryY: 0.2
+  smoothTimeY: 0
+  smoothTimeX: 0
+  characterWindowFreeBoundaryX: 0
+  characterWindowFreeBoundaryY: 0
+  CameraChaseDelay: 0
   defaultFieldOfView: 8
   smoothTimeZoom: 4
   offsetX: 0
@@ -3176,6 +3175,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inDialogueZone: 0
   isDialogueOngoing: 0
+  isInDialogue: 0
+  currentTimelineManager: {fileID: 0}
 --- !u!114 &1959469305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3245,7 +3246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08b3a5a6462f38a4a9897415b3c450a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fsm: {fileID: 11400000, guid: f29e5d094a60c0d4d8af4f6bc916247e, type: 2}
+  fsm: {fileID: 11400000, guid: e940c97f4a9914740a98bcbd19d444ce, type: 2}
   dashAtkBox: {fileID: 687929491}
 --- !u!50 &1959469309
 Rigidbody2D:
