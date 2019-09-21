@@ -15,12 +15,12 @@ MonoBehaviour:
   Name: Dash
   dashForce: 30
   dashDelayTime: 0.085
-  dashReleaseTime: 0.3
-  dashReleaseDelayTime: 0.1
+  dashReleaseTime: 0.2
+  dashReleaseDelayTime: 0.05
   inDashingDragFactor: 6
   EnergyConsume: -70
   indexPSIdle: 0
   indexPSMoving: 1
-  indexJumping2: 5
+  indexPSJumping2: 0
   indexWallJumping: 7
   indexPSAirborne: 2

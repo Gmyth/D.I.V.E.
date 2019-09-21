@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Experimental.PlayerLoop;
 
 
 [CreateAssetMenuAttribute(fileName = "PS_Moving", menuName = "Player State/Moving")]
@@ -14,6 +15,7 @@ public class PSMoving : PlayerState
     [SerializeField] private int indexPSClimb;
     public override int Update()
     {
+        NormalizeSlope();
         // Energy Recover
         Player.CurrentPlayer.EnergyRecover(Time.time);
 
@@ -48,6 +50,7 @@ public class PSMoving : PlayerState
 
         return Index;
     }
+    
 
 
     public override void OnStateEnter(State previousState)
@@ -61,9 +64,21 @@ public class PSMoving : PlayerState
     {
         int direction = axis > 0 ? 1 : -1;
         PhysicsInputHelper(axis,speedFactor,accelerationFactor);
-//        Vector2 V = playerCharacter.GetComponent<Rigidbody2D>().velocity;
-//
-//        V.x = direction * speed_factor;
-//        playerCharacter.GetComponent<Rigidbody2D>().velocity = V;
     }
+    
+    void NormalizeSlope () {
+        // Attempt vertical normalization
+        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position, -Vector2.up, 4f);
+        if (hit.collider != null && Mathf.Abs(hit.normal.x) > 0.1f && hit.transform.tag == "Ground"){
+                Rigidbody2D rb2d = playerCharacter.GetComponent<Rigidbody2D>();
+                // Apply the opposite force against the slope force 
+                // You will need to provide your own slopeFriction to stabalize movement
+                rb2d.velocity = new Vector2(rb2d.velocity.x - (hit.normal.x * 0.8f), rb2d.velocity.y);
+                //Move Player up or down to compensate for the slope below them
+                Vector3 pos = playerCharacter.transform.position;
+                pos.y += -hit.normal.x * Mathf.Abs(rb2d.velocity.x) * Time.deltaTime * (rb2d.velocity.x - hit.normal.x > 0 ? 1 : -1);
+                playerCharacter.transform.position = pos;
+        }
+    }
+    
 }

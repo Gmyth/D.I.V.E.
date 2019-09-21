@@ -73,6 +73,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
 
     public override int Update()
     {
+        if(!enemy) return indexWayPoint;
         Vector3 enemyPosition = enemy.transform.position;
 
         if (index_ESAlert >= 0)
