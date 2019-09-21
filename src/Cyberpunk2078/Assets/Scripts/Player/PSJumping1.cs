@@ -10,6 +10,7 @@ public class PSJumping1 : PlayerState
 
     [SerializeField] private float speedFactor = 3;
     [SerializeField] private float accelerationFactor = 20;
+    [SerializeField] private float jumpCD = 0.02f;
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSMoving;
     [SerializeField] private int indexJumping2;
@@ -18,7 +19,7 @@ public class PSJumping1 : PlayerState
     [SerializeField] private int indexPSAttackGH;
     [SerializeField] private int indexPSAirborne;
     [SerializeField] private int indexPSClimb;
-    private bool isJumpKeyDown = false;
+    private float lastJumpSec;
 
     public override int Update()
     {
@@ -65,12 +66,16 @@ public class PSJumping1 : PlayerState
         }
 
         //Player is sill in air
-        if (Vy < jumpForce / 5)
+        if (lastJumpSec + jumpCD < Time.time)
         {
             // prevent misclicking
             if (Input.GetButtonDown("Jump"))
+            {
                 // second_jump
+                Player.CurrentPlayer.SecondJumpReady = false;
                 return indexJumping2;
+            }
+               
         }
 
         if (Input.GetAxis("Dashing") != 0)
@@ -87,7 +92,7 @@ public class PSJumping1 : PlayerState
     {
         anim.Play("MainCharacter_Jump", -1, 0f);
         //Perform jump
-        isJumpKeyDown = true;
+        lastJumpSec = Time.time;
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         // kill any Y-axis speed
         rb2d.velocity = new Vector2 (rb2d.velocity.x, 0);
