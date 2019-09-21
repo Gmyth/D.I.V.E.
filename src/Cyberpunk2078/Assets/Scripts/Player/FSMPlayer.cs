@@ -175,12 +175,22 @@ public class FSMPlayer : FiniteStateMachine<PlayerState>
     }
 
 
-    public void Initialize(PlayerCharacter player)
+    public FSMPlayer Initialize(PlayerCharacter player)
     {
-        for (int i = 0; i < states.Length; ++i)
-            states[i].Initialize(i, player);
+        FSMPlayer fsmCopy = Instantiate(this);
 
-        currentStateIndex = -1;
+        for (int i = 0; i < states.Length; ++i)
+        {
+            PlayerState stateCopy = Instantiate(states[i]);
+            stateCopy.Initialize(i, player);
+
+            fsmCopy.states[i] = stateCopy;
+        }
+
+        fsmCopy.currentStateIndex = -1;
+
+
+        return fsmCopy;
     }
 
     public override void Boot()

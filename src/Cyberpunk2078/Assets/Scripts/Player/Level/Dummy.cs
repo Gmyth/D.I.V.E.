@@ -54,6 +54,7 @@ public abstract class Enemy : Dummy
     [HideInInspector] public PlayerCharacter currentTarget;
     [HideInInspector] public float currentAttackDamage = 0;
 
+
     public float this[StatisticType type]
     {
         get
@@ -93,7 +94,7 @@ public abstract class Enemy : Dummy
 
     protected virtual void Start()
     {
-        fsm.Initialize(this);
+        fsm = fsm.Initialize(this);
         fsm.Boot();
     }
 

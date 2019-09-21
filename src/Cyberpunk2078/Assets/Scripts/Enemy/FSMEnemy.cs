@@ -140,12 +140,22 @@ public class FSMEnemy : FiniteStateMachine<EnemyState>
     }
 
 
-    public void Initialize(Enemy enemy)
+    public FSMEnemy Initialize(Enemy enemy)
     {
-        for (int i = 0; i < states.Length; ++i)
-            states[i].Initialize(i, enemy);
+        FSMEnemy fsmCopy = Instantiate(this);
 
-        currentStateIndex = -1;
+        for (int i = 0; i < states.Length; ++i)
+        {
+            EnemyState stateCopy = Instantiate(states[i]);
+            stateCopy.Initialize(i, enemy);
+
+            fsmCopy.states[i] = stateCopy;
+        }
+
+        fsmCopy.currentStateIndex = -1;
+
+
+        return fsmCopy;
     }
 
     public override void Boot()

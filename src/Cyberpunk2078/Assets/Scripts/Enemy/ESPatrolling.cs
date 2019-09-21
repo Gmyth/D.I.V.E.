@@ -69,6 +69,9 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
         seeker = enemy.GetComponent<Seeker>();
 
         t = 0;
+
+        Debug.Log(GetInstanceID());
+        Debug.Log(seeker.gameObject.name);
     }
 
     public override int Update()
