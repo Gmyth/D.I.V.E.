@@ -11,8 +11,8 @@ public enum ZoneType
 
 [Serializable] public struct Zone
 {
-    [SerializeField] private ZoneType type;
-    [SerializeField] private Vector2 center;
+    public ZoneType type;
+    public Vector2 center;
     [SerializeField][Min(0f)] private float w;
     [SerializeField][Min(0f)] private float h;
 

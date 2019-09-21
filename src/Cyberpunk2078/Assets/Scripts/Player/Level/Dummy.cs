@@ -50,9 +50,12 @@ public abstract class Enemy : Dummy
     [SerializeField] protected StatisticSystem statistics;
     [SerializeField] protected Zone guardZone;
     [SerializeField] protected HitBox[] hitBoxes;
-
     [HideInInspector] public PlayerCharacter currentTarget;
     [HideInInspector] public float currentAttackDamage = 0;
+    
+    [Header("Patrolling")]
+    public Vector3[] patrolPoints;
+    public RangedWeaponConfiguration patrolFiringConfiguration;
 
 
     public float this[StatisticType type]
@@ -77,6 +80,17 @@ public abstract class Enemy : Dummy
         {
             return 10f;
         }
+    }
+
+
+    public Vector2 Pos
+    {
+        get { return (Vector2)transform.position; }
+    }
+
+    public void setCenter()
+    {
+        guardZone.center = transform.position;
     }
 
 

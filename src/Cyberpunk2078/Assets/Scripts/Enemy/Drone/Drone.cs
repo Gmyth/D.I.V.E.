@@ -6,10 +6,6 @@ using UnityEngine;
 [RequireComponent(typeof(Seeker))]
 public class Drone : Enemy, IPatroller
 {
-    [Header("Patrolling")]
-    [SerializeField] private Vector3[] patrolPoints;
-    public RangedWeaponConfiguration patrolFiringConfiguration;
-
     [Header("")]
     [SerializeField] private float DamageCD;
     private Dictionary<int, float> damageList = new Dictionary<int, float>();

@@ -3,9 +3,9 @@
 
 public class L2Cleaner : Enemy, IPatroller
 {
-    [Header("Patrolling")]
-    [SerializeField] private Vector3[] patrolPoints;
-    public RangedWeaponConfiguration patrolFiringConfiguration;
+//    [Header("Patrolling")]
+//    [SerializeField] private Vector3[] patrolPoints;
+//    public RangedWeaponConfiguration patrolFiringConfiguration;
 
 
     public override float ApplyDamage(int instanceId, float rawDamage, bool overWrite = false)

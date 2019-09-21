@@ -19,8 +19,7 @@ public class PSDashing : PlayerState
     [SerializeField] private int indexPSJumping2;
     [SerializeField] private int indexWallJumping;
     [SerializeField] private int indexPSAirborne;
-    
-    
+
     private float lastDashSecond;
     private bool hyperSpeed;
     private float defaultDrag;
