@@ -60,7 +60,7 @@ public class PlayerCharacter : Dummy
         rigidbody = GetComponent<Rigidbody>();
 
 
-        fsm.Initialize(this);
+        fsm = fsm.Initialize(this);
         fsm.Boot();
     }
 
