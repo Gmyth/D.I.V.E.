@@ -9,7 +9,7 @@ public class PlayerCharacter : Dummy
 
 
     [SerializeField] private FSMPlayer fsm;
-    
+
     private StatisticSystem statistic;
     private new Rigidbody rigidbody;
 
@@ -24,7 +24,7 @@ public class PlayerCharacter : Dummy
 
     public PlayerCharacter(Player player)
     {
-        statistic = new StatisticSystem(player.Inventory);
+        statistic = new StatisticSystem(player.attributes, player.inventory);
     }
 
 
@@ -46,14 +46,21 @@ public class PlayerCharacter : Dummy
 
 
         Singleton = this;
+    }
+
+    private void Start()
+    {
+
+
 
         dashAtkBox = GetComponentInChildren<Attack>().gameObject;
         dashAtkBox.SetActive(false);
 
+
         rigidbody = GetComponent<Rigidbody>();
 
 
-        fsm = fsm.Initialize(this);
+        fsm.Initialize(this);
         fsm.Boot();
     }
 
@@ -66,7 +73,7 @@ public class PlayerCharacter : Dummy
     {
         //game over
     }
-    
+
     private void OnDestroy()
     {
         if (Singleton == this)

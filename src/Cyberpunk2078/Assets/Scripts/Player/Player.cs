@@ -1,4 +1,6 @@
-﻿using System.Runtime.Remoting.Messaging;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Runtime.Remoting.Messaging;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,32 +19,42 @@ public class Player
     }
 
 
-    public Inventory Inventory { get; private set; }
+    public readonly AttributeSet attributes;
+    public readonly Inventory inventory;
 
     public bool SecondJumpReady;
     
     public float Health { get; private set; }
     
-    public float HealthCap { get; private set; }
-
-    public float EnergyCap { get; private set; }
-    
-    public float EnergyRecoverRate { get; private set; }
-    
     public float Energy { get; private set; }
-    
-    
+
+
+    public float this[AttributeType type]
+    {
+        get
+        {
+            return AttributeSet.Sum(type, attributes, inventory);
+        }
+    }
+
+
     // Internal Usage
     private float lastSecondEnergyRecover;
 
+
     private Player(int healthCap = 3, float energyCap = 200f , float energyRecoverRate = 6f)
     {
-        Inventory = new Inventory();
+        inventory = new Inventory();
+
+        
+        attributes = new AttributeSet();
+        attributes.Set(AttributeType.MaxHp_c0, healthCap);
+        attributes.Set(AttributeType.MaxSp_c0, energyCap);
+        attributes.Set(AttributeType.SpRecovery_c0, energyRecoverRate);
+
+
         SecondJumpReady = true;
-        HealthCap = healthCap;
         Health = healthCap;
-        EnergyCap = energyCap;
-        EnergyRecoverRate = energyRecoverRate;
         Energy = energyCap;
         lastSecondEnergyRecover = 0;
     }
@@ -50,10 +62,16 @@ public class Player
 
     public bool ApplyEnergyChange(float amount)
     {
-        if (Energy + amount < 0) return false;
-        Energy = Mathf.Max(Mathf.Min(amount + Energy, EnergyCap), 0);
-        GameObject.Find("Energy1").GetComponent<Slider>().value = Mathf.Max(Mathf.Min(Energy, EnergyCap/2), 0)/(EnergyCap/2);
-        GameObject.Find("Energy2").GetComponent<Slider>().value = Mathf.Max((Energy-EnergyCap/2), 0)/(EnergyCap/2);
+        if (Energy + amount < 0)
+            return false;
+
+        float maxSp = this[AttributeType.MaxSp_c0];
+
+        Energy = Mathf.Max(Mathf.Min(amount + Energy, maxSp), 0);
+        GameObject.Find("Energy1").GetComponent<Slider>().value = Mathf.Max(Mathf.Min(Energy, maxSp / 2), 0) / (maxSp / 2);
+        GameObject.Find("Energy2").GetComponent<Slider>().value = Mathf.Max((Energy-maxSp / 2), 0) / (maxSp / 2);
+
+
         return true;
     }
     
@@ -61,22 +79,24 @@ public class Player
     {
         if (time - lastSecondEnergyRecover > 0.2f)
         {
-            ApplyEnergyChange(EnergyRecoverRate);
+            ApplyEnergyChange(this[AttributeType.SpRecovery_c0]);
             lastSecondEnergyRecover = time;
         }
-
     }
     
     public bool ApplyHealthChange(float amount)
     {
-        if (Health < amount) return false;
-        Health = Mathf.Max(Mathf.Min(amount + Health, HealthCap), 0);
-        GameObject.Find("Health1").GetComponent<SpriteRenderer>().color = Health > 0? Color.white : Color.clear;
-        GameObject.Find("Health2").GetComponent<SpriteRenderer>().color = Health > 1? Color.white : Color.clear;
-        GameObject.Find("Health3").GetComponent<SpriteRenderer>().color = Health > 3? Color.white : Color.clear;
+        if (Health < amount)
+            return false;
+
+
+        Health = Mathf.Max(Mathf.Min(amount + Health, this[AttributeType.MaxHp_c0]), 0);
+
+        GameObject.Find("Health1").gameObject.SetActive(Health > 0);
+        GameObject.Find("Health2").gameObject.SetActive(Health > 1);
+        GameObject.Find("Health3").gameObject.SetActive(Health > 2);
+
+        
         return true;
     }
-
-
-
 }
