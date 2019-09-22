@@ -151,7 +151,7 @@ MonoBehaviour:
   c1:
     serializedVersion: 2
     rgba: 4294967295
-  FontSize: 12
+  FontSize: 13
   displayMode: 0
   SpeedText: 0.05
   dialoguePositionDown: {fileID: 4352279970652850735}
