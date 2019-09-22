@@ -16,6 +16,8 @@ public class PSAirborne : PlayerState
     {
         // Energy Recover
         Player.CurrentPlayer.EnergyRecover(Time.time);
+        float h = Input.GetAxis("Horizontal");
+        PhysicsInputHelper(h);
         
         if (Input.GetAxis("Attack1") > 0)
         {

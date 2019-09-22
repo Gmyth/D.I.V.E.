@@ -92,9 +92,9 @@ public class Player
 
         Health = Mathf.Max(Mathf.Min(amount + Health, this[AttributeType.MaxHp_c0]), 0);
 
-        GameObject.Find("Health1").gameObject.SetActive(Health > 0);
-        GameObject.Find("Health2").gameObject.SetActive(Health > 1);
-        GameObject.Find("Health3").gameObject.SetActive(Health > 2);
+        if(GameObject.Find("Health1"))GameObject.Find("Health1").gameObject.SetActive(Health > 0);
+        if(GameObject.Find("Health2")) GameObject.Find("Health2").gameObject.SetActive(Health > 1);
+        if(GameObject.Find("Health3"))GameObject.Find("Health3").gameObject.SetActive(Health > 2);
 
         
         return true;

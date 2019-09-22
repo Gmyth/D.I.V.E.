@@ -45,7 +45,7 @@ public class PSMoving : PlayerState
         Move(x);
 
 
-        if (Input.GetAxis("Jump") > 0)
+        if (Input.GetButtonDown("Jump"))
             return indexPSJumping1;
 
         return Index;

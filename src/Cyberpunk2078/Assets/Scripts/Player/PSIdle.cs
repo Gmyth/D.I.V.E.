@@ -16,6 +16,8 @@ public class PSIdle : PlayerState
     {
 
         NormalizeSlope();
+        var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
+        float Vy = rb2d.velocity.y;
         
         // Energy Recover
         Player.CurrentPlayer.EnergyRecover(Time.time);
@@ -26,16 +28,21 @@ public class PSIdle : PlayerState
             return indexPSAttackGH;
         }
         
+        if (!isGrounded()&& Vy < 0)
+        {
+            return indexPSAirborne;
+        }
+        
         if (Input.GetAxis("Vertical") > 0  &&  isCloseTo("Ladder"))
         {
             // up is pressed
             return indexPSClimb;
         }
-
+            
         if (Input.GetAxis("Horizontal") != 0)
             return indexPSMoving;
 
-        if (Input.GetAxis("Jump") > 0)
+        if (Input.GetButtonDown("Jump"))
             return indexPSJumping1;
         
         if (Input.GetAxis("Dashing") != 0)
@@ -48,7 +55,7 @@ public class PSIdle : PlayerState
     {
         anim.Play("MainCharacter_Idle", -1, 0f);
         Rigidbody2D rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-        //rb2d.velocity = new Vector2(0,rb2d.velocity.y);
+        rb2d.velocity = new Vector2(0,rb2d.velocity.y);
     }
 
     public override void OnStateQuit(State nextState)

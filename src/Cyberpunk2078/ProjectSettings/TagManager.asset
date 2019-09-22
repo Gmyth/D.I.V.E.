@@ -12,6 +12,7 @@ TagManager:
   - Bullet
   - PlayerAttack
   - Hunch
+  - Platform
   layers:
   - Default
   - TransparentFX

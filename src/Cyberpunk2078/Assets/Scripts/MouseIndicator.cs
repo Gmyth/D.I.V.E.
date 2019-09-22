@@ -10,15 +10,6 @@ public class MouseIndicator : MonoBehaviour
     private float timeCount = 0.0f;
     void Start()
     {
-        directionRef = new List<Vector2>();
-        directionRef.Add(new Vector2(0f,1f)); //up
-        directionRef.Add(new Vector2(-1f,0f)); //left
-        directionRef.Add(new Vector2(1f,0f)); //right
-        directionRef.Add(new Vector2(0f,-1f)); //down
-        directionRef.Add(new Vector2(-0.5f,0.5f)); //upper left
-        directionRef.Add(new Vector2(0.5f,0.5f)); //upper right
-        directionRef.Add(new Vector2(-0.5f,-0.5f)); //down left
-        directionRef.Add(new Vector2(0.5f,-0.5f)); //down right
         player  = GameObject.FindGameObjectWithTag("Player");
     }
 

@@ -156,8 +156,6 @@ public class CameraManager : MonoBehaviour {
 					getCameraBoundary (characterWindowFreeBoundaryX, characterWindowFreeBoundaryY,oX,oY);
 				}
 				
-				smoothTimeY = targetIndicator && targetIndicator.changeMoveSpeed ? targetIndicator.smoothTimeY : smoothTimeY;
-				smoothTimeX = targetIndicator && targetIndicator.changeMoveSpeed ? targetIndicator.smoothTimeX : smoothTimeX;
 				
 				float posY = transform.position.y;
 				float posX = transform.position.x;
@@ -182,8 +180,10 @@ public class CameraManager : MonoBehaviour {
 					
 				//velocity = Vector2.zero;
 
-				posX = Mathf.SmoothDamp(transform.position.x,targetPos.x, ref velocity.x, smoothTimeX);
-				posY = Mathf.SmoothDamp(transform.position.y,targetPos.y, ref velocity.y, smoothTimeY);
+				posX = Mathf.SmoothDamp(transform.position.x,targetPos.x, ref velocity.x, 
+					targetIndicator && targetIndicator.changeMoveSpeed ? targetIndicator.smoothTimeY : smoothTimeY);
+				posY = Mathf.SmoothDamp(transform.position.y,targetPos.y, ref velocity.y, 
+					targetIndicator && targetIndicator.changeMoveSpeed ? targetIndicator.smoothTimeX : smoothTimeX);
 				
 
 				transform.position = new Vector3(posX + shakeX, posY + shakeY, transform.position.z);

@@ -31,6 +31,12 @@ public abstract class PlayerState : State
         RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.1f,-0.2f,0f),-playerCharacter.transform.up,1f);
         if (hitM.collider != null && hitM.transform.CompareTag("Ground") || hitR.collider != null && hitR.transform.CompareTag("Ground") || hitL.collider != null && hitL.transform.CompareTag("Ground"))
         {
+            
+            Player.CurrentPlayer.SecondJumpReady = true;
+            return true;
+        }else if(hitM.collider != null && hitM.transform.CompareTag("Platform") || hitR.collider != null && hitR.transform.CompareTag("Platform") || hitL.collider != null && hitL.transform.CompareTag("Platform"))
+        {
+            
             Player.CurrentPlayer.SecondJumpReady = true;
             return true;
         }
@@ -83,7 +89,7 @@ public abstract class PlayerState : State
     //if player is grounded, the direction to down left/right & down side are not allowed
     public Vector2 getDirectionCorrection(Vector2 _direction, Vector2 _norm)
     {
-        if (Vector2.Angle(_direction, _norm) < 55)
+        if (Vector2.Angle(_direction, _norm) < 85)
         {
             // Allowed for free dash
             return _direction;
