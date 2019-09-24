@@ -15,7 +15,7 @@ MonoBehaviour:
   Name: Dash
   dashForce: 30
   dashDelayTime: 0.085
-  dashReleaseTime: 0.2
+  dashReleaseTime: 0.08
   dashReleaseDelayTime: 0.05
   inDashingDragFactor: 6
   EnergyConsume: -70

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Move
   speedFactor: 8
-  accelerationFactor: 15
+  accelerationFactor: 35
   indexPSIdle: 0
   indexPSAttackGH: 3
   indexPSJumping1: 4
