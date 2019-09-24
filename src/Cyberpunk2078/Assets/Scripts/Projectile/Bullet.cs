@@ -43,16 +43,6 @@ public class Bullet : Recyclable
                 TimeManager.Instance.startSlowMotion(0.3f);
                 CameraManager.Instance.flashIn(7f,0.05f,0.15f,0.01f);
             }
-            else
-            {
-                var chance = Random.Range(0, 100);
-                if (chance > 30)
-                {
-                    TimeManager.Instance.startSlowMotion(0.3f);
-                    CameraManager.Instance.flashIn(7f,0.05f,0.15f,0.01f);
-                }
-            }
-
         }
         else if (other.tag == "Player")
         {

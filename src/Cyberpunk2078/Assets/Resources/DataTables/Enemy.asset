@@ -18,6 +18,6 @@ MonoBehaviour:
     attributes:
       serializedAttributes:
       - type: 768
-        value: 1
+        value: 0
       - type: 2560
         value: 10
