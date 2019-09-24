@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(Drone))]
+
 public class DroneEditor : Editor
 {
     bool IsFoldout = false;
@@ -24,7 +24,7 @@ public class DroneEditor : Editor
          
         if (GUILayout.Button("Set Center"))
         {
-            Target.setCenter();
+            //Target.setCenter();
         }
          
          

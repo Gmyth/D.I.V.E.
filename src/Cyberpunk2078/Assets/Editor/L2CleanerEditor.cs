@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(L2Cleaner))]
+//[CustomEditor(typeof(L2Cleaner))]
 public class L2CleanerEditor : Editor
  {
      bool IsFoldout = false;
@@ -25,7 +25,7 @@ public class L2CleanerEditor : Editor
          
          if (GUILayout.Button("Set Center"))
          {
-             Target.setCenter();
+             //Target.setCenter();
          }
          
          

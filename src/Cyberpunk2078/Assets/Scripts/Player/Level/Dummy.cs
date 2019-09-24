@@ -87,12 +87,6 @@ public abstract class Enemy : Dummy
         get { return (Vector2)transform.position; }
     }
 
-    public void setCenter()
-    {
-        guardZone.center = transform.position;
-    }
-
-
     protected void EnableHitBox(int index)
     {
         hitBoxes[index].damage = currentAttackDamage;
