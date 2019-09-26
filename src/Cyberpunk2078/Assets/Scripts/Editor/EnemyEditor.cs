@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Reflection;
+using UnityEngine;
 using UnityEditor;
 
 
@@ -118,5 +120,50 @@ public class EnemyEditor : Editor
 
                     break;
             }
+
+
+        foreach (FieldInfo fieldInfo in enemy.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
+        {
+            try
+            {
+                if (fieldInfo.GetCustomAttribute<PathAttribute>(false) != null)
+                {
+                    Type fieldType = fieldInfo.FieldType;
+
+                    if (fieldType == typeof(Route))
+                    {
+                        Route route = fieldInfo.GetValue(enemy) as Route;
+                        FieldInfo[] fs = route.GetType().GetFields(BindingFlags.NonPublic);
+                        Vector3[] wayPoints = { };
+
+                        if (wayPoints.Length > 0)
+                        {
+                            for (int i = 0; i < wayPoints.Length; ++i)
+                            {
+                                EditorGUI.BeginChangeCheck();
+
+
+
+                                Vector3 V = Handles.PositionHandle(wayPoints[i], Quaternion.identity);
+                                Handles.Label(V, i.ToString());
+
+                                if (EditorGUI.EndChangeCheck())
+                                {
+                                    wayPoints[i] = V;
+                                    break;
+                                }
+                            }
+
+
+                            for (int i = 0; i < wayPoints.Length - 1; ++i)
+                                LogUtility.DrawGizmoArrow(wayPoints[i], wayPoints[i + 1]);
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
     }
 }

@@ -39,18 +39,6 @@ public class DroneEditor : Editor
                 // status = Selection.activeTransform.name;
             }
         }
-             
- 
-         
-        for(int i = 0; i < Target.patrolPoints.Length; ++i)
-        {
-            if (GUILayout.Button("Set Point For " + i))
-            {
-                Target.patrolPoints[i] = Target.Pos;
-            }
-        }
-         
-
     }
      
     public void OnInspectorUpdate()

@@ -34,6 +34,10 @@ public struct LogUtility
     public static void DrawGizmoArrow(Vector3 from, Vector3 to, float arrowHeadLength = 0.25f, float arrowHeadAngle = 20.0f)
     {
 #if UNITY_EDITOR
+        if (Vector3.Distance(from, to) == 0)
+            return;
+
+
         Gizmos.DrawLine(from, to);
 
         Vector3 direction = (to - from).normalized;

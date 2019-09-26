@@ -54,15 +54,14 @@ public abstract class Enemy : Dummy
     [SerializeField] protected Zone guardZone;
     [SerializeField] protected HitBox[] hitBoxes;
 
+    [Header("Patrolling")]
+    [SerializeField][Path(true)] protected Route patrolRoute;
+    [SerializeField] protected RangedWeaponConfiguration patrolFiringConfiguration;
+
     private EnemyData data;
 
     [HideInInspector] public PlayerCharacter currentTarget;
     [HideInInspector] public float currentAttackDamage = 0;
-
-    [Header("Patrolling")]
-    public Vector3[] patrolPoints;
-    public RangedWeaponConfiguration patrolFiringConfiguration;
-
 
 
     public float this[StatisticType type]
