@@ -7,6 +7,7 @@ public abstract class PlayerState : State
     protected PlayerCharacter playerCharacter;
     protected Animator anim;
     protected bool flip;
+    protected bool grounded;
 
 
     public virtual void Initialize(int index, PlayerCharacter playerCharacter)
@@ -33,14 +34,16 @@ public abstract class PlayerState : State
         {
             
             Player.CurrentPlayer.SecondJumpReady = true;
+            grounded = true;
             return true;
         }else if(hitM.collider != null && hitM.transform.CompareTag("Platform") || hitR.collider != null && hitR.transform.CompareTag("Platform") || hitL.collider != null && hitL.transform.CompareTag("Platform"))
         {
             
             Player.CurrentPlayer.SecondJumpReady = true;
+            grounded = true;
             return true;
         }
-    
+        grounded = false;
         return false;
     }
 
@@ -106,7 +109,7 @@ public abstract class PlayerState : State
     public void PhysicsInputHelper(float h, float maxSpeed  = 9,  float Acceleration  = 20)
     {
         Rigidbody2D rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-
+       
         // calculate speed on X axis
         if (Mathf.Abs(h) > 0.1f)
         {
@@ -121,7 +124,7 @@ public abstract class PlayerState : State
             }
             else
             {
-                if (rb2d.velocity.x * h < 0)
+                if (rb2d.velocity.x * h < 0 && grounded)
                 {
                     // not in the same direction
                     // reduce speed,friction
@@ -140,7 +143,7 @@ public abstract class PlayerState : State
         {
             // does not has input
             // reduce speed, friction
-            rb2d.AddForce(new Vector2(-rb2d.velocity.x * 4, 0f));
+            if (grounded) rb2d.AddForce(new Vector2(-rb2d.velocity.x * 4, 0f));
         }
     }
 }
