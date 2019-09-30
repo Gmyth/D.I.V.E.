@@ -5,8 +5,33 @@ using UnityEngine;
 
 public class DialoguePlayer : MonoBehaviour
 {
-    public bool inDialogueZone = false;
-    public bool isDialogueOngoing = false;
+
+    public bool isInDialogue = false;
+
+    public TimelineManager CurrentTimelineManager
+    {
+        set
+        {
+            if (value != null)
+            {
+                isInDialogue = true;
+                OnDialogueStart();
+            }
+        }
+
+        get
+        {
+            return CurrentTimelineManager;
+        }
+    }
+
+    private Animator playerAnimator;
+
+    void Awake()
+    {
+        playerAnimator = GetComponent<Animator>();
+    }
+    
 
     // Start is called before the first frame update
     void Start()
@@ -17,35 +42,36 @@ public class DialoguePlayer : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (!Input.GetKeyDown(KeyCode.G)) return;
-
-        if (inDialogueZone != true || isDialogueOngoing != false) return;
-
-        StartCoroutine(DialogueManager.Instance.PlayDialogue(0));
-
-        isDialogueOngoing = true;
+        if (PlayerCharacter.Singleton.State.isGrounded())
+        {
+            
+        }
     }
 
-    public void SetDialogueOngoing(bool boolean)
+    public void OnDialogueStart()
     {
-        isDialogueOngoing = boolean;
+        FreezePlayer();
     }
 
-    public bool isInDialogue;
-    public TimelineManager currentTimelineManager;
-    public void PrepareForTimeline(TimelineManager tm)
+    public void OnDialogueEnd()
     {
-        isInDialogue = true;
-        currentTimelineManager = tm;
-        PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 9;
-
+        EndTimelineWithPlayerExitState(0);
     }
 
     public void EndTimelineWithPlayerExitState(int playerExitState)
     {
         isInDialogue = false;
-        currentTimelineManager = null;
+        CurrentTimelineManager = null;
         PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = playerExitState;
+    }
+
+    public void FreezePlayer()
+    {
+        PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 9;
+    }
+
+    public void PlayAnimation(string name) {
+        playerAnimator.Play("MainCharacter_" + name);
     }
 
 }

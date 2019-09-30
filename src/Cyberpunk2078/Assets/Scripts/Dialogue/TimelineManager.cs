@@ -27,10 +27,7 @@ public class TimelineManager : MonoBehaviour
     {
         if (!isPlaying)
         {
-            //When timeline start
-
             GetComponent<Collider2D>().enabled = false;
-            //Stop gameplay
 
             PlayTimelineInIndex(0);
             isPlaying = true;
@@ -88,12 +85,7 @@ public class TimelineManager : MonoBehaviour
     {
         if (other.gameObject.name == "Player")
         {
-            if (isPlayInstantly)
-            {
-                OnTimelineStart();
-            }
-            player = other.gameObject.GetComponent<DialoguePlayer>();
-            player.PrepareForTimeline(this);
+            other.gameObject.GetComponent<DialoguePlayer>().CurrentTimelineManager = this;
         }
     }
 
