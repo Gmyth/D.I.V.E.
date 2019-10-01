@@ -486,7 +486,7 @@ PrefabInstance:
     - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
         type: 3}
       propertyPath: patrolRoute.wayPoints.Array.data[0].x
-      value: 50
+      value: 43.309727
       objectReference: {fileID: 0}
     - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
         type: 3}
@@ -22172,7 +22172,7 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.x
-      value: 18.906097
+      value: 22.040417
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -22207,7 +22207,7 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.w
-      value: 8.242272
+      value: 14.510914
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -22217,7 +22217,7 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.h
-      value: 8.242272
+      value: 8.242271
       objectReference: {fileID: 0}
     - target: {fileID: 445841682356872230, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}

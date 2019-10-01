@@ -66,6 +66,7 @@ public class EnemyEditor : Editor
 
                             if (EditorGUI.EndChangeCheck())
                             {
+                                Undo.RecordObject(enemy, "Modify Guard Zone");
                                 guardZone.center.x = (rightHandlePosition.x + leftHandlePosition.x) / 2f;
                                 guardZone.center.y = (topHandlePosition.y + bottomHandlePosition.y) / 2f;
                                 guardZone.Width = rightHandlePosition.x - leftHandlePosition.x;
@@ -98,6 +99,7 @@ public class EnemyEditor : Editor
                             leftHandlePosition = Handles.Slider(leftHandlePosition, leftHandlePosition - c, 0.2f, cap, 0);
                             if (EditorGUI.EndChangeCheck())
                             {
+                                Undo.RecordObject(enemy, "Modify Guard Zone");
                                 guardZone.center.x = (rightHandlePosition.x + leftHandlePosition.x) / 2f;
                                 guardZone.Radius = (rightHandlePosition.x - leftHandlePosition.x) / 2f;
                                 break;
@@ -110,6 +112,7 @@ public class EnemyEditor : Editor
                             bottomHandlePosition = Handles.Slider(bottomHandlePosition, bottomHandlePosition - c, 0.2f, cap, 0);
                             if (EditorGUI.EndChangeCheck())
                             {
+                                Undo.RecordObject(enemy, "Modify Guard Zone");
                                 guardZone.center.y = (topHandlePosition.y + bottomHandlePosition.y) / 2f;
                                 guardZone.Radius = (topHandlePosition.y - bottomHandlePosition.y) / 2f;
                                 break;
@@ -132,8 +135,8 @@ public class EnemyEditor : Editor
                         if (fieldType == typeof(Route))
                         {
                             Route route = fieldInfo.GetValue(enemy) as Route;
-                            Type t = route.GetType();
-                            Vector3[] wayPoints = t.GetField("wayPoints", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(route) as Vector3[];
+                            FieldInfo wayPointsField = route.GetType().GetField("wayPoints", BindingFlags.NonPublic | BindingFlags.Instance);
+                            Vector3[] wayPoints = wayPointsField.GetValue(route) as Vector3[];
 
                             if (wayPoints.Length > 1)
                             {
@@ -148,7 +151,9 @@ public class EnemyEditor : Editor
 
                                     if (EditorGUI.EndChangeCheck())
                                     {
+                                        Undo.RecordObject(enemy, "Set New Patrol Point " + i);
                                         wayPoints[i] = V;
+                                        wayPointsField.SetValue(route, wayPoints);
                                         break;
                                     }
                                 }
