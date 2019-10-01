@@ -11,6 +11,7 @@ public class PSJumping1 : PlayerState
     [SerializeField] private float speedFactor = 3;
     [SerializeField] private float accelerationFactor = 20;
     [SerializeField] private float jumpCD = 0.02f;
+    [SerializeField] private float wallJumpCD = 0.02f;
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSMoving;
     [SerializeField] private int indexJumping2;
@@ -34,12 +35,35 @@ public class PSJumping1 : PlayerState
 
         //Still support Horizontal update during jumping, delete following to kill Horizzontal input
          PhysicsInputHelper(h,speedFactor,accelerationFactor);
+         
+         if (isCloseTo("Ground"))
+         {
+             if (RightSideTest("Ground")&&  h > 0)
+             {
+                 if (Time.time > lastJumpSec + wallJumpCD/4 && !Player.CurrentPlayer.lastWallJumpRight)
+                 {
+                     return indexPSWallJumping; 
+                 }
+                 else if (Time.time > lastJumpSec + wallJumpCD)
+                 {
+                     return indexPSWallJumping; 
+                 }
 
-        if (isCloseTo("Ground"))
-        {
-            return indexPSWallJumping;
-        }
 
+             }
+             else if(!RightSideTest("Ground") && h < 0)
+             {
+                 if (Time.time > lastJumpSec + wallJumpCD/4 && Player.CurrentPlayer.lastWallJumpRight)
+                 {
+                     return indexPSWallJumping; 
+                 }
+                 else if (Time.time > lastJumpSec + wallJumpCD)
+                 {
+                     return indexPSWallJumping; 
+                 }
+             }
+         }
+         
         if (Input.GetAxis("Vertical") > 0 && isCloseTo("Ladder") )
         {
             // up is pressed
