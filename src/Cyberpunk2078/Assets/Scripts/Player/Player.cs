@@ -116,10 +116,8 @@ public class Player
         else
             health3.enabled = false;
 
-        Debug.Log(Health);
         if (Health <= 0)
         {
-            Debug.Log("adwwadw");
             RestoreHealth();
             CheckPointManager.Instance.RestoreCheckPoint();
         }
