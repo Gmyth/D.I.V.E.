@@ -13,6 +13,7 @@ public class PSMoving : PlayerState
     [SerializeField] private int indexPSDashing;
     [SerializeField] private int indexPSAirborne;
     [SerializeField] private int indexPSClimb;
+    [SerializeField] private int indexPSWallJumping;
     public override int Update()
     {
         NormalizeSlope();
@@ -23,6 +24,7 @@ public class PSMoving : PlayerState
         {
             return indexPSAttackGH;
         }
+            
         
         if (Input.GetAxis("Dashing") != 0)
             return indexPSDashing;

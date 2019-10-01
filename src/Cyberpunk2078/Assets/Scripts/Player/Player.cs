@@ -18,11 +18,12 @@ public class Player
         return new Player();
     }
 
-
+    
     public readonly AttributeSet attributes;
     public readonly Inventory inventory;
 
     public bool SecondJumpReady;
+    public bool lastWallJumpRight; 
     
     public float Health { get; private set; }
     
