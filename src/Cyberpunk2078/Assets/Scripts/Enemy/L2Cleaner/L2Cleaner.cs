@@ -29,7 +29,8 @@ public class L2Cleaner : Enemy, IPatroller
         Boom.transform.localScale = Vector3.one;
 
         gameObject.SetActive(false);
-        Destroy(gameObject);
+        CheckPointManager.Instance.EnterResetPool(gameObject);
+        //Destroy(gameObject);
     }
 
 

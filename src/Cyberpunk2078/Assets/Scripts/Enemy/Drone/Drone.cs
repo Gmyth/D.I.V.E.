@@ -80,8 +80,10 @@ public class Drone : Enemy, IPatroller
         Boom.gameObject.SetActive(true);
         Boom.transform.localScale = Vector3.one;
 
-        gameObject.GetComponent<SpriteRenderer>().color = Color.clear;
-        Destroy(gameObject, 0.5f);
+        //gameObject.GetComponent<SpriteRenderer>().color = Color.clear;
+        gameObject.SetActive(false);
+        //Destroy(gameObject, 0.5f);
+        CheckPointManager.Instance.EnterResetPool(gameObject);
     }
 
 

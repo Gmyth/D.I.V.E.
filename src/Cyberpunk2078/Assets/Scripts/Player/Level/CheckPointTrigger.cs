@@ -19,9 +19,9 @@ public class CheckPointTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Save Point Enter");
         if (other.gameObject.name == "Player")
         {
+            Debug.Log("PlayerEnterSavePoint");
             CheckPointManager.Instance.SetLastCheckPointTransform(gameObject.transform);
         }
     }

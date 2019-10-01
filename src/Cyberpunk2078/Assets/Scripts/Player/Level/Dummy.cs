@@ -63,6 +63,7 @@ public abstract class Enemy : Dummy
     [HideInInspector] public PlayerCharacter currentTarget;
     [HideInInspector] public float currentAttackDamage = 0;
 
+    public Transform lastCheckPointTransform;
 
     public float this[StatisticType type]
     {

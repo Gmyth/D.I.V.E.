@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CheckPointManager : MonoBehaviour
 {
@@ -12,16 +13,21 @@ public class CheckPointManager : MonoBehaviour
 
     private Transform playerLastCheckPoint;
     private GameObject player;
-    public Dictionary<GameObject, Transform> dummyLastCheckPoint;
+    public List<GameObject> enemy;
+    public List<GameObject> enemyPool;
+    private GameObject[] dummy;
     void Awake()
     {
         Instance = this;
+        enemy = new List<GameObject>();
+        enemyPool = new List<GameObject>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        dummy = GameObject.FindGameObjectsWithTag("Dummy");
+        //Debug.Log("Dummy Length:" + dummy.Length);
     }
 
     // Update is called once per frame
@@ -49,11 +55,12 @@ public class CheckPointManager : MonoBehaviour
     {
         playerLastCheckPoint = t;
 
-        GameObject [] dummy = GameObject.FindGameObjectsWithTag("Dummy");
-        Debug.Log("Dummy Length:" + dummy.Length);
+        enemyPool.Clear();
+
         for(int i = 0; i < dummy.Length; i ++)
         {
-            dummyLastCheckPoint.Add(dummy[i], dummy[i].transform);
+            dummy[i].GetComponent<Enemy>().lastCheckPointTransform = dummy[i].gameObject.transform;
+            enemy.Add(dummy[i]);
         }
     }
 
@@ -63,10 +70,21 @@ public class CheckPointManager : MonoBehaviour
         var player = PlayerCharacter.Singleton.gameObject;
         player.transform.position = playerLastCheckPoint.position;
 
-        GameObject[] dummy = GameObject.FindGameObjectsWithTag("Dummy");
-        for (int i = 0; i < dummy.Length; i++)
+        for (int i = 0; i < enemyPool.Count; i++)
         {
-            dummy[i].transform.position = dummyLastCheckPoint[dummy[i]].position;
+            enemyPool[i].SetActive(true);
         }
+
+        for (int i = 0; i < enemy.Count; i++)
+        {
+            var lastPos = enemy[i].GetComponent<Enemy>().lastCheckPointTransform.position;
+            enemy[i].transform.position = lastPos;
+        }
+    }
+
+    public void EnterResetPool(GameObject obj)
+    {
+        Debug.Log("Eneter POol");
+        enemyPool.Add(obj);
     }
 }
