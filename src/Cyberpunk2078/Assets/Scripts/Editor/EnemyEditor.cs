@@ -123,7 +123,9 @@ public class EnemyEditor : Editor
             {
                 try
                 {
-                    if (fieldInfo.GetCustomAttribute<PathAttribute>(false) != null)
+                    PathAttribute pathAttribute = fieldInfo.GetCustomAttribute<PathAttribute>(false);
+
+                    if (pathAttribute != null)
                     {
                         Type fieldType = fieldInfo.FieldType;
 
@@ -133,7 +135,7 @@ public class EnemyEditor : Editor
                             Type t = route.GetType();
                             Vector3[] wayPoints = t.GetField("wayPoints", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(route) as Vector3[];
 
-                            if (wayPoints.Length > 0)
+                            if (wayPoints.Length > 1)
                             {
                                 for (int i = 0; i < wayPoints.Length; ++i)
                                 {
@@ -152,8 +154,13 @@ public class EnemyEditor : Editor
                                 }
 
 
+                                Handles.color = new Color(0f, 1f, 0f, 0.8f);
+
                                 for (int i = 0; i < wayPoints.Length - 1; ++i)
-                                    LogUtility.DrawGizmoArrow(wayPoints[i], wayPoints[i + 1]);
+                                    EditorUtility.DrawHandlesArrow(wayPoints[i], wayPoints[i + 1]);
+
+                                if (pathAttribute.isLooping)
+                                    EditorUtility.DrawHandlesArrow(wayPoints[wayPoints.Length - 1], wayPoints[0]);
                             }
                         }
                     }
