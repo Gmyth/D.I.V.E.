@@ -22166,6 +22166,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
+      propertyPath: patrolRoute.wayPoints.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
+        type: 3}
       propertyPath: guardZone.center.x
       value: 18.906097
       objectReference: {fileID: 0}
