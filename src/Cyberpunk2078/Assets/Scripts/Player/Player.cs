@@ -88,6 +88,9 @@ public class Player
     public bool ApplyHealthChange(float amount)
     {
         if (Health < amount)
+        {
+            CheckPointManager.Instance.RestoreCheckPoint();
+        }
             return false;
 
 

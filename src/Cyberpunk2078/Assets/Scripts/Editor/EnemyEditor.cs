@@ -2,6 +2,7 @@
 using System.Reflection;
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.EditorTools;
 
 
 [CustomEditor(typeof(Enemy), true)]
@@ -30,12 +31,24 @@ public class EnemyEditor : Editor
         Event e = Event.current;
 
         
-        Zone guardZone = enemy.GuardZone;
+        if (Tools.current == Tool.Custom && EditorTools.activeToolType == typeof(EnemyTool))
+        {
+            Zone guardZone = enemy.GuardZone;
 
-        if (guardZone.Width * guardZone.Height != 0)
-            switch (Tools.current)
+            if (guardZone.Width * guardZone.Height != 0)
             {
-                case Tool.Rect:
+                EditorGUI.BeginChangeCheck();
+
+                Vector3 V = Handles.PositionHandle(guardZone.center, Quaternion.identity);
+                Handles.Label(V, "Guard Zone");
+
+                if (EditorGUI.EndChangeCheck())
+                {
+                    Undo.RecordObject(enemy, "Move Guard Zone");
+                    guardZone.center = V;
+                }
+                else
+                {
                     switch (guardZone.Type)
                     {
                         case ZoneType.Rectangle:
@@ -66,6 +79,7 @@ public class EnemyEditor : Editor
 
                                 if (EditorGUI.EndChangeCheck())
                                 {
+                                    Undo.RecordObject(enemy, "Modify Guard Zone");
                                     guardZone.center.x = (rightHandlePosition.x + leftHandlePosition.x) / 2f;
                                     guardZone.center.y = (topHandlePosition.y + bottomHandlePosition.y) / 2f;
                                     guardZone.Width = rightHandlePosition.x - leftHandlePosition.x;
@@ -98,6 +112,7 @@ public class EnemyEditor : Editor
                                 leftHandlePosition = Handles.Slider(leftHandlePosition, leftHandlePosition - c, 0.2f, cap, 0);
                                 if (EditorGUI.EndChangeCheck())
                                 {
+                                    Undo.RecordObject(enemy, "Modify Guard Zone");
                                     guardZone.center.x = (rightHandlePosition.x + leftHandlePosition.x) / 2f;
                                     guardZone.Radius = (rightHandlePosition.x - leftHandlePosition.x) / 2f;
                                     break;
@@ -110,6 +125,7 @@ public class EnemyEditor : Editor
                                 bottomHandlePosition = Handles.Slider(bottomHandlePosition, bottomHandlePosition - c, 0.2f, cap, 0);
                                 if (EditorGUI.EndChangeCheck())
                                 {
+                                    Undo.RecordObject(enemy, "Modify Guard Zone");
                                     guardZone.center.y = (topHandlePosition.y + bottomHandlePosition.y) / 2f;
                                     guardZone.Radius = (topHandlePosition.y - bottomHandlePosition.y) / 2f;
                                     break;
@@ -117,52 +133,60 @@ public class EnemyEditor : Editor
                             }
                             break;
                     }
-
-                    break;
+                }
             }
 
 
-        foreach (FieldInfo fieldInfo in enemy.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
-        {
-            try
+            foreach (FieldInfo fieldInfo in enemy.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
             {
-                if (fieldInfo.GetCustomAttribute<PathAttribute>(false) != null)
+                try
                 {
-                    Type fieldType = fieldInfo.FieldType;
+                    PathAttribute pathAttribute = fieldInfo.GetCustomAttribute<PathAttribute>(false);
 
-                    if (fieldType == typeof(Route))
+                    if (pathAttribute != null)
                     {
-                        Route route = fieldInfo.GetValue(enemy) as Route;
-                        FieldInfo[] fs = route.GetType().GetFields(BindingFlags.NonPublic);
-                        Vector3[] wayPoints = { };
+                        Type fieldType = fieldInfo.FieldType;
 
-                        if (wayPoints.Length > 0)
+                        if (fieldType == typeof(Route))
                         {
-                            for (int i = 0; i < wayPoints.Length; ++i)
+                            Route route = fieldInfo.GetValue(enemy) as Route;
+                            FieldInfo wayPointsField = route.GetType().GetField("wayPoints", BindingFlags.NonPublic | BindingFlags.Instance);
+                            Vector3[] wayPoints = wayPointsField.GetValue(route) as Vector3[];
+
+                            if (wayPoints.Length > 1)
                             {
-                                EditorGUI.BeginChangeCheck();
-
-
-
-                                Vector3 V = Handles.PositionHandle(wayPoints[i], Quaternion.identity);
-                                Handles.Label(V, i.ToString());
-
-                                if (EditorGUI.EndChangeCheck())
+                                for (int i = 0; i < wayPoints.Length; ++i)
                                 {
-                                    wayPoints[i] = V;
-                                    break;
+                                    EditorGUI.BeginChangeCheck();
+
+                                    Handles.color = new Color(0f, 0f, 1f, 0.8f);
+                                    Handles.DrawSolidDisc(wayPoints[i], Vector3.forward, 0.1f);
+                                    Vector3 V = Handles.PositionHandle(wayPoints[i], Quaternion.identity);
+                                    Handles.Label(V, i.ToString());
+
+                                    if (EditorGUI.EndChangeCheck())
+                                    {
+                                        Undo.RecordObject(enemy, "Set New Patrol Point " + i);
+                                        wayPoints[i] = V;
+                                        break;
+                                    }
                                 }
+
+
+                                Handles.color = new Color(0f, 1f, 0f, 0.8f);
+
+                                for (int i = 0; i < wayPoints.Length - 1; ++i)
+                                    EditorUtility.DrawHandlesArrow(wayPoints[i], wayPoints[i + 1]);
+
+                                if (pathAttribute.isLooping)
+                                    EditorUtility.DrawHandlesArrow(wayPoints[wayPoints.Length - 1], wayPoints[0]);
                             }
-
-
-                            for (int i = 0; i < wayPoints.Length - 1; ++i)
-                                LogUtility.DrawGizmoArrow(wayPoints[i], wayPoints[i + 1]);
                         }
                     }
                 }
-            }
-            catch (Exception)
-            {
+                catch (Exception)
+                {
+                }
             }
         }
     }
