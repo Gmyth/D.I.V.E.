@@ -10,9 +10,9 @@ public class CheckPointManager : MonoBehaviour
     public GameObject checkPointPrefab;
     public Transform checkPointFolder;
 
-    private Transform lastSavePoint;
+    private Transform playerLastCheckPoint;
     private GameObject player;
-
+    public Dictionary<GameObject, Transform> dummyLastCheckPoint;
     void Awake()
     {
         Instance = this;
@@ -47,12 +47,26 @@ public class CheckPointManager : MonoBehaviour
 
     public void SetLastCheckPointTransform(Transform t)
     {
-        lastSavePoint = t;
+        playerLastCheckPoint = t;
+
+        GameObject [] dummy = GameObject.FindGameObjectsWithTag("Dummy");
+        Debug.Log("Dummy Length:" + dummy.Length);
+        for(int i = 0; i < dummy.Length; i ++)
+        {
+            dummyLastCheckPoint.Add(dummy[i], dummy[i].transform);
+        }
     }
 
     public void RestoreCheckPoint()
     {
+        Debug.Log("WAD");
         var player = PlayerCharacter.Singleton.gameObject;
-        player.transform.position = lastSavePoint.position;
+        player.transform.position = playerLastCheckPoint.position;
+
+        GameObject[] dummy = GameObject.FindGameObjectsWithTag("Dummy");
+        for (int i = 0; i < dummy.Length; i++)
+        {
+            dummy[i].transform.position = dummyLastCheckPoint[dummy[i]].position;
+        }
     }
 }
