@@ -516,20 +516,21 @@ MonoBehaviour:
   fsm: {fileID: 11400000, guid: 154365c1720e224438a00dcfebd7516c, type: 2}
   guardZone:
     type: 0
-    center: {x: 15, y: 5}
-    w: 10
+    center: {x: 18.50663, y: 2.5150614}
+    w: 29.009514
     h: 5
   hitBoxes:
   - {fileID: 1572086336}
-  currentTarget: {fileID: 0}
-  currentAttackDamage: 0
-  patrolPoints:
-  - {x: 7, y: 0.7, z: 0}
-  - {x: 13, y: 0.7, z: 0}
+  patrolRoute:
+    wayPoints:
+    - {x: 8, y: 0.75, z: 0}
+    - {x: 16, y: 0.75, z: 0}
   patrolFiringConfiguration:
     firingInterval: 0
     bulletID: 0
     bulletSpeed: 0
+  currentTarget: {fileID: 0}
+  currentAttackDamage: 0
 --- !u!95 &384967259
 Animator:
   serializedVersion: 3

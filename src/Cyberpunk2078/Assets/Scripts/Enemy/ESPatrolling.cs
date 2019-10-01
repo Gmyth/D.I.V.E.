@@ -75,7 +75,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
     public override int Update()
     {
         if(!enemy)
-            return indexWayPoint;
+            return Index;
 
 
         Vector3 enemyPosition = enemy.transform.position;
@@ -87,6 +87,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
             if (enemy.currentTarget)
             {
                 rigidbody.velocity = Vector2.zero;
+                IsMoving = false;
 
                 return index_ESAlert;
             }
@@ -120,7 +121,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
 
                 enemy.transform.localScale = scale;
 
-                rigidbody.AddForce(direction * speed * Time.deltaTime);
+                rigidbody.velocity = direction * speed * Time.deltaTime;
 
                 IsMoving = true;
             }
@@ -131,7 +132,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
 
         if (firingConfiguration.FiringInterval > 0) // Check if the firing is enabled
         {
-            if (enemy.currentTarget == null || !IsPlayerInSight(enemy.currentTarget, 10))
+            if (enemy.currentTarget == null || !IsPlayerInSight(enemy.currentTarget, enemy[StatisticType.SightRange]))
                 enemy.currentTarget = IsPlayerInSight(10);
 
 

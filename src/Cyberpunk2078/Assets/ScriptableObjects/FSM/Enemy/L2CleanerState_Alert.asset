@@ -9,12 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4db54c6f88576c04a99a6d4e51948e17, type: 3}
-  m_Name: L2ClearnerState_Patrolling
+  m_Script: {fileID: 11500000, guid: 7c588709941353943be4314c0c1f8812, type: 3}
+  m_Name: L2CleanerState_Alert
   m_EditorClassIdentifier: 
-  speed: 300
-  delay: 0
-  idleAnimation: L2Cleaner_Idle
-  patrollingAnimation: L2Cleaner_Run
-  index_ESIdle: -1
-  index_ESAlert: 2
+  waitTime: 0.5
+  stateIndex_attacks: 01000000
+  stateIndex_targetLoss: 0

@@ -38,7 +38,7 @@ public abstract class EnemyState : State
         {
             RaycastHit2D raycastHit2D = Physics2D.Raycast(enemyPosition, playerPosition - enemyPosition, d, 1 << LayerMask.NameToLayer("Player"));
 
-            if (raycastHit2D.collider && raycastHit2D.collider.gameObject == player.gameObject)
+            if (raycastHit2D.collider == null || raycastHit2D.collider.gameObject == player.gameObject)
                 return player;
         }
 
@@ -92,7 +92,7 @@ public abstract class EnemyState<T> : EnemyState where T : Enemy
         
         RaycastHit2D raycastHit2D = Physics2D.Raycast(enemy.transform.position, player.transform.position - enemy.transform.position, Vector2.Distance(enemy.transform.position, player.transform.position), 1 << LayerMask.NameToLayer("Player"));
 
-        if (!raycastHit2D.collider || raycastHit2D.collider.gameObject != player.gameObject)
+        if (raycastHit2D.collider && raycastHit2D.collider.gameObject != player.gameObject)
             return null;
 
 
@@ -123,7 +123,7 @@ public class FSMEnemy : FiniteStateMachine<EnemyState>
             //else
             {
 #if UNITY_EDITOR
-                Debug.Log(LogUtility.MakeLogStringFormat(GetType().Name, "Make transition from state {0} to {1}", currentStateIndex, value));
+                Debug.Log(LogUtility.MakeLogStringFormat(GetType().Name, "Make transition from state {0} to {1}", states[currentStateIndex].name, states[value].name));
 #endif
 
                 int previousStateIndex = currentStateIndex;

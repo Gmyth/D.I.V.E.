@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-public abstract class ESChasingAttack<T> : EnemyState<T> where T : Enemy
+public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
 {
     [Header("Configuration")]
     [SerializeField] private float chasingSpeed;

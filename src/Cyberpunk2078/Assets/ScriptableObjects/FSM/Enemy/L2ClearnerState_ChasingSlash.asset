@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d2cd80912e43614582d5b421b6f9d92, type: 3}
   m_Name: L2ClearnerState_ChasingSlash
   m_EditorClassIdentifier: 
+  attributes:
+    serializedAttributes: []
   chasingSpeed: 3
   attackRange: 1
   attackHeight: 1
@@ -20,5 +22,5 @@ MonoBehaviour:
   idleAnimation: L2Cleaner_Idle
   chasingAnimation: L2Cleaner_Run
   attackAnimation: L2Cleaner_Melee
-  stateIndex_targetLoss: -1
-  stateIndex_afterAttack: -1
+  stateIndex_targetLoss: 0
+  stateIndex_afterAttack: 2
