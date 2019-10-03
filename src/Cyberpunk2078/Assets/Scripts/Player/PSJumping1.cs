@@ -37,12 +37,12 @@ public class PSJumping1 : PlayerState
         //Still support Horizontal update during jumping, delete following to kill Horizzontal input
          PhysicsInputHelper(h,speedFactor,accelerationFactor);
          
-         var dir = isCloseTo("Ground") ;
+         var dir = isCloseTo("Ground");
          if (dir != Direction.None )
          {
              if (dir == Direction.Right &&  h >= 0 )
              {
-                 if (previous.Index == indexPSWallJumping &&Time.time > lastJumpSec + wallJumpCD/4 && !Player.CurrentPlayer.lastWallJumpRight)
+                 if (previous.Index == indexPSWallJumping && Time.time > lastJumpSec + wallJumpCD/4 && !Player.CurrentPlayer.lastWallJumpRight)
                  {
                      return indexPSWallJumping; 
                  }
