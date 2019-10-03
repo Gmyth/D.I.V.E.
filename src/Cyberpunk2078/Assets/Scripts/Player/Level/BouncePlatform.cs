@@ -2,8 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class BouncePlatform : MonoBehaviour
 {
+    public enum Direction
+    {
+        Up = 0,
+        Left,
+        Right
+    }
+
+    public Direction bounceDiection;
     public float jumpForce = 30;
     private Rigidbody2D rb2d;
     private PlayerCharacter pc;
@@ -42,7 +51,21 @@ public class BouncePlatform : MonoBehaviour
                 pc = col.gameObject.GetComponent<PlayerCharacter>();
                 pc.GetFSM().CurrentStateIndex = 1;
                 // kill any Y-axis speed
-                rb2d.velocity = new Vector2(rb2d.velocity.x * 0.3f, jumpForce);
+
+                switch (bounceDiection)
+                {
+                    case Direction.Up:
+                        rb2d.velocity = new Vector2(rb2d.velocity.x * 0.3f, jumpForce);
+                        break;
+                    case Direction.Left:
+                        rb2d.velocity = new Vector2(-jumpForce, rb2d.velocity.y * 0.3f);
+                        break;
+                    case Direction.Right:
+                        rb2d.velocity = new Vector2(jumpForce, rb2d.velocity.y * 0.3f);
+                        break;
+                }
+
+                
                 //rb2d.AddForce(Vector3.up * jumpForce * 100);
                 bounceReady = false;
                 Debug.Log("Perform Bounch Jump");
