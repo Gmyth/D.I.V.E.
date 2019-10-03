@@ -24,13 +24,13 @@ public class PSAirborne : PlayerState
             return indexPSAttackGH;
         }
         
-        if (Input.GetAxis("Vertical") > 0  &&  isCloseTo("Ladder"))
+        if (Input.GetAxis("Vertical") > 0  &&  isCloseTo("Ladder") != Direction.None)
         {
             // up is pressed
             return indexPSClimb;
         }
         
-        if (isCloseTo("Ground"))
+        if (isCloseTo("Ground") != Direction.None)
         {
             return indexPSWallJumping;
         }

@@ -77,7 +77,7 @@ public class PSWallJumping: PlayerState
             }
         }
 
-        if (!isCloseTo("Ground") && !isGrounded())
+        if (isCloseTo("Ground")== Direction.None && !isGrounded())
         {
             return index_PSAirborne;
         }
@@ -115,7 +115,7 @@ public class PSWallJumping: PlayerState
 //        }
         
         
-        if (Input.GetAxis("Vertical") > 0 && isCloseTo("Ladder"))
+        if (Input.GetAxis("Vertical") > 0 && isCloseTo("Ladder") != Direction.None)
         {
             return index_PSClimb;
         }

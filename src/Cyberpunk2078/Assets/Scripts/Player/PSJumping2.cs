@@ -33,7 +33,7 @@ public class PSJumping2 : PlayerState
             return indexPSAirborne;
         }
         
-        if (Input.GetAxis("Vertical") > 0  && isCloseTo("Ladder") )
+        if (Input.GetAxis("Vertical") > 0  && isCloseTo("Ladder") != Direction.None)
         {
             // up is pressed
             return indexPSClimb;
@@ -52,7 +52,7 @@ public class PSJumping2 : PlayerState
             return indexPSAttackGH;
         }
         
-        if (isCloseTo("Ground"))
+        if (isCloseTo("Ground")!= Direction.None)
         {
             return index_PSWallJumping;
         }
