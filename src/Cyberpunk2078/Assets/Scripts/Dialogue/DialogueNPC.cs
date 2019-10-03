@@ -13,7 +13,7 @@ public class DialogueNPC : MonoBehaviour
 
     public void PlayAnimation(string name)
     {
-        playerAnimator.Play("NPC_" + name);
+        npcAnimator.Play("NPC_" + name);
     }
 
 }
