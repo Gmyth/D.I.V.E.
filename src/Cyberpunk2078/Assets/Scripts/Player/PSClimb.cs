@@ -9,8 +9,7 @@ public class PSClimb : PlayerState
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSMoving;
     [SerializeField] private int indexPSJumping1;
-
-
+    
     public override int Update()
     {
         var v = Input.GetAxis("Vertical");
@@ -51,7 +50,7 @@ public class PSClimb : PlayerState
             
         return Index;
     }
-
+    
     public override void OnStateEnter(State previousState)
     {
         playerCharacter.GetComponent<SpriteRenderer>().flipX = !RightSideTest("Ladder");
