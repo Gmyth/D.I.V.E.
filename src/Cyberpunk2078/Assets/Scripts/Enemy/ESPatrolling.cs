@@ -74,7 +74,10 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
 
     public override int Update()
     {
-        if(!enemy) return indexWayPoint;
+        if(!enemy)
+            return indexWayPoint;
+
+
         Vector3 enemyPosition = enemy.transform.position;
 
         if (index_ESAlert >= 0)
@@ -156,23 +159,30 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
 
 
         indexTargetPatrolPoint = 0;
-        float m = Vector3.Distance(enemyPosition, enemy.GetPatrolPoint(indexTargetPatrolPoint));
+        
 
-        for (int i = 1; i < enemy.NumPatrolPoints; ++i)
+        if (enemy.NumPatrolPoints > 1)
         {
-            float d = Vector3.Distance(enemyPosition, enemy.GetPatrolPoint(i));
+            float m = Vector3.Distance(enemyPosition, enemy.GetPatrolPoint(indexTargetPatrolPoint));
 
-            if (d < m)
+            for (int i = 1; i < enemy.NumPatrolPoints; ++i)
             {
-                indexTargetPatrolPoint = i;
-                m = d;
+                float d = Vector3.Distance(enemyPosition, enemy.GetPatrolPoint(i));
+
+                if (d < m)
+                {
+                    indexTargetPatrolPoint = i;
+                    m = d;
+                }
             }
+
+
+            seeker.pathCallback = StartPatrolling;
+
+            seeker.StartPath(enemy.transform.position, enemy.GetPatrolPoint(indexTargetPatrolPoint));
         }
+        
 
-
-        seeker.pathCallback = StartPatrolling;
-
-        seeker.StartPath(enemy.transform.position, enemy.GetPatrolPoint(indexTargetPatrolPoint));
         currentPath = null;
     }
 

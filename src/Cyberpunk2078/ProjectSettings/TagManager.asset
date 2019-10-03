@@ -26,8 +26,8 @@ TagManager:
   - Obstacle
   - Dummy
   - Player
-  - 
-  - 
+  - Platform
+  - Interactive
   - 
   - 
   - 
@@ -50,6 +50,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: test
-    uniqueID: 1256439069
+  - name: BackGround
+    uniqueID: 1436876241
+    locked: 0
+  - name: Interactive
+    uniqueID: 792809535
+    locked: 0
+  - name: Player
+    uniqueID: 1909596859
+    locked: 0
+  - name: UI
+    uniqueID: 3482792589
     locked: 0

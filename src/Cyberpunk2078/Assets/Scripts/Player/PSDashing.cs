@@ -200,7 +200,7 @@ public class PSDashing : PlayerState
         
         //Apply force to character
         playerCharacter.transform.right = direction;
-        rb2d.AddForce(direction * dashForce * 8000f * Time.deltaTime);
+        rb2d.AddForce(direction * dashForce * 200f * 1 / Time.timeScale);
         
         //Camera Tricks
         CameraManager.Instance.Shaking(0.08f,0.15f);

@@ -9,8 +9,7 @@ public class PSClimb : PlayerState
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSMoving;
     [SerializeField] private int indexPSJumping1;
-
-
+    
     public override int Update()
     {
         var v = Input.GetAxis("Vertical");
@@ -31,11 +30,11 @@ public class PSClimb : PlayerState
         }
         else
         {
-            anim.speed = -1;
+            anim.speed = 1;
             rb2d.velocity = new Vector2(0, -climbSpeed);
         }
 
-        if (!isCloseTo("Ladder"))
+        if (isCloseTo("Ladder", "Interactive") == Direction.None)
         {
             anim.speed = 1;
             rb2d.gravityScale = 3;
@@ -51,7 +50,7 @@ public class PSClimb : PlayerState
             
         return Index;
     }
-
+    
     public override void OnStateEnter(State previousState)
     {
         playerCharacter.GetComponent<SpriteRenderer>().flipX = !RightSideTest("Ladder");

@@ -38,7 +38,3 @@ using UnityEngine;
         return id.GetHashCode();
     }
 }
-
-
-[CreateAssetMenuAttribute(fileName = "Enemy", menuName = "Data Table/Enemy")]
-public class EnemyDataTable : DataTable<EnemyData> { }

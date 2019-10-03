@@ -11,6 +11,7 @@ public class PSJumping1 : PlayerState
     [SerializeField] private float speedFactor = 3;
     [SerializeField] private float accelerationFactor = 20;
     [SerializeField] private float jumpCD = 0.02f;
+    [SerializeField] private float wallJumpCD = 0.02f;
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSMoving;
     [SerializeField] private int indexJumping2;
@@ -20,6 +21,7 @@ public class PSJumping1 : PlayerState
     [SerializeField] private int indexPSAirborne;
     [SerializeField] private int indexPSClimb;
     private float lastJumpSec;
+    private State previous;
 
     public override int Update()
     {
@@ -34,13 +36,37 @@ public class PSJumping1 : PlayerState
 
         //Still support Horizontal update during jumping, delete following to kill Horizzontal input
          PhysicsInputHelper(h,speedFactor,accelerationFactor);
+         
+         var dir = isCloseTo("Ground");
+         if (dir != Direction.None )
+         {
+             if (dir == Direction.Right &&  h >= 0 )
+             {
+                 if (previous.Index == indexPSWallJumping && Time.time > lastJumpSec + wallJumpCD/4 && !Player.CurrentPlayer.lastWallJumpRight)
+                 {
+                     return indexPSWallJumping; 
+                 }
+                 else if (Time.time > lastJumpSec + wallJumpCD)
+                 {
+                     return indexPSWallJumping; 
+                 }
 
-        if (isCloseTo("Ground"))
-        {
-            return indexPSWallJumping;
-        }
 
-        if (Input.GetAxis("Vertical") > 0 && isCloseTo("Ladder") )
+             }
+             else if(dir == Direction.Left  && h <= 0)
+             {
+                 if (previous.Index == indexPSWallJumping &&  Player.CurrentPlayer.lastWallJumpRight && Time.time > lastJumpSec + wallJumpCD/4)
+                 {
+                     return indexPSWallJumping; 
+                 }
+                 else if (Time.time > lastJumpSec + wallJumpCD)
+                 {
+                     return indexPSWallJumping; 
+                 }
+             }
+         }
+         
+        if (Input.GetAxis("Vertical") > 0 && isCloseTo("Ladder") != Direction.None)
         {
             // up is pressed
             return indexPSClimb;
@@ -51,7 +77,7 @@ public class PSJumping1 : PlayerState
                 return indexPSAirborne;
         }
 
-        if (isGrounded())
+        if (isGrounded()&& Vy < 0)
         {
             // Landed
             if (h == 0)
@@ -90,6 +116,7 @@ public class PSJumping1 : PlayerState
 
     public override void OnStateEnter(State previousState)
     {
+        previous = previousState;
         anim.Play("MainCharacter_Jump", -1, 0f);
         //Perform jump
         lastJumpSec = Time.time;

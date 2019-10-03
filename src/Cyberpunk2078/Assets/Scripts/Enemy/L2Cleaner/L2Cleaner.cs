@@ -29,7 +29,8 @@ public class L2Cleaner : Enemy, IPatroller
         Boom.transform.localScale = Vector3.one;
 
         gameObject.SetActive(false);
-        Destroy(gameObject);
+        CheckPointManager.Instance.EnterResetPool(gameObject);
+        //Destroy(gameObject);
     }
 
 
@@ -37,7 +38,7 @@ public class L2Cleaner : Enemy, IPatroller
     {
         get
         {
-            return patrolPoints.Length;
+            return patrolRoute.NumWayPoints;
         }
     }
 
@@ -52,6 +53,6 @@ public class L2Cleaner : Enemy, IPatroller
 
     Vector3 IPatroller.GetPatrolPoint(int index)
     {
-        return patrolPoints[index];
+        return patrolRoute[index];
     }
 }

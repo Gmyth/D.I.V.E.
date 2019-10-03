@@ -1,12 +1,15 @@
 ﻿using System;
 using UnityEngine;
 
-[Serializable] public class SkillData : DataTableEntry
+
+[Serializable] public class ItemData : DataTableEntry
 {
     [SerializeField] private int id;
     [SerializeField] private string name;
     [SerializeField] private Sprite icon;
+    [SerializeField] private Sprite sprite;
     [SerializeField] private AttributeSet attributes;
+
 
     public override int Index
     {
@@ -45,7 +48,3 @@ using UnityEngine;
         return id.GetHashCode();
     }
 }
-
-
-[CreateAssetMenuAttribute(fileName = "Skill", menuName = "Data Table/Skill")]
-public class SkillDataTable : DataTable<SkillData> { }

@@ -11,7 +11,6 @@ public class Drone : Enemy, IPatroller
     private Dictionary<int, float> damageList = new Dictionary<int, float>();
 
     public float Health;
-
     public float HealthCap = 1;
 
 
@@ -19,7 +18,7 @@ public class Drone : Enemy, IPatroller
     {
         get
         {
-            return patrolPoints.Length;
+            return patrolRoute.NumWayPoints;
         }
     }
 
@@ -34,7 +33,7 @@ public class Drone : Enemy, IPatroller
 
     Vector3 IPatroller.GetPatrolPoint(int index)
     {
-        return patrolPoints[index];
+        return patrolRoute[index];
     }
 
 
@@ -81,8 +80,10 @@ public class Drone : Enemy, IPatroller
         Boom.gameObject.SetActive(true);
         Boom.transform.localScale = Vector3.one;
 
-        gameObject.GetComponent<SpriteRenderer>().color = Color.clear;
-        Destroy(gameObject, 0.5f);
+        //gameObject.GetComponent<SpriteRenderer>().color = Color.clear;
+        gameObject.SetActive(false);
+        //Destroy(gameObject, 0.5f);
+        CheckPointManager.Instance.EnterResetPool(gameObject);
     }
 
 
@@ -92,19 +93,4 @@ public class Drone : Enemy, IPatroller
 
         Health = HealthCap;
     }
-
-
-#if UNITY_EDITOR
-    private void OnDrawGizmosSelected()
-    {
-        if (patrolPoints.Length > 1)
-        {
-            foreach (Vector3 patrolPoint in patrolPoints)
-                Gizmos.DrawSphere(patrolPoint, 0.1f);
-
-            for (int i = 0; i < patrolPoints.Length - 1; ++i)
-                LogUtility.DrawGizmoArrow(patrolPoints[i], patrolPoints[i + 1]);
-        }
-    }
-#endif
 }

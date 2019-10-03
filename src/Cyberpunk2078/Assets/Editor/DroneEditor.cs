@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(Drone))]
+
 public class DroneEditor : Editor
 {
     bool IsFoldout = false;
@@ -24,7 +24,7 @@ public class DroneEditor : Editor
          
         if (GUILayout.Button("Set Center"))
         {
-            Target.setCenter();
+            //Target.setCenter();
         }
          
          
@@ -39,18 +39,6 @@ public class DroneEditor : Editor
                 // status = Selection.activeTransform.name;
             }
         }
-             
- 
-         
-        for(int i = 0; i < Target.patrolPoints.Length; ++i)
-        {
-            if (GUILayout.Button("Set Point For " + i))
-            {
-                Target.patrolPoints[i] = Target.Pos;
-            }
-        }
-         
-
     }
      
     public void OnInspectorUpdate()

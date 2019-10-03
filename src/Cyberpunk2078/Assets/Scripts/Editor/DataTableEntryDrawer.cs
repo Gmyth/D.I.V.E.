@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+
 //[CustomPropertyDrawer(typeof(DataTableEntry), true)]
 public class DataTableEntryDrawer : PropertyDrawer
 {

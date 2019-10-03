@@ -18,11 +18,12 @@ public class Player
         return new Player();
     }
 
-
+    
     public readonly AttributeSet attributes;
     public readonly Inventory inventory;
 
     public bool SecondJumpReady;
+    public bool lastWallJumpRight; 
     
     public float Health { get; private set; }
     
@@ -62,14 +63,16 @@ public class Player
 
     public bool ApplyEnergyChange(float amount)
     {
+        GameObject Energy1 = GameObject.Find("Energy1");
+        GameObject Energy2 = GameObject.Find("Energy2");
         if (Energy + amount < 0)
             return false;
 
         float maxSp = this[AttributeType.MaxSp_c0];
 
         Energy = Mathf.Max(Mathf.Min(amount + Energy, maxSp), 0);
-        GameObject.Find("Energy1").GetComponent<Slider>().value = Mathf.Max(Mathf.Min(Energy, maxSp / 2), 0) / (maxSp / 2);
-        GameObject.Find("Energy2").GetComponent<Slider>().value = Mathf.Max((Energy-maxSp / 2), 0) / (maxSp / 2);
+        Energy1.GetComponent<Slider>().value = Mathf.Max(Mathf.Min(Energy, maxSp / 2), 0) / (maxSp / 2);
+        Energy2.GetComponent<Slider>().value = Mathf.Max((Energy-maxSp / 2), 0) / (maxSp / 2);
 
 
         return true;
@@ -86,17 +89,47 @@ public class Player
     
     public bool ApplyHealthChange(float amount)
     {
+        SpriteRenderer health1 = GameObject.Find("Health1").GetComponent<SpriteRenderer>();
+        SpriteRenderer health2 = GameObject.Find("Health2").GetComponent<SpriteRenderer>();
+        SpriteRenderer health3 = GameObject.Find("Health3").GetComponent<SpriteRenderer>();
+
         if (Health < amount)
+        {
             return false;
+        }
 
 
         Health = Mathf.Max(Mathf.Min(amount + Health, this[AttributeType.MaxHp_c0]), 0);
 
-        if(GameObject.Find("Health1"))GameObject.Find("Health1").gameObject.SetActive(Health > 0);
-        if(GameObject.Find("Health2")) GameObject.Find("Health2").gameObject.SetActive(Health > 1);
-        if(GameObject.Find("Health3"))GameObject.Find("Health3").gameObject.SetActive(Health > 2);
+        if (Health > 0)
+            health1.enabled = true;
+        else
+            health1.enabled = false;
 
-        
+        if (Health > 1)
+            health2.enabled = true;
+        else
+            health2.enabled = false;
+
+        if (Health > 2)
+            health3.enabled = true;
+        else
+            health3.enabled = false;
+
+        if (Health <= 0)
+        {
+            RestoreHealth();
+            CheckPointManager.Instance.RestoreCheckPoint();
+        }
+
         return true;
+    }
+
+    private void RestoreHealth()
+    {
+        Health = 3;
+        Energy = 200;
+        ApplyHealthChange(0);
+        ApplyEnergyChange(0);
     }
 }
