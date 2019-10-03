@@ -17,7 +17,7 @@ MonoBehaviour:
   speedFactor: 8
   accelerationFactor: 30
   jumpCD: 0.02
-  wallJumpCD: 0.25
+  wallJumpCD: 0.1
   indexPSIdle: 0
   indexPSMoving: 1
   indexJumping2: 5

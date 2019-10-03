@@ -21,6 +21,7 @@ public class PSJumping1 : PlayerState
     [SerializeField] private int indexPSAirborne;
     [SerializeField] private int indexPSClimb;
     private float lastJumpSec;
+    private State previous;
 
     public override int Update()
     {
@@ -38,9 +39,9 @@ public class PSJumping1 : PlayerState
          
          if (isCloseTo("Ground"))
          {
-             if (RightSideTest("Ground")&&  h > 0)
+             if (RightSideTest("Ground") &&  h >= 0 )
              {
-                 if (Time.time > lastJumpSec + wallJumpCD/4 && !Player.CurrentPlayer.lastWallJumpRight)
+                 if (previous.Index == indexPSWallJumping &&Time.time > lastJumpSec + wallJumpCD/4 && !Player.CurrentPlayer.lastWallJumpRight)
                  {
                      return indexPSWallJumping; 
                  }
@@ -51,9 +52,9 @@ public class PSJumping1 : PlayerState
 
 
              }
-             else if(!RightSideTest("Ground") && h < 0)
+             else if(!RightSideTest("Ground") && h <= 0)
              {
-                 if (Time.time > lastJumpSec + wallJumpCD/4 && Player.CurrentPlayer.lastWallJumpRight)
+                 if (previous.Index == indexPSWallJumping &&  Player.CurrentPlayer.lastWallJumpRight && Time.time > lastJumpSec + wallJumpCD/4)
                  {
                      return indexPSWallJumping; 
                  }
@@ -75,7 +76,7 @@ public class PSJumping1 : PlayerState
                 return indexPSAirborne;
         }
 
-        if (isGrounded())
+        if (isGrounded()&& Vy < 0)
         {
             // Landed
             if (h == 0)
@@ -114,6 +115,7 @@ public class PSJumping1 : PlayerState
 
     public override void OnStateEnter(State previousState)
     {
+        previous = previousState;
         anim.Play("MainCharacter_Jump", -1, 0f);
         //Perform jump
         lastJumpSec = Time.time;
