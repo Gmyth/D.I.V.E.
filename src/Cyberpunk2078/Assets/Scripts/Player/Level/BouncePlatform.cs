@@ -30,7 +30,7 @@ public class BouncePlatform : MonoBehaviour
     {
         if (bounceReady == false)
         {
-            timer -= Time.deltaTime;
+            timer -= Time.unscaledDeltaTime;
         }
 
         if (timer < 0)
@@ -52,9 +52,10 @@ public class BouncePlatform : MonoBehaviour
                 pc = col.gameObject.GetComponent<PlayerCharacter>();
                 pc.GetFSM().CurrentStateIndex = 1;
                 // kill any Y-axis speed
-
+                rb2d.velocity = Vector2.zero;
+                Debug.Log("Direction:"+ gameObject.transform.up);
                 //rb2d.velocity = gameObject.transform.up * jumpForce;
-                rb2d.AddForce(gameObject.transform.up * jumpForce * 50);
+                rb2d.AddForce(gameObject.transform.up * jumpForce * 50 * 1/Time.timeScale);
 
                 //switch (bounceDiection)
                 //{
