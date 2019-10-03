@@ -11,11 +11,12 @@ public class PlayerCharacter : Dummy
     [SerializeField] private FSMPlayer fsm;
 
     private StatisticSystem statistic;
-    private new Rigidbody rigidbody;
+    private new Rigidbody2D rigidbody;
 
     public GameObject dashAtkBox;
 
     public PlayerState State => fsm.CurrentState;
+
 
     public FSMPlayer GetFSM()
     {
@@ -28,11 +29,28 @@ public class PlayerCharacter : Dummy
     }
 
 
+    public void Knockback(Vector3 origin, float force)
+    {
+        Vector3 direction = transform.position - origin;
+        direction = (direction.x > 0 ? GroundNormal.Right().normalized : GroundNormal.Left().normalized) * force;
+        rigidbody.velocity = Vector2.zero;
+        rigidbody.AddForce(direction);
+
+
+        fsm.CurrentStateIndex = 10;
+    }
+
+
     public override float ApplyDamage(int instanceId,float rawDamage, bool overWrite = false)
     {
         Debug.Log(LogUtility.MakeLogStringFormat("PlayerCharacter", "Take {0} damage.", rawDamage));
         Player.CurrentPlayer.ApplyHealthChange(-rawDamage);
         return rawDamage;
+    }
+
+    public override void Dead()
+    {
+        //game over
     }
 
 
@@ -50,14 +68,11 @@ public class PlayerCharacter : Dummy
 
     private void Start()
     {
-
-
-
         dashAtkBox = GetComponentInChildren<Attack>().gameObject;
         dashAtkBox.SetActive(false);
 
 
-        rigidbody = GetComponent<Rigidbody>();
+        rigidbody = GetComponent<Rigidbody2D>();
 
 
         fsm = fsm.Initialize(this);
@@ -67,11 +82,6 @@ public class PlayerCharacter : Dummy
     private void Update()
     {
         fsm.Update();
-    }
-
-    public override void Dead()
-    {
-        //game over
     }
 
     private void OnDestroy()

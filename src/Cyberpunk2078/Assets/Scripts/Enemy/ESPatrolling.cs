@@ -116,10 +116,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
             {
                 Vector2 direction = (currentPath.vectorPath[indexWayPoint] - enemy.transform.position).normalized;
 
-                Vector3 scale = enemy.transform.localScale;
-                scale.x = Mathf.Sign(direction.x) * Mathf.Abs(scale.x);
-
-                enemy.transform.localScale = scale;
+                AdjustFacingDirection(direction);
 
                 rigidbody.velocity = direction * speed * Time.deltaTime;
 

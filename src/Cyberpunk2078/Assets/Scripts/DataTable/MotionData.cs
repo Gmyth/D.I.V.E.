@@ -1,12 +1,12 @@
 ﻿using System;
 using UnityEngine;
 
-[Serializable] public class SkillData : DataTableEntry
+[Serializable] public class MotionData : DataTableEntry
 {
     [SerializeField] private int id;
     [SerializeField] private string name;
-    [SerializeField] private Sprite icon;
     [SerializeField] private AttributeSet attributes;
+
 
     public override int Index
     {
@@ -21,14 +21,6 @@ using UnityEngine;
         get
         {
             return id;
-        }
-    }
-
-    public Sprite Icon
-    {
-        get
-        {
-            return icon;
         }
     }
 

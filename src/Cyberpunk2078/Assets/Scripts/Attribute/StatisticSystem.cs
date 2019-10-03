@@ -18,6 +18,8 @@ public enum AttributeType : int
     SightRange_c0 = 0xA00,
     
     Damage_c0 = 0x1000,
+
+    Knowback_c0 = 0x2000,
 }
 
 
@@ -31,6 +33,7 @@ public enum StatisticType : int
     SightRange = 0xA,
 
     Damage = 0x10,
+    Knowback = 0x20,
 
     Hp = 0xF0,
     Sp = 0xF1,

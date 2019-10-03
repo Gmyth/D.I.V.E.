@@ -89,7 +89,7 @@ public abstract class EnemyState<T> : EnemyState where T : Enemy
         if (!player)
             return null;
 
-        
+
         RaycastHit2D raycastHit2D = Physics2D.Raycast(enemy.transform.position, player.transform.position - enemy.transform.position, Vector2.Distance(enemy.transform.position, player.transform.position), 1 << LayerMask.NameToLayer("Player"));
 
         if (raycastHit2D.collider && raycastHit2D.collider.gameObject != player.gameObject)
@@ -97,6 +97,24 @@ public abstract class EnemyState<T> : EnemyState where T : Enemy
 
 
         return player;
+    }
+
+    protected Vector2 GetGroundNormal()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, Vector2.down, 3f);
+
+        if (hit.collider && hit.transform.CompareTag("Ground"))
+            return hit.normal;
+
+        return Vector2.zero;
+    }
+
+    protected void AdjustFacingDirection(Vector3 direction)
+    {
+        Vector3 scale = enemy.transform.localScale;
+        scale.x = Mathf.Sign(direction.x) * Mathf.Abs(scale.x);
+
+        enemy.transform.localScale = scale;
     }
 }
 
