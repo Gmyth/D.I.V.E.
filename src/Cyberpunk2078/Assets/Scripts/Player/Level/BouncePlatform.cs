@@ -45,6 +45,7 @@ public class BouncePlatform : MonoBehaviour
     {
         if (col.gameObject.tag.CompareTo("Player") == 0)
         {
+            Debug.Log("Enter Trigger");
             if (bounceReady == true)
             {
                 rb2d = col.gameObject.GetComponent<Rigidbody2D>();
