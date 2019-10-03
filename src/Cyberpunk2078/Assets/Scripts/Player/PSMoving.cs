@@ -29,7 +29,7 @@ public class PSMoving : PlayerState
         if (Input.GetAxis("Dashing") != 0)
             return indexPSDashing;
 
-        if (Input.GetAxis("Vertical") > 0  &&  isCloseTo("Ladder"))
+        if (Input.GetAxis("Vertical") > 0  &&  isCloseTo("Ladder")!= Direction.None)
         {
             // up is pressed
             return indexPSClimb;

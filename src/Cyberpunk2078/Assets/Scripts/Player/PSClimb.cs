@@ -34,7 +34,7 @@ public class PSClimb : PlayerState
             rb2d.velocity = new Vector2(0, -climbSpeed);
         }
 
-        if (!isCloseTo("Ladder"))
+        if (isCloseTo("Ladder") == Direction.None)
         {
             anim.speed = 1;
             rb2d.gravityScale = 3;

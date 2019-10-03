@@ -33,7 +33,7 @@ public class PSIdle : PlayerState
             return indexPSAirborne;
         }
         
-        if (Input.GetAxis("Vertical") > 0  &&  isCloseTo("Ladder"))
+        if (Input.GetAxis("Vertical") > 0  &&  isCloseTo("Ladder") != Direction.None)
         {
             // up is pressed
             return indexPSClimb;

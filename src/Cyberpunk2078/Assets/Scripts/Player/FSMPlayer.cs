@@ -1,5 +1,11 @@
 ﻿using UnityEngine;
 
+public enum Direction
+{
+    None,
+    Left,
+    Right
+}
 
 public abstract class PlayerState : State
 {
@@ -72,20 +78,22 @@ public abstract class PlayerState : State
     }
 
     //Check player is close to wall
-    public bool isCloseTo(string tag)
+    public Direction isCloseTo(string tag)
     {
         RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0.1f,0f,0f),playerCharacter.transform.right,0.35f);
         RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(-0.1f,0f,0f),-playerCharacter.transform.right,0.35f);
         Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f,-0f,0f), playerCharacter.transform.right * 0.35f, Color.red);
         Debug.DrawRay(playerCharacter.transform.position + new Vector3(0.1f,-0f,0f), -playerCharacter.transform.right * 0.35f, Color.yellow);
 
-        if ((hit.collider != null && hit.transform.CompareTag(tag) )||
-            (hit1.collider != null && hit1.transform.CompareTag(tag) ))
+        if (hit.collider != null && hit.transform.CompareTag(tag))
         {
-            return true;
+            return Direction.Left;
+        }else if (hit1.collider != null && hit1.transform.CompareTag(tag))
+        {
+            return Direction.Right;
         }
 
-        return false;
+        return Direction.None;
     }
 
 
