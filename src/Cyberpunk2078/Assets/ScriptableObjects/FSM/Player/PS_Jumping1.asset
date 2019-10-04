@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: 
   jumpForce: 8
+  wallJumpForce: 9
   speedFactor: 8
   accelerationFactor: 30
   jumpCD: 0.02

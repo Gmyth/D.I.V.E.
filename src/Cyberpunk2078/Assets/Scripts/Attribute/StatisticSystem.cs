@@ -18,6 +18,8 @@ public enum AttributeType : int
     SightRange_c0 = 0xA00,
     
     Damage_c0 = 0x1000,
+    
+    Sp_c0 = 0xF110
 }
 
 

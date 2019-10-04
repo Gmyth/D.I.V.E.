@@ -64,13 +64,13 @@ public class PSWallJumping: PlayerState
                 {
                     flip = true;
                     Player.CurrentPlayer.lastWallJumpRight = true;
-                    rb2d.velocity = h <= 0? new Vector2(-jumpSpeed*1.2f, 0):new Vector2(-jumpSpeed * 0.4f, 0);
+                    rb2d.velocity = h <= 0? new Vector2(-jumpSpeed*1.3f, 0):new Vector2(-jumpSpeed * 1.3f, 0);
                 }
                 else
                 {
                     flip = false; 
                     Player.CurrentPlayer.lastWallJumpRight = false; 
-                    rb2d.velocity = h >= 0? new Vector2(jumpSpeed*1.2f, 0):new Vector2(jumpSpeed * 0.4f, 0);
+                    rb2d.velocity = h >= 0? new Vector2(jumpSpeed*1.3f, 0):new Vector2(jumpSpeed * 1.3f, 0);
                 }
 
                 return index_PSJumping1;

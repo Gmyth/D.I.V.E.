@@ -7,11 +7,11 @@ using UnityEngine;
 public class PSJumping1 : PlayerState
 {
     [SerializeField] private float jumpForce = 8;
-
+    [SerializeField] private float wallJumpForce = 8;
     [SerializeField] private float speedFactor = 3;
     [SerializeField] private float accelerationFactor = 20;
     [SerializeField] private float jumpCD = 0.02f;
-    [SerializeField] private float wallJumpCD = 0.02f;
+    [SerializeField] private float wallJumpCD;
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSMoving;
     [SerializeField] private int indexJumping2;
@@ -34,7 +34,7 @@ public class PSJumping1 : PlayerState
         // Energy Recover
         Player.CurrentPlayer.EnergyRecover(Time.time);
 
-        //Still support Horizontal update during jumping, delete following to kill Horizzontal input
+        //Still support Horizontal update during jumping, delete following to kill Horizontal input
          PhysicsInputHelper(h,speedFactor,accelerationFactor);
          
          var dir = isCloseTo("Ground");
@@ -66,7 +66,8 @@ public class PSJumping1 : PlayerState
              }
          }
          
-        if (Input.GetAxis("Vertical") > 0 && isCloseTo("Ladder") != Direction.None)
+         
+         if (Input.GetAxis("Vertical") > 0 && isCloseTo("Ladder") != Direction.None)
         {
             // up is pressed
             return indexPSClimb;
@@ -106,9 +107,7 @@ public class PSJumping1 : PlayerState
 
         if (Input.GetAxis("Dashing") != 0)
             return indexPSDashing;
-
-
-
+        
         //isJumpKeyDown = Input.GetButtonDown("Jump");
 
         return Index;
@@ -124,6 +123,15 @@ public class PSJumping1 : PlayerState
         // kill any Y-axis speed
         rb2d.velocity = new Vector2 (rb2d.velocity.x, 0);
         // Add Verticial Speed
-        rb2d.AddForce(playerCharacter.transform.up * jumpForce * 100);
+        if (previousState.Index == indexPSWallJumping)
+        {
+            rb2d.AddForce(playerCharacter.transform.up * wallJumpForce * 100);
+        }
+        else
+        {
+            rb2d.AddForce(playerCharacter.transform.up * jumpForce * 100);
+        }
+
+       
     }
 }

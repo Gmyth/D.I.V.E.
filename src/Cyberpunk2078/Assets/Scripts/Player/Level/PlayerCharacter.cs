@@ -27,14 +27,14 @@ public class PlayerCharacter : Dummy
         statistic = new StatisticSystem(player.attributes, player.inventory);
     }
 
-
+ 
     public override float ApplyDamage(int instanceId,float rawDamage, bool overWrite = false)
     {
         Debug.Log(LogUtility.MakeLogStringFormat("PlayerCharacter", "Take {0} damage.", rawDamage));
         Player.CurrentPlayer.ApplyHealthChange(-rawDamage);
         return rawDamage;
     }
-
+    
 
     private void Awake()
     {

@@ -16,7 +16,7 @@ MonoBehaviour:
   jumpForce: 3
   jumpSpeed: 15
   stickWallTime: 1
-  wallCheckCoolDown: 0.25
+  wallCheckCoolDown: 0
   index_PSIdle: 0
   index_PSMoving: 1
   index_PSJumping1: 4
