@@ -43,7 +43,7 @@ public class Player
     private float lastSecondEnergyRecover;
 
 
-    private Player(int healthCap = 3, float energyCap = 200f , float energyRecoverRate = 6f)
+    private Player(int healthCap = 3, float energyCap = 200f , float energyRecoverRate = 10f)
     {
         inventory = new Inventory();
 

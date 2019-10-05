@@ -59,6 +59,9 @@ TagManager:
   - name: Player
     uniqueID: 1909596859
     locked: 0
-  - name: UI
+  - name: UI Base
     uniqueID: 3482792589
+    locked: 0
+  - name: UI Item
+    uniqueID: 3658710919
     locked: 0

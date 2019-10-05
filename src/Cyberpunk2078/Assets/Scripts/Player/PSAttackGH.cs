@@ -7,10 +7,12 @@ using UnityEngine;
 public class PSAttackGH: PlayerState
 {
     [SerializeField] private float pushForce = 2f;
-    [SerializeField] private float recoveryTime = 0.5f;
+    [SerializeField] private float actionTime = 0.3f;
+    [SerializeField] private float recoveryTime = 0.2f;
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSMoving;
     [SerializeField] private int indexPSAirborne;
+    [SerializeField] private int indexPSDashing;
     [SerializeField] private float EnergyConsume = -10; 
     
     [SerializeField] private GameObject SplashFX; 
@@ -44,15 +46,19 @@ public class PSAttackGH: PlayerState
                 return indexPSIdle;
             return indexPSMoving;
         }
-        
-        if (Time.time - t0 > recoveryTime)
+
+        if (Time.time - t0 > actionTime)
         {
-            //rb2d.drag = defaultDrag;
-            rb2d.gravityScale = 3;
-                     
-            // Kill Trail
-            playerCharacter.GetComponent<GhostSprites>().Occupied = false;
             
+            // ok for dashing 
+            if (Input.GetAxis("Dashing") != 0)
+                return indexPSDashing;
+            
+        }
+        
+        if (Time.time - t0 > (recoveryTime + actionTime))
+        {
+
             if (!isGrounded()&& Vy < 0)
             {
                 return indexPSAirborne;
@@ -65,6 +71,18 @@ public class PSAttackGH: PlayerState
         }
 
         return Index;
+    }
+
+    public override void OnStateQuit(State nextState)
+    {
+        var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
+        
+        //rb2d.drag = defaultDrag;
+        rb2d.gravityScale = 3;
+                     
+        // Kill Trail
+        playerCharacter.GetComponent<GhostSprites>().Occupied = false;
+
     }
 
     public override void OnStateEnter(State previousState)
