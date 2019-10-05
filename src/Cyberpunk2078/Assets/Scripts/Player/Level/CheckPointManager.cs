@@ -60,7 +60,8 @@ public class CheckPointManager : MonoBehaviour
         for(int i = 0; i < dummy.Length; i ++)
         {
             dummy[i].GetComponent<Enemy>().lastCheckPointTransform = dummy[i].gameObject.transform.position;
-            enemy.Add(dummy[i]);
+            if(!enemy.Contains(dummy[i]))
+                enemy.Add(dummy[i]);
         }
     }
 
