@@ -22,7 +22,8 @@ public class Player
     public readonly AttributeSet attributes;
     public readonly Inventory inventory;
 
-    public bool SecondJumpReady;
+    public bool jumpForceGate;
+    public bool secondJumpReady;
     public bool lastWallJumpRight; 
     
     public float Health { get; private set; }
@@ -43,7 +44,7 @@ public class Player
     private float lastSecondEnergyRecover;
 
 
-    private Player(int healthCap = 3, float energyCap = 200f , float energyRecoverRate = 10f)
+    private Player(int healthCap = 3, float energyCap = 200f , float energyRecoverRate = 8)
     {
         inventory = new Inventory();
 
@@ -54,7 +55,7 @@ public class Player
         attributes.Set(AttributeType.SpRecovery_c0, energyRecoverRate);
 
 
-        SecondJumpReady = true;
+        secondJumpReady = true;
         Health = healthCap;
         Energy = energyCap;
         lastSecondEnergyRecover = 0;
@@ -78,11 +79,16 @@ public class Player
         return true;
     }
     
-    public void EnergyRecover(float time)
+    public void EnergyRecover(float time, float energyCustom = -1)
     {
         if (time - lastSecondEnergyRecover > 0.2f)
         {
-            ApplyEnergyChange(this[AttributeType.SpRecovery_c0]);
+            if (energyCustom < 0) {
+                ApplyEnergyChange(this[AttributeType.SpRecovery_c0]);
+            }else{
+                ApplyEnergyChange(energyCustom);
+            }
+            
             lastSecondEnergyRecover = time;
         }
     }

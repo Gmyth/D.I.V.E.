@@ -18,7 +18,7 @@ MonoBehaviour:
   dashReleaseTime: 0.1
   dashReleaseDelayTime: 0.05
   inDashingDragFactor: 6
-  EnergyConsume: 0
+  EnergyConsume: -80
   indexPSIdle: 0
   indexPSMoving: 1
   indexPSJumping2: 0

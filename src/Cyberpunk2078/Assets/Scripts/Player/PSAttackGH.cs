@@ -49,11 +49,11 @@ public class PSAttackGH: PlayerState
 
         if (Time.time - t0 > actionTime)
         {
-            
             // ok for dashing 
-            if (Input.GetAxis("Dashing") != 0)
+            if (Input.GetButtonDown("Dashing")) {
                 return indexPSDashing;
-            
+            }
+                
         }
         
         if (Time.time - t0 > (recoveryTime + actionTime))

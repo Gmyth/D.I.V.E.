@@ -13,7 +13,7 @@ public class BouncePlatform : MonoBehaviour
     //}
 
     //public Direction bounceDiection;
-    public float jumpForce = 30;
+    public float jumpForce = 20;
     private Rigidbody2D rb2d;
     private PlayerCharacter pc;
     public float Threshold = 1f;
@@ -50,7 +50,9 @@ public class BouncePlatform : MonoBehaviour
             {
                 rb2d = col.gameObject.GetComponent<Rigidbody2D>();
                 pc = col.gameObject.GetComponent<PlayerCharacter>();
-                pc.GetFSM().CurrentStateIndex = 1;
+                pc.GetFSM().CurrentStateIndex = 4;
+                Player.CurrentPlayer.jumpForceGate = true;
+                CameraManager.Instance.Shaking(0.15f,0.03f);
                 // kill any Y-axis speed
                 rb2d.velocity = Vector2.zero;
                 Debug.Log("Direction:"+ gameObject.transform.up);

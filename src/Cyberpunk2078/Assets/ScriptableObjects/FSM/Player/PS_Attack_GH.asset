@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: AttackGH
   pushForce: 2
-  actionTime: 0.1
-  recoveryTime: 0.1
+  actionTime: 0.05
+  recoveryTime: 0.25
   indexPSIdle: 0
   indexPSMoving: 1
   indexPSAirborne: 2

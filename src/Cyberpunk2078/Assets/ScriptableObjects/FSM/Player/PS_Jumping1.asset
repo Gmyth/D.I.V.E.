@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: 
   jumpForce: 6.8
+  wallJumpForce: 8
   speedFactor: 6
   accelerationFactor: 30
   jumpCD: 0.02
-  wallJumpCD: 0.02
+  wallJumpCD: 0.1
   indexPSIdle: 0
   indexPSMoving: 1
   indexJumping2: 5

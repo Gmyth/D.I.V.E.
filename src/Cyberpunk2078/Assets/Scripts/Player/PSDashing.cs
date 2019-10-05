@@ -46,9 +46,9 @@ public class PSDashing : PlayerState
             return indexPSMoving;
         }
 
-        if (Input.GetButtonDown("Jump") && Player.CurrentPlayer.SecondJumpReady)
+        if (Input.GetButtonDown("Jump") && Player.CurrentPlayer.secondJumpReady)
         {
-            Player.CurrentPlayer.SecondJumpReady = false;
+            Player.CurrentPlayer.secondJumpReady = false;
             return indexPSJumping2;
         }
 

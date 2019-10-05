@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Move
   speedFactor: 8
-  accelerationFactor: 50
+  accelerationFactor: 30
   indexPSIdle: 0
   indexPSAttackGH: 3
   indexPSJumping1: 4
   indexPSDashing: 6
   indexPSAirborne: 2
   indexPSClimb: 8
-  indexPSWallJumping: 0
+  indexPSWallJumping: 7

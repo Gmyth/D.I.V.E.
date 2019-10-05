@@ -76,8 +76,15 @@ public class PSWallJumping: PlayerState
                 return index_PSJumping1;
             }
         }
+        var dir = isCloseTo("Ground");
+        if (h == 0)
+        {
+            return index_PSAirborne;
+        }
+        else if (dir == Direction.Right && h < 0) { return index_PSAirborne; }
+        else if (dir == Direction.Left && h > 0) { return index_PSAirborne; }
 
-        if (isCloseTo("Ground")== Direction.None && !isGrounded())
+        if (dir == Direction.None && !isGrounded())
         {
             return index_PSAirborne;
         }
@@ -124,7 +131,7 @@ public class PSWallJumping: PlayerState
         playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
         
         // perform Dashing
-        if (Input.GetAxis("Dashing") != 0)
+        if (Input.GetButtonDown("Dashing"))
             return index_PSDashing;
         
         return Index;
