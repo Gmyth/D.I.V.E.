@@ -30,6 +30,7 @@ public class Player
     
     public float Energy { get; private set; }
 
+    public bool haveEnemyBuff = false;
 
     public float this[AttributeType type]
     {
@@ -44,7 +45,7 @@ public class Player
     private float lastSecondEnergyRecover;
 
 
-    private Player(int healthCap = 3, float energyCap = 200f , float energyRecoverRate = 8)
+    private Player(int healthCap = 3, float energyCap = 200f , float energyRecoverRate = 0)
     {
         inventory = new Inventory();
 

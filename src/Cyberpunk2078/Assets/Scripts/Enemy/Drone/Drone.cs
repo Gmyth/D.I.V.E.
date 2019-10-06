@@ -81,10 +81,14 @@ public class Drone : Enemy, IPatroller
         Boom.transform.localScale = Vector3.one;
         
         EnemyData enemyData = DataTableManager.singleton.GetEnemyData(typeID);
-        Player.CurrentPlayer.ApplyEnergyChange(enemyData.Attributes[AttributeType.Sp_c0]);
-        
+        if (!Player.CurrentPlayer.haveEnemyBuff)
+        {
+            Player.CurrentPlayer.ApplyEnergyChange(enemyData.Attributes[AttributeType.Sp_c0]);
+            Player.CurrentPlayer.haveEnemyBuff = true;
+        }
+
         //gameObject.GetComponent<SpriteRenderer>().color = Color.clear;
-         gameObject.SetActive(false);
+        gameObject.SetActive(false);
         //Destroy(gameObject, 0.5f);
         CheckPointManager.Instance.EnterResetPool(gameObject);
     }

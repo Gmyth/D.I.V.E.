@@ -153,6 +153,10 @@ public class PSDashing : PlayerState
         
         // Strong Drag during dashing
         rb2d.drag *= inDashingDragFactor;
+
+        if (Player.CurrentPlayer.Energy <= 0) {
+            Player.CurrentPlayer.haveEnemyBuff = false;
+        }
     }
 
 

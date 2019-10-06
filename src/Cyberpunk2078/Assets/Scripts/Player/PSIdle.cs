@@ -11,7 +11,7 @@ public class PSIdle : PlayerState
     [SerializeField] private int indexPSAirborne;
     [SerializeField] private int indexPSClimb;
 
-    private float energyRecoverDelaySec = 0.05f;
+    private float energyRecoverDelaySec = 0;
     private float energyRecoverTime;
 
 
@@ -23,8 +23,8 @@ public class PSIdle : PlayerState
         float Vy = rb2d.velocity.y;
         
         // Energy Recover
-        if (energyRecoverTime < Time.time)
-            Player.CurrentPlayer.EnergyRecover(Time.time, 80);
+        //if (energyRecoverTime < Time.time)
+        //    Player.CurrentPlayer.EnergyRecover(Time.time, 100);
         
         
         if (Input.GetAxis("Attack1") > 0)
@@ -58,6 +58,11 @@ public class PSIdle : PlayerState
     public override void OnStateEnter(State previousState)
     {
         energyRecoverTime = Time.time + energyRecoverDelaySec;
+        if (Player.CurrentPlayer.haveEnemyBuff)
+            Player.CurrentPlayer.ApplyEnergyChange(100);
+        else if (Player.CurrentPlayer.Energy < 100)
+            Player.CurrentPlayer.ApplyEnergyChange(100);
+
         anim.Play("MainCharacter_Idle", -1, 0f);
         Rigidbody2D rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         rb2d.velocity = new Vector2(0,rb2d.velocity.y);

@@ -15,7 +15,6 @@ public abstract class PlayerState : State
     protected bool flip;
     protected bool grounded;
 
-
     public virtual void Initialize(int index, PlayerCharacter playerCharacter)
     {
         Index = index;
