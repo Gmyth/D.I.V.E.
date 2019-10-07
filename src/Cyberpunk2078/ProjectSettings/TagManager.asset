@@ -53,11 +53,17 @@ TagManager:
   - name: BackGround
     uniqueID: 1436876241
     locked: 0
+  - name: Ground
+    uniqueID: 334935833
+    locked: 0
   - name: Interactive
     uniqueID: 792809535
     locked: 0
   - name: Player
     uniqueID: 1909596859
+    locked: 0
+  - name: ForeGround
+    uniqueID: 3655959957
     locked: 0
   - name: UI Base
     uniqueID: 3482792589
