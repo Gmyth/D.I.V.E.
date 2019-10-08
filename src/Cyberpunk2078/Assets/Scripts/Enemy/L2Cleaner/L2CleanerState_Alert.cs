@@ -5,13 +5,26 @@
 public class L2CleanerState_Alert : EnemyState<L2Cleaner>
 {
     [SerializeField] private float waitTime;
+    [SerializeField] private RandomSelector behaviorSelector;
+
+    [Header("Animation")]
+    [SerializeField] private string animation;
 
     [Header("Connected States")]
     [SerializeField] private int[] stateIndex_attacks;
     [SerializeField] private int stateIndex_targetLoss = -1;
 
+    private Animator animator;
+
     private float t;
 
+
+    public override void Initialize(L2Cleaner enemy)
+    {
+        base.Initialize(enemy);
+
+        animator = enemy.GetComponent<Animator>();
+    }
 
     public override int Update()
     {
@@ -20,9 +33,7 @@ public class L2CleanerState_Alert : EnemyState<L2Cleaner>
 
 
         if (Time.time >= t)
-        {
-            return stateIndex_attacks[0];
-        }
+            return stateIndex_attacks[behaviorSelector.Select()[0]];
 
 
         return Index;
@@ -31,5 +42,7 @@ public class L2CleanerState_Alert : EnemyState<L2Cleaner>
     public override void OnStateEnter(State previousState)
     {
         t = Time.time + waitTime;
+
+        animator.Play(animation);
     }
 }
