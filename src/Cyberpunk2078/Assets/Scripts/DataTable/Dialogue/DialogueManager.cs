@@ -153,6 +153,18 @@ public class DialogueManager: Singleton<DialogueManager>
         else
             return DialogueType.Unknown;
     }
+
+    public void ShowDialogueUI()
+    {
+        GUIManager.Singleton.Open("DialogueUI");
+    }
+
+    public void HideDialogueUI()
+    {
+        GUIManager.Singleton.Close("DialogueUI");
+
+    }
+
 }
 
     

@@ -12,6 +12,8 @@ public class PSAirborne : PlayerState
     [SerializeField] private int indexPSDashing;
     [SerializeField] private int indexPSClimb;
 
+    private State previous;
+
     public override int Update()
     {
         // Energy Recover
@@ -29,21 +31,22 @@ public class PSAirborne : PlayerState
             // up is pressed
             return indexPSClimb;
         }
-        
-        if (isCloseTo("Ground") != Direction.None)
-        {
-            return indexPSWallJumping;
-        }
 
-        if (Input.GetButtonDown("Jump") && Player.CurrentPlayer.SecondJumpReady)
-        {
+        var dir = isCloseTo("Ground");
+
+        if (dir == Direction.Right && h > 0) { return indexPSWallJumping; }
+        else if (dir == Direction.Left && h < 0) { return indexPSWallJumping; }
+
+
+        //if (Input.GetButtonDown("Jump") && Player.CurrentPlayer.secondJumpReady)
+        //{
             
-            Player.CurrentPlayer.SecondJumpReady = false;
-            return indexPSJumping2;
-        }
+        //    Player.CurrentPlayer.secondJumpReady = false;
+        //    return indexPSJumping2;
+        //}
 
         
-        if (Input.GetAxis("Dashing") != 0)
+        if (Input.GetButtonDown("Dashing"))
             return indexPSDashing;
         
         if (isGrounded())
@@ -55,6 +58,8 @@ public class PSAirborne : PlayerState
     public override void OnStateEnter(State previousState)
     {
         // Add Ghost trail
+
+        previous = previousState;
         anim.Play("MainCharacter_Airborne", -1, 0f);
     }
 }

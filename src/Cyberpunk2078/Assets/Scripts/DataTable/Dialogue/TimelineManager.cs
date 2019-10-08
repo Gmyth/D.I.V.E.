@@ -9,12 +9,14 @@ public class TimelineManager : MonoBehaviour
     public bool isPlayInstantly = false;
     public bool isTheLastTimeline = false;
 
+    [SerializeField] private PlayableDirector[] timelines;
+    [SerializeField] private int currentIndex = 0;
+
     public bool isPlaying = false;
     public bool isTheLastDialogue = false;
 
-    [SerializeField] private PlayableDirector[] timelines;
-    [SerializeField] private int currentIndex = 0;
-    
+    [SerializeField] private Color debugColor;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,10 +27,7 @@ public class TimelineManager : MonoBehaviour
     {
         if (!isPlaying)
         {
-            //When timeline start
-
             GetComponent<Collider2D>().enabled = false;
-            //Stop gameplay
 
             PlayTimelineInIndex(0);
             isPlaying = true;
@@ -86,12 +85,7 @@ public class TimelineManager : MonoBehaviour
     {
         if (other.gameObject.name == "Player")
         {
-            if (isPlayInstantly)
-            {
-                OnTimelineStart();
-            }
-            player = other.gameObject.GetComponent<DialoguePlayer>();
-            player.PrepareForTimeline(this);
+            other.gameObject.GetComponent<DialoguePlayer>().CurrentTimelineManager = this;
         }
     }
 
@@ -103,6 +97,12 @@ public class TimelineManager : MonoBehaviour
 
     public bool CheckEndState() {
         return isTheLastTimeline && isTheLastDialogue;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = debugColor;
+        Gizmos.DrawCube(transform.position, GetComponent<BoxCollider2D>().size);
     }
 
 }

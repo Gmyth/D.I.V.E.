@@ -13,9 +13,9 @@ public class PSNoInput : PlayerState
         {
             KillSpeed();
             Rigidbody2D rb2d = playerCharacter.gameObject.GetComponent<Rigidbody2D>();
-            if (isGrounded() && !playerCharacter.gameObject.GetComponent<DialoguePlayer>().currentTimelineManager.isPlayInstantly)
+            if (isGrounded() && !playerCharacter.gameObject.GetComponent<DialoguePlayer>().CurrentTimelineManager.isPlayInstantly)
             {
-                playerCharacter.gameObject.GetComponent<DialoguePlayer>().currentTimelineManager.OnTimelineStart();
+                playerCharacter.gameObject.GetComponent<DialoguePlayer>().CurrentTimelineManager.OnTimelineStart();
                 Debug.Log(LogUtility.MakeLogString("PSNoInput", "Timeline Start"));
             }
         }

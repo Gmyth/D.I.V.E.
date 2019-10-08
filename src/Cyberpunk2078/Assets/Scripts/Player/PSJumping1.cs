@@ -40,7 +40,7 @@ public class PSJumping1 : PlayerState
          var dir = isCloseTo("Ground");
          if (dir != Direction.None )
          {
-             if (dir == Direction.Right &&  h >= 0 )
+             if (dir == Direction.Right &&  h > 0 )
              {
                  if (previous.Index == indexPSWallJumping && Time.time > lastJumpSec + wallJumpCD/4 && !Player.CurrentPlayer.lastWallJumpRight)
                  {
@@ -53,7 +53,7 @@ public class PSJumping1 : PlayerState
 
 
              }
-             else if(dir == Direction.Left  && h <= 0)
+             else if(dir == Direction.Left  && h < 0)
              {
                  if (previous.Index == indexPSWallJumping &&  Player.CurrentPlayer.lastWallJumpRight && Time.time > lastJumpSec + wallJumpCD/4)
                  {
@@ -93,19 +93,19 @@ public class PSJumping1 : PlayerState
         }
 
         //Player is sill in air
-        if (lastJumpSec + jumpCD < Time.time)
-        {
-            // prevent misclicking
-            if (Input.GetButtonDown("Jump"))
-            {
-                // second_jump
-                Player.CurrentPlayer.SecondJumpReady = false;
-                return indexJumping2;
-            }
+        //if (lastJumpSec + jumpCD < Time.time)
+        //{
+        //    // prevent misclicking
+        //    if (Input.GetButtonDown("Jump"))
+        //    {
+        //        // second_jump
+        //        Player.CurrentPlayer.secondJumpReady = false;
+        //        return indexJumping2;
+        //    }
                
-        }
+        //}
 
-        if (Input.GetAxis("Dashing") != 0)
+        if (Input.GetButtonDown("Dashing"))
             return indexPSDashing;
         
         //isJumpKeyDown = Input.GetButtonDown("Jump");
@@ -126,6 +126,10 @@ public class PSJumping1 : PlayerState
         if (previousState.Index == indexPSWallJumping)
         {
             rb2d.AddForce(playerCharacter.transform.up * wallJumpForce * 100);
+        }
+        else if (Player.CurrentPlayer.jumpForceGate) {
+            // skip the force add
+            Player.CurrentPlayer.jumpForceGate = false;
         }
         else
         {

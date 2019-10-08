@@ -40,7 +40,7 @@ public class Bullet : Recyclable
         else if (other.tag == "Hunch" )
         {
             if(other.GetComponentInParent<PlayerCharacter>().State.Name == "Dash"){
-                TimeManager.Instance.startSlowMotion(0.3f);
+                TimeManager.Instance.startSlowMotion(0.2f);
                 CameraManager.Instance.flashIn(7f,0.05f,0.15f,0.01f);
             }
         }

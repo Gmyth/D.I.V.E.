@@ -22,7 +22,7 @@ public class DialogueDetection : MonoBehaviour
         Debug.Log("Press A to talk");
         if(other.gameObject.name == "Player")
         {
-            other.gameObject.GetComponent<DialoguePlayer>().inDialogueZone = true;
+            //other.gameObject.GetComponent<DialoguePlayer>().inDialogueZone = true;
         }
     }
 
@@ -32,8 +32,8 @@ public class DialogueDetection : MonoBehaviour
         switch (other.gameObject.name)
         {
             case "Player":
-                other.gameObject.GetComponent<DialoguePlayer>().inDialogueZone = false;
-                other.gameObject.GetComponent<DialoguePlayer>().isDialogueOngoing = false;
+                //other.gameObject.GetComponent<DialoguePlayer>().inDialogueZone = false;
+                //other.gameObject.GetComponent<DialoguePlayer>().isDialogueOngoing = false;
                 GUIManager.Singleton.Close("DialogueUI");
                 break;
             default:

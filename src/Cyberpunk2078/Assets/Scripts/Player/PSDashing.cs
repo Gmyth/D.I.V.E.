@@ -46,9 +46,9 @@ public class PSDashing : PlayerState
             return indexPSMoving;
         }
 
-        if (Input.GetButtonDown("Jump") && Player.CurrentPlayer.SecondJumpReady)
+        if (Input.GetButtonDown("Jump") && Player.CurrentPlayer.secondJumpReady)
         {
-            Player.CurrentPlayer.SecondJumpReady = false;
+            Player.CurrentPlayer.secondJumpReady = false;
             return indexPSJumping2;
         }
 
@@ -153,6 +153,10 @@ public class PSDashing : PlayerState
         
         // Strong Drag during dashing
         rb2d.drag *= inDashingDragFactor;
+
+        if (Player.CurrentPlayer.Energy <= 0) {
+            Player.CurrentPlayer.haveEnemyBuff = false;
+        }
     }
 
 

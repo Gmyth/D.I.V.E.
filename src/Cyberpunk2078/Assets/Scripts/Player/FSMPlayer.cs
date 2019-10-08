@@ -15,7 +15,6 @@ public abstract class PlayerState : State
     protected bool flip;
     protected bool grounded;
 
-
     public virtual void Initialize(int index, PlayerCharacter playerCharacter)
     {
         Index = index;
@@ -33,22 +32,23 @@ public abstract class PlayerState : State
     //Player Ground check
     public bool isGrounded()
     {
-        RaycastHit2D hitM = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,-0.2f,0f),-playerCharacter.transform.up,1f);
-        RaycastHit2D hitL = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.085f,-0.2f,0f),-playerCharacter.transform.up,1f);
-        RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.085f,-0.2f,0f),-playerCharacter.transform.up,1f);
+        RaycastHit2D hitM = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,-0.25f,0f),-playerCharacter.transform.up,1f);
+        RaycastHit2D hitL = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.12f,-0.25f,0f),-playerCharacter.transform.up,1f);
+        RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.12f,-0.25f,0f),-playerCharacter.transform.up,1f);
         if (hitM.collider != null && hitM.transform.CompareTag("Ground") || hitR.collider != null && hitR.transform.CompareTag("Ground") || hitL.collider != null && hitL.transform.CompareTag("Ground"))
         {
             
-            Player.CurrentPlayer.SecondJumpReady = true;
+            Player.CurrentPlayer.secondJumpReady = true;
             grounded = true;
             return true;
         }else if(hitM.collider != null && hitM.transform.CompareTag("Platform") || hitR.collider != null && hitR.transform.CompareTag("Platform") || hitL.collider != null && hitL.transform.CompareTag("Platform"))
         {
             
-            Player.CurrentPlayer.SecondJumpReady = true;
+            Player.CurrentPlayer.secondJumpReady = true;
             grounded = true;
             return true;
         }
+        Player.CurrentPlayer.jumpForceGate = false;
         grounded = false;
         return false;
     }
@@ -158,7 +158,8 @@ public abstract class PlayerState : State
         {
             // does not has input
             // reduce speed, friction
-            if (grounded) rb2d.AddForce(new Vector2(-rb2d.velocity.x * 4, 0f));
+            //if (grounded) rb2d.AddForce(new Vector2(-rb2d.velocity.x * 4, 0f));
+            if (grounded) rb2d.velocity = new Vector2(0f, rb2d.velocity.y);
         }
     }
 }

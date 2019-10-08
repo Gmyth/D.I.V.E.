@@ -56,7 +56,7 @@ public class PlatformEffector : MonoBehaviour
 
         }
 
-        if (Input.GetKey(KeyCode.Space) || Input.GetAxis("Dashing") > 0)
+        if (Input.GetKey(KeyCode.Space) || Input.GetButtonDown("Dashing"))
         {
             if (platformType == PlatformType.WalkThrough)
                 effector.rotationalOffset = 0;

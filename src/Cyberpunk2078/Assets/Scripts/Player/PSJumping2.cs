@@ -20,6 +20,7 @@ public class PSJumping2 : PlayerState
 
     public override int Update()
     {
+        playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
         float Vy = playerCharacter.GetComponent<Rigidbody2D>().velocity.y;
         float h = Input.GetAxis("Horizontal");
         //Still support Horizontal update during jumping, delete following to kill Horizzontal input
@@ -57,7 +58,7 @@ public class PSJumping2 : PlayerState
             return index_PSWallJumping;
         }
         
-        if (Input.GetAxis("Dashing") != 0)
+        if (Input.GetButtonDown("Dashing"))
             return index_PSDashing;
         return Index;
     }

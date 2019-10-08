@@ -19,6 +19,8 @@ public class PSMoving : PlayerState
         NormalizeSlope();
         // Energy Recover
         Player.CurrentPlayer.EnergyRecover(Time.time);
+        var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
+        float Vy = rb2d.velocity.y;
 
         if (Input.GetAxis("Attack1") > 0)
         {
@@ -26,7 +28,7 @@ public class PSMoving : PlayerState
         }
             
         
-        if (Input.GetAxis("Dashing") != 0)
+        if (Input.GetButtonDown("Dashing"))
             return indexPSDashing;
 
         if (Input.GetAxis("Vertical") > 0  &&  isCloseTo("Ladder")!= Direction.None)
@@ -46,6 +48,10 @@ public class PSMoving : PlayerState
         playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
         Move(x);
 
+        if (!isGrounded() && Vy < 0)
+        {
+            return indexPSAirborne;
+        }
 
         if (Input.GetButtonDown("Jump"))
             return indexPSJumping1;
@@ -59,6 +65,11 @@ public class PSMoving : PlayerState
     {
         Move(Input.GetAxis("Horizontal"));
         anim.Play("MainCharacter_Run", -1, 0f);
+
+        if (Player.CurrentPlayer.haveEnemyBuff)
+            Player.CurrentPlayer.ApplyEnergyChange(100);
+        else if (Player.CurrentPlayer.Energy < 100)
+            Player.CurrentPlayer.ApplyEnergyChange(100);
     }
 
 
