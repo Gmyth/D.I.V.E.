@@ -47,7 +47,7 @@ public class Drone : Enemy, IPatroller
             {
                 Debug.Log(LogUtility.MakeLogStringFormat("Enemy", "Take {0} damage.", rawDamage));
                 Health = Mathf.Max(Mathf.Min(Health - rawDamage, HealthCap), 0); ;
-                if (Health == 0)
+                if (Health <= 0)
                 {
                     // dead
                     Dead();
@@ -59,7 +59,7 @@ public class Drone : Enemy, IPatroller
             // new attack coming
             Debug.Log(LogUtility.MakeLogStringFormat("Enemy", "Take {0} damage.", rawDamage));
             Health = Mathf.Max(Mathf.Min(Health - rawDamage, HealthCap), 0); ;
-            if (Health == 0)
+            if (Health <= 0)
             {
                 // dead
                 Dead();
@@ -83,6 +83,15 @@ public class Drone : Enemy, IPatroller
         EnemyData enemyData = DataTableManager.singleton.GetEnemyData(typeID);
         Player.CurrentPlayer.AddOverLoadEnergy(enemyData.Attributes[AttributeType.Osp_c0]);
 
+        
+        for(int i = 0; i < 5; i++){
+            var obj = ObjectRecycler.Singleton.GetObject<SoulBall>(5);
+            obj.transform.position = transform.position;
+            obj.Active();
+            obj.gameObject.SetActive(true);
+        }
+        
+        
         //gameObject.GetComponent<SpriteRenderer>().color = Color.clear;
         gameObject.SetActive(false);
         //Destroy(gameObject, 0.5f);
