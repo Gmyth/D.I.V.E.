@@ -262,12 +262,19 @@ public class CameraManager : MonoBehaviour {
             
             
 			case CameraState.Follow:
+				var indicator = findClosestIndicator();
 				Vector2 FollowPos = (Vector2)mainTarget.transform.position + followOffset;
-
+				
+				if(indicator && indicator.bounds)
+				{
+					FollowPos.x = Mathf.Min(Mathf.Max(FollowPos.x,indicator.minCameraPos.x),indicator.maxCameraPos.x);
+					FollowPos.y = Mathf.Min(Mathf.Max(FollowPos.y,indicator.minCameraPos.y),indicator.maxCameraPos.y);
+				}
+				
 				posX = Mathf.SmoothDamp(transform.position.x,FollowPos.x, ref velocity.x, 
-					0.1f);
+					0.2f);
 				posY = Mathf.SmoothDamp(transform.position.y,FollowPos.y, ref velocity.y, 
-					0.1f);
+					0.2f);
 				transform.position = new Vector3(posX + offsetX + shakeX, posY + offsetY + shakeY, transform.position.z);
 				break;
 

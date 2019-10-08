@@ -17,8 +17,7 @@ public class PSMoving : PlayerState
     public override int Update()
     {
         NormalizeSlope();
-        // Energy Recover
-        Player.CurrentPlayer.EnergyRecover(Time.time);
+
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
 
@@ -65,11 +64,6 @@ public class PSMoving : PlayerState
     {
         Move(Input.GetAxis("Horizontal"));
         anim.Play("MainCharacter_Run", -1, 0f);
-
-        if (Player.CurrentPlayer.haveEnemyBuff)
-            Player.CurrentPlayer.ApplyEnergyChange(100);
-        else if (Player.CurrentPlayer.Energy < 100)
-            Player.CurrentPlayer.ApplyEnergyChange(100);
     }
 
 

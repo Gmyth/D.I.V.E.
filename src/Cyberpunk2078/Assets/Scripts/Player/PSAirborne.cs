@@ -16,8 +16,7 @@ public class PSAirborne : PlayerState
 
     public override int Update()
     {
-        // Energy Recover
-        Player.CurrentPlayer.EnergyRecover(Time.time);
+
         float h = Input.GetAxis("Horizontal");
         PhysicsInputHelper(h);
         
