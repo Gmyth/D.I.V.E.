@@ -9,6 +9,7 @@ public enum CameraState
 	Idle = 0, // the normal state of camera, in this state, camera will automatically adjust the position and scope for 4 players
 	Focusing,// focus at a point.
     Release,
+    Follow,
     Reset
 }
 
@@ -79,7 +80,8 @@ public class CameraManager : MonoBehaviour {
 	private float targetZoomSize;
 	private float smoothTimeQZ;
 
-	
+	//Follow related
+	private Vector2 followOffset;
 	
 	// The helper function return value
 	private Vector2 currentSmallestTolerancePos; // position of smallest TolerancePos that allow character to move without Camera Correction
@@ -143,7 +145,7 @@ public class CameraManager : MonoBehaviour {
 		{
 			case CameraState.Idle:
 				//Apply indicator config if indicator exists
-				var targetIndicator = findCloestIndicator();
+				var targetIndicator = findClosestIndicator();
 				float oX = targetIndicator && targetIndicator.changeOffset ? targetIndicator.offsetX : offsetX;
 				float oY = targetIndicator && targetIndicator.changeOffset ? targetIndicator.offsetY : offsetY;
 				
@@ -181,9 +183,9 @@ public class CameraManager : MonoBehaviour {
 				//velocity = Vector2.zero;
 
 				posX = Mathf.SmoothDamp(transform.position.x,targetPos.x, ref velocity.x, 
-					targetIndicator && targetIndicator.changeMoveSpeed ? targetIndicator.smoothTimeY : smoothTimeY);
-				posY = Mathf.SmoothDamp(transform.position.y,targetPos.y, ref velocity.y, 
 					targetIndicator && targetIndicator.changeMoveSpeed ? targetIndicator.smoothTimeX : smoothTimeX);
+				posY = Mathf.SmoothDamp(transform.position.y,targetPos.y, ref velocity.y, 
+					targetIndicator && targetIndicator.changeMoveSpeed ? targetIndicator.smoothTimeY : smoothTimeY);
 				
 
 				transform.position = new Vector3(posX + shakeX, posY + shakeY, transform.position.z);
@@ -257,6 +259,24 @@ public class CameraManager : MonoBehaviour {
             
             case CameraState.Release:
                 break;
+            
+            
+			case CameraState.Follow:
+				var indicator = findClosestIndicator();
+				Vector2 FollowPos = (Vector2)mainTarget.transform.position + followOffset;
+				
+				if(indicator && indicator.bounds)
+				{
+					FollowPos.x = Mathf.Min(Mathf.Max(FollowPos.x,indicator.minCameraPos.x),indicator.maxCameraPos.x);
+					FollowPos.y = Mathf.Min(Mathf.Max(FollowPos.y,indicator.minCameraPos.y),indicator.maxCameraPos.y);
+				}
+				
+				posX = Mathf.SmoothDamp(transform.position.x,FollowPos.x, ref velocity.x, 
+					0.2f);
+				posY = Mathf.SmoothDamp(transform.position.y,FollowPos.y, ref velocity.y, 
+					0.2f);
+				transform.position = new Vector3(posX + offsetX + shakeX, posY + offsetY + shakeY, transform.position.z);
+				break;
 
             
         }
@@ -351,6 +371,28 @@ public class CameraManager : MonoBehaviour {
 	    yield return null;
     }
 
+    public void Follow(float duration = -1)
+    {
+	    if (currentState!=CameraState.Follow)
+	    {
+		    var previous = currentState;
+		    currentState = CameraState.Follow;
+		    followOffset = transform.position - mainTarget.transform.position;
+		    if(duration > 0)StartCoroutine(followRelease(previous,duration));
+	    }
+	    else
+	    {
+		    // already followed
+	    }
+    }
+
+    IEnumerator followRelease(CameraState previous, float duration)
+    {
+	    float start = Time.time;
+	    yield return  new WaitForSeconds(duration);
+	    currentState = previous;
+	    yield return null;
+    }
 
     public void Shaking(float strength,float duration)
 	{
@@ -421,7 +463,7 @@ public class CameraManager : MonoBehaviour {
 	}
 
 
-	private CameraIndicator findCloestIndicator()
+	private CameraIndicator findClosestIndicator()
 	{
 		//function for locating closet indicator in range
 		if (indicatorList.Count == 0) return null;

@@ -87,13 +87,6 @@ public class PSAttackGH: PlayerState
 
     public override void OnStateEnter(State previousState)
     {
-        if (!Player.CurrentPlayer.ApplyEnergyChange(EnergyConsume))
-        {
-            // Energy is not enough, Cancel dash
-            t0 += 100 + Time.time ;
-            return;
-        }
-        
         playerCharacter.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         playerCharacter.GetComponent<GhostSprites>().Occupied = true;
         

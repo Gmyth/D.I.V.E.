@@ -31,8 +31,6 @@ public class PSJumping1 : PlayerState
         float h = Input.GetAxis("Horizontal");
         flip = h < 0;
         
-        // Energy Recover
-        Player.CurrentPlayer.EnergyRecover(Time.time);
 
         //Still support Horizontal update during jumping, delete following to kill Horizontal input
          PhysicsInputHelper(h,speedFactor,accelerationFactor);

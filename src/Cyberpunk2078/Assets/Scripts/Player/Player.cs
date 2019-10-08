@@ -28,9 +28,8 @@ public class Player
     
     public float Health { get; private set; }
     
-    public float Energy { get; private set; }
-
-    public bool haveEnemyBuff = false;
+    public float normalEnergy { get; private set; }
+    public float overloadEnergy { get; private set; }
 
     public float this[AttributeType type]
     {
@@ -45,53 +44,89 @@ public class Player
     private float lastSecondEnergyRecover;
 
 
-    private Player(int healthCap = 3, float energyCap = 200f , float energyRecoverRate = 0)
+    private Player(int healthCap = 3, float normalEnergyCap = 1 ,float overloadEnergyCap = 1, float energyRecoverRate = 0)
     {
         inventory = new Inventory();
 
         
         attributes = new AttributeSet();
         attributes.Set(AttributeType.MaxHp_c0, healthCap);
-        attributes.Set(AttributeType.MaxSp_c0, energyCap);
+        attributes.Set(AttributeType.MaxSp_c0, normalEnergyCap);
+        attributes.Set(AttributeType.MaxOsp_c0, overloadEnergyCap);
+        
         attributes.Set(AttributeType.SpRecovery_c0, energyRecoverRate);
 
 
         secondJumpReady = true;
         Health = healthCap;
-        Energy = energyCap;
+        normalEnergy = normalEnergyCap;
+        overloadEnergy = 0;
         lastSecondEnergyRecover = 0;
     }
 
 
-    public bool ApplyEnergyChange(float amount)
+    public bool CostEnergy(float amount)
     {
-        GameObject Energy1 = GameObject.Find("Energy1");
-        GameObject Energy2 = GameObject.Find("Energy2");
-        if (Energy + amount < 0)
+        if (amount < 0)
+        {
             return false;
-
-        float maxSp = this[AttributeType.MaxSp_c0];
-
-        Energy = Mathf.Max(Mathf.Min(amount + Energy, maxSp), 0);
-        Energy1.GetComponent<Slider>().value = Mathf.Max(Mathf.Min(Energy, maxSp / 2), 0) / (maxSp / 2);
-        Energy2.GetComponent<Slider>().value = Mathf.Max((Energy-maxSp / 2), 0) / (maxSp / 2);
-
-
+        }
+        
+        float maxNormalSp = this[AttributeType.MaxSp_c0];
+        
+        //TODO: use overload energy attribute for the MaxEnergy
+        float maxOverloadSp = this[AttributeType.MaxSp_c0];
+        if (normalEnergy - amount < 0)
+        {
+            if (overloadEnergy - amount >= 0)
+            {
+                // use overload Energy
+                overloadEnergy = Mathf.Max(Mathf.Min( overloadEnergy - amount, maxOverloadSp), 0);
+                UIUpdate();
+                return true;
+            }
+            return false;
+        }
+        
+        normalEnergy = Mathf.Max(Mathf.Min( normalEnergy - amount, maxNormalSp), 0);
+        UIUpdate();
         return true;
     }
+    
+    public bool AddNormalEnergy(float amount)
+    {
+        float maxSp = this[AttributeType.MaxSp_c0];
+        
+        normalEnergy = Mathf.Max(Mathf.Min(amount + normalEnergy, maxSp), 0);
+        UIUpdate();
+        return true;
+    }
+    
+    public bool AddOverLoadEnergy(float amount)
+    {
+        
+        //TODO: use attribute for the MaxEnergy
+        float maxSp = this[AttributeType.MaxOsp_c0];
+        
+        overloadEnergy = Mathf.Max(Mathf.Min(amount + overloadEnergy, maxSp), 0);
+        UIUpdate();
+        return true;
+    }
+    
     
     public void EnergyRecover(float time, float energyCustom = -1)
     {
         if (time - lastSecondEnergyRecover > 0.2f)
         {
             if (energyCustom < 0) {
-                ApplyEnergyChange(this[AttributeType.SpRecovery_c0]);
+                AddNormalEnergy(this[AttributeType.SpRecovery_c0]);
             }else{
-                ApplyEnergyChange(energyCustom);
+                AddNormalEnergy(energyCustom);
             }
             
             lastSecondEnergyRecover = time;
         }
+        UIUpdate();
     }
     
     public bool ApplyHealthChange(float amount)
@@ -130,14 +165,52 @@ public class Player
             RestoreHealth();
             CheckPointManager.Instance.RestoreCheckPoint();
         }
-
         return true;
     }
     private void RestoreHealth()
     {
         Health = 3;
-        Energy = 200;
+        normalEnergy = 1;
         ApplyHealthChange(0);
-        ApplyEnergyChange(0);
+        UIUpdate();
+        //ApplyEnergyChange(0);
+    }
+
+    private void UIUpdate()
+    {
+        
+        // temp UI related
+        GameObject Energy1 = GameObject.Find("Energy1");
+        GameObject Energy2 = GameObject.Find("Energy2");
+        if (normalEnergy == 0 && overloadEnergy > 0)
+        {
+            // first energy bar red
+            Energy1.GetComponent<Slider>().value = 1;
+            Energy1.GetComponentInChildren<Image>().color = Color.red;
+            
+            Energy2.GetComponent<Slider>().value = 0;
+            Energy2.GetComponentInChildren<Image>().color = Color.red;
+        }else if (normalEnergy > 0)
+        {
+            Energy1.GetComponent<Slider>().value = 1;
+            Energy1.GetComponentInChildren<Image>().color = Color.blue;
+            
+            if (overloadEnergy > 0)
+            {
+                Energy2.GetComponent<Slider>().value = 1;
+                Energy2.GetComponentInChildren<Image>().color = Color.red;
+            }
+            else
+            {
+                Energy2.GetComponent<Slider>().value = 0;
+            }
+        }
+        else
+        {
+            Energy1.GetComponent<Slider>().value = 0;
+            Energy2.GetComponent<Slider>().value = 0;
+        }
+
+
     }
 }
