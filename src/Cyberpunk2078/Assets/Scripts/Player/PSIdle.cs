@@ -59,6 +59,8 @@ public class PSIdle : PlayerState
     {
         energyRecoverTime = Time.time + energyRecoverDelaySec;
 
+        if(grounded)Player.CurrentPlayer.AddNormalEnergy(1);
+        
         anim.Play("MainCharacter_Idle", -1, 0f);
         Rigidbody2D rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         rb2d.velocity = new Vector2(0,rb2d.velocity.y);

@@ -52,7 +52,7 @@ public class Player
         attributes = new AttributeSet();
         attributes.Set(AttributeType.MaxHp_c0, healthCap);
         attributes.Set(AttributeType.MaxSp_c0, normalEnergyCap);
-        //TODO: add attributes for overload energy
+        attributes.Set(AttributeType.MaxOsp_c0, overloadEnergyCap);
         
         attributes.Set(AttributeType.SpRecovery_c0, energyRecoverRate);
 
@@ -71,34 +71,26 @@ public class Player
         {
             return false;
         }
-
-        // temp UI related
-        GameObject Energy1 = GameObject.Find("Energy1");
-        GameObject Energy2 = GameObject.Find("Energy2");
         
         float maxNormalSp = this[AttributeType.MaxSp_c0];
         
         //TODO: use overload energy attribute for the MaxEnergy
         float maxOverloadSp = this[AttributeType.MaxSp_c0];
-        if (normalEnergy + amount < 0)
+        if (normalEnergy - amount < 0)
         {
-            if (overloadEnergy + amount > 0)
+            if (overloadEnergy - amount >= 0)
             {
                 // use overload Energy
-                overloadEnergy = Mathf.Max(Mathf.Min(amount + overloadEnergy, maxOverloadSp), 0);
+                overloadEnergy = Mathf.Max(Mathf.Min( overloadEnergy - amount, maxOverloadSp), 0);
+                UIUpdate();
                 return true;
             }
             return false;
         }
-        normalEnergy = Mathf.Max(Mathf.Min(amount + normalEnergy, maxNormalSp), 0);
+        
+        normalEnergy = Mathf.Max(Mathf.Min( normalEnergy - amount, maxNormalSp), 0);
+        UIUpdate();
         return true;
-
-        
-
-        
-        
-//        Energy1.GetComponent<Slider>().value = Mathf.Max(Mathf.Min(normalEnergy, maxSp / 2), 0) / (maxSp / 2);
-//        Energy2.GetComponent<Slider>().value = Mathf.Max((normalEnergy-maxSp / 2), 0) / (maxSp / 2);
     }
     
     public bool AddNormalEnergy(float amount)
@@ -106,7 +98,7 @@ public class Player
         float maxSp = this[AttributeType.MaxSp_c0];
         
         normalEnergy = Mathf.Max(Mathf.Min(amount + normalEnergy, maxSp), 0);
-        
+        UIUpdate();
         return true;
     }
     
@@ -114,10 +106,10 @@ public class Player
     {
         
         //TODO: use attribute for the MaxEnergy
-        float maxSp = this[AttributeType.MaxSp_c0];
+        float maxSp = this[AttributeType.MaxOsp_c0];
         
         overloadEnergy = Mathf.Max(Mathf.Min(amount + overloadEnergy, maxSp), 0);
-        
+        UIUpdate();
         return true;
     }
     
@@ -134,6 +126,7 @@ public class Player
             
             lastSecondEnergyRecover = time;
         }
+        UIUpdate();
     }
     
     public bool ApplyHealthChange(float amount)
@@ -170,7 +163,6 @@ public class Player
             RestoreHealth();
             CheckPointManager.Instance.RestoreCheckPoint();
         }
-
         return true;
     }
 
@@ -179,11 +171,45 @@ public class Player
         Health = 3;
         normalEnergy = 1;
         ApplyHealthChange(0);
-       //ApplyEnergyChange(0);
+        UIUpdate();
+        //ApplyEnergyChange(0);
     }
 
     private void UIUpdate()
     {
         
+        // temp UI related
+        GameObject Energy1 = GameObject.Find("Energy1");
+        GameObject Energy2 = GameObject.Find("Energy2");
+        if (normalEnergy == 0 && overloadEnergy > 0)
+        {
+            // first energy bar red
+            Energy1.GetComponent<Slider>().value = 1;
+            Energy1.GetComponentInChildren<Image>().color = Color.red;
+            
+            Energy2.GetComponent<Slider>().value = 0;
+            Energy2.GetComponentInChildren<Image>().color = Color.red;
+        }else if (normalEnergy > 0)
+        {
+            Energy1.GetComponent<Slider>().value = 1;
+            Energy1.GetComponentInChildren<Image>().color = Color.blue;
+            
+            if (overloadEnergy > 0)
+            {
+                Energy2.GetComponent<Slider>().value = 1;
+                Energy2.GetComponentInChildren<Image>().color = Color.red;
+            }
+            else
+            {
+                Energy2.GetComponent<Slider>().value = 0;
+            }
+        }
+        else
+        {
+            Energy1.GetComponent<Slider>().value = 0;
+            Energy2.GetComponent<Slider>().value = 0;
+        }
+
+
     }
 }
