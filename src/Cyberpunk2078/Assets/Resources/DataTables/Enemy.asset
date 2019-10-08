@@ -22,7 +22,7 @@ MonoBehaviour:
       - type: 2560
         value: 10
       - type: 61712
-        value: 10
+        value: 5
   - id: 1
     name: Drone
     attributes:
