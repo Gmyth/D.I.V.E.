@@ -61,12 +61,15 @@ public class Bullet : Recyclable
 
         }
         
-        else if (other.tag == "PlayerAttack")
-        {
+        else if (other.tag == "PlayerAttack"){
             if (other.name != "DashAtkBox")
             {
+                GetComponent<LinearMovement>().initialPosition = transform.position;
+                GetComponent<LinearMovement>().orientation = (Quaternion.Euler(0, 0,  Random.Range(-30, 30)) * (GetComponent<LinearMovement>().orientation * -1)).normalized;
+                GetComponent<LinearMovement>().spawnTime = Time.time;
+
+                transform.right = GetComponent<LinearMovement>().orientation;
                 
-                gameObject.GetComponent<LinearMovement>().orientation *= -1;
                 isFriendly = true;
                 
                 CameraManager.Instance.Shaking(0.10f,0.05f);
@@ -82,8 +85,16 @@ public class Bullet : Recyclable
                 TimeManager.Instance.startSlowMotion(0.3f); 
             }
 
-        }else if (other.tag == "Ground")
-        {
+        }
+        
+        if (other.tag == "Ground"){
+            
+            var Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
+            Hit.gameObject.SetActive(true);
+            Hit.transform.right = transform.right;
+            Hit.transform.position = transform.position;
+            Hit.transform.localScale = Vector3.one;
+            
             Die();
         }
 
