@@ -52,6 +52,14 @@ public class ObjectRecycler : MonoBehaviour
             Destroy(recyclable.gameObject);
     }
 
+    public void RecycleAll()
+    {
+        foreach (Recyclable recyclable in FindObjectsOfType<Recyclable>())
+        {
+            recyclable.gameObject.SetActive(false);
+            Recycle(recyclable);
+        }
+    }
 
     private void Awake()
     {

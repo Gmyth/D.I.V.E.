@@ -126,6 +126,7 @@ public class Player
         if (Health <= 0)
         {
             //DisableInput
+            ObjectRecycler.Singleton.RecycleAll();
             PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 9;
             RestoreHealth();
             CheckPointManager.Instance.RestoreCheckPoint();

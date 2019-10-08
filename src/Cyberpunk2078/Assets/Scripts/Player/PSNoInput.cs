@@ -27,7 +27,7 @@ public class PSNoInput : PlayerState
     public override void OnStateEnter(State previousState)
     {
         anim.Play("MainCharacter_Idle", -1, 0f);
-        //KillSpeed();
+        KillSpeed();
         playerCharacter.gameObject.GetComponent<Rigidbody2D>().gravityScale = 3;
     }
 
@@ -42,7 +42,7 @@ public class PSNoInput : PlayerState
     {
         Rigidbody2D rb2d = playerCharacter.gameObject.GetComponent<Rigidbody2D>();
         rb2d.velocity = Vector2.zero;
-        rb2d.simulated = false;
+        //rb2d.simulated = false;
     }
 
 }
