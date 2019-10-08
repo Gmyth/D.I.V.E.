@@ -26,8 +26,6 @@ public class PSJumping2 : PlayerState
         //Still support Horizontal update during jumping, delete following to kill Horizzontal input
         PhysicsInputHelper(h,speed_factor,acceleration_factor);
         
-        // Energy Recover
-        Player.CurrentPlayer.EnergyRecover(Time.time);
         
         if (!isGrounded()&& Vy < 0)
         {

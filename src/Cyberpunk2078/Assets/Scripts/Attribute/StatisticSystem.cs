@@ -14,12 +14,17 @@ public enum AttributeType : int
     MaxSp_c0 = 0x400,
 
     SpRecovery_c0 = 0x500,
+    
+    MaxOsp_c0 = 0x600,
+    
+    OspRecovery_c0 = 0x700,
 
     SightRange_c0 = 0xA00,
     
     Damage_c0 = 0x1000,
     
-    Sp_c0 = 0xF110
+    Sp_c0 = 0xF110,
+    Osp_c0 = 0xF210,
 }
 
 
@@ -30,12 +35,15 @@ public enum StatisticType : int
     MaxHp = 0x3,
     MaxSp = 0x4,
     SpRecovery_c0 = 0x5,
+    MaxOsp = 0x6,
+    OspRecovery = 0x7,
     SightRange = 0xA,
 
     Damage = 0x10,
 
     Hp = 0xF0,
     Sp = 0xF1,
+    Osp = 0xF2,
 }
 
 

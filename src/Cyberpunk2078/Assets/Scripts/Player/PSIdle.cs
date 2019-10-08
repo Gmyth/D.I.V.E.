@@ -58,11 +58,9 @@ public class PSIdle : PlayerState
     public override void OnStateEnter(State previousState)
     {
         energyRecoverTime = Time.time + energyRecoverDelaySec;
-        if (Player.CurrentPlayer.haveEnemyBuff)
-            Player.CurrentPlayer.ApplyEnergyChange(100);
-        else if (Player.CurrentPlayer.Energy < 100)
-            Player.CurrentPlayer.ApplyEnergyChange(100);
 
+        if(grounded)Player.CurrentPlayer.AddNormalEnergy(1);
+        
         anim.Play("MainCharacter_Idle", -1, 0f);
         Rigidbody2D rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         rb2d.velocity = new Vector2(0,rb2d.velocity.y);

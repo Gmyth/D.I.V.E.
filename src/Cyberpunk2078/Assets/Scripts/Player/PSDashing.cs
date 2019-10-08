@@ -121,7 +121,7 @@ public class PSDashing : PlayerState
 
     public override void OnStateEnter(State previousState)
     {
-        if (!Player.CurrentPlayer.ApplyEnergyChange(EnergyConsume))
+        if (!Player.CurrentPlayer.CostEnergy(EnergyConsume))
         {
             // Energy is not enough, Cancel dash
             Apply = false;
@@ -153,10 +153,7 @@ public class PSDashing : PlayerState
         
         // Strong Drag during dashing
         rb2d.drag *= inDashingDragFactor;
-
-        if (Player.CurrentPlayer.Energy <= 0) {
-            Player.CurrentPlayer.haveEnemyBuff = false;
-        }
+        
     }
 
 
