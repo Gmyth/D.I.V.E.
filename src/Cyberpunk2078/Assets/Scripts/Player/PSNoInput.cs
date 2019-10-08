@@ -9,16 +9,16 @@ public class PSNoInput : PlayerState
 
     public override int Update()
     {
-        if (isGrounded())
-        {
-            KillSpeed();
-            Rigidbody2D rb2d = playerCharacter.gameObject.GetComponent<Rigidbody2D>();
-            if (isGrounded() && !playerCharacter.gameObject.GetComponent<DialoguePlayer>().CurrentTimelineManager.isPlayInstantly)
-            {
-                playerCharacter.gameObject.GetComponent<DialoguePlayer>().CurrentTimelineManager.OnTimelineStart();
-                Debug.Log(LogUtility.MakeLogString("PSNoInput", "Timeline Start"));
-            }
-        }
+        //if (isGrounded())
+        //{
+        //    KillSpeed();
+        //    Rigidbody2D rb2d = playerCharacter.gameObject.GetComponent<Rigidbody2D>();
+        //    if (isGrounded() && !playerCharacter.gameObject.GetComponent<DialoguePlayer>().CurrentTimelineManager.isPlayInstantly)
+        //    {
+        //        playerCharacter.gameObject.GetComponent<DialoguePlayer>().CurrentTimelineManager.OnTimelineStart();
+        //        Debug.Log(LogUtility.MakeLogString("PSNoInput", "Timeline Start"));
+        //    }
+        //}
 
         return Index;
     }
@@ -26,6 +26,7 @@ public class PSNoInput : PlayerState
 
     public override void OnStateEnter(State previousState)
     {
+        anim.Play("MainCharacter_Idle", -1, 0f);
         //KillSpeed();
         playerCharacter.gameObject.GetComponent<Rigidbody2D>().gravityScale = 3;
     }
@@ -43,4 +44,5 @@ public class PSNoInput : PlayerState
         rb2d.velocity = Vector2.zero;
         rb2d.simulated = false;
     }
+
 }

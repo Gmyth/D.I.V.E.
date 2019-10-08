@@ -125,13 +125,14 @@ public class Player
 
         if (Health <= 0)
         {
+            //DisableInput
+            PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 9;
             RestoreHealth();
             CheckPointManager.Instance.RestoreCheckPoint();
         }
 
         return true;
     }
-
     private void RestoreHealth()
     {
         Health = 3;
