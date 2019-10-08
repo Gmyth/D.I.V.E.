@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
+
 
 public class CheckPointManager : MonoBehaviour
 {
@@ -16,11 +17,14 @@ public class CheckPointManager : MonoBehaviour
     public List<GameObject> enemy;
     public List<GameObject> enemyPool;
     private GameObject[] dummy;
+
+    public GameObject blackScreen;  
+   
     void Awake()
     {
         Instance = this;
         enemy = new List<GameObject>();
-        enemyPool = new List<GameObject>();
+        enemyPool = new List<GameObject>();       
     }
 
     // Start is called before the first frame update
@@ -66,7 +70,24 @@ public class CheckPointManager : MonoBehaviour
 
     public void RestoreCheckPoint()
     {
-        Debug.Log("WAD");
+        StartCoroutine("BlackScreen");
+    }
+
+    IEnumerator BlackScreen()
+    {
+        Debug.Log("enter blacks");
+        Image image = blackScreen.GetComponent<Image>();
+
+
+        float a = 0;
+
+        while (a < 1)
+        {
+            a += Time.deltaTime;
+            image.color = new Color(0, 0, 0, a);
+            yield return null;
+        }
+
         var player = PlayerCharacter.Singleton.gameObject;
         player.transform.position = playerLastCheckPoint.position;
 
@@ -80,8 +101,16 @@ public class CheckPointManager : MonoBehaviour
             var lastPos = enemy[i].GetComponent<Enemy>().lastCheckPointTransform;
             enemy[i].transform.position = lastPos;
         }
-    }
 
+        while (a > 0)
+        {
+            a -= Time.deltaTime;
+            image.color = new Color(0, 0, 0, a);
+            yield return null;
+        }
+        PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 0;
+        yield return null;
+    }
     public void EnterResetPool(GameObject obj)
     {
         Debug.Log("Eneter POol");
