@@ -28,7 +28,7 @@ public class PlayerCharacter : Dummy
         statistic = new StatisticSystem(player.attributes, player.inventory);
     }
 
-
+ 
     public void Knockback(Vector3 origin, float force)
     {
         Vector3 direction = transform.position - origin;
@@ -47,6 +47,7 @@ public class PlayerCharacter : Dummy
         Player.CurrentPlayer.ApplyHealthChange(-rawDamage);
         return rawDamage;
     }
+    
 
     public override void Dead()
     {

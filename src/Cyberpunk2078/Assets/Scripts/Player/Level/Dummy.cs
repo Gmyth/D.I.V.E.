@@ -80,6 +80,7 @@ public abstract class Enemy : Dummy
     [HideInInspector] public PlayerCharacter currentTarget;
     [HideInInspector] public Hit currentHit;
 
+    public Vector3 lastCheckPointTransform;
 
     public float this[StatisticType type]
     {

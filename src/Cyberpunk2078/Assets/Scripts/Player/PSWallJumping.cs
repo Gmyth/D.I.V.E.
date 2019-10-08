@@ -10,11 +10,12 @@ public class PSWallJumping: PlayerState
     [SerializeField] private float wallCheckCoolDown = 0.25f;
     [SerializeField] private int index_PSIdle;
     [SerializeField] private int index_PSMoving;
+    [SerializeField] private int index_PSJumping1;
     [SerializeField] private int index_PSJumping2;
     [SerializeField] private int index_PSDashing;
-    [SerializeField] private int indexPSAttackGH;
-    [SerializeField] private int indexPSAirborne;
-    [SerializeField] private int indexPSClimb;
+    [SerializeField] private int index_PSAttackGH;
+    [SerializeField] private int index_PSAirborne;
+    [SerializeField] private int index_PSClimb;
     private bool isJumpKeyDown = false;
 
     private bool onWall = false;
@@ -25,20 +26,18 @@ public class PSWallJumping: PlayerState
     {
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         
-        // Energy Recover
-        Player.CurrentPlayer.EnergyRecover(Time.time);
+
         
-        if (onWall && Time.unscaledTime > lastStickTime + stickWallTime)
+        if (onWall && Time.time > lastStickTime + stickWallTime)
         {
             //stick over, falling start
             rb2d.gravityScale = 3;
-            onWall = false;
         }
 
         float Vy = rb2d.velocity.y;
         float h = Input.GetAxis("Horizontal");
         
-        if (isGrounded() && Vy < 0)
+        if (isGrounded() && Vy <= 0)
         {
             // Landed
             if (h == 0)
@@ -49,9 +48,8 @@ public class PSWallJumping: PlayerState
         
         if (Input.GetAxis("Attack1") > 0)
         {
-            return indexPSAttackGH;
+            return index_PSAttackGH;
         }
-
 
         if (onWall)
         {
@@ -60,77 +58,81 @@ public class PSWallJumping: PlayerState
             {
                 onWall = false;
                 lastOnWallTime = Time.unscaledTime;
-                rb2d.gravityScale = 3;
                 //re active jumping
                 if (RightSideTest("Ground"))
                 {
                     flip = true;
-                    rb2d.velocity = new Vector2(-jumpSpeed, 0);
+                    Player.CurrentPlayer.lastWallJumpRight = true;
+                    rb2d.velocity = h <= 0? new Vector2(-jumpSpeed*1.3f, 0):new Vector2(-jumpSpeed * 1.3f, 0);
                 }
                 else
                 {
                     flip = false; 
-                    rb2d.velocity = new Vector2 (jumpSpeed, 0);
+                    Player.CurrentPlayer.lastWallJumpRight = false; 
+                    rb2d.velocity = h >= 0? new Vector2(jumpSpeed*1.3f, 0):new Vector2(jumpSpeed * 1.3f, 0);
                 }
-                sideWallJump();
-            }
-        }
-        
 
-        if (!onWall && isCloseTo("Ground") && Time.unscaledTime > lastOnWallTime + wallCheckCoolDown )
-        {
-            //Not stick yet, ok to perform wall jump again
-            if (Input.GetButtonDown("Jump"))
-            {
-                lastOnWallTime = Time.unscaledTime;
-                rb2d.gravityScale = 3;
-                
-                //Check the wall is on the left or right
-                if (RightSideTest("Ground"))
-                {
-                    //right
-                    flip = true;
-                    rb2d.velocity = new Vector2(-jumpSpeed, 0);
-                }
-                else
-                {
-                    //left
-                    flip = false; 
-                    rb2d.velocity = new Vector2 (jumpSpeed, 0);
-                }
-                
-                // Perform wall jump
-                sideWallJump();
-            }
-            else
-            {
-                OnStateEnter(this);
+                return index_PSJumping1;
             }
         }
-        
-        
-        if (Input.GetAxis("Vertical") > 0 && isCloseTo("Ladder"))
+        var dir = isCloseTo("Ground");
+        if (h == 0)
         {
-            return indexPSClimb;
+            return index_PSAirborne;
         }
+        else if (dir == Direction.Right && h < 0) { return index_PSAirborne; }
+        else if (dir == Direction.Left && h > 0) { return index_PSAirborne; }
+
+        if (dir == Direction.None && !isGrounded())
+        {
+            return index_PSAirborne;
+        }
+
+
+//        if (!onWall && isCloseTo("Ground") && Time.time > lastOnWallTime + wallCheckCoolDown )
+//        {
+//            //Not stick yet, ok to perform wall jump again
+//            if (Input.GetButtonDown("Jump"))
+//            {
+//                lastOnWallTime = Time.unscaledTime;
+//                rb2d.gravityScale = 3;
+//                
+//                //Check the wall is on the left or right
+//                if (RightSideTest("Ground"))
+//                {
+//                    //right
+//                    flip = true;
+//                    rb2d.velocity = new Vector2(-jumpSpeed, 0);
+//                }
+//                else
+//                {
+//                    //left
+//                    flip = false; 
+//                    rb2d.velocity = new Vector2 (jumpSpeed, 0);
+//                }
+//                
+//                // Perform wall jump
+//                sideWallJump();
+//            }
+//            else
+//            {
+//                OnStateEnter(this);
+//            }
+//        }
+        
+        
+        if (Input.GetAxis("Vertical") > 0 && isCloseTo("Ladder") != Direction.None)
+        {
+            return index_PSClimb;
+        }
+        
         // flip sprite for correct facing 
         playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
         
         // perform Dashing
-        if (Input.GetAxis("Dashing") != 0)
+        if (Input.GetButtonDown("Dashing"))
             return index_PSDashing;
-
-        // Player is sill in air,  wall jumping + second jump are not allowed!
-//        if (Vy < jumpForce / 5)
-//        {
-//            // prevent misclicking
-//            if (Input.GetButtonDown("Jump"))
-//                // second_jump
-//                return index_Jumping2;
-//        }
         
-        //isJumpKeyDown = Input.GetButtonDown("Jump");
-
         return Index;
     }
 
@@ -146,7 +148,19 @@ public class PSWallJumping: PlayerState
         anim.Play("MainCharacter_WallJump", -1, 0f);
 
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-        lastStickTime = Time.unscaledTime;
+        
+        rb2d. velocity = Vector2.zero;
+
+        rb2d.gravityScale = 1.8f;
+        
+        lastStickTime = Time.time;
+    }
+
+    public override void OnStateQuit(State nextState)
+    {
+        var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
+        rb2d.gravityScale = 3;
+        onWall = false;
     }
 
     private void sideWallJump()

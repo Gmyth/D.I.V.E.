@@ -13,21 +13,24 @@ public class PSMoving : PlayerState
     [SerializeField] private int indexPSDashing;
     [SerializeField] private int indexPSAirborne;
     [SerializeField] private int indexPSClimb;
+    [SerializeField] private int indexPSWallJumping;
     public override int Update()
     {
         NormalizeSlope();
-        // Energy Recover
-        Player.CurrentPlayer.EnergyRecover(Time.time);
+
+        var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
+        float Vy = rb2d.velocity.y;
 
         if (Input.GetAxis("Attack1") > 0)
         {
             return indexPSAttackGH;
         }
+            
         
-        if (Input.GetAxis("Dashing") != 0)
+        if (Input.GetButtonDown("Dashing"))
             return indexPSDashing;
 
-        if (Input.GetAxis("Vertical") > 0  &&  isCloseTo("Ladder"))
+        if (Input.GetAxis("Vertical") > 0  &&  isCloseTo("Ladder")!= Direction.None)
         {
             // up is pressed
             return indexPSClimb;
@@ -44,6 +47,10 @@ public class PSMoving : PlayerState
         playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
         Move(x);
 
+        if (!isGrounded() && Vy < 0)
+        {
+            return indexPSAirborne;
+        }
 
         if (Input.GetButtonDown("Jump"))
             return indexPSJumping1;
@@ -56,6 +63,7 @@ public class PSMoving : PlayerState
     public override void OnStateEnter(State previousState)
     {
         Move(Input.GetAxis("Horizontal"));
+        if(grounded)Player.CurrentPlayer.AddNormalEnergy(1);
         anim.Play("MainCharacter_Run", -1, 0f);
     }
 
@@ -73,7 +81,7 @@ public class PSMoving : PlayerState
                 Rigidbody2D rb2d = playerCharacter.GetComponent<Rigidbody2D>();
                 // Apply the opposite force against the slope force 
                 // You will need to provide your own slopeFriction to stabalize movement
-                rb2d.velocity = new Vector2(rb2d.velocity.x - (hit.normal.x * 0.7f), rb2d.velocity.y);
+                rb2d.velocity = new Vector2(rb2d.velocity.x - (hit.normal.x * 1.5f), rb2d.velocity.y);
                 //Move Player up or down to compensate for the slope below them
                 Vector3 pos = playerCharacter.transform.position;
                 pos.y += -hit.normal.x * Mathf.Abs(rb2d.velocity.x) * Time.deltaTime * (rb2d.velocity.x - hit.normal.x > 0 ? 1 : -1);

@@ -20,20 +20,19 @@ public class PSJumping2 : PlayerState
 
     public override int Update()
     {
+        playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
         float Vy = playerCharacter.GetComponent<Rigidbody2D>().velocity.y;
         float h = Input.GetAxis("Horizontal");
         //Still support Horizontal update during jumping, delete following to kill Horizzontal input
         PhysicsInputHelper(h,speed_factor,acceleration_factor);
         
-        // Energy Recover
-        Player.CurrentPlayer.EnergyRecover(Time.time);
         
         if (!isGrounded()&& Vy < 0)
         {
             return indexPSAirborne;
         }
         
-        if (Input.GetAxis("Vertical") > 0  && isCloseTo("Ladder") )
+        if (Input.GetAxis("Vertical") > 0  && isCloseTo("Ladder") != Direction.None)
         {
             // up is pressed
             return indexPSClimb;
@@ -52,12 +51,12 @@ public class PSJumping2 : PlayerState
             return indexPSAttackGH;
         }
         
-        if (isCloseTo("Ground"))
+        if (isCloseTo("Ground")!= Direction.None)
         {
             return index_PSWallJumping;
         }
         
-        if (Input.GetAxis("Dashing") != 0)
+        if (Input.GetButtonDown("Dashing"))
             return index_PSDashing;
         return Index;
     }

@@ -46,9 +46,9 @@ public class PSDashing : PlayerState
             return indexPSMoving;
         }
 
-        if (Input.GetButtonDown("Jump") && Player.CurrentPlayer.SecondJumpReady)
+        if (Input.GetButtonDown("Jump") && Player.CurrentPlayer.secondJumpReady)
         {
-            Player.CurrentPlayer.SecondJumpReady = false;
+            Player.CurrentPlayer.secondJumpReady = false;
             return indexPSJumping2;
         }
 
@@ -121,7 +121,7 @@ public class PSDashing : PlayerState
 
     public override void OnStateEnter(State previousState)
     {
-        if (!Player.CurrentPlayer.ApplyEnergyChange(EnergyConsume))
+        if (!Player.CurrentPlayer.CostEnergy(EnergyConsume))
         {
             // Energy is not enough, Cancel dash
             Apply = false;
@@ -153,6 +153,7 @@ public class PSDashing : PlayerState
         
         // Strong Drag during dashing
         rb2d.drag *= inDashingDragFactor;
+        
     }
 
 
@@ -200,7 +201,7 @@ public class PSDashing : PlayerState
         
         //Apply force to character
         playerCharacter.transform.right = direction;
-        rb2d.AddForce(direction * dashForce * 8000f * Time.deltaTime);
+        rb2d.AddForce(direction * dashForce * 200f * 1 / Time.timeScale);
         
         //Camera Tricks
         CameraManager.Instance.Shaking(0.08f,0.15f);

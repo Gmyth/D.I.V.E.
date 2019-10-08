@@ -28,8 +28,12 @@ public class L2Cleaner : Enemy, IPatroller
         Boom.gameObject.SetActive(true);
         Boom.transform.localScale = Vector3.one;
 
+        EnemyData enemyData = DataTableManager.singleton.GetEnemyData(typeID);
+        Player.CurrentPlayer.AddOverLoadEnergy(enemyData.Attributes[AttributeType.Osp_c0]);
+
         gameObject.SetActive(false);
-        Destroy(gameObject);
+        CheckPointManager.Instance.EnterResetPool(gameObject);
+        //Destroy(gameObject);
     }
 
 

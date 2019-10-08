@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: PS_Dashing
   m_EditorClassIdentifier: 
   Name: Dash
-  dashForce: 30
+  dashForce: 15
   dashDelayTime: 0.025
-  dashReleaseTime: 0.2
+  dashReleaseTime: 0.1
   dashReleaseDelayTime: 0.05
   inDashingDragFactor: 6
-  EnergyConsume: -70
+  EnergyConsume: 1
   indexPSIdle: 0
   indexPSMoving: 1
   indexPSJumping2: 0

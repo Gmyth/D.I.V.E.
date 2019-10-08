@@ -142,6 +142,8 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
 
                 bullet.gameObject.SetActive(true);
 
+                bullet.transform.right = bullet.orientation;
+
                 t = Time.time;
             }
         }
