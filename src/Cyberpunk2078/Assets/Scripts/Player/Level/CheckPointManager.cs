@@ -91,7 +91,7 @@ public class CheckPointManager : MonoBehaviour
 
         var player = PlayerCharacter.Singleton.gameObject;
         player.transform.position = playerLastCheckPoint.position;
-
+       
         for (int i = 0; i < enemyPool.Count; i++)
         {
             enemyPool[i].SetActive(true);

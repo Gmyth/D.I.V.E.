@@ -56,7 +56,7 @@ public class PlatformEffector : MonoBehaviour
 
         }
 
-        if (Input.GetKey(KeyCode.Space) || Input.GetButtonDown("Dashing"))
+        if (PlayerCharacter.Singleton.gameObject.GetComponent<Rigidbody2D>().velocity.y > 0 )
         {
             if (platformType == PlatformType.WalkThrough)
                 effector.rotationalOffset = 0;

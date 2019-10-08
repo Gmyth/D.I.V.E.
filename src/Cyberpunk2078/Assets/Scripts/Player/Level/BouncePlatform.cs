@@ -59,7 +59,7 @@ public class BouncePlatform : MonoBehaviour
                 Debug.Log("Direction:"+ gameObject.transform.up);
                 //rb2d.velocity = gameObject.transform.up * jumpForce;
                 rb2d.AddForce(gameObject.transform.up * jumpForce * 50 * 1/Time.timeScale);
-
+                Player.CurrentPlayer.AddNormalEnergy(1);
                 //switch (bounceDiection)
                 //{
                 //    case Direction.Up:
