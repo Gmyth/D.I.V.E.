@@ -56,15 +56,15 @@ public class PlatformEffector : MonoBehaviour
 
         }
 
-        if (PlayerCharacter.Singleton.gameObject.GetComponent<Rigidbody2D>().velocity.y > 0 )
-        {
-            if (platformType == PlatformType.WalkThrough)
-                effector.rotationalOffset = 0;
-            else
-            {
-                effector.rotationalOffset = stairAngle;
-            }
-        }
+        //if (PlayerCharacter.Singleton.gameObject.GetComponent<Rigidbody2D>().velocity.y > 0 )
+        //{
+        //    if (platformType == PlatformType.WalkThrough)
+        //        effector.rotationalOffset = 0;
+        //    else
+        //    {
+        //        effector.rotationalOffset = stairAngle;
+        //    }
+        //}
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -72,6 +72,17 @@ public class PlatformEffector : MonoBehaviour
         if (collision.name == "PlatformDetector")
         {
             //collision.posit
+            var detectorPos = collision.gameObject.transform.position;
+            var platformPos = gameObject.transform.position;
+            //detector is above the platform
+            if ((detectorPos - platformPos).y > 0)
+            {
+                effector.rotationalOffset = 0;
+            }
+            else if((detectorPos - platformPos).y < 0)
+            {
+                effector.rotationalOffset = 180;
+            }
         }
     }
 }
