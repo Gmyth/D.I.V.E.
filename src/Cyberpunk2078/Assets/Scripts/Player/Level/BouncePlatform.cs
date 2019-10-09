@@ -55,7 +55,7 @@ public class BouncePlatform : MonoBehaviour
 
                 pc.GetFSM().CurrentStateIndex = 4;
                 Player.CurrentPlayer.jumpForceGate = true;
-                CameraManager.Instance.Shaking(0.15f,0.03f);
+                CameraManager.Instance.Shaking(0.1f,0.03f);
                 CameraManager.Instance.Follow(0.3f);
 
                 // kill any Y-axis speed

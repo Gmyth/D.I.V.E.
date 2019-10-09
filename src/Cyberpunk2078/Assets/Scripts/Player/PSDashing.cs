@@ -209,7 +209,7 @@ public class PSDashing : PlayerState
         rb2d.AddForce(direction * dashForce * 200f * 1 / Time.timeScale);
         
         //Camera Tricks
-        CameraManager.Instance.Shaking(0.08f,0.15f);
+        CameraManager.Instance.Shaking(0.04f,0.08f);
 
         setAtkBox(true);
     }
