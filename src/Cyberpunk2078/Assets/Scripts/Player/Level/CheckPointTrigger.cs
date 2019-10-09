@@ -21,7 +21,7 @@ public class CheckPointTrigger : MonoBehaviour
     {
         if (other.gameObject.name == "Player")
         {
-            Debug.Log("PlayerEnterSavePoint");
+            Debug.Log(LogUtility.MakeLogStringFormat("CheckPointTrigger", "Enter check point"));
             CheckPointManager.Instance.SetLastCheckPointTransform(gameObject.transform);
         }
     }
