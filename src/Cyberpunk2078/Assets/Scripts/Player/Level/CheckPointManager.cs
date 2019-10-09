@@ -76,7 +76,6 @@ public class CheckPointManager : MonoBehaviour
 
     IEnumerator BlackScreen()
     {
-        Debug.Log("enter blacks");
         Image image = blackScreen.GetComponent<Image>();
 
 
@@ -114,7 +113,6 @@ public class CheckPointManager : MonoBehaviour
     }
     public void EnterResetPool(GameObject obj)
     {
-        Debug.Log("Eneter POol");
         enemyPool.Add(obj);
     }
 }
