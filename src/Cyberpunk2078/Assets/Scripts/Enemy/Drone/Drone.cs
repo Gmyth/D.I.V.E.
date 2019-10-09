@@ -87,8 +87,8 @@ public class Drone : Enemy, IPatroller
         for(int i = 0; i < 5; i++){
             var obj = ObjectRecycler.Singleton.GetObject<SoulBall>(5);
             obj.transform.position = transform.position;
-            obj.Active();
             obj.gameObject.SetActive(true);
+            obj.Active();
         }
         
         

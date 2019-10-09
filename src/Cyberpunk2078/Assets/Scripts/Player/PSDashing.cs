@@ -114,7 +114,12 @@ public class PSDashing : PlayerState
             if (h == 0) return indexPSIdle;
             return indexPSMoving;
         }
-
+        
+        if (Input.GetButtonDown("HealthConsume"))
+        {
+            Player.CurrentPlayer.CostHealthEnergy();
+        }
+        
         return Index;
     }
 

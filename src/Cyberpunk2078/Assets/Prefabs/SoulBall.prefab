@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6126746540793851384}
   - component: {fileID: 6126746540793851391}
   - component: {fileID: 6126746540793851390}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: SoulBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +123,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.1
+  m_Time: 0.2
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -215,8 +215,8 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0.6
+  m_Mass: 0.1
+  m_LinearDrag: 3
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}

@@ -69,7 +69,12 @@ public class PSAttackGH: PlayerState
 
             return indexPSMoving;
         }
-
+        
+        if (Input.GetButtonDown("HealthConsume"))
+        {
+            Player.CurrentPlayer.CostHealthEnergy();
+        }
+        
         return Index;
     }
 

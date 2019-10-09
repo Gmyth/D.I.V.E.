@@ -19,7 +19,12 @@ public class PSAirborne : PlayerState
 
         float h = Input.GetAxis("Horizontal");
         PhysicsInputHelper(h);
-        
+
+        if (Input.GetButtonDown("HealthConsume"))
+        {
+            Player.CurrentPlayer.CostHealthEnergy();
+        }
+
         if (Input.GetAxis("Attack1") > 0)
         {
             return indexPSAttackGH;

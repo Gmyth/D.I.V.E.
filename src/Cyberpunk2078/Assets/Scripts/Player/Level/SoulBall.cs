@@ -7,21 +7,20 @@ using Random = UnityEngine.Random;
 public enum SoulBallState
 {
     Move,
-    Ready,
     Chase,
     Acquired
 }
 
 public class SoulBall : Recyclable
 {
-
-    private float MoveTime;
-    private float MoveTimeInterval;
-    private float MaxSpeed;
+    private float MaxSpeed = 16f;
     private SoulBallState currentState;
-    private float LastFloatingForce;
+    private float LastFloatingForceTime;
     private Transform target;
     private Rigidbody2D rb2d;
+
+    private float t0;
+    private float timeIntervals = 0.6f;
     // Start is called before the first frame update
 
     // Update is called once per frame
@@ -31,28 +30,15 @@ public class SoulBall : Recyclable
         switch (currentState)
         {
             case SoulBallState.Move:
-                if (Mathf.Abs(rb2d.velocity.sqrMagnitude) < 1)
+                if (t0 + timeIntervals<Time.time)
                 {
-                    bufferState = SoulBallState.Ready;
-                }
-                break;
-            case SoulBallState.Ready:
-                if ((target.position - transform.position).sqrMagnitude < 1f)
-                {
-                    // TODO  the absorb range could be attribute
-                    rb2d.drag = 0;
                     bufferState = SoulBallState.Chase;
-                }
-
-                if (LastFloatingForce + 0.8f > Time.time)
-                {
-                    LastFloatingForce = Time.time;
-                    var dir = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
-                    rb2d.AddForce(8 * dir);
+                    rb2d.velocity = Vector2.zero;
                 }
                 break;
             
             case SoulBallState.Chase:
+                
                 if ((target.position - transform.position).sqrMagnitude < 0.1f)
                 {
                     // TODO  the absorb range could be attribute
@@ -62,14 +48,15 @@ public class SoulBall : Recyclable
                 }
                 
                 var direction = (target.position - transform.position).normalized;
-                if (rb2d.velocity.sqrMagnitude < MaxSpeed)
-                {
-                    rb2d.AddForce(direction * 2f * Time.deltaTime);
-                }
+                transform.Translate(direction * 8f * Time.deltaTime);
+                
                 break;
+            
             case SoulBallState.Acquired:
                 // do nothing
+                
                 break;
+            
         }
 
         if (bufferState != currentState)
@@ -81,17 +68,19 @@ public class SoulBall : Recyclable
 
     public void Active()
     {
+        t0 = Time.time;
         rb2d = GetComponent<Rigidbody2D>();
         currentState = SoulBallState.Move;
         var dir = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
-        rb2d.AddForce(Random.Range(50,300) * dir);
-        MoveTime = Time.time;
+        rb2d.AddForce(Random.Range(15,40) * dir);
         target = GameObject.FindObjectOfType<PlayerCharacter>().transform;
+        timeIntervals += Random.Range(-0.2f, 0.2f);
     }
 
     void Acquire()
     {
         //add 
-        
+        Player.CurrentPlayer.AddHealthEnergy(2f);
+        Die();
     }
 }

@@ -53,8 +53,15 @@ public class PSMoving : PlayerState
         }
 
         if (Input.GetButtonDown("Jump"))
+        {
             return indexPSJumping1;
-
+        }
+           
+        
+        if (Input.GetButtonDown("HealthConsume"))
+        {
+            Player.CurrentPlayer.CostHealthEnergy();
+        }
         return Index;
     }
     
