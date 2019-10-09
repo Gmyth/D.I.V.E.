@@ -169,20 +169,22 @@ public class CameraManager : MonoBehaviour {
 
 
 
-				if(targetIndicator && targetIndicator.bounds)
-				{
-					posX = Mathf.Min(Mathf.Max(posX,targetIndicator.minCameraPos.x),targetIndicator.maxCameraPos.x);
-					posY = Mathf.Min(Mathf.Max(posY,targetIndicator.minCameraPos.y),targetIndicator.maxCameraPos.y);
-				}
-				
+
 				Vector2 targetPos = new Vector2(
 					posX + getDstMovement(center.x,currentLargestTolerancePos.x,currentSmallestTolerancePos.x),
 					posY + getDstMovement(center.y,currentLargestTolerancePos.y,currentSmallestTolerancePos.y)
 					);
-					
-				//velocity = Vector2.zero;
 
-				posX = Mathf.SmoothDamp(transform.position.x,targetPos.x, ref velocity.x, 
+                //velocity = Vector2.zero;
+                //print(targetPos);
+                if (targetIndicator && targetIndicator.bounds)
+                {
+                    targetPos.x = Mathf.Min(Mathf.Max(targetPos.x, targetIndicator.minCameraPos.x), targetIndicator.maxCameraPos.x);
+                    targetPos.y = Mathf.Min(Mathf.Max(targetPos.y, targetIndicator.minCameraPos.y), targetIndicator.maxCameraPos.y);
+                }
+
+                
+                posX = Mathf.SmoothDamp(transform.position.x,targetPos.x, ref velocity.x, 
 					targetIndicator && targetIndicator.changeMoveSpeed ? targetIndicator.smoothTimeX : smoothTimeX);
 				posY = Mathf.SmoothDamp(transform.position.y,targetPos.y, ref velocity.y, 
 					targetIndicator && targetIndicator.changeMoveSpeed ? targetIndicator.smoothTimeY : smoothTimeY);
