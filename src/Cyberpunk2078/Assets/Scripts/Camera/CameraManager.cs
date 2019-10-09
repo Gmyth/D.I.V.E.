@@ -171,8 +171,8 @@ public class CameraManager : MonoBehaviour {
 
 				if(targetIndicator && targetIndicator.bounds)
 				{
-					center.x = Mathf.Min(Mathf.Max(center.x,targetIndicator.minCameraPos.x),targetIndicator.maxCameraPos.x);
-					center.y = Mathf.Min(Mathf.Max(center.y,targetIndicator.minCameraPos.y),targetIndicator.maxCameraPos.y);
+					posX = Mathf.Min(Mathf.Max(posX,targetIndicator.minCameraPos.x),targetIndicator.maxCameraPos.x);
+					posY = Mathf.Min(Mathf.Max(posY,targetIndicator.minCameraPos.y),targetIndicator.maxCameraPos.y);
 				}
 				
 				Vector2 targetPos = new Vector2(
