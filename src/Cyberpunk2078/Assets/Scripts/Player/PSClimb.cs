@@ -46,6 +46,11 @@ public class PSClimb : PlayerState
             rb2d.gravityScale = 3;
             return indexPSJumping1;
         }
+        
+        if (Input.GetButtonDown("HealthConsume"))
+        {
+            Player.CurrentPlayer.CostHealthEnergy();
+        }
             
         return Index;
     }

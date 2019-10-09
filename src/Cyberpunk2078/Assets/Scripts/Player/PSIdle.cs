@@ -52,6 +52,9 @@ public class PSIdle : PlayerState
         if (Input.GetButtonDown("Dashing"))
             return indexPSDashing;
         
+        if (Input.GetButtonDown("HealthConsume"))
+            Player.CurrentPlayer.CostHealthEnergy();
+        
         return Index;
     }
 

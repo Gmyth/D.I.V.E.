@@ -58,6 +58,12 @@ public class PSJumping2 : PlayerState
         
         if (Input.GetButtonDown("Dashing"))
             return index_PSDashing;
+        
+        if (Input.GetButtonDown("HealthConsume"))
+        {
+            Player.CurrentPlayer.CostHealthEnergy();
+        }
+        
         return Index;
     }
 

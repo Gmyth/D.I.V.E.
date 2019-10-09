@@ -42,10 +42,10 @@ public class DialoguePlayer : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (PlayerCharacter.Singleton.State.isGrounded())
-        {
-            
-        }
+//        if (PlayerCharacter.Singleton.State.isGrounded())
+//        {
+//            
+//        }
     }
 
     public void OnDialogueStart()
