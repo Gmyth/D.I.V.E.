@@ -81,7 +81,7 @@ public class PlatformEffector : MonoBehaviour
             }
             else if((detectorPos - platformPos).y < 0)
             {
-                effector.rotationalOffset = 180;
+                effector.rotationalOffset = 0;
             }
         }
     }
