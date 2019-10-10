@@ -2,17 +2,27 @@
 using UnityEngine;
 
 
+public struct Hit
+{
+    public float damage;
+    public float knockback;
+}
+
+
 [RequireComponent(typeof(Collider2D))]
 public class HitBox : MonoBehaviour
 {
-    public float damage = 1;
+    public Hit hit;
     public bool isFriendly = false;
 
+    private Dummy dummy;
     private HashSet<int> objectsHit = new HashSet<int>();
 
 
-    private void Start()
+    private void OnEnable()
     {
+        dummy = GetComponentInParent<Dummy>();
+
         objectsHit.Clear();
     }
 
@@ -25,15 +35,21 @@ public class HitBox : MonoBehaviour
         }
         else if (other.tag == "Player")
         {
-            if (!objectsHit.Contains(other.gameObject.GetInstanceID()))
+            PlayerCharacter target = other.GetComponent<PlayerCharacter>();
+
+            if (target.State.Name != "Dash" && !objectsHit.Contains(other.gameObject.GetInstanceID()))
             {
-                PlayerCharacter player = other.GetComponent<PlayerCharacter>();
-
-                if (player.State.Name != "Dash")
-                    objectsHit.Add(other.gameObject.GetInstanceID());
+                dummy.OnAttack?.Invoke();
+                target.OnHit?.Invoke();
 
 
-                other.GetComponent<PlayerCharacter>().ApplyDamage(GetInstanceID(), damage);
+                if (hit.knockback > 0)
+                    target.Knockback(dummy.transform.position, hit.knockback);
+
+
+                target.ApplyDamage(GetInstanceID(), hit.damage);
+
+                objectsHit.Add(other.gameObject.GetInstanceID());
             }
         }
     }

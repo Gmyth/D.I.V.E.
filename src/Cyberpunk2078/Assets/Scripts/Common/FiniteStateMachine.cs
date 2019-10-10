@@ -11,6 +11,14 @@ public abstract class FiniteStateMachine<T> : ScriptableObject where T : State
 
     public Event2<int> OnCurrentStateChange { get; } = new Event2<int>();
 
+    public T this[int index]
+    {
+        get
+        {
+            return states[index];
+        }
+    }
+
     public virtual int CurrentStateIndex
     {
         get

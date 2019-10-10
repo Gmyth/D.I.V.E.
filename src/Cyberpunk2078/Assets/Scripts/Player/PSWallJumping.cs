@@ -156,7 +156,7 @@ public class PSWallJumping: PlayerState
         
         rb2d. velocity = Vector2.zero;
 
-        rb2d.gravityScale = 1.8f;
+        //rb2d.gravityScale = 1.8f;
         
         lastStickTime = Time.time;
     }
