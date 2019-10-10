@@ -69,13 +69,13 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
         seeker = enemy.GetComponent<Seeker>();
 
         t = 0;
-
+        
     }
 
     public override int Update()
     {
         if(!enemy)
-            return Index;
+            return indexWayPoint;
 
 
         Vector3 enemyPosition = enemy.transform.position;
@@ -87,7 +87,6 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
             if (enemy.currentTarget)
             {
                 rigidbody.velocity = Vector2.zero;
-                IsMoving = false;
 
                 return index_ESAlert;
             }
@@ -100,7 +99,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
 
             if (distance < 0.3f)
                 ++indexWayPoint;
-
+            
 
             if (indexWayPoint >= currentPath.vectorPath.Count)
             {
@@ -116,9 +115,12 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
             {
                 Vector2 direction = (currentPath.vectorPath[indexWayPoint] - enemy.transform.position).normalized;
 
-                AdjustFacingDirection(direction);
+                Vector3 scale = enemy.transform.localScale;
+                scale.x = Mathf.Sign(direction.x) * Mathf.Abs(scale.x);
 
-                rigidbody.velocity = direction * speed * Time.deltaTime;
+                enemy.transform.localScale = scale;
+
+                rigidbody.AddForce(direction * speed * Time.deltaTime);
 
                 IsMoving = true;
             }
@@ -149,7 +151,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
                 t = Time.time;
             }
         }
-
+        
 
         return Index;
     }
@@ -161,7 +163,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
 
 
         indexTargetPatrolPoint = 0;
-
+        
 
         if (enemy.NumPatrolPoints > 1)
         {
@@ -183,7 +185,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
 
             seeker.StartPath(enemy.transform.position, enemy.GetPatrolPoint(indexTargetPatrolPoint));
         }
-
+        
 
         currentPath = null;
     }

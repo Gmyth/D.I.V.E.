@@ -34,9 +34,9 @@ public class DataTableManager
         return ((DataTable<T>)dataTables[tableName])[index];
     }
 
-    public MotionData GetMotionData(int id)
+    public SkillData GetSkillData(int id)
     {
-        return GetData<MotionData>("Motion", id);
+        return GetData<SkillData>("Skill", id);
     }
 
     public ItemData GetItemData(int id)

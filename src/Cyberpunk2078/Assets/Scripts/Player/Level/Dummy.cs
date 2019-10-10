@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 
 [Serializable] public struct RangedWeaponConfiguration
@@ -41,22 +40,6 @@ public abstract class Dummy : MonoBehaviour, IDamageable
 {
     [SerializeField] protected StatisticSystem statistics;
 
-    public UnityEvent OnHit { get; private set; } = new UnityEvent();
-    public UnityEvent OnAttack { get; private set; } = new UnityEvent();
-
-    public Vector2 GroundNormal
-    {
-        get
-        {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 3f);
-
-            if (hit.collider && hit.transform.CompareTag("Ground"))
-                return hit.normal;
-
-            return Vector2.zero;
-        }
-    }
-
 
     public abstract float ApplyDamage(int instanceId, float rawDamage, bool overWrite = false);
 
@@ -78,7 +61,7 @@ public abstract class Enemy : Dummy
     private EnemyData data;
 
     [HideInInspector] public PlayerCharacter currentTarget;
-    [HideInInspector] public Hit currentHit;
+    [HideInInspector] public float currentAttackDamage = 0;
 
     public Vector3 lastCheckPointTransform;
 
@@ -98,22 +81,19 @@ public abstract class Enemy : Dummy
         }
     }
 
+
     public Vector2 Pos
     {
-        get
-        {
-            return transform.position;
-        }
+        get { return (Vector2)transform.position; }
     }
 
-
-    public void EnableHitBox(int index)
+    protected void EnableHitBox(int index)
     {
-        hitBoxes[index].hit = currentHit;
+        hitBoxes[index].damage = currentAttackDamage;
         hitBoxes[index].gameObject.SetActive(true);
     }
 
-    public void DisableHitBox(int index)
+    protected void DisableHitBox(int index)
     {
         hitBoxes[index].gameObject.SetActive(false);
     }

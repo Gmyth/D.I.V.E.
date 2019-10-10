@@ -4,7 +4,6 @@ using System.Runtime.Remoting.Messaging;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class Player
 {
     public static Player CurrentPlayer { get; private set; } = null;

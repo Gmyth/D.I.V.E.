@@ -17,4 +17,4 @@ MonoBehaviour:
   idleAnimation: L2Cleaner_Idle
   patrollingAnimation: L2Cleaner_Run
   index_ESIdle: -1
-  index_ESAlert: 2
+  index_ESAlert: 1

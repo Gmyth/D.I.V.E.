@@ -191,14 +191,7 @@ public class FSMPlayer : FiniteStateMachine<PlayerState>
             //}
             //else
             {
-                if (value < 0)
-                {
-                    currentStateIndex = -1;
-                    return;
-                }
-#if UNITY_EDITOR
-                Debug.Log(LogUtility.MakeLogStringFormat("FSMPLayer", "Make transition from {0} to {1}", states[currentStateIndex].name, states[value].name));
-#endif
+                Debug.Log(LogUtility.MakeLogStringFormat("FSMPLayer", "Make transition from state {0} to {1}", currentStateIndex, value));
 
                 int previousStateIndex = currentStateIndex;
 
