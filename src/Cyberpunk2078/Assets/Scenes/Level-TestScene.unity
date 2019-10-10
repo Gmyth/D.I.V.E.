@@ -288,19 +288,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: jumpForce
-      value: 18
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: Threshold
       value: 0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
-      propertyPath: isVertical
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
-      propertyPath: jumpForceVertical
-      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7348034764957555154, guid: 94cad0d8cc43cd64c90368e958e4d262,
         type: 3}
@@ -415,12 +407,12 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.x
-      value: 33.211315
+      value: 33.35073
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.y
-      value: -3.0462537
+      value: -4.298851
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -450,7 +442,7 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.w
-      value: 11.349129
+      value: 11.159712
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -919,26 +911,6 @@ PrefabInstance:
       propertyPath: patrolFiringConfiguration.firingInterval
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.x
-      value: 148.54575
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.y
-      value: 68.76296
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.w
-      value: 18.797104
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.h
-      value: 15.473862
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!4 &104884655 stripped
@@ -1027,12 +999,12 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.x
-      value: 212.004
+      value: 23.21
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.y
-      value: 85.78297
+      value: -12.31
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -1062,23 +1034,13 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.w
-      value: 3.9645996
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.type
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
-        type: 3}
-      propertyPath: guardZone.h
-      value: 3.7359161
-      objectReference: {fileID: 0}
-    - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
-        type: 3}
-      propertyPath: hitBoxes.Array.data[0]
-      value: 
-      objectReference: {fileID: 1616216686}
     - target: {fileID: 445841682356872230, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: m_Layer
@@ -1391,26 +1353,6 @@ PrefabInstance:
       propertyPath: patrolFiringConfiguration.firingInterval
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.x
-      value: 183.97366
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.y
-      value: 50.396156
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.w
-      value: 12.141312
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.h
-      value: 12.989044
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!4 &131437444 stripped
@@ -1588,23 +1530,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
         type: 3}
-      propertyPath: guardZone.center.x
-      value: 50.469006
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.y
-      value: -8.952986
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
       propertyPath: guardZone.w
-      value: 11.191338
+      value: 12.0488205
       objectReference: {fileID: 0}
     - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
         type: 3}
       propertyPath: guardZone.h
-      value: 8.382893
+      value: 9.449999
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: guardZone.center.x
+      value: 50.342453
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: guardZone.center.y
+      value: -8.963603
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
@@ -1854,22 +1796,22 @@ PrefabInstance:
     - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
         type: 3}
       propertyPath: guardZone.center.x
-      value: 62.455723
+      value: 62.513325
       objectReference: {fileID: 0}
     - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
         type: 3}
       propertyPath: guardZone.center.y
-      value: -8.952986
+      value: -9.323273
       objectReference: {fileID: 0}
     - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
         type: 3}
       propertyPath: guardZone.w
-      value: 11.191338
+      value: 11.076271
       objectReference: {fileID: 0}
     - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
         type: 3}
       propertyPath: guardZone.h
-      value: 8.382893
+      value: 9.449999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
@@ -2056,26 +1998,6 @@ PrefabInstance:
       propertyPath: patrolFiringConfiguration.firingInterval
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.x
-      value: 221.5866
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.y
-      value: 38.01187
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.w
-      value: 21.062576
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.h
-      value: 18.093231
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!4 &222493770 stripped
@@ -2240,12 +2162,12 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.x
-      value: 226.00728
+      value: 23.21
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.y
-      value: 31.170769
+      value: -12.31
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -2275,23 +2197,13 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.w
-      value: 9.908478
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.type
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
-        type: 3}
-      propertyPath: guardZone.h
-      value: 3.7359085
-      objectReference: {fileID: 0}
-    - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
-        type: 3}
-      propertyPath: hitBoxes.Array.data[0]
-      value: 
-      objectReference: {fileID: 1616216686}
     - target: {fileID: 445841682356872230, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: m_Layer
@@ -2390,12 +2302,12 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.x
-      value: 244.07701
+      value: 23.21
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.y
-      value: 42.66619
+      value: -12.31
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -2425,23 +2337,13 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.w
-      value: 11.947784
+      value: 6.59
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.type
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
-        type: 3}
-      propertyPath: guardZone.h
-      value: 3.7359085
-      objectReference: {fileID: 0}
-    - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
-        type: 3}
-      propertyPath: hitBoxes.Array.data[0]
-      value: 
-      objectReference: {fileID: 1616216686}
     - target: {fileID: 445841682356872230, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: m_Layer
@@ -2569,7 +2471,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: jumpForce
-      value: 18
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: Threshold
@@ -2843,19 +2745,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: jumpForce
-      value: 18
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: Threshold
       value: 0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
-      propertyPath: isVertical
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
-      propertyPath: jumpForceVertical
-      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 7348034764957555154, guid: 94cad0d8cc43cd64c90368e958e4d262,
         type: 3}
@@ -2989,7 +2883,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: jumpForce
-      value: 24
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: Threshold
@@ -3162,12 +3056,12 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.x
-      value: 193.43988
+      value: 23.21
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.y
-      value: 14.307346
+      value: -12.31
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -3197,23 +3091,13 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.w
-      value: 20.749023
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.type
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
-        type: 3}
-      propertyPath: guardZone.h
-      value: 4.3964195
-      objectReference: {fileID: 0}
-    - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
-        type: 3}
-      propertyPath: hitBoxes.Array.data[0]
-      value: 
-      objectReference: {fileID: 1616216686}
     - target: {fileID: 445841682356872230, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: m_Layer
@@ -3387,7 +3271,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: jumpForce
-      value: 28
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: Threshold
@@ -3525,19 +3409,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: jumpForce
-      value: 18
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: Threshold
       value: 0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
-      propertyPath: isVertical
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
-      propertyPath: jumpForceVertical
-      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7348034764957555154, guid: 94cad0d8cc43cd64c90368e958e4d262,
         type: 3}
@@ -3730,26 +3606,6 @@ PrefabInstance:
         type: 3}
       propertyPath: patrolFiringConfiguration.bulletSpeed
       value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.x
-      value: 117.10011
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.y
-      value: -11.968653
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.w
-      value: 8.0895
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.h
-      value: 8.382893
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
@@ -4141,7 +3997,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: jumpForce
-      value: 22
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: Threshold
@@ -4726,26 +4582,6 @@ PrefabInstance:
       propertyPath: patrolFiringConfiguration.bulletSpeed
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.x
-      value: 116.95262
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.y
-      value: -12.183384
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.w
-      value: 8.097931
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.h
-      value: 8.149426
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!4 &666157323 stripped
@@ -5023,7 +4859,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: jumpForce
-      value: 22
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: Threshold
@@ -15551,12 +15387,12 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.x
-      value: 182.92711
+      value: 23.21
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.y
-      value: 23.38562
+      value: -12.31
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -15586,23 +15422,13 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.w
-      value: 7.664337
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.type
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
-        type: 3}
-      propertyPath: guardZone.h
-      value: 3.423645
-      objectReference: {fileID: 0}
-    - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
-        type: 3}
-      propertyPath: hitBoxes.Array.data[0]
-      value: 
-      objectReference: {fileID: 1616216686}
     - target: {fileID: 445841682356872230, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: m_Layer
@@ -16027,12 +15853,12 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.x
-      value: 91.510956
+      value: 91.535034
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.y
-      value: -3.2356496
+      value: -3.3731537
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -16062,7 +15888,7 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.w
-      value: 21.175514
+      value: 20.922157
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -16072,7 +15898,7 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.h
-      value: 8.11597
+      value: 8.242271
       objectReference: {fileID: 0}
     - target: {fileID: 445841682356872230, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -16201,7 +16027,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: jumpForce
-      value: 32
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: Threshold
@@ -16403,19 +16229,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: jumpForce
-      value: 18
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: Threshold
       value: 0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
-      propertyPath: isVertical
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
-      propertyPath: jumpForceVertical
-      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7348034764957555154, guid: 94cad0d8cc43cd64c90368e958e4d262,
         type: 3}
@@ -16777,7 +16595,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: jumpForce
-      value: 22
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: Threshold
@@ -17056,7 +16874,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: jumpForce
-      value: 22
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: Threshold
@@ -17652,26 +17470,6 @@ PrefabInstance:
       propertyPath: patrolFiringConfiguration.firingInterval
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.x
-      value: 207.55545
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.y
-      value: 38.01187
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.w
-      value: 21.062576
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.h
-      value: 18.093231
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!4 &927559783 stripped
@@ -17911,12 +17709,12 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.x
-      value: 91.510956
+      value: 91.535034
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.y
-      value: -3.2356496
+      value: -3.3731537
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -17946,7 +17744,7 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.w
-      value: 21.175514
+      value: 20.922157
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -17956,13 +17754,18 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.h
-      value: 8.11597
+      value: 8.242271
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: hitBoxes.Array.data[0]
       value: 
-      objectReference: {fileID: 1342854727}
+      objectReference: {fileID: 246251344}
+    - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
+        type: 3}
+      propertyPath: hitBoxes.Array.data[1]
+      value: 
+      objectReference: {fileID: 1566171882}
     - target: {fileID: 445841682356872230, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: m_Layer
@@ -18061,12 +17864,12 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.x
-      value: 198.54266
+      value: 23.21
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.y
-      value: 78.79844
+      value: -12.31
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -18096,23 +17899,13 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.w
-      value: 16.95671
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.type
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
-        type: 3}
-      propertyPath: guardZone.h
-      value: 3.7359161
-      objectReference: {fileID: 0}
-    - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
-        type: 3}
-      propertyPath: hitBoxes.Array.data[0]
-      value: 
-      objectReference: {fileID: 1616216686}
     - target: {fileID: 445841682356872230, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: m_Layer
@@ -18540,26 +18333,6 @@ PrefabInstance:
       propertyPath: patrolFiringConfiguration.firingInterval
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.x
-      value: 230.67506
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.y
-      value: 38.01187
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.w
-      value: 15.48642
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.h
-      value: 18.093231
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!4 &1078194839 stripped
@@ -18750,26 +18523,6 @@ PrefabInstance:
         type: 3}
       propertyPath: patrolFiringConfiguration.firingInterval
       value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.x
-      value: 171.5571
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.y
-      value: 50.396156
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.w
-      value: 16.963943
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.h
-      value: 12.989044
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
@@ -19066,7 +18819,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1141192618}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 148.2, y: -5.6, z: 0}
+  m_LocalPosition: {x: 133.7, y: 56.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 115882118}
@@ -20313,12 +20066,12 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.x
-      value: 149.88853
+      value: 23.21
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.y
-      value: 45.651943
+      value: -12.31
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -20348,23 +20101,13 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.w
-      value: 22.125275
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.type
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
-        type: 3}
-      propertyPath: guardZone.h
-      value: 3.7359161
-      objectReference: {fileID: 0}
-    - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
-        type: 3}
-      propertyPath: hitBoxes.Array.data[0]
-      value: 
-      objectReference: {fileID: 1616216686}
     - target: {fileID: 445841682356872230, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: m_Layer
@@ -20492,7 +20235,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: jumpForce
-      value: 22
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: Threshold
@@ -20850,12 +20593,12 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.x
-      value: 117.180084
+      value: 22.040417
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.y
-      value: -12.347412
+      value: -11.071077
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -20885,7 +20628,7 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.w
-      value: 26.278107
+      value: 14.510914
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -20895,13 +20638,8 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.h
-      value: 8.115971
+      value: 8.242271
       objectReference: {fileID: 0}
-    - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
-        type: 3}
-      propertyPath: hitBoxes.Array.data[0]
-      value: 
-      objectReference: {fileID: 1342854727}
     - target: {fileID: 445841682356872230, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: m_Layer
@@ -21375,18 +21113,6 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
---- !u!114 &1342854727 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 445841682356872280, guid: 23eff33790726d0439e5ca18340775de,
-    type: 3}
-  m_PrefabInstance: {fileID: 780358780}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe89cc77c65cf9c48927595fc1db375e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1346838350
 GameObject:
   m_ObjectHideFlags: 0
@@ -21580,19 +21306,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: jumpForce
-      value: 14
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: Threshold
       value: 0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
-      propertyPath: isVertical
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
-      propertyPath: jumpForceVertical
-      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 7348034764957555154, guid: 94cad0d8cc43cd64c90368e958e4d262,
         type: 3}
@@ -21846,12 +21564,12 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.x
-      value: 117.180084
+      value: 22.040417
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.y
-      value: -12.347412
+      value: -11.071077
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -21881,7 +21599,7 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.w
-      value: 26.278107
+      value: 14.510914
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -21891,13 +21609,8 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.h
-      value: 8.115971
+      value: 8.242271
       objectReference: {fileID: 0}
-    - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
-        type: 3}
-      propertyPath: hitBoxes.Array.data[0]
-      value: 
-      objectReference: {fileID: 1342854727}
     - target: {fileID: 445841682356872230, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: m_Layer
@@ -21996,12 +21709,12 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.x
-      value: 156.52173
+      value: 23.21
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.y
-      value: 45.651943
+      value: -12.31
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -22031,23 +21744,13 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.w
-      value: 35.042175
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.type
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
-        type: 3}
-      propertyPath: guardZone.h
-      value: 3.7359161
-      objectReference: {fileID: 0}
-    - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
-        type: 3}
-      propertyPath: hitBoxes.Array.data[0]
-      value: 
-      objectReference: {fileID: 1616216686}
     - target: {fileID: 445841682356872230, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: m_Layer
@@ -27182,7 +26885,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: {r: 0.9339623, g: 0.118948035, b: 0.118948035, a: 0.47058824}
-  influenceLevel: 1
+  influenceLevel: 0
   type: 2
   radius: 7
   width: 13.3
@@ -27311,7 +27014,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: jumpForce
-      value: 22
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: Threshold
@@ -27661,7 +27364,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: jumpForce
-      value: 22
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: Threshold
@@ -28088,26 +27791,6 @@ PrefabInstance:
       propertyPath: patrolFiringConfiguration.firingInterval
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.x
-      value: 217.2381
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.y
-      value: 84.539154
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.w
-      value: 14.27356
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.h
-      value: 9.059654
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!4 &1651841023 stripped
@@ -28131,7 +27814,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1652289896
 Transform:
   m_ObjectHideFlags: 0
@@ -28252,19 +27935,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: jumpForce
-      value: 18
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
       propertyPath: Threshold
       value: 0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
-      propertyPath: isVertical
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 323629531, guid: 94cad0d8cc43cd64c90368e958e4d262, type: 3}
-      propertyPath: jumpForceVertical
-      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7348034764957555154, guid: 94cad0d8cc43cd64c90368e958e4d262,
         type: 3}
@@ -29312,26 +28987,6 @@ PrefabInstance:
       propertyPath: patrolFiringConfiguration.firingInterval
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.x
-      value: 201.48763
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.y
-      value: 83.027466
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.w
-      value: 16.994965
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.h
-      value: 12.2285
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!4 &1755528092 stripped
@@ -29795,26 +29450,6 @@ PrefabInstance:
         type: 3}
       propertyPath: patrolFiringConfiguration.firingInterval
       value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.x
-      value: 196.50888
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.y
-      value: 33.937042
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.w
-      value: 20.841599
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.h
-      value: 9.991226
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
@@ -30485,7 +30120,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1897327822}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.2, y: -62.2, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children:
   - {fileID: 749866182}
@@ -31095,12 +30730,12 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.x
-      value: 62.54508
+      value: 65.91665
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.y
-      value: -9.201721
+      value: -9.774969
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -31130,7 +30765,7 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.w
-      value: 12.830421
+      value: 17.635101
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -31313,26 +30948,6 @@ PrefabInstance:
         type: 3}
       propertyPath: patrolFiringConfiguration.firingInterval
       value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.x
-      value: 172.94797
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.y
-      value: 50.402977
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.w
-      value: 19.915115
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.h
-      value: 12.989044
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
@@ -31598,7 +31213,7 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.x
-      value: 196.28787
+      value: 210.93066
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -31633,7 +31248,7 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.w
-      value: 9.135132
+      value: 38.420715
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -31781,26 +31396,6 @@ PrefabInstance:
       propertyPath: patrolFiringConfiguration.firingInterval
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.x
-      value: 195.55772
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.y
-      value: 82.65479
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.w
-      value: 10.958221
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.h
-      value: 12.2285
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!4 &2060470379 stripped
@@ -31921,26 +31516,6 @@ PrefabInstance:
         type: 3}
       propertyPath: patrolFiringConfiguration.firingInterval
       value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.x
-      value: 147.5584
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.center.y
-      value: 65.97181
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.w
-      value: 15.02121
-      objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: guardZone.h
-      value: 20.037247
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
@@ -32110,12 +31685,12 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.x
-      value: 183.05399
+      value: 23.21
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.center.y
-      value: 45.651943
+      value: -12.31
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -32145,23 +31720,13 @@ PrefabInstance:
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.w
-      value: 13.936295
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: guardZone.type
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
-        type: 3}
-      propertyPath: guardZone.h
-      value: 3.7359161
-      objectReference: {fileID: 0}
-    - target: {fileID: 445841681128334402, guid: 23eff33790726d0439e5ca18340775de,
-        type: 3}
-      propertyPath: hitBoxes.Array.data[0]
-      value: 
-      objectReference: {fileID: 1616216686}
     - target: {fileID: 445841682356872230, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: m_Layer
@@ -32365,7 +31930,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2110374135}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 159, y: -1.72, z: -10}
+  m_LocalPosition: {x: 130.52, y: -1.72, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
