@@ -19,7 +19,12 @@ public class PSAirborne : PlayerState
 
         float h = Input.GetAxis("Horizontal");
         PhysicsInputHelper(h);
-        
+
+        if (Input.GetButtonDown("HealthConsume"))
+        {
+            Player.CurrentPlayer.CostHealthEnergy();
+        }
+
         if (Input.GetAxis("Attack1") > 0)
         {
             return indexPSAttackGH;
@@ -53,11 +58,16 @@ public class PSAirborne : PlayerState
         
         return Index;
     }
-    
+
+    public override void OnStateQuit(State nextState)
+    {
+        var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
+        rb2d.gravityScale = 3;
+    }
+
     public override void OnStateEnter(State previousState)
     {
         // Add Ghost trail
-
         previous = previousState;
         anim.Play("MainCharacter_Airborne", -1, 0f);
     }

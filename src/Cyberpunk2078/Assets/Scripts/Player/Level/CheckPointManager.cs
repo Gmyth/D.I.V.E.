@@ -76,7 +76,6 @@ public class CheckPointManager : MonoBehaviour
 
     IEnumerator BlackScreen()
     {
-        Debug.Log("enter blacks");
         Image image = blackScreen.GetComponent<Image>();
 
 
@@ -91,7 +90,7 @@ public class CheckPointManager : MonoBehaviour
 
         var player = PlayerCharacter.Singleton.gameObject;
         player.transform.position = playerLastCheckPoint.position;
-
+       
         for (int i = 0; i < enemyPool.Count; i++)
         {
             enemyPool[i].SetActive(true);
@@ -114,7 +113,6 @@ public class CheckPointManager : MonoBehaviour
     }
     public void EnterResetPool(GameObject obj)
     {
-        Debug.Log("Eneter POol");
         enemyPool.Add(obj);
     }
 }

@@ -114,7 +114,12 @@ public class PSDashing : PlayerState
             if (h == 0) return indexPSIdle;
             return indexPSMoving;
         }
-
+        
+        if (Input.GetButtonDown("HealthConsume"))
+        {
+            Player.CurrentPlayer.CostHealthEnergy();
+        }
+        
         return Index;
     }
 
@@ -204,7 +209,7 @@ public class PSDashing : PlayerState
         rb2d.AddForce(direction * dashForce * 200f * 1 / Time.timeScale);
         
         //Camera Tricks
-        CameraManager.Instance.Shaking(0.08f,0.15f);
+        CameraManager.Instance.Shaking(0.04f,0.08f);
 
         setAtkBox(true);
     }

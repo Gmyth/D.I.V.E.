@@ -32,9 +32,16 @@ public abstract class PlayerState : State
     //Player Ground check
     public bool isGrounded()
     {
-        RaycastHit2D hitM = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,-0.25f,0f),-playerCharacter.transform.up,1f);
-        RaycastHit2D hitL = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.12f,-0.25f,0f),-playerCharacter.transform.up,1f);
-        RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.12f,-0.25f,0f),-playerCharacter.transform.up,1f);
+        RaycastHit2D hitM = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,-0.7f,0f),-playerCharacter.transform.up, 0.6f);
+        RaycastHit2D hitL = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.12f,-0.7f,0f),-playerCharacter.transform.up, 0.6f);
+        RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.12f,-0.7f,0f),-playerCharacter.transform.up, 0.6f);
+
+        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f, -0.7f, 0f), -playerCharacter.transform.up * 0.6f, Color.red);
+
+        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0.12f, -0.7f, 0f), -playerCharacter.transform.up * 0.6f, Color.green);
+
+        Debug.DrawRay(playerCharacter.transform.position + new Vector3(-0.12f, -0.7f, 0f), -playerCharacter.transform.up * 0.6f, Color.yellow);
+
         if (hitM.collider != null && hitM.transform.CompareTag("Ground") || hitR.collider != null && hitR.transform.CompareTag("Ground") || hitL.collider != null && hitL.transform.CompareTag("Ground"))
         {
             

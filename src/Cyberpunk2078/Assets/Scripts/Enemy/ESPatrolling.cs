@@ -69,7 +69,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
         seeker = enemy.GetComponent<Seeker>();
 
         t = 0;
-        
+
     }
 
     public override int Update()
@@ -100,7 +100,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
 
             if (distance < 0.3f)
                 ++indexWayPoint;
-            
+
 
             if (indexWayPoint >= currentPath.vectorPath.Count)
             {
@@ -129,8 +129,8 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
 
         if (firingConfiguration.FiringInterval > 0) // Check if the firing is enabled
         {
-            if (enemy.currentTarget == null || !IsPlayerInSight(enemy.currentTarget, enemy[StatisticType.SightRange]))
-                enemy.currentTarget = IsPlayerInSight(10);
+            if (enemy.currentTarget == null || !IsPlayerInSight(enemy.currentTarget, 10))
+                enemy.currentTarget = FindAvailableTarget(enemy.transform.position, 10, enemy.GuardZone);
 
 
             if (enemy.currentTarget && Time.time - t >= firingConfiguration.FiringInterval)
@@ -140,6 +140,8 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
                 bullet.initialPosition = enemy.transform.position;
                 bullet.orientation = (enemy.currentTarget.transform.position - bullet.initialPosition).normalized;
 
+                bullet.GetComponent<Bullet>().isFriendly = false;
+
                 bullet.gameObject.SetActive(true);
 
                 bullet.transform.right = bullet.orientation;
@@ -147,7 +149,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
                 t = Time.time;
             }
         }
-        
+
 
         return Index;
     }
@@ -159,7 +161,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
 
 
         indexTargetPatrolPoint = 0;
-        
+
 
         if (enemy.NumPatrolPoints > 1)
         {
@@ -181,7 +183,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
 
             seeker.StartPath(enemy.transform.position, enemy.GetPatrolPoint(indexTargetPatrolPoint));
         }
-        
+
 
         currentPath = null;
     }

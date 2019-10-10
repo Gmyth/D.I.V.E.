@@ -18,6 +18,8 @@ public enum AttributeType : int
     MaxOsp_c0 = 0x600,
 
     OspRecovery_c0 = 0x700,
+    
+    MaxHsp_c0 = 0x800,
 
     SightRange_c0 = 0xA00,
 
@@ -29,6 +31,7 @@ public enum AttributeType : int
     Sp_c0 = 0xF110,
 
     Osp_c0 = 0xF210,
+    Hsp_c0 = 0xF310
 }
 
 
