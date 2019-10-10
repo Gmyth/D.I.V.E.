@@ -22,6 +22,7 @@ public class BouncePlatform : MonoBehaviour
     public float angle;
 
     public bool isVertical = false;
+    public float jumpForceVertical;
 
     // Start is called before the first frame update
     void Start()
@@ -72,7 +73,7 @@ public class BouncePlatform : MonoBehaviour
 
                 if(isVertical == true)
                 {
-                    rb2d.AddForce(-gameObject.transform.right * jumpForce * 50 * 1 / Time.timeScale);
+                    rb2d.AddForce(Vector2.up * jumpForceVertical * 50 * 1 / Time.timeScale); ;
                 }
                 
                 Player.CurrentPlayer.AddNormalEnergy(1);
