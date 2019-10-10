@@ -77,6 +77,7 @@ public class PSIdle : PlayerState
 
     void NormalizeSlope()
     {
+
         // Attempt vertical normalization
         RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position, -Vector2.up, 1f);
         if (hit.collider != null && Mathf.Abs(hit.normal.x) > 0.1f && hit.transform.tag == "Ground")

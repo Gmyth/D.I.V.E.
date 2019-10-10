@@ -55,6 +55,7 @@ public class BouncePlatform : MonoBehaviour
 
                 pc.GetFSM().CurrentStateIndex = 4;
                 Player.CurrentPlayer.jumpForceGate = true;
+
                 CameraManager.Instance.Shaking(0.1f,0.03f);
                 CameraManager.Instance.Follow(0.3f);
 
@@ -67,6 +68,55 @@ public class BouncePlatform : MonoBehaviour
                 var pos = col.gameObject.transform.position;
                 col.gameObject.transform.position = new Vector3(pos.x + gameObject.transform.up.x*0.5f, pos.y + gameObject.transform.up.y*0.5f, pos.z);
                 rb2d.AddForce(gameObject.transform.up * jumpForce * 50 * 1/Time.timeScale);
+
+                Player.CurrentPlayer.AddNormalEnergy(1);
+
+                //switch (bounceDiection)
+                //{
+                //    case Direction.Up:
+                //        rb2d.velocity = new Vector2(rb2d.velocity.x * 0.3f, jumpForce);
+                //        break;
+                //    case Direction.Left:
+                //        rb2d.velocity = new Vector2(-jumpForce, rb2d.velocity.y * 0.3f);
+                //        break;
+                //    case Direction.Right:
+                //        rb2d.velocity = new Vector2(jumpForce, rb2d.velocity.y * 0.3f);
+                //        break;
+                //}
+
+
+                //rb2d.AddForce(Vector3.up * jumpForce * 100);
+                bounceReady = false;
+            }
+
+        }
+
+    }
+
+
+    void OnTriggerStay2D(Collider2D col)
+    {
+        if (col.gameObject.tag.CompareTo("Player") == 0)
+        {
+            if (bounceReady == true)
+            {
+                rb2d = col.gameObject.GetComponent<Rigidbody2D>();
+                pc = col.gameObject.GetComponent<PlayerCharacter>();
+
+                pc.GetFSM().CurrentStateIndex = 4;
+                Player.CurrentPlayer.jumpForceGate = true;
+                CameraManager.Instance.Shaking(0.1f, 0.03f);
+                CameraManager.Instance.Follow(0.3f);
+
+                // kill any Y-axis speed
+                rb2d.velocity = Vector2.zero;
+
+                //Debug.Log("Direction:"+ gameObject.transform.up);
+                //Debug.Log("Force:" + gameObject.transform.up * jumpForce * 50 * 1 / Time.timeScale);
+
+                var pos = col.gameObject.transform.position;
+                col.gameObject.transform.position = new Vector3(pos.x + gameObject.transform.up.x * 0.5f, pos.y + gameObject.transform.up.y * 0.5f, pos.z);
+                rb2d.AddForce(gameObject.transform.up * jumpForce * 50 * 1 / Time.timeScale);
 
                 Player.CurrentPlayer.AddNormalEnergy(1);
 

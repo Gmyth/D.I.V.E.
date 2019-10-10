@@ -132,7 +132,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
         if (firingConfiguration.FiringInterval > 0) // Check if the firing is enabled
         {
             if (enemy.currentTarget == null || !IsPlayerInSight(enemy.currentTarget, 10))
-                enemy.currentTarget = IsPlayerInSight(10);
+                enemy.currentTarget = FindAvailableTarget(enemy.transform.position, 10, enemy.GuardZone);
 
 
             if (enemy.currentTarget && Time.time - t >= firingConfiguration.FiringInterval)
@@ -141,6 +141,8 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
                 bullet.speed = firingConfiguration.BulletSpeed;
                 bullet.initialPosition = enemy.transform.position;
                 bullet.orientation = (enemy.currentTarget.transform.position - bullet.initialPosition).normalized;
+
+                bullet.GetComponent<Bullet>().isFriendly = false;
 
                 bullet.gameObject.SetActive(true);
 

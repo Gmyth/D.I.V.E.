@@ -48,7 +48,7 @@ public class SoulBall : Recyclable
                 }
                 
                 var direction = (target.position - transform.position).normalized;
-                transform.Translate(direction * 8f * Time.deltaTime);
+                transform.Translate(direction * 9.5f * Time.deltaTime);
                 
                 break;
             
