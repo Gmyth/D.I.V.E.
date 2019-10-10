@@ -1,6 +1,6 @@
-﻿﻿
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
+# Visual Studio 16
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{99FAF3B9-0ABC-CF19-FC95-6E835B36CB38}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBox", "MyBox.csproj", "{06483186-E447-A13A-8007-0C6EEFA647DC}"
