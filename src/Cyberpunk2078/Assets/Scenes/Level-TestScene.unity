@@ -2084,18 +2084,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 222493769}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &246251344 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 445841682356872280, guid: 23eff33790726d0439e5ca18340775de,
-    type: 3}
-  m_PrefabInstance: {fileID: 780358780}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe89cc77c65cf9c48927595fc1db375e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &256894371
 GameObject:
   m_ObjectHideFlags: 0
@@ -17962,7 +17950,7 @@ PrefabInstance:
         type: 3}
       propertyPath: hitBoxes.Array.data[0]
       value: 
-      objectReference: {fileID: 1342854727}
+      objectReference: {fileID: 0}
     - target: {fileID: 445841682356872230, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: m_Layer
@@ -20901,7 +20889,7 @@ PrefabInstance:
         type: 3}
       propertyPath: hitBoxes.Array.data[0]
       value: 
-      objectReference: {fileID: 1342854727}
+      objectReference: {fileID: 0}
     - target: {fileID: 445841682356872230, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: m_Layer
@@ -21375,18 +21363,6 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
---- !u!114 &1342854727 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 445841682356872280, guid: 23eff33790726d0439e5ca18340775de,
-    type: 3}
-  m_PrefabInstance: {fileID: 780358780}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe89cc77c65cf9c48927595fc1db375e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1346838350
 GameObject:
   m_ObjectHideFlags: 0
@@ -21897,7 +21873,7 @@ PrefabInstance:
         type: 3}
       propertyPath: hitBoxes.Array.data[0]
       value: 
-      objectReference: {fileID: 1342854727}
+      objectReference: {fileID: 0}
     - target: {fileID: 445841682356872230, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: m_Layer
@@ -27481,18 +27457,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1516358475}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1566171882 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3669862315530931469, guid: 23eff33790726d0439e5ca18340775de,
-    type: 3}
-  m_PrefabInstance: {fileID: 780358780}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe89cc77c65cf9c48927595fc1db375e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1610285188
 GameObject:
   m_ObjectHideFlags: 0

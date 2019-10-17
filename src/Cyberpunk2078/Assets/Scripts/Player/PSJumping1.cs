@@ -20,6 +20,7 @@ public class PSJumping1 : PlayerState
     [SerializeField] private int indexPSAttackGH;
     [SerializeField] private int indexPSAirborne;
     [SerializeField] private int indexPSClimb;
+    [SerializeField] private float jumpIncreaser = 1.5f;
     private float lastJumpSec;
     private State previous;
 
@@ -78,6 +79,15 @@ public class PSJumping1 : PlayerState
         if (!isGrounded()&& Vy < 0)
         {
                 return indexPSAirborne;
+        }
+
+        if (!isGrounded() && Vy > 0)
+        {
+            if (Input.GetButton("Jump"))
+            {
+                //Debug.Log("Jump Pressed");
+                rb2d.AddForce(playerCharacter.transform.up * jumpForce * jumpIncreaser);
+            }
         }
 
         if (isGrounded()&& Vy < 0)
