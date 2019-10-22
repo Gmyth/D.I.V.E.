@@ -33902,7 +33902,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1141192618}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 144.4, y: 110.7, z: 0}
+  m_LocalPosition: {x: 159.95, y: 90.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 115882118}
@@ -36324,7 +36324,7 @@ Tilemap:
       m_ObjectToInstantiate: {fileID: 0}
       m_TileFlags: 1
       m_ColliderType: 1
-  - first: {x: 144, y: 95, z: 0}
+  - first: {x: 144, y: 94, z: 0}
     second:
       m_TileIndex: 0
       m_TileSpriteIndex: 0
@@ -36333,7 +36333,7 @@ Tilemap:
       m_ObjectToInstantiate: {fileID: 0}
       m_TileFlags: 1
       m_ColliderType: 1
-  - first: {x: 145, y: 95, z: 0}
+  - first: {x: 145, y: 94, z: 0}
     second:
       m_TileIndex: 0
       m_TileSpriteIndex: 0
@@ -36342,7 +36342,7 @@ Tilemap:
       m_ObjectToInstantiate: {fileID: 0}
       m_TileFlags: 1
       m_ColliderType: 1
-  - first: {x: 146, y: 95, z: 0}
+  - first: {x: 146, y: 94, z: 0}
     second:
       m_TileIndex: 0
       m_TileSpriteIndex: 0
@@ -36351,7 +36351,7 @@ Tilemap:
       m_ObjectToInstantiate: {fileID: 0}
       m_TileFlags: 1
       m_ColliderType: 1
-  - first: {x: 147, y: 95, z: 0}
+  - first: {x: 147, y: 94, z: 0}
     second:
       m_TileIndex: 0
       m_TileSpriteIndex: 0
@@ -36432,7 +36432,7 @@ Tilemap:
       m_ObjectToInstantiate: {fileID: 0}
       m_TileFlags: 1
       m_ColliderType: 1
-  - first: {x: 149, y: 103, z: 0}
+  - first: {x: 149, y: 102, z: 0}
     second:
       m_TileIndex: 0
       m_TileSpriteIndex: 0
@@ -36441,7 +36441,7 @@ Tilemap:
       m_ObjectToInstantiate: {fileID: 0}
       m_TileFlags: 1
       m_ColliderType: 1
-  - first: {x: 150, y: 103, z: 0}
+  - first: {x: 150, y: 102, z: 0}
     second:
       m_TileIndex: 0
       m_TileSpriteIndex: 0
@@ -36450,7 +36450,7 @@ Tilemap:
       m_ObjectToInstantiate: {fileID: 0}
       m_TileFlags: 1
       m_ColliderType: 1
-  - first: {x: 151, y: 103, z: 0}
+  - first: {x: 151, y: 102, z: 0}
     second:
       m_TileIndex: 0
       m_TileSpriteIndex: 0
@@ -47753,7 +47753,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1652289896
 Transform:
   m_ObjectHideFlags: 0
@@ -50440,7 +50440,7 @@ Tilemap:
       m_ObjectToInstantiate: {fileID: 0}
       m_TileFlags: 1
       m_ColliderType: 1
-  - first: {x: 149, y: 88, z: 0}
+  - first: {x: 152, y: 88, z: 0}
     second:
       m_TileIndex: 0
       m_TileSpriteIndex: 0
@@ -50458,7 +50458,7 @@ Tilemap:
       m_ObjectToInstantiate: {fileID: 0}
       m_TileFlags: 1
       m_ColliderType: 1
-  - first: {x: 149, y: 89, z: 0}
+  - first: {x: 152, y: 89, z: 0}
     second:
       m_TileIndex: 0
       m_TileSpriteIndex: 0
@@ -50476,7 +50476,7 @@ Tilemap:
       m_ObjectToInstantiate: {fileID: 0}
       m_TileFlags: 1
       m_ColliderType: 1
-  - first: {x: 149, y: 90, z: 0}
+  - first: {x: 152, y: 90, z: 0}
     second:
       m_TileIndex: 0
       m_TileSpriteIndex: 0
@@ -50494,7 +50494,7 @@ Tilemap:
       m_ObjectToInstantiate: {fileID: 0}
       m_TileFlags: 1
       m_ColliderType: 1
-  - first: {x: 149, y: 91, z: 0}
+  - first: {x: 152, y: 91, z: 0}
     second:
       m_TileIndex: 0
       m_TileSpriteIndex: 0
@@ -50512,7 +50512,16 @@ Tilemap:
       m_ObjectToInstantiate: {fileID: 0}
       m_TileFlags: 1
       m_ColliderType: 1
-  - first: {x: 149, y: 92, z: 0}
+  - first: {x: 152, y: 92, z: 0}
+    second:
+      m_TileIndex: 0
+      m_TileSpriteIndex: 0
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_ObjectToInstantiate: {fileID: 0}
+      m_TileFlags: 1
+      m_ColliderType: 1
+  - first: {x: 146, y: 95, z: 0}
     second:
       m_TileIndex: 0
       m_TileSpriteIndex: 0
@@ -50549,15 +50558,6 @@ Tilemap:
       m_TileFlags: 1
       m_ColliderType: 1
   - first: {x: 146, y: 99, z: 0}
-    second:
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_ObjectToInstantiate: {fileID: 0}
-      m_TileFlags: 1
-      m_ColliderType: 1
-  - first: {x: 146, y: 100, z: 0}
     second:
       m_TileIndex: 0
       m_TileSpriteIndex: 0
