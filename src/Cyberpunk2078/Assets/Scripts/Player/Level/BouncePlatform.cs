@@ -5,34 +5,30 @@ using UnityEngine;
 
 public class BouncePlatform : MonoBehaviour
 {
-    //public enum Direction
-    //{
-    //    Up = 0,
-    //    Left,
-    //    Right
-    //}
-
-    //public Direction bounceDiection;
-    public float jumpForce = 20;
+    public float jumpForce;
     private Rigidbody2D rb2d;
     private PlayerCharacter pc;
-    public float Threshold = 1f;
+    public float Threshold;
     public bool bounceReady = true;
-    public float timer;
-    public float angle;
+    private float timer;
 
-    public bool isVertical = false;
-    public float jumpForceVertical;
+    [Range(0, 360)]
+    [SerializeField]
+    private float angle = 90f;
+
+    Vector2 bounceDirection;
 
     // Start is called before the first frame update
     void Start()
     {
-        timer = Threshold;
+        timer = Threshold;          
     }
 
     // Update is called once per frame
     void Update()
     {
+        bounceDirection = DegreeToVector2(angle);
+        Debug.DrawRay(gameObject.transform.position, bounceDirection * 2f, Color.red);
 
         if (bounceReady == false)
         {
@@ -47,6 +43,12 @@ public class BouncePlatform : MonoBehaviour
 
     }
 
+    void onGizmosDraw()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(gameObject.transform.position, bounceDirection * 2f);
+    }
+
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag.CompareTo("Player") == 0)
@@ -56,6 +58,7 @@ public class BouncePlatform : MonoBehaviour
                 rb2d = col.gameObject.GetComponent<Rigidbody2D>();
                 pc = col.gameObject.GetComponent<PlayerCharacter>();
                 Player.CurrentPlayer.jumpForceGate = true;
+                Player.CurrentPlayer.NoApplyFriction = true;
                 pc.GetFSM().CurrentStateIndex = 4;
 
                 CameraManager.Instance.Shaking(0.1f,0.03f);
@@ -68,29 +71,14 @@ public class BouncePlatform : MonoBehaviour
                 //Debug.Log(LogUtility.MakeLogStringFormat("Bounce Platform","Force:" + gameObject.transform.up * jumpForce * 50 * 1 / Time.timeScale));
 
                 var pos = col.gameObject.transform.position;
-                //col.gameObject.transform.position = new Vector3(pos.x + gameObject.transform.up.x*0.2f, pos.y + gameObject.transform.up.y*0.2f, pos.z);
-                rb2d.AddForce(gameObject.transform.up * jumpForce * 50 * 1/Time.timeScale);
 
-                if(isVertical == true)
-                {
-                    rb2d.AddForce(Vector2.up * jumpForceVertical * 50 * 1 / Time.timeScale); ;
-                }
+                //col.gameObject.transform.position = new Vector3(pos.x + vec.x * 0.2f, pos.y + vec.y * 0.2f, pos.z);
                 
+
+                rb2d.AddForce(bounceDirection * jumpForce * 50 * 1/Time.timeScale);
+              
+
                 Player.CurrentPlayer.AddNormalEnergy(1);
-
-                //switch (bounceDiection)
-                //{
-                //    case Direction.Up:
-                //        rb2d.velocity = new Vector2(rb2d.velocity.x * 0.3f, jumpForce);
-                //        break;
-                //    case Direction.Left:
-                //        rb2d.velocity = new Vector2(-jumpForce, rb2d.velocity.y * 0.3f);
-                //        break;
-                //    case Direction.Right:
-                //        rb2d.velocity = new Vector2(jumpForce, rb2d.velocity.y * 0.3f);
-                //        break;
-                //}
-
 
                 //rb2d.AddForce(Vector3.up * jumpForce * 100);
                 bounceReady = false;
@@ -100,52 +88,14 @@ public class BouncePlatform : MonoBehaviour
 
     }
 
+    public static Vector2 RadianToVector2(float radian)
+    {
+        return new Vector2(Mathf.Cos(radian), Mathf.Sin(radian));
+    }
 
-    //void OnTriggerStay2D(Collider2D col)
-    //{
-    //    if (col.gameObject.tag.CompareTo("Player") == 0)
-    //    {
-    //        if (bounceReady == true)
-    //        {
-    //            rb2d = col.gameObject.GetComponent<Rigidbody2D>();
-    //            pc = col.gameObject.GetComponent<PlayerCharacter>();
+    public static Vector2 DegreeToVector2(float degree)
+    {
+        return RadianToVector2(degree * Mathf.Deg2Rad);
+    }
 
-    //            pc.GetFSM().CurrentStateIndex = 4;
-    //            Player.CurrentPlayer.jumpForceGate = true;
-    //            CameraManager.Instance.Shaking(0.1f, 0.03f);
-    //            CameraManager.Instance.Follow(0.3f);
-
-    //            // kill any Y-axis speed
-    //            rb2d.velocity = Vector2.zero;
-
-    //            //Debug.Log("Direction:"+ gameObject.transform.up);
-    //            //Debug.Log("Force:" + gameObject.transform.up * jumpForce * 50 * 1 / Time.timeScale);
-
-    //            var pos = col.gameObject.transform.position;
-    //            col.gameObject.transform.position = new Vector3(pos.x + gameObject.transform.up.x * 0.5f, pos.y + gameObject.transform.up.y * 0.5f, pos.z);
-    //            rb2d.AddForce(gameObject.transform.up * jumpForce * 50 * 1 / Time.timeScale);
-
-    //            Player.CurrentPlayer.AddNormalEnergy(1);
-
-    //            //switch (bounceDiection)
-    //            //{
-    //            //    case Direction.Up:
-    //            //        rb2d.velocity = new Vector2(rb2d.velocity.x * 0.3f, jumpForce);
-    //            //        break;
-    //            //    case Direction.Left:
-    //            //        rb2d.velocity = new Vector2(-jumpForce, rb2d.velocity.y * 0.3f);
-    //            //        break;
-    //            //    case Direction.Right:
-    //            //        rb2d.velocity = new Vector2(jumpForce, rb2d.velocity.y * 0.3f);
-    //            //        break;
-    //            //}
-
-
-    //            //rb2d.AddForce(Vector3.up * jumpForce * 100);
-    //            bounceReady = false;
-    //        }
-
-    //    }
-
-    //}
 }

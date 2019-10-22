@@ -23,6 +23,7 @@ public class Player
     public readonly Inventory inventory;
 
     public bool jumpForceGate;
+    public bool NoApplyFriction = false;
     public bool secondJumpReady;
     public bool lastWallJumpRight; 
     

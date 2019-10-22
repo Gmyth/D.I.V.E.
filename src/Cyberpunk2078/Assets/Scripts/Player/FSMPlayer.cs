@@ -166,7 +166,10 @@ public abstract class PlayerState : State
             // does not has input
             // reduce speed, friction
             //if (grounded) rb2d.AddForce(new Vector2(-rb2d.velocity.x * 4, 0f));
-            if (grounded) rb2d.velocity = new Vector2(0f, rb2d.velocity.y);
+            if (grounded)
+            {
+                rb2d.velocity = new Vector2(rb2d.velocity.x, rb2d.velocity.y);
+            }
         }
     }
 }
