@@ -28,7 +28,7 @@ public class BouncePlatform : MonoBehaviour
     void Update()
     {
         bounceDirection = DegreeToVector2(angle);
-        Debug.DrawRay(gameObject.transform.position, bounceDirection * 2f, Color.red);
+        Debug.DrawRay(gameObject.transform.position, bounceDirection * jumpForce / 10, Color.red);
 
         if (bounceReady == false)
         {
@@ -43,10 +43,11 @@ public class BouncePlatform : MonoBehaviour
 
     }
 
-    void onGizmosDraw()
+    void OnDrawGizmosSelected()
     {
+        bounceDirection = DegreeToVector2(angle);
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(gameObject.transform.position, bounceDirection * 2f);
+        Gizmos.DrawLine(transform.position, transform.position + new Vector3(bounceDirection.x, bounceDirection.y, 0) * jumpForce / 10);
     }
 
     void OnTriggerEnter2D(Collider2D col)
