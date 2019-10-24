@@ -21,8 +21,10 @@ public class PSJumping1 : PlayerState
     [SerializeField] private int indexPSAirborne;
     [SerializeField] private int indexPSClimb;
     [SerializeField] private float jumpIncreaser = 1.5f;
+    [SerializeField] private float jumpIncreaserThreshold = 1.5f;
     private float lastJumpSec;
     private State previous;
+    private float timer;
 
     public override int Update()
     {
@@ -80,13 +82,17 @@ public class PSJumping1 : PlayerState
         {
                 return indexPSAirborne;
         }
-
-        if (!isGrounded() && Vy > 0)
-        {
+       else if (previous.Index != indexPSWallJumping)
+       {
             if (Input.GetButton("Jump"))
             {
-                //Debug.Log("Jump Pressed");
-                rb2d.AddForce(playerCharacter.transform.up * jumpForce * jumpIncreaser);
+                timer -= Time.deltaTime;
+                if (timer > 0)
+                {                    
+                    Debug.Log(timer);
+                    rb2d.AddForce(playerCharacter.transform.up * jumpForce * jumpIncreaser);
+                }
+                
             }
         }
 
@@ -128,6 +134,7 @@ public class PSJumping1 : PlayerState
     public override void OnStateEnter(State previousState)
     {
         previous = previousState;
+        timer = jumpIncreaserThreshold;
         anim.Play("MainCharacter_Jump", -1, 0f);
         //Perform jump
         lastJumpSec = Time.time;
