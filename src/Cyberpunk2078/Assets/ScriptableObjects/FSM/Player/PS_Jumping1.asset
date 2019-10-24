@@ -28,4 +28,4 @@ MonoBehaviour:
   indexPSAirborne: 2
   indexPSClimb: 8
   jumpIncreaser: 3.5
-  jumpIncreaserThreshold: 0.35
+  jumpIncreaserThreshold: 0.4
