@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Events;
 
 
@@ -23,15 +24,22 @@ public enum AttributeType : int
 
     SightRange_c0 = 0xA00,
 
+
     Damage_c0 = 0x1000,
 
+    Knockback_c0 = 0x2000,
 
-    Knowback_c0 = 0x2000,
 
-    Sp_c0 = 0xF110,
+    MaxFatigue_c0 = 0xE000,
 
-    Osp_c0 = 0xF210,
-    Hsp_c0 = 0xF310
+    MaxFatigue_c1 = 0xE001,
+
+
+    SpReward_c0 = 0xF110,
+
+    OspReward_c0 = 0xF210,
+
+    HspReward_c0 = 0xF310,
 }
 
 
@@ -49,9 +57,13 @@ public enum StatisticType : int
     Damage = 0x10,
     Knowback = 0x20,
 
+    MaxFatigue = 0xE0,
+
     Hp = 0xF0,
     Sp = 0xF1,
     Osp = 0xF2,
+    Hsp = 0xF3,
+    Fatigue = 0xF4,
 }
 
 
@@ -179,6 +191,28 @@ public class StatisticSystem
         foreach (IAttributeCollection attributeSet in attributeSets)
             if (attributeSet != null && attributeSet.OnAttributeChange != null)
                 attributeSet.OnAttributeChange.RemoveListener(UpdateChangedStatistics);
+    }
+
+
+    public float Modify(StatisticType statistic, float value)
+    {
+        this[statistic] += value;
+
+        return this[statistic];
+    }
+
+    public float Modify(StatisticType statistic, float value, float max)
+    {
+        this[statistic] = Mathf.Min(max, this[statistic] + value);
+
+        return this[statistic];
+    }
+
+    public float Modify(StatisticType statistic, float value, float min, float max)
+    {
+        this[statistic] += Mathf.Clamp(this[statistic] + value, min, max);
+
+        return this[statistic];
     }
 
 

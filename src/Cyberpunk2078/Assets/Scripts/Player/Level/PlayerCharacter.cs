@@ -41,10 +41,14 @@ public class PlayerCharacter : Dummy
     }
 
 
-    public override float ApplyDamage(int instanceId,float rawDamage, bool overWrite = false)
+    public override float ApplyDamage(float rawDamage)
     {
-        Debug.Log(LogUtility.MakeLogStringFormat("PlayerCharacter", "Take {0} damage.", rawDamage));
+        Debug.Log(LogUtility.MakeLogStringFormat(name, "Take {0} damage.", rawDamage));
+
+
         Player.CurrentPlayer.ApplyHealthChange(-rawDamage);
+
+
         return rawDamage;
     }
     

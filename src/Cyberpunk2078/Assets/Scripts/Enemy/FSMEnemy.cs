@@ -51,11 +51,6 @@ public abstract class EnemyState : State
     {
         Index = index;
     }
-
-
-    public override void OnStateEnter(State previousState) { }
-    //public virtual void OnStateReset() { }
-    public override void OnStateQuit(State nextState) { }
 }
 
 
@@ -90,7 +85,17 @@ public abstract class EnemyState<T> : EnemyState where T : Enemy
             return null;
 
 
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(enemy.transform.position, player.transform.position - enemy.transform.position, Vector2.Distance(enemy.transform.position, player.transform.position), 1 << LayerMask.NameToLayer("Player"));
+        /* Check whether player is in the sight range */
+        float d = Vector2.Distance(enemy.transform.position, player.transform.position);
+
+        if (range > 0 && d > range)
+            return null;
+
+
+        /* Check whether there is something in the way */
+        int collidedLayer = (1 << LayerMask.NameToLayer("Player")) | (1 << LayerMask.NameToLayer("Obstacle"));
+
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(enemy.transform.position, player.transform.position - enemy.transform.position, d, collidedLayer);
 
         if (raycastHit2D.collider && raycastHit2D.collider.gameObject != player.gameObject)
             return null;

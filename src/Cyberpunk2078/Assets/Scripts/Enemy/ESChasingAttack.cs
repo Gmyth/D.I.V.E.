@@ -65,7 +65,7 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
 
         if (dt < 0) // Check if the attack has not been made
         {
-            PlayerCharacter player = IsPlayerInSight(enemy.currentTarget, 10);
+            PlayerCharacter player = IsPlayerInSight(enemy.currentTarget, enemy[StatisticType.SightRange]);
 
             if (player && enemy.GuardZone.Contains(player)) // Check if the target is still available
             {

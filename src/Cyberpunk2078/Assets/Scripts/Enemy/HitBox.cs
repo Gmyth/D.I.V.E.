@@ -40,15 +40,14 @@ public class HitBox : MonoBehaviour
             if (target.State.Name != "Dash" && !objectsHit.Contains(other.gameObject.GetInstanceID()))
             {
                 dummy.OnAttack?.Invoke();
-                target.OnHit?.Invoke();
+                target.OnHit?.Invoke(hit);
 
 
                 if (hit.knockback > 0)
                     target.Knockback(dummy.transform.position, hit.knockback);
 
 
-                target.ApplyDamage(GetInstanceID(), hit.damage);
-
+                target.ApplyDamage(hit.damage);
                 objectsHit.Add(other.gameObject.GetInstanceID());
             }
         }

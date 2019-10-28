@@ -1,7 +1,7 @@
 ﻿using UnityEngine.Events;
 
 
-public class Event<T> : UnityEvent<T, T>
+public class Event<T> : UnityEvent<T>
 {
 }
 

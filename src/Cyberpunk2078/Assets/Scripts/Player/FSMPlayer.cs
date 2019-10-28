@@ -24,11 +24,6 @@ public abstract class PlayerState : State
     }
 
 
-    public override void OnStateEnter(State previousState) { }
-    //public virtual void OnStateReset() { }
-    public override void OnStateQuit(State nextState) { }
-
-
     //Player Ground check
     public bool isGrounded()
     {

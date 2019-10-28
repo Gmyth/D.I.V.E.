@@ -41,8 +41,9 @@ public abstract class Dummy : MonoBehaviour, IDamageable
 {
     [SerializeField] protected StatisticSystem statistics;
 
-    public UnityEvent OnHit { get; private set; } = new UnityEvent();
+    public Event<Hit> OnHit { get; private set; } = new Event<Hit>();
     public UnityEvent OnAttack { get; private set; } = new UnityEvent();
+
 
     public Vector2 GroundNormal
     {
@@ -58,7 +59,7 @@ public abstract class Dummy : MonoBehaviour, IDamageable
     }
 
 
-    public abstract float ApplyDamage(int instanceId, float rawDamage, bool overWrite = false);
+    public abstract float ApplyDamage(float rawDamage);
 
     public abstract void Dead();
 }
