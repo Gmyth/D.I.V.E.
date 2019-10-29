@@ -62,13 +62,9 @@ public class PlayerCharacter : Dummy
     private void Awake()
     {
         if (Singleton)
-        {
             Destroy(gameObject);
-            return;
-        }
-
-
-        Singleton = this;
+        else
+            Singleton = this;
     }
 
     private void Start()

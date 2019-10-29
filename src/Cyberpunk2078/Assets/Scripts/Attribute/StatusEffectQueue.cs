@@ -1,23 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
+
 public class StatusEffectQueue : IAttributeCollection
 {
     private AttributeSet sumAttributes;
     private Dictionary<int, StatusEffect> map;
 
+    //private FibonacciHeap<StatusEffect> pq;
     private List<StatusEffect> list;
     private int current;
 
-    public EventOnAttributeChange OnAttributeChange => new EventOnAttributeChange();
+    public EventOnAttributeChange OnAttributeChange { get; private set; } = new EventOnAttributeChange();
 
-    //public float this[int id]
-    //{
-    //    get
-    //    {
-    //        return sumAttributes[id];
-    //    }
-    //}
 
     public float this[AttributeType type]
     {
@@ -26,6 +21,23 @@ public class StatusEffectQueue : IAttributeCollection
             return sumAttributes[type];
         }
     }
+
+    public bool IsEmpty
+    {
+        get
+        {
+            return current >= list.Count;
+        }
+    }
+
+    public StatusEffect Front
+    {
+        get
+        {
+            return IsEmpty ? null : list[current];
+        }
+    }
+
 
     public StatusEffectQueue()
     {
@@ -36,80 +48,71 @@ public class StatusEffectQueue : IAttributeCollection
         current = 0;
     }
 
-    public bool IsEmpty()
-    {
-        return current >= list.Count;
-    }
 
     public bool Contains(StatusEffect statusEffect)
     {
-        return map.ContainsKey(statusEffect.Id);
+        return map.ContainsKey(statusEffect.Data.Id);
     }
 
-    public bool Push(StatusEffect statusEffect)
+    public void Push(StatusEffect statusEffect)
     {
-        bool result = false;
+        int id = statusEffect.Data.Id;
 
-        int id = statusEffect.Id;
-        if (map.ContainsKey(id))
+
+        switch (statusEffect.Data.DurationStackType)
         {
-            StatusEffect existedStatusEffect = map[id];
+            case StatusEffectDurationStackType.Seperate:
+                throw new System.NotImplementedException();
 
-            bool needReposition = existedStatusEffect.EndTime != statusEffect.EndTime;
 
-            if (!existedStatusEffect.ReachMaxNumStacks())
-            {
-                foreach (KeyValuePair<AttributeType, float> attribute in existedStatusEffect)
-                    sumAttributes.Modify(attribute.Key, -attribute.Value);
+            default:
+                if (map.ContainsKey(id))
+                {
+                    StatusEffect existedStatusEffect = map[id];
 
-                existedStatusEffect.Stack(statusEffect);
+                    float t = existedStatusEffect.EndTime;
 
-                foreach (KeyValuePair<AttributeType, float> attribute in existedStatusEffect)
-                    sumAttributes.Modify(attribute.Key, attribute.Value);
 
-                result = true;
-            }
+                    sumAttributes.Modify(existedStatusEffect.Data.Attributes, OnAttributeChange, existedStatusEffect.Stack(statusEffect));
 
-            if (needReposition)
-            {
-                list.Remove(existedStatusEffect);
-                Insert(existedStatusEffect, current, list.Count - 1);
-            }
+
+                    if (t != existedStatusEffect.EndTime)
+                    {
+                        list.Remove(existedStatusEffect);
+                        Insert(existedStatusEffect, current, list.Count - 1);
+                    }
+                }
+                else
+                {
+                    if (IsEmpty)
+                        list.Add(statusEffect);
+                    else
+                        Insert(statusEffect, current, list.Count - 1);
+
+
+                    map.Add(id, statusEffect);
+
+                    foreach (KeyValuePair<AttributeType, float> attribute in statusEffect)
+                        sumAttributes.Modify(attribute.Key, attribute.Value, OnAttributeChange);
+                }
+                break;
         }
-        else
-        {
-            if (IsEmpty())
-                list.Add(statusEffect);
-            else
-                Insert(statusEffect, current, list.Count - 1);
-
-            map.Add(id, statusEffect);
-
-            foreach (KeyValuePair<AttributeType, float> attribute in statusEffect)
-                sumAttributes.Modify(attribute.Key, attribute.Value);
-
-            result = true;
-        }
-
-        return result;
-    }
-
-    public StatusEffect Top()
-    {
-        return IsEmpty() ? null : list[current];
     }
 
     public StatusEffect Pop()
     {
-        if (IsEmpty())
+        if (IsEmpty)
             return null;
+
 
         StatusEffect statusEffect = list[current++];
 
-        map.Remove(statusEffect.Id);
+        map.Remove(statusEffect.Data.Id);
+
 
         foreach (KeyValuePair<AttributeType, float> attribute in statusEffect)
-            sumAttributes.Modify(attribute.Key, -attribute.Value);
+            sumAttributes.Modify(attribute.Key, -attribute.Value, OnAttributeChange);
+
 
         return statusEffect;
     }
@@ -117,6 +120,7 @@ public class StatusEffectQueue : IAttributeCollection
     public StatusEffect Remove(int id)
     {
         StatusEffect statusEffect = null;
+
 
         if (map.ContainsKey(id))
         {
@@ -134,8 +138,21 @@ public class StatusEffectQueue : IAttributeCollection
                 sumAttributes.Modify(attribute.Key, -attribute.Value);
         }
 
+
         return statusEffect;
     }
+
+
+    public override string ToString()
+    {
+        string s = "";
+
+        for (int i = 0; i < list.Count; i++)
+            s += (i == current ? "->" : "  ") + list[i].ToString() + "\n";
+
+        return s;
+    }
+
 
     private void Insert(StatusEffect statusEffect, int start, int end)
     {
@@ -154,6 +171,7 @@ public class StatusEffectQueue : IAttributeCollection
             Insert(statusEffect, mid, end);
     }
 
+
     public IEnumerator<KeyValuePair<AttributeType, float>> GetEnumerator()
     {
         return sumAttributes.GetEnumerator();
@@ -162,15 +180,5 @@ public class StatusEffectQueue : IAttributeCollection
     IEnumerator IEnumerable.GetEnumerator()
     {
         return sumAttributes.GetEnumerator();
-    }
-
-    public override string ToString()
-    {
-        string s = "";
-
-        for (int i = 0; i < list.Count; i++)
-            s += (i == current ? "->" : "  ") + list[i].ToString() + "\n";
-
-        return s;
     }
 }

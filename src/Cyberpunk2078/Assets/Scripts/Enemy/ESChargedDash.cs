@@ -1,24 +1,17 @@
 ﻿using UnityEngine;
 
 
-public abstract class ESChargedDash<T> : ESAttack<T> where T : Enemy
+public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
 {
-    [SerializeField] private float chargeTime = 1;
+    [Header("Dash Configuration")]
     [SerializeField] private float dashForce = 8000;
     [SerializeField] private float dashDuration = 0.15f;
     [SerializeField] private float stopDistance = 0;
-
-    [Header("Animation")]
-    [SerializeField] private string chargeAnimation = "";
     [SerializeField] private string dashAnimation = "";
 
-    [Header("Connected States")]
-    [SerializeField] private int stateIndex_alert = -1;
-
     private Rigidbody2D rigidbody;
-    private Animator animator;
 
-    private float t;
+    private float t1;
     private bool bDash;
     private bool bStop;
     private Vector3 direction;
@@ -29,54 +22,6 @@ public abstract class ESChargedDash<T> : ESAttack<T> where T : Enemy
         base.Initialize(enemy);
 
         rigidbody = enemy.GetComponent<Rigidbody2D>();
-        animator = enemy.GetComponent<Animator>();
-    }
-
-    public override int Update()
-    {
-        if (Time.time >= t)
-        {
-            if (bDash)
-            {
-                rigidbody.AddForce(direction * dashForce);
-
-                if (stopDistance == 0)
-                    t = Time.time + dashDuration;
-
-                bDash = false;
-
-                if (hitBox >= 0)
-                    enemy.EnableHitBox(hitBox);
-
-
-                animator.Play(dashAnimation);
-            }
-            else if (enemy.GuardZone.Contains(enemy.transform.position) && bStop)
-            {
-                float dx = enemy.currentTarget.transform.position.x - enemy.transform.position.x;
-
-                if (Mathf.Abs(dx) <= stopDistance || dx * direction.x < 0)
-                {
-                    t = Time.time + dashDuration;
-
-                    bStop = false;
-                }
-            }
-            else
-            {
-                Stop();
-
-
-                if (hitBox >= 0)
-                    enemy.DisableHitBox(hitBox);
-
-
-                return stateIndex_alert;
-            }
-        }
-
-
-        return Index;
     }
 
     public override void OnStateEnter(State previousState)
@@ -87,7 +32,7 @@ public abstract class ESChargedDash<T> : ESAttack<T> where T : Enemy
         enemy.OnAttack.AddListener(Stop);
 
 
-        t = Time.time + chargeTime;
+        t1 = float.MaxValue;
         bDash = true;
         bStop = stopDistance != 0;
 
@@ -99,20 +44,63 @@ public abstract class ESChargedDash<T> : ESAttack<T> where T : Enemy
         direction = direction.x > 0 ? groundNormal.Right().normalized : groundNormal.Left().normalized;
 
         AdjustFacingDirection(direction);
-
-
-        animator.Play(chargeAnimation);
     }
 
     public override void OnStateQuit(State nextState)
     {
+        if (hitBox >= 0)
+            enemy.DisableHitBox(hitBox);
+
+
         enemy.OnAttack.RemoveListener(Stop);
+    }
+
+
+    protected override int Attack(float currentTime)
+    {
+        if (currentTime >= t1) // The dash is finished
+        {
+            Stop();
+
+            return stateIndex_alert;
+        }
+        else if (bDash) // Start dashing
+        {
+            rigidbody.AddForce(direction * dashForce);
+
+
+            bDash = false;
+
+            if (!bStop)
+                t1 = Time.time + dashDuration;
+
+
+            if (hitBox >= 0)
+                enemy.EnableHitBox(hitBox);
+
+
+            animator.Play(dashAnimation);
+        }
+        else if (bStop && enemy.GuardZone.Contains(enemy.transform.position)) // During dashing
+        {
+            float dx = enemy.currentTarget.transform.position.x - enemy.transform.position.x;
+
+            if (Mathf.Abs(dx) <= stopDistance || dx * direction.x <= 0)
+            {
+                t1 = Time.time + dashDuration;
+
+                bStop = false;
+            }
+        }
+
+
+        return Index;
     }
 
 
     private void Stop()
     {
-        t = 0;
+        t1 = 0;
         rigidbody.velocity = Vector2.zero;
     }
 }

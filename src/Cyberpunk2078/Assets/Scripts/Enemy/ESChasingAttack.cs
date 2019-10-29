@@ -18,7 +18,6 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
 
     private int previousStateIndex;
 
-    private SpriteRenderer renderer;
     private Rigidbody2D rigidbody;
     private Animator animator;
 
@@ -53,7 +52,7 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
     {
         base.Initialize(enemy);
 
-        renderer = enemy.GetComponent<SpriteRenderer>();
+
         rigidbody = enemy.GetComponent<Rigidbody2D>();
         animator = enemy.GetComponent<Animator>();
     }

@@ -41,6 +41,9 @@ public abstract class Dummy : MonoBehaviour, IDamageable
 {
     [SerializeField] protected StatisticSystem statistics;
 
+    public bool isInvulnerable = false;
+    public bool isEvading = false;
+
     public Event<Hit> OnHit { get; private set; } = new Event<Hit>();
     public UnityEvent OnAttack { get; private set; } = new UnityEvent();
 
@@ -54,8 +57,31 @@ public abstract class Dummy : MonoBehaviour, IDamageable
             if (hit.collider && hit.transform.CompareTag("Ground"))
                 return hit.normal;
 
+
             return Vector2.zero;
         }
+    }
+
+
+    public bool IsOnGround()
+    {
+        Vector3 position = transform.position;
+        Vector3 up = transform.up;
+
+
+        int layerMask = LayerMask.GetMask("Obstacle");
+
+        RaycastHit2D hitM = Physics2D.Raycast(position + new Vector3(0f, -0.7f, 0f), -up, 0.6f, layerMask);
+        RaycastHit2D hitL = Physics2D.Raycast(position + new Vector3(0.12f, -0.7f, 0f), -up, 0.6f, layerMask);
+        RaycastHit2D hitR = Physics2D.Raycast(position + new Vector3(-0.12f, -0.7f, 0f), -up, 0.6f, layerMask);
+
+
+        Debug.DrawRay(position + new Vector3(0f, -0.7f, 0f), -up * 0.6f, Color.red);
+        Debug.DrawRay(position + new Vector3(0.12f, -0.7f, 0f), -up * 0.6f, Color.green);
+        Debug.DrawRay(position + new Vector3(-0.12f, -0.7f, 0f), -up * 0.6f, Color.yellow);
+
+
+        return hitM.collider || hitL.collider || hitR.collider;
     }
 
 
@@ -82,6 +108,7 @@ public abstract class Enemy : Dummy
     [HideInInspector] public Hit currentHit;
 
     public Vector3 lastCheckPointTransform;
+
 
     public float this[StatisticType type]
     {

@@ -155,42 +155,43 @@ public class Player
     
     public bool ApplyHealthChange(float amount)
     {
+        Health = Mathf.Clamp(amount + Health, 0, this[AttributeType.MaxHp_c0]);
+
+
         SpriteRenderer health1 = GameObject.Find("Health1").GetComponent<SpriteRenderer>();
         SpriteRenderer health2 = GameObject.Find("Health2").GetComponent<SpriteRenderer>();
         SpriteRenderer health3 = GameObject.Find("Health3").GetComponent<SpriteRenderer>();
 
-        if (Health < amount)
+        if (health1 && health2 && health3)
         {
-            return false;
+            if (Health > 0)
+                health1.enabled = true;
+            else
+                health1.enabled = false;
+
+            if (Health > 1)
+                health2.enabled = true;
+            else
+                health2.enabled = false;
+
+            if (Health > 2)
+                health3.enabled = true;
+            else
+                health3.enabled = false;
         }
 
-
-        Health = Mathf.Max(Mathf.Min(amount + Health, this[AttributeType.MaxHp_c0]), 0);
-
-        if (Health > 0)
-            health1.enabled = true;
-        else
-            health1.enabled = false;
-
-        if (Health > 1)
-            health2.enabled = true;
-        else
-            health2.enabled = false;
-
-        if (Health > 2)
-            health3.enabled = true;
-        else
-            health3.enabled = false;
 
         if (Health <= 0)
         {
-            //DisableInput
+            // DisableInput
             ObjectRecycler.Singleton.RecycleAll();
             PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 9;
             RestoreHealth();
-            CheckPointManager.Instance.RestoreCheckPoint();
+            CheckPointManager.Instance?.RestoreCheckPoint();
         }
-        return true;
+
+
+        return Health > 0;
     }
     private void RestoreHealth()
     {
@@ -203,49 +204,55 @@ public class Player
 
     private void UIUpdate()
     {
-        
         // temp UI related
         GameObject Energy1 = GameObject.Find("Energy1");
         GameObject Energy2 = GameObject.Find("Energy2");
-        if (normalEnergy == 0 && overloadEnergy > 0)
+
+        if (Energy1 && Energy2)
         {
-            // first energy bar red
-            Energy1.GetComponent<Slider>().value = 1;
-            Energy1.GetComponentInChildren<Image>().color = Color.red;
-            
-            Energy2.GetComponent<Slider>().value = 0;
-            Energy2.GetComponentInChildren<Image>().color = Color.red;
-        }else if (normalEnergy > 0)
-        {
-            Energy1.GetComponent<Slider>().value = 1;
-            Energy1.GetComponentInChildren<Image>().color = Color.blue;
-            
-            if (overloadEnergy > 0)
+            if (normalEnergy == 0 && overloadEnergy > 0)
             {
-                Energy2.GetComponent<Slider>().value = 1;
+                // first energy bar red
+                Energy1.GetComponent<Slider>().value = 1;
+                Energy1.GetComponentInChildren<Image>().color = Color.red;
+
+                Energy2.GetComponent<Slider>().value = 0;
                 Energy2.GetComponentInChildren<Image>().color = Color.red;
+            }
+            else if (normalEnergy > 0)
+            {
+                Energy1.GetComponent<Slider>().value = 1;
+                Energy1.GetComponentInChildren<Image>().color = Color.blue;
+
+                if (overloadEnergy > 0)
+                {
+                    Energy2.GetComponent<Slider>().value = 1;
+                    Energy2.GetComponentInChildren<Image>().color = Color.red;
+                }
+                else
+                {
+                    Energy2.GetComponent<Slider>().value = 0;
+                }
             }
             else
             {
+                Energy1.GetComponent<Slider>().value = 0;
                 Energy2.GetComponent<Slider>().value = 0;
             }
         }
-        else
-        {
-            Energy1.GetComponent<Slider>().value = 0;
-            Energy2.GetComponent<Slider>().value = 0;
-        }
+        
         
         GameObject HealthEnergyUI = GameObject.Find("HealthEnergy");
         GameObject ButtonNotice = GameObject.Find("HealthButton");
-        HealthEnergyUI.GetComponent<Slider>().value = healthEnergy / this[AttributeType.MaxHsp_c0];
-        if (healthEnergy == 100)
+
+        if (HealthEnergyUI && ButtonNotice)
         {
-            ButtonNotice.transform.localScale = new Vector3(0.09541447f,0.206793f,0.4598505f);
-        }
-        else
-        {
-            ButtonNotice.transform.localScale = Vector3.zero;
+            HealthEnergyUI.GetComponent<Slider>().value = healthEnergy / this[AttributeType.MaxHsp_c0];
+
+            if (healthEnergy == 100)
+                ButtonNotice.transform.localScale = new Vector3(0.09541447f, 0.206793f, 0.4598505f);
+            else
+                ButtonNotice.transform.localScale = Vector3.zero;
         }
     }
 }

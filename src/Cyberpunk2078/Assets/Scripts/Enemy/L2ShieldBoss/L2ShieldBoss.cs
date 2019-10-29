@@ -5,9 +5,23 @@ using UnityEngine;
 
 public class L2ShieldBoss : Enemy
 {
+    public AttributeSet modifiers = new AttributeSet();
+
+
     public override float ApplyDamage(float rawDamage)
     {
-        throw new System.NotImplementedException();
+        if (isInvulnerable)
+        {
+            ApplyFatigue(rawDamage);
+            return 0;
+        }
+
+
+        if (statistics.Modify(StatisticType.Hp, -rawDamage) <= 0)
+            Dead();
+
+
+        return rawDamage;
     }
 
     public override void Dead()
@@ -20,10 +34,20 @@ public class L2ShieldBoss : Enemy
         if (statistics.Modify(StatisticType.Fatigue, rawFatigue) >= statistics[StatisticType.MaxFatigue])
         {
             statistics[StatisticType.Fatigue] = 0;
+
             fsm.CurrentStateIndex = 4;
         }
 
 
         return rawFatigue;
+    }
+
+
+    protected override void Start()
+    {
+        base.Start();
+
+
+        currentTarget = PlayerCharacter.Singleton;
     }
 }

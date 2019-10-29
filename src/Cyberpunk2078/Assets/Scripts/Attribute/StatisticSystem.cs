@@ -31,8 +31,9 @@ public enum AttributeType : int
 
 
     MaxFatigue_c0 = 0xE000,
-
     MaxFatigue_c1 = 0xE001,
+    MaxFatigue_c2 = 0xE002,
+    MaxFatigue_m0 = 0xE020,
 
 
     SpReward_c0 = 0xF110,
@@ -90,6 +91,10 @@ public class StatisticSystem
 
             case StatisticType.SightRange:
                 return AttributeSet.Sum(AttributeType.SightRange_c0, attributeSets);
+
+
+            case StatisticType.MaxFatigue:
+                return Mathf.Min(AttributeSet.Sum(AttributeType.MaxFatigue_c2), AttributeSet.Sum(AttributeType.MaxFatigue_c0) + AttributeSet.Sum(AttributeType.MaxFatigue_m0) * AttributeSet.Sum(AttributeType.MaxFatigue_c1));
 
 
             default:

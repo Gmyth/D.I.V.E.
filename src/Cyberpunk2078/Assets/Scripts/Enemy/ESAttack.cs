@@ -5,7 +5,7 @@ public abstract class ESAttack<T> : EnemyState<T> where T : Enemy
 {
     [SerializeField] protected int motionID = -1;
     [SerializeField] protected float damage = 1;
-    [SerializeField] protected float knowback = 0;
+    [SerializeField] protected float knockback = 0;
     [SerializeField] protected int hitBox = -1;
 
     private MotionData motionData;
@@ -38,6 +38,6 @@ public abstract class ESAttack<T> : EnemyState<T> where T : Enemy
 
     protected virtual float CalculateAttackKnowback()
     {
-        return knowback;
+        return knockback;
     }
 }

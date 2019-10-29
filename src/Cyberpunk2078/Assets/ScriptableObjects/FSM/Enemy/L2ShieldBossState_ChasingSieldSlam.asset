@@ -9,19 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: dfae2310580653a46a21f7dfbd2c4249, type: 3}
   m_Name: L2ShieldBossState_ChasingSieldSlam
-  m_EditorClassIdentifier: Assembly-CSharp::L2ShieldBossState_ChasingShieldSlam
+  m_EditorClassIdentifier: 
   motionID: -1
   damage: 1
-  knowback: 0
-  hitBox: -1
-  chasingSpeed: 0
-  attackRange: 0
-  attackHeight: 0
-  motionTime: 0
-  idleAnimation: 
-  chasingAnimation: 
-  attackAnimation: 
-  stateIndex_targetLoss: -1
-  stateIndex_afterAttack: -1
+  knockback: 500
+  hitBox: 0
+  chasingSpeed: 1.5
+  attackRange: 2
+  attackHeight: 5
+  motionTime: 3
+  idleAnimation: L2Cleaner_Idle
+  chasingAnimation: L2Cleaner_Run
+  attackAnimation: L2Cleaner_Melee
+  stateIndex_targetLoss: 0
+  stateIndex_afterAttack: 0
