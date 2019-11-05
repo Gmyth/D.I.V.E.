@@ -69,7 +69,10 @@ public class PlayerCharacter : Dummy
 
     private void Start()
     {
-        dashAtkBox = GetComponentInChildren<Attack>().gameObject;
+        dashAtkBox = GetComponentInChildren<HitBox>().gameObject;
+        if (!dashAtkBox)
+            dashAtkBox = GetComponentInChildren<Attack>().gameObject;
+
         dashAtkBox.SetActive(false);
 
 

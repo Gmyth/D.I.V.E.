@@ -43,3 +43,7 @@ MonoBehaviour:
         value: 100
       - type: 57345
         value: 200
+      - type: 57346
+        value: 500
+      - type: 62480
+        value: 9

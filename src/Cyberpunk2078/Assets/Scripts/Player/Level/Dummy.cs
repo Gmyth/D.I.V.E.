@@ -102,8 +102,9 @@ public abstract class Enemy : Dummy
     [SerializeField][Path(true)] protected Route patrolRoute;
     [SerializeField] protected RangedWeaponConfiguration patrolFiringConfiguration;
 
-    private EnemyData data;
+    protected EnemyData data;
 
+    [HideInInspector] public AttributeSet statusModifiers = new AttributeSet();
     [HideInInspector] public PlayerCharacter currentTarget;
     [HideInInspector] public Hit currentHit;
 
@@ -152,7 +153,7 @@ public abstract class Enemy : Dummy
         data = DataTableManager.singleton.GetEnemyData(typeID);
 
 
-        statistics = new StatisticSystem(data.Attributes);
+        statistics = new StatisticSystem(data.Attributes, statusModifiers);
         statistics[StatisticType.Hp] = statistics[StatisticType.MaxHp];
 
 

@@ -41,6 +41,9 @@ public enum AttributeType : int
     OspReward_c0 = 0xF210,
 
     HspReward_c0 = 0xF310,
+
+    Fatigue_p0 = 0xF410,
+    Fatigue_p1 = 0xF411,
 }
 
 
@@ -94,7 +97,7 @@ public class StatisticSystem
 
 
             case StatisticType.MaxFatigue:
-                return Mathf.Min(AttributeSet.Sum(AttributeType.MaxFatigue_c2), AttributeSet.Sum(AttributeType.MaxFatigue_c0) + AttributeSet.Sum(AttributeType.MaxFatigue_m0) * AttributeSet.Sum(AttributeType.MaxFatigue_c1));
+                return Mathf.Min(AttributeSet.Sum(AttributeType.MaxFatigue_c2, attributeSets), AttributeSet.Sum(AttributeType.MaxFatigue_c0, attributeSets) + AttributeSet.Sum(AttributeType.MaxFatigue_m0, attributeSets) * AttributeSet.Sum(AttributeType.MaxFatigue_c1, attributeSets));
 
 
             default:
@@ -185,8 +188,7 @@ public class StatisticSystem
         this.attributeSets = attributeSets;
 
         foreach (IAttributeCollection attributeSet in attributeSets)
-            if (attributeSet.OnAttributeChange != null)
-                attributeSet.OnAttributeChange.AddListener(UpdateChangedStatistics);
+            attributeSet.OnAttributeChange?.AddListener(UpdateChangedStatistics);
 
         UpdateChangedStatistics(this.attributeSets);
     }
@@ -223,7 +225,7 @@ public class StatisticSystem
 
     public float Sum(AttributeType type)
     {
-        return AttributeSet.Sum(type, attributeSets); //, statusEffects);
+        return AttributeSet.Sum(type, attributeSets);
     }
 
     //    public bool AddStatusEffect(StatusEffect statusEffect)

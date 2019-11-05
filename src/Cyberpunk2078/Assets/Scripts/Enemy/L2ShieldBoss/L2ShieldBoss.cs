@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class L2ShieldBoss : Enemy
 {
-    public AttributeSet modifiers = new AttributeSet();
-
-
     public override float ApplyDamage(float rawDamage)
     {
         if (isInvulnerable)
@@ -31,7 +28,14 @@ public class L2ShieldBoss : Enemy
 
     public float ApplyFatigue(float rawFatigue)
     {
-        if (statistics.Modify(StatisticType.Fatigue, rawFatigue) >= statistics[StatisticType.MaxFatigue])
+        if (fsm.CurrentStateIndex == 4)
+            return 0;
+
+
+        float fatigue = rawFatigue * (1 + statistics.Sum(AttributeType.Fatigue_p0)) * (1 + statistics.Sum(AttributeType.Fatigue_p1));
+
+
+        if (statistics.Modify(StatisticType.Fatigue, fatigue) >= statistics[StatisticType.MaxFatigue])
         {
             statistics[StatisticType.Fatigue] = 0;
 
@@ -39,7 +43,10 @@ public class L2ShieldBoss : Enemy
         }
 
 
-        return rawFatigue;
+        Debug.LogWarningFormat("[L2ShieldBoss] Fatigue: {0} / {1}", statistics[StatisticType.Fatigue], statistics[StatisticType.MaxFatigue]);
+
+
+        return fatigue;
     }
 
 
@@ -49,5 +56,7 @@ public class L2ShieldBoss : Enemy
 
 
         currentTarget = PlayerCharacter.Singleton;
+
+        isInvulnerable = true;
     }
 }

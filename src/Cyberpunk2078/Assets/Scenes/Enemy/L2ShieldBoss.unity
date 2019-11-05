@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -394,6 +394,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08b3a5a6462f38a4a9897415b3c450a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isInvulnerable: 0
+  isEvading: 0
   fsm: {fileID: 11400000, guid: e940c97f4a9914740a98bcbd19d444ce, type: 2}
   dashAtkBox: {fileID: 985340116}
 --- !u!50 &600154767
@@ -683,7 +685,7 @@ GameObject:
   - component: {fileID: 923652462}
   - component: {fileID: 923652461}
   - component: {fileID: 923652460}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: L2ShieldBoss
   m_TagString: Dummy
   m_Icon: {fileID: 0}
@@ -702,6 +704,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60f3f8a12e7017246a42baf88830aa84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isInvulnerable: 1
+  isEvading: 0
   typeID: 67
   fsm: {fileID: 11400000, guid: b39545213b4965c4fa0d4dc34734f41d, type: 2}
   guardZone:
@@ -718,7 +722,12 @@ MonoBehaviour:
     bulletID: 0
     bulletSpeed: 0
   currentTarget: {fileID: 0}
+  currentHit:
+    damage: 0
+    knockback: 0
   lastCheckPointTransform: {x: 0, y: 0, z: 0}
+  modifiers:
+    serializedAttributes: []
 --- !u!114 &923652461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -965,8 +974,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 985340117}
-  - component: {fileID: 985340119}
   - component: {fileID: 985340118}
+  - component: {fileID: 985340120}
   m_Layer: 0
   m_Name: DashAtkBox
   m_TagString: PlayerAttack
@@ -1014,7 +1023,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.30229065, y: 0.32861924}
   m_EdgeRadius: 0
---- !u!114 &985340119
+--- !u!114 &985340120
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1023,12 +1032,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 985340116}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25ed098300f2271409d98a3762211eeb, type: 3}
+  m_Script: {fileID: 11500000, guid: fe89cc77c65cf9c48927595fc1db375e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
-  effectList: 0100000002000000
+  hit:
+    damage: 1
+    knockback: 0
   isFriendly: 1
+  effects: 0100000002000000
 --- !u!1 &1019233352
 GameObject:
   m_ObjectHideFlags: 0
@@ -2602,7 +2613,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe89cc77c65cf9c48927595fc1db375e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hit:
+    damage: 0
+    knockback: 0
   isFriendly: 0
+  effects: 
 --- !u!61 &1169216329
 BoxCollider2D:
   m_ObjectHideFlags: 0

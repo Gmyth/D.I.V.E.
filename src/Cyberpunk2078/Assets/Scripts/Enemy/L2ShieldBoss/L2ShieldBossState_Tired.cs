@@ -44,12 +44,12 @@ public class L2ShieldBossState_Tired : EnemyState<L2ShieldBoss>
 
     private void OnHit(Hit hit)
     {
-        enemy.isInvulnerable = true;
+        enemy.isInvulnerable = false;
 
         enemy.ApplyDamage(1);
-        enemy.modifiers.Modify(AttributeType.MaxFatigue_m0, 1);
+        enemy.statusModifiers.Modify(AttributeType.MaxFatigue_m0, 1);
 
-        enemy.isInvulnerable = false;
+        enemy.isInvulnerable = true;
 
 
         hasHit = true;

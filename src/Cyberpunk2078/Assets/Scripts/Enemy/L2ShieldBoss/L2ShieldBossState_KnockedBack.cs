@@ -24,19 +24,13 @@ public class L2ShieldBossState_KnockedBack : EnemyState<L2ShieldBoss>
 
     public override void OnStateEnter(State previousState)
     {
-        enemy.OnHit.AddListener(OnHit);
-
         t = Time.time + duration;
+
+        enemy.statusModifiers.Set(AttributeType.Fatigue_p1, -0.5f);
     }
 
     public override void OnStateQuit(State nextState)
     {
-        enemy.OnHit.RemoveListener(OnHit);
-    }
-
-
-    private void OnHit(Hit hit)
-    {
-        enemy.ApplyFatigue(hit.damage);
+        enemy.statusModifiers.Set(AttributeType.Fatigue_p1, 0);
     }
 }
