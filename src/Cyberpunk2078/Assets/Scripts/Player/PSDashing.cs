@@ -46,7 +46,7 @@ public class PSDashing : PlayerState
             return indexPSMoving;
         }
 
-        if (Input.GetButtonDown("Jump") && Player.CurrentPlayer.secondJumpReady)
+        if (Input.GetButtonDown("Jump") && Player.CurrentPlayer.secondJumpReady && lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.time)
         {
             Player.CurrentPlayer.secondJumpReady = false;
             return indexPSJumping2;
