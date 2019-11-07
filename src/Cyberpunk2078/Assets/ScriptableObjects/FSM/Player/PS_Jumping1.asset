@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PS_Jumping1
   m_EditorClassIdentifier: 
   Name: 
-  jumpForce: 5
+  jumpForce: 3.5
   wallJumpForce: 8
   speedFactor: 6
   accelerationFactor: 30
@@ -27,5 +27,5 @@ MonoBehaviour:
   indexPSAttackGH: 3
   indexPSAirborne: 2
   indexPSClimb: 8
-  jumpIncreaser: 3.5
-  jumpIncreaserThreshold: 0.4
+  jumpIncreaser: 6
+  jumpIncreaserThreshold: 0.5
