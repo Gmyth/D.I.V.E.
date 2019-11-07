@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfae2310580653a46a21f7dfbd2c4249, type: 3}
+  m_Name: L2ShieldBossState_ChasingSieldSlam
+  m_EditorClassIdentifier: 
+  motionID: -1
+  damage: 1
+  knockback: 500
+  hitBox: 0
+  chasingSpeed: 1.5
+  attackRange: 2
+  attackHeight: 5
+  motionTime: 3
+  idleAnimation: L2Cleaner_Idle
+  chasingAnimation: L2Cleaner_Run
+  attackAnimation: L2Cleaner_Melee
+  stateIndex_targetLoss: 0
+  stateIndex_afterAttack: 0

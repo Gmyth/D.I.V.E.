@@ -8,9 +8,10 @@ public class L2Cleaner : Enemy, IPatroller
 //    public RangedWeaponConfiguration patrolFiringConfiguration;
 
 
-    public override float ApplyDamage(int instanceId, float rawDamage, bool overWrite = false)
+    public override float ApplyDamage(float rawDamage)
     {
         float damage = rawDamage;
+
 
         statistics[StatisticType.Hp] -= damage;
 
@@ -29,7 +30,7 @@ public class L2Cleaner : Enemy, IPatroller
         Boom.transform.localScale = Vector3.one;
 
         EnemyData enemyData = DataTableManager.singleton.GetEnemyData(typeID);
-        Player.CurrentPlayer.AddOverLoadEnergy(enemyData.Attributes[AttributeType.Osp_c0]);
+        Player.CurrentPlayer.AddOverLoadEnergy(enemyData.Attributes[AttributeType.OspReward_c0]);
 
         gameObject.SetActive(false);
         CheckPointManager.Instance.EnterResetPool(gameObject);

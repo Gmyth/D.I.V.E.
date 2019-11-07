@@ -38,7 +38,7 @@ public abstract class EnemyState : State
         {
             RaycastHit2D raycastHit2D = Physics2D.Raycast(enemyPosition, playerPosition - enemyPosition, d, 1 << LayerMask.NameToLayer("Player"));
 
-            if (raycastHit2D.collider && raycastHit2D.collider.gameObject == player.gameObject)
+            if (raycastHit2D.collider == null || raycastHit2D.collider.gameObject == player.gameObject)
                 return player;
         }
 
@@ -51,11 +51,6 @@ public abstract class EnemyState : State
     {
         Index = index;
     }
-
-
-    public override void OnStateEnter(State previousState) { }
-    //public virtual void OnStateReset() { }
-    public override void OnStateQuit(State nextState) { }
 }
 
 
@@ -89,14 +84,42 @@ public abstract class EnemyState<T> : EnemyState where T : Enemy
         if (!player)
             return null;
 
-        
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(enemy.transform.position, player.transform.position - enemy.transform.position, Vector2.Distance(enemy.transform.position, player.transform.position), 1 << LayerMask.NameToLayer("Player"));
 
-        if (!raycastHit2D.collider || raycastHit2D.collider.gameObject != player.gameObject)
+        /* Check whether player is in the sight range */
+        float d = Vector2.Distance(enemy.transform.position, player.transform.position);
+
+        if (range > 0 && d > range)
+            return null;
+
+
+        /* Check whether there is something in the way */
+        int collidedLayer = (1 << LayerMask.NameToLayer("Player")) | (1 << LayerMask.NameToLayer("Obstacle"));
+
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(enemy.transform.position, player.transform.position - enemy.transform.position, d, collidedLayer);
+
+        if (raycastHit2D.collider && raycastHit2D.collider.gameObject != player.gameObject)
             return null;
 
 
         return player;
+    }
+
+    protected Vector2 GetGroundNormal()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, Vector2.down, 3f);
+
+        if (hit.collider && hit.transform.CompareTag("Ground"))
+            return hit.normal;
+
+        return Vector2.zero;
+    }
+
+    protected void AdjustFacingDirection(Vector3 direction)
+    {
+        Vector3 scale = enemy.transform.localScale;
+        scale.x = Mathf.Sign(direction.x) * Mathf.Abs(scale.x);
+
+        enemy.transform.localScale = scale;
     }
 }
 
@@ -123,7 +146,7 @@ public class FSMEnemy : FiniteStateMachine<EnemyState>
             //else
             {
 #if UNITY_EDITOR
-                Debug.Log(LogUtility.MakeLogStringFormat(GetType().Name, "Make transition from state {0} to {1}", currentStateIndex, value));
+                Debug.Log(LogUtility.MakeLogStringFormat(GetType().Name, "Make transition from state {0} to {1}", states[currentStateIndex].name, states[value].name));
 #endif
 
                 int previousStateIndex = currentStateIndex;

@@ -3,33 +3,89 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatusEffectData
+
+public enum StatusEffectDurationStackType
 {
-    public int MaxNumStacks;
-    public string Name;
-    public string Attributes;
+    Min,
+    Seperate,
+    Max,
 }
 
-public class StatusEffect : IAttributeCollection, IComparable
+
+[Serializable] public class StatusEffectData : DataTableEntry
 {
-    private readonly AttributeSet attributes;
+    [SerializeField] private int id;
+    [SerializeField] private string name;
+    [SerializeField] private int maxNumStacks;
+    [SerializeField] private StatusEffectDurationStackType durationStackType;
+    [SerializeField] private AttributeSet attributes;
 
-    public StatusEffectData Data { get; internal set; }
 
-    public int Id { get; internal set; }
+    public override int Index
+    {
+        get
+        {
+            return id;
+        }
+    }
 
-    public int NumStacks { get; internal set; }
-    public float EndTime { get; internal set; }
-    
+    public int Id
+    {
+        get
+        {
+            return id;
+        }
+    }
+
+    public string Name
+    {
+        get
+        {
+            return name;
+        }
+    }
+
     public int MaxNumStacks
     {
         get
         {
-            return Data.MaxNumStacks;
+            return maxNumStacks;
         }
     }
 
-    public EventOnAttributeChange OnAttributeChange => new EventOnAttributeChange();
+    public StatusEffectDurationStackType DurationStackType
+    {
+        get
+        {
+            return durationStackType;
+        }
+    }
+
+    public AttributeSet Attributes
+    {
+        get
+        {
+            return attributes;
+        }
+    }
+
+    public override int GetHashCode()
+    {
+        return id.GetHashCode();
+    }
+}
+
+
+public class StatusEffect : IAttributeCollection, IComparable
+{
+    public StatusEffectData Data { get; internal set; }
+
+    public int NumStacks { get; internal set; }
+
+    public float EndTime { get; internal set; }
+    
+
+    public EventOnAttributeChange OnAttributeChange { get; internal set; } = new EventOnAttributeChange();
 
     //public float this[int id]
     //{
@@ -43,7 +99,7 @@ public class StatusEffect : IAttributeCollection, IComparable
     {
         get
         {
-            return attributes[type] * NumStacks;
+            return Data.Attributes[type] * NumStacks;
         }
     }
 
@@ -51,28 +107,45 @@ public class StatusEffect : IAttributeCollection, IComparable
     {
     }
 
-    public StatusEffect(int id, float duration, int numStacks = 1)
+    public StatusEffect(StatusEffectData data, float duration, int numStacks = 1)
     {
-        Id = id;
-        EndTime = Time.time + duration;
+        Data = data;
         NumStacks = numStacks;
-
-        attributes = AttributeSet.Parse(Data.Attributes);
+        EndTime = Time.time + duration;
     }
+
 
     public bool ReachMaxNumStacks()
     {
-        return NumStacks == MaxNumStacks;
+        return NumStacks == Data.MaxNumStacks;
     }
 
-    internal void Stack(StatusEffect other)
+
+    public int Stack(StatusEffect other)
     {
-        if (NumStacks != MaxNumStacks)
-            NumStacks = Math.Min(NumStacks + other.NumStacks, MaxNumStacks);
+        int n = NumStacks;
 
-        if (other.EndTime > EndTime)
-            EndTime = other.EndTime;
+
+        if (n != Data.MaxNumStacks)
+            NumStacks = Math.Min(NumStacks + other.NumStacks, Data.MaxNumStacks);
+
+
+        switch (Data.DurationStackType)
+        {
+            case StatusEffectDurationStackType.Min:
+                EndTime = Mathf.Min(EndTime, other.EndTime);
+                break;
+
+
+            case StatusEffectDurationStackType.Max:
+                EndTime = Mathf.Max(EndTime, other.EndTime);
+                break;
+        }
+
+
+        return NumStacks - n;
     }
+
 
     public int CompareTo(StatusEffect other)
     {
@@ -84,6 +157,7 @@ public class StatusEffect : IAttributeCollection, IComparable
         return CompareTo((StatusEffect)obj);
     }
 
+
     public IEnumerator<KeyValuePair<AttributeType, float>> GetEnumerator()
     {
         return new Enumerator(this);
@@ -94,21 +168,19 @@ public class StatusEffect : IAttributeCollection, IComparable
         return new Enumerator(this);
     }
 
-    public override string ToString()
-    {
-        return string.Format("[{0}][x{1}/{2}] Id:{3} Name:{4} Attributes:{5}", EndTime, NumStacks, MaxNumStacks, Id, Data.Name, attributes);
-    }
 
     public class Enumerator : IEnumerator<KeyValuePair<AttributeType, float>>
     {
         private int numStacks;
         private IEnumerator<KeyValuePair<AttributeType, float>> attributeSetEnumerator;
 
+
         public Enumerator(StatusEffect statusEffect)
         {
             numStacks = statusEffect.NumStacks;
-            attributeSetEnumerator = statusEffect.attributes.GetEnumerator();
+            attributeSetEnumerator = statusEffect.Data.Attributes.GetEnumerator();
         }
+
 
         public KeyValuePair<AttributeType, float> Current
         {
@@ -125,6 +197,7 @@ public class StatusEffect : IAttributeCollection, IComparable
                 return Current;
             }
         }
+
 
         public void Dispose() {}
 

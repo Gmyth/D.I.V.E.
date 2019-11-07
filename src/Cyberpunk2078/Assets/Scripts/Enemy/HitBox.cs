@@ -2,17 +2,35 @@
 using UnityEngine;
 
 
+[System.Serializable] public struct Hit
+{
+    public float damage;
+    public float knockback;
+}
+
+
 [RequireComponent(typeof(Collider2D))]
 public class HitBox : MonoBehaviour
 {
-    public float damage = 1;
+    public Hit hit;
     public bool isFriendly = false;
+    [SerializeField] private int[] effects;
 
+    private Dummy dummy;
     private HashSet<int> objectsHit = new HashSet<int>();
 
 
     private void Start()
     {
+        dummy = GetComponentInParent<Dummy>();
+
+        objectsHit.Clear();
+    }
+
+    private void OnEnable()
+    {
+        dummy = GetComponentInParent<Dummy>();
+
         objectsHit.Clear();
     }
 
@@ -21,20 +39,65 @@ public class HitBox : MonoBehaviour
     {
         if (isFriendly)
         {
+            if (other.tag == "Dummy")
+            {
+                Enemy enemy = other.GetComponent<Enemy>();
+                int id = enemy.gameObject.GetInstanceID();
 
+                if (!enemy.isEvading && !objectsHit.Contains(id))
+                {
+                    dummy.OnAttack?.Invoke();
+                    enemy.OnHit?.Invoke(hit);
+
+                    enemy.ApplyDamage(hit.damage);
+                    objectsHit.Add(id);
+
+
+                    CreateRandomEffect(enemy.transform);
+                }
+            }
         }
         else if (other.tag == "Player")
         {
-            if (!objectsHit.Contains(other.gameObject.GetInstanceID()))
+            PlayerCharacter player = other.GetComponent<PlayerCharacter>();
+            int id = player.gameObject.GetInstanceID();
+
+            if (player.State.Name != "Dash" && !objectsHit.Contains(id))
             {
-                PlayerCharacter player = other.GetComponent<PlayerCharacter>();
-
-                if (player.State.Name != "Dash")
-                    objectsHit.Add(other.gameObject.GetInstanceID());
+                dummy.OnAttack?.Invoke();
+                player.OnHit?.Invoke(hit);
 
 
-                other.GetComponent<PlayerCharacter>().ApplyDamage(GetInstanceID(), damage);
+                if (hit.knockback > 0)
+                    player.Knockback(dummy.transform.position, hit.knockback);
+
+
+                player.ApplyDamage(hit.damage);
+                objectsHit.Add(id);
+
+
+                CreateRandomEffect(player.transform);
             }
         }
+    }
+
+
+    private SingleEffect CreateRandomEffect(Transform targetTransform)
+    {
+        if (effects.Length == 0)
+            return null;
+            
+
+        SingleEffect effect = ObjectRecycler.Singleton.GetObject<SingleEffect>(effects[Random.Range(0, effects.Length)]);
+        effect.transform.position = targetTransform.position - (targetTransform.position - transform.position) * 0.2f;
+        effect.transform.right = transform.right;
+        effect.transform.localScale = Vector3.one;
+
+        effect.setTarget(targetTransform);
+        
+        effect.gameObject.SetActive(true);
+
+
+        return effect;
     }
 }

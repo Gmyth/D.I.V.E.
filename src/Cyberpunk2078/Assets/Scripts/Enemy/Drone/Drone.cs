@@ -37,37 +37,15 @@ public class Drone : Enemy, IPatroller
     }
 
 
-    public override float ApplyDamage(int instanceId, float rawDamage, bool overWrite)
+    public override float ApplyDamage(float rawDamage)
     {
-        float value;
-        if (damageList.TryGetValue(instanceId, out value) && overWrite)
-        {
-            // Already hit by this attack but ok for damage again
-            if (value + DamageCD < Time.time)
-            {
-                Debug.Log(LogUtility.MakeLogStringFormat("Enemy", "Take {0} damage.", rawDamage));
-                Health = Mathf.Max(Mathf.Min(Health - rawDamage, HealthCap), 0); ;
-                if (Health <= 0)
-                {
-                    // dead
-                    Dead();
-                }
-            }
-        }
-        else
-        {
-            // new attack coming
-            Debug.Log(LogUtility.MakeLogStringFormat("Enemy", "Take {0} damage.", rawDamage));
-            Health = Mathf.Max(Mathf.Min(Health - rawDamage, HealthCap), 0); ;
-            if (Health <= 0)
-            {
-                // dead
-                Dead();
-            }
-        }
-        
-        if (!damageList.ContainsKey(instanceId)) damageList.Add(instanceId, Time.time);
-        else damageList[instanceId] = Time.time;
+        Debug.Log(LogUtility.MakeLogStringFormat(name, "Take {0} damage.", rawDamage));
+
+
+        Health = Mathf.Max(Mathf.Min(Health - rawDamage, HealthCap), 0);
+
+        if (Health <= 0)
+            Dead();
 
 
         return rawDamage;
@@ -81,7 +59,7 @@ public class Drone : Enemy, IPatroller
         Boom.transform.localScale = Vector3.one;
         
         EnemyData enemyData = DataTableManager.singleton.GetEnemyData(typeID);
-        Player.CurrentPlayer.AddOverLoadEnergy(enemyData.Attributes[AttributeType.Osp_c0]);
+        Player.CurrentPlayer.AddOverLoadEnergy(enemyData.Attributes[AttributeType.OspReward_c0]);
 
         
         for(int i = 0; i < 5; i++){

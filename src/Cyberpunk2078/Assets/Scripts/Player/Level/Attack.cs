@@ -1,13 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.VFX;
+
 
 public class Attack : MonoBehaviour
 {
     [SerializeField] private float damage = 1;
     [SerializeField] private int[] effectList;
     public bool isFriendly = false;
+
+
+    HashSet<int> objectsHit = new HashSet<int>();
     
 
     public void  setDamage(float amount)
@@ -30,7 +32,9 @@ public class Attack : MonoBehaviour
                 VFX.setTarget(other.transform);
                 VFX.transform.localScale = Vector3.one;
                 VFX.gameObject.SetActive(true);
-                other.GetComponent<Dummy>().ApplyDamage(GetInstanceID(),damage);
+
+                other.GetComponent<Dummy>().ApplyDamage(damage);
+                objectsHit.Add(other.gameObject.GetInstanceID());
             }
         }
         else if (other.tag == "Player")
@@ -38,7 +42,9 @@ public class Attack : MonoBehaviour
             if (other.GetComponent<PlayerCharacter>().State.Name != "Dash")
             {
                 ObjectRecycler.Singleton.GetObject<SingleEffect>(getRandomEffect());
-                other.GetComponent<PlayerCharacter>().ApplyDamage(GetInstanceID(),damage);
+
+                other.GetComponent<PlayerCharacter>().ApplyDamage(damage);
+                objectsHit.Add(other.gameObject.GetInstanceID());
             }
         }
         
@@ -53,5 +59,11 @@ public class Attack : MonoBehaviour
         }
 
         return effectList[0];
+    }
+
+
+    private void OnEnable()
+    {
+        objectsHit.Clear();
     }
 }

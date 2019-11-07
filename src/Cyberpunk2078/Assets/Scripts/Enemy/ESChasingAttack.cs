@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 
 
-public abstract class ESChasingAttack<T> : EnemyState<T> where T : Enemy
+public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
 {
     [Header("Configuration")]
     [SerializeField] private float chasingSpeed;
     [SerializeField][Min(0)] private float attackRange;
     [SerializeField][Min(0)] private float attackHeight;
-    [SerializeField][Min(0)] private float attackDamage = 1;
     [SerializeField] private float motionTime;
     [SerializeField] private string idleAnimation = "";
     [SerializeField] private string chasingAnimation = "";
@@ -19,7 +18,6 @@ public abstract class ESChasingAttack<T> : EnemyState<T> where T : Enemy
 
     private int previousStateIndex;
 
-    private SpriteRenderer renderer;
     private Rigidbody2D rigidbody;
     private Animator animator;
 
@@ -54,7 +52,7 @@ public abstract class ESChasingAttack<T> : EnemyState<T> where T : Enemy
     {
         base.Initialize(enemy);
 
-        renderer = enemy.GetComponent<SpriteRenderer>();
+
         rigidbody = enemy.GetComponent<Rigidbody2D>();
         animator = enemy.GetComponent<Animator>();
     }
@@ -66,7 +64,7 @@ public abstract class ESChasingAttack<T> : EnemyState<T> where T : Enemy
 
         if (dt < 0) // Check if the attack has not been made
         {
-            PlayerCharacter player = IsPlayerInSight(enemy.currentTarget, 10);
+            PlayerCharacter player = IsPlayerInSight(enemy.currentTarget, enemy[StatisticType.SightRange]);
 
             if (player && enemy.GuardZone.Contains(player)) // Check if the target is still available
             {
@@ -85,14 +83,11 @@ public abstract class ESChasingAttack<T> : EnemyState<T> where T : Enemy
 
                     if (playerPosition.y - enemyPosition.y <= attackHeight) // Check if the target is low enough to get hit
                     {
-                        Vector2 direction = d > 0 ? Vector2.right : Vector2.left;
+                        AdjustFacingDirection(d > 0 ? Vector2.right : Vector2.left);
 
-                        Vector3 scale = enemy.transform.localScale;
-                        scale.x = Mathf.Sign(d) * Mathf.Abs(scale.x);
-
-                        enemy.transform.localScale = scale;
 
                         t = Time.time;
+
 
                         if (attackAnimation != "")
                             animator.Play(attackAnimation, -1, 0f);
@@ -102,10 +97,7 @@ public abstract class ESChasingAttack<T> : EnemyState<T> where T : Enemy
                 {
                     Vector2 direction = d > 0 ? Vector2.right : Vector2.left;
 
-                    Vector3 scale = enemy.transform.localScale;
-                    scale.x = Mathf.Sign(d) * Mathf.Abs(scale.x);
-
-                    enemy.transform.localScale = scale;
+                    AdjustFacingDirection(direction);
 
                     rigidbody.velocity = direction * chasingSpeed;
 
@@ -128,19 +120,15 @@ public abstract class ESChasingAttack<T> : EnemyState<T> where T : Enemy
         return stateIndex_afterAttack < 0 ? previousStateIndex : stateIndex_afterAttack;
     }
 
+
     public override void OnStateEnter(State previousState)
     {
-        enemy.currentAttackDamage = CalculateAttackDamage(attackDamage);
+        base.OnStateEnter(previousState);
+
 
         isMoving = false;
 
         previousStateIndex = previousState.Index;
         t = float.MaxValue;
-    }
-
-
-    protected virtual float CalculateAttackDamage(float baseDamage)
-    {
-        return baseDamage;
     }
 }
