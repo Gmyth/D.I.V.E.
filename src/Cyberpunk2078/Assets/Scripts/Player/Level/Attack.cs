@@ -28,7 +28,7 @@ public class Attack : MonoBehaviour
                     other.transform.position - (other.transform.position - transform.position) * 0.2f;
                 VFX.transform.right = transform.right;
                 VFX.setTarget(other.transform);
-                VFX.transform.localScale = Vector3.one;
+                VFX.transform.localScale = new Vector3(4,1,1);
                 VFX.gameObject.SetActive(true);
                 other.GetComponent<Dummy>().ApplyDamage(GetInstanceID(),damage);
             }

@@ -198,9 +198,20 @@ public class PSDashing : PlayerState
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         var mouse = GameObject.FindObjectOfType<MouseIndicator>();
         
+      
+        
         //get Mouse direction
         Vector3 direction = getDirectionCorrection(mouse.getAttackDirection(),GroundNormal());
         
+        
+        var VFX = ObjectRecycler.Singleton.GetObject<SingleEffect>(6);
+        VFX.transform.position = playerCharacter.transform.position +  direction * 0.2f;
+        VFX.setTarget(playerCharacter.transform);
+        
+        VFX.transform.right = direction;
+        VFX.transform.localScale = new Vector3(4,4,1);
+        VFX.gameObject.SetActive(true);
+
         //set correct Y flip based on mouse direction
         if (direction.x < 0 && direction.y != 0) playerCharacter.GetComponent<SpriteRenderer>().flipY = true;
         
