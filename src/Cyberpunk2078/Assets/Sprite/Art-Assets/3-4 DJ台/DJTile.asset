@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DJTile
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: 92f1afea08c55fd4a89c0cb2072d29b0, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.37254903}
   m_Transform:
     e00: 1
     e01: 0
