@@ -132,7 +132,7 @@ public class PSDashing : PlayerState
             Apply = false;
             return;
         }
-
+        
         Apply = true;
         //Dash has been pressed, set all config first
         //After delay is over, dash perform
@@ -205,12 +205,22 @@ public class PSDashing : PlayerState
         
         
         var VFX = ObjectRecycler.Singleton.GetObject<SingleEffect>(6);
-        VFX.transform.position = playerCharacter.transform.position +  direction * 0.2f;
+        VFX.transform.position = playerCharacter.transform.position +  direction * 0.5f;
         VFX.setTarget(playerCharacter.transform);
         
         VFX.transform.right = direction;
         VFX.transform.localScale = new Vector3(4,4,1);
         VFX.gameObject.SetActive(true);
+        
+        
+        
+        var trail = ObjectRecycler.Singleton.GetObject<SingleEffect>(7);
+        trail.transform.position = playerCharacter.transform.position;
+        trail.setTarget(playerCharacter.transform);
+        
+        trail.transform.right = -direction;
+        trail.transform.localScale = new Vector3(7,1,1);
+        trail.gameObject.SetActive(true);
 
         //set correct Y flip based on mouse direction
         if (direction.x < 0 && direction.y != 0) playerCharacter.GetComponent<SpriteRenderer>().flipY = true;
