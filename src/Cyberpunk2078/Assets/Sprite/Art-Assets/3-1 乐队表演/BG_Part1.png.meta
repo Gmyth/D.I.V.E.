@@ -86,8 +86,8 @@ TextureImporter:
     serializedVersion: 2
     sprites: []
     outline:
-    - - {x: -1419.5, y: -568}
-      - {x: -1419.5, y: 568}
+    - - {x: -689.5, y: -568}
+      - {x: -693.5, y: 568}
       - {x: 590.5, y: 568}
       - {x: 592.5, y: -568}
     physicsShape: []
