@@ -18,9 +18,10 @@ MonoBehaviour:
   dashReleaseTime: 0.1
   dashReleaseDelayTime: 0.05
   inDashingDragFactor: 6
+  JumpListenerInterval: 0.2
   EnergyConsume: 1
   indexPSIdle: 0
   indexPSMoving: 1
-  indexPSJumping2: 0
+  indexPSJumping1: 4
   indexWallJumping: 7
   indexPSAirborne: 2

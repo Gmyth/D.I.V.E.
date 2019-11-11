@@ -14,7 +14,8 @@ public abstract class PlayerState : State
     protected Animator anim;
     protected bool flip;
     protected bool grounded;
-
+    protected float lastGroundedSec;
+    
     public virtual void Initialize(int index, PlayerCharacter playerCharacter)
     {
         Index = index;

@@ -4,11 +4,14 @@
 [CreateAssetMenuAttribute(fileName = "PS_Airborne", menuName = "Player State/Airborne")]
 public class PSAirborne : PlayerState
 {
+
+    [SerializeField] private float JumpTolerance;
+    
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSMoving;
     [SerializeField] private int indexPSAttackGH;
     [SerializeField] private int indexPSWallJumping;
-    [SerializeField] private int indexPSJumping2;
+    [SerializeField] private int indexPSJumping1;
     [SerializeField] private int indexPSDashing;
     [SerializeField] private int indexPSClimb;
 
@@ -42,12 +45,10 @@ public class PSAirborne : PlayerState
         else if (dir == Direction.Left && h < 0) { return indexPSWallJumping; }
 
 
-        //if (Input.GetButtonDown("Jump") && Player.CurrentPlayer.secondJumpReady)
-        //{
-            
-        //    Player.CurrentPlayer.secondJumpReady = false;
-        //    return indexPSJumping2;
-        //}
+        if (Input.GetButtonDown("Jump") && Time.time <  lastGroundedSec+ JumpTolerance)
+        {
+            return indexPSJumping1;
+        }
 
         
         if (Input.GetButtonDown("Dashing"))
@@ -68,6 +69,11 @@ public class PSAirborne : PlayerState
     public override void OnStateEnter(State previousState)
     {
         // Add Ghost trail
+        if (previousState.Index == indexPSIdle || previousState.Index == indexPSMoving)
+        {
+            lastGroundedSec = Time.time;
+        }
+        
         previous = previousState;
         anim.Play("MainCharacter_Airborne", -1, 0f);
     }

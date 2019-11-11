@@ -12,11 +12,13 @@ public class PSDashing : PlayerState
     [SerializeField] private float dashReleaseTime = 0.22f; // time to recover rb2d setting after dashing process finished
     [SerializeField] private float dashReleaseDelayTime = 0.05f; // time from dash finish to actual controllable
     [SerializeField] private float inDashingDragFactor = 3; // In-dash drag factor
+    
+    [SerializeField] private float JumpListenerInterval = 0.2f;
     [SerializeField] private float EnergyConsume = -70; // In-dash drag factor
     
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSMoving;
-    [SerializeField] private int indexPSJumping2;
+    [SerializeField] private int indexPSJumping1;
     [SerializeField] private int indexWallJumping;
     [SerializeField] private int indexPSAirborne;
 
@@ -25,7 +27,8 @@ public class PSDashing : PlayerState
     private float defaultDrag;
     private bool readyToPush;
     private bool Apply = true;
-
+    private float lastJumpInput;
+    
 
     public override int Update()
     {
@@ -46,10 +49,18 @@ public class PSDashing : PlayerState
             return indexPSMoving;
         }
 
-        if (Input.GetButtonDown("Jump") && Player.CurrentPlayer.secondJumpReady && lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.time)
+        if (Input.GetButtonDown("Jump"))
         {
-            Player.CurrentPlayer.secondJumpReady = false;
-            return indexPSJumping2;
+            if (Player.CurrentPlayer.secondJumpReady && lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.time)
+            {
+                Player.CurrentPlayer.secondJumpReady = false;
+                return indexPSJumping1;
+            }
+            else
+            {
+                // save jump for later
+                lastJumpInput = Time.time;
+            }
         }
 
         if (lastDashSecond + dashDelayTime < Time.time && readyToPush)
@@ -73,10 +84,14 @@ public class PSDashing : PlayerState
             PhysicsInputHelper(h);
             setAtkBox(false);
             
-
-            
         } else if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.time)
         {
+            //cast listened jump right after dash finish
+            if (Input.GetButtonDown("Jump"))
+            {
+                Player.CurrentPlayer.secondJumpReady = false;
+                    return indexPSJumping1;
+            }
             // the dash has already ended
             // ok for move input
             PhysicsInputHelper(h);
