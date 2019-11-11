@@ -6,12 +6,21 @@ using UnityEngine;
 [CreateAssetMenuAttribute(fileName = "PS_Jumping1", menuName = "Player State/Attack Jumping 1")]
 public class PSJumping1 : PlayerState
 {
-    [SerializeField] private float jumpForce = 8;
-    [SerializeField] private float wallJumpForce = 8;
-    [SerializeField] private float speedFactor = 3;
-    [SerializeField] private float accelerationFactor = 20;
-    [SerializeField] private float jumpCD = 0.02f;
-    [SerializeField] private float wallJumpCD;
+    [Header( "Normal" )]
+    [SerializeField] private float n_jumpForce = 8;
+    [SerializeField] private float n_wallJumpForce = 8;
+    [SerializeField] private float n_speedFactor = 3;
+    [SerializeField] private float n_accelerationFactor = 20;
+    [SerializeField] private float n_wallJumpCD;
+    
+    [Header( "Fever" )]
+    [SerializeField] private float f_jumpForce = 8;
+    [SerializeField] private float f_wallJumpForce = 8;
+    [SerializeField] private float f_speedFactor = 3;
+    [SerializeField] private float f_accelerationFactor = 20;
+    [SerializeField] private float f_wallJumpCD;
+    
+    [Header( "Transferable States" )]
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSMoving;
     [SerializeField] private int indexJumping2;
@@ -28,12 +37,30 @@ public class PSJumping1 : PlayerState
 
     public override int Update()
     {
+        
+        var jumpForce =  n_jumpForce;
+        var speedFactor = n_speedFactor;
+        var accelerationFactor = n_accelerationFactor;
+        var wallJumpCD = n_wallJumpCD;
+        if (Player.CurrentPlayer.Fever)
+        {
+            jumpForce =  f_jumpForce;
+            speedFactor = f_speedFactor; 
+            accelerationFactor = f_accelerationFactor;
+            wallJumpCD = f_wallJumpCD;
+        }
+        
         playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
         float h = Input.GetAxis("Horizontal");
         flip = h < 0;
         
+        // Energy Cost
+        if (Player.CurrentPlayer.Fever)
+        {
+            Player.CurrentPlayer.CostFeverEnergy(Time.time);
+        }
 
         //Still support Horizontal update during jumping, delete following to kill Horizontal input
          PhysicsInputHelper(h,speedFactor,accelerationFactor);
@@ -67,10 +94,6 @@ public class PSJumping1 : PlayerState
              }
          }
          
-         if (Input.GetButtonDown("HealthConsume"))
-         {
-             Player.CurrentPlayer.CostHealthEnergy();
-         }
          
          if (Input.GetAxis("Vertical") > 0 && isCloseTo("Ladder") != Direction.None)
         {
@@ -133,6 +156,9 @@ public class PSJumping1 : PlayerState
 
     public override void OnStateEnter(State previousState)
     {
+        var jumpForce = Player.CurrentPlayer.Fever?f_jumpForce : n_jumpForce;
+        var wallJumpForce = Player.CurrentPlayer.Fever? f_wallJumpForce : n_wallJumpForce;
+        
         previous = previousState;
         timer = jumpIncreaserThreshold;
         anim.Play("MainCharacter_Jump", -1, 0f);

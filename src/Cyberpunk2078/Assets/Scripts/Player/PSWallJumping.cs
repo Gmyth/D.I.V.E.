@@ -4,10 +4,17 @@
 [CreateAssetMenuAttribute(fileName = "PS_WallJumping", menuName = "Player State/Wall Jumping")]
 public class PSWallJumping: PlayerState
 {
-    [SerializeField] private float jumpForce = 4.5f;
-    [SerializeField] private float jumpSpeed = 10f;
-    [SerializeField] private float stickWallTime = 0.25f;
-    [SerializeField] private float wallCheckCoolDown = 0.25f;
+    [Header("Normal")]
+    [SerializeField] private float n_jumpForce = 4.5f;
+    [SerializeField] private float n_jumpSpeed = 10f;
+    [SerializeField] private float n_stickWallTime = 0.25f;
+    [SerializeField] private float n_wallCheckCoolDown = 0.25f;
+    [Header("Fever")]
+    [SerializeField] private float f_jumpForce = 4.5f;
+    [SerializeField] private float f_jumpSpeed = 10f;
+    [SerializeField] private float f_stickWallTime = 0.25f;
+    [SerializeField] private float f_wallCheckCoolDown = 0.25f;
+    
     [SerializeField] private int index_PSIdle;
     [SerializeField] private int index_PSMoving;
     [SerializeField] private int index_PSJumping1;
@@ -24,16 +31,31 @@ public class PSWallJumping: PlayerState
     private float lastOnWallTime;
     public override int Update()
     {
-        var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-        
+        var jumpSpeed = n_jumpSpeed;
+        var stickWallTime = n_stickWallTime;
+        var wallCheckCoolDown = n_wallCheckCoolDown;
+        if (Player.CurrentPlayer.Fever)
+        {
+            jumpSpeed = f_jumpSpeed;
+            stickWallTime = f_stickWallTime;
+            wallCheckCoolDown = f_wallCheckCoolDown;
+        }
 
+
+        var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         
         if (onWall && Time.time > lastStickTime + stickWallTime)
         {
             //stick over, falling start
             rb2d.gravityScale = 3;
         }
-
+        
+        // Energy Cost
+        if (Player.CurrentPlayer.Fever)
+        {
+            Player.CurrentPlayer.CostFeverEnergy(Time.time);
+        }
+        
         float Vy = rb2d.velocity.y;
         float h = Input.GetAxis("Horizontal");
         
@@ -133,10 +155,7 @@ public class PSWallJumping: PlayerState
         if (Input.GetButtonDown("Dashing"))
             return index_PSDashing;
         
-        if (Input.GetButtonDown("HealthConsume"))
-        {
-            Player.CurrentPlayer.CostHealthEnergy();
-        }
+        
         
         return Index;
     }
@@ -170,6 +189,8 @@ public class PSWallJumping: PlayerState
 
     private void sideWallJump()
     {
+        var jumpForce = Player.CurrentPlayer.Fever?f_jumpForce: n_jumpForce;
+        
         //Perform jump
         anim.Play("MainCharacter_Jump", -1, 0f);
         

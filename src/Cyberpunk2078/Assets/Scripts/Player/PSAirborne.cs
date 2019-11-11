@@ -4,9 +4,13 @@
 [CreateAssetMenuAttribute(fileName = "PS_Airborne", menuName = "Player State/Airborne")]
 public class PSAirborne : PlayerState
 {
-
-    [SerializeField] private float JumpTolerance;
+    [Header( "Normal" )]
+    [SerializeField] private float n_jumpTolerance;
     
+    [Header( "Fever" )]
+    [SerializeField] private float f_jumpTolerance;
+    
+    [Header( "Transferable States" )]
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSMoving;
     [SerializeField] private int indexPSAttackGH;
@@ -19,13 +23,14 @@ public class PSAirborne : PlayerState
 
     public override int Update()
     {
-
+        var jumpTolerance = Player.CurrentPlayer.Fever ? f_jumpTolerance : n_jumpTolerance;
         float h = Input.GetAxis("Horizontal");
         PhysicsInputHelper(h);
 
-        if (Input.GetButtonDown("HealthConsume"))
+        // Energy Cost
+        if (Player.CurrentPlayer.Fever)
         {
-            Player.CurrentPlayer.CostHealthEnergy();
+            Player.CurrentPlayer.CostFeverEnergy(Time.time);
         }
 
         if (Input.GetAxis("Attack1") > 0)
@@ -45,7 +50,7 @@ public class PSAirborne : PlayerState
         else if (dir == Direction.Left && h < 0) { return indexPSWallJumping; }
 
 
-        if (Input.GetButtonDown("Jump") && Time.time <  lastGroundedSec+ JumpTolerance)
+        if (Input.GetButtonDown("Jump") && Time.time <  lastGroundedSec+ jumpTolerance)
         {
             return indexPSJumping1;
         }

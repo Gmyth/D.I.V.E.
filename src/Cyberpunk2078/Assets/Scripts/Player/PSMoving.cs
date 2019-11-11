@@ -5,8 +5,15 @@ using UnityEngine.Experimental.PlayerLoop;
 [CreateAssetMenuAttribute(fileName = "PS_Moving", menuName = "Player State/Moving")]
 public class PSMoving : PlayerState
 {
+    [Header("Normal")]
     [SerializeField] private float speedFactor = 3;
     [SerializeField] private float accelerationFactor = 20;
+    
+    [Header("Fever Mode")]
+    [SerializeField] private float f_speedFactor = 3;
+    [SerializeField] private float f_accelerationFactor = 20;
+    
+    [Header( "Transferable States" )]
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSAttackGH;
     [SerializeField] private int indexPSJumping1;
@@ -21,6 +28,12 @@ public class PSMoving : PlayerState
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
 
+        // Energy Cost
+        if (Player.CurrentPlayer.Fever)
+        {
+            Player.CurrentPlayer.CostFeverEnergy(Time.time);
+        }
+        
         if (Input.GetAxis("Attack1") > 0)
         {
             return indexPSAttackGH;
@@ -58,10 +71,6 @@ public class PSMoving : PlayerState
         }
            
         
-        if (Input.GetButtonDown("HealthConsume"))
-        {
-            Player.CurrentPlayer.CostHealthEnergy();
-        }
         return Index;
     }
     
@@ -78,7 +87,8 @@ public class PSMoving : PlayerState
     internal void Move(float axis)
     {
         int direction = axis > 0 ? 1 : -1;
-        PhysicsInputHelper(axis,speedFactor,accelerationFactor);
+        if(Player.CurrentPlayer.Fever){PhysicsInputHelper(axis,speedFactor,accelerationFactor);}
+        else {PhysicsInputHelper(axis,f_speedFactor,f_accelerationFactor);}
     }
     
     void NormalizeSlope () {

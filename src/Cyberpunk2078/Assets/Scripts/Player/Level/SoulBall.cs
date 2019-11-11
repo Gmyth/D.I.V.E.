@@ -80,7 +80,7 @@ public class SoulBall : Recyclable
     void Acquire()
     {
         //add 
-        Player.CurrentPlayer.AddHealthEnergy(2f);
+        Player.CurrentPlayer.AddFeverEnergy(2f);
         Die();
     }
 }

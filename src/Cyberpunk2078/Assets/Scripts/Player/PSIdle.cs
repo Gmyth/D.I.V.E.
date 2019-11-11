@@ -4,15 +4,13 @@
 [CreateAssetMenuAttribute(fileName = "PS_Idle", menuName = "Player State/Idle")]
 public class PSIdle : PlayerState
 {
+    [Header( "Transferable States" )]
     [SerializeField] private int indexPSMoving;
     [SerializeField] private int indexPSAttackGH;
     [SerializeField] private int indexPSJumping1;
     [SerializeField] private int indexPSDashing;
     [SerializeField] private int indexPSAirborne;
     [SerializeField] private int indexPSClimb;
-
-    private float energyRecoverDelaySec = 0;
-    private float energyRecoverTime;
 
 
     public override int Update()
@@ -23,9 +21,9 @@ public class PSIdle : PlayerState
         float Vy = rb2d.velocity.y;
         
         // Energy Cost
-        if (Player.CurrentPlayer.Fever && energyRecoverTime < Time.time)
+        if (Player.CurrentPlayer.Fever)
         {
-            Player.CurrentPlayer.FeverEnergyCost(Time.time, 100);
+            Player.CurrentPlayer.CostFeverEnergy(Time.time);
         }
         
         
@@ -54,21 +52,17 @@ public class PSIdle : PlayerState
         if (Input.GetButtonDown("Dashing"))
             return indexPSDashing;
         
-        if (Input.GetButtonDown("HealthConsume"))
-            Player.CurrentPlayer.CostHealthEnergy();
-        
         return Index;
     }
 
     public override void OnStateEnter(State previousState)
     {
-        energyRecoverTime = Time.time + energyRecoverDelaySec;
-
-        if(grounded)Player.CurrentPlayer.AddNormalEnergy(1);
         
+        if(grounded)Player.CurrentPlayer.AddNormalEnergy(1);
         anim.Play("MainCharacter_Idle", -1, 0f);
         Rigidbody2D rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         rb2d.velocity = new Vector2(0,rb2d.velocity.y);
+        
     }
 
     public override void OnStateQuit(State nextState)

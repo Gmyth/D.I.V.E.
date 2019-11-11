@@ -7,15 +7,27 @@ using UnityEngine;
 [CreateAssetMenuAttribute(fileName = "PS_Dashing", menuName = "Player State/Dashing")]
 public class PSDashing : PlayerState
 {
-    [SerializeField] private float dashForce = 8; // Dash Initial speed
-    [SerializeField] private float dashDelayTime = 0.05f; // time from button press to actual dash
-    [SerializeField] private float dashReleaseTime = 0.22f; // time to recover rb2d setting after dashing process finished
-    [SerializeField] private float dashReleaseDelayTime = 0.05f; // time from dash finish to actual controllable
-    [SerializeField] private float inDashingDragFactor = 3; // In-dash drag factor
+    [Header("Normal")]
+    [SerializeField] private float n_dashForce = 8; // Dash Initial speed
+    [SerializeField] private float n_dashDelayTime = 0.05f; // time from button press to actual dash
+    [SerializeField] private float n_dashReleaseTime = 0.22f; // time to recover rb2d setting after dashing process finished
+    [SerializeField] private float n_dashReleaseDelayTime = 0.05f; // time from dash finish to actual controllable
+    [SerializeField] private float n_inDashingDragFactor = 3; // In-dash drag factor
+    [SerializeField] private float n_JumpListenerInterval = 0.2f;
     
-    [SerializeField] private float JumpListenerInterval = 0.2f;
-    [SerializeField] private float EnergyConsume = -70; // In-dash drag factor
+    [Header("Fever")]
+    [SerializeField] private float f_dashForce = 8; // Dash Initial speed
+    [SerializeField] private float f_dashDelayTime = 0.05f; // time from button press to actual dash
+    [SerializeField] private float f_dashReleaseTime = 0.22f; // time to recover rb2d setting after dashing process finished
+    [SerializeField] private float f_dashReleaseDelayTime = 0.05f; // time from dash finish to actual controllable
+    [SerializeField] private float f_inDashingDragFactor = 3; // In-dash drag factor
+    [SerializeField] private float f_JumpListenerInterval = 0.2f;
     
+    [Header( "Common" )]
+
+    [SerializeField] private float EnergyConsume = -70;
+    
+    [Header( "Transferable States" )]
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSMoving;
     [SerializeField] private int indexPSJumping1;
@@ -33,11 +45,22 @@ public class PSDashing : PlayerState
     public override int Update()
     {
         
+     
+        var dashDelayTime = Player.CurrentPlayer.Fever?f_dashDelayTime:n_dashDelayTime; 
+        var dashReleaseTime = Player.CurrentPlayer.Fever?f_dashReleaseTime:n_dashReleaseTime; 
+        var dashReleaseDelayTime = Player.CurrentPlayer.Fever?f_dashReleaseTime:n_dashReleaseTime;
+        var JumpListenerInterval = Player.CurrentPlayer.Fever?f_JumpListenerInterval:n_JumpListenerInterval;
+        
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
         float h = Input.GetAxis("Horizontal");
-        //Still support Horizontal update during jumping, delete following to kill Horizzontal input
 
+        // Energy Cost
+        if (Player.CurrentPlayer.Fever)
+        {
+            Player.CurrentPlayer.CostFeverEnergy(Time.time);
+        }
+        
         if (!Apply)
         {
             if (!isGrounded())
@@ -87,11 +110,12 @@ public class PSDashing : PlayerState
         } else if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.time)
         {
             //cast listened jump right after dash finish
-            if (Input.GetButtonDown("Jump"))
+            if (lastJumpInput + JumpListenerInterval > Time.time)
             {
                 Player.CurrentPlayer.secondJumpReady = false;
                     return indexPSJumping1;
             }
+            
             // the dash has already ended
             // ok for move input
             PhysicsInputHelper(h);
@@ -130,10 +154,6 @@ public class PSDashing : PlayerState
             return indexPSMoving;
         }
         
-        if (Input.GetButtonDown("HealthConsume"))
-        {
-            Player.CurrentPlayer.CostHealthEnergy();
-        }
         
         return Index;
     }
@@ -141,6 +161,8 @@ public class PSDashing : PlayerState
 
     public override void OnStateEnter(State previousState)
     {
+        
+        var inDashingDragFactor = Player.CurrentPlayer.Fever?f_inDashingDragFactor:n_inDashingDragFactor; 
         if (!Player.CurrentPlayer.CostEnergy(EnergyConsume))
         {
             // Energy is not enough, Cancel dash
@@ -206,6 +228,9 @@ public class PSDashing : PlayerState
 
     private void forceApply()
     {
+        
+        var dashForce = Player.CurrentPlayer.Fever?f_dashForce:n_dashForce; 
+        
         // Fix sprite flip on X-axis
         playerCharacter.GetComponent<SpriteRenderer>().flipX = false;
         // Play Animation

@@ -19,15 +19,17 @@ public enum AttributeType : int
     
     OspRecovery_c0 = 0x700,
     
-    MaxHsp_c0 = 0x800,
-
+    MaxFsp_c0 = 0x800,
+    
+    FspDecay_c0 = 0x900,
+    
     SightRange_c0 = 0xA00,
     
     Damage_c0 = 0x1000,
     
     Sp_c0 = 0xF110,
     Osp_c0 = 0xF210,
-    Hsp_c0 = 0xF310
+    Fsp_c0 = 0xF310
 }
 
 
