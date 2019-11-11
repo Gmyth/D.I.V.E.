@@ -22,9 +22,11 @@ public class PSIdle : PlayerState
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
         
-        // Energy Recover
-        //if (energyRecoverTime < Time.time)
-        //    Player.CurrentPlayer.EnergyRecover(Time.time, 100);
+        // Energy Cost
+        if (Player.CurrentPlayer.Fever && energyRecoverTime < Time.time)
+        {
+            Player.CurrentPlayer.FeverEnergyCost(Time.time, 100);
+        }
         
         
         if (Input.GetAxis("Attack1") > 0)

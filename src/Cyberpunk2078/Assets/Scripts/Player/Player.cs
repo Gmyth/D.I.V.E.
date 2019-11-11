@@ -32,7 +32,9 @@ public class Player
     public float normalEnergy { get; private set; }
     public float overloadEnergy { get; private set; }
     
-    public float healthEnergy { get; private set; }
+    public float FeverEnergy { get; private set; }
+    
+    public bool Fever { get; private set; }
 
     public float this[AttributeType type]
     {
@@ -44,10 +46,10 @@ public class Player
 
 
     // Internal Usage
-    private float lastSecondEnergyRecover;
+    private float lastSecondEnergyCost;
 
 
-    private Player(int healthCap = 3, float normalEnergyCap = 1 ,float overloadEnergyCap = 1,float healthEnergyCap = 100, float energyRecoverRate = 0)
+    private Player(int healthCap = 3, float normalEnergyCap = 1 ,float overloadEnergyCap = 1,float feverEnergyCap = 100, float energyRecoverRate = 0)
     {
 
         inventory = new Inventory();
@@ -55,15 +57,15 @@ public class Player
         attributes.Set(AttributeType.MaxHp_c0, healthCap);
         attributes.Set(AttributeType.MaxSp_c0, normalEnergyCap);
         attributes.Set(AttributeType.MaxOsp_c0, overloadEnergyCap);
-        attributes.Set(AttributeType.MaxHsp_c0, healthEnergyCap);
+        attributes.Set(AttributeType.MaxHsp_c0, feverEnergyCap);
         attributes.Set(AttributeType.SpRecovery_c0, energyRecoverRate);
 
         secondJumpReady = true;
         Health = healthCap;
         normalEnergy = normalEnergyCap;
-        healthEnergy = 0;
+        FeverEnergy = 0;
         overloadEnergy = 0;
-        lastSecondEnergyRecover = 0;
+        lastSecondEnergyCost = 0;
         UIUpdate();
     }
 
@@ -119,7 +121,7 @@ public class Player
     {
         float maxSp = this[AttributeType.MaxHsp_c0];
 
-        healthEnergy = Mathf.Max(Mathf.Min(amount + healthEnergy, maxSp), 0);
+        FeverEnergy = Mathf.Max(Mathf.Min(amount + FeverEnergy, maxSp), 0);
         
         UIUpdate();
         return true;
@@ -127,28 +129,37 @@ public class Player
 
     public bool CostHealthEnergy()
     {
-        if (healthEnergy == 100 && Health < this[AttributeType.MaxHp_c0])
+        if (FeverEnergy == 100 && Health < this[AttributeType.MaxHp_c0])
         {
             ApplyHealthChange(1);
-            healthEnergy = 0;
+            FeverEnergy = 0;
             UIUpdate();
             return true;
         }
-        UIUpdate();
+        
+        if (FeverEnergy == 100)
+        {
+            Fever = true;
+        }
+        else if(FeverEnergy  == 0)
+        {
+            Fever = false;
+        }
+        
         return false;
     }
 
-    public void EnergyRecover(float time, float energyCustom = -1)
+    public void FeverEnergyCost(float time, float energyCustom = -1)
     {
-        if (time - lastSecondEnergyRecover > 0.2f)
+        if (time - lastSecondEnergyCost > 0.2f)
         {
             if (energyCustom < 0) {
-                AddNormalEnergy(this[AttributeType.SpRecovery_c0]);
+                AddHealthEnergy(this[AttributeType.SpRecovery_c0]);
             }else{
-                AddNormalEnergy(energyCustom);
+                AddHealthEnergy(energyCustom);
             }
             
-            lastSecondEnergyRecover = time;
+            lastSecondEnergyCost = time;
         }
         UIUpdate();
     }
@@ -203,6 +214,7 @@ public class Player
 
     private void UIUpdate()
     {
+        //请正式UI出来后把这玩意儿 Ban 了， 谢谢 
         
         // temp UI related
         GameObject Energy1 = GameObject.Find("Energy1");
@@ -238,13 +250,15 @@ public class Player
         
         GameObject HealthEnergyUI = GameObject.Find("HealthEnergy");
         GameObject ButtonNotice = GameObject.Find("HealthButton");
-        HealthEnergyUI.GetComponent<Slider>().value = healthEnergy / this[AttributeType.MaxHsp_c0];
-        if (healthEnergy == 100)
+        HealthEnergyUI.GetComponent<Slider>().value = FeverEnergy / this[AttributeType.MaxHsp_c0];
+        if (FeverEnergy == 100)
         {
+            Fever = true;
             ButtonNotice.transform.localScale = new Vector3(0.09541447f,0.206793f,0.4598505f);
         }
         else
         {
+            Fever = false;
             ButtonNotice.transform.localScale = Vector3.zero;
         }
     }
