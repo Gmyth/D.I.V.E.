@@ -49,7 +49,7 @@ public class Player
     private float lastSecondEnergyCost;
 
 
-    private Player(int healthCap = 3, float normalEnergyCap = 1 ,float overloadEnergyCap = 1,float feverEnergyCap = 100, float feverDecayRate = 5)
+    private Player(int healthCap = 3, float normalEnergyCap = 1 ,float overloadEnergyCap = 1,float feverEnergyCap = 100, float feverDecayRate = 1)
     {
 
         inventory = new Inventory();
@@ -198,10 +198,10 @@ public class Player
         if (Health <= 0)
         {
             //DisableInput
-            ObjectRecycler.Singleton.RecycleAll();
-            PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 9;
-            RestoreHealth();
-            CheckPointManager.Instance.RestoreCheckPoint();
+           // ObjectRecycler.Singleton.RecycleAll();
+           // PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 9;
+           // RestoreHealth();
+           // CheckPointManager.Instance.RestoreCheckPoint();
         }
         return true;
     }
@@ -257,11 +257,16 @@ public class Player
         if (FeverEnergy == 100)
         {
             Fever = true;
+            PlayerCharacter.Singleton.GetComponent<GhostSprites>().Occupied = true;
             ButtonNotice.transform.localScale = new Vector3(0.09541447f,0.206793f,0.4598505f);
         }
         else
         {
-            Fever = false;
+            if (FeverEnergy <= 0)
+            {
+                Fever = false;
+                PlayerCharacter.Singleton.GetComponent<GhostSprites>().Occupied = false;
+            }
             ButtonNotice.transform.localScale = Vector3.zero;
         }
     }

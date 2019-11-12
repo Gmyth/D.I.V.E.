@@ -6,12 +6,12 @@ using UnityEngine.Experimental.PlayerLoop;
 public class PSMoving : PlayerState
 {
     [Header("Normal")]
-    [SerializeField] private float speedFactor = 3;
-    [SerializeField] private float accelerationFactor = 20;
+    [SerializeField] private float n_speedFactor;
+    [SerializeField] private float n_accelerationFactor;
     
     [Header("Fever Mode")]
-    [SerializeField] private float f_speedFactor = 3;
-    [SerializeField] private float f_accelerationFactor = 20;
+    [SerializeField] private float f_speedFactor;
+    [SerializeField] private float f_accelerationFactor;
     
     [Header( "Transferable States" )]
     [SerializeField] private int indexPSIdle;
@@ -87,7 +87,7 @@ public class PSMoving : PlayerState
     internal void Move(float axis)
     {
         int direction = axis > 0 ? 1 : -1;
-        if(Player.CurrentPlayer.Fever){PhysicsInputHelper(axis,speedFactor,accelerationFactor);}
+        if(!Player.CurrentPlayer.Fever){PhysicsInputHelper(axis,n_speedFactor,n_accelerationFactor);}
         else {PhysicsInputHelper(axis,f_speedFactor,f_accelerationFactor);}
     }
     

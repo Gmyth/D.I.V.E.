@@ -65,7 +65,7 @@ public class PSAttackGH: PlayerState
             // Landed
                      
             // Kill Trail
-            playerCharacter.GetComponent<GhostSprites>().Occupied = false;
+          //  playerCharacter.GetComponent<GhostSprites>().Occupied = false;
             if (h == 0)
                 // not moving
             
@@ -109,7 +109,7 @@ public class PSAttackGH: PlayerState
         rb2d.gravityScale = 3;
                      
         // Kill Trail
-        playerCharacter.GetComponent<GhostSprites>().Occupied = false;
+        //playerCharacter.GetComponent<GhostSprites>().Occupied = false;
 
     }
 
@@ -119,7 +119,7 @@ public class PSAttackGH: PlayerState
         var pushForce = Player.CurrentPlayer.Fever? f_pushForce : n_pushForce;
 
         playerCharacter.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        playerCharacter.GetComponent<GhostSprites>().Occupied = true;
+        //playerCharacter.GetComponent<GhostSprites>().Occupied = true;
         
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         t0 = Time.time;
