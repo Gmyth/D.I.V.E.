@@ -56,8 +56,11 @@ public class PSAirborne : PlayerState
         }
 
         
-        if (Input.GetButtonDown("Dashing") || Input.GetButtonDown("Trigger"))
+        if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
+        {
+            Player.CurrentPlayer.triggerReady = false;
             return indexPSDashing;
+        }
         
         if (isGrounded())
             return Input.GetAxis("Horizontal") != 0?indexPSMoving:indexPSIdle;

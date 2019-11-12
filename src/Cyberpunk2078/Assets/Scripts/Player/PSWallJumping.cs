@@ -153,8 +153,11 @@ public class PSWallJumping: PlayerState
         playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
         
         // perform Dashing
-        if (Input.GetButtonDown("Dashing") || Input.GetButtonDown("Trigger"))
+        if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
+        {
+            Player.CurrentPlayer.triggerReady = false;
             return index_PSDashing;
+        }
         
         
         

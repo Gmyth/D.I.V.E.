@@ -25,7 +25,8 @@ public class Player
     public bool jumpForceGate;
     public bool NoApplyFriction = false;
     public bool secondJumpReady;
-    public bool lastWallJumpRight; 
+    public bool lastWallJumpRight;
+    public bool triggerReady;
     
     public float Health { get; private set; }
     
@@ -198,10 +199,10 @@ public class Player
         if (Health <= 0)
         {
             //DisableInput
-           // ObjectRecycler.Singleton.RecycleAll();
-           // PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 9;
-           // RestoreHealth();
-           // CheckPointManager.Instance.RestoreCheckPoint();
+            ObjectRecycler.Singleton.RecycleAll();
+            PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 9;
+            RestoreHealth();
+            CheckPointManager.Instance.RestoreCheckPoint();
         }
         return true;
     }

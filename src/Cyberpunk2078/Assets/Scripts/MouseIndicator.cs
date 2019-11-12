@@ -21,7 +21,7 @@ public class MouseIndicator : MonoBehaviour
         var mousePosInScreen = Input.mousePosition;
         if (Mathf.Abs(Input.GetAxis("HorizontalJoyStick")) > 0 || Mathf.Abs(Input.GetAxis("VerticalJoyStick")) > 0)
         {
-            controllerDir = new Vector3(Input.GetAxis("HorizontalJoyStick"),Input.GetAxis("VerticalJoyStick")).normalized;
+            controllerDir = new Vector3(Input.GetAxis("HorizontalJoyStick"),Input.GetAxis("VerticalJoyStick"));
         }
         mousePosInScreen.z = 10; // select distance = 10 units from the camera
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(mousePosInScreen);

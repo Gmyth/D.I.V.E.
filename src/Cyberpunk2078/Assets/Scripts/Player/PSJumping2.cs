@@ -81,10 +81,11 @@ public class PSJumping2 : PlayerState
             return index_PSWallJumping;
         }
         
-        if (Input.GetButtonDown("Dashing") || Input.GetButtonDown("Trigger"))
+        if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
+        {
+            Player.CurrentPlayer.triggerReady = false;
             return index_PSDashing;
-        
-        
+        }
         return Index;
     }
 
