@@ -25,8 +25,10 @@ public class Player
     public bool jumpForceGate;
     public bool NoApplyFriction = false;
     public bool secondJumpReady;
-    public bool lastWallJumpRight; 
-    
+    public bool lastWallJumpRight;
+    public bool energyLocked;
+    public bool overloadEnergyLocked;
+
     public float Health { get; private set; }
     
     public float normalEnergy { get; private set; }
@@ -45,6 +47,7 @@ public class Player
 
     // Internal Usage
     private float lastSecondEnergyRecover;
+    
 
 
     private Player(int healthCap = 3, float normalEnergyCap = 1 ,float overloadEnergyCap = 1,float healthEnergyCap = 100, float energyRecoverRate = 0)
@@ -58,6 +61,9 @@ public class Player
         attributes.Set(AttributeType.MaxHsp_c0, healthEnergyCap);
         attributes.Set(AttributeType.SpRecovery_c0, energyRecoverRate);
 
+
+        energyLocked = false;
+        overloadEnergyLocked = false;
         secondJumpReady = true;
         Health = healthCap;
         normalEnergy = normalEnergyCap;
@@ -98,6 +104,8 @@ public class Player
     
     public bool AddNormalEnergy(float amount)
     {
+        if (energyLocked) return false;
+
         float maxSp = this[AttributeType.MaxSp_c0];
         
         normalEnergy = Mathf.Max(Mathf.Min(amount + normalEnergy, maxSp), 0);
@@ -107,7 +115,8 @@ public class Player
     
     public bool AddOverLoadEnergy(float amount)
     {
-        
+        if (overloadEnergyLocked) return false;
+
         float maxSp = this[AttributeType.MaxOsp_c0];
         
         overloadEnergy = Mathf.Max(Mathf.Min(amount + overloadEnergy, maxSp), 0);
