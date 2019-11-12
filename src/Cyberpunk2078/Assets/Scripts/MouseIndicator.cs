@@ -8,6 +8,7 @@ public class MouseIndicator : MonoBehaviour
     private GameObject player;
     private List<Vector2> directionRef;
     private float timeCount = 0.0f;
+    private Vector2 controllerDir;
     void Start()
     {
         player  = GameObject.FindGameObjectWithTag("Player");
@@ -18,6 +19,10 @@ public class MouseIndicator : MonoBehaviour
     {
         transform.position = player.transform.position;
         var mousePosInScreen = Input.mousePosition;
+        if (Mathf.Abs(Input.GetAxis("HorizontalJoyStick")) > 0 || Mathf.Abs(Input.GetAxis("VerticalJoyStick")) > 0)
+        {
+            controllerDir = new Vector3(Input.GetAxis("HorizontalJoyStick"),Input.GetAxis("VerticalJoyStick")).normalized;
+        }
         mousePosInScreen.z = 10; // select distance = 10 units from the camera
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(mousePosInScreen);
         Vector2 direction = -(mousePos - (Vector2) transform.position).normalized;
@@ -32,7 +37,12 @@ public class MouseIndicator : MonoBehaviour
 
 
     public Vector2 getAttackDirection()
-    { 
+    {
+        if (controllerDir != Vector2.zero)
+        {
+            return controllerDir;
+        }
+
         transform.position = player.transform.position;
         var mousePosInScreen = Input.mousePosition;
         mousePosInScreen.z = 10; // select distance = 10 units from the camera

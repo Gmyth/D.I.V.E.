@@ -41,7 +41,8 @@ public class PSJumping2 : PlayerState
         
         playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
         float Vy = playerCharacter.GetComponent<Rigidbody2D>().velocity.y;
-        float h = Input.GetAxis("Horizontal");
+        float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
+
         //Still support Horizontal update during jumping, delete following to kill Horizzontal input
         PhysicsInputHelper(h,speedFactor,accelerationFactor);
         
@@ -64,7 +65,7 @@ public class PSJumping2 : PlayerState
         
         if (isGrounded())
             {
-                if (Input.GetAxis("Horizontal") == 0)
+                if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("HorizontalJoyStick") == 0)
                     return index_PSIdle;
 
                 return index_PSMoving;
@@ -80,7 +81,7 @@ public class PSJumping2 : PlayerState
             return index_PSWallJumping;
         }
         
-        if (Input.GetButtonDown("Dashing"))
+        if (Input.GetButtonDown("Dashing") || Input.GetButtonDown("Trigger"))
             return index_PSDashing;
         
         

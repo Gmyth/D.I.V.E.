@@ -53,7 +53,8 @@ public class PSDashing : PlayerState
         
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
-        float h = Input.GetAxis("Horizontal");
+        float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
+
 
         // Energy Cost
         if (Player.CurrentPlayer.Fever)
@@ -202,7 +203,8 @@ public class PSDashing : PlayerState
     public override void OnStateQuit(State nextState)
     {
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-        float h = Input.GetAxis("Horizontal");
+        float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
+
         
         // reset drag & gravity 
         rb2d.drag = defaultDrag;

@@ -43,13 +43,13 @@ public class PSIdle : PlayerState
             return indexPSClimb;
         }
             
-        if (Input.GetAxis("Horizontal") != 0)
+        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("HorizontalJoyStick") != 0)
             return indexPSMoving;
 
         if (Input.GetButtonDown("Jump"))
             return indexPSJumping1;
         
-        if (Input.GetButtonDown("Dashing"))
+        if (Input.GetButtonDown("Dashing") || Input.GetButtonDown("Trigger"))
             return indexPSDashing;
         
         return Index;

@@ -24,7 +24,7 @@ public class PSAirborne : PlayerState
     public override int Update()
     {
         var jumpTolerance = Player.CurrentPlayer.Fever ? f_jumpTolerance : n_jumpTolerance;
-        float h = Input.GetAxis("Horizontal");
+        float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
         PhysicsInputHelper(h);
 
         // Energy Cost
@@ -56,7 +56,7 @@ public class PSAirborne : PlayerState
         }
 
         
-        if (Input.GetButtonDown("Dashing"))
+        if (Input.GetButtonDown("Dashing") || Input.GetButtonDown("Trigger"))
             return indexPSDashing;
         
         if (isGrounded())

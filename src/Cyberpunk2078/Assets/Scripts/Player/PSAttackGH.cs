@@ -41,7 +41,7 @@ public class PSAttackGH: PlayerState
             recoveryTime = f_recoveryTime;
         }
 
-        float h = Input.GetAxis("Horizontal");
+        float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
         PhysicsInputHelper(h);
@@ -76,7 +76,7 @@ public class PSAttackGH: PlayerState
         if (Time.time - t0 > actionTime)
         {
             // ok for dashing 
-            if (Input.GetButtonDown("Dashing")) {
+            if (Input.GetButtonDown("Dashing") || Input.GetButtonDown("Trigger")) {
                 return indexPSDashing;
             }
                 
@@ -90,8 +90,8 @@ public class PSAttackGH: PlayerState
                 return indexPSAirborne;
             }
             
-            if (Input.GetAxis("Horizontal") == 0)
-                return indexPSIdle;
+            if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("HorizontalJoyStick") == 0)
+                 return indexPSIdle;
 
             return indexPSMoving;
         }

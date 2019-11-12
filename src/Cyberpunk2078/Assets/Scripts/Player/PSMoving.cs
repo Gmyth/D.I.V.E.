@@ -40,7 +40,7 @@ public class PSMoving : PlayerState
         }
             
         
-        if (Input.GetButtonDown("Dashing"))
+        if (Input.GetButtonDown("Dashing") || Input.GetButtonDown("Trigger"))
             return indexPSDashing;
 
         if (Input.GetAxis("Vertical") > 0  &&  isCloseTo("Ladder")!= Direction.None)
@@ -48,14 +48,16 @@ public class PSMoving : PlayerState
             // up is pressed
             return indexPSClimb;
         }
-
-        float x = Input.GetAxis("Horizontal");
+        
+        Debug.Log(Input.GetAxis("HorizontalJoyStick"));
+        
+        float x = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
 
         
         flip = x <= 0;
         if (x == 0)
-            
             return indexPSIdle;
+        
         
         playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
         Move(x);
@@ -78,7 +80,7 @@ public class PSMoving : PlayerState
 
     public override void OnStateEnter(State previousState)
     {
-        Move(Input.GetAxis("Horizontal"));
+        Move(Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal"));
         if(grounded)Player.CurrentPlayer.AddNormalEnergy(1);
         anim.Play("MainCharacter_Run", -1, 0f);
     }

@@ -53,7 +53,7 @@ public class PSJumping1 : PlayerState
         playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
-        float h = Input.GetAxis("Horizontal");
+        float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
         flip = h < 0;
         
         // Energy Cost
@@ -146,7 +146,7 @@ public class PSJumping1 : PlayerState
                
         //}
 
-        if (Input.GetButtonDown("Dashing"))
+        if (Input.GetButtonDown("Dashing") || Input.GetButtonDown("Trigger"))
             return indexPSDashing;
         
         //isJumpKeyDown = Input.GetButtonDown("Jump");

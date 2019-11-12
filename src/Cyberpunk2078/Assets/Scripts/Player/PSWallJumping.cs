@@ -57,7 +57,8 @@ public class PSWallJumping: PlayerState
         }
         
         float Vy = rb2d.velocity.y;
-        float h = Input.GetAxis("Horizontal");
+        float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
+
         
         if (isGrounded() && Vy <= 0)
         {
@@ -152,7 +153,7 @@ public class PSWallJumping: PlayerState
         playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
         
         // perform Dashing
-        if (Input.GetButtonDown("Dashing"))
+        if (Input.GetButtonDown("Dashing") || Input.GetButtonDown("Trigger"))
             return index_PSDashing;
         
         
