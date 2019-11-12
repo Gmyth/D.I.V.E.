@@ -52,6 +52,12 @@ public class Attack : MonoBehaviour
                 
                 other.GetComponent<Dummy>().ApplyDamage(GetInstanceID(),damage);
             }
+            else if (other.name == "Breakable")
+            {  
+
+                other.gameObject.SetActive(false);
+                //
+            }
         }
         else if (other.tag == "Player")
         {
@@ -62,7 +68,8 @@ public class Attack : MonoBehaviour
             }
         }
         
-        
+
+
     }
 
     public int getRandomEffect()

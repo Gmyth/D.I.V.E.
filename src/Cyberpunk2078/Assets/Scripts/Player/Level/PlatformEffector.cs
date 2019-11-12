@@ -17,11 +17,9 @@ public class PlatformEffector : MonoBehaviour
 
     public float initialWaitTime;
 
-    public PlatformType platformType;
-
-    public float stairAngle;
-
     private GameObject player;
+
+    public float radius;
 
     // Start is called before the first frame update
     private void Start()
@@ -32,29 +30,14 @@ public class PlatformEffector : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.S))
-        {
-            waitTime = initialWaitTime;
-            
+        if (Input.GetKeyDown(KeyCode.S))
+        {          
+            if (CheckOnPlatform())
+            {
+                effector.rotationalOffset = 180;
+            }
         }
-        if (Input.GetKey(KeyCode.S))
-        {
-            if (waitTime <= 0)
-            {
-                if(platformType == PlatformType.WalkThrough)
-                    effector.rotationalOffset = 180;
-                else
-                {
-                    effector.rotationalOffset = -180 + stairAngle;
-                }
-                waitTime = initialWaitTime;
-            }
-            else
-            {
-                waitTime -= Time.deltaTime;
-            }
 
-        }
 
         //if (PlayerCharacter.Singleton.gameObject.GetComponent<Rigidbody2D>().velocity.y > 0 )
         //{
@@ -84,5 +67,15 @@ public class PlatformEffector : MonoBehaviour
                 effector.rotationalOffset = 0;
             }
         }
+    }
+
+    private bool CheckOnPlatform()
+    {
+        Debug.Log("Enter Check");
+        RaycastHit2D hit = Physics2D.CircleCast(gameObject.transform.position, radius, new Vector2(0,1));
+        if (hit.collider != null && hit.transform.CompareTag("Player"))
+            return true;
+        else
+            return false;
     }
 }
