@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3027208874658607727}
   - component: {fileID: 3027208874658607729}
   - component: {fileID: 3027208874658607728}
-  - component: {fileID: -5715934514040091887}
   - component: {fileID: -3411127162189070211}
   m_Layer: 12
   m_Name: Jump-Platform-1.5
@@ -129,20 +128,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.9442952, y: 0.34105682}
   m_EdgeRadius: 0
---- !u!114 &-5715934514040091887
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3027208874658607725}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5507cfaa94aa0d547911c9fd940ed395, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offset: 0.2
-  Smoothness: 0
 --- !u!114 &-3411127162189070211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,7 +140,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffa11510f39fafe40acc459f07f26078, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialWaitTime: 0.05
-  platformType: 0
-  stairAngle: 0
-  radius: 1
+  offset: 0.3
+  Smoothness: 0
+  waitTime: 0
+  initialWaitTime: 0.15
+  occupied: 0

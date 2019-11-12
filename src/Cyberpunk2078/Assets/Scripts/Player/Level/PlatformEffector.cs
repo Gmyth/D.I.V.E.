@@ -2,80 +2,100 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlatformEffector : MonoBehaviour
 {
-    public enum PlatformType
-    {
-        WalkThrough = 0,
-        Stair
+    private float originalYPosition;
+    private float originalXPosition;
+    private bool movedUp = true;
+    private bool movedDown = true;
+    private bool movedLeft = true;
+    private bool movedRight = true;
+    public float offset = 1f;
+    public float Smoothness;
 
-    }
     private PlatformEffector2D effector;
-
     private float waitTime;
-
     public float initialWaitTime;
-
-    private GameObject player;
-
-    public float radius;
+    public bool occupied;
 
     // Start is called before the first frame update
     private void Start()
     {
         effector = gameObject.GetComponent<PlatformEffector2D>();
+        originalYPosition = transform.position.y;
+        originalXPosition = transform.position.x;
+        Smoothness = Random.Range(0.3f, 0.6f);
+        occupied = false;
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
-        {          
-            if (CheckOnPlatform())
+        if (Input.GetKeyUp(KeyCode.S))
+        {
+            waitTime = initialWaitTime;
+            if (PlayerCharacter.Singleton.State.isGrounded())
             {
-                effector.rotationalOffset = 180;
+                movedUp = true;
+                movedDown = true;
             }
         }
+        if (Input.GetKey(KeyCode.S))
+        {
+            if (occupied)
+            {
+                if (waitTime <= 0)
+                {
+                    effector.rotationalOffset = 180;
+                    movedUp = false;
+                    movedDown = false;
+                    waitTime = initialWaitTime;
+                }
+                else
+                {
+                    waitTime -= Time.deltaTime;
+                }
+            }       
+        }
 
+        //Floating Platform
+        if (movedUp)
+        {
+            Vector2 position = Vector2.Lerp(transform.position, new Vector2(originalXPosition, originalYPosition + offset), Smoothness * Time.deltaTime);
+            transform.position = new Vector2(transform.position.x, position.y);
+        }
+        else if (movedDown)
+        {
+            Vector2 position = Vector2.Lerp((Vector2)(transform.position), new Vector2(originalXPosition, originalYPosition), Smoothness * Time.deltaTime);
+            transform.position = new Vector2(transform.position.x, position.y);
+        }
 
-        //if (PlayerCharacter.Singleton.gameObject.GetComponent<Rigidbody2D>().velocity.y > 0 )
-        //{
-        //    if (platformType == PlatformType.WalkThrough)
-        //        effector.rotationalOffset = 0;
-        //    else
-        //    {
-        //        effector.rotationalOffset = stairAngle;
-        //    }
-        //}
+        if (transform.position.y - originalYPosition > 0.9 * offset)
+        {
+            movedUp = false;
+        }
+        else if (transform.position.y - originalYPosition <= 0.1)
+        {
+            movedUp = true;
+        }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.name == "PlatformDetector")
         {
-            //collision.posit
-            var detectorPos = collision.gameObject.transform.position;
-            var platformPos = gameObject.transform.position;
-            //detector is above the platform
-            if ((detectorPos - platformPos).y > 0)
-            {
-                effector.rotationalOffset = 0;
-            }
-            else if((detectorPos - platformPos).y < 0)
-            {
-                effector.rotationalOffset = 0;
-            }
+            occupied = true;
+            
         }
     }
-
-    private bool CheckOnPlatform()
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("Enter Check");
-        RaycastHit2D hit = Physics2D.CircleCast(gameObject.transform.position, radius, new Vector2(0,1));
-        if (hit.collider != null && hit.transform.CompareTag("Player"))
-            return true;
-        else
-            return false;
+        if (collision.name == "PlatformDetector")
+        {
+            occupied = false;
+            effector.rotationalOffset = 0;
+        }
     }
 }
