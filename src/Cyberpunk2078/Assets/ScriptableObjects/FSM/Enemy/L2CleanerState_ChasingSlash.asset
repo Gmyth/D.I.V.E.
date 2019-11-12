@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   motionID: -1
   damage: 1
-  knowback: 0
+  knockback: 0
   hitBox: -1
   chasingSpeed: 3
   attackRange: 1
   attackHeight: 1
   motionTime: 1
   idleAnimation: L2Cleaner_Idle
-  chasingAnimation: L2Cleaner_Run
+  chasingAnimation: L2Cleaner_Alert
   attackAnimation: L2Cleaner_Melee
   stateIndex_targetLoss: 0
   stateIndex_afterAttack: 2

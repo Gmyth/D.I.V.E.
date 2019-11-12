@@ -17,6 +17,6 @@ MonoBehaviour:
     n: 1
     repeats: 1
     weights: 0a0000005a000000
-  animation: L2Cleaner_Idle
+  animation: L2Cleaner_Alert
   stateIndex_attacks: 0300000001000000
   stateIndex_targetLoss: 0

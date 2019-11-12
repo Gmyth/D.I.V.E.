@@ -324,10 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a43577f830dcf69419f952dc677b95ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inDialogueZone: 0
-  isDialogueOngoing: 0
   isInDialogue: 0
-  currentTimelineManager: {fileID: 0}
 --- !u!114 &600154763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -397,6 +394,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08b3a5a6462f38a4a9897415b3c450a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isInvulnerable: 0
+  isEvading: 0
   fsm: {fileID: 11400000, guid: e940c97f4a9914740a98bcbd19d444ce, type: 2}
   dashAtkBox: {fileID: 985340116}
 --- !u!50 &600154767
@@ -945,7 +944,7 @@ GameObject:
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1145465059
 Transform:
@@ -2435,7 +2434,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!156049354 &1326076568
 Grid:
@@ -3317,7 +3316,7 @@ PrefabInstance:
     - target: {fileID: 445841681128334413, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 445841681128334413, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
@@ -3362,6 +3361,15 @@ PrefabInstance:
     - target: {fileID: 445841681128334413, guid: 23eff33790726d0439e5ca18340775de,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 445841681128334414, guid: 23eff33790726d0439e5ca18340775de,
+        type: 3}
+      propertyPath: m_GravityScale
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1413059481, guid: 23eff33790726d0439e5ca18340775de, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -127,6 +127,14 @@ public abstract class Enemy : Dummy
         }
     }
 
+    public EnemyData Data
+    {
+        get
+        {
+            return data;
+        }
+    }
+
     public Vector2 Pos
     {
         get
@@ -145,6 +153,18 @@ public abstract class Enemy : Dummy
     public void DisableHitBox(int index)
     {
         hitBoxes[index].gameObject.SetActive(false);
+    }
+
+    public void DisableAllHitBoxes()
+    {
+        foreach (HitBox hitBox in hitBoxes)
+            hitBox.gameObject.SetActive(false);
+    }
+
+    public void SwitchHitBox(int previousIndex, int currentIndex)
+    {
+        DisableHitBox(previousIndex);
+        EnableHitBox(currentIndex);
     }
 
 

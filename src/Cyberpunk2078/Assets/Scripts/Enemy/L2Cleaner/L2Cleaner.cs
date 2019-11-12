@@ -32,9 +32,9 @@ public class L2Cleaner : Enemy, IPatroller
         EnemyData enemyData = DataTableManager.singleton.GetEnemyData(typeID);
         Player.CurrentPlayer.AddOverLoadEnergy(enemyData.Attributes[AttributeType.OspReward_c0]);
 
+        
         gameObject.SetActive(false);
-        CheckPointManager.Instance.EnterResetPool(gameObject);
-        //Destroy(gameObject);
+        CheckPointManager.Instance?.EnterResetPool(gameObject);
     }
 
 

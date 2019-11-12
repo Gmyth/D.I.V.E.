@@ -4,6 +4,7 @@
 public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
 {
     [Header("Dash Configuration")]
+    [SerializeField] private OrientationType type = OrientationType.Omnidirectional;
     [SerializeField] private float dashForce = 8000;
     [SerializeField] private float dashDuration = 0.15f;
     [SerializeField] private float stopDistance = 0;
@@ -37,11 +38,15 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
         bStop = stopDistance != 0;
 
 
-        direction = enemy.currentTarget.transform.position - enemy.transform.position;
+        direction = (enemy.currentTarget.transform.position - enemy.transform.position).normalized;
 
-        Vector2 groundNormal = GetGroundNormal();
+        if ((type == OrientationType.UpwardOnly && direction.y < 0) || type == OrientationType.Horizontal)
+        {
+            Vector2 groundNormal = GetGroundNormal();
 
-        direction = direction.x > 0 ? groundNormal.Right().normalized : groundNormal.Left().normalized;
+            direction = direction.x > 0 ? groundNormal.Right().normalized : groundNormal.Left().normalized;
+        }
+
 
         AdjustFacingDirection(direction);
     }
@@ -58,13 +63,13 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
 
     protected override int Attack(float currentTime)
     {
-        if (currentTime >= t1) // The dash is finished
+        if (currentTime >= t1) // The dash has been finished
         {
             Stop();
 
             return stateIndex_alert;
         }
-        else if (bDash) // Start dashing
+        else if (bDash) // The dash has not been performed
         {
             rigidbody.AddForce(direction * dashForce);
 
@@ -81,7 +86,7 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
 
             animator.Play(dashAnimation);
         }
-        else if (bStop && enemy.GuardZone.Contains(enemy.transform.position)) // During dashing
+        else if (bStop && enemy.GuardZone.Contains(enemy.transform.position))
         {
             float dx = enemy.currentTarget.transform.position.x - enemy.transform.position.x;
 

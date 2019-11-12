@@ -106,7 +106,7 @@ public abstract class EnemyState<T> : EnemyState where T : Enemy
 
     protected Vector2 GetGroundNormal()
     {
-        RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, Vector2.down, 3f);
+        RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, Vector2.down, 10f);
 
         if (hit.collider && hit.transform.CompareTag("Ground"))
             return hit.normal;
