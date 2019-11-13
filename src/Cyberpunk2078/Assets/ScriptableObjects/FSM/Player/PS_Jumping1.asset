@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: PS_Jumping1
   m_EditorClassIdentifier: 
   Name: 
-  n_jumpForce: 5
+  n_jumpForce: 5.5
   n_wallJumpForce: 6
   n_speedFactor: 7
   n_accelerationFactor: 20
   n_wallJumpCD: 0
-  f_jumpForce: 5
+  f_jumpForce: 5.5
   f_wallJumpForce: 6
   f_speedFactor: 7
   f_accelerationFactor: 20

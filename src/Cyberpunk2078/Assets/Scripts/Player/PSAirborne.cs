@@ -63,7 +63,7 @@ public class PSAirborne : PlayerState
         }
         
         if (isGrounded())
-            return Input.GetAxis("Horizontal") != 0 || Input.GetAxis("HorizontalStick") != 0 ? indexPSMoving:indexPSIdle;
+            return Input.GetAxis("Horizontal") != 0 || Input.GetAxis("HorizontalJoyStick") != 0 ? indexPSMoving:indexPSIdle;
         
         return Index;
     }
