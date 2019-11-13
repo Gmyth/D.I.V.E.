@@ -14,7 +14,8 @@ public abstract class PlayerState : State
     protected Animator anim;
     protected bool flip;
     protected bool grounded;
-
+    protected float lastGroundedSec;
+    
     public virtual void Initialize(int index, PlayerCharacter playerCharacter)
     {
         Index = index;
@@ -32,29 +33,59 @@ public abstract class PlayerState : State
     //Player Ground check
     public bool isGrounded()
     {
-        RaycastHit2D hitM = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,-0.7f,0f),-playerCharacter.transform.up, 0.6f);
-        RaycastHit2D hitL = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.12f,-0.7f,0f),-playerCharacter.transform.up, 0.6f);
-        RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.12f,-0.7f,0f),-playerCharacter.transform.up, 0.6f);
+        Vector2 slideCheck = playerCharacter.GetComponent<Rigidbody2D>().velocity.x > 0
+            ? new Vector2(0.5f, -0.5f)
+            : new Vector2(-0.5f, -0.5f);
+        
+        // this variable will reposition the ray start point 
+        float centerOffset = -0.7f;
+        
+        float DistanceToTheGround = playerCharacter.GetComponent<CapsuleCollider2D>().bounds.extents.y + centerOffset;
+        RaycastHit2D hitM = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.2f  );
+        RaycastHit2D hitL = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.3f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.1f );
+        RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.3f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.1f);
+        RaycastHit2D hitSlide = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,0f,0f),slideCheck, 2f );
 
-        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f, -0.7f, 0f), -playerCharacter.transform.up * 0.6f, Color.red);
+        
+        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f, centerOffset, 0f), -playerCharacter.transform.up * (DistanceToTheGround + 0.2f), Color.red);
 
-        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0.12f, -0.7f, 0f), -playerCharacter.transform.up * 0.6f, Color.green);
+        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0.3f, centerOffset, 0f), -playerCharacter.transform.up * (DistanceToTheGround + 0.1f), Color.green);
 
-        Debug.DrawRay(playerCharacter.transform.position + new Vector3(-0.12f, -0.7f, 0f), -playerCharacter.transform.up * 0.6f, Color.yellow);
+        Debug.DrawRay(playerCharacter.transform.position + new Vector3(-0.3f, centerOffset, 0f), -playerCharacter.transform.up * (DistanceToTheGround + 0.1f), Color.yellow);
+        
+        Debug.DrawRay(playerCharacter.transform.position, slideCheck * 2f, Color.green);
 
-        if (hitM.collider != null && hitM.transform.CompareTag("Ground") || hitR.collider != null && hitR.transform.CompareTag("Ground") || hitL.collider != null && hitL.transform.CompareTag("Ground"))
+        bool margin = !(hitSlide.collider != null && (hitSlide.transform.CompareTag("Ground") || hitSlide.transform.CompareTag("Platform") && hitSlide.normal.x > 0.1f));
+
+        if (hitL.collider != null && (hitL.transform.CompareTag("Ground")||hitL.transform.CompareTag("Platform")))
         {
+            //Left hit!
             
+            //Character Margin
+            if(margin)playerCharacter.transform.Translate(Vector2.down* (hitL.distance - DistanceToTheGround));
             Player.CurrentPlayer.secondJumpReady = true;
             grounded = true;
             return true;
-        }else if(hitM.collider != null && hitM.transform.CompareTag("Platform") || hitR.collider != null && hitR.transform.CompareTag("Platform") || hitL.collider != null && hitL.transform.CompareTag("Platform"))
+        }else if (hitR.collider != null && (hitR.transform.CompareTag("Ground")||hitR.transform.CompareTag("Platform")))
         {
+            //Right hit!
             
+            //Character Margin
+            if(margin)playerCharacter.transform.Translate(Vector2.down* (hitR.distance - DistanceToTheGround));
             Player.CurrentPlayer.secondJumpReady = true;
             grounded = true;
             return true;
-        }
+        }else if (hitM.collider != null && (hitM.transform.CompareTag("Ground")||hitM.transform.CompareTag("Platform")))
+        {
+            //Middle hit!
+            
+            //Character Margin
+            if(margin)playerCharacter.transform.Translate(Vector2.down* (hitM.distance - DistanceToTheGround));
+            Player.CurrentPlayer.secondJumpReady = true;
+            grounded = true;
+            return true;
+        } 
+        
         Player.CurrentPlayer.jumpForceGate = false;
         grounded = false;
         return false;
@@ -161,15 +192,13 @@ public abstract class PlayerState : State
                 }
             }
         }
-        else
+    }
+
+    public void PreUpdate()
+    {
+        if (Input.GetAxis("Trigger") <= 0)
         {
-            // does not has input
-            // reduce speed, friction
-            //if (grounded) rb2d.AddForce(new Vector2(-rb2d.velocity.x * 4, 0f));
-            if (grounded)
-            {
-                rb2d.velocity = new Vector2(rb2d.velocity.x, rb2d.velocity.y);
-            }
+             Player.CurrentPlayer.triggerReady = true;
         }
     }
 }
@@ -255,6 +284,9 @@ public class FSMPlayer : FiniteStateMachine<PlayerState>
     public void Update()
     {
         if (currentStateIndex >= 0)
+        {
+            CurrentState.PreUpdate();
             CurrentStateIndex = CurrentState.Update();
+        }
     }
 }

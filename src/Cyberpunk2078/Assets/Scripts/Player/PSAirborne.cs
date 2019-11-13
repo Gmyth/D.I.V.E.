@@ -4,11 +4,18 @@
 [CreateAssetMenuAttribute(fileName = "PS_Airborne", menuName = "Player State/Airborne")]
 public class PSAirborne : PlayerState
 {
+    [Header( "Normal" )]
+    [SerializeField] private float n_jumpTolerance;
+    
+    [Header( "Fever" )]
+    [SerializeField] private float f_jumpTolerance;
+    
+    [Header( "Transferable States" )]
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSMoving;
     [SerializeField] private int indexPSAttackGH;
     [SerializeField] private int indexPSWallJumping;
-    [SerializeField] private int indexPSJumping2;
+    [SerializeField] private int indexPSJumping1;
     [SerializeField] private int indexPSDashing;
     [SerializeField] private int indexPSClimb;
 
@@ -16,13 +23,14 @@ public class PSAirborne : PlayerState
 
     public override int Update()
     {
-
-        float h = Input.GetAxis("Horizontal");
+        var jumpTolerance = Player.CurrentPlayer.Fever ? f_jumpTolerance : n_jumpTolerance;
+        float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
         PhysicsInputHelper(h);
 
-        if (Input.GetButtonDown("HealthConsume"))
+        // Energy Cost
+        if (Player.CurrentPlayer.Fever)
         {
-            Player.CurrentPlayer.CostHealthEnergy();
+            Player.CurrentPlayer.CostFeverEnergy(Time.time);
         }
 
         if (Input.GetAxis("Attack1") > 0)
@@ -42,16 +50,17 @@ public class PSAirborne : PlayerState
         else if (dir == Direction.Left && h < 0) { return indexPSWallJumping; }
 
 
-        //if (Input.GetButtonDown("Jump") && Player.CurrentPlayer.secondJumpReady)
-        //{
-            
-        //    Player.CurrentPlayer.secondJumpReady = false;
-        //    return indexPSJumping2;
-        //}
+        if (Input.GetButtonDown("Jump") && Time.time <  lastGroundedSec+ jumpTolerance)
+        {
+            return indexPSJumping1;
+        }
 
         
-        if (Input.GetButtonDown("Dashing"))
+        if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
+        {
+            Player.CurrentPlayer.triggerReady = false;
             return indexPSDashing;
+        }
         
         if (isGrounded())
             return Input.GetAxis("Horizontal") != 0?indexPSMoving:indexPSIdle;
@@ -68,6 +77,11 @@ public class PSAirborne : PlayerState
     public override void OnStateEnter(State previousState)
     {
         // Add Ghost trail
+        if (previousState.Index == indexPSIdle || previousState.Index == indexPSMoving)
+        {
+            lastGroundedSec = Time.time;
+        }
+        
         previous = previousState;
         anim.Play("MainCharacter_Airborne", -1, 0f);
     }

@@ -42,6 +42,11 @@ public class Bullet : Recyclable
             if(other.GetComponentInParent<PlayerCharacter>().State.Name == "Dash"){
                 TimeManager.Instance.startSlowMotion(0.2f);
                 CameraManager.Instance.flashIn(7f,0.05f,0.15f,0.01f);
+            }else if (Player.CurrentPlayer.Fever)
+            {
+                Player.CurrentPlayer.AddFeverEnergy(-50);
+                TimeManager.Instance.startSlowMotion(0.4f);
+                CameraManager.Instance.flashIn(7f,0.05f,0.15f,0.01f);
             }
         }
         else if (other.tag == "Player")

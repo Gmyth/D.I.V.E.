@@ -6,9 +6,17 @@ using UnityEngine;
 [CreateAssetMenuAttribute(fileName = "PS_Attack_GH", menuName = "Player State/Attack GH")]
 public class PSAttackGH: PlayerState
 {
-    [SerializeField] private float pushForce = 2f;
-    [SerializeField] private float actionTime = 0.3f;
-    [SerializeField] private float recoveryTime = 0.2f;
+    [Header( "Normal" )]
+    [SerializeField] private float n_pushForce = 2f;
+    [SerializeField] private float n_actionTime = 0.3f;
+    [SerializeField] private float n_recoveryTime = 0.2f;
+    
+    [Header( "Fever" )]
+    [SerializeField] private float f_pushForce = 2f;
+    [SerializeField] private float f_actionTime = 0.3f;
+    [SerializeField] private float f_recoveryTime = 0.2f;
+    
+    [Header( "Transferable States" )]
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSMoving;
     [SerializeField] private int indexPSAirborne;
@@ -22,10 +30,28 @@ public class PSAttackGH: PlayerState
 
     public override int Update()
     {
-        float h = Input.GetAxis("Horizontal");
+        var pushForce = n_pushForce;
+        var actionTime = n_actionTime;
+        var recoveryTime = n_recoveryTime;
+
+        if (Player.CurrentPlayer.Fever)
+        {
+            pushForce = f_pushForce;
+            actionTime = f_actionTime;
+            recoveryTime = f_recoveryTime;
+        }
+
+        float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
         PhysicsInputHelper(h);
+        
+        // Energy Cost
+        if (Player.CurrentPlayer.Fever)
+        {
+            Player.CurrentPlayer.CostFeverEnergy(Time.time);
+        }
+        
         RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,0.5f);
         if (hit1.collider != null && hit1.transform.CompareTag("Ground"))
         {
@@ -39,7 +65,7 @@ public class PSAttackGH: PlayerState
             // Landed
                      
             // Kill Trail
-            playerCharacter.GetComponent<GhostSprites>().Occupied = false;
+          //  playerCharacter.GetComponent<GhostSprites>().Occupied = false;
             if (h == 0)
                 // not moving
             
@@ -50,7 +76,9 @@ public class PSAttackGH: PlayerState
         if (Time.time - t0 > actionTime)
         {
             // ok for dashing 
-            if (Input.GetButtonDown("Dashing")) {
+            if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
+            {
+                Player.CurrentPlayer.triggerReady = false;
                 return indexPSDashing;
             }
                 
@@ -64,16 +92,13 @@ public class PSAttackGH: PlayerState
                 return indexPSAirborne;
             }
             
-            if (Input.GetAxis("Horizontal") == 0)
-                return indexPSIdle;
+            if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("HorizontalJoyStick") == 0)
+                 return indexPSIdle;
 
             return indexPSMoving;
         }
         
-        if (Input.GetButtonDown("HealthConsume"))
-        {
-            Player.CurrentPlayer.CostHealthEnergy();
-        }
+
         
         return Index;
     }
@@ -86,14 +111,17 @@ public class PSAttackGH: PlayerState
         rb2d.gravityScale = 3;
                      
         // Kill Trail
-        playerCharacter.GetComponent<GhostSprites>().Occupied = false;
+        //playerCharacter.GetComponent<GhostSprites>().Occupied = false;
 
     }
 
     public override void OnStateEnter(State previousState)
     {
+        
+        var pushForce = Player.CurrentPlayer.Fever? f_pushForce : n_pushForce;
+
         playerCharacter.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        playerCharacter.GetComponent<GhostSprites>().Occupied = true;
+        //playerCharacter.GetComponent<GhostSprites>().Occupied = true;
         
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         t0 = Time.time;

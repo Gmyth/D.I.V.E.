@@ -7,16 +7,30 @@ using UnityEngine;
 [CreateAssetMenuAttribute(fileName = "PS_Dashing", menuName = "Player State/Dashing")]
 public class PSDashing : PlayerState
 {
-    [SerializeField] private float dashForce = 8; // Dash Initial speed
-    [SerializeField] private float dashDelayTime = 0.05f; // time from button press to actual dash
-    [SerializeField] private float dashReleaseTime = 0.22f; // time to recover rb2d setting after dashing process finished
-    [SerializeField] private float dashReleaseDelayTime = 0.05f; // time from dash finish to actual controllable
-    [SerializeField] private float inDashingDragFactor = 3; // In-dash drag factor
-    [SerializeField] private float EnergyConsume = -70; // In-dash drag factor
+    [Header("Normal")]
+    [SerializeField] private float n_dashForce = 8; // Dash Initial speed
+    [SerializeField] private float n_dashDelayTime = 0.05f; // time from button press to actual dash
+    [SerializeField] private float n_dashReleaseTime = 0.22f; // time to recover rb2d setting after dashing process finished
+    [SerializeField] private float n_dashReleaseDelayTime = 0.05f; // time from dash finish to actual controllable
+    [SerializeField] private float n_inDashingDragFactor = 3; // In-dash drag factor
+    [SerializeField] private float n_JumpListenerInterval = 0.2f;
     
+    [Header("Fever")]
+    [SerializeField] private float f_dashForce = 8; // Dash Initial speed
+    [SerializeField] private float f_dashDelayTime = 0.05f; // time from button press to actual dash
+    [SerializeField] private float f_dashReleaseTime = 0.22f; // time to recover rb2d setting after dashing process finished
+    [SerializeField] private float f_dashReleaseDelayTime = 0.05f; // time from dash finish to actual controllable
+    [SerializeField] private float f_inDashingDragFactor = 3; // In-dash drag factor
+    [SerializeField] private float f_JumpListenerInterval = 0.2f;
+    
+    [Header( "Common" )]
+
+    [SerializeField] private float EnergyConsume = -70;
+    
+    [Header( "Transferable States" )]
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSMoving;
-    [SerializeField] private int indexPSJumping2;
+    [SerializeField] private int indexPSJumping1;
     [SerializeField] private int indexWallJumping;
     [SerializeField] private int indexPSAirborne;
 
@@ -25,16 +39,29 @@ public class PSDashing : PlayerState
     private float defaultDrag;
     private bool readyToPush;
     private bool Apply = true;
-
+    private float lastJumpInput;
+    
 
     public override int Update()
     {
         
+     
+        var dashDelayTime = Player.CurrentPlayer.Fever?f_dashDelayTime:n_dashDelayTime; 
+        var dashReleaseTime = Player.CurrentPlayer.Fever?f_dashReleaseTime:n_dashReleaseTime; 
+        var dashReleaseDelayTime = Player.CurrentPlayer.Fever?f_dashReleaseTime:n_dashReleaseTime;
+        var JumpListenerInterval = Player.CurrentPlayer.Fever?f_JumpListenerInterval:n_JumpListenerInterval;
+        
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
-        float h = Input.GetAxis("Horizontal");
-        //Still support Horizontal update during jumping, delete following to kill Horizzontal input
+        float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
 
+
+        // Energy Cost
+        if (Player.CurrentPlayer.Fever)
+        {
+            Player.CurrentPlayer.CostFeverEnergy(Time.time);
+        }
+        
         if (!Apply)
         {
             if (!isGrounded())
@@ -46,10 +73,18 @@ public class PSDashing : PlayerState
             return indexPSMoving;
         }
 
-        if (Input.GetButtonDown("Jump") && Player.CurrentPlayer.secondJumpReady && lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.time)
+        if (Input.GetButtonDown("Jump"))
         {
-            Player.CurrentPlayer.secondJumpReady = false;
-            return indexPSJumping2;
+            if (Player.CurrentPlayer.secondJumpReady && lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.time)
+            {
+                Player.CurrentPlayer.secondJumpReady = false;
+                return indexPSJumping1;
+            }
+            else
+            {
+                // save jump for later
+                lastJumpInput = Time.time;
+            }
         }
 
         if (lastDashSecond + dashDelayTime < Time.time && readyToPush)
@@ -73,10 +108,15 @@ public class PSDashing : PlayerState
             PhysicsInputHelper(h);
             setAtkBox(false);
             
-
-            
         } else if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.time)
         {
+            //cast listened jump right after dash finish
+            if (lastJumpInput + JumpListenerInterval > Time.time)
+            {
+                Player.CurrentPlayer.secondJumpReady = false;
+                    return indexPSJumping1;
+            }
+            
             // the dash has already ended
             // ok for move input
             PhysicsInputHelper(h);
@@ -115,10 +155,6 @@ public class PSDashing : PlayerState
             return indexPSMoving;
         }
         
-        if (Input.GetButtonDown("HealthConsume"))
-        {
-            Player.CurrentPlayer.CostHealthEnergy();
-        }
         
         return Index;
     }
@@ -126,6 +162,8 @@ public class PSDashing : PlayerState
 
     public override void OnStateEnter(State previousState)
     {
+        
+        var inDashingDragFactor = Player.CurrentPlayer.Fever?f_inDashingDragFactor:n_inDashingDragFactor; 
         if (!Player.CurrentPlayer.CostEnergy(EnergyConsume))
         {
             // Energy is not enough, Cancel dash
@@ -138,7 +176,7 @@ public class PSDashing : PlayerState
         //After delay is over, dash perform
         
         // Add Ghost trail
-        playerCharacter.GetComponent<GhostSprites>().Occupied = true;
+        //if(!Player.CurrentPlayer.Fever)playerCharacter.GetComponent<GhostSprites>().Occupied = true;
         lastDashSecond = Time.time;
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         
@@ -165,7 +203,8 @@ public class PSDashing : PlayerState
     public override void OnStateQuit(State nextState)
     {
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-        float h = Input.GetAxis("Horizontal");
+        float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
+
         
         // reset drag & gravity 
         rb2d.drag = defaultDrag;
@@ -181,7 +220,7 @@ public class PSDashing : PlayerState
         playerCharacter.GetComponent<SpriteRenderer>().flipY = false;
             
         // Kill Trail
-        playerCharacter.GetComponent<GhostSprites>().Occupied = false;
+       // if(!Player.CurrentPlayer.Fever)playerCharacter.GetComponent<GhostSprites>().Occupied = false;
         
         setAtkBox(false);
         
@@ -191,6 +230,9 @@ public class PSDashing : PlayerState
 
     private void forceApply()
     {
+        
+        var dashForce = Player.CurrentPlayer.Fever?f_dashForce:n_dashForce; 
+        
         // Fix sprite flip on X-axis
         playerCharacter.GetComponent<SpriteRenderer>().flipX = false;
         // Play Animation

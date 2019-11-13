@@ -29,12 +29,16 @@ public class Player
     public bool energyLocked;
     public bool overloadEnergyLocked;
 
+    public bool triggerReady;
+    
     public float Health { get; private set; }
     
     public float normalEnergy { get; private set; }
     public float overloadEnergy { get; private set; }
     
-    public float healthEnergy { get; private set; }
+    public float FeverEnergy { get; private set; }
+    
+    public bool Fever { get; private set; }
 
     public float this[AttributeType type]
     {
@@ -48,9 +52,10 @@ public class Player
     // Internal Usage
     private float lastSecondEnergyRecover;
     
+    private float lastSecondEnergyCost;
 
 
-    private Player(int healthCap = 3, float normalEnergyCap = 1 ,float overloadEnergyCap = 1,float healthEnergyCap = 100, float energyRecoverRate = 0)
+    private Player(int healthCap = 3, float normalEnergyCap = 1 ,float overloadEnergyCap = 1,float feverEnergyCap = 100, float feverDecayRate = 1)
     {
 
         inventory = new Inventory();
@@ -58,8 +63,8 @@ public class Player
         attributes.Set(AttributeType.MaxHp_c0, healthCap);
         attributes.Set(AttributeType.MaxSp_c0, normalEnergyCap);
         attributes.Set(AttributeType.MaxOsp_c0, overloadEnergyCap);
-        attributes.Set(AttributeType.MaxHsp_c0, healthEnergyCap);
-        attributes.Set(AttributeType.SpRecovery_c0, energyRecoverRate);
+        attributes.Set(AttributeType.MaxFsp_c0, feverEnergyCap);
+        attributes.Set(AttributeType.FspDecay_c0, feverDecayRate);
 
 
         energyLocked = false;
@@ -67,9 +72,9 @@ public class Player
         secondJumpReady = true;
         Health = healthCap;
         normalEnergy = normalEnergyCap;
-        healthEnergy = 0;
+        FeverEnergy = 0;
         overloadEnergy = 0;
-        lastSecondEnergyRecover = 0;
+        lastSecondEnergyCost = 0;
         UIUpdate();
     }
 
@@ -124,40 +129,51 @@ public class Player
         return true;
     }
 
-    public bool AddHealthEnergy(float amount)
+    public bool AddFeverEnergy(float amount)
     {
-        float maxSp = this[AttributeType.MaxHsp_c0];
+        float maxSp = this[AttributeType.MaxFsp_c0];
 
-        healthEnergy = Mathf.Max(Mathf.Min(amount + healthEnergy, maxSp), 0);
+        FeverEnergy = Mathf.Max(Mathf.Min(amount + FeverEnergy, maxSp), 0);
         
         UIUpdate();
         return true;
     }
 
-    public bool CostHealthEnergy()
-    {
-        if (healthEnergy == 100 && Health < this[AttributeType.MaxHp_c0])
-        {
-            ApplyHealthChange(1);
-            healthEnergy = 0;
-            UIUpdate();
-            return true;
-        }
-        UIUpdate();
-        return false;
-    }
+//    public bool CostFeverEnergy()
+//    {
+//        if (FeverEnergy == 100 && Health < this[AttributeType.MaxHp_c0])
+//        {
+//            ApplyHealthChange(1);
+//            FeverEnergy = 0;
+//            UIUpdate();
+//            return true;
+//        }
+//        
+//        if (FeverEnergy == 100)
+//        {
+//            Fever = true;
+//        }
+//        else if(FeverEnergy  == 0)
+//        {
+//            Fever = false;
+//        }
+//        
+//        return false;
+//    }
 
-    public void EnergyRecover(float time, float energyCustom = -1)
+    public void CostFeverEnergy(float time, float energyCustom = -1)
     {
-        if (time - lastSecondEnergyRecover > 0.2f)
+        // cost fever energy in Update
+        // multi call prevention
+        if (time - lastSecondEnergyCost > 0.2f)
         {
             if (energyCustom < 0) {
-                AddNormalEnergy(this[AttributeType.SpRecovery_c0]);
+                AddFeverEnergy(-this[AttributeType.FspDecay_c0]);
             }else{
-                AddNormalEnergy(energyCustom);
+                AddFeverEnergy(-energyCustom);
             }
             
-            lastSecondEnergyRecover = time;
+            lastSecondEnergyCost = time;
         }
         UIUpdate();
     }
@@ -205,6 +221,7 @@ public class Player
     {
         Health = 3;
         normalEnergy = 1;
+        FeverEnergy = 0;
         ApplyHealthChange(0);
         UIUpdate();
         //ApplyEnergyChange(0);
@@ -212,6 +229,7 @@ public class Player
 
     private void UIUpdate()
     {
+        //TODO: 请正式 UI出来后把这玩意儿 Ban 了， 谢谢 
         
         // temp UI related
         GameObject Energy1 = GameObject.Find("Energy1");
@@ -247,13 +265,20 @@ public class Player
         
         GameObject HealthEnergyUI = GameObject.Find("HealthEnergy");
         GameObject ButtonNotice = GameObject.Find("HealthButton");
-        HealthEnergyUI.GetComponent<Slider>().value = healthEnergy / this[AttributeType.MaxHsp_c0];
-        if (healthEnergy == 100)
+        HealthEnergyUI.GetComponent<Slider>().value = FeverEnergy / this[AttributeType.MaxFsp_c0];
+        if (FeverEnergy == 100)
         {
+            Fever = true;
+            PlayerCharacter.Singleton.GetComponent<GhostSprites>().Occupied = true;
             ButtonNotice.transform.localScale = new Vector3(0.09541447f,0.206793f,0.4598505f);
         }
         else
         {
+            if (FeverEnergy <= 0)
+            {
+                Fever = false;
+                PlayerCharacter.Singleton.GetComponent<GhostSprites>().Occupied = false;
+            }
             ButtonNotice.transform.localScale = Vector3.zero;
         }
     }
