@@ -15,7 +15,7 @@ MonoBehaviour:
   Name: 
   jumpForce: 5
   wallJumpForce: 8
-  speedFactor: 3
+  speedFactor: 5
   accelerationFactor: 20
   jumpCD: 0.02
   wallJumpCD: 0

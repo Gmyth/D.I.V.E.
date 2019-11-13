@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SimpleTeleporter : MonoBehaviour
 {
+
+    public Transform TargetTeleportPosition;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -15,4 +18,12 @@ public class SimpleTeleporter : MonoBehaviour
     {
         
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Player") {
+            other.gameObject.transform.position = TargetTeleportPosition.position;
+        }
+    }
+
 }
