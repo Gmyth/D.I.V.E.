@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Dash
   n_dashForce: 15
-  n_dashDelayTime: 0.025
+  n_dashDelayTime: 0.02
   n_dashReleaseTime: 0.1
   n_dashReleaseDelayTime: 0.05
   n_inDashingDragFactor: 6
   n_JumpListenerInterval: 0.2
-  f_dashForce: 20
+  f_dashForce: 15
   f_dashDelayTime: 0.02
   f_dashReleaseTime: 0.1
-  f_dashReleaseDelayTime: 0.045
+  f_dashReleaseDelayTime: 0.05
   f_inDashingDragFactor: 6
   f_JumpListenerInterval: 0.2
   EnergyConsume: 1

@@ -16,12 +16,26 @@ public class SimpleBreakable : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public void DestoryBreakable()
     {
-        if (other.gameObject.tag == "PlayerAttack")
-        {
-            gameObject.SetActive(false);
-        }
+        //Play break animation
+        gameObject.SetActive(false);
     }
+
+    //private void OnTriggerEnter2D(Collider2D other)
+    //{
+    //    if (other.gameObject.tag == "PlayerAttack")
+    //    {
+    //        gameObject.SetActive(false);
+    //    }
+    //}
+
+    //private void OnTriggerStay2D(Collider2D other)
+    //{
+    //    if (other.gameObject.tag == "PlayerAttack")
+    //    {
+    //        gameObject.SetActive(false);
+    //    }
+    //}
 
 }

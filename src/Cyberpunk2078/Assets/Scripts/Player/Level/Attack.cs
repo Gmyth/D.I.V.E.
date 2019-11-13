@@ -52,11 +52,9 @@ public class Attack : MonoBehaviour
                 
                 other.GetComponent<Dummy>().ApplyDamage(GetInstanceID(),damage);
             }
-            else if (other.name == "Breakable")
-            {  
-
-                other.gameObject.SetActive(false);
-                //
+            else if (other.tag == "Platform" && other.GetComponent<SimpleBreakable>())
+            {
+                other.GetComponent<SimpleBreakable>().DestoryBreakable();
             }
         }
         else if (other.tag == "Player")
