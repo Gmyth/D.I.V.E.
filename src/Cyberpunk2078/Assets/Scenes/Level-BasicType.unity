@@ -1008,9 +1008,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffa11510f39fafe40acc459f07f26078, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offset: 1
+  Smoothness: 0
   initialWaitTime: 0.5
-  platformType: 0
-  stairAngle: 0
+  occupied: 0
 --- !u!251 &241576507
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -1465,8 +1466,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.006292367, y: -0.018456245}
-  m_Size: {x: 0.17587848, y: 0.33667913}
+  m_Offset: {x: -0.0012005329, y: -0.008822608}
+  m_Size: {x: 0.17159681, y: 0.31741187}
   m_Direction: 0
 --- !u!114 &305290650
 MonoBehaviour:
@@ -3621,9 +3622,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffa11510f39fafe40acc459f07f26078, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offset: 1
+  Smoothness: 0
   initialWaitTime: 0.2
-  platformType: 0
-  stairAngle: 0
+  occupied: 0
 --- !u!251 &694799236
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -7128,9 +7130,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffa11510f39fafe40acc459f07f26078, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offset: 1
+  Smoothness: 0
   initialWaitTime: 0.5
-  platformType: 0
-  stairAngle: 0
+  occupied: 0
 --- !u!251 &987791406
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -9068,9 +9071,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffa11510f39fafe40acc459f07f26078, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offset: 1
+  Smoothness: 0
   initialWaitTime: 0.5
-  platformType: 0
-  stairAngle: 0
+  occupied: 0
 --- !u!251 &1368708228
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -10564,9 +10568,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffa11510f39fafe40acc459f07f26078, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offset: 1
+  Smoothness: 0
   initialWaitTime: 0.5
-  platformType: 0
-  stairAngle: 0
+  occupied: 0
 --- !u!251 &1612464428
 PlatformEffector2D:
   m_ObjectHideFlags: 0

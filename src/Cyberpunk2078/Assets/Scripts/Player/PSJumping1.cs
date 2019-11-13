@@ -111,8 +111,7 @@ public class PSJumping1 : PlayerState
             {
                 timer -= Time.deltaTime;
                 if (timer > 0)
-                {                    
-                    Debug.Log(timer);
+                {
                     rb2d.AddForce(playerCharacter.transform.up * jumpForce * jumpIncreaser);
                 }
                 

@@ -38,12 +38,12 @@ public abstract class PlayerState : State
             : new Vector2(-0.5f, -0.5f);
         
         // this variable will reposition the ray start point 
-        float centerOffset = -0.7f;
+        float centerOffset = -0.4f;
         
         float DistanceToTheGround = playerCharacter.GetComponent<CapsuleCollider2D>().bounds.extents.y + centerOffset;
         RaycastHit2D hitM = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.2f  );
-        RaycastHit2D hitL = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.3f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.2f );
-        RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.3f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.2f);
+       // RaycastHit2D hitL = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.3f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.2f );
+       // RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.3f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.2f);
         RaycastHit2D hitSlide = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,0f,0f),slideCheck, 2f );
 
         
@@ -57,30 +57,66 @@ public abstract class PlayerState : State
 
         bool margin = !(hitSlide.collider != null && (hitSlide.transform.CompareTag("Ground") || hitSlide.transform.CompareTag("Platform") && hitSlide.normal.x > 0.1f));
 
-        if (hitL.collider != null && (hitL.transform.CompareTag("Ground")||hitL.transform.CompareTag("Platform")))
-        {
-            //Left hit!
-            
-            //Character Margin
-            if(margin)playerCharacter.transform.Translate(Vector2.down* (hitL.distance - DistanceToTheGround));
-            Player.CurrentPlayer.secondJumpReady = true;
-            grounded = true;
-            return true;
-        }else if (hitR.collider != null && (hitR.transform.CompareTag("Ground")||hitR.transform.CompareTag("Platform")))
-        {
-            //Right hit!
-            
-            //Character Margin
-            if(margin)playerCharacter.transform.Translate(Vector2.down* (hitR.distance - DistanceToTheGround));
-            Player.CurrentPlayer.secondJumpReady = true;
-            grounded = true;
-            return true;
-        }else if (hitM.collider != null && (hitM.transform.CompareTag("Ground")||hitM.transform.CompareTag("Platform")))
+//        if (hitL.collider != null && (hitL.transform.CompareTag("Ground")||hitL.transform.CompareTag("Platform")))
+//        {
+//            //Left hit!
+//            
+//            //Character Margin
+//            if (margin&& !grounded)
+//            {
+//
+//                if (name == "Airborne")
+//                {
+//                    playerCharacter.transform.Translate(Vector2.up * (hitL.distance - DistanceToTheGround));
+//                }
+//                else
+//                {
+//                    playerCharacter.transform.Translate(Vector2.down* (hitL.distance - DistanceToTheGround));
+//                }
+//            }
+//
+//            
+//            Player.CurrentPlayer.secondJumpReady = true;
+//            grounded = true;
+//            return true;
+//        }else if (hitR.collider != null && (hitR.transform.CompareTag("Ground")||hitR.transform.CompareTag("Platform")))
+//        {
+//            //Right hit!
+//            
+//            //Character Margin
+//            if (margin&& !grounded)
+//            {
+//
+//                if (name == "Airborne")
+//                {
+//                    playerCharacter.transform.Translate(Vector2.up * (hitR.distance - DistanceToTheGround));
+//                }
+//                else
+//                {
+//                    playerCharacter.transform.Translate(Vector2.down* (hitR.distance - DistanceToTheGround));
+//                }
+//            }
+//            Player.CurrentPlayer.secondJumpReady = true;
+//            grounded = true;
+//            return true;
+//        }else 
+        if (hitM.collider != null && (hitM.transform.CompareTag("Ground")||hitM.transform.CompareTag("Platform")))
         {
             //Middle hit!
             
             //Character Margin
-            if(margin)playerCharacter.transform.Translate(Vector2.down* (hitM.distance - DistanceToTheGround));
+            if (margin&& !grounded)
+            {
+
+                if (name == "Airborne")
+                {
+                    playerCharacter.transform.Translate(Vector2.up * (hitM.distance - DistanceToTheGround));
+                }
+                else
+                {
+                    playerCharacter.transform.Translate(Vector2.down* (hitM.distance - DistanceToTheGround));
+                }
+            }
             Player.CurrentPlayer.secondJumpReady = true;
             grounded = true;
             return true;
