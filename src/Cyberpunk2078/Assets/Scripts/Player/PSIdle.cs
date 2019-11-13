@@ -66,8 +66,7 @@ public class PSIdle : PlayerState
         //rb2d.gravityScale = 0;
         if(grounded)Player.CurrentPlayer.AddNormalEnergy(1);
         anim.Play("MainCharacter_Idle", -1, 0f);
-        
-        rb2d.velocity = new Vector2(0,rb2d.velocity.y);
+     
         
     }
 
