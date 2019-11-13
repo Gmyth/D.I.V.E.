@@ -52,7 +52,6 @@ public class PSMoving : PlayerState
             return indexPSClimb;
         }
         
-        Debug.Log(Input.GetAxis("HorizontalJoyStick"));
         
         float x = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
 
