@@ -119,7 +119,8 @@ public class PSJumping1 : PlayerState
             }
         }
 
-        if (isGrounded()&& Vy < 0)
+
+        if (isGrounded() && Vy < 0)
         {
             // Landed
             if (h == 0)

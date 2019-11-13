@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Airborne
   n_jumpTolerance: 0.2
-  f_jumpTolerance: 0.15
+  f_jumpTolerance: 0.2
   indexPSIdle: 0
   indexPSMoving: 1
   indexPSAttackGH: 3
   indexPSWallJumping: 7
-  indexPSJumping1: 4
+  indexPSJumping1: 0
   indexPSDashing: 6
   indexPSClimb: 8
