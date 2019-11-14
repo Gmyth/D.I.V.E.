@@ -6,6 +6,8 @@ public class SimpleTeleporter : MonoBehaviour
 {
 
     public Transform TargetTeleportPosition;
+
+    public Color GizmoColor;
     
     // Start is called before the first frame update
     void Start()
@@ -24,6 +26,13 @@ public class SimpleTeleporter : MonoBehaviour
         if (other.gameObject.tag == "Player") {
             other.gameObject.transform.position = TargetTeleportPosition.position;
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = GizmoColor;
+        Gizmos.DrawCube(transform.position, transform.localScale);
+        Gizmos.DrawCube(TargetTeleportPosition.position, new Vector3(1, 2, 1));
     }
 
 }

@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: 
   n_jumpForce: 5.5
-  n_wallJumpForce: 6
+  n_wallJumpForce: 8
   n_speedFactor: 7
   n_accelerationFactor: 20
   n_wallJumpCD: 0
   f_jumpForce: 5.5
-  f_wallJumpForce: 6
+  f_wallJumpForce: 8
   f_speedFactor: 7
   f_accelerationFactor: 20
   f_wallJumpCD: 0
