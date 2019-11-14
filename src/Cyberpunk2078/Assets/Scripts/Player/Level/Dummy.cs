@@ -6,8 +6,14 @@ using UnityEngine.Events;
 [Serializable] public struct RangedWeaponConfiguration
 {
     [SerializeField] private float firingInterval;
+    [SerializeField] private float chargeTime;
+    [SerializeField] private Transform muzzle;
     [SerializeField] private int bulletID;
     [SerializeField] private float bulletSpeed;
+
+    [Header("Deviation")]
+    [SerializeField] private float minDeviationAngle;
+    [SerializeField] private float maxDeviationAngle;
 
 
     public float FiringInterval
@@ -15,6 +21,22 @@ using UnityEngine.Events;
         get
         {
             return firingInterval;
+        }
+    }
+
+    public float ChargeTime
+    {
+        get
+        {
+            return chargeTime;
+        }
+    }
+
+    public Transform Muzzle
+    {
+        get
+        {
+            return muzzle;
         }
     }
 
@@ -31,6 +53,22 @@ using UnityEngine.Events;
         get
         {
             return bulletSpeed;
+        }
+    }
+
+    public float MinDeviationAngle
+    {
+        get
+        {
+            return minDeviationAngle;
+        }
+    }
+
+    public float MaxDeviationAngle
+    {
+        get
+        {
+            return maxDeviationAngle;
         }
     }
 }
