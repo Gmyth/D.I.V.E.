@@ -1,5 +1,5 @@
 ﻿
 public interface IDamageable
 {
-    float ApplyDamage(int instanceId, float rawDamage, bool overWrite = false);
+    float ApplyDamage(float rawDamage);
 }

@@ -33,7 +33,8 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
     private int indexWayPoint = 0;
 
     private bool isMoving = false;
-    private float t = 0;
+    private float t_nextFire = 0;
+    private float t_finishCharging = 0;
 
 
     private bool IsMoving
@@ -68,14 +69,13 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
         animator = enemy.GetComponent<Animator>();
         seeker = enemy.GetComponent<Seeker>();
 
-        t = 0;
-        
+        t_nextFire = 0;
     }
 
     public override int Update()
     {
         if(!enemy)
-            return indexWayPoint;
+            return Index;
 
 
         Vector3 enemyPosition = enemy.transform.position;
@@ -87,6 +87,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
             if (enemy.currentTarget)
             {
                 rigidbody.velocity = Vector2.zero;
+                IsMoving = false;
 
                 return index_ESAlert;
             }
@@ -99,7 +100,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
 
             if (distance < 0.3f)
                 ++indexWayPoint;
-            
+
 
             if (indexWayPoint >= currentPath.vectorPath.Count)
             {
@@ -115,16 +116,22 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
             {
                 Vector2 direction = (currentPath.vectorPath[indexWayPoint] - enemy.transform.position).normalized;
 
-                Vector3 scale = enemy.transform.localScale;
-                scale.x = Mathf.Sign(direction.x) * Mathf.Abs(scale.x);
+                if (enemy.Data.Type == EnemyType.Ground)
+                    direction = direction.x > 0 ? Vector2.right : Vector2.left;
 
-                enemy.transform.localScale = scale;
 
-                rigidbody.AddForce(direction * speed * Time.deltaTime);
+                AdjustFacingDirection(direction);
+
+
+                rigidbody.velocity = direction * speed;
+
 
                 IsMoving = true;
             }
         }
+
+
+        float now = Time.time;
 
 
         RangedWeaponConfiguration firingConfiguration = enemy.PatrolFiringConfiguration;
@@ -135,23 +142,27 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
                 enemy.currentTarget = FindAvailableTarget(enemy.transform.position, 10, enemy.GuardZone);
 
 
-            if (enemy.currentTarget && Time.time - t >= firingConfiguration.FiringInterval)
+            if (enemy.currentTarget)
             {
-                LinearMovement bullet = ObjectRecycler.Singleton.GetObject<LinearMovement>(firingConfiguration.BulletID);
-                bullet.speed = firingConfiguration.BulletSpeed;
-                bullet.initialPosition = enemy.transform.position;
-                bullet.orientation = (enemy.currentTarget.transform.position - bullet.initialPosition).normalized;
+                if (now >= t_nextFire)
+                {
+                    if (t_finishCharging == 0)
+                        t_finishCharging = now + firingConfiguration.ChargeTime;
 
-                bullet.GetComponent<Bullet>().isFriendly = false;
 
-                bullet.gameObject.SetActive(true);
+                    if (now >= t_finishCharging)
+                    {
+                        Fire(firingConfiguration);
 
-                bullet.transform.right = bullet.orientation;
-
-                t = Time.time;
+                        t_nextFire = now + firingConfiguration.FiringInterval;
+                        t_finishCharging = 0;
+                    }
+                    else
+                        Charge();
+                }
             }
         }
-        
+
 
         return Index;
     }
@@ -163,7 +174,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
 
 
         indexTargetPatrolPoint = 0;
-        
+
 
         if (enemy.NumPatrolPoints > 1)
         {
@@ -185,14 +196,35 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
 
             seeker.StartPath(enemy.transform.position, enemy.GetPatrolPoint(indexTargetPatrolPoint));
         }
-        
+
 
         currentPath = null;
+
+
+        t_finishCharging = 0;
     }
 
     public override void OnStateQuit(State nextState)
     {
         seeker.CancelCurrentPathRequest();
+    }
+
+    
+    protected virtual void Charge()
+    {
+    }
+
+    protected virtual void Fire(RangedWeaponConfiguration firingConfiguration)
+    {
+        LinearMovement bullet = ObjectRecycler.Singleton.GetObject<LinearMovement>(firingConfiguration.BulletID);
+        bullet.speed = firingConfiguration.BulletSpeed;
+        bullet.initialPosition = firingConfiguration.Muzzle ? firingConfiguration.Muzzle.position : enemy.transform.position;
+        bullet.orientation = (enemy.currentTarget.transform.position - bullet.initialPosition).normalized;
+
+        bullet.GetComponent<Bullet>().isFriendly = false;
+        bullet.transform.right = bullet.orientation;
+
+        bullet.gameObject.SetActive(true);
     }
 
 
