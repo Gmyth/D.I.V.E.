@@ -2,8 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SimpleTutorialManager : MonoBehaviour
+public enum TutorialState
 {
+    Null,
+    TeachDash,
+    TeachDoubleDash,
+
+}
+
+public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
+{
+
+    public TutorialState CurrentState
+    {
+        set
+        {
+            switch (value)
+            {
+                case TutorialState.TeachDash:
+                    Time.timeScale = 0;
+                    dashKeyUI.SetActive(true);
+                    break;
+
+                case TutorialState.TeachDoubleDash:
+
+                    break;
+            }
+
+            CurrentState = value;
+        }
+
+        get { return CurrentState; }
+    }
+
+    [SerializeField] private GameObject dashKeyUI;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -13,7 +46,10 @@ public class SimpleTutorialManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        switch (CurrentState)
+        {
+
+        }
     }
 
     public void DeleteEnergySystem()
@@ -21,6 +57,18 @@ public class SimpleTutorialManager : MonoBehaviour
         Player.CurrentPlayer.energyLocked = true;
         Player.CurrentPlayer.overloadEnergyLocked = true;
         Player.CurrentPlayer.CostEnergy(1);
+    }
+
+    public void TeachDash()
+    {
+        CurrentState = TutorialState.TeachDash;
+        Time.timeScale = 0;
+        dashKeyUI.SetActive(true);
+    }
+
+    public void TeachDoubleDash()
+    {
+        CurrentState = TutorialState.TeachDoubleDash;
     }
 
     public void IntroduceNormalEnergy()
