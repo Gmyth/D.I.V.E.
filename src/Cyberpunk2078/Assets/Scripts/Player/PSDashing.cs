@@ -128,23 +128,40 @@ public class PSDashing : PlayerState
         }
         
         //prevent ground-hitting shifting 
-        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0, 1f, 0),rb2d.velocity.normalized,4f);
-        if (hit1.collider != null && hit1.transform.CompareTag("Ground"))
+        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0, 1f, 0),rb2d.velocity.normalized,1.5f);
+        if (hit1.collider != null)
         {
-            PhysicsInputHelper(h);
-            if (!isGrounded())
-            {
-                return indexPSAirborne;
-            }
+            if(hit1.transform.CompareTag("Ground")){
+                rb2d.velocity = rb2d.velocity * 0f;
+                PhysicsInputHelper(h);
+                if (!isGrounded())
+                {
+                    return indexPSAirborne;
+                }
 
-            if (h == 0) return indexPSIdle;
-            return indexPSMoving;
+                if (h == 0) return indexPSIdle;
+                return indexPSMoving;
+            }
+            else if(hit1.transform.CompareTag("Platform") && rb2d.velocity.normalized.y < 0)
+            {
+                //upper ward
+                rb2d.velocity = rb2d.velocity * 0f;
+                PhysicsInputHelper(h);
+                if (!isGrounded())
+                {
+                    return indexPSAirborne;
+                }
+
+                if (h == 0) return indexPSIdle;
+                return indexPSMoving;
+            }
         }
             
         
         // Player is grounded and dash has finished
         if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime  < Time.time)
         {
+            rb2d.velocity = rb2d.velocity * 0f;
             PhysicsInputHelper(h);
             if (!isGrounded())
             {
@@ -214,7 +231,7 @@ public class PSDashing : PlayerState
         PhysicsInputHelper(h);
         
         // reset player facing
-        playerCharacter.transform.right = Vector3.right;
+         playerCharacter.transform.right = Vector3.right;
             
         // reset sprite flip
         playerCharacter.GetComponent<SpriteRenderer>().flipY = false;
@@ -235,6 +252,7 @@ public class PSDashing : PlayerState
         
         // Fix sprite flip on X-axis
         playerCharacter.GetComponent<SpriteRenderer>().flipX = false;
+        
         // Play Animation
         anim.Play("MainCharacter_Dashing", -1, 0f);
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();

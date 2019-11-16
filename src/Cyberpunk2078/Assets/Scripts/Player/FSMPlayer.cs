@@ -126,7 +126,7 @@ public abstract class PlayerState : State
     //Player Ground Normal Vector, Used for Dash direction correction
     public Vector2 GroundNormal()
     {
-        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,-0.2f,0f),-playerCharacter.transform.up,1f);
+        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,0.8f,0f),-playerCharacter.transform.up,1f);
 
         if (hit.collider != null && hit.transform.CompareTag("Ground") ) {
             return hit.normal;
