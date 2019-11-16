@@ -274,9 +274,9 @@ public class Player
 
         if (HealthEnergyUI && ButtonNotice)
         {
-            HealthEnergyUI.GetComponent<Slider>().value = healthEnergy / this[AttributeType.MaxHsp_c0];
+            HealthEnergyUI.GetComponent<Slider>().value = FeverEnergy / this[AttributeType.MaxFsp_c0];
 
-            if (healthEnergy == 100)
+            if (FeverEnergy == 100)
                 ButtonNotice.transform.localScale = new Vector3(0.09541447f, 0.206793f, 0.4598505f);
             else
                 ButtonNotice.transform.localScale = Vector3.zero;

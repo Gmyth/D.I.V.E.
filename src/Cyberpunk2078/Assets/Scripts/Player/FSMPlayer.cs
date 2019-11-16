@@ -33,16 +33,17 @@ public abstract class PlayerState : State
             : new Vector2(-0.5f, -0.5f);
         
         // this variable will reposition the ray start point 
-        float centerOffset = -0.4f;
-        
-        float DistanceToTheGround = playerCharacter.GetComponent<CapsuleCollider2D>().bounds.extents.y + centerOffset;
-        RaycastHit2D hitM = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.4f  );
+        float centerOffset = 0.2f;
+
+        //float DistanceToTheGround = playerCharacter.GetComponent<CapsuleCollider2D>().bounds.extents.y + centerOffset;
+        float DistanceToTheGround = centerOffset;
+        RaycastHit2D hitM = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.1f  );
        // RaycastHit2D hitL = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.3f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.2f );
        // RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.3f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.2f);
         RaycastHit2D hitSlide = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,0f,0f),slideCheck, 2f );
 
         
-        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f, centerOffset, 0f), -playerCharacter.transform.up * (DistanceToTheGround + 0.2f), Color.red);
+        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f, centerOffset, 0f), -playerCharacter.transform.up * (DistanceToTheGround + 0.1f), Color.red);
 
 //        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0.3f, centerOffset, 0f), -playerCharacter.transform.up * (DistanceToTheGround + 0.2f), Color.green);
 //
@@ -105,11 +106,11 @@ public abstract class PlayerState : State
 
                 if (name == "Airborne")
                 {
-                    playerCharacter.transform.Translate(Vector2.up * (hitM.distance - DistanceToTheGround));
+                   // playerCharacter.transform.Translate(Vector2.up * (hitM.distance - DistanceToTheGround));
                 }
                 else
                 {
-                    playerCharacter.transform.Translate(Vector2.down* (hitM.distance - DistanceToTheGround));
+                   // playerCharacter.transform.Translate(Vector2.down* (hitM.distance - DistanceToTheGround));
                 }
             }
             Player.CurrentPlayer.secondJumpReady = true;
