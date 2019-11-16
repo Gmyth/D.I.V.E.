@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Events;
 
 
@@ -14,9 +15,9 @@ public enum AttributeType : int
     MaxSp_c0 = 0x400,
 
     SpRecovery_c0 = 0x500,
-    
+
     MaxOsp_c0 = 0x600,
-    
+
     OspRecovery_c0 = 0x700,
     
     MaxFsp_c0 = 0x800,
@@ -24,12 +25,27 @@ public enum AttributeType : int
     FspDecay_c0 = 0x900,
     
     SightRange_c0 = 0xA00,
-    
+
+
     Damage_c0 = 0x1000,
-    
-    Sp_c0 = 0xF110,
-    Osp_c0 = 0xF210,
-    Fsp_c0 = 0xF310
+
+    Knockback_c0 = 0x2000,
+
+
+    MaxFatigue_c0 = 0xE000,
+    MaxFatigue_c1 = 0xE001,
+    MaxFatigue_c2 = 0xE002,
+    MaxFatigue_m0 = 0xE020,
+
+
+    SpReward_c0 = 0xF110,
+
+    OspReward_c0 = 0xF210,
+
+    HspReward_c0 = 0xF310,
+
+    Fatigue_p0 = 0xF410,
+    Fatigue_p1 = 0xF411,
 }
 
 
@@ -45,10 +61,15 @@ public enum StatisticType : int
     SightRange = 0xA,
 
     Damage = 0x10,
+    Knowback = 0x20,
+
+    MaxFatigue = 0xE0,
 
     Hp = 0xF0,
     Sp = 0xF1,
     Osp = 0xF2,
+    Hsp = 0xF3,
+    Fatigue = 0xF4,
 }
 
 
@@ -75,6 +96,10 @@ public class StatisticSystem
 
             case StatisticType.SightRange:
                 return AttributeSet.Sum(AttributeType.SightRange_c0, attributeSets);
+
+
+            case StatisticType.MaxFatigue:
+                return Mathf.Min(AttributeSet.Sum(AttributeType.MaxFatigue_c2, attributeSets), AttributeSet.Sum(AttributeType.MaxFatigue_c0, attributeSets) + AttributeSet.Sum(AttributeType.MaxFatigue_m0, attributeSets) * AttributeSet.Sum(AttributeType.MaxFatigue_c1, attributeSets));
 
 
             default:
@@ -165,8 +190,7 @@ public class StatisticSystem
         this.attributeSets = attributeSets;
 
         foreach (IAttributeCollection attributeSet in attributeSets)
-            if (attributeSet.OnAttributeChange != null)
-                attributeSet.OnAttributeChange.AddListener(UpdateChangedStatistics);
+            attributeSet.OnAttributeChange?.AddListener(UpdateChangedStatistics);
 
         UpdateChangedStatistics(this.attributeSets);
     }
@@ -179,9 +203,31 @@ public class StatisticSystem
     }
 
 
+    public float Modify(StatisticType statistic, float value)
+    {
+        this[statistic] += value;
+
+        return this[statistic];
+    }
+
+    public float Modify(StatisticType statistic, float value, float max)
+    {
+        this[statistic] = Mathf.Min(max, this[statistic] + value);
+
+        return this[statistic];
+    }
+
+    public float Modify(StatisticType statistic, float value, float min, float max)
+    {
+        this[statistic] += Mathf.Clamp(this[statistic] + value, min, max);
+
+        return this[statistic];
+    }
+
+
     public float Sum(AttributeType type)
     {
-        return AttributeSet.Sum(type, attributeSets); //, statusEffects);
+        return AttributeSet.Sum(type, attributeSets);
     }
 
     //    public bool AddStatusEffect(StatusEffect statusEffect)

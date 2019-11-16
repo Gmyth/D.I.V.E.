@@ -2,10 +2,18 @@
 using UnityEngine;
 
 
+public enum EnemyType
+{
+    Ground,
+    Floating,
+}
+
+
 [Serializable] public class EnemyData : DataTableEntry
 {
     [SerializeField] private int id;
     [SerializeField] private string name;
+    [SerializeField] private EnemyType type;
     [SerializeField] private AttributeSet attributes;
 
 
@@ -22,6 +30,14 @@ using UnityEngine;
         get
         {
             return id;
+        }
+    }
+
+    public EnemyType Type
+    {
+        get
+        {
+            return type;
         }
     }
 

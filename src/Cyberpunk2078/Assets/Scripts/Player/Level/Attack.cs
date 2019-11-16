@@ -1,13 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.VFX;
+
 
 public class Attack : MonoBehaviour
 {
     [SerializeField] private float damage = 1;
     [SerializeField] private int[] effectList;
     public bool isFriendly = false;
+
+
+    HashSet<int> objectsHit = new HashSet<int>();
     
 
     public void  setDamage(float amount)
@@ -30,27 +32,9 @@ public class Attack : MonoBehaviour
                 VFX.setTarget(other.transform);
                 VFX.transform.localScale = new Vector3(4,1,1);
                 VFX.gameObject.SetActive(true);
-                
-                
-                 
-                var trail = ObjectRecycler.Singleton.GetObject<SingleEffect>(8);
-                trail.transform.position = VFX.transform.position;
-                trail.setTarget(other.transform);
-        
-                trail.transform.right = transform.right;
-                trail.transform.localScale = new Vector3(7,1,1);
-                trail.gameObject.SetActive(true);
-                
-                
-                var trail1 = ObjectRecycler.Singleton.GetObject<SingleEffect>(8);
-                trail1.transform.position = VFX.transform.position;
-                trail1.setTarget(other.transform);
-        
-                trail1.transform.right = -transform.right;
-                trail1.transform.localScale = new Vector3(7,1,1);
-                trail1.gameObject.SetActive(true);
-                
-                other.GetComponent<Dummy>().ApplyDamage(GetInstanceID(),damage);
+
+                other.GetComponent<Dummy>().ApplyDamage(damage);
+                objectsHit.Add(other.gameObject.GetInstanceID());
             }
             else if (other.tag == "Platform" && other.GetComponent<SimpleBreakable>())
             {
@@ -62,7 +46,9 @@ public class Attack : MonoBehaviour
             if (other.GetComponent<PlayerCharacter>().State.Name != "Dash")
             {
                 ObjectRecycler.Singleton.GetObject<SingleEffect>(getRandomEffect());
-                other.GetComponent<PlayerCharacter>().ApplyDamage(GetInstanceID(),damage);
+
+                other.GetComponent<PlayerCharacter>().ApplyDamage(damage);
+                objectsHit.Add(other.gameObject.GetInstanceID());
             }
         }
         
@@ -78,5 +64,11 @@ public class Attack : MonoBehaviour
         }
 
         return effectList[0];
+    }
+
+
+    private void OnEnable()
+    {
+        objectsHit.Clear();
     }
 }

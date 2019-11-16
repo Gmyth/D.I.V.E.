@@ -15,6 +15,6 @@ MonoBehaviour:
   speed: 300
   delay: 0
   idleAnimation: L2Cleaner_Idle
-  patrollingAnimation: L2Cleaner_Run
+  patrollingAnimation: L2Cleaner_Idle
   index_ESIdle: -1
-  index_ESAlert: 1
+  index_ESAlert: 2
