@@ -41,9 +41,9 @@ public abstract class PlayerState : State
         float centerOffset = -0.7f;
         
         float DistanceToTheGround = playerCharacter.GetComponent<CapsuleCollider2D>().bounds.extents.y + centerOffset;
-        RaycastHit2D hitM = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.2f  );
-        RaycastHit2D hitL = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.3f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.1f );
-        RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.3f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.1f);
+        RaycastHit2D hitM = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.4f  );
+        RaycastHit2D hitL = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.3f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.4f );
+        RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.3f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.4f);
         RaycastHit2D hitSlide = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,0f,0f),slideCheck, 2f );
 
         
