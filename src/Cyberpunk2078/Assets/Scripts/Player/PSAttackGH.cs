@@ -52,7 +52,7 @@ public class PSAttackGH: PlayerState
             Player.CurrentPlayer.CostFeverEnergy(Time.time);
         }
         
-        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,0.5f);
+        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,0.8f);
         if (hit1.collider != null && hit1.transform.CompareTag("Ground"))
         {
             // kill all speed
@@ -128,6 +128,7 @@ public class PSAttackGH: PlayerState
         var mouse = GameObject.FindObjectOfType<MouseIndicator>();
         
         //get Mouse direction
+        
         Vector3 direction = getDirectionCorrection(mouse.getAttackDirection(),GroundNormal());
         var obj = Instantiate(SplashFX);
         obj.transform.position = playerCharacter.transform.position;
