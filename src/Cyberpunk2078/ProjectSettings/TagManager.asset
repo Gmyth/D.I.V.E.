@@ -62,6 +62,9 @@ TagManager:
   - name: Interactive
     uniqueID: 792809535
     locked: 0
+  - name: SpriteFX
+    uniqueID: 3589357453
+    locked: 0
   - name: Player
     uniqueID: 1909596859
     locked: 0
