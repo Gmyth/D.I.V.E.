@@ -33,17 +33,17 @@ public abstract class PlayerState : State
             : new Vector2(-0.5f, -0.5f);
         
         // this variable will reposition the ray start point 
-        float centerOffset = 0.2f;
+        float centerOffset = -0.7f;
 
-        //float DistanceToTheGround = playerCharacter.GetComponent<CapsuleCollider2D>().bounds.extents.y + centerOffset;
-        float DistanceToTheGround = centerOffset;
-        RaycastHit2D hitM = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.1f  );
+        float DistanceToTheGround = playerCharacter.GetComponent<CapsuleCollider2D>().bounds.extents.y + centerOffset;
+        //float DistanceToTheGround = centerOffset;
+        RaycastHit2D hitM = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.4f  );
        // RaycastHit2D hitL = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.3f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.2f );
        // RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.3f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.2f);
         RaycastHit2D hitSlide = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,0f,0f),slideCheck, 2f );
 
         
-        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f, centerOffset, 0f), -playerCharacter.transform.up * (DistanceToTheGround + 0.1f), Color.red);
+        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f, centerOffset, 0f), -playerCharacter.transform.up * (DistanceToTheGround + 0.4f), Color.red);
 
 //        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0.3f, centerOffset, 0f), -playerCharacter.transform.up * (DistanceToTheGround + 0.2f), Color.green);
 //
@@ -126,7 +126,7 @@ public abstract class PlayerState : State
     //Player Ground Normal Vector, Used for Dash direction correction
     public Vector2 GroundNormal()
     {
-        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,0.8f,0f),-playerCharacter.transform.up,1f);
+        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position,-playerCharacter.transform.up,1.2f);
 
         if (hit.collider != null && hit.transform.CompareTag("Ground") ) {
             return hit.normal;
@@ -177,7 +177,7 @@ public abstract class PlayerState : State
     //if player is grounded, the direction to down left/right & down side are not allowed
     public Vector2 getDirectionCorrection(Vector2 _direction, Vector2 _norm)
     {
-        if (Vector2.Angle(_direction, _norm) < 85)
+        if (Vector2.Angle(_direction, _norm) < 80)
         {
             // Allowed for free dash
             return _direction;

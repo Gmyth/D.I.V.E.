@@ -128,7 +128,7 @@ public class PSDashing : PlayerState
         }
         
         //prevent ground-hitting shifting 
-        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0, 1f, 0),rb2d.velocity.normalized,1.5f);
+        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,1f);
         if (hit1.collider != null)
         {
             if(hit1.transform.CompareTag("Ground")){
@@ -222,6 +222,7 @@ public class PSDashing : PlayerState
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
 
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Dummy"),false);
         
         // reset drag & gravity 
         rb2d.drag = defaultDrag;
@@ -231,7 +232,8 @@ public class PSDashing : PlayerState
         PhysicsInputHelper(h);
         
         // reset player facing
-         playerCharacter.transform.right = Vector3.right;
+        //playerCharacter.GetComponent<CapsuleCollider2D>().isTrigger = false;
+        playerCharacter.transform.right = Vector3.right;
             
         // reset sprite flip
         playerCharacter.GetComponent<SpriteRenderer>().flipY = false;
@@ -241,7 +243,7 @@ public class PSDashing : PlayerState
         
         setAtkBox(false);
         
-        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Dummy"),false);
+        
 
     }
 
@@ -263,6 +265,7 @@ public class PSDashing : PlayerState
         //get Mouse direction
         Vector3 direction = getDirectionCorrection(mouse.getAttackDirection(),GroundNormal());
         
+        Debug.Log(direction);
         
         var VFX = ObjectRecycler.Singleton.GetObject<SingleEffect>(6);
         VFX.transform.position = playerCharacter.transform.position +  direction * 0.5f;
@@ -284,9 +287,12 @@ public class PSDashing : PlayerState
 
         //set correct Y flip based on mouse direction
         if (direction.x < 0 && direction.y != 0) playerCharacter.GetComponent<SpriteRenderer>().flipY = true;
+
+
         
         //Apply force to character
-        playerCharacter.transform.right = direction;
+       // playerCharacter.GetComponent<CapsuleCollider2D>().isTrigger = true;
+        playerCharacter.transform.right = direction; 
         rb2d.AddForce(direction * dashForce * 200f * 1 / Time.timeScale);
         
         //Camera Tricks
