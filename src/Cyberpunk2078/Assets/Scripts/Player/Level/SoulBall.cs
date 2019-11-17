@@ -39,7 +39,7 @@ public class SoulBall : Recyclable
                 break;
             
             case SoulBallState.Chase:
-                if ((target.position - transform.position).sqrMagnitude < 0.1f)
+                if ((target.position - transform.position).sqrMagnitude < 0.3f)
                 {
                     // TODO  the absorb range could be attribute
                     rb2d.drag = 0;
@@ -51,7 +51,7 @@ public class SoulBall : Recyclable
                 var direction = (target.position - transform.position).normalized;
                 transform.Translate(direction * v * Time.deltaTime);
 
-                v += acceleration * Time.deltaTime;
+                v = v < 30 ? v + acceleration * Time.deltaTime : v ;
                 
                 break;
             

@@ -137,6 +137,15 @@ public class Player
         FeverEnergy = Mathf.Max(Mathf.Min(amount + FeverEnergy, maxSp), 0);
         
         UIUpdate();
+
+        if (FeverEnergy == 100)
+        {
+            Fever = true;
+        }
+        else if(FeverEnergy  == 0)
+        {
+            Fever = false;
+        }
         return true;
     }
 

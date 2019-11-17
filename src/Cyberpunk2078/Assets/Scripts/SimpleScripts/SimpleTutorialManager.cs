@@ -12,7 +12,7 @@ public enum TutorialState
 
 public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
 {
-
+    
     public TutorialState CurrentState
     {
         set
@@ -20,13 +20,20 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
             switch (value)
             {
                 case TutorialState.TeachDash:
+                    IntroduceNormalEnergy();
                     Time.timeScale = 0;
-                    dashKeyUI.SetActive(true);
+                    UI_DashKey.SetActive(true);
                     break;
 
                 case TutorialState.TeachDoubleDash:
-
+                    IntroduceOverloadEnergy();
+                    Time.timeScale = 0;
                     break;
+
+                default:
+                    Time.timeScale = 1;
+                    break;
+
             }
 
             CurrentState = value;
@@ -35,7 +42,10 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         get { return CurrentState; }
     }
 
-    [SerializeField] private GameObject dashKeyUI;
+    public GameObject UI_DashKey;
+    public GameObject UI_BlackMask;
+
+    public GameObject UI_TeachDash_DirectionMask;
 
     // Start is called before the first frame update
     void Start()
@@ -46,10 +56,12 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
     // Update is called once per frame
     void Update()
     {
-        switch (CurrentState)
-        {
+        
+    }
 
-        }
+    public void SetTutorialState(int stateIndex)
+    {
+        CurrentState = (TutorialState)stateIndex;
     }
 
     public void DeleteEnergySystem()
@@ -57,18 +69,6 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         Player.CurrentPlayer.energyLocked = true;
         Player.CurrentPlayer.overloadEnergyLocked = true;
         Player.CurrentPlayer.CostEnergy(1);
-    }
-
-    public void TeachDash()
-    {
-        CurrentState = TutorialState.TeachDash;
-        Time.timeScale = 0;
-        dashKeyUI.SetActive(true);
-    }
-
-    public void TeachDoubleDash()
-    {
-        CurrentState = TutorialState.TeachDoubleDash;
     }
 
     public void IntroduceNormalEnergy()

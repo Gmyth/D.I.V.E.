@@ -113,8 +113,8 @@ public class Drone : Enemy, IPatroller
         EnemyData enemyData = DataTableManager.singleton.GetEnemyData(typeID);
         Player.CurrentPlayer.AddOverLoadEnergy(enemyData.Attributes[AttributeType.OspReward_c0]);
 
-        
-        for(int i = 0; i < 5; i++)
+
+        for (int i = 0; i < 5; i++)
         {
             var obj = ObjectRecycler.Singleton.GetObject<SoulBall>(5);
             obj.transform.position = transform.position;

@@ -193,7 +193,7 @@ public class PSDashing : PlayerState
         //After delay is over, dash perform
         
         // Add Ghost trail
-        //if(!Player.CurrentPlayer.Fever)playerCharacter.GetComponent<GhostSprites>().Occupied = true;
+        if(!Player.CurrentPlayer.Fever)playerCharacter.GetComponent<GhostSprites>().Occupied = true;
         lastDashSecond = Time.time;
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         
@@ -239,7 +239,7 @@ public class PSDashing : PlayerState
         playerCharacter.GetComponent<SpriteRenderer>().flipY = false;
             
         // Kill Trail
-       // if(!Player.CurrentPlayer.Fever)playerCharacter.GetComponent<GhostSprites>().Occupied = false;
+        if(!Player.CurrentPlayer.Fever)playerCharacter.GetComponent<GhostSprites>().Occupied = false;
         
         setAtkBox(false);
         

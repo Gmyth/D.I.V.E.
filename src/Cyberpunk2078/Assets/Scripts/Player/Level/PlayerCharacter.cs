@@ -85,6 +85,14 @@ public class PlayerCharacter : Dummy
 
     private void Update()
     {
+        if (Player.CurrentPlayer.FeverEnergy == 100)
+        {
+            GetComponent<GhostSprites>().Occupied = true;
+        }
+        else if (Player.CurrentPlayer.FeverEnergy == 0)
+        {
+            GetComponent<GhostSprites>().Occupied = false;
+        }
         fsm.Update();
     }
 
