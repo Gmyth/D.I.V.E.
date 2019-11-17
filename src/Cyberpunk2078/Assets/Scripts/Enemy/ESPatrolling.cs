@@ -18,6 +18,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
     [SerializeField] private float delay = 0;
     [SerializeField] private string idleAnimation = "";
     [SerializeField] private string patrollingAnimation = "";
+    [SerializeField] private bool alwaysFacingTarget = true;
 
     [Header("Connected States")]
     [SerializeField] private int index_ESIdle = -1;
@@ -144,6 +145,9 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
 
             if (enemy.currentTarget)
             {
+                if (alwaysFacingTarget)
+                    AdjustFacingDirection((enemy.currentTarget.transform.position - enemy.transform.position).x > 0 ? Vector3.right : Vector3.left);
+
                 if (now >= t_nextFire)
                 {
                     if (t_finishCharging == 0)

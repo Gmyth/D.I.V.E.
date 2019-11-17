@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b7862141c9c39f42a13380c194fc02c, type: 3}
   m_Name: L2CleanerState_Idle
   m_EditorClassIdentifier: 
-  index_ESAlert: 1
+  index_ESAlert: 2

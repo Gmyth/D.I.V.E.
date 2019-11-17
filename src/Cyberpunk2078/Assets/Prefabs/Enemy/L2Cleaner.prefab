@@ -45,7 +45,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.11192322, y: 2.2143366}
+  m_Offset: {x: 0.8128509, y: 2.2143366}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -56,7 +56,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.2693596, y: 2.5613618}
+  m_Size: {x: 2.8675041, y: 2.5613618}
   m_EdgeRadius: 0
 --- !u!114 &1413059483
 MonoBehaviour:
@@ -276,8 +276,12 @@ MonoBehaviour:
     wayPoints: []
   patrolFiringConfiguration:
     firingInterval: 0
+    chargeTime: 0
+    muzzle: {fileID: 0}
     bulletID: 0
     bulletSpeed: 0
+    minDeviationAngle: 0
+    maxDeviationAngle: 0
   statusModifiers:
     serializedAttributes: []
   currentTarget: {fileID: 0}

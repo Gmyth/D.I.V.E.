@@ -21,15 +21,15 @@ AnimationClip:
   - curve:
     - time: 0
       value: {fileID: 21300000, guid: 886f3e390a9f16b4a93c095dce486ffc, type: 3}
-    - time: 0.15
-      value: {fileID: 21300000, guid: d62536a81547a7c42a196a882767b0af, type: 3}
     - time: 0.23333333
-      value: {fileID: 21300000, guid: f3c3afb0c3518eb42be732b560850e76, type: 3}
+      value: {fileID: 21300000, guid: 886f3e390a9f16b4a93c095dce486ffc, type: 3}
     - time: 0.31666666
+      value: {fileID: 21300000, guid: f3c3afb0c3518eb42be732b560850e76, type: 3}
+    - time: 0.4
       value: {fileID: 21300000, guid: 75d10cb850a5015458cef4a3edfc2ba1, type: 3}
-    - time: 0.56666666
+    - time: 0.65
       value: {fileID: 21300000, guid: 55b26410972c8184f90c775da5b84b2f, type: 3}
-    - time: 0.98333335
+    - time: 1.4833333
       value: {fileID: 21300000, guid: 55b26410972c8184f90c775da5b84b2f, type: 3}
     attribute: m_Sprite
     path: 
@@ -51,7 +51,7 @@ AnimationClip:
       isPPtrCurve: 1
     pptrCurveMapping:
     - {fileID: 21300000, guid: 886f3e390a9f16b4a93c095dce486ffc, type: 3}
-    - {fileID: 21300000, guid: d62536a81547a7c42a196a882767b0af, type: 3}
+    - {fileID: 21300000, guid: 886f3e390a9f16b4a93c095dce486ffc, type: 3}
     - {fileID: 21300000, guid: f3c3afb0c3518eb42be732b560850e76, type: 3}
     - {fileID: 21300000, guid: 75d10cb850a5015458cef4a3edfc2ba1, type: 3}
     - {fileID: 21300000, guid: 55b26410972c8184f90c775da5b84b2f, type: 3}
@@ -61,7 +61,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1
+    m_StopTime: 1.5
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 32
@@ -88,14 +88,14 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.33333334
+  - time: 0.31666666
     functionName: EnableHitBox
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 1
     messageOptions: 0
-  - time: 0.56666666
+  - time: 0.5833333
     functionName: DisableAllHitBoxes
     data: 
     objectReferenceParameter: {fileID: 0}

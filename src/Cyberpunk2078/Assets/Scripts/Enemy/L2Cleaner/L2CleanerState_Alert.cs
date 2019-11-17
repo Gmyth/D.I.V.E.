@@ -28,7 +28,7 @@ public class L2CleanerState_Alert : EnemyState<L2Cleaner>
 
     public override int Update()
     {
-        if (!IsPlayerInSight(enemy.currentTarget, enemy[StatisticType.SightRange]))
+        if (!enemy.GuardZone.Contains(enemy.currentTarget) || !IsPlayerInSight(enemy.currentTarget, enemy[StatisticType.SightRange]))
             return stateIndex_targetLoss;
 
 

@@ -50,7 +50,9 @@ public class PlayerCharacter : Dummy
     public void Knockback(Vector3 origin, float force)
     {
         Vector3 direction = transform.position - origin;
-        direction = (direction.x > 0 ? GroundNormal.Right().normalized : GroundNormal.Left().normalized) * force;
+        Vector2 groundNormal = GroundNormal;
+
+        direction = ((direction.x > 0 ? groundNormal.Right().normalized : groundNormal.Left().normalized) + groundNormal).normalized * force;
         rigidbody.velocity = Vector2.zero;
         rigidbody.AddForce(direction);
 

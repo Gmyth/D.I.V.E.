@@ -25,6 +25,12 @@ public class HitBox : MonoBehaviour
         dummy = GetComponentInParent<Dummy>();
 
         objectsHit.Clear();
+
+        List<Collider2D> list = new List<Collider2D>();
+        int n = GetComponent<Collider2D>().OverlapCollider(new ContactFilter2D(), list);
+
+        for (int i = 0; i < n; ++i)
+            OnTriggerEnter2D(list[i]);
     }
 
     private void OnEnable()

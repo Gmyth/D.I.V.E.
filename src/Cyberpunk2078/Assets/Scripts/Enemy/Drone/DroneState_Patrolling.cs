@@ -24,7 +24,7 @@ public class DroneState_Patrolling : ESPatrolling<Drone>
         base.Charge();
 
 
-        enemy.AdjustGunDirection(enemy.currentTarget.transform.position);
+        enemy.AdjustGunDirection(Mathf.Sign(enemy.transform.right.x) * enemy.currentTarget.transform.position);
 
 
         enemy.isGunCharging = true;

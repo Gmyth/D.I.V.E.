@@ -14,7 +14,7 @@ public class PSKnockback : PlayerState
     [SerializeField] private int stateIndex_jumping;
     [SerializeField] private int stateIndex_Dashing;
 
-    [HideInInspector] public Vector3 knowback;
+    [HideInInspector] public Vector3 knockback;
     
     private Rigidbody2D rigidbody;
 

@@ -17,9 +17,9 @@ MonoBehaviour:
   knockback: 0
   hitBox: -1
   chasingSpeed: 3
-  attackRange: 1
-  attackHeight: 1
-  motionTime: 1
+  attackRange: 2
+  attackHeight: 6
+  motionTime: 0.8
   idleAnimation: L2Cleaner_Idle
   chasingAnimation: L2Cleaner_Alert
   attackAnimation: L2Cleaner_Melee

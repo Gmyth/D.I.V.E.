@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   motionID: -1
   damage: 1
-  knockback: 0
+  knockback: 1000
   hitBox: 2
-  chargeTime: 1
+  chargeTime: 0.3
   stopChargingOnTargetLoss: 0
   chargeAnimation: L2Cleaner_Alert
   stateIndex_alert: 2
