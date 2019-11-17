@@ -68,11 +68,9 @@ public class PSJumping1 : PlayerState
          }
          
          if (Input.GetButtonDown("HealthConsume"))
-         {
-             Player.CurrentPlayer.CostHealthEnergy();
-         }
-         
-         if (Input.GetAxis("Vertical") > 0 && isCloseTo("Ladder") != Direction.None)
+            playerCharacter.ConsumeFever();
+
+        if (Input.GetAxis("Vertical") > 0 && isCloseTo("Ladder") != Direction.None)
         {
             // up is pressed
             return indexPSClimb;

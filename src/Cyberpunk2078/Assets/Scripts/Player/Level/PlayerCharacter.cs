@@ -10,23 +10,39 @@ public class PlayerCharacter : Dummy
 
     [SerializeField] private FSMPlayer fsm;
 
-    private StatisticSystem statistic;
     private new Rigidbody2D rigidbody;
+
+
+    private Player player;
 
     public GameObject dashAtkBox;
 
+
+    public EventOnStatisticChange OnStatisticChange { get; private set; }
+
     public PlayerState State => fsm.CurrentState;
 
+
+    public float this[StatisticType statisticType]
+    {
+        get
+        {
+            return statistics[statisticType];
+        }
+    }
 
     public FSMPlayer GetFSM()
     {
         return fsm;
     }
 
-    public PlayerCharacter(Player player)
-    {
-        statistic = new StatisticSystem(player.attributes, player.inventory);
-    }
+    //public PlayerCharacter(Player player)
+    //{
+    //    statistic = new StatisticSystem(player.attributes, player.inventory);
+
+
+    //    OnStatisticChange = statistic.onStatisticChange;
+    //}
 
  
     public void Knockback(Vector3 origin, float force)
@@ -46,16 +62,110 @@ public class PlayerCharacter : Dummy
         Debug.Log(LogUtility.MakeLogStringFormat(name, "Take {0} damage.", rawDamage));
 
 
-        Player.CurrentPlayer.ApplyHealthChange(-rawDamage);
+        if (rawDamage <= 0)
+            return 0;
 
 
-        return rawDamage;
+        StatisticModificationResult result = statistics.Modify(StatisticType.Hp, -rawDamage, 0);
+
+        if (result.currentValue <= 0)
+            Dead();
+
+        // Player.CurrentPlayer.ApplyHealthChange(-rawDamage);
+
+
+        return result.previousValue - result.currentValue;
     }
     
-
     public override void Dead()
     {
-        //game over
+        fsm.CurrentStateIndex = 9;
+
+        ResetStatistics();
+
+
+        ObjectRecycler.Singleton.RecycleAll();
+        CheckPointManager.Instance?.RestoreCheckPoint();
+    }
+
+
+    public bool AddNormalEnergy(float amount)
+    {
+        float maxSp = statistics[StatisticType.MaxSp];
+
+        statistics.Modify(StatisticType.Sp, amount, 0, maxSp);
+
+
+        return true;
+    }
+
+    public bool AddOverLoadEnergy(float amount)
+    {
+        float maxSp = statistics[StatisticType.MaxOsp];
+
+        statistics.Modify(StatisticType.Osp, amount, 0, maxSp);
+
+
+        return true;
+    }
+
+    public float ConsumeEnergy(float value)
+    {
+        if (value < 0)
+            return -1;
+
+        if (statistics[StatisticType.Sp] + statistics[StatisticType.Osp] < value)
+            return -1;
+
+
+        float usedEnergy = 0;
+
+        StatisticModificationResult result = statistics.Modify(StatisticType.Sp, -value, 0, statistics[StatisticType.MaxSp]);
+
+        usedEnergy += result.previousValue - result.currentValue;
+
+        value -= usedEnergy;
+
+
+        if (value >= 1)
+        {
+            result = statistics.Modify(StatisticType.Osp, -value, 0, statistics[StatisticType.MaxOsp]);
+
+            usedEnergy += result.previousValue - result.currentValue;
+        }
+        
+
+        return usedEnergy;
+    }
+
+
+    public bool AddFever(float amount)
+    {
+        statistics.Modify(StatisticType.Fever, amount, 0, statistics[StatisticType.MaxFever]);
+
+        return true;
+    }
+
+    public bool ConsumeFever()
+    {
+        if (statistics[StatisticType.Fever] == statistics[StatisticType.MaxFever] && statistics[StatisticType.Hp] < statistics[StatisticType.MaxHp])
+        {
+            statistics.Modify(StatisticType.Hp, 1, 0, statistics[StatisticType.MaxHp]);
+            statistics[StatisticType.Fever] = 0;
+
+            return true;
+        }
+
+        return false;
+    }
+
+
+    private void ResetStatistics()
+    {
+        statistics[StatisticType.Hp] = statistics[StatisticType.MaxHp];
+        statistics[StatisticType.Sp] = statistics[StatisticType.MaxSp];
+        statistics[StatisticType.Osp] = 0;
+        statistics[StatisticType.Fever] = 0;
     }
 
 
@@ -69,6 +179,17 @@ public class PlayerCharacter : Dummy
 
     private void Start()
     {
+        player = Player.CurrentPlayer == null ? Player.CreatePlayer() : Player.CurrentPlayer;
+
+
+        statistics = new StatisticSystem(player.attributes, player.inventory);
+
+        ResetStatistics();
+
+
+        OnStatisticChange = statistics.onStatisticChange;
+
+
         dashAtkBox = GetComponentInChildren<HitBox>()?.gameObject;
         if (!dashAtkBox)
             dashAtkBox = GetComponentInChildren<Attack>()?.gameObject;
@@ -81,6 +202,9 @@ public class PlayerCharacter : Dummy
 
         fsm = fsm.Initialize(this);
         fsm.Boot();
+
+
+        GUIManager.Singleton.Open("HUD", this);
     }
 
     private void Update()

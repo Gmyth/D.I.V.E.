@@ -114,11 +114,9 @@ public class PSDashing : PlayerState
             if (h == 0) return indexPSIdle;
             return indexPSMoving;
         }
-        
+
         if (Input.GetButtonDown("HealthConsume"))
-        {
-            Player.CurrentPlayer.CostHealthEnergy();
-        }
+            playerCharacter.ConsumeFever();
         
         return Index;
     }
@@ -126,7 +124,7 @@ public class PSDashing : PlayerState
 
     public override void OnStateEnter(State previousState)
     {
-        if (!Player.CurrentPlayer.CostEnergy(EnergyConsume))
+        if (playerCharacter.ConsumeEnergy(EnergyConsume) <= 0)
         {
             // Energy is not enough, Cancel dash
             Apply = false;

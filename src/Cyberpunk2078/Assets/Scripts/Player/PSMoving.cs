@@ -59,9 +59,9 @@ public class PSMoving : PlayerState
            
         
         if (Input.GetButtonDown("HealthConsume"))
-        {
-            Player.CurrentPlayer.CostHealthEnergy();
-        }
+            playerCharacter.ConsumeFever();
+
+
         return Index;
     }
     
@@ -70,7 +70,8 @@ public class PSMoving : PlayerState
     public override void OnStateEnter(State previousState)
     {
         Move(Input.GetAxis("Horizontal"));
-        if(grounded)Player.CurrentPlayer.AddNormalEnergy(1);
+        if (grounded)
+            playerCharacter.AddNormalEnergy(1);
         anim.Play("MainCharacter_Run", -1, 0f);
     }
 

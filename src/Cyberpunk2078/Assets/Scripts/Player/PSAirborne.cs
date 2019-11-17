@@ -22,7 +22,7 @@ public class PSAirborne : PlayerState
 
         if (Input.GetButtonDown("HealthConsume"))
         {
-            Player.CurrentPlayer.CostHealthEnergy();
+            playerCharacter.ConsumeFever();
         }
 
         if (Input.GetAxis("Attack1") > 0)

@@ -14,11 +14,13 @@ public class L2ShieldBoss : Enemy
         }
 
 
-        if (statistics.Modify(StatisticType.Hp, -rawDamage) <= 0)
+        StatisticModificationResult result = statistics.Modify(StatisticType.Hp, -rawDamage, 0, statistics[StatisticType.MaxHp]);
+
+        if (result.currentValue <= 0)
             Dead();
 
 
-        return rawDamage;
+        return result.previousValue - result.currentValue;
     }
 
     public override void Dead()
@@ -28,14 +30,16 @@ public class L2ShieldBoss : Enemy
 
     public float ApplyFatigue(float rawFatigue)
     {
-        if (fsm.CurrentStateIndex == 4)
+        if (fsm.CurrentStateIndex == 4 || rawFatigue <= 0)
             return 0;
 
 
         float fatigue = rawFatigue * (1 + statistics.Sum(AttributeType.Fatigue_p0)) * (1 + statistics.Sum(AttributeType.Fatigue_p1));
 
 
-        if (statistics.Modify(StatisticType.Fatigue, fatigue) >= statistics[StatisticType.MaxFatigue])
+        StatisticModificationResult result = statistics.Modify(StatisticType.Fatigue, fatigue, 0, statistics[StatisticType.MaxFatigue]);
+
+        if (result.currentValue >= statistics[StatisticType.MaxFatigue])
         {
             statistics[StatisticType.Fatigue] = 0;
 
@@ -43,10 +47,10 @@ public class L2ShieldBoss : Enemy
         }
 
 
-        Debug.LogWarningFormat("[L2ShieldBoss] Fatigue: {0} / {1}", statistics[StatisticType.Fatigue], statistics[StatisticType.MaxFatigue]);
+        Debug.LogWarningFormat("[L2ShieldBoss] Fatigue: {0} / {1}", result.currentValue, statistics[StatisticType.MaxFatigue]);
 
 
-        return fatigue;
+        return result.currentValue - result.previousValue;
     }
 
 

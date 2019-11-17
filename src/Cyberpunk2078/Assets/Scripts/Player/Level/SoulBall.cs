@@ -27,6 +27,7 @@ public class SoulBall : Recyclable
     void Update()
     {
         var bufferState = currentState;
+
         switch (currentState)
         {
             case SoulBallState.Move:
@@ -44,7 +45,10 @@ public class SoulBall : Recyclable
                     // TODO  the absorb range could be attribute
                     rb2d.drag = 0;
                     bufferState = SoulBallState.Acquired;
-                    Acquire();
+
+                    PlayerCharacter.Singleton.AddFever(2f);
+
+                    Die();
                 }
                 
                 var direction = (target.position - transform.position).normalized;
@@ -75,12 +79,5 @@ public class SoulBall : Recyclable
         rb2d.AddForce(Random.Range(15,40) * dir);
         target = GameObject.FindObjectOfType<PlayerCharacter>().transform;
         timeIntervals += Random.Range(-0.2f, 0.2f);
-    }
-
-    void Acquire()
-    {
-        //add 
-        Player.CurrentPlayer.AddHealthEnergy(2f);
-        Die();
     }
 }

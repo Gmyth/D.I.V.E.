@@ -53,7 +53,7 @@ public class PSIdle : PlayerState
             return indexPSDashing;
         
         if (Input.GetButtonDown("HealthConsume"))
-            Player.CurrentPlayer.CostHealthEnergy();
+            playerCharacter.ConsumeFever();
         
         return Index;
     }
@@ -62,7 +62,8 @@ public class PSIdle : PlayerState
     {
         energyRecoverTime = Time.time + energyRecoverDelaySec;
 
-        if(grounded)Player.CurrentPlayer.AddNormalEnergy(1);
+        if (grounded)
+            playerCharacter.AddNormalEnergy(1);
         
         anim.Play("MainCharacter_Idle", -1, 0f);
         Rigidbody2D rb2d = playerCharacter.GetComponent<Rigidbody2D>();

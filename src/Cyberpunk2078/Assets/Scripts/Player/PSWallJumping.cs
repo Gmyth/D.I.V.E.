@@ -134,10 +134,8 @@ public class PSWallJumping: PlayerState
             return index_PSDashing;
         
         if (Input.GetButtonDown("HealthConsume"))
-        {
-            Player.CurrentPlayer.CostHealthEnergy();
-        }
-        
+            playerCharacter.ConsumeFever();
+
         return Index;
     }
 
