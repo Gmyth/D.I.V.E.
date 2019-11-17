@@ -19,7 +19,7 @@ MonoBehaviour:
   n_dashReleaseDelayTime: 0.05
   n_inDashingDragFactor: 6
   n_JumpListenerInterval: 0.1
-  f_dashForce: 16
+  f_dashForce: 18
   f_dashDelayTime: 0.02
   f_dashReleaseTime: 0.08
   f_dashReleaseDelayTime: 0.04

@@ -98,7 +98,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
         {
             float distance = Vector2.Distance(currentPath.vectorPath[indexWayPoint], enemyPosition);
 
-            if (distance < 0.3f)
+            if (distance < 0.5f)
                 ++indexWayPoint;
 
 

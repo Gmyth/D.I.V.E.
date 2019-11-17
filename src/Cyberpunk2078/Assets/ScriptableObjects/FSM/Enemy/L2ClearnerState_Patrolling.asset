@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4db54c6f88576c04a99a6d4e51948e17, type: 3}
   m_Name: L2ClearnerState_Patrolling
   m_EditorClassIdentifier: 
-  speed: 300
-  delay: 0
+  speed: 2
+  delay: 3
   idleAnimation: L2Cleaner_Idle
   patrollingAnimation: L2Cleaner_Idle
   index_ESIdle: -1
