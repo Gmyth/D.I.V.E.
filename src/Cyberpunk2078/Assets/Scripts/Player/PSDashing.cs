@@ -44,24 +44,16 @@ public class PSDashing : PlayerState
 
     public override int Update()
     {
-        
-     
-        var dashDelayTime = Player.CurrentPlayer.Fever?f_dashDelayTime:n_dashDelayTime; 
-        var dashReleaseTime = Player.CurrentPlayer.Fever?f_dashReleaseTime:n_dashReleaseTime; 
-        var dashReleaseDelayTime = Player.CurrentPlayer.Fever?f_dashReleaseTime:n_dashReleaseTime;
-        var JumpListenerInterval = Player.CurrentPlayer.Fever?f_JumpListenerInterval:n_JumpListenerInterval;
+        var dashDelayTime = playerCharacter.IsInFeverMode ? f_dashDelayTime:n_dashDelayTime; 
+        var dashReleaseTime = playerCharacter.IsInFeverMode ? f_dashReleaseTime:n_dashReleaseTime; 
+        var dashReleaseDelayTime = playerCharacter.IsInFeverMode ? f_dashReleaseTime:n_dashReleaseTime;
+        var JumpListenerInterval = playerCharacter.IsInFeverMode ? f_JumpListenerInterval:n_JumpListenerInterval;
         
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
         float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
 
 
-        // Energy Cost
-        if (Player.CurrentPlayer.Fever)
-        {
-            Player.CurrentPlayer.CostFeverEnergy(Time.time);
-        }
-        
         if (!Apply)
         {
             if (!isGrounded())
@@ -171,7 +163,7 @@ public class PSDashing : PlayerState
             if (h == 0) return indexPSIdle;
             return indexPSMoving;
         }
-        
+
         
         return Index;
     }
@@ -180,8 +172,8 @@ public class PSDashing : PlayerState
     public override void OnStateEnter(State previousState)
     {
         
-        var inDashingDragFactor = Player.CurrentPlayer.Fever?f_inDashingDragFactor:n_inDashingDragFactor; 
-        if (!Player.CurrentPlayer.CostEnergy(EnergyConsume))
+        var inDashingDragFactor = playerCharacter.IsInFeverMode ? f_inDashingDragFactor:n_inDashingDragFactor; 
+        if (playerCharacter.ConsumeEnergy(EnergyConsume) <= 0)
         {
             // Energy is not enough, Cancel dash
             Apply = false;
@@ -193,7 +185,7 @@ public class PSDashing : PlayerState
         //After delay is over, dash perform
         
         // Add Ghost trail
-        if(!Player.CurrentPlayer.Fever)playerCharacter.GetComponent<GhostSprites>().Occupied = true;
+        if(!playerCharacter.IsInFeverMode) playerCharacter.GetComponent<GhostSprites>().Occupied = true;
         lastDashSecond = Time.time;
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         
@@ -239,7 +231,7 @@ public class PSDashing : PlayerState
         playerCharacter.GetComponent<SpriteRenderer>().flipY = false;
             
         // Kill Trail
-        if(!Player.CurrentPlayer.Fever)playerCharacter.GetComponent<GhostSprites>().Occupied = false;
+        if(!playerCharacter.IsInFeverMode) playerCharacter.GetComponent<GhostSprites>().Occupied = false;
         
         setAtkBox(false);
         
@@ -250,7 +242,7 @@ public class PSDashing : PlayerState
     private void forceApply()
     {
         
-        var dashForce = Player.CurrentPlayer.Fever?f_dashForce:n_dashForce; 
+        var dashForce = playerCharacter.IsInFeverMode ? f_dashForce:n_dashForce; 
         
         // Fix sprite flip on X-axis
         playerCharacter.GetComponent<SpriteRenderer>().flipX = false;

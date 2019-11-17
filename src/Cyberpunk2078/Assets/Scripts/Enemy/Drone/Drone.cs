@@ -111,7 +111,7 @@ public class Drone : Enemy, IPatroller
         Boom.transform.localScale = Vector3.one;
         
         EnemyData enemyData = DataTableManager.singleton.GetEnemyData(typeID);
-        Player.CurrentPlayer.AddOverLoadEnergy(enemyData.Attributes[AttributeType.OspReward_c0]);
+        PlayerCharacter.Singleton.AddOverLoadEnergy(enemyData.Attributes[AttributeType.OspReward_c0]);
 
 
         for (int i = 0; i < 5; i++)

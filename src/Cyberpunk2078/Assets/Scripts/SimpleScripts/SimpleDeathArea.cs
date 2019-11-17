@@ -23,12 +23,15 @@ public class SimpleDeathArea : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Player") {
+        if (other.gameObject.tag == "Player")
+        {
+            PlayerCharacter playerCharacter = other.GetComponent<PlayerCharacter>();
 
-            if (Player.CurrentPlayer.Health > 0)
+            if (playerCharacter[StatisticType.Hp] > 0)
             {
                 //Take damage
-                Player.CurrentPlayer.ApplyHealthChange(-1);
+                PlayerCharacter.Singleton.ApplyDamage(1000);
+
                 //Respawn at last checkpoint
                 other.transform.position = RespawnPoint.position;
             }

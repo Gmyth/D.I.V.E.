@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SimpleChargePoint : MonoBehaviour
 {
-
     public float RecoverTime = 2.0f;
     public bool isReady = true;
 
@@ -24,7 +23,7 @@ public class SimpleChargePoint : MonoBehaviour
 
     public void ChargeEnergy() 
     {
-        Player.CurrentPlayer.AddOverLoadEnergy(1);
+        PlayerCharacter.Singleton.AddOverLoadEnergy(1);
         Drain();
     }
 

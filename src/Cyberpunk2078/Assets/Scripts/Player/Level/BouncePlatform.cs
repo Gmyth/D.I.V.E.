@@ -79,7 +79,7 @@ public class BouncePlatform : MonoBehaviour
                 rb2d.AddForce(bounceDirection * jumpForce * 50 * 1/Time.timeScale);
               
 
-                Player.CurrentPlayer.AddNormalEnergy(1);
+                PlayerCharacter.Singleton.AddNormalEnergy(1);
 
                 //rb2d.AddForce(Vector3.up * jumpForce * 100);
                 bounceReady = false;

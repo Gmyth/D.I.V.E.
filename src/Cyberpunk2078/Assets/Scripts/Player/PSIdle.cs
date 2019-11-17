@@ -20,12 +20,6 @@ public class PSIdle : PlayerState
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
         
-        // Energy Cost
-        if (Player.CurrentPlayer.Fever)
-        {
-            Player.CurrentPlayer.CostFeverEnergy(Time.time);
-        }
-        
         
         if (Input.GetAxis("Attack1") > 0)
         {
@@ -64,7 +58,8 @@ public class PSIdle : PlayerState
        // rb2d.bodyType = RigidbodyType2D.Kinematic;
         rb2d.velocity = Vector2.zero;
         //rb2d.gravityScale = 0;
-        if(grounded)Player.CurrentPlayer.AddNormalEnergy(1);
+        if (grounded)
+            playerCharacter.AddNormalEnergy(1);
         anim.Play("MainCharacter_Idle", -1, 0f);
         
         

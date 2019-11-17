@@ -34,7 +34,7 @@ public class PSAttackGH: PlayerState
         var actionTime = n_actionTime;
         var recoveryTime = n_recoveryTime;
 
-        if (Player.CurrentPlayer.Fever)
+        if (playerCharacter.IsInFeverMode)
         {
             pushForce = f_pushForce;
             actionTime = f_actionTime;
@@ -45,12 +45,7 @@ public class PSAttackGH: PlayerState
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
         PhysicsInputHelper(h);
-        
-        // Energy Cost
-        if (Player.CurrentPlayer.Fever)
-        {
-            Player.CurrentPlayer.CostFeverEnergy(Time.time);
-        }
+
         
         RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,0.8f);
         if (hit1.collider != null && hit1.transform.CompareTag("Ground"))
@@ -97,7 +92,7 @@ public class PSAttackGH: PlayerState
 
             return indexPSMoving;
         }
-        
+
 
         
         return Index;
@@ -118,7 +113,7 @@ public class PSAttackGH: PlayerState
     public override void OnStateEnter(State previousState)
     {
         
-        var pushForce = Player.CurrentPlayer.Fever? f_pushForce : n_pushForce;
+        var pushForce = playerCharacter.IsInFeverMode ? f_pushForce : n_pushForce;
 
         playerCharacter.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         //playerCharacter.GetComponent<GhostSprites>().Occupied = true;

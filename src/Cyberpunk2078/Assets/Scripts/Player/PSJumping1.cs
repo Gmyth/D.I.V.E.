@@ -42,7 +42,8 @@ public class PSJumping1 : PlayerState
         var speedFactor = n_speedFactor;
         var accelerationFactor = n_accelerationFactor;
         var wallJumpCD = n_wallJumpCD;
-        if (Player.CurrentPlayer.Fever)
+
+        if (playerCharacter.IsInFeverMode)
         {
             jumpForce =  f_jumpForce;
             speedFactor = f_speedFactor; 
@@ -56,11 +57,6 @@ public class PSJumping1 : PlayerState
         float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
         flip = h < 0;
         
-        // Energy Cost
-        if (Player.CurrentPlayer.Fever)
-        {
-            Player.CurrentPlayer.CostFeverEnergy(Time.time);
-        }
 
         //Still support Horizontal update during jumping, delete following to kill Horizontal input
          PhysicsInputHelper(h,speedFactor,accelerationFactor);
@@ -159,8 +155,8 @@ public class PSJumping1 : PlayerState
 
     public override void OnStateEnter(State previousState)
     {
-        var jumpForce = Player.CurrentPlayer.Fever?f_jumpForce : n_jumpForce;
-        var wallJumpForce = Player.CurrentPlayer.Fever? f_wallJumpForce : n_wallJumpForce;
+        var jumpForce = playerCharacter.IsInFeverMode ? f_jumpForce : n_jumpForce;
+        var wallJumpForce = playerCharacter.IsInFeverMode ? f_wallJumpForce : n_wallJumpForce;
         
         previous = previousState;
         timer = jumpIncreaserThreshold;

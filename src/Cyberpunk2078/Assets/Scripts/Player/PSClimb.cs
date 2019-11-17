@@ -21,11 +21,6 @@ public class PSClimb : PlayerState
         var v = Input.GetAxis("Vertical");
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         
-        // Energy Cost
-        if (Player.CurrentPlayer.Fever)
-        {
-            Player.CurrentPlayer.CostFeverEnergy(Time.time);
-        }
 
         if (v == 0)
         {
@@ -35,12 +30,12 @@ public class PSClimb : PlayerState
         }else if (v > 0)
         {
             anim.speed = 1;
-            rb2d.velocity = new Vector2(0, Player.CurrentPlayer.Fever?f_climbSpeed:climbSpeed);
+            rb2d.velocity = new Vector2(0, playerCharacter.IsInFeverMode ? f_climbSpeed:climbSpeed);
         }
         else
         {
             anim.speed = 1;
-            rb2d.velocity = new Vector2(0, Player.CurrentPlayer.Fever?-f_climbSpeed:-climbSpeed);
+            rb2d.velocity = new Vector2(0, playerCharacter.IsInFeverMode ? -f_climbSpeed:-climbSpeed);
         }
 
         if (isCloseTo("Ladder", "Interactive") == Direction.None)
@@ -56,7 +51,7 @@ public class PSClimb : PlayerState
             rb2d.gravityScale = 3;
             return indexPSJumping1;
         }
-        
+
 
             
         return Index;

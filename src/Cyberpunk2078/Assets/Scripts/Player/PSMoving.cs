@@ -28,12 +28,6 @@ public class PSMoving : PlayerState
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
 
-        // Energy Cost
-        if (Player.CurrentPlayer.Fever)
-        {
-            Player.CurrentPlayer.CostFeverEnergy(Time.time);
-        }
-        
         if (Input.GetAxis("Attack1") > 0)
         {
             return indexPSAttackGH;
@@ -83,7 +77,8 @@ public class PSMoving : PlayerState
     public override void OnStateEnter(State previousState)
     {
         Move(Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal"));
-        if(grounded)Player.CurrentPlayer.AddNormalEnergy(1);
+        if (grounded)
+            playerCharacter.AddNormalEnergy(1);
         anim.Play("MainCharacter_Run", -1, 0f);
     }
 
@@ -91,7 +86,7 @@ public class PSMoving : PlayerState
     internal void Move(float axis)
     {
         int direction = axis > 0 ? 1 : -1;
-        if(!Player.CurrentPlayer.Fever){PhysicsInputHelper(axis,n_speedFactor,n_accelerationFactor);}
+        if(!playerCharacter.IsInFeverMode) {PhysicsInputHelper(axis,n_speedFactor,n_accelerationFactor);}
         else {PhysicsInputHelper(axis,f_speedFactor,f_accelerationFactor);}
     }
     

@@ -34,7 +34,8 @@ public class PSWallJumping: PlayerState
         var jumpSpeed = n_jumpSpeed;
         var stickWallTime = n_stickWallTime;
         var wallCheckCoolDown = n_wallCheckCoolDown;
-        if (Player.CurrentPlayer.Fever)
+
+        if (playerCharacter.IsInFeverMode)
         {
             jumpSpeed = f_jumpSpeed;
             stickWallTime = f_stickWallTime;
@@ -50,11 +51,6 @@ public class PSWallJumping: PlayerState
             rb2d.gravityScale = 3;
         }
         
-        // Energy Cost
-        if (Player.CurrentPlayer.Fever)
-        {
-            Player.CurrentPlayer.CostFeverEnergy(Time.time);
-        }
         
         float Vy = rb2d.velocity.y;
         float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
@@ -193,7 +189,7 @@ public class PSWallJumping: PlayerState
 
     private void sideWallJump()
     {
-        var jumpForce = Player.CurrentPlayer.Fever?f_jumpForce: n_jumpForce;
+        var jumpForce = playerCharacter.IsInFeverMode ? f_jumpForce: n_jumpForce;
         
         //Perform jump
         anim.Play("MainCharacter_Jump", -1, 0f);

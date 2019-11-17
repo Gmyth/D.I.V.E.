@@ -20,7 +20,7 @@ public abstract class PlayerState : State
     {
         Index = index;
         this.playerCharacter = playerCharacter;
-        Player.CreatePlayer();
+
         anim = playerCharacter.GetComponent<Animator>();
     }
 

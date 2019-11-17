@@ -12,9 +12,6 @@ public struct ProjectileUtility
         float angle = (Random.Range(0, 1) * 2 - 1) * Random.Range(deviation * minAngle, deviation * maxAngle);
 
 
-        Debug.LogWarning(deviation);
-
-
         return (Quaternion.Euler(0, 0, angle) * initialDirection).normalized;
     }
 }

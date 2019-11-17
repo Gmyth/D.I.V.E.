@@ -30,7 +30,7 @@ public class L2Cleaner : Enemy, IPatroller
         Boom.transform.localScale = Vector3.one;
 
         EnemyData enemyData = DataTableManager.singleton.GetEnemyData(typeID);
-        Player.CurrentPlayer.AddOverLoadEnergy(enemyData.Attributes[AttributeType.OspReward_c0]);
+        PlayerCharacter.Singleton.AddOverLoadEnergy(enemyData.Attributes[AttributeType.OspReward_c0]);
 
         
         gameObject.SetActive(false);

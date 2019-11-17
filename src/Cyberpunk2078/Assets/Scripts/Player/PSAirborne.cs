@@ -23,15 +23,12 @@ public class PSAirborne : PlayerState
 
     public override int Update()
     {
-        var jumpTolerance = Player.CurrentPlayer.Fever ? f_jumpTolerance : n_jumpTolerance;
+        var jumpTolerance = playerCharacter.IsInFeverMode ? f_jumpTolerance : n_jumpTolerance;
+
         float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
+
         PhysicsInputHelper(h);
 
-        // Energy Cost
-        if (Player.CurrentPlayer.Fever)
-        {
-            Player.CurrentPlayer.CostFeverEnergy(Time.time);
-        }
 
         if (Input.GetAxis("Attack1") > 0)
         {

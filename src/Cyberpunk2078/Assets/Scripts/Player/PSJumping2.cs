@@ -32,7 +32,7 @@ public class PSJumping2 : PlayerState
         var jumpForce =  n_jumpForce;
         var speedFactor = n_speedFactor;
         var accelerationFactor = n_accelerationFactor;
-        if (Player.CurrentPlayer.Fever)
+        if (playerCharacter.IsInFeverMode)
         {
             jumpForce =  f_jumpForce;
             speedFactor = f_speedFactor; 
@@ -45,12 +45,7 @@ public class PSJumping2 : PlayerState
 
         //Still support Horizontal update during jumping, delete following to kill Horizzontal input
         PhysicsInputHelper(h,speedFactor,accelerationFactor);
-        
-        // Energy Cost
-        if (Player.CurrentPlayer.Fever)
-        {
-            Player.CurrentPlayer.CostFeverEnergy(Time.time);
-        }
+
         
         if (!isGrounded()&& Vy < 0)
         {
@@ -93,7 +88,7 @@ public class PSJumping2 : PlayerState
     public override void OnStateEnter(State previousState)
     {
         
-        var jumpForce = Player.CurrentPlayer.Fever?f_jumpForce : n_jumpForce;
+        var jumpForce = playerCharacter.IsInFeverMode ? f_jumpForce : n_jumpForce;
         anim.Play("MainCharacter_Jump", -1, 0f);
         
         //Perform jump

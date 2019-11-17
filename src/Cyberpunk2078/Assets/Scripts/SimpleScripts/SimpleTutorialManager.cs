@@ -68,19 +68,19 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
     {
         Player.CurrentPlayer.energyLocked = true;
         Player.CurrentPlayer.overloadEnergyLocked = true;
-        Player.CurrentPlayer.CostEnergy(1);
+        PlayerCharacter.Singleton.ConsumeEnergy(1);
     }
 
     public void IntroduceNormalEnergy()
     {
         Player.CurrentPlayer.energyLocked = false;
-        Player.CurrentPlayer.AddNormalEnergy(1);
+        PlayerCharacter.Singleton.AddNormalEnergy(1);
     }
 
     public void IntroduceOverloadEnergy()
     {
         Player.CurrentPlayer.overloadEnergyLocked = false;
-        Player.CurrentPlayer.AddOverLoadEnergy(1);
+        PlayerCharacter.Singleton.AddOverLoadEnergy(1);
     }
 
 }
