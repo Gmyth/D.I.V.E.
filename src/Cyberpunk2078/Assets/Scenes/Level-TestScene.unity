@@ -10427,9 +10427,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ba9401f38524604f8c716449bf6c0f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPoint: {fileID: 0}
-  endPoint: {fileID: 0}
-  timerText: {fileID: 0}
+  startPoint: {fileID: 620976635}
+  endPoint: {fileID: 1886630839}
+  timerText: {fileID: 1321030123}
   totalTime: 0
   isCounting: 0
 --- !u!114 &635697448
@@ -55054,7 +55054,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1183792766}
-  - component: {fileID: 1183792765}
   m_Layer: 0
   m_Name: Timer
   m_TagString: Untagged
@@ -55062,23 +55061,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1183792765
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1183792764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ba9401f38524604f8c716449bf6c0f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startPoint: {fileID: 620976635}
-  endPoint: {fileID: 1886630839}
-  timerText: {fileID: 1321030123}
-  totalTime: 0
-  isCounting: 0
 --- !u!4 &1183792766
 Transform:
   m_ObjectHideFlags: 0
