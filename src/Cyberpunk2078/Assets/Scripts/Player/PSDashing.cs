@@ -225,7 +225,7 @@ public class PSDashing : PlayerState
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Dummy"),false);
         
         // reset drag & gravity 
-        rb2d.drag = defaultDrag;
+        rb2d.drag = 1;
         rb2d.gravityScale = 3;
         
         // Listening to move input

@@ -38,16 +38,16 @@ public abstract class PlayerState : State
         float DistanceToTheGround = playerCharacter.GetComponent<CapsuleCollider2D>().bounds.extents.y + centerOffset;
         //float DistanceToTheGround = centerOffset;
         RaycastHit2D hitM = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.4f  );
-        RaycastHit2D hitL = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.3f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.2f );
-        RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.3f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.2f);
+        RaycastHit2D hitL = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.3f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.4f );
+        RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.3f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.4f);
         RaycastHit2D hitSlide = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,0f,0f),slideCheck, 2f );
 
         
         Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f, centerOffset, 0f), -playerCharacter.transform.up * (DistanceToTheGround + 0.4f), Color.red);
 
-        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0.3f, centerOffset, 0f), -playerCharacter.transform.up * (DistanceToTheGround + 0.2f), Color.green);
+        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0.3f, centerOffset, 0f), -playerCharacter.transform.up * (DistanceToTheGround + 0.4f), Color.green);
 //
-        Debug.DrawRay(playerCharacter.transform.position + new Vector3(-0.3f, centerOffset, 0f), -playerCharacter.transform.up * (DistanceToTheGround + 0.2f), Color.yellow);
+        Debug.DrawRay(playerCharacter.transform.position + new Vector3(-0.3f, centerOffset, 0f), -playerCharacter.transform.up * (DistanceToTheGround + 0.4f), Color.yellow);
         
         Debug.DrawRay(playerCharacter.transform.position, slideCheck * 2f, Color.green);
 
@@ -61,14 +61,14 @@ public abstract class PlayerState : State
             if (margin && !grounded)
             {
 
-                if (name == "Airborne")
-                {
-                    playerCharacter.transform.Translate(Vector2.up * (hitL.distance - DistanceToTheGround));
-                }
-                else
-                {
-                    playerCharacter.transform.Translate(Vector2.down * (hitL.distance - DistanceToTheGround));
-                }
+                //if (name == "Airborne")
+                //{
+                //    playerCharacter.transform.Translate(Vector2.up * (hitL.distance - DistanceToTheGround));
+                //}
+                //else
+                //{
+                //    playerCharacter.transform.Translate(Vector2.down * (hitL.distance - DistanceToTheGround));
+                //}
             }
 
 
@@ -84,14 +84,14 @@ public abstract class PlayerState : State
             if (margin && !grounded)
             {
 
-                if (name == "Airborne")
-                {
-                    playerCharacter.transform.Translate(Vector2.up * (hitR.distance - DistanceToTheGround));
-                }
-                else
-                {
-                    playerCharacter.transform.Translate(Vector2.down * (hitR.distance - DistanceToTheGround));
-                }
+                //if (name == "Airborne")
+                //{
+                //    playerCharacter.transform.Translate(Vector2.up * (hitR.distance - DistanceToTheGround));
+                //}
+                //else
+                //{
+                //    playerCharacter.transform.Translate(Vector2.down * (hitR.distance - DistanceToTheGround));
+                //}
             }
             Player.CurrentPlayer.secondJumpReady = true;
             grounded = true;
@@ -106,14 +106,14 @@ public abstract class PlayerState : State
             if (margin&& !grounded)
             {
 
-                if (name == "Airborne")
-                {
-                   playerCharacter.transform.Translate(Vector2.up * (hitM.distance - DistanceToTheGround));
-                }
-                else
-                {
-                   playerCharacter.transform.Translate(Vector2.down* (hitM.distance - DistanceToTheGround));
-                }
+                //if (name == "Airborne")
+                //{
+                //   playerCharacter.transform.Translate(Vector2.up * (hitM.distance - DistanceToTheGround));
+                //}
+                //else
+                //{
+                //   playerCharacter.transform.Translate(Vector2.down* (hitM.distance - DistanceToTheGround));
+                //}
             }
             Player.CurrentPlayer.secondJumpReady = true;
             grounded = true;
