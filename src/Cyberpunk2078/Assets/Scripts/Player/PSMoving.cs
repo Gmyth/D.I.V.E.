@@ -5,8 +5,15 @@ using UnityEngine.Experimental.PlayerLoop;
 [CreateAssetMenuAttribute(fileName = "PS_Moving", menuName = "Player State/Moving")]
 public class PSMoving : PlayerState
 {
-    [SerializeField] private float speedFactor = 3;
-    [SerializeField] private float accelerationFactor = 20;
+    [Header("Normal")]
+    [SerializeField] private float n_speedFactor;
+    [SerializeField] private float n_accelerationFactor;
+    
+    [Header("Fever Mode")]
+    [SerializeField] private float f_speedFactor;
+    [SerializeField] private float f_accelerationFactor;
+    
+    [Header( "Transferable States" )]
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSAttackGH;
     [SerializeField] private int indexPSJumping1;
@@ -27,22 +34,26 @@ public class PSMoving : PlayerState
         }
             
         
-        if (Input.GetButtonDown("Dashing"))
+        if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
+        {
+            Player.CurrentPlayer.triggerReady = false;
             return indexPSDashing;
+        }
 
         if (Input.GetAxis("Vertical") > 0  &&  isCloseTo("Ladder")!= Direction.None)
         {
             // up is pressed
             return indexPSClimb;
         }
-
-        float x = Input.GetAxis("Horizontal");
+        
+        
+        float x = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
 
         
         flip = x <= 0;
         if (x == 0)
-            
             return indexPSIdle;
+        
         
         playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
         Move(x);
@@ -58,10 +69,6 @@ public class PSMoving : PlayerState
         }
            
         
-        if (Input.GetButtonDown("HealthConsume"))
-            playerCharacter.ConsumeFever();
-
-
         return Index;
     }
     
@@ -69,7 +76,7 @@ public class PSMoving : PlayerState
 
     public override void OnStateEnter(State previousState)
     {
-        Move(Input.GetAxis("Horizontal"));
+        Move(Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal"));
         if (grounded)
             playerCharacter.AddNormalEnergy(1);
         anim.Play("MainCharacter_Run", -1, 0f);
@@ -79,7 +86,8 @@ public class PSMoving : PlayerState
     internal void Move(float axis)
     {
         int direction = axis > 0 ? 1 : -1;
-        PhysicsInputHelper(axis,speedFactor,accelerationFactor);
+        if(!playerCharacter.IsInFeverMode) {PhysicsInputHelper(axis,n_speedFactor,n_accelerationFactor);}
+        else {PhysicsInputHelper(axis,f_speedFactor,f_accelerationFactor);}
     }
     
     void NormalizeSlope () {

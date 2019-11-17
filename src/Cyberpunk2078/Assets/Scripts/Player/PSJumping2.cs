@@ -6,9 +6,18 @@ using UnityEngine;
 [CreateAssetMenuAttribute(fileName = "PS_Jumping2", menuName = "Player State/Attack Jumping 2")]
 public class PSJumping2 : PlayerState
 {
-    [SerializeField] private float jumpForce = 3f;
-    [SerializeField] private float speed_factor = 3;
-    [SerializeField] private float acceleration_factor = 20;
+    [Header( "Normal" )]
+    [SerializeField] private float n_jumpForce = 3f;
+    [SerializeField] private float n_speedFactor = 3;
+    [SerializeField] private float n_accelerationFactor = 20;
+    
+    [Header( "Fever" )]
+    [SerializeField] private float f_jumpForce = 3f;
+    [SerializeField] private float f_speedFactor = 3;
+    [SerializeField] private float f_accelerationFactor = 20;
+    
+    [Header( "Transferable States" )]
+  
     [SerializeField] private int index_PSIdle;
     [SerializeField] private int index_PSMoving;
     [SerializeField] private int index_PSWallJumping;
@@ -20,12 +29,23 @@ public class PSJumping2 : PlayerState
 
     public override int Update()
     {
+        var jumpForce =  n_jumpForce;
+        var speedFactor = n_speedFactor;
+        var accelerationFactor = n_accelerationFactor;
+        if (playerCharacter.IsInFeverMode)
+        {
+            jumpForce =  f_jumpForce;
+            speedFactor = f_speedFactor; 
+            accelerationFactor = f_accelerationFactor;
+        }
+        
         playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
         float Vy = playerCharacter.GetComponent<Rigidbody2D>().velocity.y;
-        float h = Input.GetAxis("Horizontal");
+        float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
+
         //Still support Horizontal update during jumping, delete following to kill Horizzontal input
-        PhysicsInputHelper(h,speed_factor,acceleration_factor);
-        
+        PhysicsInputHelper(h,speedFactor,accelerationFactor);
+
         
         if (!isGrounded()&& Vy < 0)
         {
@@ -40,7 +60,7 @@ public class PSJumping2 : PlayerState
         
         if (isGrounded())
             {
-                if (Input.GetAxis("Horizontal") == 0)
+                if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("HorizontalJoyStick") == 0)
                     return index_PSIdle;
 
                 return index_PSMoving;
@@ -56,18 +76,19 @@ public class PSJumping2 : PlayerState
             return index_PSWallJumping;
         }
         
-        if (Input.GetButtonDown("Dashing"))
+        if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
+        {
+            Player.CurrentPlayer.triggerReady = false;
             return index_PSDashing;
-
-        if (Input.GetButtonDown("HealthConsume"))
-            playerCharacter.ConsumeFever();
-        
+        }
         return Index;
     }
 
 
     public override void OnStateEnter(State previousState)
     {
+        
+        var jumpForce = playerCharacter.IsInFeverMode ? f_jumpForce : n_jumpForce;
         anim.Play("MainCharacter_Jump", -1, 0f);
         
         //Perform jump

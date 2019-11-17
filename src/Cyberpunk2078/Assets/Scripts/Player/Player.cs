@@ -28,6 +28,12 @@ public class Player
     public bool secondJumpReady;
     public bool lastWallJumpRight;
 
+    public bool energyLocked;
+    public bool overloadEnergyLocked;
+
+    public bool triggerReady;
+
+
     public float this[AttributeType type]
     {
         get
@@ -37,16 +43,19 @@ public class Player
     }
 
 
-    private Player(int healthCap = 3, float normalEnergyCap = 1 ,float overloadEnergyCap = 1,float healthEnergyCap = 100, float energyRecoverRate = 0)
+    private Player(int healthCap = 3, float normalEnergyCap = 1 ,float overloadEnergyCap = 1,float feverEnergyCap = 100, float feverDecayRate = 1)
     {
         inventory = new Inventory();
         attributes = new AttributeSet();
         attributes.Set(AttributeType.MaxHp_c0, healthCap);
         attributes.Set(AttributeType.MaxSp_c0, normalEnergyCap);
         attributes.Set(AttributeType.MaxOsp_c0, overloadEnergyCap);
-        attributes.Set(AttributeType.MaxFever_c0, healthEnergyCap);
-        attributes.Set(AttributeType.SpRecovery_c0, energyRecoverRate);
+        attributes.Set(AttributeType.MaxFever_c0, feverEnergyCap);
+        attributes.Set(AttributeType.FeverDecay_c0, feverDecayRate);
 
+
+        energyLocked = false;
+        overloadEnergyLocked = false;
         secondJumpReady = true;
     }
 }

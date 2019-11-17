@@ -4,10 +4,17 @@
 [CreateAssetMenuAttribute(fileName = "PS_WallJumping", menuName = "Player State/Wall Jumping")]
 public class PSWallJumping: PlayerState
 {
-    [SerializeField] private float jumpForce = 4.5f;
-    [SerializeField] private float jumpSpeed = 10f;
-    [SerializeField] private float stickWallTime = 0.25f;
-    [SerializeField] private float wallCheckCoolDown = 0.25f;
+    [Header("Normal")]
+    [SerializeField] private float n_jumpForce = 4.5f;
+    [SerializeField] private float n_jumpSpeed = 10f;
+    [SerializeField] private float n_stickWallTime = 0.25f;
+    [SerializeField] private float n_wallCheckCoolDown = 0.25f;
+    [Header("Fever")]
+    [SerializeField] private float f_jumpForce = 4.5f;
+    [SerializeField] private float f_jumpSpeed = 10f;
+    [SerializeField] private float f_stickWallTime = 0.25f;
+    [SerializeField] private float f_wallCheckCoolDown = 0.25f;
+    
     [SerializeField] private int index_PSIdle;
     [SerializeField] private int index_PSMoving;
     [SerializeField] private int index_PSJumping1;
@@ -24,18 +31,30 @@ public class PSWallJumping: PlayerState
     private float lastOnWallTime;
     public override int Update()
     {
-        var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-        
+        var jumpSpeed = n_jumpSpeed;
+        var stickWallTime = n_stickWallTime;
+        var wallCheckCoolDown = n_wallCheckCoolDown;
 
+        if (playerCharacter.IsInFeverMode)
+        {
+            jumpSpeed = f_jumpSpeed;
+            stickWallTime = f_stickWallTime;
+            wallCheckCoolDown = f_wallCheckCoolDown;
+        }
+
+
+        var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         
         if (onWall && Time.time > lastStickTime + stickWallTime)
         {
             //stick over, falling start
             rb2d.gravityScale = 3;
         }
-
+        
+        
         float Vy = rb2d.velocity.y;
-        float h = Input.GetAxis("Horizontal");
+        float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
+
         
         if (isGrounded() && Vy <= 0)
         {
@@ -130,12 +149,14 @@ public class PSWallJumping: PlayerState
         playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
         
         // perform Dashing
-        if (Input.GetButtonDown("Dashing"))
+        if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
+        {
+            Player.CurrentPlayer.triggerReady = false;
             return index_PSDashing;
+        }
         
-        if (Input.GetButtonDown("HealthConsume"))
-            playerCharacter.ConsumeFever();
-
+        
+        
         return Index;
     }
 
@@ -168,6 +189,8 @@ public class PSWallJumping: PlayerState
 
     private void sideWallJump()
     {
+        var jumpForce = playerCharacter.IsInFeverMode ? f_jumpForce: n_jumpForce;
+        
         //Perform jump
         anim.Play("MainCharacter_Jump", -1, 0f);
         

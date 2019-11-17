@@ -13,13 +13,14 @@ public enum SoulBallState
 
 public class SoulBall : Recyclable
 {
-    private float MaxSpeed = 16f;
+    private float acceleration = 20f;
     private SoulBallState currentState;
     private float LastFloatingForceTime;
     private Transform target;
     private Rigidbody2D rb2d;
 
     private float t0;
+    private float v;
     private float timeIntervals = 0.6f;
     // Start is called before the first frame update
 
@@ -39,20 +40,22 @@ public class SoulBall : Recyclable
                 break;
             
             case SoulBallState.Chase:
-                
-                if ((target.position - transform.position).sqrMagnitude < 0.1f)
+                if ((target.position - transform.position).sqrMagnitude < 0.3f)
                 {
                     // TODO  the absorb range could be attribute
                     rb2d.drag = 0;
                     bufferState = SoulBallState.Acquired;
 
-                    PlayerCharacter.Singleton.AddFever(2f);
+                    PlayerCharacter.Singleton.AddFever(4f);
 
                     Die();
                 }
+
                 
                 var direction = (target.position - transform.position).normalized;
-                transform.Translate(direction * 9.5f * Time.deltaTime);
+                transform.Translate(direction * v * Time.deltaTime);
+
+                v = Mathf.Min(30, v + acceleration * Time.deltaTime);
                 
                 break;
             
@@ -73,6 +76,7 @@ public class SoulBall : Recyclable
     public void Active()
     {
         t0 = Time.time;
+        v = 5f;
         rb2d = GetComponent<Rigidbody2D>();
         currentState = SoulBallState.Move;
         var dir = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));

@@ -30,11 +30,32 @@ public class Attack : MonoBehaviour
                     other.transform.position - (other.transform.position - transform.position) * 0.2f;
                 VFX.transform.right = transform.right;
                 VFX.setTarget(other.transform);
-                VFX.transform.localScale = Vector3.one;
+                VFX.transform.localScale = new Vector3(4,1,1);
                 VFX.gameObject.SetActive(true);
+
+                var trail = ObjectRecycler.Singleton.GetObject<SingleEffect>(8);
+                trail.transform.position = VFX.transform.position;
+                trail.setTarget(other.transform);
+
+                trail.transform.right = transform.right;
+                trail.transform.localScale = new Vector3(7, 1, 1);
+                trail.gameObject.SetActive(true);
+
+
+                var trail1 = ObjectRecycler.Singleton.GetObject<SingleEffect>(8);
+                trail1.transform.position = VFX.transform.position;
+                trail1.setTarget(other.transform);
+
+                trail1.transform.right = -transform.right;
+                trail1.transform.localScale = new Vector3(7, 1, 1);
+                trail1.gameObject.SetActive(true);
 
                 other.GetComponent<Dummy>().ApplyDamage(damage);
                 objectsHit.Add(other.gameObject.GetInstanceID());
+            }
+            else if (other.tag == "Platform" && other.GetComponent<SimpleBreakable>())
+            {
+                other.GetComponent<SimpleBreakable>().DestoryBreakable();
             }
         }
         else if (other.tag == "Player")
@@ -48,7 +69,8 @@ public class Attack : MonoBehaviour
             }
         }
         
-        
+
+
     }
 
     public int getRandomEffect()

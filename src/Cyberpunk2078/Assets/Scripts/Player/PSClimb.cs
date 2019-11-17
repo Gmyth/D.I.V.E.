@@ -5,7 +5,13 @@ using UnityEngine;
 [CreateAssetMenuAttribute(fileName = "PS_Climb", menuName = "Player State/Climb")]
 public class PSClimb : PlayerState
 {
+    [Header("Normal")]
     [SerializeField] private float climbSpeed;
+    
+    [Header("Fever Mode")]
+    [SerializeField] private float f_climbSpeed;
+    
+    [Header( "Transferable States" )]
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSMoving;
     [SerializeField] private int indexPSJumping1;
@@ -16,7 +22,6 @@ public class PSClimb : PlayerState
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         
 
-
         if (v == 0)
         {
             anim.speed = 0;
@@ -25,12 +30,12 @@ public class PSClimb : PlayerState
         }else if (v > 0)
         {
             anim.speed = 1;
-            rb2d.velocity = new Vector2(0, climbSpeed);
+            rb2d.velocity = new Vector2(0, playerCharacter.IsInFeverMode ? f_climbSpeed:climbSpeed);
         }
         else
         {
             anim.speed = 1;
-            rb2d.velocity = new Vector2(0, -climbSpeed);
+            rb2d.velocity = new Vector2(0, playerCharacter.IsInFeverMode ? -f_climbSpeed:-climbSpeed);
         }
 
         if (isCloseTo("Ladder", "Interactive") == Direction.None)
@@ -47,8 +52,7 @@ public class PSClimb : PlayerState
             return indexPSJumping1;
         }
 
-        if (Input.GetButtonDown("HealthConsume"))
-            playerCharacter.ConsumeFever();
+
             
         return Index;
     }

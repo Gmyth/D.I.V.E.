@@ -36,6 +36,8 @@ public class PlayerCharacter : Dummy
         return fsm;
     }
 
+    public bool IsInFeverMode { get; private set; } = false;
+
     //public PlayerCharacter(Player player)
     //{
     //    statistic = new StatisticSystem(player.attributes, player.inventory);
@@ -141,7 +143,24 @@ public class PlayerCharacter : Dummy
 
     public bool AddFever(float amount)
     {
-        statistics.Modify(StatisticType.Fever, amount, 0, statistics[StatisticType.MaxFever]);
+        StatisticModificationResult result = statistics.Modify(StatisticType.Fever, amount, 0, statistics[StatisticType.MaxFever]);
+
+        if (result.currentValue >= 100)
+            IsInFeverMode = true;
+        else if (result.currentValue <= 0)
+            IsInFeverMode = false;
+
+        return true;
+    }
+
+    public bool ConsumeFever(float value)
+    {
+        StatisticModificationResult result = statistics.Modify(StatisticType.Fever, -value, 0, statistics[StatisticType.MaxFever]);
+
+        if (result.currentValue >= 100)
+            ActivateFeverMode();
+        else if (result.currentValue <= 0)
+            DeactivateFeverMode();
 
         return true;
     }
@@ -157,6 +176,18 @@ public class PlayerCharacter : Dummy
         }
 
         return false;
+    }
+
+    public void ActivateFeverMode()
+    {
+        IsInFeverMode = true;
+        GetComponent<GhostSprites>().Occupied = true;
+    }
+
+    public void DeactivateFeverMode()
+    {
+        IsInFeverMode = false;
+        GetComponent<GhostSprites>().Occupied = false;
     }
 
 
@@ -209,6 +240,10 @@ public class PlayerCharacter : Dummy
 
     private void Update()
     {
+        if (IsInFeverMode)
+            ConsumeFever(statistics[StatisticType.FeverDecay] * Time.deltaTime);
+
+
         fsm.Update();
     }
 

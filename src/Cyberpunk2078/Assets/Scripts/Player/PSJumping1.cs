@@ -6,12 +6,21 @@ using UnityEngine;
 [CreateAssetMenuAttribute(fileName = "PS_Jumping1", menuName = "Player State/Attack Jumping 1")]
 public class PSJumping1 : PlayerState
 {
-    [SerializeField] private float jumpForce = 8;
-    [SerializeField] private float wallJumpForce = 8;
-    [SerializeField] private float speedFactor = 3;
-    [SerializeField] private float accelerationFactor = 20;
-    [SerializeField] private float jumpCD = 0.02f;
-    [SerializeField] private float wallJumpCD;
+    [Header( "Normal" )]
+    [SerializeField] private float n_jumpForce = 8;
+    [SerializeField] private float n_wallJumpForce = 8;
+    [SerializeField] private float n_speedFactor = 3;
+    [SerializeField] private float n_accelerationFactor = 20;
+    [SerializeField] private float n_wallJumpCD;
+    
+    [Header( "Fever" )]
+    [SerializeField] private float f_jumpForce = 8;
+    [SerializeField] private float f_wallJumpForce = 8;
+    [SerializeField] private float f_speedFactor = 3;
+    [SerializeField] private float f_accelerationFactor = 20;
+    [SerializeField] private float f_wallJumpCD;
+    
+    [Header( "Transferable States" )]
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSMoving;
     [SerializeField] private int indexJumping2;
@@ -28,10 +37,24 @@ public class PSJumping1 : PlayerState
 
     public override int Update()
     {
+        
+        var jumpForce =  n_jumpForce;
+        var speedFactor = n_speedFactor;
+        var accelerationFactor = n_accelerationFactor;
+        var wallJumpCD = n_wallJumpCD;
+
+        if (playerCharacter.IsInFeverMode)
+        {
+            jumpForce =  f_jumpForce;
+            speedFactor = f_speedFactor; 
+            accelerationFactor = f_accelerationFactor;
+            wallJumpCD = f_wallJumpCD;
+        }
+        
         playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
-        float h = Input.GetAxis("Horizontal");
+        float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
         flip = h < 0;
         
 
@@ -67,10 +90,8 @@ public class PSJumping1 : PlayerState
              }
          }
          
-         if (Input.GetButtonDown("HealthConsume"))
-            playerCharacter.ConsumeFever();
-
-        if (Input.GetAxis("Vertical") > 0 && isCloseTo("Ladder") != Direction.None)
+         
+         if (Input.GetAxis("Vertical") > 0 && isCloseTo("Ladder") != Direction.None)
         {
             // up is pressed
             return indexPSClimb;
@@ -86,15 +107,15 @@ public class PSJumping1 : PlayerState
             {
                 timer -= Time.deltaTime;
                 if (timer > 0)
-                {                    
-                    Debug.Log(timer);
+                {
                     rb2d.AddForce(playerCharacter.transform.up * jumpForce * jumpIncreaser);
                 }
                 
             }
         }
 
-        if (isGrounded()&& Vy < 0)
+
+        if (isGrounded() && Vy < 0)
         {
             // Landed
             if (h == 0)
@@ -121,8 +142,11 @@ public class PSJumping1 : PlayerState
                
         //}
 
-        if (Input.GetButtonDown("Dashing"))
+        if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
+        {
+            Player.CurrentPlayer.triggerReady = false;
             return indexPSDashing;
+        }
         
         //isJumpKeyDown = Input.GetButtonDown("Jump");
 
@@ -131,6 +155,9 @@ public class PSJumping1 : PlayerState
 
     public override void OnStateEnter(State previousState)
     {
+        var jumpForce = playerCharacter.IsInFeverMode ? f_jumpForce : n_jumpForce;
+        var wallJumpForce = playerCharacter.IsInFeverMode ? f_wallJumpForce : n_wallJumpForce;
+        
         previous = previousState;
         timer = jumpIncreaserThreshold;
         anim.Play("MainCharacter_Jump", -1, 0f);

@@ -21,7 +21,9 @@ public enum AttributeType : int
     OspRecovery_c0 = 0x700,
     
     MaxFever_c0 = 0x800,
-
+    
+    FeverDecay_c0 = 0x900,
+    
     SightRange_c0 = 0xA00,
 
 
@@ -57,6 +59,7 @@ public enum StatisticType : int
     MaxOsp = 0x6,
     OspRecovery = 0x7,
     MaxFever = 0x8,
+    FeverDecay = 0x9,
     SightRange = 0xA,
 
     Damage = 0x10,
@@ -117,6 +120,10 @@ public class StatisticSystem
 
             case StatisticType.MaxFever:
                 return AttributeSet.Sum(AttributeType.MaxFever_c0, attributeSets);
+
+
+            case StatisticType.FeverDecay:
+                return AttributeSet.Sum(AttributeType.FeverDecay_c0, attributeSets);
 
 
             case StatisticType.SightRange:

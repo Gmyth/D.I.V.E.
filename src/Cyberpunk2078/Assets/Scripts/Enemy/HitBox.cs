@@ -56,6 +56,10 @@ public class HitBox : MonoBehaviour
                     CreateRandomEffect(enemy.transform);
                 }
             }
+            else if (other.tag == "Platform" && other.GetComponent<SimpleBreakable>())
+            {
+                other.GetComponent<SimpleBreakable>().DestoryBreakable();
+            }
         }
         else if (other.tag == "Player")
         {
@@ -77,6 +81,24 @@ public class HitBox : MonoBehaviour
 
 
                 CreateRandomEffect(player.transform);
+
+                var trail = ObjectRecycler.Singleton.GetObject<SingleEffect>(8);
+                trail.transform.position = other.transform.position - (other.transform.position - transform.position) * 0.2f;
+                trail.setTarget(other.transform);
+
+                trail.transform.right = transform.right;
+                trail.transform.localScale = new Vector3(20, 1, 1);
+                trail.gameObject.SetActive(true);
+
+
+                var trail1 = ObjectRecycler.Singleton.GetObject<SingleEffect>(8);
+                trail1.transform.position = other.transform.position - (other.transform.position - transform.position) * 0.2f;
+                trail1.setTarget(other.transform);
+
+                trail1.transform.right = -transform.right;
+                trail1.transform.localScale = new Vector3(20, 1, 1);
+                trail1.gameObject.SetActive(true);
+
             }
         }
     }
