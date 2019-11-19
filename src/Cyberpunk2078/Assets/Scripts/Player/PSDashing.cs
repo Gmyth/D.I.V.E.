@@ -120,32 +120,19 @@ public class PSDashing : PlayerState
         }
         
         //prevent ground-hitting shifting 
-        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,1f);
+        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,1.5f);
         if (hit1.collider != null)
         {
+            Debug.LogWarning("Prevented");
             if(hit1.transform.CompareTag("Ground")){
-                rb2d.velocity = rb2d.velocity * 0f;
-                PhysicsInputHelper(h);
-                if (!isGrounded())
-                {
-                    return indexPSAirborne;
-                }
-
-                if (h == 0) return indexPSIdle;
-                return indexPSMoving;
+                if( Mathf.Abs(hit1.normal.x) > 0f)rb2d.velocity = new Vector2(rb2d.velocity.x, 0 );
+                if( Mathf.Abs(hit1.normal.y) > 0f)rb2d.velocity =  new Vector2(0, rb2d.velocity.y );
             }
             else if(hit1.transform.CompareTag("Platform") && rb2d.velocity.normalized.y < 0)
             {
                 //upper ward
-                rb2d.velocity = rb2d.velocity * 0f;
-                PhysicsInputHelper(h);
-                if (!isGrounded())
-                {
-                    return indexPSAirborne;
-                }
-
-                if (h == 0) return indexPSIdle;
-                return indexPSMoving;
+                if( Mathf.Abs(hit1.normal.x) > 0f)rb2d.velocity = new Vector2(rb2d.velocity.x, 0 );
+                if( Mathf.Abs(hit1.normal.y) > 0f)rb2d.velocity =  new Vector2(0, rb2d.velocity.y );
             }
         }
             
@@ -185,7 +172,7 @@ public class PSDashing : PlayerState
         //After delay is over, dash perform
         
         // Add Ghost trail
-        if(!playerCharacter.IsInFeverMode) playerCharacter.GetComponent<GhostSprites>().Occupied = true;
+        if(!playerCharacter.IsInFeverMode) playerCharacter.SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
         lastDashSecond = Time.time;
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         
@@ -225,13 +212,13 @@ public class PSDashing : PlayerState
         
         // reset player facing
         //playerCharacter.GetComponent<CapsuleCollider2D>().isTrigger = false;
-        playerCharacter.transform.right = Vector3.right;
+        playerCharacter.SpriteHolder.right = Vector3.right;
             
         // reset sprite flip
-        playerCharacter.GetComponent<SpriteRenderer>().flipY = false;
+        playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipY = false;
             
         // Kill Trail
-        if(!playerCharacter.IsInFeverMode) playerCharacter.GetComponent<GhostSprites>().Occupied = false;
+        if(!playerCharacter.IsInFeverMode) playerCharacter.SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
         
         setAtkBox(false);
         
@@ -245,7 +232,7 @@ public class PSDashing : PlayerState
         var dashForce = playerCharacter.IsInFeverMode ? f_dashForce:n_dashForce; 
         
         // Fix sprite flip on X-axis
-        playerCharacter.GetComponent<SpriteRenderer>().flipX = false;
+        playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipX = false;
         
         // Play Animation
         anim.Play("MainCharacter_Dashing", -1, 0f);
@@ -278,13 +265,13 @@ public class PSDashing : PlayerState
         trail.gameObject.SetActive(true);
 
         //set correct Y flip based on mouse direction
-        if (direction.x < 0 && direction.y != 0) playerCharacter.GetComponent<SpriteRenderer>().flipY = true;
+        if (direction.x < 0 && direction.y != 0) playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipY = true;
 
 
         
         //Apply force to character
        // playerCharacter.GetComponent<CapsuleCollider2D>().isTrigger = true;
-        playerCharacter.transform.right = direction; 
+        playerCharacter.SpriteHolder.right = direction; 
         rb2d.AddForce(direction * dashForce * 200f * 1 / Time.timeScale);
         
         //Camera Tricks

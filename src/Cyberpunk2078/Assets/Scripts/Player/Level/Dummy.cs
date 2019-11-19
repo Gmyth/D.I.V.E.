@@ -74,7 +74,7 @@ using UnityEngine.Events;
 }
 
 
-[RequireComponent(typeof(SpriteRenderer), typeof(Rigidbody2D), typeof(Collision2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(Collision2D))]
 public abstract class Dummy : MonoBehaviour, IDamageable
 {
     [SerializeField] protected StatisticSystem statistics;

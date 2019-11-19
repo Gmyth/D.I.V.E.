@@ -51,7 +51,7 @@ public class PSJumping1 : PlayerState
             wallJumpCD = f_wallJumpCD;
         }
         
-        playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
+        playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipX = flip;
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
         float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
@@ -59,39 +59,20 @@ public class PSJumping1 : PlayerState
         
 
         //Still support Horizontal update during jumping, delete following to kill Horizontal input
-         PhysicsInputHelper(h,speedFactor,accelerationFactor);
+         if(lastJumpSec + 0.2f < Time.time) PhysicsInputHelper(h,speedFactor,accelerationFactor);
          
          var dir = isCloseTo("Ground");
-         if (dir != Direction.None )
+         if (dir != Direction.None)
          {
-             if (dir == Direction.Right &&  h > 0 )
+             if (Player.CurrentPlayer.ChainWallJumpReady)
              {
-                 if (previous.Index == indexPSWallJumping && Time.time > lastJumpSec + wallJumpCD/4 && !Player.CurrentPlayer.lastWallJumpRight)
-                 {
-                     return indexPSWallJumping; 
-                 }
-                 else if (Time.time > lastJumpSec + wallJumpCD)
-                 {
-                     return indexPSWallJumping; 
-                 }
-
-
-             }
-             else if(dir == Direction.Left  && h < 0)
-             {
-                 if (previous.Index == indexPSWallJumping &&  Player.CurrentPlayer.lastWallJumpRight && Time.time > lastJumpSec + wallJumpCD/4)
-                 {
-                     return indexPSWallJumping; 
-                 }
-                 else if (Time.time > lastJumpSec + wallJumpCD)
-                 {
-                     return indexPSWallJumping; 
-                 }
+                 return indexPSWallJumping;
              }
          }
          
-         
-         if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("VerticalJoyStick") > 0)
+
+
+        if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("VerticalJoyStick") > 0)
          {
              // up is pressed
              if(isCloseTo("Ladder") != Direction.None) return indexPSClimb;

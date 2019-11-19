@@ -114,11 +114,12 @@
 			fixed4 frag(v2f IN) : SV_Target
 			{
 				float2 d = 2 * (float2(0.5, 0.5) - IN.uv);
+				float l = length(d);
 
-				if (length(d) < _InnerRadius)
+				if (l < _InnerRadius)
 					discard;
 
-				if (length(d) > _OutterRadius)
+				if (l > _OutterRadius)
 					discard;
 
 
@@ -134,9 +135,10 @@
 					discard;
 
 
-				float a = (_EndAngle - _StartAngle - _StrideWidth * (_NumStride - 1)) / _NumStride;
+				float w = _StrideWidth * _OutterRadius / l;
+				float a = (_EndAngle - _StartAngle - w * (_NumStride - 1)) / _NumStride;
 
-				if (angle % (a + _StrideWidth) > a)
+				if (angle % (a + w) > a)
 					discard;
 
 

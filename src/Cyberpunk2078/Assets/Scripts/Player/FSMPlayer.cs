@@ -21,7 +21,7 @@ public abstract class PlayerState : State
         Index = index;
         this.playerCharacter = playerCharacter;
 
-        anim = playerCharacter.GetComponent<Animator>();
+        anim = playerCharacter.SpriteHolder.GetComponent<Animator>();
     }
 
 
@@ -71,7 +71,7 @@ public abstract class PlayerState : State
                 //}
             }
 
-
+            Player.CurrentPlayer.ChainWallJumpReady = false; 
             Player.CurrentPlayer.secondJumpReady = true;
             grounded = true;
             return true;
@@ -93,6 +93,7 @@ public abstract class PlayerState : State
                 //    playerCharacter.transform.Translate(Vector2.down * (hitR.distance - DistanceToTheGround));
                 //}
             }
+            Player.CurrentPlayer.ChainWallJumpReady = false; 
             Player.CurrentPlayer.secondJumpReady = true;
             grounded = true;
             return true;
@@ -115,6 +116,7 @@ public abstract class PlayerState : State
                 //   playerCharacter.transform.Translate(Vector2.down* (hitM.distance - DistanceToTheGround));
                 //}
             }
+            Player.CurrentPlayer.ChainWallJumpReady = false; 
             Player.CurrentPlayer.secondJumpReady = true;
             grounded = true;
             return true;
