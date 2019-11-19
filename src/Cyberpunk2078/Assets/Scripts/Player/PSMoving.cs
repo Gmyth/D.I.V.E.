@@ -47,7 +47,7 @@ public class PSMoving : PlayerState
             if(isCloseTo("Ladder") != Direction.None) return indexPSClimb;
         }
         
-        
+
         float x = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
 
         
@@ -56,7 +56,7 @@ public class PSMoving : PlayerState
             return indexPSIdle;
         
         
-        playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
+        playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipX = flip;
         Move(x);
 
         if (!isGrounded() && Vy < 0)

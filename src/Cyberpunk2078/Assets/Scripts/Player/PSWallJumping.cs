@@ -45,11 +45,11 @@ public class PSWallJumping: PlayerState
 
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         
-        if (onWall && Time.time > lastStickTime + stickWallTime)
-        {
-            //stick over, falling start
-            rb2d.gravityScale = 3;
-        }
+//        if (onWall && Time.time > lastStickTime + stickWallTime)
+//        {
+//            //stick over, falling start
+//            rb2d.gravityScale = 3;
+//        }
         
         
         float Vy = rb2d.velocity.y;
@@ -82,26 +82,23 @@ public class PSWallJumping: PlayerState
                 if (dir == Direction.Right)
                 {
                     flip = true;
-                    Player.CurrentPlayer.lastWallJumpRight = true;
-                    rb2d.velocity = h <= 0? new Vector2(-jumpSpeed*1.3f, 0):new Vector2(-jumpSpeed * 1.3f, 0);
+                    Player.CurrentPlayer.ChainWallJumpReady = true;
+                    rb2d.velocity = new Vector2(-jumpSpeed * 1.3f, 0);
                 }
                 else
                 {
                     flip = false; 
-                    Player.CurrentPlayer.lastWallJumpRight = false; 
-                    rb2d.velocity = h >= 0? new Vector2(jumpSpeed*1.3f, 0):new Vector2(jumpSpeed * 1.3f, 0);
+                    Player.CurrentPlayer.ChainWallJumpReady = true; 
+                    rb2d.velocity = new Vector2(jumpSpeed*1.3f, 0);
                 }
 
                 return index_PSJumping1;
             }
         }
        
-        if (h == 0)
-        {
-            return index_PSAirborne;
-        }
-        else if (dir == Direction.Right && h < 0) { return index_PSAirborne; }
-        else if (dir == Direction.Left && h > 0) { return index_PSAirborne; }
+        
+        if (h > 0) { rb2d.gravityScale = 1.2f;}
+        else if (h < 0) {  rb2d.gravityScale = 1.2f; }
 
         if (dir == Direction.None && !isGrounded())
         {
@@ -147,7 +144,7 @@ public class PSWallJumping: PlayerState
             if(isCloseTo("Ladder") != Direction.None) return index_PSClimb;
         }
         // flip sprite for correct facing 
-        playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
+        playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipX = flip;
         
         // perform Dashing
         if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
@@ -155,9 +152,7 @@ public class PSWallJumping: PlayerState
             Player.CurrentPlayer.triggerReady = false;
             return index_PSDashing;
         }
-        
-        
-        
+
         return Index;
     }
 

@@ -26,7 +26,7 @@ public class Player
     public bool jumpForceGate;
     public bool NoApplyFriction = false;
     public bool secondJumpReady;
-    public bool lastWallJumpRight;
+    public bool ChainWallJumpReady;
 
     public bool climbReady = true;
     public bool energyLocked;
