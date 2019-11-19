@@ -338,6 +338,19 @@ public class FSMPlayer : FiniteStateMachine<PlayerState>
         OnCurrentStateChange.Invoke(currentStateIndex, -1);
     }
 
+    public override void Reboot()
+    {
+        CurrentState.OnStateQuit(CurrentState);
+
+        OnMachineBoot();
+
+        currentStateIndex = startingStateIndex;
+
+        CurrentState.OnStateEnter(CurrentState);
+
+        OnCurrentStateChange.Invoke(currentStateIndex, -1);
+    }
+
     public override void ShutDown()
     {
         int previousStateIndex = currentStateIndex;

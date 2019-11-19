@@ -223,4 +223,9 @@ public abstract class Enemy : Dummy
     {
         fsm.Update();
     }
+
+    public void Reset()
+    {
+        fsm.Reboot();
+    }
 }
