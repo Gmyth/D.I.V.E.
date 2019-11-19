@@ -6,16 +6,12 @@ public class DroneState_Patrolling : ESPatrolling<Drone>
 {
     private Animator gunAnimator;
 
-    private bool isCharging = false;
-
 
     public override void OnStateEnter(State previousState)
     {
         base.OnStateEnter(previousState);
 
         gunAnimator = enemy.Gun.GetComponent<Animator>();
-
-        isCharging = false;
     }
 
 
@@ -24,13 +20,15 @@ public class DroneState_Patrolling : ESPatrolling<Drone>
         base.Charge();
 
 
-        enemy.AdjustGunDirection(Mathf.Sign(enemy.transform.right.x) * enemy.currentTarget.transform.position);
+        enemy.Aim(enemy.currentTarget.transform.position);
 
 
-        enemy.isGunCharging = true;
+        if (!enemy.isGunCharging)
+        {
+            enemy.isGunCharging = true;
 
-
-        gunAnimator.Play("L2Drone_Gun_Charging");
+            gunAnimator.Play("L2Drone_Gun_Charging");
+        }
     }
 
     protected override void Fire(RangedWeaponConfiguration firingConfiguration)
