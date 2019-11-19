@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Experimental.PlayerLoop;
 
 
 [CreateAssetMenuAttribute(fileName = "PS_Moving", menuName = "Player State/Moving")]
@@ -21,6 +20,8 @@ public class PSMoving : PlayerState
     [SerializeField] private int indexPSAirborne;
     [SerializeField] private int indexPSClimb;
     [SerializeField] private int indexPSWallJumping;
+
+
     public override int Update()
     {
         NormalizeSlope();
@@ -46,7 +47,7 @@ public class PSMoving : PlayerState
             if(isCloseTo("Ladder") != Direction.None) return indexPSClimb;
         }
         
-        
+
         float x = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
 
         
@@ -55,7 +56,7 @@ public class PSMoving : PlayerState
             return indexPSIdle;
         
         
-        playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
+        playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipX = flip;
         Move(x);
 
         if (!isGrounded() && Vy < 0)

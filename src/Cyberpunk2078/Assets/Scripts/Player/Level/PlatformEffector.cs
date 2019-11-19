@@ -49,6 +49,7 @@ public class PlatformEffector : MonoBehaviour
                 if (waitTime <= 0)
                 {
                     effector.rotationalOffset = 180;
+                    PlayerCharacter.Singleton.GetComponent<Rigidbody2D>().gravityScale = 3;
                     movedUp = false;
                     movedDown = false;
                     waitTime = initialWaitTime;

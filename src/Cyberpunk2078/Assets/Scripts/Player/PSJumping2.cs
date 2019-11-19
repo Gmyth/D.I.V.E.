@@ -39,7 +39,7 @@ public class PSJumping2 : PlayerState
             accelerationFactor = f_accelerationFactor;
         }
         
-        playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
+        playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipX = flip;
         float Vy = playerCharacter.GetComponent<Rigidbody2D>().velocity.y;
         float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
 

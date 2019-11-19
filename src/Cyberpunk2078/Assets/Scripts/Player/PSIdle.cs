@@ -25,7 +25,11 @@ public class PSIdle : PlayerState
         {
             return indexPSAttackGH;
         }
-        
+
+
+        if (Input.GetButtonDown("Jump"))
+            return indexPSJumping1;
+
         if (!isGrounded())
         {
             return indexPSAirborne;
@@ -40,8 +44,6 @@ public class PSIdle : PlayerState
         if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("HorizontalJoyStick") != 0)
             return indexPSMoving;
 
-        if (Input.GetButtonDown("Jump"))
-            return indexPSJumping1;
 
         if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
         {
@@ -57,7 +59,7 @@ public class PSIdle : PlayerState
         Rigidbody2D rb2d = playerCharacter.GetComponent<Rigidbody2D>();
        // rb2d.bodyType = RigidbodyType2D.Kinematic;
         rb2d.velocity = Vector2.zero;
-        rb2d.gravityScale = 0;
+       rb2d.gravityScale = 0;
         if (grounded)
             playerCharacter.AddNormalEnergy(1);
         anim.Play("MainCharacter_Idle", -1, 0f);
@@ -69,7 +71,7 @@ public class PSIdle : PlayerState
     {
         Rigidbody2D rb2d = playerCharacter.GetComponent<Rigidbody2D>();
        // rb2d.bodyType = RigidbodyType2D.Dynamic;
-        rb2d.gravityScale = 3;
+       rb2d.gravityScale = 3;
     }
     
 

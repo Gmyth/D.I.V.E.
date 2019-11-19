@@ -43,8 +43,7 @@ public class PSAirborne : PlayerState
 
         var dir = isCloseTo("Ground");
 
-        if (dir == Direction.Right && h > 0) { return indexPSWallJumping; }
-        else if (dir == Direction.Left && h < 0) { return indexPSWallJumping; }
+        if (dir != Direction.None && Mathf.Abs(h) > 0 ) { return indexPSWallJumping; }
 
 
         if (Input.GetButtonDown("Jump") && Time.time <  lastGroundedSec+ jumpTolerance)

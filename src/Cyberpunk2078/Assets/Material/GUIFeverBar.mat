@@ -39,7 +39,7 @@ Material:
     - _ColorMask: 15
     - _EndAngle: 180
     - _Inner: 0
-    - _InnerRadius: 0.925
+    - _InnerRadius: 0
     - _NumStride: 1
     - _Outter: 1
     - _OutterRadius: 1
