@@ -254,15 +254,6 @@ public class PSDashing : PlayerState
         VFX.transform.localScale = new Vector3(4,4,1);
         VFX.gameObject.SetActive(true);
         
-        
-        
-        var trail = ObjectRecycler.Singleton.GetObject<SingleEffect>(7);
-        trail.transform.position = playerCharacter.transform.position;
-        trail.setTarget(playerCharacter.transform);
-        
-        trail.transform.right = -direction;
-        trail.transform.localScale = new Vector3(7,1,1);
-        trail.gameObject.SetActive(true);
 
         //set correct Y flip based on mouse direction
         if (direction.x < 0 && direction.y != 0) playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipY = true;
@@ -275,8 +266,8 @@ public class PSDashing : PlayerState
         rb2d.AddForce(direction * dashForce * 200f * 1 / Time.timeScale);
         
         //Camera Tricks
-        CameraManager.Instance.Shaking(0.04f,0.08f);
-
+        CameraManager.Instance.Shaking(0.20f,0.10f);
+        
         setAtkBox(true);
     }
 

@@ -64,7 +64,7 @@ public class PSJumping1 : PlayerState
          var dir = isCloseTo("Ground");
          if (dir != Direction.None)
          {
-             if (Player.CurrentPlayer.ChainWallJumpReady)
+             if (lastJumpSec + 0.2f < Time.time && Player.CurrentPlayer.ChainWallJumpReady)
              {
                  return indexPSWallJumping;
              }

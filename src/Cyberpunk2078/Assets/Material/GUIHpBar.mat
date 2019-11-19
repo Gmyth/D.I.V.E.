@@ -49,7 +49,7 @@ Material:
     - _StencilOp: 0
     - _StencilReadMask: 255
     - _StencilWriteMask: 255
-    - _StrideWidth: 5
+    - _StrideWidth: 3
     - _StrideWidthBias: 0
     - _UseUIAlphaClip: 0
     - _Value: 1

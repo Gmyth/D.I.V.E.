@@ -81,7 +81,7 @@ public class SoulBall : Recyclable
         currentState = SoulBallState.Move;
         var dir = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
         rb2d.AddForce(Random.Range(15,40) * dir);
-        target = GameObject.FindObjectOfType<PlayerCharacter>().transform;
+        target = PlayerCharacter.Singleton.transform;
         timeIntervals += Random.Range(-0.2f, 0.2f);
     }
 }
