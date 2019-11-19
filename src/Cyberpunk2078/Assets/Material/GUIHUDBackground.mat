@@ -7,13 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Hidden_SphereUI
-  m_Shader: {fileID: 4800000, guid: 1c41c994a5460e0479c7b4a915c9e3ee, type: 3}
-  m_ShaderKeywords: true
+  m_Name: GUIHUDBackground
+  m_Shader: {fileID: 4800000, guid: ea94c17e136b6d94a97e030f0081fe1b, type: 3}
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3000
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -23,19 +23,16 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Clockwise: 1
-    - _ColorMask: 15
-    - _EndAngle: 180
-    - _InnerRadius: 0.2
-    - _NumStride: 3
-    - _OutterRadius: 1
-    - _StartAngle: 0
-    - _Stencil: 0
-    - _StencilComp: 8
-    - _StencilOp: 0
-    - _StencilReadMask: 255
-    - _StencilWriteMask: 255
-    - _StrideWidth: 5
-    - _Value: 1
-    m_Colors: []
+    - _MaxAlpha: 0.5
+    - _MinAlpha: 0
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
