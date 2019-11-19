@@ -60,7 +60,6 @@ public abstract class PlayerState : State
             //Character Margin
             if (margin && !grounded)
             {
-
                 //if (name == "Airborne")
                 //{
                 //    playerCharacter.transform.Translate(Vector2.up * (hitL.distance - DistanceToTheGround));
