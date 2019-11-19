@@ -103,7 +103,7 @@ public class CheckPointManager : MonoBehaviour
         {
             var lastPos = enemy[i].GetComponent<Enemy>().lastCheckPointTransform;
             enemy[i].transform.position = lastPos;
-            
+            enemy[i].GetComponent<Enemy>().Reset();
         }
 
         while (a > 0)

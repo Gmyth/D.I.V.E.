@@ -42,7 +42,7 @@ public abstract class FiniteStateMachine<T> : ScriptableObject where T : State
 
 
     public abstract void Boot();
-
+    public abstract void Reboot();
     public abstract void ShutDown();
 
 
