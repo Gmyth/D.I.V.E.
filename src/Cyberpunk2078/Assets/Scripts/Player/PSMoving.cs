@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Experimental.PlayerLoop;
 
 
 [CreateAssetMenuAttribute(fileName = "PS_Moving", menuName = "Player State/Moving")]
@@ -21,6 +20,8 @@ public class PSMoving : PlayerState
     [SerializeField] private int indexPSAirborne;
     [SerializeField] private int indexPSClimb;
     [SerializeField] private int indexPSWallJumping;
+
+
     public override int Update()
     {
         NormalizeSlope();
