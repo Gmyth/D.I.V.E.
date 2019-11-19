@@ -35,10 +35,10 @@ public class PSAirborne : PlayerState
             return indexPSAttackGH;
         }
         
-        if (Input.GetAxis("Vertical") > 0  &&  isCloseTo("Ladder") != Direction.None)
+        if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("VerticalJoyStick") > 0)
         {
             // up is pressed
-            return indexPSClimb;
+            if(isCloseTo("Ladder") != Direction.None) return indexPSClimb;
         }
 
         var dir = isCloseTo("Ground");

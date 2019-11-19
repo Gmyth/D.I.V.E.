@@ -91,11 +91,11 @@ public class PSJumping1 : PlayerState
          }
          
          
-         if (Input.GetAxis("Vertical") > 0 && isCloseTo("Ladder") != Direction.None)
-        {
-            // up is pressed
-            return indexPSClimb;
-        }
+         if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("VerticalJoyStick") > 0)
+         {
+             // up is pressed
+             if(isCloseTo("Ladder") != Direction.None) return indexPSClimb;
+         }
 
         if (!isGrounded()&& Vy < 0)
         {

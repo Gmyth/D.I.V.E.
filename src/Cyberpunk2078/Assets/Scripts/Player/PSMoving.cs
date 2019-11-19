@@ -40,10 +40,10 @@ public class PSMoving : PlayerState
             return indexPSDashing;
         }
 
-        if (Input.GetAxis("Vertical") > 0  &&  isCloseTo("Ladder")!= Direction.None)
+        if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("VerticalJoyStick") > 0)
         {
             // up is pressed
-            return indexPSClimb;
+            if(isCloseTo("Ladder") != Direction.None) return indexPSClimb;
         }
         
         
@@ -97,7 +97,7 @@ public class PSMoving : PlayerState
                 Rigidbody2D rb2d = playerCharacter.GetComponent<Rigidbody2D>();
                 // Apply the opposite force against the slope force 
                 // You will need to provide your own slopeFriction to stabalize movement
-                rb2d.velocity = new Vector2(rb2d.velocity.x - (hit.normal.x * 0.5f), rb2d.velocity.y);
+                rb2d.velocity = new Vector2(rb2d.velocity.x - (hit.normal.x * 0.8f), rb2d.velocity.y);
                 //Move Player up or down to compensate for the slope below them
                 Vector3 pos = playerCharacter.transform.position;
                 pos.y += -hit.normal.x * Mathf.Abs(rb2d.velocity.x) * Time.deltaTime * (rb2d.velocity.x - hit.normal.x > 0 ? 1 : -1);

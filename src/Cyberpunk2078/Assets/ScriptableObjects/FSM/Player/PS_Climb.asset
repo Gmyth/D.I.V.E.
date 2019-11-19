@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Climb
   climbSpeed: 3
+  f_climbSpeed: 3
   indexPSIdle: 0
   indexPSMoving: 1
   indexPSJumping1: 4

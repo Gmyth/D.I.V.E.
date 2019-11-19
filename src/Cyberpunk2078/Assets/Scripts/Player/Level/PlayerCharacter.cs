@@ -47,7 +47,7 @@ public class PlayerCharacter : Dummy
     //}
 
  
-    public void Knockback(Vector3 origin, float force)
+    public void Knockback(Vector3 origin, float force, float duration = 1f)
     {
         Vector3 direction = transform.position - origin;
         Vector2 groundNormal = GroundNormal;
@@ -55,8 +55,7 @@ public class PlayerCharacter : Dummy
         direction = ((direction.x > 0 ? groundNormal.Right().normalized : groundNormal.Left().normalized) + groundNormal).normalized * force;
         rigidbody.velocity = Vector2.zero;
         rigidbody.AddForce(direction);
-
-
+        Player.CurrentPlayer.knockBackDuration = duration;
         fsm.CurrentStateIndex = 10;
     }
 
@@ -148,9 +147,18 @@ public class PlayerCharacter : Dummy
         StatisticModificationResult result = statistics.Modify(StatisticType.Fever, amount, 0, statistics[StatisticType.MaxFever]);
 
         if (result.currentValue >= 100)
+        {
             IsInFeverMode = true;
+            GetComponent<GhostSprites>().Occupied = true;
+        }
         else if (result.currentValue <= 0)
+        {
             IsInFeverMode = false;
+            GetComponent<GhostSprites>().Occupied = false;
+        }
+        
+
+      
 
         return true;
     }

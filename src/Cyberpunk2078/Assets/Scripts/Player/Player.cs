@@ -28,10 +28,13 @@ public class Player
     public bool secondJumpReady;
     public bool lastWallJumpRight;
 
+    public bool climbReady = true;
     public bool energyLocked;
     public bool overloadEnergyLocked;
 
     public bool triggerReady;
+    
+    public float knockBackDuration;
 
 
     public float this[AttributeType type]

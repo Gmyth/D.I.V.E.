@@ -66,9 +66,9 @@ public class Bullet : Recyclable
             if (other.GetComponent<PlayerCharacter>().State.Name != "Dash")
             {
                 other.GetComponent<PlayerCharacter>().ApplyDamage(rawDamage);
+                other.GetComponent<PlayerCharacter>().Knockback(transform.position, 300f, 0.3f);
                 --numHitsRemaining;
-
-
+                
                 CameraManager.Instance.Shaking(0.20f, 0.05f);
                 SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
                 Hit.transform.right = transform.right;

@@ -13,15 +13,19 @@ MonoBehaviour:
   m_Name: PS_WallJumping
   m_EditorClassIdentifier: 
   Name: WallJump
-  jumpForce: 2.5
-  jumpSpeed: 8
-  stickWallTime: 1
-  wallCheckCoolDown: 0
+  n_jumpForce: 4.5
+  n_jumpSpeed: 10
+  n_stickWallTime: 0.25
+  n_wallCheckCoolDown: 0.25
+  f_jumpForce: 4.5
+  f_jumpSpeed: 10
+  f_stickWallTime: 0.25
+  f_wallCheckCoolDown: 0.25
   index_PSIdle: 0
   index_PSMoving: 1
   index_PSJumping1: 4
   index_PSJumping2: 7
   index_PSDashing: 6
-  index_PSAttackGH: 0
-  index_PSAirborne: 0
-  index_PSClimb: 0
+  index_PSAttackGH: 3
+  index_PSAirborne: 2
+  index_PSClimb: 8

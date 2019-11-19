@@ -137,42 +137,61 @@ public abstract class PlayerState : State
         return Vector2.zero;
     }
 
-    //Check the Wall is on left or right
-    public bool RightSideTest(string tag)
-    {
-        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0.1f,0f,0f),playerCharacter.transform.right,0.4f);
-
-        if (hit.collider != null && hit.transform.CompareTag(tag) )
-        {
-            return true;
-        }
-        return false;
-    }
-
     //Check player is close to wall
     public Direction isCloseTo(string tag, string layerMask = "")
     {
         RaycastHit2D hit = layerMask.Length > 0 ? 
-                Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0.1f,0f,0f),playerCharacter.transform.right,0.35f,1 << LayerMask.NameToLayer(layerMask))
-                : Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0.1f,0f,0f),playerCharacter.transform.right,0.35f);
+                Physics2D.Raycast(playerCharacter.transform.position,playerCharacter.transform.right,0.5f,1 << LayerMask.NameToLayer(layerMask))
+                : Physics2D.Raycast(playerCharacter.transform.position,playerCharacter.transform.right,0.5f);
         RaycastHit2D hit1 = layerMask.Length > 0 ? 
-                Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(-0.1f,0f,0f),-playerCharacter.transform.right,0.35f, 1 << LayerMask.NameToLayer(layerMask))
-                : Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.1f,0f,0f),-playerCharacter.transform.right,0.35f);
+                Physics2D.Raycast(playerCharacter.transform.position,-playerCharacter.transform.right,0.5f, 1 << LayerMask.NameToLayer(layerMask))
+                : Physics2D.Raycast(playerCharacter.transform.position,-playerCharacter.transform.right,0.5f);
 
-        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f,-0f,0f), playerCharacter.transform.right * 0.35f, Color.red);
-        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0.1f,-0f,0f), -playerCharacter.transform.right * 0.35f, Color.yellow);
-
+        Debug.DrawRay(playerCharacter.transform.position, playerCharacter.transform.right * 0.5f, Color.green);
+        Debug.DrawRay(playerCharacter.transform.position, -playerCharacter.transform.right * 0.5f, Color.green);
+        
         if (hit.collider != null && hit.transform.CompareTag(tag))
         {
             return Direction.Right;
             
         }else if (hit1.collider != null && hit1.transform.CompareTag(tag))
         {
-            
             return Direction.Left;
         }
-
         return Direction.None;
+    }
+    
+    public Vector2 LadderMargin(string tag = "Ladder", string layerMask = "")
+    {
+        RaycastHit2D hit = layerMask.Length > 0 ? 
+            Physics2D.Raycast(playerCharacter.transform.position,playerCharacter.transform.right,1f,1 << LayerMask.NameToLayer(layerMask))
+            : Physics2D.Raycast(playerCharacter.transform.position,playerCharacter.transform.right,1f);
+        RaycastHit2D hit1 = layerMask.Length > 0 ? 
+            Physics2D.Raycast(playerCharacter.transform.position,-playerCharacter.transform.right,1f, 1 << LayerMask.NameToLayer(layerMask))
+            : Physics2D.Raycast(playerCharacter.transform.position,-playerCharacter.transform.right,1f);
+
+        Debug.DrawRay(playerCharacter.transform.position, playerCharacter.transform.right * 0.8f, Color.red);
+        Debug.DrawRay(playerCharacter.transform.position, -playerCharacter.transform.right * 0.8f, Color.yellow);
+
+        float height = 0;
+        float center = 0;
+        if (hit.collider != null && hit.collider.transform.CompareTag(tag))
+        {
+            playerCharacter.transform.position = new Vector3(hit.transform.position.x,  playerCharacter.transform.position.y,  playerCharacter.transform.position.z);
+            height = hit.collider.bounds.extents.y;
+            center = hit.transform.position.y;
+        }else if (hit1.collider != null && hit1.collider.transform.CompareTag(tag))
+        {
+            playerCharacter.transform.position = new Vector3(hit1.transform.position.x,  playerCharacter.transform.position.y,  playerCharacter.transform.position.z);
+            height = hit1.collider.bounds.extents.y;
+            center = hit1.transform.position.y;
+        }
+
+        if (height > 0)
+        {
+            return new Vector2(center - height,center + height);
+        }
+        return Vector2.zero;
     }
 
 
@@ -233,6 +252,16 @@ public abstract class PlayerState : State
         if (Input.GetAxis("Trigger") <= 0)
         {
              Player.CurrentPlayer.triggerReady = true;
+        }
+        
+        if (Input.GetAxis("VerticalJoyStick") <= 0)
+        {
+            Player.CurrentPlayer.climbReady = true;
+        }
+        
+        if (Input.GetAxis("Vertical") <= 0)
+        {
+            Player.CurrentPlayer.climbReady = true;
         }
     }
 }

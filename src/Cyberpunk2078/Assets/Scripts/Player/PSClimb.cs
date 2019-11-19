@@ -15,7 +15,10 @@ public class PSClimb : PlayerState
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSMoving;
     [SerializeField] private int indexPSJumping1;
-    
+
+    private float t0;
+    private float timeInterval = 0.5f;
+    private Vector2 climbBoundary;
     public override int Update()
     {
         var v = Input.GetAxis("Vertical");
@@ -38,11 +41,21 @@ public class PSClimb : PlayerState
             rb2d.velocity = new Vector2(0, playerCharacter.IsInFeverMode ? -f_climbSpeed:-climbSpeed);
         }
 
-        if (isCloseTo("Ladder", "Interactive") == Direction.None)
+        // climbBoundary = (minHeight, maxHeight)
+        if (playerCharacter.transform.position.y < climbBoundary.x || playerCharacter.transform.position.y > climbBoundary.y)
         {
             anim.speed = 1;
             rb2d.gravityScale = 3;
             return indexPSIdle;
+        }
+        
+        if (isGrounded())
+        {
+            if(Input.GetAxis("Vertical") < 0  || Input.GetAxis("VerticalJoyStick") < 0 ){
+                anim.speed = 1;
+                rb2d.gravityScale = 3;
+                return indexPSIdle;
+            }
         }
 
         if (Input.GetAxis("Jump") > 0)
@@ -58,12 +71,13 @@ public class PSClimb : PlayerState
     }
     
     public override void OnStateEnter(State previousState)
-    {
-        playerCharacter.GetComponent<SpriteRenderer>().flipX = !RightSideTest("Ladder");
-        
+    { 
+        var rb2d = playerCharacter.GetComponent<Rigidbody2D>(); 
+        rb2d.velocity = Vector2.zero;
+        climbBoundary = LadderMargin();
+        t0 = Time.time;
        //kill speed
-       var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-       rb2d.velocity = Vector2.zero;
+        Debug.LogWarning("min:" +climbBoundary.x + " max:" + climbBoundary.y);
        
        //Perform Climb
        anim.Play("MainCharacter_Climb", -1, 0f);

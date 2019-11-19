@@ -70,6 +70,7 @@ public class PSWallJumping: PlayerState
             return index_PSAttackGH;
         }
 
+        var dir = isCloseTo("Ground");
         if (onWall)
         {
             //Sticked , ok to perform wall jump again
@@ -78,7 +79,7 @@ public class PSWallJumping: PlayerState
                 onWall = false;
                 lastOnWallTime = Time.unscaledTime;
                 //re active jumping
-                if (RightSideTest("Ground"))
+                if (dir == Direction.Right)
                 {
                     flip = true;
                     Player.CurrentPlayer.lastWallJumpRight = true;
@@ -94,7 +95,7 @@ public class PSWallJumping: PlayerState
                 return index_PSJumping1;
             }
         }
-        var dir = isCloseTo("Ground");
+       
         if (h == 0)
         {
             return index_PSAirborne;
@@ -140,11 +141,11 @@ public class PSWallJumping: PlayerState
 //        }
         
         
-        if (Input.GetAxis("Vertical") > 0 && isCloseTo("Ladder") != Direction.None)
+        if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("VerticalJoyStick") > 0)
         {
-            return index_PSClimb;
+            // up is pressed
+            if(isCloseTo("Ladder") != Direction.None) return index_PSClimb;
         }
-        
         // flip sprite for correct facing 
         playerCharacter.GetComponent<SpriteRenderer>().flipX = flip;
         
@@ -162,8 +163,9 @@ public class PSWallJumping: PlayerState
 
     public override void OnStateEnter(State previousState)
     {
+        var dir = isCloseTo("Ground");
         // Set flip
-        flip = !RightSideTest("Ground");
+        flip = dir == Direction.Left;
         
         //kill speed
         onWall = true;
