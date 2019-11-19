@@ -97,47 +97,15 @@ public class PSWallJumping: PlayerState
         }
        
         
-        if (h > 0) { rb2d.gravityScale = 1.2f;}
-        else if (h < 0) {  rb2d.gravityScale = 1.2f; }
-
+        if ( dir ==  Direction.Right && h > 0) { rb2d.gravityScale = 1.2f;}
+        else if (dir ==  Direction.Left && h < 0) {  rb2d.gravityScale = 1.2f; }
+        else{rb2d.gravityScale = 3f;}
         if (dir == Direction.None && !isGrounded())
         {
             return index_PSAirborne;
         }
 
 
-//        if (!onWall && isCloseTo("Ground") && Time.time > lastOnWallTime + wallCheckCoolDown )
-//        {
-//            //Not stick yet, ok to perform wall jump again
-//            if (Input.GetButtonDown("Jump"))
-//            {
-//                lastOnWallTime = Time.unscaledTime;
-//                rb2d.gravityScale = 3;
-//                
-//                //Check the wall is on the left or right
-//                if (RightSideTest("Ground"))
-//                {
-//                    //right
-//                    flip = true;
-//                    rb2d.velocity = new Vector2(-jumpSpeed, 0);
-//                }
-//                else
-//                {
-//                    //left
-//                    flip = false; 
-//                    rb2d.velocity = new Vector2 (jumpSpeed, 0);
-//                }
-//                
-//                // Perform wall jump
-//                sideWallJump();
-//            }
-//            else
-//            {
-//                OnStateEnter(this);
-//            }
-//        }
-        
-        
         if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("VerticalJoyStick") > 0)
         {
             // up is pressed
