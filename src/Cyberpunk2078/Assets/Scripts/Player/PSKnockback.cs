@@ -35,7 +35,7 @@ public class PSKnockback : PlayerState
             return stateIndex_Idle;
         if (t0 + BlinkInterval < Time.time)
         {
-            playerCharacter.GetComponent<SpriteRenderer>().color = counter % 2 ==0 ?Color.gray:Color.white;
+            playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().color = counter % 2 ==0 ?Color.gray:Color.white;
             counter++;
             t0 = Time.time;
         }
@@ -53,13 +53,13 @@ public class PSKnockback : PlayerState
         duration = Player.CurrentPlayer.knockBackDuration;
         t = Time.time + duration;
         t0 = Time.time;
-        playerCharacter.GetComponent<SpriteRenderer>().color = Color.gray;
+        playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().color = Color.gray;
         counter = 0;
     }
 
     public override void OnStateQuit(State nextState)
     {
-        playerCharacter.GetComponent<SpriteRenderer>().color = Color.white;
+        playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().color = Color.white;
     }
     
 }

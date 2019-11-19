@@ -9,7 +9,7 @@ public class PlayerCharacter : Dummy
 
 
     [SerializeField] private FSMPlayer fsm;
-
+    public Transform SpriteHolder;
     private new Rigidbody2D rigidbody;
 
 
@@ -149,12 +149,12 @@ public class PlayerCharacter : Dummy
         if (result.currentValue >= 100)
         {
             IsInFeverMode = true;
-            GetComponent<GhostSprites>().Occupied = true;
+            SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
         }
         else if (result.currentValue <= 0)
         {
             IsInFeverMode = false;
-            GetComponent<GhostSprites>().Occupied = false;
+            SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
         }
         
 
@@ -191,13 +191,13 @@ public class PlayerCharacter : Dummy
     public void ActivateFeverMode()
     {
         IsInFeverMode = true;
-        GetComponent<GhostSprites>().Occupied = true;
+        SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
     }
 
     public void DeactivateFeverMode()
     {
         IsInFeverMode = false;
-        GetComponent<GhostSprites>().Occupied = false;
+        SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
     }
 
 

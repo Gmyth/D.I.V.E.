@@ -132,7 +132,7 @@ public class PSAttackGH: PlayerState
         anim.Play("MainCharacter_Atk", -1, 0f);
         playerCharacter.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         playerCharacter.GetComponent<Rigidbody2D>().AddForce(direction * pushForce * 100f);
-        playerCharacter.GetComponent<SpriteRenderer>().flipX = direction.x < 0;
+        playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipX = direction.x < 0;
         Destroy(obj,0.3f);
         //kill gravity
 //        rb2d.gravityScale = 0;
