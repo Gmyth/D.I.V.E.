@@ -256,6 +256,7 @@ public class GhostSprites : MonoBehaviour
 		g.transform.localScale = gameObject.transform.localScale;
 		g.transform.rotation = gameObject.transform.rotation;
 		g.GetComponent<SpriteRenderer>().sprite = character.sprite;
+		g.GetComponent<SpriteRenderer>().flipX = character.flipX;
         g.GetComponent<SpriteRenderer>().sortingLayerName = "Player";
         g.GetComponent<SpriteRenderer> ().sortingOrder = GhostSpriteSortingOrder;
 		ghostList.Add (g);
