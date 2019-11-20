@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: PS_Dashing
   m_EditorClassIdentifier: 
   Name: Dash
-  n_dashForce: 14
+  n_dashForce: 12
   n_dashDelayTime: 0.02
   n_dashReleaseTime: 0.1
   n_dashReleaseDelayTime: 0.05
   n_inDashingDragFactor: 8
   n_JumpListenerInterval: 0.1
-  f_dashForce: 18
+  f_dashForce: 16
   f_dashDelayTime: 0.02
   f_dashReleaseTime: 0.08
   f_dashReleaseDelayTime: 0.04
