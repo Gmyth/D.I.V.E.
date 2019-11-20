@@ -25,7 +25,8 @@ public class PSMoving : PlayerState
     public override int Update()
     {
         NormalizeSlope();
-
+        if (playerCharacter.IsInFeverMode) anim.speed = 1.1f;
+        else anim.speed = 1f;
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
 
@@ -77,10 +78,44 @@ public class PSMoving : PlayerState
 
     public override void OnStateEnter(State previousState)
     {
-        Move(Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal"));
-        if (grounded)
-            playerCharacter.AddNormalEnergy(1);
+        float h = Input.GetAxis("HorizontalJoyStick") != 0
+            ? Input.GetAxis("HorizontalJoyStick")
+            : Input.GetAxis("Horizontal");
+        
+        Move(h);
+        
         anim.Play("MainCharacter_Run", -1, 0f);
+        
+        //VFX 
+        if (Mathf.Abs(h) > 0)
+        {
+            var Dust = ObjectRecycler.Singleton.GetObject<SingleEffect>(10);
+            Dust.transform.position = playerCharacter.transform.position;
+            RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position, -Vector2.up, 3f);
+            Dust.transform.right =Vector3.right;
+            if (hit.collider != null && hit.transform.tag == "Ground")
+            {
+                Dust.transform.up = hit.normal;
+            }
+
+            
+            if (h > 0) Dust.transform.localScale = new Vector3(-1, 1, 1);
+            else Dust.transform.localScale = Vector3.one;
+            ;
+//            if (h > 0) Dust.transform.right = Vector3.left;
+//            else Dust.transform.right = Vector3.right;
+            Dust.gameObject.SetActive(true);
+        }
+
+        if (playerCharacter.IsInFeverMode) anim.speed = 1.1f;
+    }
+    
+    public override void OnStateQuit(State nextState)
+    {
+
+        anim.speed = 1f;
+        
+
     }
 
 

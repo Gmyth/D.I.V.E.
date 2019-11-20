@@ -11,8 +11,7 @@ public class PlayerCharacter : Dummy
     [SerializeField] private FSMPlayer fsm;
     public Transform SpriteHolder;
     private new Rigidbody2D rigidbody;
-
-
+    public GameObject groundDust;
     private Player player;
 
     public GameObject dashAtkBox;

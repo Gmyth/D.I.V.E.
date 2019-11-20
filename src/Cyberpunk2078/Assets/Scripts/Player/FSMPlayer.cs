@@ -69,7 +69,8 @@ public abstract class PlayerState : State
                 //    playerCharacter.transform.Translate(Vector2.down * (hitL.distance - DistanceToTheGround));
                 //}
             }
-
+            
+            playerCharacter.AddNormalEnergy(1);
             Player.CurrentPlayer.ChainWallJumpReady = false; 
             Player.CurrentPlayer.secondJumpReady = true;
             grounded = true;
@@ -92,6 +93,7 @@ public abstract class PlayerState : State
                 //    playerCharacter.transform.Translate(Vector2.down * (hitR.distance - DistanceToTheGround));
                 //}
             }
+            playerCharacter.AddNormalEnergy(1);
             Player.CurrentPlayer.ChainWallJumpReady = false; 
             Player.CurrentPlayer.secondJumpReady = true;
             grounded = true;
@@ -115,6 +117,7 @@ public abstract class PlayerState : State
                 //   playerCharacter.transform.Translate(Vector2.down* (hitM.distance - DistanceToTheGround));
                 //}
             }
+            playerCharacter.AddNormalEnergy(1);
             Player.CurrentPlayer.ChainWallJumpReady = false; 
             Player.CurrentPlayer.secondJumpReady = true;
             grounded = true;

@@ -95,13 +95,37 @@ public class PSWallJumping: PlayerState
                 return index_PSJumping1;
             }
         }
-       
+
+
+        if (dir == Direction.Right && h > 0)
+        {
+            
+            rb2d.gravityScale = 1.2f;
+            playerCharacter.groundDust.transform.localPosition =  new Vector3(0.2f,-0.5f,0);
+            playerCharacter.groundDust.GetComponent<ParticleSystem>().gravityModifier = -1;
+            playerCharacter.groundDust.GetComponent<ParticleSystem>().Play();
+            anim.Play("MainCharacter_WallJump", -1, 0f);
+        }
+        else if (dir == Direction.Left && h < 0)
+        {
+            playerCharacter.groundDust.transform.localPosition = new Vector3(-0.2f,-0.5f,0);
+            playerCharacter.groundDust.GetComponent<ParticleSystem>().gravityModifier = 0-1;
+            playerCharacter.groundDust.GetComponent<ParticleSystem>().Play();
+            rb2d.gravityScale = 1.2f;
+            anim.Play("MainCharacter_WallJump", -1, 0f);
+        }
+        else
+        {
+            anim.Play("MainCharacter_Airborne", -1, 0f);
+            playerCharacter.groundDust.transform.localPosition = Vector3.zero;
+            playerCharacter.groundDust.GetComponent<ParticleSystem>().gravityModifier = 0;
+            playerCharacter.groundDust.GetComponent<ParticleSystem>().Stop();
+            rb2d.gravityScale = 3f;
+        }
         
-        if ( dir ==  Direction.Right && h > 0) { rb2d.gravityScale = 1.2f;}
-        else if (dir ==  Direction.Left && h < 0) {  rb2d.gravityScale = 1.2f; }
-        else{rb2d.gravityScale = 3f;}
         if (dir == Direction.None && !isGrounded())
         {
+           
             return index_PSAirborne;
         }
 
@@ -129,12 +153,12 @@ public class PSWallJumping: PlayerState
         var dir = isCloseTo("Ground");
         // Set flip
         flip = dir == Direction.Left;
-        
+
         //kill speed
         onWall = true;
         
         // Animation
-        anim.Play("MainCharacter_WallJump", -1, 0f);
+        anim.Play("MainCharacter_Airborne", -1, 0f);
 
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         
@@ -147,6 +171,9 @@ public class PSWallJumping: PlayerState
 
     public override void OnStateQuit(State nextState)
     {
+        playerCharacter.groundDust.transform.localPosition = Vector3.zero;
+        playerCharacter.groundDust.GetComponent<ParticleSystem>().gravityModifier = 0;
+        playerCharacter.groundDust.GetComponent<ParticleSystem>().Stop();
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         rb2d.gravityScale = 3;
         onWall = false;
