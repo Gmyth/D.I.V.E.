@@ -32,6 +32,13 @@ public class L2Cleaner : Enemy, IPatroller
         EnemyData enemyData = DataTableManager.singleton.GetEnemyData(typeID);
         PlayerCharacter.Singleton.AddOverLoadEnergy(enemyData.Attributes[AttributeType.OspReward_c0]);
 
+        for (int i = 0; i < 3; i++)
+        {
+            var obj = ObjectRecycler.Singleton.GetObject<SoulBall>(5);
+            obj.transform.position = transform.position;
+            obj.gameObject.SetActive(true);
+            obj.Active();
+        }
         
         gameObject.SetActive(false);
         CheckPointManager.Instance?.EnterResetPool(gameObject);

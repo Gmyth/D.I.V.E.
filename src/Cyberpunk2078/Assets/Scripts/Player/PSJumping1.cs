@@ -139,6 +139,12 @@ public class PSJumping1 : PlayerState
         var jumpForce = playerCharacter.IsInFeverMode ? f_jumpForce : n_jumpForce;
         var wallJumpForce = playerCharacter.IsInFeverMode ? f_wallJumpForce : n_wallJumpForce;
         
+        
+        
+        
+        playerCharacter.groundDust.transform.localPosition = new Vector3(0,-0.5f,0);
+        playerCharacter.groundDust.GetComponent<ParticleSystem>().Play();
+        
         previous = previousState;
         timer = jumpIncreaserThreshold;
         anim.Play("MainCharacter_Jump", -1, 0f);
@@ -160,7 +166,23 @@ public class PSJumping1 : PlayerState
         {
             rb2d.AddForce(playerCharacter.transform.up * jumpForce * 100);
         }
+        
+        //VFX 
+        var Dust = ObjectRecycler.Singleton.GetObject<SingleEffect>(11);
+        Dust.transform.position = playerCharacter.transform.position;
 
+        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position, -Vector2.up, 3f);
+            
+        Dust.transform.right =-(new Vector2(rb2d.velocity.x,25f).normalized);
+
+        Dust.gameObject.SetActive(true);
+        Dust.GetComponentInChildren<Animator>().speed = 1.5f;
        
+    }
+    
+    public override void OnStateQuit(State nextState)
+    {
+        playerCharacter.groundDust.transform.localPosition = Vector3.zero;
+        playerCharacter.groundDust.GetComponent<ParticleSystem>().Stop();
     }
 }

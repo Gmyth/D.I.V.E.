@@ -95,7 +95,7 @@ public class PSDashing : PlayerState
                 // kill speed after dash
                 hyperSpeed = false;
                 rb2d.drag = defaultDrag;
-                rb2d.velocity = rb2d.velocity * 0.1f;
+                rb2d.velocity = rb2d.velocity * 0.5f;
             }
             PhysicsInputHelper(h);
             setAtkBox(false);
@@ -140,7 +140,7 @@ public class PSDashing : PlayerState
         // Player is grounded and dash has finished
         if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime  < Time.time)
         {
-            rb2d.velocity = rb2d.velocity * 0f;
+            rb2d.velocity = rb2d.velocity * 0.5f;
             PhysicsInputHelper(h);
             if (!isGrounded())
             {
@@ -210,6 +210,8 @@ public class PSDashing : PlayerState
         // Listening to move input
         PhysicsInputHelper(h);
         
+        playerCharacter.SpriteHolder.GetComponent<TrailRenderer>().emitting = false;
+        
         // reset player facing
         //playerCharacter.GetComponent<CapsuleCollider2D>().isTrigger = false;
         playerCharacter.SpriteHolder.right = Vector3.right;
@@ -253,7 +255,18 @@ public class PSDashing : PlayerState
         VFX.transform.right = direction;
         VFX.transform.localScale = new Vector3(4,4,1);
         VFX.gameObject.SetActive(true);
+        VFX.GetComponent<GhostSprites>().Occupied = true;
         
+        var Dust = ObjectRecycler.Singleton.GetObject<SingleEffect>(9);
+        Dust.transform.position = playerCharacter.transform.position +  direction * 0.5f;
+        //Dust.setTarget(playerCharacter.transform);
+        
+        Dust.transform.right = -direction;
+        Dust.transform.localScale = new Vector3(1,1,1);
+        Dust.gameObject.SetActive(true);
+
+
+        playerCharacter.SpriteHolder.GetComponent<TrailRenderer>().emitting = true;
 
         //set correct Y flip based on mouse direction
         if (direction.x < 0 && direction.y != 0) playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipY = true;
@@ -266,7 +279,7 @@ public class PSDashing : PlayerState
         rb2d.AddForce(direction * dashForce * 200f * 1 / Time.timeScale);
         
         //Camera Tricks
-        CameraManager.Instance.Shaking(0.20f,0.10f);
+        CameraManager.Instance.Shaking(0.15f,0.15f);
         
         setAtkBox(true);
     }
