@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+
 public class ObjectRecycler : MonoBehaviour
 {
     public static ObjectRecycler Singleton { get; private set; }

@@ -94,7 +94,7 @@ public enum ZoneType
         switch (type)
         {
             case ZoneType.Rectangle:
-                return Mathf.Abs(position.x - center.x) <= w / 2f && Mathf.Abs(position.y - center.y) <= h / 2f;
+                return Mathf.Abs(position.x - center.x) <= (w / 2f) && Mathf.Abs(position.y - center.y) <= (h / 2f);
 
 
             case ZoneType.Circle:
