@@ -168,25 +168,13 @@ public class PlayerCharacter : Dummy
             ActivateFeverMode();
         else if (result.currentValue <= 0)
             DeactivateFeverMode();
-
+        
         return true;
-    }
-
-    public bool ConsumeFever()
-    {
-        if (statistics[StatisticType.Fever] == statistics[StatisticType.MaxFever] && statistics[StatisticType.Hp] < statistics[StatisticType.MaxHp])
-        {
-            statistics.Modify(StatisticType.Hp, 1, 0, statistics[StatisticType.MaxHp]);
-            statistics[StatisticType.Fever] = 0;
-
-            return true;
-        }
-
-        return false;
     }
 
     public void ActivateFeverMode()
     {
+        CameraManager.Instance.flashIn(8f,0.02f,0.10f,0.01f);
         IsInFeverMode = true;
         SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
     }
