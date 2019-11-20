@@ -16,6 +16,7 @@ public abstract class PlayerState : State
     protected bool grounded;
     protected float lastGroundedSec;
     
+
     public virtual void Initialize(int index, PlayerCharacter playerCharacter)
     {
         Index = index;

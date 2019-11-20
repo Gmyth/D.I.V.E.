@@ -207,7 +207,14 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
 
 
         t_finishCharging = 0;
+
+
+        isMoving = false;
+
+        if (idleAnimation != "")
+            animator.Play(idleAnimation);
     }
+
 
     public override void OnStateQuit(State nextState)
     {

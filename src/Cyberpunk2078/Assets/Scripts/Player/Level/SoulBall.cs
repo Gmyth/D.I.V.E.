@@ -33,7 +33,7 @@ public class SoulBall : Recyclable
         t = Time.time + timeIntervals + Random.Range(-0.2f, 0.2f);
         v = 5f;
 
-
+        
         rb2d.AddForce(Random.Range(15, 40) * new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f)));
     }
 
@@ -47,6 +47,8 @@ public class SoulBall : Recyclable
                     currentState = SoulBallState.Chase;
                     rb2d.velocity = Vector2.zero;
                 }
+
+
                 break;
                 
 
@@ -55,6 +57,8 @@ public class SoulBall : Recyclable
 
                 if (direction.sqrMagnitude < 0.3f)
                 {
+                    rb2d.velocity = Vector2.zero;
+
                     //rb2d.drag = 0;
                     //bufferState = SoulBallState.Acquired;
 
@@ -73,6 +77,7 @@ public class SoulBall : Recyclable
 
                 v = Mathf.Min(maxSpeed, v + acceleration * Time.deltaTime);
                 
+
                 break;
         }
     }

@@ -107,9 +107,10 @@ public class Drone : Enemy, IPatroller
     {
         var Boom = ObjectRecycler.Singleton.GetObject<SingleEffect>(3);
         Boom.transform.position = transform.position;
-        Boom.gameObject.SetActive(true);
         Boom.transform.localScale = Vector3.one;
-        
+        Boom.gameObject.SetActive(true);
+
+
         EnemyData enemyData = DataTableManager.singleton.GetEnemyData(typeID);
         PlayerCharacter.Singleton.AddOverLoadEnergy(enemyData.Attributes[AttributeType.OspReward_c0]);
 
