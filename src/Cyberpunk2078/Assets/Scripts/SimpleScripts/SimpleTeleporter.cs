@@ -6,6 +6,7 @@ public class SimpleTeleporter : MonoBehaviour
 {
 
     public Transform TargetTeleportPosition;
+    public GameObject TargetLevel;
 
     public Color GizmoColor;
     
@@ -24,7 +25,9 @@ public class SimpleTeleporter : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player") {
+            TargetLevel.SetActive(true);
             other.gameObject.transform.position = TargetTeleportPosition.position;
+            gameObject.SetActive(false);
         }
     }
 
@@ -32,7 +35,8 @@ public class SimpleTeleporter : MonoBehaviour
     {
         Gizmos.color = GizmoColor;
         Gizmos.DrawCube(transform.position, transform.localScale);
-        Gizmos.DrawCube(TargetTeleportPosition.position, new Vector3(1, 2, 1));
+        if (TargetTeleportPosition != null)
+            Gizmos.DrawCube(TargetTeleportPosition.position, new Vector3(1, 2, 1));
     }
 
 }

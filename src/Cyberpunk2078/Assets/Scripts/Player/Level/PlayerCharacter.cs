@@ -73,12 +73,25 @@ public class PlayerCharacter : Dummy
         if (result.currentValue <= 0)
             Dead();
 
-        // Player.CurrentPlayer.ApplyHealthChange(-rawDamage);
+
+        return result.previousValue - result.currentValue;
+    }
+
+    public float Heal(float rawHeal)
+    {
+        Debug.Log(LogUtility.MakeLogStringFormat(name, "Heal {0}.", rawHeal));
+
+
+        if (rawHeal <= 0)
+            return 0;
+
+
+        StatisticModificationResult result = statistics.Modify(StatisticType.Hp, rawHeal, 0, statistics[StatisticType.MaxHp]);
 
 
         return result.previousValue - result.currentValue;
     }
-    
+
     public override void Dead()
     {
         fsm.CurrentStateIndex = 9;
@@ -93,22 +106,36 @@ public class PlayerCharacter : Dummy
 
     public bool AddNormalEnergy(float amount)
     {
-        float maxSp = statistics[StatisticType.MaxSp];
+        if (!player.energyLocked)
+        {
+            float maxSp = statistics[StatisticType.MaxSp];
 
-        statistics.Modify(StatisticType.Sp, amount, 0, maxSp);
+            statistics.Modify(StatisticType.Sp, amount, 0, maxSp);
 
 
-        return true;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public bool AddOverLoadEnergy(float amount)
     {
-        float maxSp = statistics[StatisticType.MaxOsp];
+        if (!player.overloadEnergyLocked)
+        {
+            float maxSp = statistics[StatisticType.MaxOsp];
 
-        statistics.Modify(StatisticType.Osp, amount, 0, maxSp);
+            statistics.Modify(StatisticType.Osp, amount, 0, maxSp);
 
 
-        return true;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public float ConsumeEnergy(float value)

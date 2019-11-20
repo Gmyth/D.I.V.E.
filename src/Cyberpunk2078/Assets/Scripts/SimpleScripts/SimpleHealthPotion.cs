@@ -9,7 +9,8 @@ public class SimpleHealthPotion : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            
+            PlayerCharacter.Singleton.Heal(1);
+            gameObject.SetActive(false);
         }
     }
 
