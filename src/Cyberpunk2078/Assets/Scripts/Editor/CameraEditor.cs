@@ -39,6 +39,15 @@ public class CameraEditor : Editor
                     cameraInitPosition.y = indicator.minCameraPos.y;
             }
             Camera.main.transform.position = cameraInitPosition;
+
+            if (indicator.changeSize)
+            {
+                Camera.main.orthographicSize = indicator.targetCameraSize;
+            }
+            else
+            {
+                Camera.main.orthographicSize = 8;
+            }
         }
 
         DrawDefaultInspector();
