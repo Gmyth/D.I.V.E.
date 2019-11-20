@@ -39,6 +39,7 @@ public class SoulBall : Recyclable
                 }
                 break;
             
+
             case SoulBallState.Chase:
                 if ((target.position - transform.position).sqrMagnitude < 0.3f)
                 {
@@ -51,25 +52,23 @@ public class SoulBall : Recyclable
                     Die();
                 }
 
-                
-                var direction = (target.position - transform.position).normalized;
-                transform.Translate(direction * v * Time.deltaTime);
+
+                Vector3 direction = target.position - transform.position;
+                float distance = v * Time.deltaTime;
+
+                if (direction.sqrMagnitude <= distance * distance)
+                    transform.position = target.position;
+                else
+                    transform.Translate(direction.normalized * distance);
 
                 v = Mathf.Min(30, v + acceleration * Time.deltaTime);
                 
                 break;
-            
-            case SoulBallState.Acquired:
-                // do nothing
-                
-                break;
-            
         }
 
+
         if (bufferState != currentState)
-        {
             currentState = bufferState;
-        }
 
     }
 
