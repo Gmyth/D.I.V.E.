@@ -37,7 +37,6 @@ public class L2Cleaner : Enemy, IPatroller
             var obj = ObjectRecycler.Singleton.GetObject<SoulBall>(5);
             obj.transform.position = transform.position;
             obj.gameObject.SetActive(true);
-            obj.Active();
         }
         
         gameObject.SetActive(false);
