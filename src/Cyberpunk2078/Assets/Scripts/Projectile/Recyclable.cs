@@ -10,7 +10,7 @@ public class Recyclable : MonoBehaviour
     protected void Die()
     {
         StopAllCoroutines();
-        gameObject.SetActive(false);
+
         ObjectRecycler.Singleton.Recycle(this);
     }
 

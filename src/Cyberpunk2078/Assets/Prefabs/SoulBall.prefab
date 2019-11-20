@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Color: {r: 0.9622642, g: 0.92188907, b: 0, a: 1}
   m_Intensity: 1.98
   m_LightVolumeOpacity: 0.593
-  m_ApplyToSortingLayers: d1fda455
+  m_ApplyToSortingLayers: d1fda45519b7f613
   m_LightCookieSprite: {fileID: 0}
   m_UseNormalMap: 0
   m_LightOrder: 0
@@ -346,6 +346,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: -1
   lifeSpan: 0
+  maxSpeed: 30
+  acceleration: 20
 --- !u!50 &6126746540793851391
 Rigidbody2D:
   serializedVersion: 4
