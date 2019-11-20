@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -45657,7 +45657,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1159311149}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -109.5, y: 93.2, z: 0}
+  m_LocalPosition: {x: 47.2, y: -31, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1210124606}
@@ -53595,6 +53595,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1366465702}
   - component: {fileID: 1366465703}
+  - component: {fileID: 1366465704}
   m_Layer: 0
   m_Name: '--------- Level-1 Dancing Hall-1 ---------'
   m_TagString: Untagged
@@ -53642,6 +53643,93 @@ MonoBehaviour:
   version: 1
   data:
     dataString: UEsDBBQAAAgIAACYn+tM5/VoaQIAAA0FAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVE1z2jAQ/SuMzoWRbVzi3logpId8TGgnF19kaY01yJJHkgMkw3+vJBvs0BPLvv14+3blT8SlaYBapTeas0fFAP2YIG+jb5MBfIAj2Sm55R9wiXnjzFY+iISYV2K5cv7IpxlVg9Wc/pQ74YOxc7aSl0rXa7aDpTLWOHdJhAEHaWV9tnSuzwk6up9p5lNOzooX3vpwVoYnZ2dSkBb0KPQOz77HKY7SpE+ZzqNZ2icls0WW3eE0Xk/xIuS3kgpSN8D8MEOZLJrFaV8gyUKkdJP2QbgDqRKCm54psqcmKPFKTl4HxombOlDzIlTAd5X1E4wTn8vSgO0l0eS04tqJ11VEv1SnaE3MvmP2TkTre6RRHCh1RR//w6dRgEut6odL3wj7HrbidO8YUmLsSPKxe/WVeCsPROxJIeCtAvmkNlq1kjnQ6tantgbi1fD3OtqyArof/B3VG2fbDIpfNnzZr5/hHKY/LgWviyD7vHNshQpah7MA7Rbz2xEOR2P6Es7rWfw18IfsxtfVA/dcG+ugfkrp6RWq1T4U3TvDK09bu1RaQvD2nBuQRNjTi6tibzd4g4263iD3xD+jvnePXV7HTUpwD/EY30Av6nDdlanU4RFM9dxawSUMpD3w5GRaKim7AxtLcknbtrokdJS2azn7elkIk4JFdB7TYlEyRmGK8ZwkRZbhBJI0SQsUTo9LNycRLx3RXh63NDkUl+7MLl+XyUaTJhw70+Sw4R+1GknOZam2VAPI567ClTho18S9SbZm3Am0BWu5DOtGnzkSiu6B5ddCeZh0fbSa5EOVHDX8XVnvydEyfE5ydEbnf1BLAwQUAAAICAAAmJ/rrjVY1WwAAAB3AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9Kz0FFQSi9KLMgoBgoYgjilmSkgdrSSQWJSimGyiVFyknlaSkpyqq6BgUmicZKlpYFxqrGpsWmSUixQfUllQapfYm4qRE9AYklGWmZeSmZeup57UWaKO8hopdhaAFBLAQItABQAAAgIAACYn+tM5/VoaQIAAA0FAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAACYn+uuNVjVbAAAAHcAAAAJACQAAAAAAAAAAAAAALYCAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAbQMAAAAA
+    upgradeData: 
+    file_cachedStartup: {fileID: 0}
+    data_cachedStartup: 
+    cacheStartup: 0
+  showNavGraphs: 1
+  showUnwalkableNodes: 1
+  debugMode: 0
+  debugFloor: 0
+  debugRoof: 1
+  manualDebugFloorRoof: 0
+  showSearchTree: 0
+  unwalkableNodeDebugSize: 0.3
+  logPathResults: 1
+  maxNearestNodeDistance: 100
+  scanOnStartup: 1
+  fullGetNearestSearch: 0
+  prioritizeGraphs: 0
+  prioritizeGraphsLimit: 1
+  colorSettings:
+    _SolidColor: {r: 0.11764706, g: 0.4, b: 0.7882353, a: 0.9}
+    _UnwalkableNode: {r: 1, g: 0, b: 0, a: 0.5}
+    _BoundsHandles: {r: 0.29, g: 0.454, b: 0.741, a: 0.9}
+    _ConnectionLowLerp: {r: 0, g: 1, b: 0, a: 0.5}
+    _ConnectionHighLerp: {r: 1, g: 0, b: 0, a: 0.5}
+    _MeshEdgeColor: {r: 0, g: 0, b: 0, a: 0.5}
+    _AreaColors:
+    - {r: 0, g: 0, b: 0, a: 0}
+  tagNames:
+  - Basic Ground
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
+  - 11
+  - 12
+  - 13
+  - 14
+  - 15
+  - 16
+  - 17
+  - 18
+  - 19
+  - 20
+  - 21
+  - 22
+  - 23
+  - 24
+  - 25
+  - 26
+  - 27
+  - 28
+  - 29
+  - 30
+  - 31
+  heuristic: 2
+  heuristicScale: 1
+  threadCount: 1
+  maxFrameTime: 10
+  batchGraphUpdates: 0
+  graphUpdateBatchingInterval: 0.2
+  euclideanEmbedding:
+    mode: 0
+    seed: 0
+    pivotPointRoot: {fileID: 0}
+    spreadOutCount: 1
+  showGraphs: 1
+--- !u!114 &1366465704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1366465701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78396926cbbfc4ac3b48fc5fc34a87d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  data:
+    dataString: UEsDBBQAAAgIAACYn+udMQPEXwIAAAEFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVE1z2jAQ/SuMziVjY9yU3logpId8TEgnF19kaY01yJJHkgMkw3/vSraxQ0+IfftWb9+u/EmEsjUwp83GCP6gOZCfE+LP5NtkAO/hSHdabcUH9DlvgrvSJ9GQ80Kd0BiPPc3qCpwR7JfaSZ8cYbBRotCmWvMdLLV1FsMFlRYQMtp5tsLQ54Qc8We68JQTnma3/vSBp0U0OeORgXJgRqk/opvvszSK06SjTOfxTdqRWk6jmKRVDdw3MFAXyc0s7UjJImQq7K5LilqQaSmF7dQRd6pD9y/05HvngmKnQY5vvASxK51XPSY+FYUF19lg6GklDBrWViS/detiRe2+VfZOZePvSONZkNQWffgPn8YBLoyu7vt748jf4UrB9qiQUetGNo/Dq6/CG3Wgck9zCW8lqEe9MbpRHEFnGk9tLMxWw99La8sS2H6It1Kvgk09ON5PtZ+p7+Ecuj8upajyYPu8DWylDl6HVQCDg/mDgsOi2K4ERr2KvxZe6W68UR1wJ4x1CHVdKi8v143xqeQOD9551rilNgpCtNNcg6LSnZ6xirue4BU2uvUKuaP+6XR3d1j/Iq4oITzkR9EV9KwPl1nZUh8ewJZPjZNCwSDaA49o01Ir1S7Y2JKetm1MQdmItmsE/7pZJKI5j9l8xvLbgnMG0yia0yRfLKIEkjRJcxJWTyjsk8rnVmhnDw5NDcUVrln/RZlsDK3DsnNDDxvxUemR5UIVessMgHpqK1yEg8FL8E3yNRdo0BacEyqMm3xmRGq2B55dCmWh0/XRGZoNVTJSi3ftfCQjy/AJyciZnP8BUEsDBBQAAAgIAACYn+uuNVjVbAAAAHcAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz0rPQUVBKL0osyCgGChiCOKWZKSB2tJJBYlKKYbKJUXKSeVpKSnKqroGBSaJxkqWlgXGqsamxaZJSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAAJif650xA8RfAgAAAQUAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAAJif6641WNVsAAAAdwAAAAkAJAAAAAAAAAAAAAAArAIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAABjAwAAAAA=
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -92665,7 +92753,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 9
+  orthographic size: 8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -92689,7 +92777,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2110374135}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -45, y: -27, z: -10}
+  m_LocalPosition: {x: 128, y: 46, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
