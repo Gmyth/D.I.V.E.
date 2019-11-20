@@ -5,12 +5,13 @@ public class ObjectRecycler : MonoBehaviour
 {
     public static ObjectRecycler Singleton { get; private set; }
 
-    private static Vector3 recyclePosition = Vector3.one * -100;
+    private static Vector3 recyclePosition = Vector3.one * -10000;
 
 
     [SerializeField] private Recyclable[] prefabs;
 
     private Stack<Recyclable>[] recycledObjects;
+
 
     private ObjectRecycler() { }
 
@@ -20,8 +21,10 @@ public class ObjectRecycler : MonoBehaviour
         if (recycledObjects[id].Count > 0)
             return recycledObjects[id].Pop();
 
+
         Recyclable recyclable = Instantiate(prefabs[id], transform);
         recyclable.id = id;
+
 
         return recyclable;
     }
@@ -35,7 +38,10 @@ public class ObjectRecycler : MonoBehaviour
         T obj = Instantiate(prefabs[id].GetComponent<T>(), recyclePosition, Quaternion.identity, transform.GetChild(id));
 
         if (obj)
+        {
             obj.GetComponent<Recyclable>().id = id;
+            obj.gameObject.SetActive(false);
+        }
 
 
         return obj;
@@ -45,7 +51,9 @@ public class ObjectRecycler : MonoBehaviour
     {
         if (recyclable.id >= 0)
         {
-            recyclable.transform.position = recyclePosition;
+            recyclable.gameObject.SetActive(false);
+            recyclable.transform.localPosition = recyclePosition;
+
             recycledObjects[recyclable.id].Push(recyclable);
         }
         else
@@ -55,11 +63,9 @@ public class ObjectRecycler : MonoBehaviour
     public void RecycleAll()
     {
         foreach (Recyclable recyclable in FindObjectsOfType<Recyclable>())
-        {
-            recyclable.gameObject.SetActive(false);
             Recycle(recyclable);
-        }
     }
+
 
     private void Awake()
     {
@@ -74,9 +80,10 @@ public class ObjectRecycler : MonoBehaviour
             for (int id = 0; id < recycledObjects.Length; id++)
             {
                 recycledObjects[id] = new Stack<Recyclable>(256);
-                child = new GameObject();
-                child.name = id.ToString();
+
+                child = new GameObject(id.ToString() + " - " + prefabs[id].name);
                 child.transform.parent = transform;
+                child.transform.localPosition = Vector3.zero;
             }
         }
         else if (this != Singleton)

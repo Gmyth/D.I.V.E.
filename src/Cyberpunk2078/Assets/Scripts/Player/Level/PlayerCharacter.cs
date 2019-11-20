@@ -201,7 +201,7 @@ public class PlayerCharacter : Dummy
 
     public void ActivateFeverMode()
     {
-        CameraManager.Instance.flashIn(8f,0.02f,0.10f,0.01f);
+        CameraManager.Instance.flashIn(7.5f,0.02f,0.10f,0.01f);
         IsInFeverMode = true;
         SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
     }
