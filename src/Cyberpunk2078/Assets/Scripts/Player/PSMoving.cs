@@ -42,7 +42,7 @@ public class PSMoving : PlayerState
             return indexPSDashing;
         }
 
-        if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("VerticalJoyStick") > 0)
+        if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("VerticalJoyStick") > 0.7f)
         {
             // up is pressed
             if(isCloseTo("Ladder") != Direction.None) return indexPSClimb;

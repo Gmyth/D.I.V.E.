@@ -152,6 +152,9 @@ public class GUIHUD : GUIWindow
         float t = Time.time;
 
         int i = 0;
+
+        textArea.text += "\n\n";
+
         while (i < text.Length)
         {
             while (i < (Time.time - t) / textSpeed && i < text.Length)

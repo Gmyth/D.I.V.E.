@@ -44,7 +44,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
                         // Make instance persistent.
                         // TEMP: Reload the scene will have issue
-                        //DontDestroyOnLoad(singletonObject);
+                        DontDestroyOnLoad(singletonObject);
                     }
                 }
 

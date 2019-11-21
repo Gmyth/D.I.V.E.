@@ -30,6 +30,11 @@ public class SimpleEventTrigger : MonoBehaviour
         }
     }
 
+    public void PrintHUDText(string str)
+    {
+        GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").ShowText(str);
+    }
+
     public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player")

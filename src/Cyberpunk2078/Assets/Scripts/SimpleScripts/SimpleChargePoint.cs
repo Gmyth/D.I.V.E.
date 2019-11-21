@@ -36,7 +36,7 @@ public class SimpleChargePoint : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.tag == "PlayerAttack") 
+        if (other.tag == "Player" || other.tag == "PlayerAttack")
         {
             if (isReady)
             {
@@ -44,6 +44,40 @@ public class SimpleChargePoint : MonoBehaviour
             }
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Player" || other.tag == "PlayerAttack")
+        {
+            if (isReady)
+            {
+                ChargeEnergy();
+            }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.transform.tag == "Player" || other.transform.tag == "PlayerAttack")
+        {
+            if (isReady)
+            {
+                ChargeEnergy();
+            }
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D other)
+    {
+        if (other.transform.tag == "Player" || other.transform.tag == "PlayerAttack")
+        {
+            if (isReady)
+            {
+                ChargeEnergy();
+            }
+        }
+    }
+
 
     private IEnumerator Recover()
     {

@@ -28,7 +28,9 @@ public class SimpleTeleporter : MonoBehaviour
             TargetLevel.SetActive(true);
             CameraManager.Instance.Initialize();
             other.gameObject.transform.position = TargetTeleportPosition.position;
-            gameObject.SetActive(false);
+
+            transform.parent.gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
     }
 

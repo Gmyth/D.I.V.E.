@@ -13,6 +13,7 @@ TagManager:
   - PlayerAttack
   - Hunch
   - Platform
+  - Item
   layers:
   - Default
   - TransparentFX

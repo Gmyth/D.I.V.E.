@@ -15,15 +15,22 @@ public class PSClimb : PlayerState
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSMoving;
     [SerializeField] private int indexPSJumping1;
+    [SerializeField] private int indexPSDashing;
+
 
     private float t0;
     private float timeInterval = 0.5f;
     private Vector2 climbBoundary;
     public override int Update()
     {
-        var v = Input.GetAxis("Vertical");
+        var v = Input.GetAxis("VerticalJoyStick")!=0? Input.GetAxis("VerticalJoyStick"): Input.GetAxis("Vertical");
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-        
+
+        if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
+        {
+            Player.CurrentPlayer.triggerReady = false;
+            return indexPSDashing;
+        }
 
         if (v == 0)
         {

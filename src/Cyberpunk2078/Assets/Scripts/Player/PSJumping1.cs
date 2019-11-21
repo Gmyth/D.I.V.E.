@@ -55,6 +55,8 @@ public class PSJumping1 : PlayerState
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
         float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("VerticalJoyStick");
+        Vector2 normalizedInput = new Vector2(h, v).normalized;
         flip = h < 0;
         
 
@@ -72,7 +74,7 @@ public class PSJumping1 : PlayerState
          
 
 
-        if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("VerticalJoyStick") > 0)
+        if (Input.GetAxis("Vertical") > 0 || normalizedInput.y > 0.7f)
          {
              // up is pressed
              if(isCloseTo("Ladder") != Direction.None) return indexPSClimb;

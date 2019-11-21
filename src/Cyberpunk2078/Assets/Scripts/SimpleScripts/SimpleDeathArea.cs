@@ -30,7 +30,7 @@ public class SimpleDeathArea : MonoBehaviour
             if (playerCharacter[StatisticType.Hp] > 0)
             {
                 //Take damage
-                PlayerCharacter.Singleton.ApplyDamage(1000);
+                PlayerCharacter.Singleton.ApplyDamage(1);
 
                 //Respawn at last checkpoint
                 other.transform.position = RespawnPoint.position;

@@ -10,7 +10,15 @@ public class Attack : MonoBehaviour
 
 
     HashSet<int> objectsHit = new HashSet<int>();
-    
+
+
+
+    private void Start()
+    {
+
+
+
+    }
 
     public void  setDamage(float amount)
     {
@@ -56,7 +64,7 @@ public class Attack : MonoBehaviour
             else if (other.tag == "Platform" && other.GetComponent<SimpleBreakable>())
             {
                 other.GetComponent<SimpleBreakable>().DestoryBreakable();
-            }
+            } 
         }
         else if (other.tag == "Player")
         {

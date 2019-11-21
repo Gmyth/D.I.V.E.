@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityScript.Steps;
+//using UnityScript.Steps;
 
 public class MouseIndicator : MonoBehaviour
 {
@@ -28,21 +28,29 @@ public class MouseIndicator : MonoBehaviour
             lastControllerInput = Time.unscaledTime;
         }
 
-        mousePosInScreen.z = 10; // select distance = 10 units from the camera
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(mousePosInScreen);
-        Vector2 direction = -(mousePos - (Vector2) transform.position).normalized;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Quaternion rotation = Quaternion.AngleAxis(angle,Vector3.forward);
-        
-        if (controllerDir != Vector2.zero && lastControllerInput + 0.5f < Time.unscaledTime)
+
+        if (lastControllerInput + 2f > Time.unscaledTime)
         {
             //use indicator for controller
-            direction = controllerDir;
-            angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            rotation = Quaternion.AngleAxis(angle,Vector3.forward);
+
+            mousePosInScreen.z = 10; // select distance = 10 units from the camera
+            Vector2 direction = -controllerDir;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            transform.rotation = rotation;
+        }
+        else
+        {
+            mousePosInScreen.z = 10; // select distance = 10 units from the camera
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(mousePosInScreen);
+            Vector2 direction = -(mousePos - (Vector2)transform.position).normalized;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            transform.rotation = rotation;
+
         }
 
-        transform.rotation = rotation;
+
     }
 
 

@@ -217,7 +217,7 @@ public abstract class PlayerState : State
 
 
     // Function : Keyboard Input => Physics Velocity, And Friction Calculation
-    public void PhysicsInputHelper(float h, float maxSpeed  = 9,  float Acceleration  = 20)
+    public void PhysicsInputHelper(float h, float maxSpeed  = 9,  float Acceleration  = 25)
     {
         Rigidbody2D rb2d = playerCharacter.GetComponent<Rigidbody2D>();
        
@@ -254,6 +254,7 @@ public abstract class PlayerState : State
 
     public void PreUpdate()
     {
+
         if (Input.GetAxis("Trigger") <= 0)
         {
              Player.CurrentPlayer.triggerReady = true;

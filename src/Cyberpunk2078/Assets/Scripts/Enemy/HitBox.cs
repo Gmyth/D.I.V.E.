@@ -79,7 +79,7 @@ public class HitBox : MonoBehaviour
 
 
                 if (hit.knockback > 0)
-                    player.Knockback(dummy.transform.position, hit.knockback);
+                    player.Knockback(dummy.transform.position, hit.knockback, 0.5f);
 
 
                 player.ApplyDamage(hit.damage);

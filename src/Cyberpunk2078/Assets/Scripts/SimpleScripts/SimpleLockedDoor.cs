@@ -51,6 +51,8 @@ public class SimpleLockedDoor : MonoBehaviour
         CameraManager.Instance.Shaking(0.05f,0.7f, true);
         gameObject.SetActive(false);
         OpenedDoor.SetActive(true);
+
+        GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").ShowText("A door opened somewhere...");
         //CameraManager.Instance.Shaking(0.6f, 1000000f);
     }
 

@@ -26,7 +26,8 @@ public class PSAirborne : PlayerState
         var jumpTolerance = playerCharacter.IsInFeverMode ? f_jumpTolerance : n_jumpTolerance;
 
         float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
-
+        float v = Input.GetAxis("VerticalJoyStick");
+        Vector2 normalizedInput = new Vector2(h, v).normalized;
         PhysicsInputHelper(h);
 
 
@@ -35,7 +36,7 @@ public class PSAirborne : PlayerState
             return indexPSAttackGH;
         }
         
-        if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("VerticalJoyStick") > 0)
+        if (Input.GetAxis("Vertical") > 0 || normalizedInput.y > 0.7f)
         {
             // up is pressed
             if(isCloseTo("Ladder") != Direction.None) return indexPSClimb;

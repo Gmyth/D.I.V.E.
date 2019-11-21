@@ -4,8 +4,10 @@ using UnityEngine.Tilemaps;
 
 public class DestructibleTile : Tile
 {
+#if UNITY_EDITOR
     [Space(20)]
     [Header("Destructible Tile")]
+#endif
 
     public float life;
     private float StartLife;
@@ -47,6 +49,7 @@ public class DestructibleTile : Tile
         }
     }
 
+#if UNITY_EDITOR
     [MenuItem("Assets/Tools/DestructibleTile")]
     public static void CreateDestructibleTile()
     {
@@ -57,4 +60,5 @@ public class DestructibleTile : Tile
 
         AssetDatabase.CreateAsset(ScriptableObject.CreateInstance<DestructibleTile>(), path);
     }
+#endif
 }

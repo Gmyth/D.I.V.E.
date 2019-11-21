@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum TutorialState
 {
@@ -42,6 +43,10 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         get { return CurrentState; }
     }
 
+    [SerializeField] private GameObject c1;
+    [SerializeField] private GameObject c2;
+    [SerializeField] private GameObject c3;
+    [SerializeField] private GameObject c4;
     public GameObject UI_DashKey;
     public GameObject UI_BlackMask;
 
@@ -50,7 +55,7 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -58,6 +63,27 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
     {
         
     }
+
+
+    public void PickUpCollectible(int index) {
+        switch (index) {
+
+            case 1:
+                c1.GetComponent<Image>().color = Color.white;
+                break;
+            case 2:
+                c2.GetComponent<Image>().color = Color.white;
+                break;
+            case 3:
+                c3.GetComponent<Image>().color = Color.white;
+                break;
+            case 4:
+                c4.GetComponent<Image>().color = Color.white;
+                break;
+        }
+
+    }
+
 
     public void SetTutorialState(int stateIndex)
     {

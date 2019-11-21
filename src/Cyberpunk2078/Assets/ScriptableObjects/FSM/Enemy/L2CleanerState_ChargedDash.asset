@@ -14,16 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   motionID: -1
   damage: 1
-  knockback: 1000
+  knockback: 100
   hitBox: 2
-  chargeTime: 0.3
+  chargeTime: 1
   stopChargingOnTargetLoss: 0
   chargeAnimation: L2Cleaner_Alert
   stateIndex_alert: 2
   type: 1
-  dashForce: 8000
+  dashForce: 3000
   minDuration: 0.3
   maxDuration: 0
   stopDistance: 0.5
   animation_dash: L2Cleaner_Dashing
-  animation_idle: L2Cleaner_Idle
