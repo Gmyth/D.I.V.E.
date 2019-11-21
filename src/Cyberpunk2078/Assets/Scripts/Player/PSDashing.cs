@@ -94,7 +94,7 @@ public class PSDashing : PlayerState
                 // kill speed after dash
                 hyperSpeed = false;
                 rb2d.drag = defaultDrag;
-                rb2d.velocity = rb2d.velocity * 0.5f;
+                rb2d.velocity = rb2d.velocity * 0.3f;
             }
             PhysicsInputHelper(h);
 
@@ -136,7 +136,7 @@ public class PSDashing : PlayerState
         // Player is grounded and dash has finished
         if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime  < Time.time)
         {
-            rb2d.velocity = rb2d.velocity * 0.5f;
+            rb2d.velocity = rb2d.velocity * 0.3f;
             PhysicsInputHelper(h);
             if (!isGrounded())
             {

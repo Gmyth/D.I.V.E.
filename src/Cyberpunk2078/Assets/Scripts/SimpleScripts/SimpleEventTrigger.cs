@@ -23,6 +23,7 @@ public class SimpleEventTrigger : MonoBehaviour
 
     public void InvokeEvents()
     {
+        CheckPointManager.Instance.RestoreObject(gameObject);
         for (int i = 0; i < triggeredEvents.Length; i++)
         {
             triggeredEvents[i].Invoke();
@@ -35,6 +36,7 @@ public class SimpleEventTrigger : MonoBehaviour
         {
             InvokeEvents();
             gameObject.SetActive(false);
+
         }
     }
 
