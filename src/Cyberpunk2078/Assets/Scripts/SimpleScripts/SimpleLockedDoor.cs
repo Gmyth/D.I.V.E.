@@ -12,8 +12,9 @@ public class SimpleLockedDoor : MonoBehaviour
 
     public GameObject OpenedDoor;
 
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -37,9 +38,9 @@ public class SimpleLockedDoor : MonoBehaviour
 
     public void DeleteLocker()
     {
-        lockerCount--;
         CameraManager.Instance.Shaking(0.05f,0.1f);
-        dots[lockerCount].SetActive(false);
+        dots[--lockerCount].SetActive(false);
+
         if (lockerCount <= 0)
         {
             Unlock();

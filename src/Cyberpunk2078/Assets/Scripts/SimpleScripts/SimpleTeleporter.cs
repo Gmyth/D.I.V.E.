@@ -9,12 +9,6 @@ public class SimpleTeleporter : MonoBehaviour
     public GameObject TargetLevel;
 
     public Color GizmoColor;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -25,11 +19,23 @@ public class SimpleTeleporter : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player") {
-            TargetLevel.SetActive(true);
-            CameraManager.Instance.Initialize();
-            other.gameObject.transform.position = TargetTeleportPosition.position;
 
-            transform.parent.gameObject.SetActive(false);
+
+
+            CapsuleCollider2D collider = other.GetComponent<CapsuleCollider2D>();
+
+            if (collider)
+            {
+                TargetLevel.SetActive(true);
+                CameraManager.Instance.Initialize();
+
+                collider.isTrigger = true;
+                other.gameObject.transform.position = TargetTeleportPosition.position;
+                collider.isTrigger = false;
+
+                transform.parent.gameObject.SetActive(false);
+            }
+
             //gameObject.SetActive(false);
         }
     }

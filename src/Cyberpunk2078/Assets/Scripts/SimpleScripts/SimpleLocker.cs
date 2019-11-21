@@ -6,9 +6,10 @@ public class SimpleLocker : MonoBehaviour
 {
 
     public SimpleLockedDoor ConnectedDoor;
+    bool b = true;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         ConnectedDoor.AddLocker(this);
     }
@@ -21,10 +22,12 @@ public class SimpleLocker : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "PlayerAttack" || other.gameObject.tag == "Player")
+        if (b && (other.gameObject.tag == "PlayerAttack" || other.gameObject.tag == "Player"))
         {
             ConnectedDoor.DeleteLocker();
             gameObject.SetActive(false);
+
+            b = false;
         }
     }
 

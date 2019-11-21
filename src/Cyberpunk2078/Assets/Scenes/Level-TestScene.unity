@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -19964,7 +19964,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a066c76f18be0a4f946b7839e460e7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lockers: []
+  lockers:
+  - {fileID: 629867346}
+  - {fileID: 2043138571}
   lockerCount: 0
   dots: []
   OpenedDoor: {fileID: 192862842}
@@ -41872,7 +41874,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 805449771}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 149.2, y: -5.2, z: 0}
+  m_LocalPosition: {x: 148.74, y: -4.08, z: 0}
   m_LocalScale: {x: 2, y: 8, z: 1}
   m_Children: []
   m_Father: {fileID: 1047344069}
@@ -53059,7 +53061,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a066c76f18be0a4f946b7839e460e7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lockers: []
+  lockers:
+  - {fileID: 790994602}
+  - {fileID: 372614524}
   lockerCount: 0
   dots: []
   OpenedDoor: {fileID: 519156495}
@@ -58215,12 +58219,12 @@ PrefabInstance:
       propertyPath: thruster
       value: 
       objectReference: {fileID: 1176232642}
-    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+    - target: {fileID: 8849360307540039034, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
         type: 3}
       propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8849360307540039034, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
         type: 3}
       propertyPath: m_FlipX
       value: 0
@@ -98363,7 +98367,7 @@ PrefabInstance:
       propertyPath: patrolRoute.wayPoints.Array.data[3].y
       value: 4.5925956
       objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+    - target: {fileID: 2675494265900334673, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
         type: 3}
       propertyPath: m_FlipX
       value: 0
@@ -98373,7 +98377,7 @@ PrefabInstance:
       propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2675494265900334673, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
         type: 3}
       propertyPath: m_FlipX
       value: 0
