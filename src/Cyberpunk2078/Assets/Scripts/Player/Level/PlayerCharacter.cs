@@ -13,8 +13,7 @@ public class PlayerCharacter : Dummy
     private new Rigidbody2D rigidbody;
     public GameObject groundDust;
     private Player player;
-
-    public GameObject dashAtkBox;
+    
 
 
     public EventOnStatisticChange OnStatisticChange { get; private set; }
@@ -241,13 +240,6 @@ public class PlayerCharacter : Dummy
 
 
         OnStatisticChange = statistics.onStatisticChange;
-
-
-        dashAtkBox = GetComponentInChildren<HitBox>()?.gameObject;
-        if (!dashAtkBox)
-            dashAtkBox = GetComponentInChildren<Attack>()?.gameObject;
-
-        dashAtkBox.SetActive(false);
 
 
         rigidbody = GetComponent<Rigidbody2D>();

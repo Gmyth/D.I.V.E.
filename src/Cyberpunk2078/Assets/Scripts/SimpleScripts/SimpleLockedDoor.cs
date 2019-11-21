@@ -10,6 +10,8 @@ public class SimpleLockedDoor : MonoBehaviour
 
     [SerializeField] private List<GameObject> dots;
 
+    public GameObject OpenedDoor;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +19,8 @@ public class SimpleLockedDoor : MonoBehaviour
         {
             dots.Add(transform.GetChild(i).gameObject);
         }
+
+        OpenedDoor.SetActive(false);
     }
 
     // Update is called once per frame
@@ -34,6 +38,7 @@ public class SimpleLockedDoor : MonoBehaviour
     public void DeleteLocker()
     {
         lockerCount--;
+        CameraManager.Instance.Shaking(0.05f,0.1f);
         dots[lockerCount].SetActive(false);
         if (lockerCount <= 0)
         {
@@ -43,7 +48,10 @@ public class SimpleLockedDoor : MonoBehaviour
 
     public void Unlock()
     {
+        CameraManager.Instance.Shaking(0.05f,0.7f, true);
         gameObject.SetActive(false);
+        OpenedDoor.SetActive(true);
+        //CameraManager.Instance.Shaking(0.6f, 1000000f);
     }
 
 }
