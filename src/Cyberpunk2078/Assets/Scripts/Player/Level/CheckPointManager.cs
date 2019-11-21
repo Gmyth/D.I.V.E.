@@ -14,9 +14,15 @@ public class CheckPointManager : MonoBehaviour
 
     private Transform playerLastCheckPoint;
     private GameObject player;
+
     public List<GameObject> enemy;
     public List<GameObject> enemyPool;
+
+    //Dummy reference
     private GameObject[] dummy;
+
+    //Objects needed to be restored
+    public List<GameObject> objects;
 
     public GameObject blackScreen;  
    
@@ -31,6 +37,7 @@ public class CheckPointManager : MonoBehaviour
     void Start()
     {
         dummy = GameObject.FindGameObjectsWithTag("Dummy");
+        //triggers = GameObject.FindGameObjectsWithTag("Triggers");
         //Debug.Log("Dummy Length:" + dummy.Length);
     }
 
@@ -61,20 +68,33 @@ public class CheckPointManager : MonoBehaviour
 
         enemyPool.Clear();
 
+        objects.Clear();
+
         for(int i = 0; i < dummy.Length; i ++)
         {
-            dummy[i].GetComponent<Enemy>().lastCheckPointTransform = dummy[i].gameObject.transform.position;
+            //put dummy into enemy
             if (!enemy.Contains(dummy[i]))
             {
                 enemy.Add(dummy[i]);
             }
-                
+
+            //record position
+            dummy[i].GetComponent<Enemy>().lastCheckPointTransform = dummy[i].gameObject.transform.position;
+
         }
     }
 
     public void RestoreCheckPoint()
     {
         StartCoroutine("BlackScreen");
+
+        for(int i = 0; i < objects.Count; ++i)
+        {
+            if (objects[i].GetComponent<SimpleEventTrigger>() != null)
+            {
+                objects[i].GetComponent<SimpleEventTrigger>().gameObject.SetActive(true);
+            }
+        }
     }
 
     IEnumerator BlackScreen()
@@ -118,5 +138,10 @@ public class CheckPointManager : MonoBehaviour
     public void EnterResetPool(GameObject obj)
     {
         enemyPool.Add(obj);
+    }
+
+    public void RestoreObject(GameObject obj)
+    {
+        objects.Add(obj);
     }
 }

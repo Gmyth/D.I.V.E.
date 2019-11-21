@@ -236,6 +236,8 @@ public class CameraManager : MonoBehaviour {
 						camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize, defaultFieldOfView, ref zoomVelocity, smoothTimeZoom);
 					}
 				}
+				
+				
 				break;
 			
 			case CameraState.Focusing:
@@ -396,7 +398,7 @@ public class CameraManager : MonoBehaviour {
 	    yield return null;
     }
 
-    public void Shaking(float strength,float duration)
+    public void Shaking(float strength, float duration, bool overwrite = false)
 	{
 		if (!shake)
 		{
@@ -407,26 +409,41 @@ public class CameraManager : MonoBehaviour {
 		}
 		else
 		{
-			shakeMagnitude = strength;
-			shakeRefreshing = true; // refresh current Coroutine
+			if (overwrite)
+			{
+				shakeMagnitude = strength;
+				StartCoroutine(shakeRelease(duration,overwrite));
+				shakeRefreshing = true; // refresh current Coroutine
+			}
+			
 		}
 	}
 
-	IEnumerator shakeRelease(float duration)
+    IEnumerator shakeRelease(float duration, bool overwrite = false)
 	{
+		if (shakeRefreshing)
+		{
+			shakeRefreshing = false;
+		}
+		
+		bool stop = true;
+		
 		int counter = 0;
 		while (counter * 0.01f < duration)
 		{
-			if (shakeRefreshing)
+			if (shakeRefreshing && !overwrite)
 			{
 				//get refreshed
-				counter = 0;
-				shakeRefreshing = false; 
+				stop = false;
+				break;
 			}
+			
 			yield return new WaitForSeconds(0.01f);
 			counter++;
 		}
-		shake = false;
+
+		if (stop) { shake = false; }
+		
 		yield return null;
 	}
 

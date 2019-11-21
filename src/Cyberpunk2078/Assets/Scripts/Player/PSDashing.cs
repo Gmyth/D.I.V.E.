@@ -24,7 +24,6 @@ public class PSDashing : PlayerState
     [SerializeField] private float f_JumpListenerInterval = 0.2f;
     
     [Header( "Common" )]
-
     [SerializeField] private float EnergyConsume = -70;
     
     [Header( "Transferable States" )]
@@ -98,8 +97,7 @@ public class PSDashing : PlayerState
                 rb2d.velocity = rb2d.velocity * 0.3f;
             }
             PhysicsInputHelper(h);
-            setAtkBox(false);
-            
+
         } else if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.time)
         {
             //cast listened jump right after dash finish
@@ -122,7 +120,6 @@ public class PSDashing : PlayerState
         RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,1.5f);
         if (hit1.collider != null)
         {
-            Debug.LogWarning("Prevented");
             if(hit1.transform.CompareTag("Ground")){
                 if( Mathf.Abs(hit1.normal.x) > 0f)rb2d.velocity = new Vector2(rb2d.velocity.x, 0 );
                 if( Mathf.Abs(hit1.normal.y) > 0f)rb2d.velocity =  new Vector2(0, rb2d.velocity.y );
@@ -169,7 +166,7 @@ public class PSDashing : PlayerState
         Apply = true;
         //Dash has been pressed, set all config first
         //After delay is over, dash perform
-        
+
         // Add Ghost trail
         if(!playerCharacter.IsInFeverMode) playerCharacter.SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
         lastDashSecond = Time.time;
@@ -221,9 +218,6 @@ public class PSDashing : PlayerState
         // Kill Trail
         if(!playerCharacter.IsInFeverMode) playerCharacter.SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
         
-        setAtkBox(false);
-        
-        
 
     }
 
@@ -245,7 +239,6 @@ public class PSDashing : PlayerState
         //get Mouse direction
         Vector3 direction = getDirectionCorrection(mouse.getAttackDirection(),GroundNormal());
         
-        Debug.Log(direction);
         
         var VFX = ObjectRecycler.Singleton.GetObject<SingleEffect>(6);
         VFX.transform.position = playerCharacter.transform.position +  direction * 0.5f;
@@ -278,15 +271,9 @@ public class PSDashing : PlayerState
         rb2d.AddForce(direction * dashForce * 200f * 1 / Time.timeScale);
         
         //Camera Tricks
-        CameraManager.Instance.Shaking(0.15f,0.15f);
+        CameraManager.Instance.Shaking(0.1f,0.10f);
         
-        setAtkBox(true);
     }
-
-    private void setAtkBox(bool value)
-    {
-        playerCharacter.dashAtkBox.SetActive(value);
-    }
-
+    
     
 }
