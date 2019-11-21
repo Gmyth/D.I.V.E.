@@ -87,6 +87,11 @@ public class GUIManager : MonoBehaviour
         return uiWindowsOpened[name];
     }
 
+    public T GetGUIWindow<T>(string name)
+    {
+        return GetGUIWindow(name).GetComponent<T>();
+    }
+
     public GUIWindow Open(string name, params object[] args)
     {
         return Open(name, UIMode.DEFAULT, args);

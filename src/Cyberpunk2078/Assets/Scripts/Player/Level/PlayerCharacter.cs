@@ -173,15 +173,9 @@ public class PlayerCharacter : Dummy
         StatisticModificationResult result = statistics.Modify(StatisticType.Fever, amount, 0, statistics[StatisticType.MaxFever]);
 
         if (result.currentValue >= 100)
-        {
-            IsInFeverMode = true;
-            SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
-        }
+            ActivateFeverMode();
         else if (result.currentValue <= 0)
-        {
-            IsInFeverMode = false;
-            SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
-        }
+            DeactivateFeverMode();
         
 
         return true;
@@ -195,21 +189,35 @@ public class PlayerCharacter : Dummy
             ActivateFeverMode();
         else if (result.currentValue <= 0)
             DeactivateFeverMode();
-        
+
         return true;
     }
 
     public void ActivateFeverMode()
     {
+        if (IsInFeverMode)
+            return;
+
+
         CameraManager.Instance.flashIn(7.5f,0.02f,0.10f,0.01f);
+
         IsInFeverMode = true;
         SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
+
+        GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").HighlightFeverBar();
+        GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").ShowText("Fever Mode!!!");
     }
 
     public void DeactivateFeverMode()
     {
+        if (!IsInFeverMode)
+            return;
+
+
         IsInFeverMode = false;
         SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
+
+        GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").DehighlightFeverBar();
     }
 
 

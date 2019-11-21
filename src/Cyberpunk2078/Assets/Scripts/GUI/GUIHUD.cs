@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,8 +9,18 @@ public class GUIHUD : GUIWindow
     [SerializeField] private Image hpBar;
     [SerializeField] private Image spBar;
     [SerializeField] private Image feverBar;
+    [SerializeField] private Text textArea;
+
+    [Header("Configuration")]
+    [SerializeField] private Color feverBlinkColor = Color.yellow;
+    [SerializeField] private float feverBlinkSpeed = 5;
+    [SerializeField] private float textDuration = 5;
+    [SerializeField] private float textSpeed = 0.02f;
 
     private PlayerCharacter player;
+
+    private Coroutine textCoroutine = null;
+    private Coroutine feverCoroutine = null;
 
 
     public override void OnOpen(params object[] args)
@@ -35,7 +44,34 @@ public class GUIHUD : GUIWindow
         player.OnStatisticChange.RemoveListener(HandleStatisticChange);
     }
 
-    
+
+    public void ShowText(string text)
+    {
+        if (textCoroutine != null)
+            StopCoroutine(textCoroutine);
+
+        textCoroutine = StartCoroutine(ShowText(text, textDuration));
+    }
+
+    public void HighlightFeverBar()
+    {
+        if (feverCoroutine != null)
+            StopCoroutine(feverCoroutine);
+        
+        feverCoroutine = StartCoroutine(BlinkFeverBar());
+    }
+
+    public void DehighlightFeverBar()
+    {
+        if (feverCoroutine != null)
+        {
+            StopCoroutine(feverCoroutine);
+
+            feverBar.color = Color.white;
+        }
+    }
+
+
     private void UpdateHp(int value)
     {
         hpBar.fillAmount = Mathf.Lerp(0.5f, 1, value / player[StatisticType.MaxHp]);
@@ -95,5 +131,46 @@ public class GUIHUD : GUIWindow
                 UpdateFever(Mathf.RoundToInt(currentValue));
                 break;
         }
+    }
+
+
+    private IEnumerator BlinkFeverBar()
+    {
+        float t = Time.time;
+
+
+        while (true)
+        {
+            feverBar.color = Color.Lerp(Color.white, feverBlinkColor, (Mathf.Sin(feverBlinkSpeed * (Time.time - t)) + 1) / 2);
+
+            yield return null;
+        }
+    }
+
+    private IEnumerator ShowText(string text, float waitTime)
+    {
+        float t = Time.time;
+
+        int i = 0;
+        while (i < text.Length)
+        {
+            while (i < (Time.time - t) / textSpeed && i < text.Length)
+            {
+                textArea.text += text[i];
+
+                ++i;
+            }
+
+            yield return null;
+        }
+
+
+        yield return new WaitForSeconds(waitTime);
+
+
+        textArea.text = "";
+
+
+        yield break;
     }
 }
