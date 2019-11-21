@@ -10,6 +10,8 @@ public class SimpleLockedDoor : MonoBehaviour
 
     [SerializeField] private List<GameObject> dots;
 
+    public GameObject OpenedDoor;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +19,8 @@ public class SimpleLockedDoor : MonoBehaviour
         {
             dots.Add(transform.GetChild(i).gameObject);
         }
+
+        OpenedDoor.SetActive(false);
     }
 
     // Update is called once per frame
@@ -44,6 +48,8 @@ public class SimpleLockedDoor : MonoBehaviour
     public void Unlock()
     {
         gameObject.SetActive(false);
+        OpenedDoor.SetActive(true);
+        //CameraManager.Instance.Shaking(0.6f, 1000000f);
     }
 
 }
