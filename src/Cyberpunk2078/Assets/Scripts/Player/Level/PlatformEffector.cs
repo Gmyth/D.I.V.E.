@@ -33,7 +33,7 @@ public class PlatformEffector : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.S))
+        if (Input.GetKeyUp(KeyCode.S) || Input.GetAxis("VerticalJoyStick") >= 0)
         {
             waitTime = initialWaitTime;
             if (PlayerCharacter.Singleton.State.isGrounded())
@@ -42,7 +42,7 @@ public class PlatformEffector : MonoBehaviour
                 movedDown = true;
             }
         }
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S) || Input.GetAxis("VerticalJoyStick") < -0.7f)
         {
             if (occupied)
             {

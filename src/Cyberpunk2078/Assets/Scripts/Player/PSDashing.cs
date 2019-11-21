@@ -112,7 +112,6 @@ public class PSDashing : PlayerState
             // the dash has already ended
             // ok for move input
             PhysicsInputHelper(h);
-            setAtkBox(false);
             
             //enable Collision
             playerCharacter.transform.right = Vector3.right;
