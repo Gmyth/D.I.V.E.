@@ -19,6 +19,7 @@ public class PlatformEffector : MonoBehaviour
     private float waitTime;
     public float initialWaitTime;
     public bool occupied;
+    private bool isController;
 
     // Start is called before the first frame update
     private void Start()
@@ -33,7 +34,7 @@ public class PlatformEffector : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.S) || Input.GetAxis("VerticalJoyStick") >= 0)
+        if (Input.GetKeyUp(KeyCode.S) && !isController)
         {
             waitTime = initialWaitTime;
             if (PlayerCharacter.Singleton.State.isGrounded())
@@ -42,7 +43,7 @@ public class PlatformEffector : MonoBehaviour
                 movedDown = true;
             }
         }
-        if (Input.GetKey(KeyCode.S) || Input.GetAxis("VerticalJoyStick") < -0.7f)
+        if (Input.GetKey(KeyCode.S))
         {
             if (occupied)
             {
@@ -59,6 +60,35 @@ public class PlatformEffector : MonoBehaviour
                     waitTime -= Time.deltaTime;
                 }
             }       
+        }
+
+        if (Input.GetAxis("VerticalJoyStick") >= 0 && isController)
+        {
+            waitTime = initialWaitTime;
+            if (PlayerCharacter.Singleton.State.isGrounded())
+            {
+                movedUp = true;
+                movedDown = true;
+            }
+        }
+        if (Input.GetAxis("VerticalJoyStick") < -0.7f)
+        {
+            if (occupied)
+            {
+                if (waitTime <= 0)
+                {
+                    effector.rotationalOffset = 180;
+                    PlayerCharacter.Singleton.GetComponent<Rigidbody2D>().gravityScale = 3;
+                    movedUp = false;
+                    movedDown = false;
+                    waitTime = initialWaitTime;
+                }
+                else
+                {
+                    isController = true;
+                    waitTime -= Time.deltaTime;
+                }
+            }
         }
 
         //Floating Platform

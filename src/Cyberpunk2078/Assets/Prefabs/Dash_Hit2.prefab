@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &454271246
 Transform:
   m_ObjectHideFlags: 0
@@ -176,9 +176,11 @@ GameObject:
   - component: {fileID: 310886306066041263}
   - component: {fileID: 8259730487943943506}
   - component: {fileID: 7847185314864667999}
+  - component: {fileID: 1650999984910538425}
+  - component: {fileID: 7893521407897966715}
   m_Layer: 0
   m_Name: Dash_Hit2
-  m_TagString: Untagged
+  m_TagString: PlayerAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -303,3 +305,44 @@ MonoBehaviour:
   alphaFluctuationOverride: 0.113
   Occupied: 1
   alphaFluctuationDivisor: 15
+--- !u!114 &1650999984910538425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3512452609889147219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25ed098300f2271409d98a3762211eeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  effectList: 0100000002000000
+  isFriendly: 1
+--- !u!61 &7893521407897966715
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3512452609889147219}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.594154, y: 0.29370764}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.5, y: 0.64}
+    newSize: {x: 1.5, y: 0.64}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.3292303, y: 0.57258457}
+  m_EdgeRadius: 0

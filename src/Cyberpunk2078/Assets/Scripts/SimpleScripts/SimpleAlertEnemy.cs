@@ -5,7 +5,9 @@ using UnityEngine;
 public class SimpleAlertEnemy : MonoBehaviour
 {
 
-    private SimpleAlertDoor alertDoor;
+    private List<SimpleAlertDoor> alertDoors = new List<SimpleAlertDoor>();
+
+    private bool reviveFlag = false;
 
     // Start is called before the first frame update
     void Start()
@@ -21,17 +23,24 @@ public class SimpleAlertEnemy : MonoBehaviour
 
     public void BindAlertDoor(SimpleAlertDoor door)
     {
-        alertDoor = door;
+        alertDoors.Add(door);
     }
 
     private void OnEnable()
     {
-        alertDoor.ApplyEnemyCountChange(1);
+        if (reviveFlag)
+        {
+            for (int i = 0; i < alertDoors.Count; i++)
+                alertDoors[i].ApplyEnemyCountChange(1);
+            reviveFlag = false;
+        }
     }
 
     private void OnDisable() 
     {
-        alertDoor.ApplyEnemyCountChange(-1);
+        for (int i = 0; i < alertDoors.Count; i++)
+            alertDoors[i].ApplyEnemyCountChange(-1);
+        reviveFlag = true;
     }
 
 }

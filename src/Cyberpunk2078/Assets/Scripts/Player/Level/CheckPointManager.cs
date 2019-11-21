@@ -95,6 +95,8 @@ public class CheckPointManager : MonoBehaviour
                 objects[i].GetComponent<SimpleEventTrigger>().gameObject.SetActive(true);
             }
         }
+
+        objects.Clear();
     }
 
     IEnumerator BlackScreen()
