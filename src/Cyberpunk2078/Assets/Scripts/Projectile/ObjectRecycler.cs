@@ -7,8 +7,8 @@ public class ObjectRecycler : MonoBehaviour
     public static ObjectRecycler Singleton { get; private set; }
 
     private static Vector3 recyclePosition = Vector3.one * -10000;
-
-
+    
+    
     [SerializeField] private Recyclable[] prefabs;
 
     private Stack<Recyclable>[] recycledObjects;
@@ -73,7 +73,8 @@ public class ObjectRecycler : MonoBehaviour
         if (!Singleton)
         {
             Singleton = this;
-            DontDestroyOnLoad(gameObject);
+            //TEMP: Reload the scene will have issue
+            //DontDestroyOnLoad(gameObject);
 
             recycledObjects = new Stack<Recyclable>[prefabs.Length];
 

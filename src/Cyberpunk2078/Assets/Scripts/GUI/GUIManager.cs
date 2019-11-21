@@ -196,8 +196,9 @@ public class GUIManager : MonoBehaviour
         if (!Singleton)
         {
             Singleton = this;
-
-            DontDestroyOnLoad(gameObject);
+            
+            // TEMP: Reload the scene will have issue
+            //DontDestroyOnLoad(gameObject);
         }
         else if (Singleton != this)
             Destroy(gameObject);
