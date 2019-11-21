@@ -34,6 +34,7 @@ public class SimpleLockedDoor : MonoBehaviour
     public void DeleteLocker()
     {
         lockerCount--;
+        CameraManager.Instance.Shaking(0.05f,0.1f);
         dots[lockerCount].SetActive(false);
         if (lockerCount <= 0)
         {
@@ -43,6 +44,7 @@ public class SimpleLockedDoor : MonoBehaviour
 
     public void Unlock()
     {
+        CameraManager.Instance.Shaking(0.05f,0.7f, true);
         gameObject.SetActive(false);
     }
 
