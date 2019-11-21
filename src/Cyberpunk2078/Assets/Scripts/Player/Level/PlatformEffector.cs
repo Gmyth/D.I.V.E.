@@ -42,7 +42,7 @@ public class PlatformEffector : MonoBehaviour
                 movedDown = true;
             }
         }
-        if (Input.GetKey(KeyCode.S) || Input.GetAxis("VerticalJoyStick") < 0)
+        if (Input.GetKey(KeyCode.S) || Input.GetAxis("VerticalJoyStick") < -0.7f)
         {
             if (occupied)
             {
