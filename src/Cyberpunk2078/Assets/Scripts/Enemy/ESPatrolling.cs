@@ -97,7 +97,9 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
 
         if (currentPath != null)
         {
-            float distance = Vector2.Distance(currentPath.vectorPath[indexWayPoint], enemyPosition);
+            Vector3 wayPoint = currentPath.vectorPath[indexWayPoint];
+
+            float distance = enemy.Data.Type == EnemyType.Ground ? Mathf.Abs(wayPoint.x - enemyPosition.x) : Vector2.Distance(wayPoint, enemyPosition);
 
             if (distance < 0.5f)
                 ++indexWayPoint;
