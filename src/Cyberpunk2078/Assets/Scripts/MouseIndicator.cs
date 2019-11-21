@@ -8,7 +8,9 @@ public class MouseIndicator : MonoBehaviour
     private GameObject player;
     private List<Vector2> directionRef;
     private float timeCount = 0.0f;
+    private float deadZone = 0.2f;
     private Vector2 controllerDir;
+    private float currTimeDead;
     void Start()
     {
         player  = GameObject.FindGameObjectWithTag("Player");
@@ -21,7 +23,24 @@ public class MouseIndicator : MonoBehaviour
         var mousePosInScreen = Input.mousePosition;
         if (Mathf.Abs(Input.GetAxis("HorizontalJoyStick")) > 0 || Mathf.Abs(Input.GetAxis("VerticalJoyStick")) > 0)
         {
-            controllerDir = new Vector3(Input.GetAxis("HorizontalJoyStick"),Input.GetAxis("VerticalJoyStick"));
+            var h = Input.GetAxis("HorizontalJoyStick");
+            var v = Input.GetAxis("VerticalJoyStick");
+            controllerDir = new Vector3(Input.GetAxis("HorizontalJoyStick"),Input.GetAxis("VerticalJoyStick")).normalized;
+//            if(h != 0 || v != 0)
+//            {
+//                    // If we're coming from a diagonal direction, wait for a bit
+//                    if(Mathf.Abs(controllerDir.x) > 0 && Mathf.Abs(controllerDir.y) > 0 && currTimeDead <= 0)
+//                        currTimeDead = 0.05f;
+//                    if(currTimeDead > 0)
+//                        currTimeDead -= Time.deltaTime;
+//                    // If we're done waiting, set the direction
+//                    if(currTimeDead <= 0)
+//                    {
+//                        controllerDir.x = h;
+//                        controllerDir.y = v;
+//                        controllerDir.Normalize();
+//                    }
+//            }
         }
         mousePosInScreen.z = 10; // select distance = 10 units from the camera
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(mousePosInScreen);
