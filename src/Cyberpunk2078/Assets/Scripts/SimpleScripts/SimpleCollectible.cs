@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class SimpleCollectible : MonoBehaviour
 {
+
+    public Image image;
     // Start is called before the first frame update
     [SerializeField] private int index;
 
@@ -20,7 +24,8 @@ public class SimpleCollectible : MonoBehaviour
 
     public void Collect()
     {
-        SimpleTutorialManager.Instance.PickUpCollectible(index);
+        //SimpleTutorialManager.Instance.PickUpCollectible(index);
+        image.color = Color.white;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

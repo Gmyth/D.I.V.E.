@@ -67,7 +67,6 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
 
     public void PickUpCollectible(int index) {
         switch (index) {
-
             case 1:
                 c1.GetComponent<Image>().color = Color.white;
                 break;
