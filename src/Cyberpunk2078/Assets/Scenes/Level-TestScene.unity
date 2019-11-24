@@ -11644,6 +11644,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e009e455c50b0949824cc99eef2910a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 1792609109}
   index: 3
 --- !u!61 &220666741
 BoxCollider2D:
@@ -39196,6 +39197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e009e455c50b0949824cc99eef2910a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 1052876052}
   index: 2
 --- !u!61 &718207506
 BoxCollider2D:
@@ -41230,6 +41232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e009e455c50b0949824cc99eef2910a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 622751331}
   index: 1
 --- !u!61 &779935142
 BoxCollider2D:
@@ -58219,12 +58222,12 @@ PrefabInstance:
       propertyPath: thruster
       value: 
       objectReference: {fileID: 1176232642}
-    - target: {fileID: 8849360307540039034, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
         type: 3}
       propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+    - target: {fileID: 8849360307540039034, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
         type: 3}
       propertyPath: m_FlipX
       value: 0
@@ -90833,6 +90836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e009e455c50b0949824cc99eef2910a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 569509882}
   index: 4
 --- !u!61 &1643100662
 BoxCollider2D:
@@ -98367,7 +98371,7 @@ PrefabInstance:
       propertyPath: patrolRoute.wayPoints.Array.data[3].y
       value: 4.5925956
       objectReference: {fileID: 0}
-    - target: {fileID: 2675494265900334673, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
         type: 3}
       propertyPath: m_FlipX
       value: 0
@@ -98377,7 +98381,7 @@ PrefabInstance:
       propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+    - target: {fileID: 2675494265900334673, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
         type: 3}
       propertyPath: m_FlipX
       value: 0
