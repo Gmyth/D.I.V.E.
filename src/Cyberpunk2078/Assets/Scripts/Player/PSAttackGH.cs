@@ -8,19 +8,20 @@ public class PSAttackGH: PlayerState
 {
     [Header( "Normal" )]
     [SerializeField] private float n_pushForce = 2f;
-    [SerializeField] private float n_actionTime = 0.3f;
-    [SerializeField] private float n_recoveryTime = 0.2f;
+    [SerializeField] private float n_actionTime = 0.25f;
+    [SerializeField] private float n_recoveryTime = 0.10f;
     
     [Header( "Fever" )]
-    [SerializeField] private float f_pushForce = 2f;
-    [SerializeField] private float f_actionTime = 0.3f;
-    [SerializeField] private float f_recoveryTime = 0.2f;
+    [SerializeField] private float f_pushForce = 3f;
+    [SerializeField] private float f_actionTime = 0.25f;
+    [SerializeField] private float f_recoveryTime = 0.05f;
     
     [Header( "Transferable States" )]
     [SerializeField] private int indexPSIdle;
     [SerializeField] private int indexPSMoving;
     [SerializeField] private int indexPSAirborne;
     [SerializeField] private int indexPSDashing;
+    [SerializeField] private int indexPSJumping1;
     [SerializeField] private float EnergyConsume = -10; 
     
     [SerializeField] private GameObject SplashFX; 
@@ -46,7 +47,6 @@ public class PSAttackGH: PlayerState
         float Vy = rb2d.velocity.y;
         PhysicsInputHelper(h);
 
-        
         RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,0.8f);
         if (hit1.collider != null && hit1.transform.CompareTag("Ground"))
         {
@@ -75,6 +75,9 @@ public class PSAttackGH: PlayerState
             {
                 Player.CurrentPlayer.triggerReady = false;
                 return indexPSDashing;
+            }else if (Input.GetButtonDown("Jump") && grounded)
+            {
+                return indexPSJumping1;
             }
                 
         }
@@ -133,7 +136,7 @@ public class PSAttackGH: PlayerState
         playerCharacter.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         playerCharacter.GetComponent<Rigidbody2D>().AddForce(direction * pushForce * 100f);
         playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipX = direction.x < 0;
-        Destroy(obj,0.3f);
+        Destroy(obj,0.2f);
         //kill gravity
 //        rb2d.gravityScale = 0;
 //        defaultDrag = rb2d.drag;
