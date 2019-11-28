@@ -21,13 +21,13 @@ public class SimpleChargePoint : MonoBehaviour
         
     }
 
-    public void ChargeEnergy() 
+    public void OnEnergyCharge() 
     {
         PlayerCharacter.Singleton.AddOverLoadEnergy(1);
-        Drain();
+        OnDrain();
     }
 
-    public void Drain()
+    public void OnDrain()
     {
         isReady = false;
         GetComponent<SpriteRenderer>().color = Color.black;
@@ -36,11 +36,15 @@ public class SimpleChargePoint : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
+        Debug.Log("Charge point collide with " + other.gameObject.name);
         if (other.tag == "Player" || other.tag == "PlayerAttack")
         {
             if (isReady)
             {
-                ChargeEnergy();
+                PlayerCharacter playerCharacter = other.GetComponent<PlayerCharacter>();
+
+                if (playerCharacter[StatisticType.Osp] <= 0)
+                    OnEnergyCharge();
             }
         }
     }
@@ -51,32 +55,14 @@ public class SimpleChargePoint : MonoBehaviour
         {
             if (isReady)
             {
-                ChargeEnergy();
+                PlayerCharacter playerCharacter = other.GetComponent<PlayerCharacter>();
+
+                if (playerCharacter[StatisticType.Osp] <= 0)
+                    OnEnergyCharge();
             }
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.transform.tag == "Player" || other.transform.tag == "PlayerAttack")
-        {
-            if (isReady)
-            {
-                ChargeEnergy();
-            }
-        }
-    }
-
-    private void OnCollisionStay2D(Collision2D other)
-    {
-        if (other.transform.tag == "Player" || other.transform.tag == "PlayerAttack")
-        {
-            if (isReady)
-            {
-                ChargeEnergy();
-            }
-        }
-    }
 
 
     private IEnumerator Recover()

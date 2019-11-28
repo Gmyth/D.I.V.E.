@@ -468,6 +468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07a5e7d299bb2824380ab99ef9ba791c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUsed: 0
 --- !u!212 &24978939
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -20159,6 +20160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07a5e7d299bb2824380ab99ef9ba791c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUsed: 0
 --- !u!212 &691377199
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -43542,6 +43544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07a5e7d299bb2824380ab99ef9ba791c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUsed: 0
 --- !u!212 &907732926
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -46695,6 +46698,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07a5e7d299bb2824380ab99ef9ba791c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUsed: 0
 --- !u!61 &1053819994
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -54781,6 +54785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07a5e7d299bb2824380ab99ef9ba791c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUsed: 0
 --- !u!212 &1248880699
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -55806,6 +55811,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07a5e7d299bb2824380ab99ef9ba791c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUsed: 0
 --- !u!61 &1300866327
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -57370,6 +57376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07a5e7d299bb2824380ab99ef9ba791c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUsed: 0
 --- !u!212 &1376915193
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -58641,6 +58648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07a5e7d299bb2824380ab99ef9ba791c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUsed: 0
 --- !u!61 &1439278577
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -89539,7 +89547,7 @@ GameObject:
   - component: {fileID: 1552041595}
   m_Layer: 11
   m_Name: SpriteHolder
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -89901,6 +89909,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07a5e7d299bb2824380ab99ef9ba791c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUsed: 0
 --- !u!61 &1587655867
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -91796,6 +91805,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07a5e7d299bb2824380ab99ef9ba791c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUsed: 0
 --- !u!212 &1681878238
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -92831,7 +92841,7 @@ GameObject:
   - component: {fileID: 1736826692}
   m_Layer: 0
   m_Name: PlatformDetector
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99383,6 +99393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07a5e7d299bb2824380ab99ef9ba791c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUsed: 0
 --- !u!212 &1988142548
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -103244,6 +103255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07a5e7d299bb2824380ab99ef9ba791c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUsed: 0
 --- !u!61 &2126918044
 BoxCollider2D:
   m_ObjectHideFlags: 0
