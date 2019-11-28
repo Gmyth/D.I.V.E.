@@ -48,7 +48,7 @@ public class HitBox : MonoBehaviour
 
                 if (!enemy.isEvading && !objectsHit.Contains(id))
                 {
-                    hit.source?.OnAttack?.Invoke();
+                    hit.source.OnAttack.Invoke();
                     enemy.OnHit?.Invoke(hit);
 
                     enemy.ApplyDamage(hit.damage);
@@ -87,7 +87,7 @@ public class HitBox : MonoBehaviour
 
             if (player.State.Name != "Dash" && !objectsHit.Contains(id))
             {
-                hit.source?.OnAttack?.Invoke();
+                hit.source.OnAttack.Invoke();
                 player.OnHit?.Invoke(hit);
 
 

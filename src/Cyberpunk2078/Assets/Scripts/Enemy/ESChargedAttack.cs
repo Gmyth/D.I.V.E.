@@ -14,7 +14,7 @@ public abstract class ESChargedAttack<T> : ESAttack<T> where T : Enemy
 
     protected Animator animator;
 
-    protected float t;
+    protected float t_charge;
 
 
     public override void Initialize(T enemy)
@@ -28,7 +28,7 @@ public abstract class ESChargedAttack<T> : ESAttack<T> where T : Enemy
     {
         float currentTime = Time.time;
 
-        if (currentTime >= t)
+        if (currentTime >= t_charge)
             return Attack(currentTime);
         else if (stopChargingOnTargetLoss && IsPlayerInSight(enemy.currentTarget, enemy[StatisticType.SightRange]))
             return stateIndex_alert;
@@ -42,7 +42,7 @@ public abstract class ESChargedAttack<T> : ESAttack<T> where T : Enemy
         base.OnStateEnter(previousState);
 
 
-        t = Time.time + chargeTime;
+        t_charge = Time.time + chargeTime;
 
 
         animator.Play(chargeAnimation);
