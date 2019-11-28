@@ -103,8 +103,8 @@ GameObject:
   - component: {fileID: 310886306066041263}
   - component: {fileID: 8259730487943943506}
   - component: {fileID: 7847185314864667999}
-  - component: {fileID: 1650999984910538425}
   - component: {fileID: 7893521407897966715}
+  - component: {fileID: 4860359914202827150}
   m_Layer: 16
   m_Name: Dash_Hit2
   m_TagString: PlayerHitBox
@@ -231,21 +231,6 @@ MonoBehaviour:
   alphaFluctuationOverride: 0.113
   Occupied: 1
   alphaFluctuationDivisor: 15
---- !u!114 &1650999984910538425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3512452609889147219}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25ed098300f2271409d98a3762211eeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 1
-  effectList: 0100000002000000
-  isFriendly: 1
 --- !u!61 &7893521407897966715
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -272,3 +257,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.0773078, y: 0.3779251}
   m_EdgeRadius: 0
+--- !u!114 &4860359914202827150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3512452609889147219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe89cc77c65cf9c48927595fc1db375e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hit:
+    source: {fileID: 0}
+    damage: 1
+    knockback: 0
+  isFriendly: 1
+  effects: 0100000002000000
