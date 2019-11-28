@@ -9,6 +9,7 @@ public class SimpleChargePoint : MonoBehaviour
 
     private Color chargedColor;
     
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,39 +32,56 @@ public class SimpleChargePoint : MonoBehaviour
     {
         isReady = false;
         GetComponent<SpriteRenderer>().color = Color.black;
+
         StartCoroutine(Recover());
     }
 
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        Debug.Log("Charge point collide with " + other.gameObject.name);
-        if (other.tag == "Player" || other.tag == "PlayerAttack")
-        {
-            if (isReady)
-            {
-                PlayerCharacter playerCharacter = other.GetComponent<PlayerCharacter>();
 
-                if (playerCharacter[StatisticType.Osp] <= 0)
-                    OnEnergyCharge();
-            }
-        }
-    }
+    //private void OnTriggerStay2D(Collider2D other)
+    //{
+    //    Debug.Log("Charge point collide with " + other.gameObject.name);
+
+    //    if (isReady)
+    //    {
+    //        if (other.tag == "Player")
+    //        {
+    //            PlayerCharacter playerCharacter = other.GetComponent<PlayerCharacter>();
+
+    //            if (playerCharacter[StatisticType.Osp] <= 0)
+    //                OnEnergyCharge();
+    //        }
+    //        else if (other.tag == "PlayerHitBox")
+    //        {
+    //            PlayerCharacter playerCharacter = PlayerCharacter.Singleton;
+
+    //            if (playerCharacter[StatisticType.Osp] <= 0)
+    //                OnEnergyCharge();
+    //        }
+    //    }
+    //}
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player" || other.tag == "PlayerAttack")
+        Debug.Log("Charge point collide with " + other.gameObject.name);
+
+        if (isReady)
         {
-            if (isReady)
+            if (other.tag == "Player")
             {
                 PlayerCharacter playerCharacter = other.GetComponent<PlayerCharacter>();
 
                 if (playerCharacter[StatisticType.Osp] <= 0)
                     OnEnergyCharge();
             }
+            else if (other.tag == "PlayerHitBox")
+            {
+                PlayerCharacter playerCharacter = PlayerCharacter.Singleton;
+
+                if (playerCharacter[StatisticType.Osp] <= 0)
+                    OnEnergyCharge();
+            }
         }
     }
-
-
 
     private IEnumerator Recover()
     {
@@ -71,5 +89,4 @@ public class SimpleChargePoint : MonoBehaviour
         isReady = true;
         GetComponent<SpriteRenderer>().color = chargedColor;
     }
-
 }

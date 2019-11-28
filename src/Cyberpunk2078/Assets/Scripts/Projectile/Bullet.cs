@@ -81,7 +81,7 @@ public class Bullet : Recyclable
                 Die();   
             }
         }
-        else if (other.tag == "PlayerAttack")
+        else if (other.tag == "PlayerHitBox")
         {
             if (other.name != "DashAtkBox")
             {

@@ -105,9 +105,9 @@ GameObject:
   - component: {fileID: 7847185314864667999}
   - component: {fileID: 1650999984910538425}
   - component: {fileID: 7893521407897966715}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Dash_Hit2
-  m_TagString: PlayerAttack
+  m_TagString: PlayerHitBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

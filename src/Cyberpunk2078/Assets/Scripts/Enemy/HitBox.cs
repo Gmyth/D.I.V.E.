@@ -4,6 +4,7 @@ using UnityEngine;
 
 [System.Serializable] public struct Hit
 {
+    public Dummy source;
     public float damage;
     public float knockback;
 }

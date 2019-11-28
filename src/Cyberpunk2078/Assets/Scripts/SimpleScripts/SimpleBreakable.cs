@@ -24,7 +24,7 @@ public class SimpleBreakable : MonoBehaviour
 
     //private void OnTriggerEnter2D(Collider2D other)
     //{
-    //    if (other.gameObject.tag == "PlayerAttack")
+    //    if (other.gameObject.tag == "PlayerHitBox")
     //    {
     //        gameObject.SetActive(false);
     //    }
@@ -32,7 +32,7 @@ public class SimpleBreakable : MonoBehaviour
 
     //private void OnTriggerStay2D(Collider2D other)
     //{
-    //    if (other.gameObject.tag == "PlayerAttack")
+    //    if (other.gameObject.tag == "PlayerHitBox")
     //    {
     //        gameObject.SetActive(false);
     //    }
