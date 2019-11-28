@@ -55,17 +55,17 @@ public class HitBox : MonoBehaviour
                     objectsHit.Add(id);
 
 
-                    SingleEffect VFX = CreateRandomEffect(enemy.transform);
+                    CreateRandomEffect(enemy.transform);
 
                     var trail = ObjectRecycler.Singleton.GetObject<SingleEffect>(8);
-                    trail.transform.position = VFX.transform.position;
+                    trail.transform.position = enemy.transform.position;
                     trail.setTarget(other.transform);
                     trail.transform.right = transform.right;
                     trail.transform.localScale = new Vector3(7, 1, 1);
                     trail.gameObject.SetActive(true);
 
                     var trail1 = ObjectRecycler.Singleton.GetObject<SingleEffect>(8);
-                    trail1.transform.position = VFX.transform.position;
+                    trail1.transform.position = enemy.transform.position;
                     trail1.setTarget(other.transform);
                     trail1.transform.right = -transform.right;
                     trail1.transform.localScale = new Vector3(7, 1, 1);

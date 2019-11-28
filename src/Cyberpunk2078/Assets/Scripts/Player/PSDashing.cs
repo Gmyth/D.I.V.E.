@@ -240,14 +240,14 @@ public class PSDashing : PlayerState
         Vector3 direction = getDirectionCorrection(mouse.getAttackDirection(),GroundNormal());
         
         
-        var VFX = ObjectRecycler.Singleton.GetObject<SingleEffect>(6);
-        VFX.transform.position = playerCharacter.transform.position +  direction * 0.5f;
-        VFX.setTarget(playerCharacter.transform);
-        
-        VFX.transform.right = direction;
-        VFX.transform.localScale = new Vector3(4,4,1);
-        VFX.gameObject.SetActive(true);
-        VFX.GetComponent<GhostSprites>().Occupied = true;
+        var attack = ObjectRecycler.Singleton.GetObject<SingleEffect>(6);
+        attack.transform.position = playerCharacter.transform.position +  direction * 0.5f;
+        attack.setTarget(playerCharacter.transform);
+        attack.transform.right = direction;
+        attack.transform.localScale = new Vector3(4,4,1);
+        attack.gameObject.SetActive(true);
+        attack.GetComponent<GhostSprites>().Occupied = true;
+        attack.GetComponent<HitBox>().hit.source = playerCharacter;
         
         var Dust = ObjectRecycler.Singleton.GetObject<SingleEffect>(9);
         Dust.transform.position = playerCharacter.transform.position +  direction * 0.5f;
