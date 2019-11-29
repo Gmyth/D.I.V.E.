@@ -36,7 +36,7 @@ public class Drone : Enemy, IPatroller
 
     public Vector3 GetDeviatedBulletDirection(float minAngle, float maxAngle)
     {
-        return ProjectileUtility.GetDeviatedBulletDirection(Mathf.Sign(-transform.localScale.x) * gun.transform.right, minAngle, maxAngle, aimDeviation);
+        return ProjectileUtility.GetDeviatedBulletDirection(Mathf.Sign(transform.localScale.x) * gun.transform.right, minAngle, maxAngle, aimDeviation);
     }
 
     public void Aim(Vector3 targetPosition)
@@ -45,7 +45,7 @@ public class Drone : Enemy, IPatroller
         //    return;
 
 
-        Vector3 direction = Mathf.Sign(transform.localScale.x) * (transform.position - targetPosition).normalized;
+        Vector3 direction = Mathf.Sign(transform.localScale.x) * (targetPosition - transform.position).normalized;
 
 
         float angle = Vector3.Angle(gun.transform.right, direction);
