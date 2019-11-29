@@ -17,10 +17,11 @@ public class PSClimb : PlayerState
     [SerializeField] private int indexPSJumping1;
     [SerializeField] private int indexPSDashing;
 
-
     private float t0;
     private float timeInterval = 0.5f;
     private Vector2 climbBoundary;
+
+
     public override int Update()
     {
         var v = Input.GetAxis("VerticalJoyStick")!=0? Input.GetAxis("VerticalJoyStick"): Input.GetAxis("Vertical");

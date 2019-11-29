@@ -3,11 +3,10 @@
 
 public abstract class ESChargedAttack<T> : ESAttack<T> where T : Enemy
 {
+    [Header("Charge Configuration")]
     [SerializeField] protected float chargeTime = 1;
     [SerializeField] protected bool stopChargingOnTargetLoss = false;
-
-    [Header("Animation")]
-    [SerializeField] protected string chargeAnimation = "";
+    [SerializeField] protected string animation_charging = "";
 
     [Header("Connected States")]
     [SerializeField] protected int stateIndex_alert = -1;
@@ -37,6 +36,7 @@ public abstract class ESChargedAttack<T> : ESAttack<T> where T : Enemy
         return Index;
     }
 
+
     public override void OnStateEnter(State previousState)
     {
         base.OnStateEnter(previousState);
@@ -45,7 +45,7 @@ public abstract class ESChargedAttack<T> : ESAttack<T> where T : Enemy
         t_charge = Time.time + chargeTime;
 
 
-        animator.Play(chargeAnimation);
+        animator.Play(animation_charging);
     }
 
 
