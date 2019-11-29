@@ -40,7 +40,7 @@ public class L2Cleaner : Enemy, IPatroller
         }
         
         gameObject.SetActive(false);
-        CheckPointManager.Instance?.EnterResetPool(gameObject);
+        CheckPointManager.Instance?.Dead(gameObject);
     }
 
 

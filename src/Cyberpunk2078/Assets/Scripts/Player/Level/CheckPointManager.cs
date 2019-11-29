@@ -8,51 +8,54 @@ public class CheckPointManager : MonoBehaviour
 {
     public static CheckPointManager Instance { get; private set; } = null;
 
-    public List<GameObject> checkPoints;
-    public GameObject checkPointPrefab;
-    public Transform checkPointFolder;
+    private List<GameObject> checkPoints;
 
     private Transform playerLastCheckPoint;
-    private GameObject player;
 
-    public List<GameObject> enemy;
-    public List<GameObject> enemyPool;
+    public GameObject checkPointPrefab;
 
-    //Dummy reference
+    public Transform checkPointFolder;
+
+    /// <summary>
+    /// Enemies needed to be reset and restore position
+    /// </summary>
+    public List<GameObject> killedEnemies;
+
+    /// <summary>
+    /// Dummy reference
+    /// </summary>
     private GameObject[] dummy;
 
-    //Objects needed to be restored
+    /// <summary>
+    /// //Objects needed to be restored
+    /// </summary>
     public List<GameObject> objects;
 
+    /// <summary>
+    /// Blackscreen Reference
+    /// </summary>
     public GameObject blackScreen;  
    
     void Awake()
     {
         Instance = this;
-        enemy = new List<GameObject>();
-        enemyPool = new List<GameObject>();       
+        killedEnemies = new List<GameObject>();       
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        //Get all dummies
         dummy = GameObject.FindGameObjectsWithTag("Dummy");
-        //triggers = GameObject.FindGameObjectsWithTag("Triggers");
-        //Debug.Log("Dummy Length:" + dummy.Length);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    //Editor tool
     public void SetCheckPoint()
     {
         var obj = Instantiate(checkPointPrefab, gameObject.transform.position, Quaternion.identity, checkPointFolder);
         checkPoints.Add(obj);
     }
-
+    //Editor tool
     public void ClearCheckPoint()
     {
         for(int i=0;i<checkPoints.Count;i++)
@@ -62,32 +65,27 @@ public class CheckPointManager : MonoBehaviour
         checkPoints.Clear();
     }
 
-    public void SetLastCheckPointTransform(Transform t)
+    public void RecordPosition(Transform t)
     {
         playerLastCheckPoint = t;
 
-        enemyPool.Clear();
-
+        //Clear when reach new checkpoint
+        killedEnemies.Clear();
         objects.Clear();
 
         for(int i = 0; i < dummy.Length; i ++)
         {
-            //put dummy into enemy
-            if (!enemy.Contains(dummy[i]))
-            {
-                enemy.Add(dummy[i]);
-            }
-
             //record position
             dummy[i].GetComponent<Enemy>().lastCheckPointTransform = dummy[i].gameObject.transform.position;
-
         }
     }
 
     public void RestoreCheckPoint()
     {
+        //Restore enemies position
         StartCoroutine("BlackScreen");
 
+        //Restore objects
         for(int i = 0; i < objects.Count; ++i)
         {
             if (objects[i].GetComponent<SimpleEventTrigger>() != null)
@@ -95,7 +93,6 @@ public class CheckPointManager : MonoBehaviour
                 objects[i].GetComponent<SimpleEventTrigger>().gameObject.SetActive(true);
             }
         }
-
         objects.Clear();
     }
 
@@ -103,7 +100,7 @@ public class CheckPointManager : MonoBehaviour
     {
         Image image = blackScreen.GetComponent<Image>();
 
-
+        //Black Screen Fade in
         float a = 0;
 
         while (a < 1)
@@ -113,21 +110,25 @@ public class CheckPointManager : MonoBehaviour
             yield return null;
         }
 
+        //Restore player position
         var player = PlayerCharacter.Singleton.gameObject;
         player.transform.position = playerLastCheckPoint.position;
        
-        for (int i = 0; i < enemyPool.Count; i++)
+        //Enable kill enemies
+        for (int i = 0; i < killedEnemies.Count; i++)
         {
-            enemyPool[i].SetActive(true);
+            killedEnemies[i].SetActive(true);
         }
 
-        for (int i = 0; i < enemy.Count; i++)
+        //Restore all enemies position
+        for (int i = 0; i < dummy.Length; i++)
         {
-            var lastPos = enemy[i].GetComponent<Enemy>().lastCheckPointTransform;
-            enemy[i].transform.position = lastPos;
-            enemy[i].GetComponent<Enemy>().Reset();
+            var lastPos = dummy[i].GetComponent<Enemy>().lastCheckPointTransform;
+            dummy[i].transform.position = lastPos;
+            dummy[i].GetComponent<Enemy>().Reset();
         }
 
+        //Black Screen Fade out
         while (a > 0)
         {
             a -= Time.deltaTime;
@@ -137,13 +138,18 @@ public class CheckPointManager : MonoBehaviour
         PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 0;
         yield return null;
     }
-    public void EnterResetPool(GameObject obj)
+
+    public void Dead(GameObject obj)
     {
-        enemyPool.Add(obj);
+        if(!killedEnemies.Contains(obj))
+            killedEnemies.Add(obj);
     }
 
     public void RestoreObject(GameObject obj)
     {
-        objects.Add(obj);
+        if (!objects.Contains(obj))
+        {
+            objects.Add(obj);
+        }           
     }
 }

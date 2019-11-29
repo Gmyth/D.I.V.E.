@@ -126,7 +126,7 @@ public class Drone : Enemy, IPatroller
         //gameObject.GetComponent<SpriteRenderer>().color = Color.clear;
         gameObject.SetActive(false);
         //Destroy(gameObject, 0.5f);
-        CheckPointManager.Instance.EnterResetPool(gameObject);
+        CheckPointManager.Instance.Dead(gameObject);
     }
 
 
