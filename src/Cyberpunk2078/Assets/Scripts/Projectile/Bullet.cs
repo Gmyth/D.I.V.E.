@@ -22,9 +22,19 @@ public class Bullet : Recyclable
     {
         if (numHitsRemaining <= 0)
             Die();
+        else if (other.tag == "Ground")
+        {
+            SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
+            Hit.transform.right = transform.right;
+            Hit.transform.position = transform.position;
+            Hit.transform.localScale = Vector3.one;
+
+            Hit.gameObject.SetActive(true);
 
 
-        if (isFriendly)
+            Die();
+        }
+        else if (isFriendly)
         {
             if (other.tag == "Dummy")
             {
@@ -41,8 +51,6 @@ public class Bullet : Recyclable
                 Hit.transform.localScale = Vector3.one;
 
                 Hit.gameObject.SetActive(true);
-
-                Die();
             }
         }
         else if (other.tag == "Hunch" )
@@ -76,9 +84,6 @@ public class Bullet : Recyclable
                 Hit.transform.localScale = Vector3.one;
 
                 Hit.gameObject.SetActive(true);
-                
-
-                Die();   
             }
         }
         else if (other.tag == "PlayerHitBox")
@@ -107,17 +112,8 @@ public class Bullet : Recyclable
             else
                 TimeManager.Instance.startSlowMotion(0.3f); 
         }
-        else if (other.tag == "Ground")
-        {
-            SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
-            Hit.transform.right = transform.right;
-            Hit.transform.position = transform.position;
-            Hit.transform.localScale = Vector3.one;
 
-            Hit.gameObject.SetActive(true);
-
-
+        if (numHitsRemaining <= 0)
             Die();
-        }
     }
 }
