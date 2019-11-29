@@ -24,7 +24,8 @@ public class PSAttackGH: PlayerState
     [SerializeField] private int indexPSJumping1;
     [SerializeField] private float EnergyConsume = -10; 
     
-    [SerializeField] private GameObject SplashFX; 
+    [SerializeField] private GameObject SplashFX;
+
     private float t0 = 0;
     private float defaultDrag;
 
