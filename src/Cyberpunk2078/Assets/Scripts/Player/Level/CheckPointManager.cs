@@ -84,6 +84,10 @@ public class CheckPointManager : MonoBehaviour
     {
         //Restore enemies position
         StartCoroutine("BlackScreen");
+    
+        //Restore Camera State
+        CameraManager.Instance.Reset();
+        TimeManager.Instance.endSlowMotion();
 
         //Restore objects
         for(int i = 0; i < objects.Count; ++i)

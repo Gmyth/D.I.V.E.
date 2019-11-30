@@ -250,8 +250,8 @@ public class PSDashing : PlayerState
         attack.transform.right = direction;
         attack.transform.localScale = new Vector3(4,4,1);
         attack.gameObject.SetActive(true);
-        attack.GetComponent<GhostSprites>().Occupied = true;
-        attack.GetComponent<HitBox>().hit.source = playerCharacter;
+        
+        attack.GetComponentInChildren<HitBox>().hit.source = playerCharacter;
 
         var Dust = ObjectRecycler.Singleton.GetObject<SingleEffect>(9);
         Dust.transform.position = playerCharacter.transform.position +  direction * 0.5f;
