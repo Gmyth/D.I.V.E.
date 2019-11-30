@@ -66,7 +66,7 @@ public class PSJumping2 : PlayerState
                 return index_PSMoving;
         }
         
-        if (Input.GetAxis("Attack1") > 0)
+        if (Input.GetButtonDown("Attack1"))
         {
             return indexPSAttackGH;
         }

@@ -7,18 +7,21 @@ using UnityEngine;
 public class PSJumping1 : PlayerState
 {
     [Header( "Normal" )]
+  
     [SerializeField] private float n_jumpForce = 8;
-    [SerializeField] private float n_wallJumpForce = 8;
     [SerializeField] private float n_speedFactor = 3;
     [SerializeField] private float n_accelerationFactor = 20;
     [SerializeField] private float n_wallJumpCD;
+    [SerializeField] private float n_wallJumpForce = 4.5f;
+    [SerializeField] private float n_wallJumpSpeed = 10f;
     
     [Header( "Fever" )]
     [SerializeField] private float f_jumpForce = 8;
-    [SerializeField] private float f_wallJumpForce = 8;
     [SerializeField] private float f_speedFactor = 3;
     [SerializeField] private float f_accelerationFactor = 20;
     [SerializeField] private float f_wallJumpCD;
+    [SerializeField] private float f_wallJumpForce = 4.5f;
+    [SerializeField] private float f_wallJumpSpeed = 10f;
     
     [Header( "Transferable States" )]
     [SerializeField] private int indexPSIdle;
@@ -41,14 +44,14 @@ public class PSJumping1 : PlayerState
         var jumpForce =  n_jumpForce;
         var speedFactor = n_speedFactor;
         var accelerationFactor = n_accelerationFactor;
-        var wallJumpCD = n_wallJumpCD;
+        var wallJumpSpeed = n_wallJumpSpeed;
 
         if (playerCharacter.IsInFeverMode)
         {
             jumpForce =  f_jumpForce;
             speedFactor = f_speedFactor; 
             accelerationFactor = f_accelerationFactor;
-            wallJumpCD = f_wallJumpCD;
+            wallJumpSpeed = f_wallJumpSpeed;
         }
         
         playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipX = flip;
@@ -107,9 +110,14 @@ public class PSJumping1 : PlayerState
             return indexPSMoving;
         }
 
-        if (Input.GetAxis("Attack1") > 0)
+        if (Input.GetButtonDown("Attack1"))
         {
             return indexPSAttackGH;
+        }
+
+        if (Input.GetButtonDown("Jump") && isCloseTo("Ground") != Direction.None)
+        {
+            performWallJump();
         }
 
         //Player is sill in air
@@ -124,7 +132,7 @@ public class PSJumping1 : PlayerState
         //    }
                
         //}
-
+        
         if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
         {
             Player.CurrentPlayer.triggerReady = false;
@@ -139,10 +147,7 @@ public class PSJumping1 : PlayerState
     public override void OnStateEnter(State previousState)
     {
         var jumpForce = playerCharacter.IsInFeverMode ? f_jumpForce : n_jumpForce;
-        var wallJumpForce = playerCharacter.IsInFeverMode ? f_wallJumpForce : n_wallJumpForce;
-        
-        
-        
+
         
         playerCharacter.groundDust.transform.localPosition = new Vector3(0,-0.5f,0);
         playerCharacter.groundDust.GetComponent<ParticleSystem>().Play();
@@ -155,10 +160,10 @@ public class PSJumping1 : PlayerState
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         // kill any Y-axis speed
         rb2d.velocity = new Vector2 (rb2d.velocity.x, 0);
-        // Add Verticial Speed
-        if (previousState.Index == indexPSWallJumping)
+        // Add Vertical Speed
+        if (previousState.Index == indexPSWallJumping && !Player.CurrentPlayer.jumpForceGate)
         {
-            rb2d.AddForce(playerCharacter.transform.up * wallJumpForce * 100);
+            performWallJump();
         }
         else if (Player.CurrentPlayer.jumpForceGate) {
             // skip the force add
@@ -186,5 +191,28 @@ public class PSJumping1 : PlayerState
     {
         playerCharacter.groundDust.transform.localPosition = Vector3.zero;
         playerCharacter.groundDust.GetComponent<ParticleSystem>().Stop();
+    }
+
+    private void performWallJump()
+    {
+        var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
+        var wallJumpForce = playerCharacter.IsInFeverMode ? f_wallJumpForce : n_wallJumpForce;
+        var wallJumpSpeed = playerCharacter.IsInFeverMode ? f_wallJumpSpeed : n_wallJumpSpeed;
+        var dir = isCloseTo("Ground");
+        //re active jumping
+        if (dir == Direction.Right)
+        {
+            flip = true;
+            Player.CurrentPlayer.ChainWallJumpReady = true;
+            rb2d.velocity = new Vector2(-wallJumpForce * 1.3f, 0);
+        }
+        else
+        {
+            flip = false; 
+            Player.CurrentPlayer.ChainWallJumpReady = true; 
+            rb2d.velocity = new Vector2(wallJumpSpeed*1.3f, 0);
+        }
+            
+        rb2d.AddForce(playerCharacter.transform.up * wallJumpForce * 100);
     }
 }

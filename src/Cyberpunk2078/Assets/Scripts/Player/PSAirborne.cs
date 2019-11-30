@@ -27,11 +27,13 @@ public class PSAirborne : PlayerState
 
         float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
         float v = Input.GetAxis("VerticalJoyStick");
+        var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
+        float Vy = rb2d.velocity.y;
         Vector2 normalizedInput = new Vector2(h, v).normalized;
         PhysicsInputHelper(h);
 
 
-        if (Input.GetAxis("Attack1") > 0)
+        if (Input.GetButtonDown("Attack1"))
         {
             return indexPSAttackGH;
         }
@@ -44,7 +46,7 @@ public class PSAirborne : PlayerState
 
         var dir = isCloseTo("Ground");
 
-        if (dir != Direction.None && Mathf.Abs(h) > 0 ) { return indexPSWallJumping; }
+        if (dir != Direction.None && Mathf.Abs(h) > 0 && Vy < 0) { return indexPSWallJumping; }
 
 
         if (Input.GetButtonDown("Jump") && Time.time <  lastGroundedSec+ jumpTolerance)
@@ -80,6 +82,8 @@ public class PSAirborne : PlayerState
         }
         
         previous = previousState;
+        var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
+        rb2d.gravityScale = 3;
         anim.Play("MainCharacter_Airborne", -1, 0f);
     }
 }

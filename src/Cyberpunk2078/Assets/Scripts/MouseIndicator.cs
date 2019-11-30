@@ -10,7 +10,9 @@ public class MouseIndicator : MonoBehaviour
     private float timeCount = 0.0f;
     private float deadZone = 0.2f;
     private Vector2 controllerDir;
-    private float lastControllerInput;
+    private Vector3 lastMousePos;
+    private bool useMouseKeyboard;
+    private bool useJoyStick;
     void Start()
     {
         player  = GameObject.FindGameObjectWithTag("Player");
@@ -21,15 +23,21 @@ public class MouseIndicator : MonoBehaviour
     {
         transform.position = player.transform.position;
         var mousePosInScreen = Input.mousePosition;
-        controllerDir= Vector2.zero;
         if (Mathf.Abs(Input.GetAxis("HorizontalJoyStick")) > 0 || Mathf.Abs(Input.GetAxis("VerticalJoyStick")) > 0)
         {
             controllerDir = new Vector3(Input.GetAxis("HorizontalJoyStick"),Input.GetAxis("VerticalJoyStick")).normalized;
-            lastControllerInput = Time.unscaledTime;
+            useMouseKeyboard = false;
+            useJoyStick = true;
+        }else if (Input.mousePosition != lastMousePos)
+        {
+            //mouse moved
+            useMouseKeyboard = true;
+            useJoyStick = false;
         }
 
+        lastMousePos = mousePosInScreen;
 
-        if (lastControllerInput + 2f > Time.unscaledTime)
+        if (useJoyStick)
         {
             //use indicator for controller
 
@@ -39,7 +47,7 @@ public class MouseIndicator : MonoBehaviour
             Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             transform.rotation = rotation;
         }
-        else
+        else if(useMouseKeyboard)
         {
             mousePosInScreen.z = 10; // select distance = 10 units from the camera
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(mousePosInScreen);
@@ -47,7 +55,7 @@ public class MouseIndicator : MonoBehaviour
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             transform.rotation = rotation;
-
+            
         }
 
 

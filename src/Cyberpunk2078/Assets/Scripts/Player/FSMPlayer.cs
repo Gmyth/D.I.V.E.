@@ -118,7 +118,7 @@ public abstract class PlayerState : State
                 //   playerCharacter.transform.Translate(Vector2.down* (hitM.distance - DistanceToTheGround));
                 //}
             }
-            playerCharacter.AddNormalEnergy(1);
+            
             Player.CurrentPlayer.ChainWallJumpReady = false; 
             Player.CurrentPlayer.secondJumpReady = true;
             grounded = true;
@@ -146,11 +146,11 @@ public abstract class PlayerState : State
     public Direction isCloseTo(string tag, string layerMask = "")
     {
         RaycastHit2D hit = layerMask.Length > 0 ? 
-                Physics2D.Raycast(playerCharacter.transform.position,playerCharacter.transform.right,0.5f,1 << LayerMask.NameToLayer(layerMask))
-                : Physics2D.Raycast(playerCharacter.transform.position,playerCharacter.transform.right,0.5f);
+                Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.3f,0f,0f),playerCharacter.transform.right,0.8f,1 << LayerMask.NameToLayer(layerMask))
+                : Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.3f,0f,0f),playerCharacter.transform.right,0.8f);
         RaycastHit2D hit1 = layerMask.Length > 0 ? 
-                Physics2D.Raycast(playerCharacter.transform.position,-playerCharacter.transform.right,0.5f, 1 << LayerMask.NameToLayer(layerMask))
-                : Physics2D.Raycast(playerCharacter.transform.position,-playerCharacter.transform.right,0.5f);
+                Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.3f,0f,0f),-playerCharacter.transform.right,0.8f, 1 << LayerMask.NameToLayer(layerMask))
+                : Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.3f,0f,0f),-playerCharacter.transform.right,0.8f);
 
         Debug.DrawRay(playerCharacter.transform.position, playerCharacter.transform.right * 0.5f, Color.green);
         Debug.DrawRay(playerCharacter.transform.position, -playerCharacter.transform.right * 0.5f, Color.green);
@@ -169,11 +169,11 @@ public abstract class PlayerState : State
     public Vector2 LadderMargin(string tag = "Ladder", string layerMask = "")
     {
         RaycastHit2D hit = layerMask.Length > 0 ? 
-            Physics2D.Raycast(playerCharacter.transform.position,playerCharacter.transform.right,1f,1 << LayerMask.NameToLayer(layerMask))
-            : Physics2D.Raycast(playerCharacter.transform.position,playerCharacter.transform.right,1f);
+            Physics2D.Raycast(playerCharacter.transform.position +  new Vector3(-0.3f,0f,0f),playerCharacter.transform.right,1f,1 << LayerMask.NameToLayer(layerMask))
+            : Physics2D.Raycast(playerCharacter.transform.position +  new Vector3(-0.3f,0f,0f),playerCharacter.transform.right,1f);
         RaycastHit2D hit1 = layerMask.Length > 0 ? 
-            Physics2D.Raycast(playerCharacter.transform.position,-playerCharacter.transform.right,1f, 1 << LayerMask.NameToLayer(layerMask))
-            : Physics2D.Raycast(playerCharacter.transform.position,-playerCharacter.transform.right,1f);
+            Physics2D.Raycast(playerCharacter.transform.position +  new Vector3(0.3f,0f,0f),-playerCharacter.transform.right,1f, 1 << LayerMask.NameToLayer(layerMask))
+            : Physics2D.Raycast(playerCharacter.transform.position +  new Vector3(0.3f,0f,0f),-playerCharacter.transform.right,1f);
 
         Debug.DrawRay(playerCharacter.transform.position, playerCharacter.transform.right * 0.8f, Color.red);
         Debug.DrawRay(playerCharacter.transform.position, -playerCharacter.transform.right * 0.8f, Color.yellow);

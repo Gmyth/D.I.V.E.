@@ -19,6 +19,7 @@ public class CameraManager : MonoBehaviour {
 	public static CameraManager Instance;
 	private float zoomVelocity;
 	private Vector2 velocity; // the speed reference for camera
+	private Vector2 focusVelocity;
 	[Header("Camera")]
 
     // the smooth time for camera change the position on Y - axis, the larger number will slow the camera moving speed. 0 will be response instantly 
@@ -140,12 +141,12 @@ public class CameraManager : MonoBehaviour {
 			shakeX = Random.Range(-1f, 1f) * shakeMagnitude;
 			shakeY = Random.Range(-1f, 1f) * shakeMagnitude;
 		}
-		var camera = GetComponent<Camera>();
+		var camera = GetComponentInChildren<Camera>();
+		var targetIndicator = findClosestIndicator();
 		switch (currentState)
 		{
 			case CameraState.Idle:
 				//Apply indicator config if indicator exists
-				var targetIndicator = findClosestIndicator();
 				float oX = targetIndicator && targetIndicator.changeOffset ? targetIndicator.offsetX : offsetX;
 				float oY = targetIndicator && targetIndicator.changeOffset ? targetIndicator.offsetY : offsetY;
 				
@@ -241,10 +242,55 @@ public class CameraManager : MonoBehaviour {
 				break;
 			
 			case CameraState.Focusing:
-				camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize,cameraSizeOnFocusing, ref zoomVelocity, smoothTimeX / 10);
-				posX = Mathf.SmoothDamp(transform.position.x,target.position.x, ref velocity.x, smoothTimeX / 5);
-				posY = Mathf.SmoothDamp(transform.position.y,target.position.y, ref velocity.y, smoothTimeY / 5);
-				transform.position = new Vector3(posX + offsetX + shakeX, posY + offsetY + shakeY, transform.position.z);
+				
+				posX = Mathf.SmoothDamp(transform.position.x,target.position.x, ref focusVelocity.x, smoothTimeX * 4);
+				posY = Mathf.SmoothDamp(transform.position.y,target.position.y, ref focusVelocity.y, smoothTimeY * 4);
+				transform.position = new Vector3(posX + shakeX, posY + shakeY, transform.position.z);
+				
+				if (targetIndicator && targetIndicator.changeSize)
+				{
+					defaultSize = targetIndicator.targetCameraSize;
+					if (flash)
+					{
+						if (!flashOut)
+						{
+							// zoom in to target ZoomSize
+							camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize,targetZoomSize, ref zoomVelocity, smoothTimeQZ);
+						}
+						else
+						{
+							//zoom out to origin ZoomSize
+							camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize,defaultSize, ref zoomVelocity, smoothTimeQZ);
+						}
+					}
+					else
+					{
+						// back to normal
+						camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize, targetIndicator.targetCameraSize, ref zoomVelocity, targetIndicator.smoothZoomTime);
+					}
+				}
+				else
+				{
+					defaultSize = defaultFieldOfView;
+					if (flash)
+					{
+						if (!flashOut)
+						{
+							// zoom in to target ZoomSize
+							camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize,targetZoomSize, ref zoomVelocity, smoothTimeQZ);
+						}
+						else
+						{
+							//zoom out to origin ZoomSize
+							camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize,defaultSize, ref zoomVelocity, smoothTimeQZ);
+						}
+					}
+					else
+					{
+						// back to normal
+						camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize,cameraSizeOnFocusing, ref zoomVelocity, smoothTimeX / 10);
+					}
+				}
 				break;
 
             case CameraState.Reset:
@@ -299,25 +345,31 @@ public class CameraManager : MonoBehaviour {
 		//Gizmos.DrawSphere(center, 1);
 	}
 
-	public void focusAt(Transform _target)
+	public void FocusAt(Transform _target, float duration = -1f)
 	{
 		target = _target;
 		currentState = CameraState.Focusing;
+		if (duration > -1f) StartCoroutine(resetDelay(duration));
 	}
 
-    public void release()
+    public void Release()
     {
         currentState = CameraState.Release;
     }
 
 
-    public void reset()
+    public void Reset()
 	{
 		currentState = CameraState.Reset;
 	}
 
+    private IEnumerator resetDelay(float duration)
+    {
+	    yield return  new WaitForSeconds(duration);
+	    if(currentState != CameraState.Reset)Reset();
+    }
 
-    public void flashIn(float targetSize, float smoothTime, float inDuration, float outDuration)
+    public void FlashIn(float targetSize, float smoothTime, float inDuration, float outDuration)
     {
 	    if (!flash)
 	    {
