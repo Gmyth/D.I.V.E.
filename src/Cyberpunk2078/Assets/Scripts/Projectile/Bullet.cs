@@ -8,11 +8,11 @@ public class Bullet : Recyclable
     public bool isFriendly = false;
     public int numHits = 1;
     public int rawDamage = 1;
-    
+
     [SerializeField] private float hitEstimationTimeInterval = 0.02f;
     private float lastHitEstimation;
     private bool hunchTriggered;
-    
+
     private int numHitsRemaining;
 
 
@@ -53,9 +53,19 @@ public class Bullet : Recyclable
     {
         if (numHitsRemaining <= 0)
             Die();
+        else if (other.tag == "Ground")
+        {
+            SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
+            Hit.transform.right = transform.right;
+            Hit.transform.position = transform.position;
+            Hit.transform.localScale = Vector3.one;
+
+            Hit.gameObject.SetActive(true);
 
 
-        if (isFriendly)
+            Die();
+        }
+        else if (isFriendly)
         {
             if (other.tag == "Dummy")
             {
@@ -95,10 +105,10 @@ public class Bullet : Recyclable
                 other.GetComponent<PlayerCharacter>().ApplyDamage(rawDamage);
                 other.GetComponent<PlayerCharacter>().Knockback(transform.position, 300f, 0.3f);
                 --numHitsRemaining;
-                
+
                 TimeManager.Instance.endSlowMotion();
                 CameraManager.Instance.Reset();
-                
+
                 CameraManager.Instance.Shaking(0.20f, 0.05f);
                 SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
                 Hit.transform.right = transform.right;
@@ -107,10 +117,10 @@ public class Bullet : Recyclable
 
                 Hit.gameObject.SetActive(true);
 
-                Die();   
+                Die();
             }
         }
-        else if (other.tag == "PlayerAttack")
+        else if (other.tag == "PlayerHitBox")
         {
             if (other.name != "DashAtkBox")
             {
@@ -119,9 +129,9 @@ public class Bullet : Recyclable
                 GetComponent<LinearMovement>().spawnTime = Time.time;
 
                 transform.right = GetComponent<LinearMovement>().orientation;
-                
+
                 isFriendly = true;
-                
+
 
                 CameraManager.Instance.Shaking(0.10f,0.05f);
                 TimeManager.Instance.startSlowMotion(0.05f);
@@ -135,17 +145,8 @@ public class Bullet : Recyclable
             }
 
         }
-        else if (other.tag == "Ground")
-        {
-            SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
-            Hit.transform.right = transform.right;
-            Hit.transform.position = transform.position;
-            Hit.transform.localScale = Vector3.one;
 
-            Hit.gameObject.SetActive(true);
-
-
+        if (numHitsRemaining <= 0)
             Die();
-        }
     }
 }

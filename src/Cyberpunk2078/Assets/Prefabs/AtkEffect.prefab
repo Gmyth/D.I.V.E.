@@ -151,9 +151,9 @@ GameObject:
   - component: {fileID: 8782620589037814962}
   - component: {fileID: 2157924796228020923}
   - component: {fileID: 7612053412110401872}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Splash 1
-  m_TagString: PlayerAttack
+  m_TagString: PlayerHitBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -25,12 +25,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1413059481}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 445841681128334413}
-  m_RootOrder: 0
+  m_Father: {fileID: 573552226383568636}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1413059484
 BoxCollider2D:
@@ -71,10 +71,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hit:
+    source: {fileID: 0}
     damage: 0
     knockback: 0
   isFriendly: 0
   effects: 
+  group: {fileID: 0}
 --- !u!1 &445841681128334412
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,8 +110,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1413059482}
-  - {fileID: 445841682356872231}
+  - {fileID: 573552226383568636}
   - {fileID: 3669862315530931468}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -286,6 +287,7 @@ MonoBehaviour:
     serializedAttributes: []
   currentTarget: {fileID: 0}
   currentHit:
+    source: {fileID: 0}
     damage: 0
     knockback: 0
   lastCheckPointTransform: {x: 0, y: 0, z: 0}
@@ -314,12 +316,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 445841682356872230}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 445841681128334413}
-  m_RootOrder: 1
+  m_Father: {fileID: 573552226383568636}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &445841682356872281
 BoxCollider2D:
@@ -360,10 +362,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hit:
+    source: {fileID: 0}
     damage: 0
     knockback: 0
   isFriendly: 0
   effects: 
+  group: {fileID: 0}
 --- !u!1 &3669862315530931471
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,7 +398,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 445841681128334413}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &3669862315530931466
 BoxCollider2D:
@@ -435,7 +439,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hit:
+    source: {fileID: 0}
     damage: 0
     knockback: 0
   isFriendly: 0
   effects: 
+  group: {fileID: 0}
+--- !u!1 &4798640497762447322
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 573552226383568636}
+  m_Layer: 0
+  m_Name: HitBoxGroup_Slash
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &573552226383568636
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4798640497762447322}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 445841682356872231}
+  - {fileID: 1413059482}
+  m_Father: {fileID: 445841681128334413}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

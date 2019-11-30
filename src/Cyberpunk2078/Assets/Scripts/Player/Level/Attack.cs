@@ -32,10 +32,11 @@ public class Attack : MonoBehaviour
         {
             if (other.tag == "Dummy")
             {
-                CameraManager.Instance.Shaking(0.20f,0.10f);
+                CameraManager.Instance.Shaking(0.20f, 0.10f);
+
+
                 var VFX = ObjectRecycler.Singleton.GetObject<SingleEffect>(getRandomEffect());
-                VFX.transform.position =
-                    other.transform.position - (other.transform.position - transform.position) * 0.2f;
+                VFX.transform.position = other.transform.position - (other.transform.position - transform.position) * 0.2f;
                 VFX.transform.right = transform.right;
                 VFX.setTarget(other.transform);
                 VFX.transform.localScale = new Vector3(4,1,1);
@@ -44,41 +45,40 @@ public class Attack : MonoBehaviour
                 var trail = ObjectRecycler.Singleton.GetObject<SingleEffect>(8);
                 trail.transform.position = VFX.transform.position;
                 trail.setTarget(other.transform);
-
                 trail.transform.right = transform.right;
                 trail.transform.localScale = new Vector3(7, 1, 1);
                 trail.gameObject.SetActive(true);
 
-
                 var trail1 = ObjectRecycler.Singleton.GetObject<SingleEffect>(8);
                 trail1.transform.position = VFX.transform.position;
                 trail1.setTarget(other.transform);
-
                 trail1.transform.right = -transform.right;
                 trail1.transform.localScale = new Vector3(7, 1, 1);
                 trail1.gameObject.SetActive(true);
 
+
                 other.GetComponent<Dummy>().ApplyDamage(damage);
+
                 objectsHit.Add(other.gameObject.GetInstanceID());
             }
             else if (other.tag == "Platform" && other.GetComponent<SimpleBreakable>())
             {
                 other.GetComponent<SimpleBreakable>().DestoryBreakable();
-            } 
+            }
         }
         else if (other.tag == "Player")
         {
             if (other.GetComponent<PlayerCharacter>().State.Name != "Dash")
             {
                 ObjectRecycler.Singleton.GetObject<SingleEffect>(getRandomEffect());
+
+
                 other.GetComponent<PlayerCharacter>().Knockback(transform.position, 10f);
                 other.GetComponent<PlayerCharacter>().ApplyDamage(damage);
+
                 objectsHit.Add(other.gameObject.GetInstanceID());
             }
         }
-        
-
-
     }
 
     public int getRandomEffect()

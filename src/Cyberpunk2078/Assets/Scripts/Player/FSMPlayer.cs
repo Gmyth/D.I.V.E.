@@ -252,7 +252,7 @@ public abstract class PlayerState : State
         }
     }
 
-    public void PreUpdate()
+    public void EarlyUpdate()
     {
 
         if (Input.GetAxis("Trigger") <= 0)
@@ -337,44 +337,46 @@ public class FSMPlayer : FiniteStateMachine<PlayerState>
     {
         OnMachineBoot();
 
+        foreach (PlayerState state in states)
+            state.OnMachineBoot();
+
+
         currentStateIndex = startingStateIndex;
 
-        CurrentState.OnStateEnter(CurrentState);
+        CurrentState.OnStateEnter(null);
 
         OnCurrentStateChange.Invoke(currentStateIndex, -1);
     }
 
     public override void Reboot()
     {
-        CurrentState.OnStateQuit(CurrentState);
-
-        OnMachineBoot();
-
-        currentStateIndex = startingStateIndex;
-
-        CurrentState.OnStateEnter(CurrentState);
-
-        OnCurrentStateChange.Invoke(currentStateIndex, -1);
+        ShutDown();
+        Boot();
     }
 
     public override void ShutDown()
     {
         int previousStateIndex = currentStateIndex;
 
+
         CurrentState.OnStateQuit(null);
 
         currentStateIndex = -1;
 
-        OnMachineShutDown();
-
         OnCurrentStateChange.Invoke(-1, previousStateIndex);
+
+
+        foreach (PlayerState state in states)
+            state.OnMachineShutDown();
+
+        OnMachineShutDown();
     }
 
     public void Update()
     {
         if (currentStateIndex >= 0)
         {
-            CurrentState.PreUpdate();
+            CurrentState.EarlyUpdate();
             CurrentStateIndex = CurrentState.Update();
         }
     }

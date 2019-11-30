@@ -10,10 +10,11 @@ TagManager:
   - Shield
   - Ladder
   - Bullet
-  - PlayerAttack
   - Hunch
   - Platform
   - Item
+  - PlayerHitBox
+  - EnemyHitBox
   layers:
   - Default
   - TransparentFX
@@ -31,8 +32,8 @@ TagManager:
   - Interactive
   - SoulBall
   - 
-  - 
-  - 
+  - PlayerHitBox
+  - EnemyHitBox
   - 
   - 
   - 

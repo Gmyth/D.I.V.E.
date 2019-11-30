@@ -31,6 +31,7 @@ public abstract class ESAttack<T> : EnemyState<T> where T : Enemy
     public override void OnStateEnter(State previousState)
     {
         Hit hit = new Hit();
+        hit.source = enemy;
         hit.damage = CalculateAttackDamage();
         hit.knockback = CalculateAttackKnowback();
 

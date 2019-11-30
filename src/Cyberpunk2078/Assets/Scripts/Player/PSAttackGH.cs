@@ -24,7 +24,8 @@ public class PSAttackGH: PlayerState
     [SerializeField] private int indexPSJumping1;
     [SerializeField] private float EnergyConsume = -10; 
     
-    [SerializeField] private GameObject SplashFX; 
+    [SerializeField] private GameObject SplashFX;
+
     private float t0 = 0;
     private float defaultDrag;
 
@@ -128,20 +129,29 @@ public class PSAttackGH: PlayerState
         //get Mouse direction
         
         Vector3 direction = getDirectionCorrection(mouse.getAttackDirection(),GroundNormal());
-        var obj = Instantiate(SplashFX);
-        obj.transform.position = playerCharacter.transform.position;
-        obj.transform.right = direction;
-        obj.transform.parent = playerCharacter.transform;
+
+
+        var attack = Instantiate(SplashFX);
+        attack.transform.position = playerCharacter.transform.position;
+        attack.transform.right = direction;
+        attack.transform.parent = playerCharacter.transform;
+        attack.GetComponentInChildren<HitBox>().hit.source = playerCharacter;
+
+        Destroy(attack, 0.2f);
+
+
         anim.Play("MainCharacter_Atk", -1, 0f);
         playerCharacter.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         playerCharacter.GetComponent<Rigidbody2D>().AddForce(direction * pushForce * 100f);
         playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipX = direction.x < 0;
-        Destroy(obj,0.2f);
-        //kill gravity
-//        rb2d.gravityScale = 0;
-//        defaultDrag = rb2d.drag;
-//        rb2d.drag = 0;
-        
+
+
+        // kill gravity
+        //rb2d.gravityScale = 0;
+        //defaultDrag = rb2d.drag;
+        //rb2d.drag = 0;
+
+
         //Camera Tricks
         CameraManager.Instance.Shaking(0.03f,0.05f);
     }

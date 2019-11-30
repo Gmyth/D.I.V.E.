@@ -22,7 +22,7 @@ public class SimpleLocker : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (b && (other.gameObject.tag == "PlayerAttack" || other.gameObject.tag == "Player"))
+        if (b && (other.gameObject.tag == "PlayerHitBox" || other.gameObject.tag == "Player"))
         {
             ConnectedDoor.DeleteLocker();
             gameObject.SetActive(false);
