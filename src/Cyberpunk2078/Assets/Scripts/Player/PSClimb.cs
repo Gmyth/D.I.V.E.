@@ -58,7 +58,7 @@ public class PSClimb : PlayerState
         
         if (isGrounded())
         {
-            if(Input.GetAxis("Vertical") < 0  || Input.GetAxis("VerticalJoyStick") < 0 ){
+            if(v < 0){
                 anim.speed = 1;
                 rb2d.gravityScale = 3;
                 return indexPSIdle;

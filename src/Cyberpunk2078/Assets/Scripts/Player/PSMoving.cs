@@ -30,7 +30,7 @@ public class PSMoving : PlayerState
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
 
-        if (Input.GetAxis("Attack1") > 0)
+        if (Input.GetButtonDown("Attack1"))
         {
             return indexPSAttackGH;
         }
@@ -78,6 +78,7 @@ public class PSMoving : PlayerState
 
     public override void OnStateEnter(State previousState)
     {
+        playerCharacter.AddNormalEnergy(1);
         float h = Input.GetAxis("HorizontalJoyStick") != 0
             ? Input.GetAxis("HorizontalJoyStick")
             : Input.GetAxis("Horizontal");

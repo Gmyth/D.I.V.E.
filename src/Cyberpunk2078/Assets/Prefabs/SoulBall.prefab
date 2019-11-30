@@ -346,8 +346,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: -1
   lifeSpan: 0
-  maxSpeed: 30
-  acceleration: 20
+  maxSpeedIn: 30
+  accelerationIn: 20
+  minSpeedOut: 1
+  accelerationOut: 20
 --- !u!50 &6126746540793851391
 Rigidbody2D:
   serializedVersion: 4
@@ -356,19 +358,19 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6126746540793851378}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 0.1
   m_LinearDrag: 3
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!58 &6126746540793851390
 CircleCollider2D:
   m_ObjectHideFlags: 0

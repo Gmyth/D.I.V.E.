@@ -223,7 +223,9 @@ public class PSDashing : PlayerState
 
     private void forceApply()
     {
-        
+        //avoid Slow Motion
+        TimeManager.Instance.endSlowMotion();
+
         var dashForce = playerCharacter.IsInFeverMode ? f_dashForce:n_dashForce; 
         
         // Fix sprite flip on X-axis
@@ -245,10 +247,10 @@ public class PSDashing : PlayerState
         VFX.setTarget(playerCharacter.transform);
         
         VFX.transform.right = direction;
+        VFX.transform.parent = playerCharacter.transform;
         VFX.transform.localScale = new Vector3(4,4,1);
         VFX.gameObject.SetActive(true);
-        VFX.GetComponent<GhostSprites>().Occupied = true;
-        
+            
         var Dust = ObjectRecycler.Singleton.GetObject<SingleEffect>(9);
         Dust.transform.position = playerCharacter.transform.position +  direction * 0.5f;
         //Dust.setTarget(playerCharacter.transform);

@@ -54,11 +54,13 @@ public class HitBox : MonoBehaviour
                 {
                     dummy.OnAttack?.Invoke();
                     enemy.OnHit?.Invoke(hit);
-
+                    
+                    TimeManager.Instance.endSlowMotion();
+                    CameraManager.Instance.Reset();
+                    
                     enemy.ApplyDamage(hit.damage);
                     objectsHit.Add(id);
-
-
+                    
                     CreateRandomEffect(enemy.transform);
                 }
             }

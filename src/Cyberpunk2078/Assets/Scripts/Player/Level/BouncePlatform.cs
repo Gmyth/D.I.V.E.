@@ -56,6 +56,7 @@ public class BouncePlatform : MonoBehaviour
         {
             if (bounceReady == true)
             {
+               
                 rb2d = col.gameObject.GetComponent<Rigidbody2D>();
                 pc = col.gameObject.GetComponent<PlayerCharacter>();
                 Player.CurrentPlayer.jumpForceGate = true;
@@ -67,7 +68,7 @@ public class BouncePlatform : MonoBehaviour
 
                 // kill any Y-axis speed
                 rb2d.velocity = Vector2.zero;
-
+                rb2d.gravityScale = 3;
                 //Debug.Log("Direction:"+ gameObject.transform.up);
                 //Debug.Log(LogUtility.MakeLogStringFormat("Bounce Platform","Force:" + gameObject.transform.up * jumpForce * 50 * 1 / Time.timeScale));
 

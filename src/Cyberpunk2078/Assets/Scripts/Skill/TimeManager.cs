@@ -29,16 +29,18 @@ public class TimeManager : MonoBehaviour
         
     }
 
-    public void startSlowMotion(float duration)
+    public void startSlowMotion(float duration, float scale = 0.3f)
     {
-        Time.timeScale = slowMotionFactor;
-        Time.fixedDeltaTime = Time.timeScale * 0.02f;
+        Time.timeScale = scale == slowMotionFactor? slowMotionFactor : scale;
+        //Time.fixedDeltaTime = Time.timeScale * 0.02f;
         startTime = Time.unscaledTime;
         endTime = startTime + duration;
     }
     
     public void endSlowMotion()
     {
-        endTime = Time.unscaledTime;;
+        Time.timeScale = 1;
+        //Time.fixedDeltaTime = Time.timeScale * 0.02f;
+        endTime = Time.unscaledTime - 1f;
     }
 }

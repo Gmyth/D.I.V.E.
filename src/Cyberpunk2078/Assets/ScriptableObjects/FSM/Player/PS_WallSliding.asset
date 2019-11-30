@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1e9c19f531ef1e4394a7e9ec2cb363e, type: 3}
-  m_Name: PS_WallJumping
+  m_Name: PS_WallSliding
   m_EditorClassIdentifier: 
-  Name: WallJump
+  Name: WallSliding
   n_jumpForce: 4.5
   n_jumpSpeed: 10
   n_stickWallTime: 0.25

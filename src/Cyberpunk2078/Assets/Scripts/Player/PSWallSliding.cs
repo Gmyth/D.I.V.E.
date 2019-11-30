@@ -1,17 +1,13 @@
 ﻿using UnityEngine;
 
 
-[CreateAssetMenuAttribute(fileName = "PS_WallJumping", menuName = "Player State/Wall Jumping")]
-public class PSWallJumping: PlayerState
+[CreateAssetMenuAttribute(fileName = "PS_WallSliding", menuName = "Player State/Wall Sliding")]
+public class PSWallSliding: PlayerState
 {
     [Header("Normal")]
-    [SerializeField] private float n_jumpForce = 4.5f;
-    [SerializeField] private float n_jumpSpeed = 10f;
     [SerializeField] private float n_stickWallTime = 0.25f;
     [SerializeField] private float n_wallCheckCoolDown = 0.25f;
     [Header("Fever")]
-    [SerializeField] private float f_jumpForce = 4.5f;
-    [SerializeField] private float f_jumpSpeed = 10f;
     [SerializeField] private float f_stickWallTime = 0.25f;
     [SerializeField] private float f_wallCheckCoolDown = 0.25f;
     
@@ -27,17 +23,14 @@ public class PSWallJumping: PlayerState
 
     private bool onWall = false;
     private float gravityHolder;
-    private float lastStickTime;
-    private float lastOnWallTime;
+
     public override int Update()
     {
-        var jumpSpeed = n_jumpSpeed;
         var stickWallTime = n_stickWallTime;
         var wallCheckCoolDown = n_wallCheckCoolDown;
 
         if (playerCharacter.IsInFeverMode)
         {
-            jumpSpeed = f_jumpSpeed;
             stickWallTime = f_stickWallTime;
             wallCheckCoolDown = f_wallCheckCoolDown;
         }
@@ -45,11 +38,6 @@ public class PSWallJumping: PlayerState
 
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         
-//        if (onWall && Time.time > lastStickTime + stickWallTime)
-//        {
-//            //stick over, falling start
-//            rb2d.gravityScale = 3;
-//        }
         
         
         float Vy = rb2d.velocity.y;
@@ -65,38 +53,18 @@ public class PSWallJumping: PlayerState
             return index_PSMoving;
         }
         
-        if (Input.GetAxis("Attack1") > 0)
+        if (Input.GetButtonDown("Attack1"))
         {
             return index_PSAttackGH;
         }
 
-        var dir = isCloseTo("Ground");
-        if (onWall)
+        
+        if (Input.GetButtonDown("Jump"))
         {
-            //Sticked , ok to perform wall jump again
-            if (Input.GetButtonDown("Jump"))
-            {
-                onWall = false;
-                lastOnWallTime = Time.unscaledTime;
-                //re active jumping
-                if (dir == Direction.Right)
-                {
-                    flip = true;
-                    Player.CurrentPlayer.ChainWallJumpReady = true;
-                    rb2d.velocity = new Vector2(-jumpSpeed * 1.3f, 0);
-                }
-                else
-                {
-                    flip = false; 
-                    Player.CurrentPlayer.ChainWallJumpReady = true; 
-                    rb2d.velocity = new Vector2(jumpSpeed*1.3f, 0);
-                }
-
-                return index_PSJumping1;
-            }
+            return index_PSJumping1;
         }
 
-
+        var dir = isCloseTo("Ground");
         if (dir == Direction.Right && h > 0)
         {
             
@@ -109,7 +77,7 @@ public class PSWallJumping: PlayerState
         else if (dir == Direction.Left && h < 0)
         {
             playerCharacter.groundDust.transform.localPosition = new Vector3(-0.2f,-0.5f,0);
-            playerCharacter.groundDust.GetComponent<ParticleSystem>().gravityModifier = 0-1;
+            playerCharacter.groundDust.GetComponent<ParticleSystem>().gravityModifier = -1;
             playerCharacter.groundDust.GetComponent<ParticleSystem>().Play();
             rb2d.gravityScale = 1.2f;
             anim.Play("MainCharacter_WallJump", -1, 0f);
@@ -150,9 +118,12 @@ public class PSWallJumping: PlayerState
 
     public override void OnStateEnter(State previousState)
     {
+        
+        
         var dir = isCloseTo("Ground");
         // Set flip
         flip = dir == Direction.Left;
+        var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
 
         //kill speed
         onWall = true;
@@ -160,13 +131,9 @@ public class PSWallJumping: PlayerState
         // Animation
         anim.Play("MainCharacter_Airborne", -1, 0f);
 
-        var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-        
         rb2d. velocity = Vector2.zero;
 
         rb2d.gravityScale = 1.8f;
-        
-        lastStickTime = Time.time;
     }
 
     public override void OnStateQuit(State nextState)
@@ -178,25 +145,5 @@ public class PSWallJumping: PlayerState
         rb2d.gravityScale = 3;
         onWall = false;
     }
-
-    private void sideWallJump()
-    {
-        var jumpForce = playerCharacter.IsInFeverMode ? f_jumpForce: n_jumpForce;
-        
-        //Perform jump
-        anim.Play("MainCharacter_Jump", -1, 0f);
-        
-        // prevent applying force twice
-        isJumpKeyDown = true;
-        
-        var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-        
-        // kill any Y-axis speed
-        rb2d.velocity = new Vector2 (rb2d.velocity.x, 0);
-        
-        // Add Vertical Speed
-        rb2d.AddForce(playerCharacter.transform.up * jumpForce * 100);
-    }
-    
 
 }
