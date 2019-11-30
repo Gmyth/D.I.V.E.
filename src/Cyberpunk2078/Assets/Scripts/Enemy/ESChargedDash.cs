@@ -9,7 +9,6 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
     [SerializeField] private float minDuration = 0.15f;
     [SerializeField] private float maxDuration = 0;
     [SerializeField] private float stopDistance = 1;
-
     [SerializeField] private string animation_dash = "";
 
     private Rigidbody2D rigidbody;
@@ -17,7 +16,6 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
     private Vector3 direction;
     private bool bDash;
     private bool bStop;
-
     private float t;
     private float d;
 
@@ -39,7 +37,6 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
 
         bDash = true;
         bStop = false;
-
         t = float.MaxValue;
         d = float.MaxValue;
         

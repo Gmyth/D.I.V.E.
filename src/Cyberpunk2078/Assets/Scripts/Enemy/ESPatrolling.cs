@@ -29,12 +29,12 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
     private Animator animator;
     private Seeker seeker;
 
+    private float t_nextFire = 0;
+
     private int indexTargetPatrolPoint = 0;
     private Path currentPath = null;
     private int indexWayPoint = 0;
-
     private bool isMoving = false;
-    private float t_nextFire = 0;
     private float t_finishCharging = 0;
 
 
@@ -69,8 +69,6 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
         rigidbody = enemy.GetComponent<Rigidbody2D>();
         animator = enemy.GetComponent<Animator>();
         seeker = enemy.GetComponent<Seeker>();
-
-        t_nextFire = 0;
     }
 
     public override int Update()
@@ -148,7 +146,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
             if (enemy.currentTarget)
             {
                 if (alwaysFacingTarget)
-                    AdjustFacingDirection((enemy.currentTarget.transform.position - enemy.transform.position).x > 0 ? Vector3.left : Vector3.right);
+                    AdjustFacingDirection((enemy.currentTarget.transform.position - enemy.transform.position).x > 0 ? Vector3.right : Vector3.left);
 
 
                 if (now >= t_nextFire)
@@ -223,7 +221,15 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
         seeker.CancelCurrentPathRequest();
     }
 
-    
+
+    public override void OnMachineBoot()
+    {
+        base.OnMachineBoot();
+
+        t_nextFire = 0;
+    }
+
+
     protected virtual void Charge()
     {
     }
