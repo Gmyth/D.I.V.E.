@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3027208874658607726}
   - component: {fileID: 3027208874658607727}
   - component: {fileID: 3027208874658607729}
-  - component: {fileID: 3027208874658607728}
   - component: {fileID: -3411127162189070211}
+  - component: {fileID: 8396039119686204290}
   m_Layer: 12
   m_Name: Jump-Platform-1.5
   m_TagString: Platform
@@ -70,7 +70,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1909596859
-  m_SortingLayer: 4
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c52effb451966944fbc01e880126c769, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -102,32 +102,6 @@ PlatformEffector2D:
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
---- !u!61 &3027208874658607728
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3027208874658607725}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 1
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.0049488544, y: 0.0592955}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.3692307, y: 0.8153846}
-    newSize: {x: 2.3692307, y: 0.8153846}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.9442952, y: 0.34105682}
-  m_EdgeRadius: 0
 --- !u!114 &-3411127162189070211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,8 +114,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffa11510f39fafe40acc459f07f26078, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: 0.3
-  Smoothness: 0
-  waitTime: 0
   initialWaitTime: 0.15
   occupied: 0
+--- !u!70 &8396039119686204290
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3027208874658607725}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 925154e0aa8bc684c8a375d522d105b5, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 1
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.000004611151, y: -0.021700384}
+  m_Size: {x: 1.9670018, y: 0.29563496}
+  m_Direction: 1
