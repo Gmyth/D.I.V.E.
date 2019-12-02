@@ -9,8 +9,10 @@ using UnityEngine.Playables;
 // ReSharper disable All
 
 
-public class DialogueManager: Singleton<DialogueManager>
+public class DialogueManager : MonoBehaviour
 {
+    public static DialogueManager Instance { get; private set; } = null;
+
     private TextDict[] Dict;
     private DialogueData[] dialogues;
 
@@ -18,6 +20,11 @@ public class DialogueManager: Singleton<DialogueManager>
     public UnityEvent KeyPressed;
 
     private TimelineManager currentTimelineManager;
+
+    void Awake()
+    {
+        Instance = this;
+    }
 
     public enum DialogueType
     {
@@ -99,10 +106,6 @@ public class DialogueManager: Singleton<DialogueManager>
         
         if (CheckDialogueType(index) == DialogueType.Normal)
             dialogueWin.DisplayDialogue(dialogues[index].Text, dialogues[index].Actor);
-        else if(CheckDialogueType(index) == DialogueType.Option)
-        {
-            
-        }
         else
             yield break;
 
@@ -126,10 +129,6 @@ public class DialogueManager: Singleton<DialogueManager>
 
             if (CheckDialogueType(index) == DialogueType.Normal)
                 dialogueWin.DisplayDialogue(dialogues[nextDialogue].Text, dialogues[nextDialogue].Actor);
-            else if (CheckDialogueType(index) == DialogueType.Option)
-            {
-
-            }
             else
                 yield break;
 

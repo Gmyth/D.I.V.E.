@@ -83,56 +83,8 @@ public class GUIDialogue : GUIWindow
     public float AngleMultiplier = 1.0f;
     public float CurveScale = 1.0f;
 
-    // Start is called before the first frame update
-    private void Start()
-    {
-        //mode = GuiDialogueMode.Default;
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-
-    }
-
-    //private void CheckActor(string actor)
-    //{
-    //    switch (mode)
-    //    {
-    //        case GuiDialogueMode.Default:
-    //            {
-    //                //if it is the first TeshMeshPro dialogue box
-    //                if (textBoxList.Count == 0)
-    //                {
-    //                    GameObject dialogueBox = Instantiate(ResourceUtility.GetGUIPrefab<GameObject>("Dialogue"), transform, false);
-    //                    textBoxList.Add(dialogueBox);
-    //                }
-    //                //if textBoxDict don't has the actor, add it (Only allow actor to appear once in dict)
-    //                if (!textBoxDict.ContainsKey(actor))
-    //                    textBoxDict.Add(actor, textBoxList[0].GetComponentInChildren<TMP_Text>());
-    //                break;
-    //            }
-    //        case GuiDialogueMode.Multiple:
-    //            break;
-
-    //        default:
-    //            throw new ArgumentOutOfRangeException();
-    //    }
-    //}
-
     private void SetDialoguePosition()
-    {
-        //if (Camera.main == null) return;
-        //Vector2 actorCoordinates = Camera.main.WorldToScreenPoint(transform.position);
-
-        //actorCoordinates.y += 120;
-        //actorCoordinates.x -= 400;
-
-
-
-        //textBoxList[0].GetComponent<Transform>().position = actorCoordinates;
-        //textBoxList[0].GetComponent<Transform>().position = dialoguePositionDown.position;
-       
+    {     
         if (displayMode == DisplayMode.Down)
             dialogueBox.GetComponent<Transform>().SetPositionAndRotation(dialoguePositionDown.position, dialoguePositionDown.rotation);
         else if(displayMode == DisplayMode.Up)
@@ -145,8 +97,6 @@ public class GUIDialogue : GUIWindow
 
     public void DisplayDialogue(string text, string actor)
     {
-        //CheckActor(actor);
-
         if (text == null)
         {
             Debug.Log(LogUtility.MakeLogStringFormat("GUIDialogue", "Error: The text to be displayed is null"));
