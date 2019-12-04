@@ -45,7 +45,7 @@ public class SimpleChargePoint : MonoBehaviour
         {
             if (other.tag == "Player")
             {
-                PlayerCharacter playerCharacter = other.GetComponent<PlayerCharacter>();
+                PlayerCharacter playerCharacter = PlayerCharacter.Singleton;
 
                 if (playerCharacter[StatisticType.Osp] <= 0)
                     OnEnergyCharge();
