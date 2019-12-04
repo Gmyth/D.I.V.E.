@@ -86,7 +86,7 @@ public class PSAttackGH: PlayerState
         if (Time.time - t0 > (recoveryTime + actionTime))
         {
 
-            if (!isGrounded()&& Vy < 0)
+            if (GetGroundType() == 0&& Vy < 0)
             {
                 return indexPSAirborne;
             }

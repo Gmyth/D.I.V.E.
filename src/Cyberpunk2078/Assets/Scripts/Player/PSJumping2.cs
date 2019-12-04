@@ -46,8 +46,9 @@ public class PSJumping2 : PlayerState
         //Still support Horizontal update during jumping, delete following to kill Horizzontal input
         PhysicsInputHelper(h,speedFactor,accelerationFactor);
 
-        
-        if (!isGrounded()&& Vy < 0)
+        bool ground = GetGroundType() == 1;
+
+        if (!ground && Vy < 0)
         {
             return indexPSAirborne;
         }
@@ -58,7 +59,7 @@ public class PSJumping2 : PlayerState
             if(isCloseTo("Ladder") != Direction.None) return indexPSClimb;
         }
         
-        if (isGrounded())
+        if (ground)
             {
                 if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("HorizontalJoyStick") == 0)
                     return index_PSIdle;

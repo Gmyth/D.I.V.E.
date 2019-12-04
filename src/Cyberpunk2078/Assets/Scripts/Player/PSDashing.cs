@@ -55,7 +55,7 @@ public class PSDashing : PlayerState
 
         if (!Apply)
         {
-            if (!isGrounded())
+            if (GetGroundType() == 0)
             {
                 return indexPSAirborne;
             }
@@ -138,7 +138,7 @@ public class PSDashing : PlayerState
         {
             rb2d.velocity = rb2d.velocity * 0.3f;
             PhysicsInputHelper(h);
-            if (!isGrounded())
+            if (GetGroundType() == 0)
             {
                 return indexPSAirborne;
             }
