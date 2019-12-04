@@ -37,11 +37,11 @@ public class PSAirborne : PlayerState
         {
             return indexPSAttackGH;
         }
-        
+
         if (Input.GetAxis("Vertical") > 0 || normalizedInput.y > 0.7f)
         {
             // up is pressed
-            if(isCloseTo("Ladder") != Direction.None) return indexPSClimb;
+            if (isCloseTo("Ladder") != Direction.None) return indexPSClimb;
         }
 
         var dir = isCloseTo("Ground");
@@ -49,21 +49,46 @@ public class PSAirborne : PlayerState
         if (dir != Direction.None && Mathf.Abs(h) > 0 && Vy < 0) { return indexPSWallJumping; }
 
 
-        if (Input.GetButtonDown("Jump") && Time.time <  lastGroundedSec+ jumpTolerance)
+        if (Input.GetButtonDown("Jump") && Time.time < lastGroundedSec + jumpTolerance)
         {
             return indexPSJumping1;
         }
 
-        
+
         if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
         {
             Player.CurrentPlayer.triggerReady = false;
             return indexPSDashing;
         }
-        
-        if (isGrounded())
-            return (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("HorizontalJoyStick") != 0) ? indexPSMoving : indexPSIdle;
-        
+
+
+        switch (GetGroundType())
+        {
+            case 1:
+                return (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("HorizontalJoyStick") != 0) ? indexPSMoving : indexPSIdle;
+
+
+            case 2:
+                if (Mathf.Abs(rb2d.velocity.x) < 0.5)
+                {
+                    rb2d.velocity = Vector2.zero;
+
+                    rb2d.AddForce(Global.enemyHeadJumpVerticalForce * playerCharacter.transform.up + Global.enemyHeadJumpHorizontalForce * playerCharacter.transform.right);
+                }
+                else
+                {
+                    Vector2 velocity = rb2d.velocity;
+                    velocity.y = 0;
+
+                    rb2d.velocity = velocity;
+
+                    rb2d.AddForce(Global.enemyHeadJumpVerticalForce * playerCharacter.transform.up);
+                }
+
+                return indexPSJumping1;
+        }
+
+
         return Index;
     }
 

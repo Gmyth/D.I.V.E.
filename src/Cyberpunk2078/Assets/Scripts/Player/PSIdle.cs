@@ -22,23 +22,20 @@ public class PSIdle : PlayerState
         
         
         if (Input.GetButtonDown("Attack1"))
-        {
             return indexPSAttackGH;
-        }
 
 
         if (Input.GetButtonDown("Jump"))
             return indexPSJumping1;
 
-        if (!isGrounded())
-        {
+        if (GetGroundType() == 0)
             return indexPSAirborne;
-        }
         
         if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("VerticalJoyStick") > 0.7f)
         {
             // up is pressed
-            if(isCloseTo("Ladder") != Direction.None) return indexPSClimb;
+            if(isCloseTo("Ladder") != Direction.None)
+                return indexPSClimb;
         }
             
         if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("HorizontalJoyStick") != 0)

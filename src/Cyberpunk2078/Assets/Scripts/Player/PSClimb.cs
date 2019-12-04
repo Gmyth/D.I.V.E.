@@ -57,7 +57,7 @@ public class PSClimb : PlayerState
             return indexPSIdle;
         }
         
-        if (isGrounded())
+        if (GetGroundType() == 1)
         {
             if(v < 0){
                 anim.speed = 1;

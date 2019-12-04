@@ -60,7 +60,7 @@ public class PSMoving : PlayerState
         playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipX = flip;
         Move(x);
 
-        if (!isGrounded() && Vy < 0)
+        if (GetGroundType() == 0 && Vy < 0)
         {
             return indexPSAirborne;
         }
