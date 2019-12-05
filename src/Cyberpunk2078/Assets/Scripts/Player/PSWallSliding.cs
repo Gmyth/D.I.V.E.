@@ -66,7 +66,7 @@ public class PSWallSliding: PlayerState
             Player.CurrentPlayer.jumpForceGate = true;
 
             rigidbody.velocity = Vector2.zero;
-            rigidbody.AddForce(Global.enemyHeadJumpVerticalForce * playerCharacter.transform.up + Global.enemyHeadJumpHorizontalForce * playerCharacter.transform.right);
+            rigidbody.AddForce(Global.enemyHeadJumpVerticalForce * playerCharacter.transform.up - Global.enemyHeadJumpHorizontalForce * playerCharacter.transform.right);
 
             return index_PSJumping1;
         }

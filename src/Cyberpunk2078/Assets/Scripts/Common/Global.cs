@@ -2,6 +2,6 @@
 
 public struct Global
 {
-    public static float enemyHeadJumpVerticalForce = 200;
-    public static float enemyHeadJumpHorizontalForce = 50;
+    public static float enemyHeadJumpVerticalForce = 400;
+    public static float enemyHeadJumpHorizontalForce = 600;
 }
