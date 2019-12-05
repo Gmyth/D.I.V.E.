@@ -89,12 +89,16 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
             {
                 if (type == OrientationType.Horizontal)
                 {
-                    if (Mathf.Abs(enemy.currentTarget.transform.position.x - enemy.transform.position.x) <= stopDistance)
+                    float dx = enemy.currentTarget.transform.position.x - enemy.transform.position.x;
+
+                    if (Mathf.Abs(dx) <= stopDistance || Mathf.Sign(dx) != Mathf.Sign(direction.x))
                         bStop = true;
                 }
                 else
                 {
-                    if ((enemy.currentTarget.transform.position - enemy.transform.position).sqrMagnitude <= stopDistance * stopDistance)
+                    Vector3 d = enemy.currentTarget.transform.position - enemy.transform.position;
+
+                    if (d.sqrMagnitude <= stopDistance * stopDistance || Vector3.Dot(direction, d.normalized) < -0.5)
                         bStop = true;
                 }
             }

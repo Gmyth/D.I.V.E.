@@ -69,6 +69,8 @@ public class PSAirborne : PlayerState
 
 
             case 2:
+                Player.CurrentPlayer.jumpForceGate = true;
+
                 if (Mathf.Abs(rb2d.velocity.x) < 0.5)
                 {
                     rb2d.velocity = Vector2.zero;
