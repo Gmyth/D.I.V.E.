@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -252,6 +252,11 @@ PrefabInstance:
         type: 3}
       propertyPath: guardZone.h
       value: 12.618652
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
@@ -2895,6 +2900,11 @@ PrefabInstance:
         type: 3}
       propertyPath: guardZone.h
       value: 12.989044
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
@@ -10145,6 +10155,11 @@ PrefabInstance:
       propertyPath: guardZone.center.y
       value: 99.486855
       objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!4 &329205230 stripped
@@ -10808,6 +10823,11 @@ PrefabInstance:
         type: 3}
       propertyPath: patrolRoute.wayPoints.Array.data[0].y
       value: -2.020206
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
@@ -15978,6 +15998,11 @@ PrefabInstance:
       propertyPath: patrolRoute.wayPoints.Array.data[0].y
       value: -10.323489
       objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!4 &477771902 stripped
@@ -16566,7 +16591,7 @@ PrefabInstance:
     - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
         type: 3}
       propertyPath: m_FlipX
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
         type: 3}
@@ -17237,6 +17262,11 @@ PrefabInstance:
       propertyPath: guardZone.h
       value: 14.718292
       objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!4 &537269041 stripped
@@ -17570,6 +17600,11 @@ PrefabInstance:
       propertyPath: thruster
       value: 
       objectReference: {fileID: 536076312}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!4 &544589992 stripped
@@ -20660,6 +20695,11 @@ PrefabInstance:
       propertyPath: guardZone.h
       value: 12.989044
       objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!1 &687683873 stripped
@@ -21218,6 +21258,11 @@ PrefabInstance:
         type: 3}
       propertyPath: guardZone.h
       value: 16.02353
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
@@ -22304,6 +22349,11 @@ PrefabInstance:
         type: 3}
       propertyPath: patrolRoute.wayPoints.Array.data[1].y
       value: 86.953804
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
@@ -39561,6 +39611,11 @@ PrefabInstance:
       propertyPath: guardZone.h
       value: 9.194622
       objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!4 &916976904 stripped
@@ -40282,6 +40337,11 @@ PrefabInstance:
         type: 3}
       propertyPath: guardZone.center.y
       value: -26.23645
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
@@ -41800,6 +41860,11 @@ PrefabInstance:
       propertyPath: thruster
       value: 
       objectReference: {fileID: 1478465675}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!4 &1033257451 stripped
@@ -44469,6 +44534,11 @@ PrefabInstance:
       propertyPath: guardZone.h
       value: 14.663006
       objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!4 &1177554106 stripped
@@ -46341,6 +46411,11 @@ PrefabInstance:
         type: 3}
       propertyPath: guardZone.h
       value: 18.498508
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
@@ -55299,6 +55374,11 @@ PrefabInstance:
       propertyPath: patrolRoute.wayPoints.Array.data[0].y
       value: 36.046528
       objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!4 &1562992160 stripped
@@ -58744,6 +58824,11 @@ PrefabInstance:
       propertyPath: guardZone.h
       value: 18.498508
       objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!4 &1717989080 stripped
@@ -59766,6 +59851,11 @@ PrefabInstance:
       propertyPath: guardZone.center.y
       value: -58.312645
       objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!212 &1781316021 stripped
@@ -60463,6 +60553,11 @@ PrefabInstance:
       propertyPath: thruster
       value: 
       objectReference: {fileID: 1254386082}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!4 &1806296144 stripped
@@ -62348,6 +62443,11 @@ PrefabInstance:
       propertyPath: thruster
       value: 
       objectReference: {fileID: 1880106207}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!1 &1880106206 stripped
@@ -63507,6 +63607,11 @@ PrefabInstance:
       propertyPath: guardZone.h
       value: 20.037247
       objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!4 &1951335686 stripped
@@ -64101,6 +64206,11 @@ PrefabInstance:
         type: 3}
       propertyPath: patrolRoute.wayPoints.Array.data[1].y
       value: 86.93302
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
@@ -83587,6 +83697,11 @@ PrefabInstance:
       propertyPath: guardZone.h
       value: 12.989044
       objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!1 &2022447690 stripped
@@ -84667,6 +84782,11 @@ PrefabInstance:
       propertyPath: guardZone.center.y
       value: -3.2887545
       objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!4 &2090804774 stripped
@@ -84897,6 +85017,11 @@ PrefabInstance:
         type: 3}
       propertyPath: patrolRoute.wayPoints.Array.data[1].y
       value: 71.10567
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
@@ -101450,6 +101575,11 @@ PrefabInstance:
       propertyPath: guardZone.h
       value: 18.222229
       objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
 --- !u!4 &2135182176 stripped
@@ -101590,6 +101720,11 @@ PrefabInstance:
         type: 3}
       propertyPath: guardZone.center.y
       value: 16.262589
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
