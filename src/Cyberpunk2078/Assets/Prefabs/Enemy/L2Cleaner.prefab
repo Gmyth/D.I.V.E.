@@ -45,7 +45,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.8128509, y: 2.2143366}
+  m_Offset: {x: 0.6731845, y: 1.9416547}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -56,7 +56,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.8675041, y: 2.5613618}
+  m_Size: {x: 2.41525, y: 2.015998}
   m_EdgeRadius: 0
 --- !u!114 &1413059483
 MonoBehaviour:
@@ -76,7 +76,6 @@ MonoBehaviour:
     knockback: 0
   isFriendly: 0
   effects: 
-  group: {fileID: 0}
 --- !u!1 &445841681128334412
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,8 +197,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.026017189, y: 1.2193968}
-  m_Size: {x: 0.8916321, y: 2.466589}
+  m_Offset: {x: 0.019366413, y: 1.0431519}
+  m_Size: {x: 0.7586165, y: 2.0741925}
   m_Direction: 0
 --- !u!95 &445841681128334403
 Animator:
@@ -336,7 +335,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.2748365, y: 1.7491713}
+  m_Offset: {x: 1.0985906, y: 1.622807}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -347,7 +346,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.943533, y: 3.4916925}
+  m_Size: {x: 1.5910411, y: 2.5206785}
   m_EdgeRadius: 0
 --- !u!114 &445841682356872280
 MonoBehaviour:
@@ -367,7 +366,6 @@ MonoBehaviour:
     knockback: 0
   isFriendly: 0
   effects: 
-  group: {fileID: 0}
 --- !u!1 &3669862315530931471
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,7 +411,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.45310974, y: 1.4770095}
+  m_Offset: {x: 0.41320503, y: 1.3772476}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -424,7 +422,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5118675, y: 2.3531613}
+  m_Size: {x: 1.4320581, y: 2.486178}
   m_EdgeRadius: 0
 --- !u!114 &3669862315530931469
 MonoBehaviour:
@@ -444,7 +442,6 @@ MonoBehaviour:
     knockback: 0
   isFriendly: 0
   effects: 
-  group: {fileID: 0}
 --- !u!1 &4798640497762447322
 GameObject:
   m_ObjectHideFlags: 0
