@@ -4,6 +4,7 @@
 
 using UnityEngine;
 
+
 public struct ResourceUtility
 {
     public static T GetPrefab<T>(string directory) where T : Object

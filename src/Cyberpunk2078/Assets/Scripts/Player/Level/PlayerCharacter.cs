@@ -11,9 +11,11 @@ public class PlayerCharacter : Dummy
     [SerializeField] private FSMPlayer fsm;
 
     public Transform SpriteHolder;
-    private new Rigidbody2D rigidbody;
     public GameObject groundDust;
+    public GUITutorial tutorial;
+
     private Player player;
+    private new Rigidbody2D rigidbody;
 
 
     public EventOnStatisticChange OnStatisticChange { get; private set; }
@@ -255,6 +257,9 @@ public class PlayerCharacter : Dummy
 
         fsm = fsm.Initialize(this);
         fsm.Boot();
+
+
+        tutorial.Hide();
 
 
         GUIManager.Singleton.Open("HUD", this);
