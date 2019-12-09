@@ -20,7 +20,9 @@ public class HitBox : MonoBehaviour
     private HitBoxGroup group;
     private HashSet<int> objectsHit;
 
+    private Coroutine bulletTimeCorotine = null;
 
+    
     private void Awake()
     {
         HitBoxGroup group = transform.parent.GetComponent<HitBoxGroup>();
@@ -63,7 +65,7 @@ public class HitBox : MonoBehaviour
                     enemy.OnHit?.Invoke(hit);
                     
                     TimeManager.Instance.endSlowMotion();
-                    CameraManager.Instance.Reset();
+                    CameraManager.Instance.Idle();
                     
                     enemy.ApplyDamage(hit.damage);
                     objectsHit.Add(id);
@@ -85,7 +87,7 @@ public class HitBox : MonoBehaviour
                     trail1.gameObject.SetActive(true);
 
 
-                    CameraManager.Instance.Shaking(0.20f, 0.10f);
+                    CameraManager.Instance.Shaking(0.20f, 0.10f, true);
                 }
             }
             else if (other.tag == "Platform" && other.GetComponent<SimpleBreakable>())
@@ -133,8 +135,15 @@ public class HitBox : MonoBehaviour
         }
     }
 
+
     private SingleEffect CreateRandomEffect(Transform targetTransform)
     {
+        SingleEffect effect1 = ObjectRecycler.Singleton.GetObject<SingleEffect>(Random.Range(1,2));
+        effect1.transform.position = targetTransform.position - (targetTransform.position - transform.position) * 0.2f;
+        effect1.transform.right = transform.right;
+        effect1.setTarget(targetTransform);
+        effect1.gameObject.SetActive(true);
+        
         if (effects.Length == 0)
             return null;
             

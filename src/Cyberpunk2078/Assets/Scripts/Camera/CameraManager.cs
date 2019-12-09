@@ -368,6 +368,11 @@ public class CameraManager : MonoBehaviour {
 	{
 		currentState = CameraState.Reset;
 	}
+    
+    public void Idle()
+    {
+	    currentState = CameraState.Idle;
+    }
 
     private IEnumerator resetDelay(float duration)
     {

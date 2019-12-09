@@ -38,8 +38,8 @@ public class Bullet : Recyclable
                 {
                     hunchTriggered = true;
                     playerCharacter.ConsumeFever(30);
-                    TimeManager.Instance.startSlowMotion(0.8f);
-                    CameraManager.Instance.FocusAt(playerCharacter.transform,0.8f);
+                    TimeManager.Instance.startSlowMotion(0.5f);
+                    CameraManager.Instance.FocusAt(playerCharacter.transform,0.2f);
                     CameraManager.Instance.FlashIn(7f,0.05f,0.15f,0.01f);
                 }
             }
@@ -73,7 +73,9 @@ public class Bullet : Recyclable
 
                 other.GetComponent<Dummy>().ApplyDamage(rawDamage);
                 --numHitsRemaining;
-
+                
+                TimeManager.Instance.endSlowMotion();
+                CameraManager.Instance.Idle();
 
                 SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
                 Hit.transform.position = other.transform.position - (other.transform.position - transform.position) * 0.2f;
@@ -107,7 +109,7 @@ public class Bullet : Recyclable
                 --numHitsRemaining;
 
                 TimeManager.Instance.endSlowMotion();
-                CameraManager.Instance.Reset();
+                CameraManager.Instance.Idle();
 
                 CameraManager.Instance.Shaking(0.20f, 0.05f);
                 SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
@@ -124,14 +126,17 @@ public class Bullet : Recyclable
         {
             if (other.name != "DashAtkBox")
             {
+                isFriendly = true;
                 GetComponent<LinearMovement>().initialPosition = transform.position;
                 GetComponent<LinearMovement>().speed *= 1.5f;
                 GetComponent<LinearMovement>().orientation = (Quaternion.Euler(0, 0,  Random.Range(-30, 30)) * (GetComponent<LinearMovement>().orientation * -1)).normalized;
                 GetComponent<LinearMovement>().spawnTime = Time.time;
 
                 transform.right = GetComponent<LinearMovement>().orientation;
-
-                isFriendly = true;
+                
+                TimeManager.Instance.endSlowMotion();
+                CameraManager.Instance.Idle();
+                
 
                 CameraManager.Instance.Shaking(0.2f,0.05f,true);
 
@@ -141,14 +146,6 @@ public class Bullet : Recyclable
                 Hit1.transform.position = other.transform.position + (transform.position  - other.transform.position) * 0.3f;
 
                 Hit1.gameObject.SetActive(true);
-                
-
-                SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
-                Hit.transform.right = transform.right;
-                Hit.transform.position = other.transform.position + (transform.position  - other.transform.position) * 0.5f;
-                Hit.transform.localScale = Vector3.one;
-
-                Hit.gameObject.SetActive(true);
             }
 
         }
