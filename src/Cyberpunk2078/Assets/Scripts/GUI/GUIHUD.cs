@@ -10,6 +10,8 @@ public class GUIHUD : GUIWindow
     [SerializeField] private Image spBar;
     [SerializeField] private Image feverBar;
     [SerializeField] private Text textArea;
+    [SerializeField] private GameObject resourceInspector;
+    [SerializeField] private GUIDialogueWidget dialogueWidget;
 
     [Header("Configuration")]
     [SerializeField] private Color feverBlinkColor = Color.yellow;
@@ -52,6 +54,19 @@ public class GUIHUD : GUIWindow
 
         textCoroutine = StartCoroutine(ShowText(text, textDuration));
     }
+
+    public void ShowDialogue(DialogueData dialogue)
+    {
+        resourceInspector.SetActive(false);
+        dialogueWidget.Show(dialogue);
+    }
+
+    public void HideDialogue()
+    {
+        resourceInspector.SetActive(true);
+        dialogueWidget.Hide();
+    }
+
 
     public void HighlightFeverBar()
     {

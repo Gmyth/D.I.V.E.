@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 
@@ -9,11 +10,15 @@ public class DataTableManager
 
     private Dictionary<string, DataTable> dataTables = new Dictionary<string, DataTable>();
 
+    private Dictionary<int, string[]> textDictionary = new Dictionary<int, string[]>();
+
 
     private DataTableManager()
     {
         foreach (DataTable dataPage in Resources.LoadAll<DataTable>("DataTables"))
             dataTables.Add(dataPage.name, dataPage);
+
+        ReadTextTable();
     }
 
 
@@ -34,6 +39,11 @@ public class DataTableManager
         return ((DataTable<T>)dataTables[tableName])[index];
     }
 
+    public string GetText(int id)
+    {
+        return textDictionary[id][0];
+    }
+
     public MotionData GetMotionData(int id)
     {
         return GetData<MotionData>("Motion", id);
@@ -47,5 +57,21 @@ public class DataTableManager
     public EnemyData GetEnemyData(int id)
     {
         return GetData<EnemyData>("Enemy", id);
+    }
+
+    public DialogueData GetDialogueData(int id)
+    {
+        return GetData<DialogueData>("Dialogue", id);
+    }
+
+
+    private void ReadTextTable()
+    {
+        string jsonString = File.ReadAllText(Application.dataPath + "/StreamingAssets" + "/Text.json");
+        string fixedJsonString = JsonHelper.fixJson(jsonString);
+
+
+        foreach(TextData data in JsonHelper.FromJson<TextData>(fixedJsonString))
+            textDictionary.Add(data.Id, new string[] { data.English });
     }
 }
