@@ -86,7 +86,7 @@ public class CheckPointManager : MonoBehaviour
         StartCoroutine("BlackScreen");
     
         //Restore Camera State
-        CameraManager.Instance.Reset();
+        CameraManager.Instance.Idle();
         TimeManager.Instance.endSlowMotion();
 
         //Restore objects

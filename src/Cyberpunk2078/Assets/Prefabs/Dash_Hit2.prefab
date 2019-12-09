@@ -282,4 +282,4 @@ MonoBehaviour:
     damage: 1
     knockback: 0
   isFriendly: 1
-  effects: 0100000002000000
+  effects: 0e0000000f000000

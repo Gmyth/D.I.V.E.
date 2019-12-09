@@ -10,37 +10,57 @@ public class TimeManager : MonoBehaviour
 
     [SerializeField]private float releaseSmoothTime;
     [SerializeField]private float slowMotionFactor;
+    [SerializeField]private float targetFXAlpha;
+    private float velocity;
+    private SpriteRenderer blackScreen;
     private float startTime;
     private float endTime;
+
+    private bool triggered;
     void Awake()
     {
         Instance = this;
+        blackScreen = Camera.main.GetComponentInChildren<SpriteRenderer>();
+        Time.timeScale = 1;
+        Time.fixedDeltaTime = Time.timeScale * 0.02f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Time.unscaledTime > endTime)
-        { 
-            var newScale = Time.timeScale + (1f / releaseSmoothTime) * Time.unscaledDeltaTime;
-            Time.timeScale = Mathf.Clamp(newScale, 0f, 1f);
-            Time.fixedDeltaTime = Time.timeScale * 0.02f;
-        }
         
+        if (triggered)
+        {
+            if (Time.unscaledTime < endTime)
+            { 
+                var newScale = Time.timeScale - (1f / releaseSmoothTime) * Time.unscaledDeltaTime;
+                Time.timeScale = Mathf.Clamp(newScale, slowMotionFactor, 1f);
+                Time.fixedDeltaTime = Time.timeScale * 0.02f;
+                float current = blackScreen.color.a;
+                blackScreen.color =new Color(blackScreen.color.r,blackScreen.color.g,blackScreen.color.b, Mathf.SmoothDamp(current, targetFXAlpha, ref velocity, 0.1f));
+            }
+            else if(Time.unscaledTime >= endTime)
+            {
+                triggered = false;
+                Time.timeScale = 1;
+                Time.fixedDeltaTime = Time.timeScale * 0.02f;
+                blackScreen.color =new Color(blackScreen.color.r,blackScreen.color.g,blackScreen.color.b, 0f);
+            }
+        }
     }
 
-    public void startSlowMotion(float duration, float scale = 0.3f)
+    public void startSlowMotion(float duration)
     {
-        Time.timeScale = scale == slowMotionFactor? slowMotionFactor : scale;
-        //Time.fixedDeltaTime = Time.timeScale * 0.02f;
         startTime = Time.unscaledTime;
-        endTime = startTime + duration;
+        endTime = Time.unscaledTime + duration * 10f;
+        triggered = true;
     }
-    
+
     public void endSlowMotion()
     {
         Time.timeScale = 1;
-        //Time.fixedDeltaTime = Time.timeScale * 0.02f;
-        endTime = Time.unscaledTime - 1f;
+        Time.fixedDeltaTime = Time.timeScale * 0.02f;
+        blackScreen.color =new Color(blackScreen.color.r,blackScreen.color.g,blackScreen.color.b, 0f);
+        triggered = false;
     }
 }
