@@ -25,7 +25,7 @@ public class PSMoving : PlayerState
     public override int Update()
     {
         NormalizeSlope();
-        if (playerCharacter.IsInFeverMode) anim.speed = 1.1f;
+        if (playerCharacter.InKillStreak) anim.speed = 1.1f;
         else anim.speed = 1f;
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
@@ -108,7 +108,7 @@ public class PSMoving : PlayerState
             Dust.gameObject.SetActive(true);
         }
 
-        if (playerCharacter.IsInFeverMode) anim.speed = 1.1f;
+        if (playerCharacter.InKillStreak) anim.speed = 1.1f;
     }
     
     public override void OnStateQuit(State nextState)
@@ -123,7 +123,7 @@ public class PSMoving : PlayerState
     internal void Move(float axis)
     {
         int direction = axis > 0 ? 1 : -1;
-        if(!playerCharacter.IsInFeverMode) {PhysicsInputHelper(axis,n_speedFactor,n_accelerationFactor);}
+        if(!playerCharacter.InKillStreak) {PhysicsInputHelper(axis,n_speedFactor,n_accelerationFactor);}
         else {PhysicsInputHelper(axis,f_speedFactor,f_accelerationFactor);}
     }
     

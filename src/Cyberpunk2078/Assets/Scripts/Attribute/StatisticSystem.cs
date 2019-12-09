@@ -20,7 +20,7 @@ public enum AttributeType : int
 
     OspRecovery_c0 = 0x700,
     
-    MaxFever_c0 = 0x800,
+    MaxUltimateEnergy_c0 = 0x800,
     
     FeverDecay_c0 = 0x900,
     
@@ -36,7 +36,9 @@ public enum AttributeType : int
     MaxFatigue_c1 = 0xE001,
     MaxFatigue_c2 = 0xE002,
     MaxFatigue_m0 = 0xE020,
-
+    
+    MaxKs_c0 = 0xA110,
+    KsDecay_c0 = 0xA210, // Kill Streak Decay
 
     SpReward_c0 = 0xF110,
 
@@ -58,19 +60,23 @@ public enum StatisticType : int
     SpRecovery_c0 = 0x5,
     MaxOsp = 0x6,
     OspRecovery = 0x7,
-    MaxFever = 0x8,
+    MaxUltimateEnergy = 0x8,
     FeverDecay = 0x9,
     SightRange = 0xA,
 
     Damage = 0x10,
     Knowback = 0x20,
-
+    
+    KsDecay = 0xA1,
+    KsCount = 0xA2,
+    MaxKs = 0xA3,
+    
     MaxFatigue = 0xE0,
 
     Hp = 0xF0,
     Sp = 0xF1,
     Osp = 0xF2,
-    Fever = 0xF3,
+    UltimateEnergy = 0xF3,
     Fatigue = 0xF4,
 }
 
@@ -118,8 +124,8 @@ public class StatisticSystem
                 return AttributeSet.Sum(AttributeType.MaxOsp_c0, attributeSets);
 
 
-            case StatisticType.MaxFever:
-                return AttributeSet.Sum(AttributeType.MaxFever_c0, attributeSets);
+            case StatisticType.MaxUltimateEnergy:
+                return AttributeSet.Sum(AttributeType.MaxUltimateEnergy_c0, attributeSets);
 
 
             case StatisticType.FeverDecay:

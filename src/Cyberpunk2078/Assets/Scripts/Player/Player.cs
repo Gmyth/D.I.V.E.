@@ -46,16 +46,25 @@ public class Player
     }
 
 
-    private Player(int healthCap = 3, float normalEnergyCap = 1 ,float overloadEnergyCap = 1,float feverEnergyCap = 100, float feverDecayRate = 1)
+    private Player(
+        int healthCap = 3, 
+        float normalEnergyCap = 1, 
+        float overloadEnergyCap = 1,
+        float feverEnergyCap = 100, 
+        float feverDecayRate = 1, 
+        float killStreakCap = 2,
+        float killStreakDecay = 4
+    )
     {
         inventory = new Inventory();
         attributes = new AttributeSet();
         attributes.Set(AttributeType.MaxHp_c0, healthCap);
         attributes.Set(AttributeType.MaxSp_c0, normalEnergyCap);
         attributes.Set(AttributeType.MaxOsp_c0, overloadEnergyCap);
-        attributes.Set(AttributeType.MaxFever_c0, feverEnergyCap);
+        attributes.Set(AttributeType.MaxUltimateEnergy_c0, feverEnergyCap);
         attributes.Set(AttributeType.FeverDecay_c0, feverDecayRate);
-
+        attributes.Set(AttributeType.MaxKs_c0, killStreakCap);
+        attributes.Set(AttributeType.KsDecay_c0, killStreakDecay);
 
         energyLocked = false;
         overloadEnergyLocked = false;

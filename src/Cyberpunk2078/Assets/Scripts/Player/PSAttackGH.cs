@@ -36,7 +36,7 @@ public class PSAttackGH: PlayerState
         var actionTime = n_actionTime;
         var recoveryTime = n_recoveryTime;
 
-        if (playerCharacter.IsInFeverMode)
+        if (playerCharacter.InKillStreak)
         {
             pushForce = f_pushForce;
             actionTime = f_actionTime;
@@ -117,7 +117,7 @@ public class PSAttackGH: PlayerState
     public override void OnStateEnter(State previousState)
     {
         
-        var pushForce = playerCharacter.IsInFeverMode ? f_pushForce : n_pushForce;
+        var pushForce = playerCharacter.InKillStreak ? f_pushForce : n_pushForce;
 
         playerCharacter.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         //playerCharacter.GetComponent<GhostSprites>().Occupied = true;
