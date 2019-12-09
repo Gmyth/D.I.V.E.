@@ -17,4 +17,9 @@ MonoBehaviour:
     portrait: {fileID: 21300000, guid: e1cacb538c49f804a9dbe41bb990f915, type: 3}
     textID_speaker: 1
     textID_content: 4
+    next: 1
+  - id: 1
+    portrait: {fileID: 21300000, guid: e1cacb538c49f804a9dbe41bb990f915, type: 3}
+    textID_speaker: 1
+    textID_content: 2
     next: -1

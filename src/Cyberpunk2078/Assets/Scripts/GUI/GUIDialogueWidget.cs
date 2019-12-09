@@ -31,6 +31,15 @@ public class GUIDialogueWidget : GUIWidget
 
     public void Show(DialogueData dialogue)
     {
+        ShowDialogue(dialogue);
+
+
+        Show();
+    }
+
+
+    private void ShowDialogue(DialogueData dialogue)
+    {
         this.dialogue = dialogue;
 
 
@@ -50,9 +59,6 @@ public class GUIDialogueWidget : GUIWidget
 
 
         i0 = speakerName.Length + 2;
-
-
-        Show();
     }
 
 
@@ -64,57 +70,54 @@ public class GUIDialogueWidget : GUIWidget
 
     private IEnumerator ShowText()
     {
-        textField.ForceMeshUpdate();
-
-
-        //Count how many characters we have in our new dialogue line.
-        TMP_TextInfo textInfo = textField.textInfo;
-        int numCharacters = textInfo.characterCount;
-
-
-        float t = Time.unscaledTime;
-        
-        while (textField.maxVisibleCharacters < numCharacters)
+        for (;;)
         {
-            textField.maxVisibleCharacters = i0 + Mathf.FloorToInt((Time.unscaledTime - t) / textSpeed);
+            //Count how many characters we have in our new dialogue line.
+            int numCharacters = textField.text.Length;
 
-            yield return null;
+
+            float t = Time.unscaledTime;
+            
+            while (textField.maxVisibleCharacters < numCharacters)
+            {
+                float dt = Time.unscaledTime - t;
+                float ts = Input.GetButton("Attack1") ? 0.2f * textSpeed : textSpeed;
+                int n = Mathf.FloorToInt(dt / ts);
+
+                textField.maxVisibleCharacters += n;
+                t += n * ts;
+
+                yield return null;
+            }
+
+
+            yield return WaitForKeyPress("Attack1");
+
+
+            if (dialogue.Next < 0)
+                break;
+            else
+                ShowDialogue(DataTableManager.singleton.GetDialogueData(dialogue.Next));
         }
+
+
+        Hide();
     }
 
-    private IEnumerator WaitForKeyPress(KeyCode key, GUIDialogue win = null)
+    private IEnumerator WaitForKeyPress(string buttonName, float maxDuration = float.MaxValue)
     {
-        bool done = false;
-        float coolDown = 1f;
-        while (!done) // essentially a "while true", but with a bool to break out naturally
-        {
-            if (win != null)
-            {
-                if (coolDown >= 1 && Input.GetKeyDown(key) && win.CheckAnimateCoroutine() == false)
-                {
-                    done = true; // breaks the loop
-                    coolDown = 0f;
-                }
-                yield return null; // wait until next frame, then continue execution from here (loop continues)
-            }
-            else
-            {
-                if (coolDown >= 1 && Input.GetKeyDown(key))
-                {
-                    done = true; // breaks the loop
-                    coolDown = 0f;
-                }
-                yield return null; // wait until next frame, then continue execution from here (loop continues)
-            }
-            coolDown += Time.deltaTime;
-        }
+        float t = Time.unscaledTime;
 
-        // now this function returns
+        for (; Time.unscaledTime - t < maxDuration && !Input.GetButtonDown(buttonName);)
+        {
+            yield return null;
+        }
     }
 
     private void HideText(int numToShow = 0)
     {
         textField.firstVisibleCharacter = 0;
         textField.maxVisibleCharacters = numToShow;
+        textField.ForceMeshUpdate();
     }
 }

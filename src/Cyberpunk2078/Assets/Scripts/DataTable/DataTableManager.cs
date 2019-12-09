@@ -9,8 +9,7 @@ public class DataTableManager
 
 
     private Dictionary<string, DataTable> dataTables = new Dictionary<string, DataTable>();
-
-    private Dictionary<int, string[]> textDictionary = new Dictionary<int, string[]>();
+    private Dictionary<int, string[]> textTable = new Dictionary<int, string[]>();
 
 
     private DataTableManager()
@@ -41,7 +40,12 @@ public class DataTableManager
 
     public string GetText(int id)
     {
-        return textDictionary[id][0];
+        return GetText(id, Global.currentLanguage);
+    }
+
+    public string GetText(int id, Language language)
+    {
+        return textTable[id][(int)language];
     }
 
     public MotionData GetMotionData(int id)
@@ -72,6 +76,6 @@ public class DataTableManager
 
 
         foreach(TextData data in JsonHelper.FromJson<TextData>(fixedJsonString))
-            textDictionary.Add(data.Id, new string[] { data.English });
+            textTable.Add(data.Id, new string[] { data.English });
     }
 }
