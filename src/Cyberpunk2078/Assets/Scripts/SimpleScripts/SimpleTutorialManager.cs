@@ -114,10 +114,11 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
 
     private IEnumerator SlowDownAnimation()
     {
-        int t = 0;
+        float t = 0;
         while (t > 0)
         {
             PlayerCharacter.Singleton.gameObject.GetComponentInChildren<Animator>().speed -= t;
+            t += 0.1f;
             yield return 0;
         }
     }
