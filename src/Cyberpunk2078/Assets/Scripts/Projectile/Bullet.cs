@@ -38,7 +38,7 @@ public class Bullet : Recyclable
                 {
                     hunchTriggered = true;
                     playerCharacter.AddKillCount(-2);
-                    TimeManager.Instance.startSlowMotion(0.5f);
+                    TimeManager.Instance.startSlowMotion(1f);
                     CameraManager.Instance.FocusAt(playerCharacter.transform,0.2f);
                     CameraManager.Instance.FlashIn(7f,0.05f,0.15f,0.01f);
                 }

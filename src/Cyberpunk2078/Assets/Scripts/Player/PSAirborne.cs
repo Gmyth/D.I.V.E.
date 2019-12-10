@@ -31,7 +31,12 @@ public class PSAirborne : PlayerState
         float Vy = rb2d.velocity.y;
         Vector2 normalizedInput = new Vector2(h, v).normalized;
         PhysicsInputHelper(h);
-
+        
+        if (Input.GetButtonDown("Ultimate"))
+        {
+            //TODO add another ultimate
+            playerCharacter.ActivateFever();
+        }
 
         if (Input.GetButtonDown("Attack1"))
         {

@@ -85,7 +85,7 @@ public class BouncePlatform : MonoBehaviour
               
 
                 PlayerCharacter.Singleton.AddNormalEnergy(1);
-
+                if (PlayerCharacter.Singleton.InFever) PlayerCharacter.Singleton.AddOverLoadEnergy(1);
                 //rb2d.AddForce(Vector3.up * jumpForce * 100);
                 bounceReady = false;
             }

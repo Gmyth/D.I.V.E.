@@ -36,6 +36,8 @@ public class Player
     
     public float knockBackDuration;
 
+    public float FeverFactor = 1.5f;
+
 
     public float this[AttributeType type]
     {
@@ -51,7 +53,7 @@ public class Player
         float normalEnergyCap = 1, 
         float overloadEnergyCap = 1,
         float feverEnergyCap = 100, 
-        float feverDecayRate = 1, 
+        float feverDecayRate = 20, 
         float killStreakCap = 2,
         float killStreakDecay = 4
     )
