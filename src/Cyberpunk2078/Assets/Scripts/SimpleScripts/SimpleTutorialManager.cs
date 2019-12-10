@@ -102,8 +102,6 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         PlayerCharacter.Singleton.AddNormalEnergy(1);
 
         PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 11;
-
-        TimeManager.Instance.startSlowMotion(1000, 0);
     }
 
     public void IntroduceOverloadEnergy()

@@ -300,7 +300,7 @@ public class PlayerCharacter : Dummy
         fsm.Boot();
 
 
-        tutorial.Hide();
+        //tutorial.Hide();
 
 
         GUIManager.Singleton.Open("HUD", this);

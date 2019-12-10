@@ -15,7 +15,7 @@ public class TimeManager : MonoBehaviour
     private SpriteRenderer blackScreen;
     private float startTime;
     private float endTime;
-
+    private float targetScale;
     private bool triggered;
     void Awake()
     {
@@ -34,7 +34,7 @@ public class TimeManager : MonoBehaviour
             if (Time.unscaledTime < endTime)
             { 
                 var newScale = Time.timeScale - (1f / releaseSmoothTime) * Time.unscaledDeltaTime;
-                Time.timeScale = Mathf.Clamp(newScale, slowMotionFactor, 1f);
+                Time.timeScale = Mathf.Clamp(newScale, targetScale, 1f);
                 Time.fixedDeltaTime = Time.timeScale * 0.02f;
                 float current = blackScreen.color.a;
                 blackScreen.color =new Color(blackScreen.color.r,blackScreen.color.g,blackScreen.color.b, Mathf.SmoothDamp(current, targetFXAlpha, ref velocity, 0.1f));
@@ -49,9 +49,10 @@ public class TimeManager : MonoBehaviour
         }
     }
 
-    public void startSlowMotion(float duration)
+    public void startSlowMotion(float duration, float scale = -1f)
     {
         startTime = Time.unscaledTime;
+        targetScale = scale >= 0 ? scale: slowMotionFactor;
         endTime = Time.unscaledTime + duration * 10f;
         triggered = true;
     }
