@@ -298,7 +298,7 @@ public class PlayerCharacter : Dummy
         fsm.Boot();
 
 
-        ((GUIHUD)GUIManager.Singleton.Open("HUD", this)).ShowDialogue(DataTableManager.singleton.GetDialogueData(0));
+        ((GUIHUD)GUIManager.Singleton.Open("HUD", this)).ShowDialogue(DataTableManager.singleton.GetDialogueData(10101001));
     }
 
     private void Update()

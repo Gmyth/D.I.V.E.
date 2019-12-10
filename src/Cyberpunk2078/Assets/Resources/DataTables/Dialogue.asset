@@ -13,13 +13,183 @@ MonoBehaviour:
   m_Name: Dialogue
   m_EditorClassIdentifier: 
   serializedEntries:
-  - id: 0
-    portrait: {fileID: 21300000, guid: e1cacb538c49f804a9dbe41bb990f915, type: 3}
-    textID_speaker: 1
-    textID_content: 4
-    next: 1
-  - id: 1
-    portrait: {fileID: 21300000, guid: e1cacb538c49f804a9dbe41bb990f915, type: 3}
-    textID_speaker: 1
-    textID_content: 2
+  - id: 10101001
+    portrait: {fileID: 0}
+    textID_speaker: 10001
+    textID_content: 1010101001
+    next: 10101002
+  - id: 10101002
+    portrait: {fileID: 0}
+    textID_speaker: 10000
+    textID_content: 1010101002
+    next: 10101003
+  - id: 10101003
+    portrait: {fileID: 0}
+    textID_speaker: 10000
+    textID_content: 1010101003
+    next: 10101004
+  - id: 10101004
+    portrait: {fileID: 0}
+    textID_speaker: 10000
+    textID_content: 1010101004
+    next: 10101005
+  - id: 10101005
+    portrait: {fileID: 0}
+    textID_speaker: 10001
+    textID_content: 1010101005
+    next: 10101006
+  - id: 10101006
+    portrait: {fileID: 0}
+    textID_speaker: 10000
+    textID_content: 1010101006
+    next: 10101007
+  - id: 10101007
+    portrait: {fileID: 0}
+    textID_speaker: 10001
+    textID_content: 1010101007
+    next: 10101008
+  - id: 10101008
+    portrait: {fileID: 0}
+    textID_speaker: 10001
+    textID_content: 1010101008
+    next: 10101009
+  - id: 10101009
+    portrait: {fileID: 0}
+    textID_speaker: 10000
+    textID_content: 1010101009
+    next: 10101010
+  - id: 10101010
+    portrait: {fileID: 0}
+    textID_speaker: 10001
+    textID_content: 1010101010
+    next: -1
+  - id: 10102001
+    portrait: {fileID: 0}
+    textID_speaker: 10001
+    textID_content: 1010102001
+    next: -1
+  - id: 10103001
+    portrait: {fileID: 0}
+    textID_speaker: 10001
+    textID_content: 1010103001
+    next: -1
+  - id: 10104001
+    portrait: {fileID: 0}
+    textID_speaker: 10002
+    textID_content: 1010104001
+    next: 10104002
+  - id: 10104002
+    portrait: {fileID: 0}
+    textID_speaker: 10002
+    textID_content: 1010104002
+    next: 10104003
+  - id: 10104003
+    portrait: {fileID: 0}
+    textID_speaker: 10002
+    textID_content: 1010104003
+    next: 10104004
+  - id: 10104004
+    portrait: {fileID: 0}
+    textID_speaker: 10002
+    textID_content: 1010104004
+    next: 10104005
+  - id: 10104005
+    portrait: {fileID: 0}
+    textID_speaker: 10002
+    textID_content: 1010104005
+    next: 10104006
+  - id: 10104006
+    portrait: {fileID: 0}
+    textID_speaker: 10000
+    textID_content: 1010104006
+    next: 10104007
+  - id: 10104007
+    portrait: {fileID: 0}
+    textID_speaker: 10001
+    textID_content: 1010104007
+    next: 10104008
+  - id: 10104008
+    portrait: {fileID: 0}
+    textID_speaker: 10000
+    textID_content: 1010104008
+    next: 10104009
+  - id: 10104009
+    portrait: {fileID: 0}
+    textID_speaker: 10001
+    textID_content: 1010104009
+    next: 10104010
+  - id: 10104010
+    portrait: {fileID: 0}
+    textID_speaker: 10000
+    textID_content: 1010104010
+    next: 10104011
+  - id: 10104011
+    portrait: {fileID: 0}
+    textID_speaker: 10001
+    textID_content: 1010104011
+    next: 10104012
+  - id: 10104012
+    portrait: {fileID: 0}
+    textID_speaker: 10001
+    textID_content: 1010104012
+    next: 10104013
+  - id: 10104013
+    portrait: {fileID: 0}
+    textID_speaker: 10000
+    textID_content: 1010104013
+    next: -1
+  - id: 10105001
+    portrait: {fileID: 0}
+    textID_speaker: 10000
+    textID_content: 1010105001
+    next: 10105002
+  - id: 10105002
+    portrait: {fileID: 0}
+    textID_speaker: 10001
+    textID_content: 1010105002
+    next: 10105003
+  - id: 10105003
+    portrait: {fileID: 0}
+    textID_speaker: 10000
+    textID_content: 1010105003
+    next: 10105004
+  - id: 10105004
+    portrait: {fileID: 0}
+    textID_speaker: 10001
+    textID_content: 1010105004
+    next: 10105005
+  - id: 10105005
+    portrait: {fileID: 0}
+    textID_speaker: 10000
+    textID_content: 1010105005
+    next: 10105006
+  - id: 10105006
+    portrait: {fileID: 0}
+    textID_speaker: 10001
+    textID_content: 1010105006
+    next: -1
+  - id: 10201001
+    portrait: {fileID: 0}
+    textID_speaker: 10000
+    textID_content: 1010201001
+    next: 10201002
+  - id: 10201002
+    portrait: {fileID: 0}
+    textID_speaker: 10000
+    textID_content: 1010201002
+    next: 10201003
+  - id: 10201003
+    portrait: {fileID: 0}
+    textID_speaker: 10000
+    textID_content: 1010201003
+    next: -1
+  - id: 10301001
+    portrait: {fileID: 0}
+    textID_speaker: 10001
+    textID_content: 1010301001
+    next: 10301002
+  - id: 10301002
+    portrait: {fileID: 0}
+    textID_speaker: 10001
+    textID_content: 1010301002
     next: -1

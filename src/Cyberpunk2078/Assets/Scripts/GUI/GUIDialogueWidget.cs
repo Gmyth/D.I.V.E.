@@ -29,6 +29,15 @@ public class GUIDialogueWidget : GUIWidget
     private Action currentCallback = null;
 
 
+    public override void Hide()
+    {
+        base.Hide();
+
+
+        currentCallback = null;
+    }
+
+
     public void Show(DialogueData dialogue, Action callback = null)
     {
         currentCallback = callback;
@@ -102,7 +111,6 @@ public class GUIDialogueWidget : GUIWidget
 
 
         callback?.Invoke();
-        currentCallback = null;
     }
 
     private IEnumerator WaitForKeyPress(string buttonName, float maxDuration = float.MaxValue)

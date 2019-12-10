@@ -55,15 +55,21 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
-src/Cyberpunk2078_Protorype/Library
-src/Cyberpunk2078_Protorype/Temp
-src/Cyberpunk2078_Protorype/obj
-src/Cyberpunk2078_Protorype/.idea
-src/Cyberpunk2078_Protorype/Logs
+/src/Cyberpunk2078_Protorype/Library
+/src/Cyberpunk2078_Protorype/Temp
+/src/Cyberpunk2078_Protorype/obj
+/src/Cyberpunk2078_Protorype/.idea
+/src/Cyberpunk2078_Protorype/Logs
 
-src/Cyberpunk2078/Library
-src/Cyberpunk2078/Temp
-src/Cyberpunk2078/obj
-src/Cyberpunk2078/.idea
-src/Cyberpunk2078/Logs
-src/Cyberpunk2078/Cyberpunk2078.sln
+/src/Cyberpunk2078/Library
+/src/Cyberpunk2078/Temp
+/src/Cyberpunk2078/obj
+/src/Cyberpunk2078/.idea
+/src/Cyberpunk2078/Logs
+/src/Cyberpunk2078/Cyberpunk2078.sln
+/src/Cyberpunk2078/Assets/Xlsx/Json(server)/*
+/src/Cyberpunk2078/Assets/Xlsx/Tab(client)/*
+/src/Cyberpunk2078/Assets/Xlsx/Json(server).meta
+/src/Cyberpunk2078/Assets/Xlsx/Tab(client).meta
+/src/Cyberpunk2078/Assets/Xlsx/Json(server)
+/src/Cyberpunk2078/Assets/Xlsx/Tab(client)
