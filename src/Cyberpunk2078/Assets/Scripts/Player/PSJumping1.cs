@@ -62,6 +62,11 @@ public class PSJumping1 : PlayerState
         Vector2 normalizedInput = new Vector2(h, v).normalized;
         flip = h < 0;
         
+        if (Input.GetButtonDown("Ultimate"))
+        {
+            //TODO add another ultimate
+            playerCharacter.ActivateFever();
+        }
 
         //Still support Horizontal update during jumping, delete following to kill Horizontal input
             if(lastJumpSec + 0.2f < Time.time) PhysicsInputHelper(h,speedFactor,accelerationFactor);

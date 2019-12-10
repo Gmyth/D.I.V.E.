@@ -52,12 +52,19 @@ public class TimeManager : MonoBehaviour
     public void startSlowMotion(float duration)
     {
         startTime = Time.unscaledTime;
-        endTime = Time.unscaledTime + duration * 10f;
+        endTime = Time.unscaledTime + duration;
         triggered = true;
     }
 
-    public void endSlowMotion()
+    public void endSlowMotion(float delay = 0.02f)
     {
+        StartCoroutine(endSlowMotionDelay(delay));
+    }
+
+    private IEnumerator endSlowMotionDelay(float delay)
+    {
+        
+        yield return  new WaitForSeconds(delay);
         Time.timeScale = 1;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
         blackScreen.color =new Color(blackScreen.color.r,blackScreen.color.g,blackScreen.color.b, 0f);

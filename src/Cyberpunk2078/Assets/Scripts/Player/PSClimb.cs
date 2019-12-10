@@ -24,15 +24,24 @@ public class PSClimb : PlayerState
 
     public override int Update()
     {
+        float feverFactor = playerCharacter.InFever ? Player.CurrentPlayer.FeverFactor : 1f;
         var v = Input.GetAxis("VerticalJoyStick")!=0? Input.GetAxis("VerticalJoyStick"): Input.GetAxis("Vertical");
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-
+        
+        if (Input.GetButtonDown("Ultimate"))
+        {
+            //TODO add another ultimate
+            playerCharacter.ActivateFever();
+        }
+        
         if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
         {
             Player.CurrentPlayer.triggerReady = false;
             return indexPSDashing;
         }
 
+        
+        
         if (v == 0)
         {
             anim.speed = 0;
@@ -41,12 +50,12 @@ public class PSClimb : PlayerState
         }else if (v > 0)
         {
             anim.speed = 1;
-            rb2d.velocity = new Vector2(0, playerCharacter.InKillStreak ? f_climbSpeed:climbSpeed);
+            rb2d.velocity = new Vector2(0, playerCharacter.InKillStreak ? f_climbSpeed * feverFactor:climbSpeed * feverFactor);
         }
         else
         {
             anim.speed = 1;
-            rb2d.velocity = new Vector2(0, playerCharacter.InKillStreak ? -f_climbSpeed:-climbSpeed);
+            rb2d.velocity = new Vector2(0, playerCharacter.InKillStreak ? -f_climbSpeed * feverFactor:-climbSpeed * feverFactor);
         }
 
         // climbBoundary = (minHeight, maxHeight)

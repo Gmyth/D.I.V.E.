@@ -106,6 +106,18 @@ public class PlayerCharacter : Dummy
         CheckPointManager.Instance?.RestoreCheckPoint();
     }
 
+    public bool ActivateFever()
+    {
+        if (statistics[StatisticType.UltimateEnergy] > 30f)
+        {
+            InFever = true;
+            CameraManager.Instance.FlashIn(6,0.05f,0.05f,0.05f);
+            AddOverLoadEnergy(1);
+        }
+        return InFever;
+        
+    }
+    
 
     public bool AddNormalEnergy(float amount)
     {

@@ -30,6 +30,12 @@ public class PSMoving : PlayerState
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
 
+        if (Input.GetButtonDown("Ultimate"))
+        {
+            //TODO add another ultimate
+            playerCharacter.ActivateFever();
+        }
+        
         if (Input.GetButtonDown("Attack1"))
         {
             return indexPSAttackGH;
@@ -79,6 +85,7 @@ public class PSMoving : PlayerState
     public override void OnStateEnter(State previousState)
     {
         playerCharacter.AddNormalEnergy(1);
+        if (PlayerCharacter.Singleton.InFever) PlayerCharacter.Singleton.AddOverLoadEnergy(1);
         float h = Input.GetAxis("HorizontalJoyStick") != 0
             ? Input.GetAxis("HorizontalJoyStick")
             : Input.GetAxis("Horizontal");
