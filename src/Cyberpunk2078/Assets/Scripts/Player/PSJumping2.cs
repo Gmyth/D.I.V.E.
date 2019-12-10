@@ -53,14 +53,21 @@ public class PSJumping2 : PlayerState
             return indexPSAirborne;
         }
         
+        if (Input.GetButtonDown("Ultimate"))
+        {
+            //TODO add another ultimate
+            playerCharacter.ActivateFever();
+        }
+        
         if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("VerticalJoyStick") > 0.7f)
         {
             // up is pressed
             if(isCloseTo("Ladder") != Direction.None) return indexPSClimb;
         }
         
+        
         if (ground)
-            {
+        {
                 if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("HorizontalJoyStick") == 0)
                     return index_PSIdle;
 

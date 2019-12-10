@@ -69,6 +69,12 @@ public class PSAttackGH: PlayerState
             return indexPSMoving;
         }
 
+        if (Input.GetButtonDown("Ultimate"))
+        {
+            //TODO add another ultimate
+            playerCharacter.ActivateFever();
+        }
+        
         if (Time.time - t0 > actionTime)
         {
             // ok for dashing 

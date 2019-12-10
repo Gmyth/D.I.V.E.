@@ -185,15 +185,16 @@ public abstract class PlayerState : State
     // Function : Keyboard Input => Physics Velocity, And Friction Calculation
     public void PhysicsInputHelper(float h, float maxSpeed  = 9,  float Acceleration  = 25)
     {
+        float feverFactor = playerCharacter.InFever ? Player.CurrentPlayer.FeverFactor : 1;
         Rigidbody2D rb2d = playerCharacter.GetComponent<Rigidbody2D>();
        
         // calculate speed on X axis
         if (Mathf.Abs(h) > 0.1f)
         {
             // has horizontal input
-            if (Mathf.Abs(rb2d.velocity.x) < maxSpeed)
+            if (Mathf.Abs(rb2d.velocity.x) < maxSpeed * feverFactor)
             {
-                var direction = Vector3.right * h * Acceleration;
+                var direction = Vector3.right * h * Acceleration * feverFactor;
                 if (direction.x * rb2d.velocity.x < 0)
                     direction = direction * 4f;
 
