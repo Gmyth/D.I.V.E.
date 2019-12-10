@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -58,7 +59,13 @@ public class GUIHUD : GUIWindow
     public void ShowDialogue(DialogueData dialogue)
     {
         resourceInspector.SetActive(false);
-        dialogueWidget.Show(dialogue);
+        dialogueWidget.Show(dialogue, HideDialogue);
+    }
+
+    public void ShowDialogue(DialogueData dialogue, Action callback)
+    {
+        resourceInspector.SetActive(false);
+        dialogueWidget.Show(dialogue, callback);
     }
 
     public void HideDialogue()

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
@@ -25,12 +26,14 @@ public class GUIDialogueWidget : GUIWidget
     [SerializeField] private TextMeshProUGUI textField;
 
     DialogueData dialogue = null;
+    private Action currentCallback = null;
 
-    int i0;
 
-
-    public void Show(DialogueData dialogue)
+    public void Show(DialogueData dialogue, Action callback = null)
     {
+        currentCallback = callback;
+
+
         ShowDialogue(dialogue);
 
 
@@ -56,19 +59,16 @@ public class GUIDialogueWidget : GUIWidget
 
         //We now hide text based on each character's alpha value
         HideText(speakerName.Length + 2);
-
-
-        i0 = speakerName.Length + 2;
     }
 
 
     private void Start()
     {
-        StartCoroutine(ShowText());
+        StartCoroutine(ShowText(currentCallback));
     }
 
 
-    private IEnumerator ShowText()
+    private IEnumerator ShowText(Action callback = null)
     {
         for (;;)
         {
@@ -101,7 +101,8 @@ public class GUIDialogueWidget : GUIWidget
         }
 
 
-        Hide();
+        callback?.Invoke();
+        currentCallback = null;
     }
 
     private IEnumerator WaitForKeyPress(string buttonName, float maxDuration = float.MaxValue)
