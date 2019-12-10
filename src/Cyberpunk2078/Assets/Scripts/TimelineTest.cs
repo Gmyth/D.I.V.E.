@@ -7,7 +7,7 @@ public class TimelineTest : MonoBehaviour
 
     private void OnEnable()
     {
-        StartCoroutine(SlowDown(5));
+        //StartCoroutine(SlowDown(5));
     }
 
     private void OnDisable()

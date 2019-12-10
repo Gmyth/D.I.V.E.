@@ -102,12 +102,24 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         PlayerCharacter.Singleton.AddNormalEnergy(1);
 
         PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 11;
+
+        StartCoroutine(SlowDownAnimation());
     }
 
     public void IntroduceOverloadEnergy()
     {
         Player.CurrentPlayer.overloadEnergyLocked = false;
         //PlayerCharacter.Singleton.AddOverLoadEnergy(1);
+    }
+
+    private IEnumerator SlowDownAnimation()
+    {
+        int t = 0;
+        while (t > 0)
+        {
+            PlayerCharacter.Singleton.gameObject.GetComponentInChildren<Animator>().speed -= t;
+            yield return 0;
+        }
     }
 
 }
