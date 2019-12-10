@@ -27,7 +27,7 @@ public class TimelineManager : MonoBehaviour
     {
         if (!isPlaying)
         {
-            GetComponent<Collider2D>().enabled = false;
+            //GetComponent<Collider2D>().enabled = false;
 
             PlayTimelineInIndex(0);
             isPlaying = true;
@@ -102,7 +102,7 @@ public class TimelineManager : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = debugColor;
-        Gizmos.DrawCube(transform.position, GetComponent<BoxCollider2D>().size);
+        //Gizmos.DrawCube(transform.position, GetComponent<BoxCollider2D>().size);
     }
 
 }

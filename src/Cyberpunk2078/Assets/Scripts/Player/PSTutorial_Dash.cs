@@ -21,6 +21,13 @@ public class PSTutorial_Dash : PlayerState
 
     public override int Update()
     {
+
+        if (animator.speed > 0)
+        {
+            var newSpeed = animator.speed - 0.1f;
+            animator.speed = Mathf.Clamp(newSpeed, 0, 1f);
+        }
+
         if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
         {
             Player.CurrentPlayer.triggerReady = false;
@@ -46,6 +53,8 @@ public class PSTutorial_Dash : PlayerState
         rb2d.simulated = true;
         rb2d.gravityScale = 3;
         rb2d.drag = 1;
+
+        SimpleTutorialManager.Instance.AfterDashTutorial();
     }
 
 }
