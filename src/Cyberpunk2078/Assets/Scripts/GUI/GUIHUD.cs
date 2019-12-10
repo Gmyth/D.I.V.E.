@@ -36,7 +36,7 @@ public class GUIHUD : GUIWindow
 
         UpdateHp(Mathf.FloorToInt(player[StatisticType.Hp]));
         UpdateSp(Mathf.FloorToInt(player[StatisticType.Sp] + player[StatisticType.Osp]));
-        UpdateFever(Mathf.FloorToInt(player[StatisticType.Fever]));
+        UpdateFever(Mathf.FloorToInt(player[StatisticType.UltimateEnergy]));
 
 
         player.OnStatisticChange.AddListener(HandleStatisticChange);
@@ -116,7 +116,7 @@ public class GUIHUD : GUIWindow
 
     private void UpdateFever(int value)
     {
-        feverBar.fillAmount = Mathf.Lerp(0.5f, 1, value / player[StatisticType.MaxFever]);
+        feverBar.fillAmount = Mathf.Lerp(0.5f, 1, value / player[StatisticType.MaxUltimateEnergy]);
     }
 
 
@@ -149,7 +149,7 @@ public class GUIHUD : GUIWindow
                 break;
 
 
-            case StatisticType.Fever:
+            case StatisticType.UltimateEnergy:
                 UpdateFever(Mathf.RoundToInt(currentValue));
                 break;
         }

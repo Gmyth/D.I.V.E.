@@ -34,10 +34,10 @@ public class Bullet : Recyclable
             {
                 //hit! Hunch Trigger
                 PlayerCharacter playerCharacter = hit.collider.GetComponent<PlayerCharacter>();
-                if (playerCharacter.IsInFeverMode)
+                if (playerCharacter.InKillStreak)
                 {
                     hunchTriggered = true;
-                    playerCharacter.ConsumeFever(30);
+                    playerCharacter.AddKillCount(-2);
                     TimeManager.Instance.startSlowMotion(0.5f);
                     CameraManager.Instance.FocusAt(playerCharacter.transform,0.2f);
                     CameraManager.Instance.FlashIn(7f,0.05f,0.15f,0.01f);

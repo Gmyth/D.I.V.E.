@@ -13,6 +13,8 @@ public class PlayerCharacter : Dummy
     public Transform SpriteHolder;
     private new Rigidbody2D rigidbody;
     public GameObject groundDust;
+
+    private float lastKillStreakDecaySecond;
     private Player player;
 
 
@@ -34,8 +36,10 @@ public class PlayerCharacter : Dummy
         return fsm;
     }
 
-    public bool IsInFeverMode { get; private set; } = false;
-
+    public bool InKillStreak { get; private set; } = false;
+    
+    public bool InFever { get; private set; } = false;
+    public bool MaxUltimateEnergy { get; private set; }
     //public PlayerCharacter(Player player)
     //{
     //    statistic = new StatisticSystem(player.attributes, player.inventory);
@@ -166,57 +170,91 @@ public class PlayerCharacter : Dummy
         return usedEnergy;
     }
 
+   
 
-    public bool AddFever(float amount)
+
+    public bool AddUltimateEnergy(float amount)
     {
-        StatisticModificationResult result = statistics.Modify(StatisticType.Fever, amount, 0, statistics[StatisticType.MaxFever]);
-
-        if (result.currentValue >= 100)
-            ActivateFeverMode();
-        else if (result.currentValue <= 0)
-            DeactivateFeverMode();
+        StatisticModificationResult result = statistics.Modify(StatisticType.UltimateEnergy, amount, 0, statistics[StatisticType.MaxUltimateEnergy]);
+       
+        //TODO add max value effect
+        if (result.currentValue >= statistics[StatisticType.MaxUltimateEnergy])
+            GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").HighlightFeverBar();
+        else if(!InFever)
+            GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").DehighlightFeverBar();
         
-
         return true;
     }
 
-    public bool ConsumeFever(float value)
+    public bool ConsumeUltimateEnergy(float value)
     {
-        StatisticModificationResult result = statistics.Modify(StatisticType.Fever, -value, 0, statistics[StatisticType.MaxFever]);
+        StatisticModificationResult result = statistics.Modify(StatisticType.UltimateEnergy, -value, 0, statistics[StatisticType.MaxUltimateEnergy]);
 
-        if (result.currentValue >= 100)
-            ActivateFeverMode();
-        else if (result.currentValue <= 0)
-            DeactivateFeverMode();
-
+        if (result.currentValue <= 0 && InFever)
+        {
+            InFever = false;
+            GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").DehighlightFeverBar();
+        }
         return true;
     }
-
-    public void ActivateFeverMode()
+    
+    public void KillStreakDecay()
     {
-        if (IsInFeverMode)
+        if (!InKillStreak){
+            if(lastKillStreakDecaySecond + statistics[StatisticType.KsDecay] < Time.time)
+            {
+                //Kill Streak Decay
+                statistics[StatisticType.KsCount] = Mathf.Max(0, statistics[StatisticType.KsCount] - 1);
+                lastKillStreakDecaySecond = Time.time;
+            }
+
+        }
+        else
+        {
+            if(lastKillStreakDecaySecond + statistics[StatisticType.KsDecay] * 2 < Time.time)
+            {
+                //Kill Streak Decay, Kill Streak Over
+                statistics[StatisticType.KsCount] = 0;
+                lastKillStreakDecaySecond = Time.time;
+                DeactivateKillStreak();
+            }
+        }
+    }
+    
+     public bool AddKillCount(float amount)
+     {
+         StatisticModificationResult result = statistics.Modify(StatisticType.KsCount, amount, 0, statistics[StatisticType.MaxKs]);
+    
+         if (result.currentValue >= statistics[StatisticType.MaxKs])
+             
+             ActivateKillStreak();
+         else
+             DeactivateKillStreak();
+         
+         lastKillStreakDecaySecond = Time.time;
+         return true;
+     }
+    
+    public void ActivateKillStreak()
+    {
+        if (InKillStreak)
             return;
-
-
-        CameraManager.Instance.FlashIn(7.5f,0.02f,0.10f,0.01f);
-
-        IsInFeverMode = true;
+        
+        InKillStreak = true;
         SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
-
-        GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").HighlightFeverBar();
-        GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").ShowText("Fever Mode!!!");
+        
+        GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").ShowText("Kill Streak!!!");
     }
 
-    public void DeactivateFeverMode()
+    public void DeactivateKillStreak()
     {
-        if (!IsInFeverMode)
+        if (!InKillStreak)
             return;
 
 
-        IsInFeverMode = false;
+        InKillStreak = false;
         SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
-
-        GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").DehighlightFeverBar();
+        
     }
 
 
@@ -225,7 +263,10 @@ public class PlayerCharacter : Dummy
         statistics[StatisticType.Hp] = statistics[StatisticType.MaxHp];
         statistics[StatisticType.Sp] = statistics[StatisticType.MaxSp];
         statistics[StatisticType.Osp] = 0;
-        statistics[StatisticType.Fever] = 0;
+        statistics[StatisticType.UltimateEnergy] = 0;
+        statistics[StatisticType.KsCount] = 0;
+        statistics[StatisticType.KsDecay] = 5;
+        statistics[StatisticType.MaxKs] = 2;
     }
 
 
@@ -262,8 +303,10 @@ public class PlayerCharacter : Dummy
 
     private void Update()
     {
-        if (IsInFeverMode)
-            ConsumeFever(statistics[StatisticType.FeverDecay] * Time.deltaTime);
+        if (InFever)
+            ConsumeUltimateEnergy(statistics[StatisticType.FeverDecay] * Time.deltaTime);
+        
+        KillStreakDecay();
 
 
         fsm.Update();

@@ -43,10 +43,10 @@ public class PSDashing : PlayerState
 
     public override int Update()
     {
-        var dashDelayTime = playerCharacter.IsInFeverMode ? f_dashDelayTime:n_dashDelayTime;
-        var dashReleaseTime = playerCharacter.IsInFeverMode ? f_dashReleaseTime:n_dashReleaseTime;
-        var dashReleaseDelayTime = playerCharacter.IsInFeverMode ? f_dashReleaseTime:n_dashReleaseTime;
-        var JumpListenerInterval = playerCharacter.IsInFeverMode ? f_JumpListenerInterval:n_JumpListenerInterval;
+        var dashDelayTime = playerCharacter.InKillStreak ? f_dashDelayTime:n_dashDelayTime;
+        var dashReleaseTime = playerCharacter.InKillStreak ? f_dashReleaseTime:n_dashReleaseTime;
+        var dashReleaseDelayTime = playerCharacter.InKillStreak ? f_dashReleaseTime:n_dashReleaseTime;
+        var JumpListenerInterval = playerCharacter.InKillStreak ? f_JumpListenerInterval:n_JumpListenerInterval;
 
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
@@ -155,7 +155,7 @@ public class PSDashing : PlayerState
     public override void OnStateEnter(State previousState)
     {
 
-        var inDashingDragFactor = playerCharacter.IsInFeverMode ? f_inDashingDragFactor:n_inDashingDragFactor;
+        var inDashingDragFactor = playerCharacter.InKillStreak ? f_inDashingDragFactor:n_inDashingDragFactor;
         if (playerCharacter.ConsumeEnergy(EnergyConsume) <= 0)
         {
             // Energy is not enough, Cancel dash
@@ -168,7 +168,7 @@ public class PSDashing : PlayerState
         //After delay is over, dash perform
 
         // Add Ghost trail
-        if(!playerCharacter.IsInFeverMode) playerCharacter.SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
+        if(!playerCharacter.InKillStreak) playerCharacter.SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
         lastDashSecond = Time.time;
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
 
@@ -216,7 +216,7 @@ public class PSDashing : PlayerState
         playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipY = false;
 
         // Kill Trail
-        if(!playerCharacter.IsInFeverMode) playerCharacter.SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
+        if(!playerCharacter.InKillStreak) playerCharacter.SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
 
 
     }
@@ -226,7 +226,7 @@ public class PSDashing : PlayerState
         //avoid Slow Motion
         TimeManager.Instance.endSlowMotion();
 
-        var dashForce = playerCharacter.IsInFeverMode ? f_dashForce:n_dashForce;
+        var dashForce = playerCharacter.InKillStreak ? f_dashForce:n_dashForce;
 
         // Fix sprite flip on X-axis
         playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipX = false;

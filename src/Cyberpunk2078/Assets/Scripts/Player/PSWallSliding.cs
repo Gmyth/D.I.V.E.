@@ -39,7 +39,7 @@ public class PSWallSliding: PlayerState
         var stickWallTime = n_stickWallTime;
         var wallCheckCoolDown = n_wallCheckCoolDown;
 
-        if (playerCharacter.IsInFeverMode)
+        if (playerCharacter.InKillStreak)
         {
             stickWallTime = f_stickWallTime;
             wallCheckCoolDown = f_wallCheckCoolDown;

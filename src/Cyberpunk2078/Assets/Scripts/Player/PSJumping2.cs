@@ -32,7 +32,7 @@ public class PSJumping2 : PlayerState
         var jumpForce =  n_jumpForce;
         var speedFactor = n_speedFactor;
         var accelerationFactor = n_accelerationFactor;
-        if (playerCharacter.IsInFeverMode)
+        if (playerCharacter.InKillStreak)
         {
             jumpForce =  f_jumpForce;
             speedFactor = f_speedFactor; 
@@ -89,7 +89,7 @@ public class PSJumping2 : PlayerState
     public override void OnStateEnter(State previousState)
     {
         
-        var jumpForce = playerCharacter.IsInFeverMode ? f_jumpForce : n_jumpForce;
+        var jumpForce = playerCharacter.InKillStreak ? f_jumpForce : n_jumpForce;
         anim.Play("MainCharacter_Jump", -1, 0f);
         
         //Perform jump
