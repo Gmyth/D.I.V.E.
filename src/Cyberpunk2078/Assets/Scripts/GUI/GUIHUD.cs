@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,8 @@ public class GUIHUD : GUIWindow
     [SerializeField] private Image spBar;
     [SerializeField] private Image feverBar;
     [SerializeField] private Text textArea;
+    [SerializeField] private GameObject resourceInspector;
+    [SerializeField] private GUIDialogueWidget dialogueWidget;
 
     [Header("Configuration")]
     [SerializeField] private Color feverBlinkColor = Color.yellow;
@@ -33,7 +36,7 @@ public class GUIHUD : GUIWindow
 
         UpdateHp(Mathf.FloorToInt(player[StatisticType.Hp]));
         UpdateSp(Mathf.FloorToInt(player[StatisticType.Sp] + player[StatisticType.Osp]));
-        UpdateFever(Mathf.FloorToInt(player[StatisticType.Fever]));
+        UpdateFever(Mathf.FloorToInt(player[StatisticType.UltimateEnergy]));
 
 
         player.OnStatisticChange.AddListener(HandleStatisticChange);
@@ -52,6 +55,25 @@ public class GUIHUD : GUIWindow
 
         textCoroutine = StartCoroutine(ShowText(text, textDuration));
     }
+
+    public void ShowDialogue(DialogueData dialogue)
+    {
+        resourceInspector.SetActive(false);
+        dialogueWidget.Show(dialogue, HideDialogue);
+    }
+
+    public void ShowDialogue(DialogueData dialogue, Action callback)
+    {
+        resourceInspector.SetActive(false);
+        dialogueWidget.Show(dialogue, callback);
+    }
+
+    public void HideDialogue()
+    {
+        resourceInspector.SetActive(true);
+        dialogueWidget.Hide();
+    }
+
 
     public void HighlightFeverBar()
     {
@@ -94,7 +116,7 @@ public class GUIHUD : GUIWindow
 
     private void UpdateFever(int value)
     {
-        feverBar.fillAmount = Mathf.Lerp(0.5f, 1, value / player[StatisticType.MaxFever]);
+        feverBar.fillAmount = Mathf.Lerp(0.5f, 1, value / player[StatisticType.MaxUltimateEnergy]);
     }
 
 
@@ -127,7 +149,7 @@ public class GUIHUD : GUIWindow
                 break;
 
 
-            case StatisticType.Fever:
+            case StatisticType.UltimateEnergy:
                 UpdateFever(Mathf.RoundToInt(currentValue));
                 break;
         }

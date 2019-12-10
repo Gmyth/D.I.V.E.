@@ -109,7 +109,7 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
     public void IntroduceOverloadEnergy()
     {
         Player.CurrentPlayer.overloadEnergyLocked = false;
-        PlayerCharacter.Singleton.AddOverLoadEnergy(1);
+        //PlayerCharacter.Singleton.AddOverLoadEnergy(1);
     }
 
 }

@@ -46,7 +46,7 @@ public class PSJumping1 : PlayerState
         var accelerationFactor = n_accelerationFactor;
         var wallJumpSpeed = n_wallJumpSpeed;
 
-        if (playerCharacter.IsInFeverMode)
+        if (playerCharacter.InKillStreak)
         {
             jumpForce =  f_jumpForce;
             speedFactor = f_speedFactor; 
@@ -64,31 +64,32 @@ public class PSJumping1 : PlayerState
         
 
         //Still support Horizontal update during jumping, delete following to kill Horizontal input
-         if(lastJumpSec + 0.2f < Time.time) PhysicsInputHelper(h,speedFactor,accelerationFactor);
+            if(lastJumpSec + 0.2f < Time.time) PhysicsInputHelper(h,speedFactor,accelerationFactor);
          
-         var dir = isCloseTo("Ground");
-         if (dir != Direction.None)
-         {
-             if (lastJumpSec + 0.2f < Time.time && Player.CurrentPlayer.ChainWallJumpReady)
-             {
-                 return indexPSWallJumping;
-             }
+            var dir = isCloseTo("Ground");
+            if (dir != Direction.None)
+            {
+                if (lastJumpSec + 0.2f < Time.time && Player.CurrentPlayer.ChainWallJumpReady)
+                {
+                    return indexPSWallJumping;
+                }
          }
-         
 
+
+        bool ground = GetGroundType() == 1;
 
         if (Input.GetAxis("Vertical") > 0 || normalizedInput.y > 0.7f)
-         {
-             // up is pressed
-             if(isCloseTo("Ladder") != Direction.None) return indexPSClimb;
-         }
+            {
+                // up is pressed
+                if(isCloseTo("Ladder") != Direction.None) return indexPSClimb;
+            }
 
-        if (!isGrounded()&& Vy < 0)
+        if (!ground && Vy < 0)
         {
-                return indexPSAirborne;
+            return indexPSAirborne;
         }
-       else if (previous.Index != indexPSWallJumping)
-       {
+        else if (previous.Index != indexPSWallJumping)
+        {
             if (Input.GetButton("Jump"))
             {
                 timer -= Time.deltaTime;
@@ -96,12 +97,11 @@ public class PSJumping1 : PlayerState
                 {
                     rb2d.AddForce(playerCharacter.transform.up * jumpForce * jumpIncreaser);
                 }
-                
             }
         }
 
 
-        if (isGrounded() && Vy < 0)
+        if (ground && Vy < 0)
         {
             // Landed
             if (h == 0)
@@ -146,7 +146,7 @@ public class PSJumping1 : PlayerState
 
     public override void OnStateEnter(State previousState)
     {
-        var jumpForce = playerCharacter.IsInFeverMode ? f_jumpForce : n_jumpForce;
+        var jumpForce = playerCharacter.InKillStreak ? f_jumpForce : n_jumpForce;
 
         
         playerCharacter.groundDust.transform.localPosition = new Vector3(0,-0.5f,0);
@@ -196,8 +196,8 @@ public class PSJumping1 : PlayerState
     private void performWallJump()
     {
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-        var wallJumpForce = playerCharacter.IsInFeverMode ? f_wallJumpForce : n_wallJumpForce;
-        var wallJumpSpeed = playerCharacter.IsInFeverMode ? f_wallJumpSpeed : n_wallJumpSpeed;
+        var wallJumpForce = playerCharacter.InKillStreak ? f_wallJumpForce : n_wallJumpForce;
+        var wallJumpSpeed = playerCharacter.InKillStreak ? f_wallJumpSpeed : n_wallJumpSpeed;
         var dir = isCloseTo("Ground");
         //re active jumping
         if (dir == Direction.Right)

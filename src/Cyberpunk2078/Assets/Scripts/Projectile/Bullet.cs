@@ -34,16 +34,16 @@ public class Bullet : Recyclable
             {
                 //hit! Hunch Trigger
                 PlayerCharacter playerCharacter = hit.collider.GetComponent<PlayerCharacter>();
-                if (playerCharacter.IsInFeverMode)
+                if (playerCharacter.InKillStreak)
                 {
                     hunchTriggered = true;
-                    playerCharacter.ConsumeFever(30);
-                    TimeManager.Instance.startSlowMotion(0.8f);
-                    CameraManager.Instance.FocusAt(playerCharacter.transform,0.8f);
+                    playerCharacter.AddKillCount(-2);
+                    TimeManager.Instance.startSlowMotion(0.5f);
+                    CameraManager.Instance.FocusAt(playerCharacter.transform,0.2f);
                     CameraManager.Instance.FlashIn(7f,0.05f,0.15f,0.01f);
                 }
             }
-
+            
             lastHitEstimation = Time.unscaledTime;
         }
     }
@@ -73,7 +73,9 @@ public class Bullet : Recyclable
 
                 other.GetComponent<Dummy>().ApplyDamage(rawDamage);
                 --numHitsRemaining;
-
+                
+                TimeManager.Instance.endSlowMotion();
+                CameraManager.Instance.Idle();
 
                 SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
                 Hit.transform.position = other.transform.position - (other.transform.position - transform.position) * 0.2f;
@@ -107,7 +109,7 @@ public class Bullet : Recyclable
                 --numHitsRemaining;
 
                 TimeManager.Instance.endSlowMotion();
-                CameraManager.Instance.Reset();
+                CameraManager.Instance.Idle();
 
                 CameraManager.Instance.Shaking(0.20f, 0.05f);
                 SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
@@ -124,24 +126,26 @@ public class Bullet : Recyclable
         {
             if (other.name != "DashAtkBox")
             {
+                isFriendly = true;
                 GetComponent<LinearMovement>().initialPosition = transform.position;
+                GetComponent<LinearMovement>().speed *= 1.5f;
                 GetComponent<LinearMovement>().orientation = (Quaternion.Euler(0, 0,  Random.Range(-30, 30)) * (GetComponent<LinearMovement>().orientation * -1)).normalized;
                 GetComponent<LinearMovement>().spawnTime = Time.time;
 
                 transform.right = GetComponent<LinearMovement>().orientation;
+                
+                TimeManager.Instance.endSlowMotion();
+                CameraManager.Instance.Idle();
+                
 
-                isFriendly = true;
+                CameraManager.Instance.Shaking(0.2f,0.05f,true);
 
+                CameraManager.Instance.FocusAt(transform,0.1f);
+                SingleEffect Hit1 = ObjectRecycler.Singleton.GetObject<SingleEffect>(12);
+                Hit1.transform.right = transform.right;
+                Hit1.transform.position = other.transform.position + (transform.position  - other.transform.position) * 0.3f;
 
-                CameraManager.Instance.Shaking(0.10f,0.05f);
-                TimeManager.Instance.startSlowMotion(0.05f);
-
-                SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
-                Hit.transform.right = transform.right;
-                Hit.transform.position = other.transform.position + (transform.position  - other.transform.position) * 0.5f;
-                Hit.transform.localScale = Vector3.one;
-
-                Hit.gameObject.SetActive(true);
+                Hit1.gameObject.SetActive(true);
             }
 
         }

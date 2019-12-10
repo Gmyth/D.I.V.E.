@@ -14,7 +14,7 @@ public class DialogueManager : MonoBehaviour
     public static DialogueManager Instance { get; private set; } = null;
 
     private TextDict[] Dict;
-    private DialogueData[] dialogues;
+    private SimpleDialogueData[] dialogues;
 
     public UnityEvent DialogueEnd;
     public UnityEvent KeyPressed;
@@ -37,7 +37,7 @@ public class DialogueManager : MonoBehaviour
         string path = Application.dataPath + "/StreamingAssets" + "/Dialogue.json";
         string jsonString = File.ReadAllText(path);
         string fixedJsonString = JsonHelper.fixJson(jsonString);
-        dialogues = JsonHelper.FromJson<DialogueData>(fixedJsonString);
+        dialogues = JsonHelper.FromJson<SimpleDialogueData>(fixedJsonString);
     }
 
     public void InitUIText()
@@ -53,7 +53,7 @@ public class DialogueManager : MonoBehaviour
         return dialogues[index].Text;
     }
 
-    public DialogueData GetDialogueData(int index)
+    public SimpleDialogueData GetDialogueData(int index)
     {
         return dialogues[index];
     }
@@ -110,6 +110,7 @@ public class DialogueManager : MonoBehaviour
             yield break;
 
         yield return null;
+
 
         while(dialogues[index].Next != "-1")
         {
@@ -170,7 +171,7 @@ public class DialogueManager : MonoBehaviour
 
 
 [Serializable]
-public class DialogueData
+public class SimpleDialogueData
 {
     public int ID;
     public string Type;

@@ -21,6 +21,7 @@ public class SimpleTimer : MonoBehaviour
 
     [SerializeField] private bool isCounting;
 
+
     // Start is called before the first frame update
     void Start()
     {

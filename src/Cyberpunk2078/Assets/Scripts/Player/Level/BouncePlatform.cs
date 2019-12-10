@@ -11,7 +11,8 @@ public class BouncePlatform : MonoBehaviour
     public float Threshold;
     public bool bounceReady = true;
     private float timer;
-
+    [SerializeField] private GameObject BounceVFX;
+    
     [Range(0, 360)]
     [SerializeField]
     private float angle = 90f;
@@ -21,7 +22,8 @@ public class BouncePlatform : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        timer = Threshold;          
+        timer = Threshold;
+        BounceVFX.SetActive(false);
     }
 
     // Update is called once per frame
@@ -75,7 +77,9 @@ public class BouncePlatform : MonoBehaviour
                 var pos = col.gameObject.transform.position;
 
                 //col.gameObject.transform.position = new Vector3(pos.x + vec.x * 0.2f, pos.y + vec.y * 0.2f, pos.z);
-                
+
+                BounceVFX.SetActive(true);
+                BounceVFX.GetComponent<Animator>().Play("BounceVFX", 0, 0);
 
                 rb2d.AddForce(bounceDirection * jumpForce * 50 * 1/Time.timeScale);
               

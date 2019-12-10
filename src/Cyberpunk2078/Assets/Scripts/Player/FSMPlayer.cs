@@ -26,8 +26,9 @@ public abstract class PlayerState : State
     }
 
 
-    //Player Ground check
-    public bool isGrounded()
+    // Player Ground check
+    // @return 0 - airborne   1 - ground   2 - enemy
+    public int GetGroundType()
     {
         Vector2 slideCheck = playerCharacter.GetComponent<Rigidbody2D>().velocity.x > 0
             ? new Vector2(0.5f, -0.5f)
@@ -45,68 +46,21 @@ public abstract class PlayerState : State
 
         
         Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f, centerOffset, 0f), -playerCharacter.transform.up * (DistanceToTheGround + 0.4f), Color.red);
-
         Debug.DrawRay(playerCharacter.transform.position + new Vector3(0.3f, centerOffset, 0f), -playerCharacter.transform.up * (DistanceToTheGround + 0.4f), Color.green);
-//
         Debug.DrawRay(playerCharacter.transform.position + new Vector3(-0.3f, centerOffset, 0f), -playerCharacter.transform.up * (DistanceToTheGround + 0.4f), Color.yellow);
-        
         Debug.DrawRay(playerCharacter.transform.position, slideCheck * 2f, Color.green);
 
         bool margin = !(hitSlide.collider != null && (hitSlide.transform.CompareTag("Ground") || hitSlide.transform.CompareTag("Platform") && hitSlide.normal.x > 0.1f));
 
-        if (hitL.collider != null && (hitL.transform.CompareTag("Ground") || hitL.transform.CompareTag("Platform")))
-        {
-            //Left hit!
+        Player player = Player.CurrentPlayer;
 
+
+        if ((hitL.collider != null && (hitL.transform.CompareTag("Ground") || hitL.transform.CompareTag("Platform"))) ||
+            (hitR.collider != null && (hitR.transform.CompareTag("Ground") || hitR.transform.CompareTag("Platform"))) ||
+            (hitM.collider != null && (hitM.transform.CompareTag("Ground") || hitM.transform.CompareTag("Platform"))))
+        {
             //Character Margin
             if (margin && !grounded)
-            {
-                //if (name == "Airborne")
-                //{
-                //    playerCharacter.transform.Translate(Vector2.up * (hitL.distance - DistanceToTheGround));
-                //}
-                //else
-                //{
-                //    playerCharacter.transform.Translate(Vector2.down * (hitL.distance - DistanceToTheGround));
-                //}
-            }
-            
-            playerCharacter.AddNormalEnergy(1);
-            Player.CurrentPlayer.ChainWallJumpReady = false; 
-            Player.CurrentPlayer.secondJumpReady = true;
-            grounded = true;
-            return true;
-        }
-        else if (hitR.collider != null && (hitR.transform.CompareTag("Ground") || hitR.transform.CompareTag("Platform")))
-        {
-            //Right hit!
-
-            //Character Margin
-            if (margin && !grounded)
-            {
-
-                //if (name == "Airborne")
-                //{
-                //    playerCharacter.transform.Translate(Vector2.up * (hitR.distance - DistanceToTheGround));
-                //}
-                //else
-                //{
-                //    playerCharacter.transform.Translate(Vector2.down * (hitR.distance - DistanceToTheGround));
-                //}
-            }
-            playerCharacter.AddNormalEnergy(1);
-            Player.CurrentPlayer.ChainWallJumpReady = false; 
-            Player.CurrentPlayer.secondJumpReady = true;
-            grounded = true;
-            return true;
-        }
-        else
-       if (hitM.collider != null && (hitM.transform.CompareTag("Ground")||hitM.transform.CompareTag("Platform")))
-        {
-            //Middle hit!
-            
-            //Character Margin
-            if (margin&& !grounded)
             {
 
                 //if (name == "Airborne")
@@ -118,16 +72,28 @@ public abstract class PlayerState : State
                 //   playerCharacter.transform.Translate(Vector2.down* (hitM.distance - DistanceToTheGround));
                 //}
             }
-            
-            Player.CurrentPlayer.ChainWallJumpReady = false; 
-            Player.CurrentPlayer.secondJumpReady = true;
+
+            player.ChainWallJumpReady = false;
+            player.secondJumpReady = true;
+
             grounded = true;
-            return true;
+
+            return 1;
         } 
-        
-        Player.CurrentPlayer.jumpForceGate = false;
+        else if ((hitL.collider != null && hitL.transform.CompareTag("Dummy")) ||
+                 (hitR.collider != null && hitR.transform.CompareTag("Dummy")) ||
+                 (hitM.collider != null && hitM.transform.CompareTag("Dummy")))
+        {
+            return 2;
+        }
+
+
+        player.jumpForceGate = false;
+
         grounded = false;
-        return false;
+
+
+        return 0;
     }
 
     //Player Ground Normal Vector, Used for Dash direction correction

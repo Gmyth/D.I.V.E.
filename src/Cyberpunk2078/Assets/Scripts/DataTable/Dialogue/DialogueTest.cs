@@ -8,7 +8,7 @@ public class DialogueTest : MonoBehaviour
     void Start()
     {
         DialogueManager.Instance.InitDialogue();
-        DialogueManager.Instance.InitUIText();
+        //DialogueManager.Instance.InitUIText();
         
         Debug.Log("DialogueLoaded");
     }

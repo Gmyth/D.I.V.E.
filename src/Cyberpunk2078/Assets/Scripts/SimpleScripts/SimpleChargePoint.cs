@@ -39,13 +39,13 @@ public class SimpleChargePoint : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        //Debug.Log("Charge point collide with " + other.gameObject.name);
+        Debug.Log("Charge point collide with " + other.gameObject.name);
 
         if (isReady)
         {
             if (other.tag == "Player")
             {
-                PlayerCharacter playerCharacter = other.GetComponent<PlayerCharacter>();
+                PlayerCharacter playerCharacter = PlayerCharacter.Singleton;
 
                 if (playerCharacter[StatisticType.Osp] <= 0)
                     OnEnergyCharge();

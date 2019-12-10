@@ -243,6 +243,12 @@ public class CameraManager : MonoBehaviour {
 			
 			case CameraState.Focusing:
 				
+				// prevent overchasing
+				if ((target.position - transform.position).sqrMagnitude > 1000)
+				{
+					break;
+				}
+
 				posX = Mathf.SmoothDamp(transform.position.x,target.position.x, ref focusVelocity.x, smoothTimeX * 4);
 				posY = Mathf.SmoothDamp(transform.position.y,target.position.y, ref focusVelocity.y, smoothTimeY * 4);
 				transform.position = new Vector3(posX + shakeX, posY + shakeY, transform.position.z);
@@ -362,9 +368,15 @@ public class CameraManager : MonoBehaviour {
 	{
 		currentState = CameraState.Reset;
 	}
+    
+    public void Idle()
+    {
+	    currentState = CameraState.Idle;
+    }
 
     private IEnumerator resetDelay(float duration)
     {
+	    if(!target) Reset();
 	    yield return  new WaitForSeconds(duration);
 	    if(currentState != CameraState.Reset)Reset();
     }

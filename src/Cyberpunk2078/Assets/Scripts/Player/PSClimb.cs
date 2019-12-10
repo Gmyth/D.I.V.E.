@@ -41,12 +41,12 @@ public class PSClimb : PlayerState
         }else if (v > 0)
         {
             anim.speed = 1;
-            rb2d.velocity = new Vector2(0, playerCharacter.IsInFeverMode ? f_climbSpeed:climbSpeed);
+            rb2d.velocity = new Vector2(0, playerCharacter.InKillStreak ? f_climbSpeed:climbSpeed);
         }
         else
         {
             anim.speed = 1;
-            rb2d.velocity = new Vector2(0, playerCharacter.IsInFeverMode ? -f_climbSpeed:-climbSpeed);
+            rb2d.velocity = new Vector2(0, playerCharacter.InKillStreak ? -f_climbSpeed:-climbSpeed);
         }
 
         // climbBoundary = (minHeight, maxHeight)
@@ -57,7 +57,7 @@ public class PSClimb : PlayerState
             return indexPSIdle;
         }
         
-        if (isGrounded())
+        if (GetGroundType() == 1)
         {
             if(v < 0){
                 anim.speed = 1;

@@ -113,7 +113,7 @@ public class Drone : Enemy, IPatroller
 
         EnemyData enemyData = DataTableManager.singleton.GetEnemyData(typeID);
         PlayerCharacter.Singleton.AddOverLoadEnergy(enemyData.Attributes[AttributeType.OspReward_c0]);
-
+        PlayerCharacter.Singleton.AddKillCount(1);
 
         for (int i = 0; i < 5; i++)
         {
@@ -121,8 +121,7 @@ public class Drone : Enemy, IPatroller
             obj.transform.position = transform.position;
             obj.gameObject.SetActive(true);
         }
-        
-        
+
         //gameObject.GetComponent<SpriteRenderer>().color = Color.clear;
         gameObject.SetActive(false);
         //Destroy(gameObject, 0.5f);

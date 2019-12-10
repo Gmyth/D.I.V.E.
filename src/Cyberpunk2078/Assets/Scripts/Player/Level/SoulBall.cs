@@ -71,7 +71,7 @@ public class SoulBall : Recyclable
                     //rb2d.drag = 0;
                     //bufferState = SoulBallState.Acquired;
 
-                    PlayerCharacter.Singleton.AddFever(4f);
+                    PlayerCharacter.Singleton.AddUltimateEnergy(4f);
                     triggered = true;
                     Die();
                 }
