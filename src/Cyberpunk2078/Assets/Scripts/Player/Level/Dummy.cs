@@ -215,18 +215,20 @@ public abstract class Enemy : Dummy
         statistics = new StatisticSystem(data.Attributes, statusModifiers);
         statistics[StatisticType.Hp] = statistics[StatisticType.MaxHp];
 
-
-        fsm = fsm.Initialize(this);
-        fsm.Boot();
+        if (fsm)
+        {
+            fsm = fsm.Initialize(this);
+            fsm.Boot();
+        }
     }
 
     protected virtual void FixedUpdate()
     {
-        fsm.Update();
+        fsm?.Update();
     }
 
     public void Reset()
     {
-        fsm.Reboot();
+        fsm?.Reboot();
     }
 }

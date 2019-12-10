@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 
 public enum TutorialState
@@ -21,7 +22,7 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
             switch (value)
             {
                 case TutorialState.TeachDash:
-                    IntroduceNormalEnergy();
+                    //IntroduceNormalEnergy();
                     Time.timeScale = 0;
                     UI_DashKey.SetActive(true);
                     break;
@@ -96,20 +97,36 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         PlayerCharacter.Singleton.ConsumeEnergy(1);
     }
 
-    public void IntroduceNormalEnergy()
+    public void IntroduceNormalEnergy(TimelineManager timelineParentObject)
     {
+        //Change button sprite according to the controller
+        //UI_DashKey.GetComponent<SpriteRenderer>().sprite = ;
+
         Player.CurrentPlayer.energyLocked = false;
         PlayerCharacter.Singleton.AddNormalEnergy(1);
 
         PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 11;
 
-        StartCoroutine(SlowDownAnimation());
+        //StartCoroutine(SlowDownAnimation());
+    }
+
+    public void AfterDashTutorial()
+    {
+        
     }
 
     public void IntroduceOverloadEnergy()
     {
         Player.CurrentPlayer.overloadEnergyLocked = false;
         //PlayerCharacter.Singleton.AddOverLoadEnergy(1);
+    }
+
+    public void IntroduceBulletDeflect()
+    {
+        //Change button sprite according to the controller
+        //UI_DashKey.GetComponent<SpriteRenderer>().sprite = ;
+
+        PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 11;
     }
 
     private IEnumerator SlowDownAnimation()
