@@ -314,10 +314,7 @@ public class PlayerCharacter : Dummy
         fsm.Boot();
 
 
-        //tutorial.Hide();
-
-
-        GUIManager.Singleton.Open("HUD", this);
+        ((GUIHUD)GUIManager.Singleton.Open("HUD", this)).ShowDialogue(DataTableManager.singleton.GetDialogueData(10101001));
     }
 
     private void Update()
