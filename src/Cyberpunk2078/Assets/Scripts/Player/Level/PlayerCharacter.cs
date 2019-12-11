@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +17,8 @@ public class PlayerCharacter : Dummy
 
     private float lastKillStreakDecaySecond;
     private Player player;
+
+    public int currentDialogueID = -1;
 
 
     public EventOnStatisticChange OnStatisticChange { get; private set; }
@@ -270,6 +273,13 @@ public class PlayerCharacter : Dummy
     }
 
 
+    public void StartDialogue(int dialogueID)
+    {
+        currentDialogueID = dialogueID;
+        fsm.CurrentStateIndex = 12;
+    }
+
+
     private void ResetStatistics()
     {
         statistics[StatisticType.Hp] = statistics[StatisticType.MaxHp];
@@ -309,8 +319,11 @@ public class PlayerCharacter : Dummy
         fsm = fsm.Initialize(this);
         fsm.Boot();
 
-
-        ((GUIHUD)GUIManager.Singleton.Open("HUD", this)).ShowDialogue(DataTableManager.singleton.GetDialogueData(10101001));
+        
+        GUIManager.Singleton.Open("HUD", this);
+        
+        
+        StartDialogue(10101001);
     }
 
     private void Update()
