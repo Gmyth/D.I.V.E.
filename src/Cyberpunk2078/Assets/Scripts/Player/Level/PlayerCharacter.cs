@@ -326,7 +326,7 @@ public class PlayerCharacter : Dummy
         
         GUIManager.Singleton.Open("HUD", this);
         
-        StartDialogue(10102001);
+        //StartDialogue(10102001);
     }
 
     private void Update()

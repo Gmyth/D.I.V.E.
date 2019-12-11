@@ -147,16 +147,6 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 11;
     }
 
-    private IEnumerator SlowDownAnimation()
-    {
-        float t = 0;
-        while (t > 0)
-        {
-            PlayerCharacter.Singleton.gameObject.GetComponentInChildren<Animator>().speed -= t;
-            t += 0.1f;
-            yield return 0;
-        }
-    }
 
     private IEnumerator ShowGameObjectAfterDelay(float delayTime, GameObject targetObject)
     {
