@@ -556,7 +556,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1909596859
-  m_SortingLayer: 6
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: c032f9d5d07000a4eb2af126e4c66d35, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -647,7 +647,7 @@ TrailRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -705609843
-  m_SortingLayer: 5
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Time: 0.6
   m_Parameters:
@@ -960,7 +960,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -812174707
-  m_SortingLayer: 8
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 01f8abab650e36f40a4b39149c60a1c9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1017,6 +1017,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a8a7af26f6efad4baeff49f27eb8f76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  correct: {r: 0.08566215, g: 0.7264151, b: 0.3484169, a: 1}
+  error: {r: 0.8679245, g: 0.118725546, b: 0.118725546, a: 1}
 --- !u!1 &7457358083176784541
 GameObject:
   m_ObjectHideFlags: 0
@@ -5745,7 +5747,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -705609843
-  m_SortingLayer: 5
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0

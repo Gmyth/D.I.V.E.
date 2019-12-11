@@ -8,7 +8,7 @@ public class SimpleAlertDoor : MonoBehaviour
     public delegate bool EnemyDeathDelegate(Enemy enemy);
 
     public SimpleAlertEnemy[] enemies;
-    public int enemyCount;
+    private int enemyCount;
 
     // Start is called before the first frame update
     void Start()

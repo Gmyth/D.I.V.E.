@@ -129,6 +129,8 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         PlayerCharacter.Singleton.SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
         timelineManager_DashTutorial.PlayNextTimeline();
         TimeManager.Instance.endSlowMotion(0f);
+
+        PlayerCharacter.Singleton.transform.parent.GetComponentInChildren<MouseIndicator>().ResetColor();
     }
 
     public void IntroduceOverloadEnergy()

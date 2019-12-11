@@ -73,6 +73,7 @@ public class PSDialogue : PlayerState
     {
         base.OnStateEnter(previousState);
 
+        
 
         currentStatus = Status.Waiting;
 
@@ -82,7 +83,9 @@ public class PSDialogue : PlayerState
         v.y = Mathf.Min(0, v.y);
         rb2d.velocity = v;
         
-        
+        var mouse = GameObject.FindObjectOfType<MouseIndicator>();
+        mouse.Lock();
+
         switch (GetGroundType())
         {
             case 0:
@@ -124,6 +127,8 @@ public class PSDialogue : PlayerState
     {
         base.OnStateQuit(nextState);
 
+        var mouse = GameObject.FindObjectOfType<MouseIndicator>();
+        mouse.Unlock();
         
         currentStatus = Status.Done;
 

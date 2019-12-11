@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9cc72006fbb28c49bdd128234eeabbe, type: 3}
   m_Name: FSM_TutorialDummy
   m_EditorClassIdentifier: 
-  states:
-  - {fileID: 11400000, guid: a7b2cbdf6d98b6a45bad81f1bd4c94eb, type: 2}
+  states: []
   startingStateIndex: 0
