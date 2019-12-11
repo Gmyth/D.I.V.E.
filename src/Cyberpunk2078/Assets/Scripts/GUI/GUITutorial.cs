@@ -16,6 +16,18 @@ public class GUITutorial : MonoBehaviour
     private Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
 
 
+    public void Show(string s)
+    {
+        string[] buttonNames = s.Split('+');
+
+        int n = buttonNames.Length;
+
+        if (n == 1)
+            ShowKeyboardButton(buttonNames[0]);
+        else
+            ShowKeyboardButtonCombination(buttonNames[0], buttonNames[1]);
+    }
+
     public void ShowKeyboardButton(string buttonName)
     {
         leftIcon.sprite = sprites["Keyboard_Black_" + buttonName + "_Up"];
