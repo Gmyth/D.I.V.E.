@@ -14,6 +14,8 @@ public class PlayerCharacter : Dummy
     public GameObject groundDust;
     public GUITutorial tutorial;
 
+    public bool diableDash;
+
 
     private float lastKillStreakDecaySecond;
     private Player player;

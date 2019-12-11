@@ -43,6 +43,7 @@ public class PSDashing : PlayerState
 
     public override int Update()
     {
+
         var dashDelayTime = playerCharacter.InKillStreak ? f_dashDelayTime:n_dashDelayTime;
         var dashReleaseTime = playerCharacter.InKillStreak ? f_dashReleaseTime:n_dashReleaseTime;
         var dashReleaseDelayTime = playerCharacter.InKillStreak ? f_dashReleaseTime:n_dashReleaseTime;
@@ -71,7 +72,7 @@ public class PSDashing : PlayerState
 
         if (Input.GetButtonDown("Jump"))
         {
-            if (Player.CurrentPlayer.secondJumpReady && lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.time)
+            if (Player.CurrentPlayer.secondJumpReady && lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.unscaledTime)
             {
                 Player.CurrentPlayer.secondJumpReady = false;
                 return indexPSJumping1;
@@ -79,11 +80,11 @@ public class PSDashing : PlayerState
             else
             {
                 // save jump for later
-                lastJumpInput = Time.time;
+                lastJumpInput = Time.unscaledTime;
             }
         }
 
-        if (lastDashSecond + dashDelayTime < Time.time && readyToPush)
+        if (lastDashSecond + dashDelayTime < Time.unscaledTime && readyToPush)
         {
             // Press delay ends. time to actual dash
             readyToPush = false;
@@ -91,7 +92,7 @@ public class PSDashing : PlayerState
         }
 
 
-        if (lastDashSecond + dashReleaseTime + dashDelayTime < Time.time)
+        if (lastDashSecond + dashReleaseTime + dashDelayTime < Time.unscaledTime)
         {
             // the dash has already ended
             if (hyperSpeed)
@@ -103,10 +104,10 @@ public class PSDashing : PlayerState
             }
             PhysicsInputHelper(h);
 
-        } else if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.time)
+        } else if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.unscaledTime)
         {
             //cast listened jump right after dash finish
-            if (lastJumpInput + JumpListenerInterval > Time.time)
+            if (lastJumpInput + JumpListenerInterval > Time.unscaledTime)
             {
                 Player.CurrentPlayer.secondJumpReady = false;
                     return indexPSJumping1;
@@ -139,7 +140,7 @@ public class PSDashing : PlayerState
 
 
         // Player is grounded and dash has finished
-        if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime  < Time.time)
+        if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime  < Time.unscaledTime)
         {
             rb2d.velocity = rb2d.velocity * 0.3f;
             PhysicsInputHelper(h);
@@ -172,9 +173,10 @@ public class PSDashing : PlayerState
         //Dash has been pressed, set all config first
         //After delay is over, dash perform
 
+
         // Add Ghost trail
         if(!playerCharacter.InKillStreak) playerCharacter.SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
-        lastDashSecond = Time.time;
+        lastDashSecond = Time.unscaledTime;
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
 
         // Record the default Drag of rb2d
@@ -229,7 +231,7 @@ public class PSDashing : PlayerState
     private void forceApply()
     {
         //avoid Slow Motion
-        TimeManager.Instance.endSlowMotion();
+        TimeManager.Instance.endSlowMotion(0f);
 
         var dashForce = playerCharacter.InKillStreak ? f_dashForce:n_dashForce;
 
@@ -277,7 +279,7 @@ public class PSDashing : PlayerState
         //Apply force to character
        // playerCharacter.GetComponent<CapsuleCollider2D>().isTrigger = true;
         playerCharacter.SpriteHolder.right = direction;
-        rb2d.AddForce(direction * dashForce * 200f * 1 / Time.timeScale);
+        rb2d.AddForce(direction * dashForce * 200f * 1);
 
         //Camera Tricks
         CameraManager.Instance.Shaking(0.1f,0.10f);

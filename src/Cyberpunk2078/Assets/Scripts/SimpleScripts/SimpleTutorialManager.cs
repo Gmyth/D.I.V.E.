@@ -14,7 +14,7 @@ public enum TutorialState
 
 public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
 {
-    
+
     public TutorialState CurrentState
     {
         set
@@ -62,7 +62,7 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
 
@@ -97,22 +97,38 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         PlayerCharacter.Singleton.ConsumeEnergy(1);
     }
 
-    public void IntroduceNormalEnergy(TimelineManager timelineParentObject)
+    private TimelineManager timelineManager_DashTutorial;
+    public Drone DashTutorial_Drone;
+    [SerializeField] private Transform shootPoint_DashTutorial;
+    public void IntroduceNormalEnergy(TimelineManager timelineManager)
     {
+        timelineManager_DashTutorial = timelineManager;
+
         //Change button sprite according to the controller
         //UI_DashKey.GetComponent<SpriteRenderer>().sprite = ;
+        CameraManager.Instance.FocusAt(PlayerCharacter.Singleton.transform, 99999f);
+        CameraManager.Instance.FlashIn(6f, 0.05f, 999999f, 0.01f);
+        PlayerCharacter.Singleton.SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
+        TimeManager.Instance.startSlowMotion(999999f, 0f, 0.001f);
 
         Player.CurrentPlayer.energyLocked = false;
         PlayerCharacter.Singleton.AddNormalEnergy(1);
 
+        PlayerCharacter.Singleton.diableDash = true;
         PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 11;
 
-        //StartCoroutine(SlowDownAnimation());
+        DashTutorial_Drone.Fire(shootPoint_DashTutorial.position, false);
+
+        StartCoroutine(ShowGameObjectAfterDelay(1.0f, UI_DashKey));
     }
+
 
     public void AfterDashTutorial()
     {
-        
+        CameraManager.Instance.Idle();
+        PlayerCharacter.Singleton.SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
+        timelineManager_DashTutorial.PlayNextTimeline();
+        TimeManager.Instance.endSlowMotion(0f);
     }
 
     public void IntroduceOverloadEnergy()
@@ -138,6 +154,15 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
             t += 0.1f;
             yield return 0;
         }
+    }
+
+    private IEnumerator ShowGameObjectAfterDelay(float delayTime, GameObject targetObject)
+    {
+        yield return new WaitForSecondsRealtime(delayTime);
+        targetObject.SetActive(true);
+
+        yield return new WaitForSecondsRealtime(1.0f);
+        PlayerCharacter.Singleton.diableDash = false;
     }
 
 }

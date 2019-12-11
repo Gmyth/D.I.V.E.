@@ -249,9 +249,9 @@ public class CameraManager : MonoBehaviour {
 					break;
 				}
 
-				posX = Mathf.SmoothDamp(transform.position.x,target.position.x, ref focusVelocity.x, smoothTimeX * 4);
-				posY = Mathf.SmoothDamp(transform.position.y,target.position.y, ref focusVelocity.y, smoothTimeY * 4);
-				transform.position = new Vector3(posX + shakeX, posY + shakeY, transform.position.z);
+				posX = Mathf.SmoothDamp(transform.position.x,target.position.x, ref focusVelocity.x, 0.001f);
+				posY = Mathf.SmoothDamp(transform.position.y,target.position.y, ref focusVelocity.y, 0.001f);
+				transform.position = new Vector3(posX, posY, transform.position.z);
 				
 				if (targetIndicator && targetIndicator.changeSize)
 				{
@@ -372,6 +372,9 @@ public class CameraManager : MonoBehaviour {
     public void Idle()
     {
 	    currentState = CameraState.Idle;
+        flash = false;
+        flashOut = false;
+        shake = false;
     }
 
     private IEnumerator resetDelay(float duration)

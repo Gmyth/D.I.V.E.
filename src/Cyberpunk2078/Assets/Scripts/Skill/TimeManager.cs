@@ -8,7 +8,7 @@ public class TimeManager : MonoBehaviour
     // Start is called before the first frame update
     public static TimeManager Instance { get; private set; } = null;
 
-    [SerializeField]private float releaseSmoothTime;
+    [SerializeField]private float defaultSmoothTime;
     [SerializeField]private float slowMotionFactor;
     [SerializeField]private float targetFXAlpha;
     private float velocity;
@@ -16,6 +16,7 @@ public class TimeManager : MonoBehaviour
     private float startTime;
     private float endTime;
     private float targetScale;
+    private float smoothTime;
     private bool triggered;
     void Awake()
     {
@@ -31,9 +32,10 @@ public class TimeManager : MonoBehaviour
         
         if (triggered)
         {
+            smoothTime += 0.085f;
             if (Time.unscaledTime < endTime)
             { 
-                var newScale = Time.timeScale - (1f / releaseSmoothTime) * Time.unscaledDeltaTime;
+                var newScale = Time.timeScale - (1f / smoothTime) * Time.unscaledDeltaTime;
                 Time.timeScale = Mathf.Clamp(newScale, targetScale, 1f);
                 Time.fixedDeltaTime = Time.timeScale * 0.02f;
                 float current = blackScreen.color.a;
@@ -49,15 +51,16 @@ public class TimeManager : MonoBehaviour
         }
     }
 
-    public void startSlowMotion(float duration, float scale = -1f)
+    public void startSlowMotion(float duration, float scale = -1f, float _smoothTime = -1f)
     {
         startTime = Time.unscaledTime;
         targetScale = scale >= 0 ? scale: slowMotionFactor;
+        smoothTime = _smoothTime >= 0 ? _smoothTime : defaultSmoothTime;
         endTime = Time.unscaledTime + duration;
         triggered = true;
     }
 
-    public void endSlowMotion(float delay = 0.02f)
+    public void endSlowMotion(float delay = 0f)
     {
         StartCoroutine(endSlowMotionDelay(delay));
     }

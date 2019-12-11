@@ -10,6 +10,8 @@ public class Bullet : Recyclable
     public int rawDamage = 1;
 
     [SerializeField] private float hitEstimationTimeInterval = 0.02f;
+
+    [SerializeField] private bool disableHunch;
     private float lastHitEstimation;
     private bool hunchTriggered;
 
@@ -25,7 +27,7 @@ public class Bullet : Recyclable
 
     private void Update()
     {
-        if (lastHitEstimation + hitEstimationTimeInterval < Time.unscaledTime && !hunchTriggered && !isFriendly)
+        if (!disableHunch && lastHitEstimation + hitEstimationTimeInterval < Time.unscaledTime && !hunchTriggered && !isFriendly )
         {
             // time to check
             var direction = GetComponent<LinearMovement>().orientation;

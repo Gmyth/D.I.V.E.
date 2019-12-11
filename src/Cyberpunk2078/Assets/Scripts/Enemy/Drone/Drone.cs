@@ -39,7 +39,7 @@ public class Drone : Enemy, IPatroller
         return ProjectileUtility.GetDeviatedBulletDirection(Mathf.Sign(transform.localScale.x) * gun.transform.right, minAngle, maxAngle, aimDeviation);
     }
 
-    public void Aim(Vector3 targetPosition)
+    public Vector3 Aim(Vector3 targetPosition)
     {
         //if (isGunCharging)
         //    return;
@@ -54,6 +54,9 @@ public class Drone : Enemy, IPatroller
 
 
         gun.transform.right = direction;
+
+
+        return direction;
     }
 
     public void ResetGunDirection()
@@ -63,6 +66,22 @@ public class Drone : Enemy, IPatroller
 
 
         gun.transform.right = Vector3.right;
+    }
+
+    public void Fire(Vector3 position, bool hasDeviation = true)
+    {
+        Vector3 aimDirection = Aim(position);
+
+
+        LinearMovement bullet = ObjectRecycler.Singleton.GetObject<LinearMovement>(patrolFiringConfiguration.BulletID);
+        bullet.speed = patrolFiringConfiguration.BulletSpeed;
+        bullet.initialPosition = patrolFiringConfiguration.Muzzle ? patrolFiringConfiguration.Muzzle.position : transform.position;
+        bullet.orientation = hasDeviation ? GetDeviatedBulletDirection(patrolFiringConfiguration.MinDeviationAngle, patrolFiringConfiguration.MaxDeviationAngle) : aimDirection;
+
+        bullet.GetComponent<Bullet>().isFriendly = false;
+        bullet.transform.right = bullet.orientation;
+
+        bullet.gameObject.SetActive(true);
     }
 
 

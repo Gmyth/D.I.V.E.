@@ -22,16 +22,15 @@ public class PSTutorial_Dash : PlayerState
     public override int Update()
     {
 
-        if (animator.speed > 0)
+        if ((Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady)) && !playerCharacter.diableDash)
         {
-            var newSpeed = animator.speed - 0.1f;
-            animator.speed = Mathf.Clamp(newSpeed, 0, 1f);
-        }
-
-        if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
-        {
-            Player.CurrentPlayer.triggerReady = false;
-            return indexPSDashing;
+            Vector2 actualDirection = PlayerCharacter.Singleton.transform.parent.GetComponentInChildren<MouseIndicator>().getAttackDirection();
+            Vector2 idealDirection = (SimpleTutorialManager.Instance.DashTutorial_Drone.transform.position - PlayerCharacter.Singleton.transform.position).normalized;
+            if (Vector2.Angle(actualDirection, idealDirection) < 15)
+            {
+                Player.CurrentPlayer.triggerReady = false;
+                return indexPSDashing;
+            }
         }
 
         return Index;
@@ -40,19 +39,24 @@ public class PSTutorial_Dash : PlayerState
     public override void OnStateEnter(State previousState)
     {
         //animator.speed = 0;
+        animator.Play("MainCharacter_Airborne");
 
-        rb2d.simulated = false;
-        rb2d.velocity = Vector2.zero;
-        rb2d.gravityScale = 0;
+        //rb2d.simulated = false;
+        //rb2d.velocity = new Vector2(0, rb2d.velocity.y);
+        //rb2d.velocity = Vector2.zero;
+
+        //rb2d.gravityScale = 0;
+
+        playerCharacter.diableDash = true;
     }
 
     public override void OnStateQuit(State nextState)
     {
         //animator.speed = 1;
 
-        rb2d.simulated = true;
-        rb2d.gravityScale = 3;
-        rb2d.drag = 1;
+        //rb2d.simulated = true;
+        //rb2d.gravityScale = 3;
+        //rb2d.drag = 1;
 
         SimpleTutorialManager.Instance.AfterDashTutorial();
     }
