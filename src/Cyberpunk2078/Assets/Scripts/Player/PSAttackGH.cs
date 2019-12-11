@@ -134,7 +134,7 @@ public class PSAttackGH: PlayerState
         
         //get Mouse direction
         
-        Vector3 direction = getDirectionCorrection(mouse.getAttackDirection(),GroundNormal());
+        Vector3 direction = mouse.GetDirectionCorrection(GroundNormal());
 
 
         var attack = Instantiate(SplashFX);

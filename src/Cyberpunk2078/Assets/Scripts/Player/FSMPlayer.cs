@@ -167,19 +167,7 @@ public abstract class PlayerState : State
 
 
     //if player is grounded, the direction to down left/right & down side are not allowed
-    public Vector2 getDirectionCorrection(Vector2 _direction, Vector2 _norm)
-    {
-        if (Vector2.Angle(_direction, _norm) < 80)
-        {
-            // Allowed for free dash
-            return _direction;
-        }
-        // need to be on the axis of perpendicular to norm
-        Vector2 corDir  = Vector2.Perpendicular(_norm);
-        if (_direction.x * corDir.x > 0) return corDir;
 
-        return -corDir;
-    }
 
 
     // Function : Keyboard Input => Physics Velocity, And Friction Calculation

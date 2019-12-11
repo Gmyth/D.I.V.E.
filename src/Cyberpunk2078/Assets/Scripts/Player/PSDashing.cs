@@ -244,7 +244,7 @@ public class PSDashing : PlayerState
 
 
         //get Mouse direction
-        Vector3 direction = getDirectionCorrection(mouse.getAttackDirection(),GroundNormal());
+        Vector3 direction = mouse.GetDirectionCorrection(GroundNormal());
 
 
         var attack = ObjectRecycler.Singleton.GetObject<SingleEffect>(6);
