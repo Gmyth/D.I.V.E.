@@ -327,8 +327,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d52b88c66f60d294b8f4512213b52061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyboardIcons: Sprites/KeyIcon/KeyboardBlack.png
-  joystickIcons: Sprites/KeyIcon/XboxOne.png
+  keyboardIcons: Sprites/KeyIcon/KeyboardBlack
+  joystickIcons: Sprites/KeyIcon/XboxOne
   directionalIcons: {fileID: 9048313617144736061}
   leftIcon: {fileID: 265835813131470850}
   plusIcon: {fileID: 7319329913451568251}
@@ -799,7 +799,8 @@ MonoBehaviour:
   fsm: {fileID: 11400000, guid: e940c97f4a9914740a98bcbd19d444ce, type: 2}
   SpriteHolder: {fileID: 7457358081385485185}
   groundDust: {fileID: 7457358083176784541}
-  tutorial: {fileID: 0}
+  diableDash: 0
+  currentDialogueID: -1
 --- !u!70 &7457358081769736768
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
