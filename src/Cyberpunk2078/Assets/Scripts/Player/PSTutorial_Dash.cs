@@ -21,12 +21,10 @@ public class PSTutorial_Dash : PlayerState
 
     public override int Update()
     {
-
-        if ((Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady)) && !playerCharacter.diableDash)
+        Vector2 idealDirection = (SimpleTutorialManager.Instance.DashTutorial_Drone.transform.position - PlayerCharacter.Singleton.transform.position).normalized;
+        if (PlayerCharacter.Singleton.transform.parent.GetComponentInChildren<MouseIndicator>().DirectionNotification(idealDirection, 15f))
         {
-            Vector2 actualDirection = PlayerCharacter.Singleton.transform.parent.GetComponentInChildren<MouseIndicator>().getAttackDirection();
-            Vector2 idealDirection = (SimpleTutorialManager.Instance.DashTutorial_Drone.transform.position - PlayerCharacter.Singleton.transform.position).normalized;
-            if (Vector2.Angle(actualDirection, idealDirection) < 15)
+            if ((Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady)) && !playerCharacter.diableDash)
             {
                 Player.CurrentPlayer.triggerReady = false;
                 return indexPSDashing;

@@ -13,7 +13,7 @@ public class PlayerCharacter : Dummy
 
     public Transform SpriteHolder;
     public GameObject groundDust;
-    public GUITutorial tutorial;
+    //public GUITutorial tutorial;
 
     public bool diableDash;
 

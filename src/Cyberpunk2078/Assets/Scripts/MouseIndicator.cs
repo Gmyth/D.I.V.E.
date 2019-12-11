@@ -33,7 +33,7 @@ public class MouseIndicator : MonoBehaviour
     {
         if (locked) return;
         
-        transform.position = player.transform.position;
+        //transform.position = player.transform.position;
         var mousePosInScreen = Input.mousePosition;
         if (Mathf.Abs(Input.GetAxis("HorizontalJoyStick")) > 0 || Mathf.Abs(Input.GetAxis("VerticalJoyStick")) > 0)
         {
