@@ -78,7 +78,8 @@ public class PSDialogue : PlayerState
 
 
         Vector2 v = rb2d.velocity;
-        v.y = 0;
+        v.x = 0;
+        v.y = Mathf.Min(0, v.y);
         rb2d.velocity = v;
         
         

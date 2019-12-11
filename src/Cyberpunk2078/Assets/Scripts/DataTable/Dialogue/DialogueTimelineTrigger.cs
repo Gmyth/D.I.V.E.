@@ -8,15 +8,25 @@ using UnityEngine.Playables;
 public class DialogueTimelineTrigger : MonoBehaviour
 {
     [SerializeField] private int dialogueID;
-    
-    
+
+    private bool isTriggered = false;
+
+
+    private void OnEnable()
+    {
+        isTriggered = false;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player")
+        if (!isTriggered && other.tag == "Player")
         {
-            PlayerCharacter playerCharacter = other.GetComponent<PlayerCharacter>();
+            other.GetComponent<PlayerCharacter>().StartDialogue(dialogueID);
 
-            playerCharacter.StartDialogue(dialogueID);
+            
+            isTriggered = true;
+            
+            gameObject.SetActive(false);
         }
     }
 }
