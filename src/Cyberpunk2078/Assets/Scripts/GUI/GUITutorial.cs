@@ -30,32 +30,54 @@ public class GUITutorial : MonoBehaviour
 
     public void ShowKeyboardButton(string buttonName)
     {
-        leftIcon.sprite = sprites["Keyboard_Black_" + buttonName + "_Up"];
-        leftIcon.SetNativeSize();
+        if (buttonName == "Directionals")
+        {
+            directionalIcons.SetActive(true);
+            leftIcon.gameObject.SetActive(false);
+        }
+        else
+        {
+            directionalIcons.SetActive(false);
 
 
-        directionalIcons.SetActive(false);
-        leftIcon.gameObject.SetActive(true);
+            leftIcon.sprite = sprites["Keyboard_Black_" + buttonName + "_Up"];
+            leftIcon.SetNativeSize();
+
+            leftIcon.gameObject.SetActive(true);
+        }
+        
+        
         plusIcon.gameObject.SetActive(false);
         rightIcon.gameObject.SetActive(false);
     }
 
     public void ShowKeyboardButtonCombination(string buttonName1, string buttonName2)
     {
-        leftIcon.sprite = sprites["Keyboard_Black_" + buttonName1 + "_Up"];
-        leftIcon.SetNativeSize();
+        if (buttonName1 == "Directionals")
+        {
+            directionalIcons.SetActive(true);
+            leftIcon.gameObject.SetActive(false);
+        }
+        else
+        {
+            directionalIcons.SetActive(false);
+
+
+            leftIcon.sprite = sprites["Keyboard_Black_" + buttonName1 + "_Up"];
+            leftIcon.SetNativeSize();
+
+            leftIcon.gameObject.SetActive(true);
+        }
 
 
         plusIcon.GetComponent<RectTransform>().sizeDelta = new Vector2(16, 16);
+
+        plusIcon.gameObject.SetActive(true);
 
 
         rightIcon.sprite = sprites["Keyboard_Black_" + buttonName2 + "_Up"];
         rightIcon.SetNativeSize();
 
-
-        directionalIcons.SetActive(false);
-        leftIcon.gameObject.SetActive(true);
-        plusIcon.gameObject.SetActive(true);
         rightIcon.gameObject.SetActive(true);
     }
 
