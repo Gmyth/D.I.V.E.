@@ -86,15 +86,22 @@ public class GUIDialogueWidget : GUIWidget
 
             while (textField.maxVisibleCharacters < numCharacters)
             {
+                if (Input.GetButtonDown("Attack1"))
+                    break;
+
+
                 float dt = Time.unscaledTime - t;
-                float ts = Input.GetButton("Attack1") ? 0.2f * textSpeed : textSpeed;
+                float ts = Input.GetButton("Dashing") ? 0.2f * textSpeed : textSpeed;
                 int n = Mathf.FloorToInt(dt / ts);
 
                 textField.maxVisibleCharacters += n;
                 t += n * ts;
 
+
                 yield return null;
             }
+
+            textField.maxVisibleCharacters = numCharacters;
 
 
             yield return WaitForKeyPress("Attack1");
@@ -112,6 +119,9 @@ public class GUIDialogueWidget : GUIWidget
 
     private IEnumerator WaitForKeyPress(string buttonName, float maxDuration = float.MaxValue)
     {
+        yield return null;
+
+
         float t = Time.unscaledTime;
 
         for (; Time.unscaledTime - t < maxDuration && !Input.GetButtonDown(buttonName);)
