@@ -1,22 +1,32 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Playables;
 
 public class DialogueTimelineTrigger : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private int dialogueID;
+
+    private bool isTriggered = false;
+
+
+    private void OnEnable()
     {
-        
+        isTriggered = false;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        
+        if (!isTriggered && other.tag == "Player")
+        {
+            other.GetComponent<PlayerCharacter>().StartDialogue(dialogueID);
+
+            
+            isTriggered = true;
+            
+            gameObject.SetActive(false);
+        }
     }
-
-
-
 }

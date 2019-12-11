@@ -27,17 +27,8 @@ public class GUIDialogueWidget : GUIWidget
 
     DialogueData dialogue = null;
     private Action currentCallback = null;
-
-
-    public override void Hide()
-    {
-        base.Hide();
-
-
-        currentCallback = null;
-    }
-
-
+    
+    
     public void Show(DialogueData dialogue, Action callback = null)
     {
         currentCallback = callback;
@@ -47,6 +38,15 @@ public class GUIDialogueWidget : GUIWidget
 
 
         Show();
+    }
+    
+    public override void Hide()
+    {
+        base.Hide();
+
+        StopAllCoroutines();
+        
+        currentCallback = null;
     }
 
 
@@ -71,7 +71,7 @@ public class GUIDialogueWidget : GUIWidget
     }
 
 
-    private void Start()
+    private void OnEnable()
     {
         StartCoroutine(ShowText(currentCallback));
     }
@@ -81,18 +81,8 @@ public class GUIDialogueWidget : GUIWidget
     {
         for (;;)
         {
-            float t = Time.unscaledTime;
-
-
-            yield return null;
-            
-
-            while (Time.unscaledTime - t < 0.5 && !Input.GetButtonDown("Attack1"))
-                yield return null;
-
-
             int numCharacters = textField.text.Length;
-            t = Time.unscaledTime;
+            float t = Time.unscaledTime;
 
             while (textField.maxVisibleCharacters < numCharacters)
             {
