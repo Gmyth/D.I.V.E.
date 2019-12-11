@@ -64,10 +64,10 @@ public class GUIDialogueWidget : GUIWidget
         string content = dataTableManager.GetText(dialogue.TextID_Content);
 
 
-        textField.text = StripAllCommands(speakerName + ":\n" + content);
+        textField.text = StripAllCommands(speakerName + "\n" + content);
 
         //We now hide text based on each character's alpha value
-        HideText(speakerName.Length + 2);
+        HideText(speakerName.Length + 1);
     }
 
 
@@ -81,12 +81,19 @@ public class GUIDialogueWidget : GUIWidget
     {
         for (;;)
         {
-            //Count how many characters we have in our new dialogue line.
-            int numCharacters = textField.text.Length;
-
-
             float t = Time.unscaledTime;
+
+
+            yield return null;
             
+
+            while (Time.unscaledTime - t < 0.5 && !Input.GetButtonDown("Attack1"))
+                yield return null;
+
+
+            int numCharacters = textField.text.Length;
+            t = Time.unscaledTime;
+
             while (textField.maxVisibleCharacters < numCharacters)
             {
                 float dt = Time.unscaledTime - t;
