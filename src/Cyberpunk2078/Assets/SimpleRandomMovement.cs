@@ -34,7 +34,7 @@ public class SimpleRandomMovement : MonoBehaviour
         
         transform.position = Vector2.MoveTowards(transform.position, targetPos, maxDistance);
 
-        light.intensity = Mathf.Lerp(light.intensity, x , timer * speed);
+        light.intensity = Mathf.Lerp(light.intensity, x/3 , timer * speed);
     }
 
 
