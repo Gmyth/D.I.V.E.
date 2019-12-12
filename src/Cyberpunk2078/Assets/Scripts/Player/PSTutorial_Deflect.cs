@@ -11,6 +11,7 @@ public class PSTutorial_Deflect : PlayerState
 
     private float t = 0;
 
+    private GameObject attackEffect;
 
     public override void Initialize(int index, PlayerCharacter playerCharacter)
     {
@@ -29,11 +30,11 @@ public class PSTutorial_Deflect : PlayerState
                 {
                     anim.Play("MainCharacter_Atk", -1, 0f);
 
-                    var attack = Instantiate(SplashFX);
-                    attack.transform.position = playerCharacter.transform.position;
-                    attack.transform.right = PlayerCharacter.Singleton.transform.parent.GetComponentInChildren<MouseIndicator>().GetAttackDirection();
-                    attack.transform.parent = playerCharacter.transform;
-                    attack.GetComponentInChildren<HitBox>().hit.source = playerCharacter;
+                    attackEffect = Instantiate(SplashFX);
+                    attackEffect.transform.position = playerCharacter.transform.position;
+                    attackEffect.transform.right = PlayerCharacter.Singleton.transform.parent.GetComponentInChildren<MouseIndicator>().GetAttackDirection();
+                    attackEffect.transform.parent = playerCharacter.transform;
+                    attackEffect.GetComponentInChildren<HitBox>().hit.source = playerCharacter;
 
                     t = Time.unscaledTime + 0.5f;
 
@@ -44,7 +45,7 @@ public class PSTutorial_Deflect : PlayerState
         else if (Time.unscaledTime > t)
             return indexPSNoInput;
 
-
+        
         return Index;
     }
 
@@ -58,5 +59,6 @@ public class PSTutorial_Deflect : PlayerState
     public override void OnStateQuit(State nextState)
     {
         anim.Play("MainCharacter_Idle", -1, 0f);
+        Destroy(attackEffect);
     }
 }

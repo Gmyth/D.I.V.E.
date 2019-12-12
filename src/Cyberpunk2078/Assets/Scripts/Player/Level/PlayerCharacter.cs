@@ -116,10 +116,10 @@ public class PlayerCharacter : Dummy
 
     public bool ActivateFever()
     {
-        if (statistics[StatisticType.UltimateEnergy] > 30f)
+        if (statistics[StatisticType.UltimateEnergy] > 30f && !InFever)
         {
             InFever = true;
-            CameraManager.Instance.FlashIn(6,0.05f,0.05f,0.05f);
+            CameraManager.Instance.FlashIn(7,0.05f,0.05f,0.05f);
             AddOverLoadEnergy(1);
         }
         return InFever;

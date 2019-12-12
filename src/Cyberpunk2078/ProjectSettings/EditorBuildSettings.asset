@@ -8,7 +8,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Level-Art.unity
     guid: 82bf8f2644d9fbd43864843a9236d5e6
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Level-TestScene.unity
     guid: 977f47d3a1b5d2943a2d9bcf907f6ff9
+  - enabled: 1
+    path: Assets/Scenes/Level-Timeline-Test.unity
+    guid: c796addbcd44a2b48b21c4428bfde51b
   m_configObjects: {}

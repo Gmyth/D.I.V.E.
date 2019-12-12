@@ -30,7 +30,7 @@ public class GUITutorial : MonoBehaviour
 
     public void ShowKeyboardButton(string buttonName)
     {
-        if (buttonName == "Directionals")
+        if (buttonName == "Keyboard_WASD")
         {
             directionalIcons.SetActive(true);
             leftIcon.gameObject.SetActive(false);
@@ -40,7 +40,7 @@ public class GUITutorial : MonoBehaviour
             directionalIcons.SetActive(false);
 
 
-            leftIcon.sprite = sprites["Keyboard_Black_" + buttonName + "_Up"];
+            leftIcon.sprite = sprites[buttonName];
             leftIcon.SetNativeSize();
 
             leftIcon.gameObject.SetActive(true);
@@ -53,7 +53,7 @@ public class GUITutorial : MonoBehaviour
 
     public void ShowKeyboardButtonCombination(string buttonName1, string buttonName2)
     {
-        if (buttonName1 == "Directionals")
+        if (buttonName1 == "Keyboard_WASD")
         {
             directionalIcons.SetActive(true);
             leftIcon.gameObject.SetActive(false);
@@ -63,7 +63,7 @@ public class GUITutorial : MonoBehaviour
             directionalIcons.SetActive(false);
 
 
-            leftIcon.sprite = sprites["Keyboard_Black_" + buttonName1 + "_Up"];
+            leftIcon.sprite = sprites[buttonName1];
             leftIcon.SetNativeSize();
 
             leftIcon.gameObject.SetActive(true);
@@ -75,7 +75,7 @@ public class GUITutorial : MonoBehaviour
         plusIcon.gameObject.SetActive(true);
 
 
-        rightIcon.sprite = sprites["Keyboard_Black_" + buttonName2 + "_Up"];
+        rightIcon.sprite = sprites[buttonName2];
         rightIcon.SetNativeSize();
 
         rightIcon.gameObject.SetActive(true);

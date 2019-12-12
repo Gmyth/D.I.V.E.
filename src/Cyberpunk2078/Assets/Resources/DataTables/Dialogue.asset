@@ -194,7 +194,7 @@ MonoBehaviour:
     textID_content: 1010106008
     next: -1
   - id: 10201004
-    portrait: {fileID: 21300000, guid: 4381aeb5e317b094da34018e7a921138, type: 3}
-    textID_speaker: 10003
+    portrait: {fileID: 21300000, guid: 3393b11759de4ab4884fef90db08c998, type: 3}
+    textID_speaker: 10000
     textID_content: 1010201004
     next: -1
