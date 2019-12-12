@@ -62,10 +62,15 @@ public class GUIHUD : GUIWindow
         dialogueWidget.Show(dialogue, HideDialogue);
     }
 
-    public void ShowDialogue(DialogueData dialogue, Action callback)
+    public void ShowDialogue(DialogueData dialogue, params Action[] callbacks)
     {
+        Action[] newCallbacks = new Action[callbacks.Length + 1];
+        callbacks.CopyTo(newCallbacks, 0);
+        newCallbacks[callbacks.Length] = HideDialogue;
+
+
         resourceInspector.SetActive(false);
-        dialogueWidget.Show(dialogue, callback);
+        dialogueWidget.Show(dialogue, newCallbacks);
     }
 
     public void HideDialogue()

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 
 [CreateAssetMenuAttribute(fileName = "PS_Dialogue", menuName = "Player State/Dialogue")]
@@ -47,14 +48,13 @@ public class PSDialogue : PlayerState
                     GUIHUD hud = GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD");
                     if (!hud)
                         return indexPSIdle;
+
+                    Action[] newCallbacks = new Action[playerCharacter.currentDialogueCallbacks.Length + 1];
+                    playerCharacter.currentDialogueCallbacks.CopyTo(newCallbacks, 0);
+                    newCallbacks[playerCharacter.currentDialogueCallbacks.Length] = EndDialogue;
+
+                    hud.ShowDialogue(DataTableManager.singleton.GetDialogueData(playerCharacter.currentDialogueID), newCallbacks);
                     
-                    hud.ShowDialogue(DataTableManager.singleton.GetDialogueData(playerCharacter.currentDialogueID),
-                        delegate
-                        {
-                            currentStatus = Status.Done;
-                            hud.HideDialogue();
-                        });
-                
                     currentStatus = Status.InDialogue;
                     
                     break;
@@ -107,12 +107,11 @@ public class PSDialogue : PlayerState
                 GUIHUD hud = GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD");
                 if (hud)
                 {
-                    hud.ShowDialogue(DataTableManager.singleton.GetDialogueData(playerCharacter.currentDialogueID),
-                        delegate
-                        {
-                            currentStatus = Status.Done;
-                            hud.HideDialogue();
-                        });
+                    Action[] newCallbacks = new Action[playerCharacter.currentDialogueCallbacks.Length + 1];
+                    playerCharacter.currentDialogueCallbacks.CopyTo(newCallbacks, 0);
+                    newCallbacks[playerCharacter.currentDialogueCallbacks.Length] = EndDialogue;
+
+                    hud.ShowDialogue(DataTableManager.singleton.GetDialogueData(playerCharacter.currentDialogueID), newCallbacks);
 
                     currentStatus = Status.InDialogue;
                 }
@@ -134,5 +133,12 @@ public class PSDialogue : PlayerState
 
         
         playerCharacter.currentDialogueID = -1;
+        playerCharacter.currentDialogueCallbacks = null;
+    }
+
+
+    private void EndDialogue()
+    {
+        currentStatus = Status.Done;
     }
 }

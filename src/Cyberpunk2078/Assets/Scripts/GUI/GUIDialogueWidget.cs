@@ -26,12 +26,12 @@ public class GUIDialogueWidget : GUIWidget
     [SerializeField] private TextMeshProUGUI textField;
 
     DialogueData dialogue = null;
-    private Action currentCallback = null;
+    private Action[] currentCallbacks = null;
     
     
-    public void Show(DialogueData dialogue, Action callback = null)
+    public void Show(DialogueData dialogue, params Action[] callbacks)
     {
-        currentCallback = callback;
+        currentCallbacks = callbacks;
 
 
         ShowDialogue(dialogue);
@@ -46,7 +46,7 @@ public class GUIDialogueWidget : GUIWidget
 
         StopAllCoroutines();
         
-        currentCallback = null;
+        currentCallbacks = null;
     }
 
 
@@ -73,11 +73,11 @@ public class GUIDialogueWidget : GUIWidget
 
     private void OnEnable()
     {
-        StartCoroutine(ShowText(currentCallback));
+        StartCoroutine(ShowText(currentCallbacks));
     }
 
 
-    private IEnumerator ShowText(Action callback = null)
+    private IEnumerator ShowText(params Action[] callbacks)
     {
         for (;;)
         {
@@ -114,7 +114,9 @@ public class GUIDialogueWidget : GUIWidget
         }
 
 
-        callback?.Invoke();
+        if (callbacks != null)
+            foreach (Action callback in callbacks)
+                callback?.Invoke();
     }
 
     private IEnumerator WaitForKeyPress(string buttonName, float maxDuration = float.MaxValue)
@@ -125,9 +127,10 @@ public class GUIDialogueWidget : GUIWidget
         float t = Time.unscaledTime;
 
         for (; Time.unscaledTime - t < maxDuration && !Input.GetButtonDown(buttonName);)
-        {
             yield return null;
-        }
+
+
+        yield return null;
     }
 
     private void HideText(int numToShow = 0)

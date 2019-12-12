@@ -114,7 +114,7 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         Player.CurrentPlayer.energyLocked = false;
         PlayerCharacter.Singleton.AddNormalEnergy(1);
 
-        PlayerCharacter.Singleton.diableDash = true;
+        PlayerCharacter.Singleton.isInTutorial = true;
         PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 11;
 
         DashTutorial_Drone.Fire(shootPoint_DashTutorial.position, false);
@@ -139,22 +139,42 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         //PlayerCharacter.Singleton.AddOverLoadEnergy(1);
     }
 
-    public void IntroduceBulletDeflect()
+    private TimelineManager timelineManager_DeflectTutorial;
+    public Bullet DeflectTutorial_Bullet;
+    public GameObject DeflectTutorial_Jack;
+    public void IntroduceBulletDeflect(TimelineManager timelineManager)
     {
+        timelineManager_DeflectTutorial = timelineManager;
+
+        DeflectTutorial_Jack.GetComponentsInChildren<Animator>()[1].runtimeAnimatorController = null;
+
         //Change button sprite according to the controller
         //UI_DashKey.GetComponent<SpriteRenderer>().sprite = ;
 
-        PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 11;
+        timelineManager_DeflectTutorial.PlayTimelineInIndex(0);
+
+        PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 13;
+
+        StartCoroutine(ShowGameObjectAfterDelay(1.0f, null));
+    }
+
+    public void AfterDeflectTutorial()
+    {
+        CameraManager.Instance.Idle();
+        PlayerCharacter.Singleton.SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
+        timelineManager_DeflectTutorial.PlayNextTimeline();
+
+        PlayerCharacter.Singleton.transform.parent.GetComponentInChildren<MouseIndicator>().ResetColor();
     }
 
 
     private IEnumerator ShowGameObjectAfterDelay(float delayTime, GameObject targetObject)
     {
         yield return new WaitForSecondsRealtime(delayTime);
-        targetObject.SetActive(true);
+        targetObject?.SetActive(true);
 
         yield return new WaitForSecondsRealtime(1.0f);
-        PlayerCharacter.Singleton.diableDash = false;
+        PlayerCharacter.Singleton.isInTutorial = false;
     }
 
 }

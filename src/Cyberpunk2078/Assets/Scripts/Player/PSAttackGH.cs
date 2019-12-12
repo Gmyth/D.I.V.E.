@@ -103,8 +103,6 @@ public class PSAttackGH: PlayerState
             return indexPSMoving;
         }
 
-
-        
         return Index;
     }
 

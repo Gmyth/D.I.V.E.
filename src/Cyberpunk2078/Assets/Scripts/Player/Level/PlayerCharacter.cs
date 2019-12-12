@@ -15,7 +15,7 @@ public class PlayerCharacter : Dummy
     public GameObject groundDust;
     //public GUITutorial tutorial;
 
-    public bool diableDash;
+    public bool isInTutorial;
 
 
     private float lastKillStreakDecaySecond;
@@ -23,6 +23,7 @@ public class PlayerCharacter : Dummy
     private new Rigidbody2D rigidbody;
 
     public int currentDialogueID = -1;
+    public Action[] currentDialogueCallbacks = null;
 
 
     public EventOnStatisticChange OnStatisticChange { get; private set; }
@@ -273,13 +274,13 @@ public class PlayerCharacter : Dummy
 
         InKillStreak = false;
         SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
-        
     }
 
 
-    public void StartDialogue(int dialogueID)
+    public void StartDialogue(int dialogueID, params Action[] callbacks)
     {
         currentDialogueID = dialogueID;
+        currentDialogueCallbacks = callbacks;
         fsm.CurrentStateIndex = 12;
     }
 

@@ -118,7 +118,7 @@ public class MouseIndicator : MonoBehaviour
 
     public void ResetColor()
     {
-        GetComponentInChildren<SpriteRenderer>().color = error;
+        GetComponentInChildren<SpriteRenderer>().color = defaultColor;
         renderer.transform.localScale = defaultScale;
     }
     

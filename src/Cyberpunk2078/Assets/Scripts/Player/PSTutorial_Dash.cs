@@ -24,7 +24,7 @@ public class PSTutorial_Dash : PlayerState
         Vector2 idealDirection = (SimpleTutorialManager.Instance.DashTutorial_Drone.transform.position - PlayerCharacter.Singleton.transform.position).normalized;
         if (PlayerCharacter.Singleton.transform.parent.GetComponentInChildren<MouseIndicator>().DirectionNotification(idealDirection, 15f))
         {
-            if ((Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady)) && !playerCharacter.diableDash)
+            if ((Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady)) && !playerCharacter.isInTutorial)
             {
                 Player.CurrentPlayer.triggerReady = false;
                 return indexPSDashing;
@@ -45,7 +45,7 @@ public class PSTutorial_Dash : PlayerState
 
         //rb2d.gravityScale = 0;
 
-        playerCharacter.diableDash = true;
+        playerCharacter.isInTutorial = true;
     }
 
     public override void OnStateQuit(State nextState)
