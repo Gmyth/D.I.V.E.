@@ -3,7 +3,7 @@
 
 public abstract class EnemyState : State
 {
-    public static PlayerCharacter FindAvailableTarget(Vector3 enemyPosition, float range)
+    protected static PlayerCharacter FindAvailableTarget(Vector3 enemyPosition, float range)
     {
         PlayerCharacter player = PlayerCharacter.Singleton;
 
@@ -25,7 +25,7 @@ public abstract class EnemyState : State
     }
 
 
-    public static PlayerCharacter FindAvailableTarget(Vector3 enemyPosition, float range, Zone guardZone)
+    protected static PlayerCharacter FindAvailableTarget(Vector3 enemyPosition, float range, Zone guardZone)
     {
         PlayerCharacter player = PlayerCharacter.Singleton;
 
@@ -120,6 +120,15 @@ public abstract class EnemyState<T> : EnemyState where T : Enemy
         scale.x = Mathf.Sign(direction.x) * Mathf.Abs(scale.x);
 
         enemy.transform.localScale = scale;
+    }
+
+    protected PlayerCharacter FindAvailableTarget(bool useSightRange = true, bool useGuardZone = true)
+    {
+        if (useSightRange)
+            return useGuardZone ? FindAvailableTarget(enemy.transform.position, enemy[StatisticType.SightRange], enemy.GuardZone) : FindAvailableTarget(enemy.transform.position, enemy[StatisticType.SightRange]);
+
+
+        return null;
     }
 }
 

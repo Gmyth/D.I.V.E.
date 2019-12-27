@@ -9,13 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcf0e81a3663f484aa84473a341b87c4, type: 3}
-  m_Name: DroneState_Patrolling
+  m_Script: {fileID: 11500000, guid: 828cd845ddfeb794f82ffb05891d4f10, type: 3}
+  m_Name: DroneState_Searching
   m_EditorClassIdentifier: 
-  speed: 2
-  delay: 4
-  idleAnimation: 
-  patrollingAnimation: 
-  alwaysFacingTarget: 0
-  index_ESIdle: -1
-  index_ESAlert: 1
+  useSightRange: 1
+  useGuardZone: 0
+  duration: 3
+  stateIndex_idle: 0
+  stateIndex_alert: 1

@@ -10,10 +10,11 @@ public abstract class ESChargedAttack<T> : ESAttack<T> where T : Enemy
 
     [Header("Connected States")]
     [SerializeField] protected int stateIndex_alert = -1;
+    [SerializeField] protected int stateIndex_onTargetLoss = -1;
 
     protected Animator animator;
 
-    protected float t_charge;
+    protected float t_chargeFinish;
 
 
     public override void Initialize(T enemy)
@@ -27,10 +28,10 @@ public abstract class ESChargedAttack<T> : ESAttack<T> where T : Enemy
     {
         float currentTime = Time.time;
 
-        if (currentTime >= t_charge)
+        if (currentTime >= t_chargeFinish)
             return Attack(currentTime);
-        else if (stopChargingOnTargetLoss && IsPlayerInSight(enemy.currentTarget, enemy[StatisticType.SightRange]))
-            return stateIndex_alert;
+        else if (!IsPlayerInSight(enemy.currentTarget, enemy[StatisticType.SightRange]))
+            return OnTargetLoss();
 
 
         return Index;
@@ -42,7 +43,7 @@ public abstract class ESChargedAttack<T> : ESAttack<T> where T : Enemy
         base.OnStateEnter(previousState);
 
 
-        t_charge = Time.time + chargeTime;
+        t_chargeFinish = Time.time + chargeTime;
 
 
         animator.Play(animation_charging);
@@ -50,4 +51,9 @@ public abstract class ESChargedAttack<T> : ESAttack<T> where T : Enemy
 
 
     protected abstract int Attack(float currentTime);
+
+    protected virtual int OnTargetLoss()
+    {
+        return stopChargingOnTargetLoss ? stateIndex_onTargetLoss : Index;
+    }
 }

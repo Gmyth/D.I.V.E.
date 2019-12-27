@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-[CreateAssetMenuAttribute(fileName = "L2CleanerState_Alert", menuName = "Enemy State/Level 2/Cleaner/Alert")]
+[CreateAssetMenuAttribute(fileName = "L2CleanerState_Alert", menuName = "Enemy State/L2Cleaner/Alert")]
 public class L2CleanerState_Alert : EnemyState<L2Cleaner>
 {
     [SerializeField] private float waitTime;

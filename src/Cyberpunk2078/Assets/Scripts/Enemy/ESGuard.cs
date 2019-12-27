@@ -1,38 +1,55 @@
 ﻿using UnityEngine;
 
 
-public interface IGuardian
+public abstract class ESGuard<T> : EnemyState<T> where T : Enemy
 {
-    float MinTurnTime { get; }
-    float MaxTurnTime { get; }
-}
+    [Header("Configuration")]
+    [SerializeField] private bool useSightRange = true;
+    [SerializeField] private bool useGuardZone = true;
+    [SerializeField] private float duration = 3;
 
-
-public abstract class ESGuard<T> : EnemyState<T> where T : Enemy, IGuardian
-{
     [Header("Connected States")]
-    [SerializeField] private int index_ESIdle = -1;
-    [SerializeField] private int index_ESAlert = -1;
+    [SerializeField] private int stateIndex_idle = -1;
+    [SerializeField] private int stateIndex_alert = -1;
 
-    private float t0 = 0;
+    private Rigidbody2D rigidbody;
+
+    private float t_stop;
 
 
-    public override int Update()
+    public override void Initialize(T enemy)
     {
-        if (Time.time >= t0)
-        {
-            // TODO: Turn
+        base.Initialize(enemy);
 
-            t0 += Random.Range(enemy.MinTurnTime, enemy.MaxTurnTime);
-        }
 
-        // TODO: Player detection
-
-        return Index;
+        rigidbody = enemy.GetComponent<Rigidbody2D>();
     }
 
     public override void OnStateEnter(State previousState)
     {
-        t0 = Time.time + Random.Range(enemy.MinTurnTime, enemy.MaxTurnTime);
+        base.OnStateEnter(previousState);
+
+
+        rigidbody.velocity = Vector2.zero;
+
+
+        t_stop = duration == 0 ? float.MaxValue : Time.time + duration;
+    }
+
+    public override int Update()
+    {
+        float t = Time.time;
+
+        if (t >= t_stop)
+            return stateIndex_idle;
+
+
+        PlayerCharacter target = FindAvailableTarget(useSightRange, useGuardZone);
+
+        if (target)
+            return stateIndex_alert;
+
+
+        return Index;
     }
 }

@@ -68,7 +68,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1909596859
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 258456577e459fa4397583ff205eda0f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -174,7 +174,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1909596859
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ebc5533139ab2df489188957a298bba7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -311,6 +311,8 @@ MonoBehaviour:
     damage: 0
     knockback: 0
   lastCheckPointTransform: {x: 0, y: 0, z: 0}
+  farRange: 0
+  nearRange: 0
   gun: {fileID: 8849360307540039034}
   thruster: {fileID: 2675494265900334673}
   Health: 5
@@ -383,7 +385,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1909596859
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 3b992699a38f8554eaf819b2de3bcbc8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -465,7 +467,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1909596859
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 0a174ffcc5462a94a8cb31befd0d09d3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

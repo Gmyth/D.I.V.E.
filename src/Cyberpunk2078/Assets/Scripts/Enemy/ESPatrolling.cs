@@ -73,18 +73,17 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
 
     public override int Update()
     {
-        if(!enemy)
-            return Index;
-
-
         Vector3 enemyPosition = enemy.transform.position;
+
 
         if (index_ESAlert >= 0)
         {
-            enemy.currentTarget = FindAvailableTarget(enemyPosition, enemy[StatisticType.SightRange], enemy.GuardZone);
+            PlayerCharacter target = FindAvailableTarget(enemyPosition, enemy[StatisticType.SightRange], enemy.GuardZone);
 
-            if (enemy.currentTarget)
+            if (target)
             {
+                enemy.currentTarget = target;
+
                 rigidbody.velocity = Vector2.zero;
                 IsMoving = false;
 

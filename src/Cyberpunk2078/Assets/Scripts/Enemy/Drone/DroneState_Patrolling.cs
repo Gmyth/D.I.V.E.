@@ -4,14 +4,25 @@
 [CreateAssetMenuAttribute(fileName = "DroneState_Patrolling", menuName = "Enemy State/Drone/Patrolling")]
 public class DroneState_Patrolling : ESPatrolling<Drone>
 {
+    private Animator droneAnimator;
     private Animator gunAnimator;
 
+
+    public override void Initialize(Drone enemy)
+    {
+        base.Initialize(enemy);
+
+
+        droneAnimator = enemy.GetComponent<Animator>();
+        gunAnimator = enemy.Gun.GetComponent<Animator>();
+    }
 
     public override void OnStateEnter(State previousState)
     {
         base.OnStateEnter(previousState);
 
-        gunAnimator = enemy.Gun.GetComponent<Animator>();
+
+        droneAnimator.Play("L2Drone_Idle");
     }
 
 
