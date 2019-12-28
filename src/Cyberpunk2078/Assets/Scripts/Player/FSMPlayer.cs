@@ -164,7 +164,20 @@ public abstract class PlayerState : State
         return Vector2.zero;
     }
 
+    protected void Fire()
+    {
+        LinearMovement bullet = ObjectRecycler.Singleton.GetObject<LinearMovement>(0);
+        bullet.speed = 20;
+        bullet.initialPosition = playerCharacter.transform.position;
+        bullet.orientation = playerCharacter.transform.parent.GetComponentInChildren<MouseIndicator>().GetAttackDirection();
+        
+        bullet.GetComponent<Bullet>().speed = 20;
+        bullet.GetComponent<Bullet>().isFriendly = true;
+        bullet.transform.right = bullet.orientation;
 
+        bullet.gameObject.SetActive(true);
+    }
+    
     //if player is grounded, the direction to down left/right & down side are not allowed
 
 
@@ -222,6 +235,12 @@ public abstract class PlayerState : State
         if (Input.GetAxis("Vertical") <= 0)
         {
             Player.CurrentPlayer.climbReady = true;
+        }
+        
+        if (Input.GetButtonDown("Fire"))
+        {
+            //TODO Temp code
+            Fire();
         }
     }
 }

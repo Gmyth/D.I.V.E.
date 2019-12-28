@@ -7,7 +7,7 @@ public class TimeManager : MonoBehaviour
 {
     // Start is called before the first frame update
     public static TimeManager Instance { get; private set; } = null;
-
+    public float TimeFactor = 1;
     [SerializeField]private float defaultSmoothTime;
     [SerializeField]private float slowMotionFactor;
     [SerializeField]private float targetFXAlpha;
@@ -63,6 +63,31 @@ public class TimeManager : MonoBehaviour
     public void endSlowMotion(float delay = 0f)
     {
         StartCoroutine(endSlowMotionDelay(delay));
+    }
+
+
+    public void StartFeverMotion()
+    {
+        TimeFactor = 0.2f;
+        StartCoroutine(applyBlackScreen());
+    }
+    
+    public void EndFeverMotion()
+    {
+        TimeFactor = 1f;
+        blackScreen.color =new Color(blackScreen.color.r,blackScreen.color.g,blackScreen.color.b, 0f);
+    }
+
+    private IEnumerator applyBlackScreen()
+    {
+        
+        while (TimeFactor!= 1f)
+        {
+            float current = blackScreen.color.a;
+            yield return new WaitForSeconds(0.01f);
+            blackScreen.color =new Color(blackScreen.color.r,blackScreen.color.g,blackScreen.color.b, Mathf.SmoothDamp(current, targetFXAlpha, ref velocity, 0.1f));
+            yield return null;
+        }
     }
 
     private IEnumerator endSlowMotionDelay(float delay)

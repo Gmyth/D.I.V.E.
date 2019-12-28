@@ -82,7 +82,7 @@ public abstract class Dummy : MonoBehaviour, IDamageable
 
     public bool isInvulnerable = false;
     public bool isEvading = false;
-
+    public float UnitTimeFactor = 1;
     public Event<Hit> OnHit { get; private set; } = new Event<Hit>();
     public UnityEvent OnAttack { get; private set; } = new UnityEvent();
 

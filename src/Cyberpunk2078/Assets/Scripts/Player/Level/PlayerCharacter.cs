@@ -121,6 +121,7 @@ public class PlayerCharacter : Dummy
             InFever = true;
             CameraManager.Instance.FlashIn(7,0.05f,0.05f,0.05f);
             AddOverLoadEnergy(1);
+            TimeManager.Instance.StartFeverMotion();
         }
         return InFever;
         
@@ -214,6 +215,7 @@ public class PlayerCharacter : Dummy
         {
             InFever = false;
             GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").DehighlightFeverBar();
+            TimeManager.Instance.EndFeverMotion();
         }
         return true;
     }

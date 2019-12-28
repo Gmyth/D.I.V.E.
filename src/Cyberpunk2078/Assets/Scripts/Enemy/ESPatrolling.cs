@@ -78,7 +78,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
 
 
         Vector3 enemyPosition = enemy.transform.position;
-
+        animator.speed = TimeManager.Instance.TimeFactor * enemy.UnitTimeFactor;
         if (index_ESAlert >= 0)
         {
             enemy.currentTarget = FindAvailableTarget(enemyPosition, enemy[StatisticType.SightRange], enemy.GuardZone);
@@ -124,7 +124,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
                 AdjustFacingDirection(direction);
 
 
-                rigidbody.velocity = direction * speed;
+                rigidbody.velocity = direction * speed * TimeManager.Instance.TimeFactor * enemy.UnitTimeFactor;
 
 
                 IsMoving = true;
@@ -242,6 +242,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
         bullet.orientation = (enemy.currentTarget.transform.position - bullet.initialPosition).normalized;
 
         bullet.GetComponent<Bullet>().isFriendly = false;
+        bullet.GetComponent<Bullet>().speed = firingConfiguration.BulletSpeed;
         bullet.transform.right = bullet.orientation;
 
         bullet.gameObject.SetActive(true);

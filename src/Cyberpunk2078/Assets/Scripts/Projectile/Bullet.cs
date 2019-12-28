@@ -8,6 +8,7 @@ public class Bullet : Recyclable
     public bool isFriendly = false;
     public int numHits = 1;
     public int rawDamage = 1;
+    public float speed;
 
     [SerializeField] private float hitEstimationTimeInterval = 0.02f;
 
@@ -27,6 +28,8 @@ public class Bullet : Recyclable
 
     private void Update()
     {
+        GetComponentInChildren<Animator>().speed = TimeManager.Instance.TimeFactor;
+        GetComponent<LinearMovement>().speed = speed * TimeManager.Instance.TimeFactor;
         if (!disableHunch && lastHitEstimation + hitEstimationTimeInterval < Time.unscaledTime && !hunchTriggered && !isFriendly )
         {
             // time to check

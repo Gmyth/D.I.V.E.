@@ -37,6 +37,8 @@ public class PSAirborne : PlayerState
             //TODO add another ultimate
             playerCharacter.ActivateFever();
         }
+        
+
 
         if (Input.GetButtonDown("Attack1"))
         {
@@ -66,8 +68,10 @@ public class PSAirborne : PlayerState
             return indexPSDashing;
         }
 
+        if (Vy > 0)
+            return Index;
 
-        switch (GetGroundType())
+            switch (GetGroundType())
         {
             case 1:
                 return (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("HorizontalJoyStick") != 0) ? indexPSMoving : indexPSIdle;

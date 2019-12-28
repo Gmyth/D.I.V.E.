@@ -37,7 +37,8 @@ public class DroneState_Patrolling : ESPatrolling<Drone>
         bullet.speed = firingConfiguration.BulletSpeed;
         bullet.initialPosition = firingConfiguration.Muzzle ? firingConfiguration.Muzzle.position : enemy.transform.position;
         bullet.orientation = enemy.GetDeviatedBulletDirection(firingConfiguration.MinDeviationAngle, firingConfiguration.MaxDeviationAngle);
-
+        
+        bullet.GetComponent<Bullet>().speed = firingConfiguration.BulletSpeed;
         bullet.GetComponent<Bullet>().isFriendly = false;
         bullet.transform.right = bullet.orientation;
 
