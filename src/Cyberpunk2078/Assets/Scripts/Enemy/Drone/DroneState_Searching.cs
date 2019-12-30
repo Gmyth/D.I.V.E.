@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 [CreateAssetMenuAttribute(fileName = "DroneState_Searching", menuName = "Enemy State/Drone/Searching")]
 public class DroneState_Searching : ESGuard<Drone>
 {
-    private Rigidbody2D rigidbody;
     private Animator animator;
 
 

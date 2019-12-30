@@ -12,7 +12,7 @@ public abstract class ESGuard<T> : EnemyState<T> where T : Enemy
     [SerializeField] private int stateIndex_idle = -1;
     [SerializeField] private int stateIndex_alert = -1;
 
-    private Rigidbody2D rigidbody;
+    protected Rigidbody2D rigidbody;
 
     private float t_stop;
 

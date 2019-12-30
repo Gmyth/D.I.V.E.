@@ -18,7 +18,7 @@ MonoBehaviour:
   hitBox: -1
   chargeTime: 1
   stopChargingOnTargetLoss: 1
-  animation_charging: 
+  animation_charging: L2Drone_Alert
   stateIndex_alert: 1
   stateIndex_onTargetLoss: 3
   recoil: 10

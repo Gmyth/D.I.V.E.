@@ -88,6 +88,7 @@ public abstract class EnemyState<T> : EnemyState where T : Enemy
         /* Check whether player is in the sight range */
         float d = Vector2.Distance(enemy.transform.position, player.transform.position);
 
+
         if (range > 0 && d > range)
             return null;
 
