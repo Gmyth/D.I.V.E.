@@ -14,7 +14,7 @@ public abstract class PlayerState : State
     protected Animator anim;
     protected bool flip;
     protected bool grounded;
-    protected float lastGroundedSec;
+    protected float lastGroundedSec; 
 
     public virtual void Initialize(int index, PlayerCharacter playerCharacter)
     {
@@ -76,6 +76,8 @@ public abstract class PlayerState : State
             player.secondJumpReady = true;
 
             grounded = true;
+
+            
 
             return 1;
         } 

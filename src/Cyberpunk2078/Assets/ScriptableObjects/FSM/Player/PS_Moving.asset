@@ -24,3 +24,4 @@ MonoBehaviour:
   indexPSAirborne: 2
   indexPSClimb: 8
   indexPSWallJumping: 7
+  PlayerStateEvent: event:/Footsteps

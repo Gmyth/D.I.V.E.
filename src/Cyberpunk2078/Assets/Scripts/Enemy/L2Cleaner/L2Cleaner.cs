@@ -3,9 +3,10 @@
 
 public class L2Cleaner : Enemy, IPatroller
 {
-//    [Header("Patrolling")]
-//    [SerializeField] private Vector3[] patrolPoints;
-//    public RangedWeaponConfiguration patrolFiringConfiguration;
+    //    [Header("Patrolling")]
+    //    [SerializeField] private Vector3[] patrolPoints;
+    //    public RangedWeaponConfiguration patrolFiringConfiguration;
+
 
 
     public override float ApplyDamage(float rawDamage)
@@ -42,6 +43,7 @@ public class L2Cleaner : Enemy, IPatroller
         }
         
         gameObject.SetActive(false);
+        FMODUnity.RuntimeManager.PlayOneShot(DeadAudio);
         CheckPointManager.Instance?.Dead(gameObject);
     }
 

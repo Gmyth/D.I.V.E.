@@ -149,6 +149,9 @@ public abstract class Enemy : Dummy
 
     public Vector3 lastCheckPointTransform;
 
+    [Header("Audio")]
+    [FMODUnity.EventRef]
+    public string DeadAudio;
 
     public float this[StatisticType type]
     {

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PS_Dashing
   m_EditorClassIdentifier: 
   Name: Dash
+  LandSound: 
   n_dashForce: 16
   n_dashDelayTime: 0.02
   n_dashReleaseTime: 0.1
@@ -31,3 +32,4 @@ MonoBehaviour:
   indexPSJumping1: 0
   indexWallJumping: 7
   indexPSAirborne: 2
+  DashSound: event:/Dash

@@ -37,6 +37,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
     private bool isMoving = false;
     private float t_finishCharging = 0;
 
+    
 
     private bool IsMoving
     {
@@ -52,10 +53,17 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
                 if (value)
                 {
                     if (patrollingAnimation != "")
+                    {
                         animator.Play(patrollingAnimation);
+
+                        
+                    }
                 }
                 else if (idleAnimation != "")
+                {
                     animator.Play(idleAnimation);
+                    
+                }
             }
         }
     }
@@ -167,7 +175,6 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
                 }
             }
         }
-
 
         return Index;
     }

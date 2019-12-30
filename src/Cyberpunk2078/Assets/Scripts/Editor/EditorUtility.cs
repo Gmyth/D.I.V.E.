@@ -1,4 +1,6 @@
-﻿using UnityEditor;
+﻿using System;
+using FMODUnity;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -21,6 +23,16 @@ public class EditorUtility
 
         Handles.DrawLine(to, to + right * arrowHeadLength);
         Handles.DrawLine(to, to + left * arrowHeadLength);
+    }
+
+    internal static void SetDirty(Settings settings)
+    {
+        throw new NotImplementedException();
+    }
+
+    internal static bool DisplayDialog(string v1, string v2, string v3, string v4)
+    {
+        throw new NotImplementedException();
     }
 }
 #endif

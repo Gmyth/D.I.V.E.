@@ -38,6 +38,12 @@ public class PSJumping1 : PlayerState
     private State previous;
     private float timer;
 
+    [Header("Audio")]
+    [FMODUnity.EventRef]
+    public string JumpSound;
+
+
+
     public override int Update()
     {
         
@@ -160,6 +166,10 @@ public class PSJumping1 : PlayerState
         previous = previousState;
         timer = jumpIncreaserThreshold;
         anim.Play("MainCharacter_Jump", -1, 0f);
+
+        FMODUnity.RuntimeManager.PlayOneShot(JumpSound);
+
+
         //Perform jump
         lastJumpSec = Time.time;
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();

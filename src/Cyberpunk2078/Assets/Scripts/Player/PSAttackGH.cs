@@ -26,6 +26,10 @@ public class PSAttackGH: PlayerState
     
     [SerializeField] private GameObject SplashFX;
 
+    [Header("Audio")]
+    [FMODUnity.EventRef]
+    public string SwingSound;
+
     private float t0 = 0;
     private float defaultDrag;
 
@@ -145,6 +149,8 @@ public class PSAttackGH: PlayerState
 
 
         anim.Play("MainCharacter_Atk", -1, 0f);
+        FMODUnity.RuntimeManager.PlayOneShot(SwingSound);
+
         playerCharacter.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         playerCharacter.GetComponent<Rigidbody2D>().AddForce(direction * pushForce * 100f);
         playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipX = direction.x < 0;

@@ -40,6 +40,9 @@ public class PSDashing : PlayerState
     private bool Apply = true;
     private float lastJumpInput;
 
+    [Header("Audio")]
+    [FMODUnity.EventRef]
+    public string DashSound;
 
     public override int Update()
     {
@@ -170,12 +173,15 @@ public class PSDashing : PlayerState
         }
 
         Apply = true;
+
+        FMODUnity.RuntimeManager.PlayOneShot(DashSound);
+
         //Dash has been pressed, set all config first
         //After delay is over, dash perform
 
 
         // Add Ghost trail
-        if(!playerCharacter.InKillStreak) playerCharacter.SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
+        if (!playerCharacter.InKillStreak) playerCharacter.SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
         lastDashSecond = Time.unscaledTime;
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
 

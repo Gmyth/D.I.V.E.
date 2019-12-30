@@ -14,15 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: 
   n_jumpForce: 5.5
-  n_wallJumpForce: 8
   n_speedFactor: 7
   n_accelerationFactor: 20
   n_wallJumpCD: 0
+  n_wallJumpForce: 8
+  n_wallJumpSpeed: 10
   f_jumpForce: 5.5
-  f_wallJumpForce: 8
   f_speedFactor: 7
   f_accelerationFactor: 20
   f_wallJumpCD: 0
+  f_wallJumpForce: 8
+  f_wallJumpSpeed: 10
   indexPSIdle: 0
   indexPSMoving: 1
   indexJumping2: 5
@@ -33,3 +35,4 @@ MonoBehaviour:
   indexPSClimb: 8
   jumpIncreaser: 2.5
   jumpIncreaserThreshold: 0.3
+  JumpSound: event:/Jump
