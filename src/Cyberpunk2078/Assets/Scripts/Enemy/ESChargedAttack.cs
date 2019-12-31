@@ -3,13 +3,14 @@
 
 public abstract class ESChargedAttack<T> : ESAttack<T> where T : Enemy
 {
-    [Header("Charge Configuration")]
+    [Header("Charge")]
     [SerializeField] protected float chargeTime = 1;
     [SerializeField] protected bool stopChargingOnTargetLoss = false;
     [SerializeField] protected string animation_charging = "";
 
     [Header("Connected States")]
     [SerializeField] protected int stateIndex_alert = -1;
+    [SerializeField] protected int stateIndex_afterAttack = -1;
     [SerializeField] protected int stateIndex_onTargetLoss = -1;
 
     protected Animator animator;

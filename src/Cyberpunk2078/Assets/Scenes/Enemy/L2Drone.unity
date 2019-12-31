@@ -375,7 +375,7 @@ PrefabInstance:
     - target: {fileID: 4422422707932968826, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10
+      value: 16.65
       objectReference: {fileID: 0}
     - target: {fileID: 4422422707932968826, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
         type: 3}
@@ -434,6 +434,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
         type: 3}
+      propertyPath: patrolRoute.stayTimes.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
       propertyPath: patrolFiringConfiguration.firingInterval
       value: 0
       objectReference: {fileID: 0}
@@ -455,7 +460,7 @@ PrefabInstance:
     - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
         type: 3}
       propertyPath: patrolRoute.wayPoints.Array.data[0].x
-      value: 9.97883
+      value: 6.2413096
       objectReference: {fileID: 0}
     - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
         type: 3}
@@ -486,6 +491,21 @@ PrefabInstance:
         type: 3}
       propertyPath: nearRange
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: typeID
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: patrolRoute.stayTimes.Array.data[0]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: patrolRoute.stayTimes.Array.data[1]
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4422422707932968825, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
         type: 3}

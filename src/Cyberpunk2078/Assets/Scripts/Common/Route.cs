@@ -18,6 +18,7 @@ public class PathAttribute : PropertyAttribute
 [Serializable] public class Route : IEnumerable
 {
     [SerializeField] private Vector3[] wayPoints;
+    [SerializeField] private float[] stayTimes;
 
 
     public Vector3 this[int index]
@@ -40,6 +41,16 @@ public class PathAttribute : PropertyAttribute
         {
             return wayPoints.Length;
         }
+    }
+
+
+    public float GetStayTime(int index)
+    {
+        if (index < 0 || index >= stayTimes.Length)
+            return 0;
+
+
+        return stayTimes[index];
     }
 
 

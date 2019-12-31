@@ -4,10 +4,14 @@
 [CreateAssetMenuAttribute(fileName = "L2DroneState_Firing", menuName = "Enemy State/Drone/Firing")]
 public class DroneState_Firing : ESChargedAttack<Drone>
 {
+    [Header("Firing")]
     [SerializeField] private float recoil = 10;
+    [SerializeField] protected float recoilDuration = 0.2f;
 
     private Rigidbody2D rigidbody;
     private Animator gunAnimator;
+
+    private float t_motion;
 
 
     public override void Initialize(Drone enemy)
@@ -22,6 +26,9 @@ public class DroneState_Firing : ESChargedAttack<Drone>
     public override void OnStateEnter(State previousState)
     {
         base.OnStateEnter(previousState);
+
+
+        t_motion = 0;
 
 
         rigidbody.velocity = Vector2.zero;
@@ -51,12 +58,21 @@ public class DroneState_Firing : ESChargedAttack<Drone>
 
     protected override int Attack(float currentTime)
     {
-        enemy.Fire();
+        float t = Time.time;
 
 
-        rigidbody.AddForce(recoil * -enemy.AimingDirection, ForceMode2D.Impulse);
+        if (t_motion == 0)
+        {
+            enemy.Fire();
 
 
-        return stateIndex_alert;
+            rigidbody.AddForce(recoil * -enemy.AimingDirection, ForceMode2D.Impulse);
+
+
+            t_motion = t + recoilDuration;
+        }
+
+        
+        return t >= t_motion ? stateIndex_alert : Index;
     }
 }

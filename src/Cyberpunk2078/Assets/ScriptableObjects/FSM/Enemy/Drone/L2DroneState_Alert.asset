@@ -15,6 +15,12 @@ MonoBehaviour:
   waitTime: 0
   animation: L2Drone_Alert
   stateIndex_attacks: 02000000
-  stateIndex_targetLoss: 3
+  stateIndex_targetLoss: 0
+  behaviorSelector:
+    n: 1
+    repeats: 1
+    weights: 280000002800000014000000
+  stayDuration: 0.5
   chasingSpeed: 3
   chasingDuration: 0.5
+  backingSpeed: 1

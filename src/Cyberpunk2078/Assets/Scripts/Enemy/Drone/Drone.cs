@@ -5,8 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Seeker))]
 public class Drone : Enemy, IPatroller
 {
-    private static readonly string animation_idle = "L2Drone_Idle";
-    private static readonly string animation_alert = "L2Drone_Alert";
+    public static readonly string animation_idle = "L2Drone_Idle";
+    public static readonly string animation_alert = "L2Drone_Alert";
 
 
     [SerializeField] private float farRange;
@@ -149,10 +149,14 @@ public class Drone : Enemy, IPatroller
         }
     }
 
-
     Vector3 IPatroller.GetPatrolPoint(int index)
     {
         return patrolRoute[index];
+    }
+
+    float IPatroller.GetPatrolPointStayTime(int index)
+    {
+        return patrolRoute.GetStayTime(index);
     }
 
 

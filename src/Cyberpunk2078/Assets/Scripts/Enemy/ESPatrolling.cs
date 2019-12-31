@@ -8,11 +8,14 @@ public interface IPatroller
     RangedWeaponConfiguration PatrolFiringConfiguration { get; }
 
     Vector3 GetPatrolPoint(int index);
+    float GetPatrolPointStayTime(int index);
 }
 
 
 public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatroller
 {
+    [SerializeField] private bool useAStar = false;
+
     [Header("Configuration")]
     [SerializeField] private float speed = 5;
     [SerializeField] private float delay = 0;
@@ -30,11 +33,13 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
     private Seeker seeker;
 
     private float t_nextFire = 0;
+    private int indexLastPatrolPoint = -1;
 
     private int indexTargetPatrolPoint = 0;
     private Path currentPath = null;
     private int indexWayPoint = 0;
     private bool isMoving = false;
+    private float t_finishWaiting = 0;
     private float t_finishCharging = 0;
 
 
@@ -84,54 +89,141 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
             {
                 enemy.currentTarget = target;
 
+
                 rigidbody.velocity = Vector2.zero;
+
                 IsMoving = false;
+
 
                 return index_ESAlert;
             }
         }
 
 
-        if (currentPath != null)
+        float t = Time.time;
+
+
+        if (t >= t_finishWaiting)
         {
-            Vector3 wayPoint = currentPath.vectorPath[indexWayPoint];
-
-            float distance = enemy.Data.Type == EnemyType.Ground ? Mathf.Abs(wayPoint.x - enemyPosition.x) : Vector2.Distance(wayPoint, enemyPosition);
-
-            if (distance < 0.5f)
-                ++indexWayPoint;
-
-
-            if (indexWayPoint >= currentPath.vectorPath.Count)
+            if (useAStar)
             {
-                rigidbody.velocity = Vector2.zero;
-                IsMoving = false;
+                if (currentPath != null)
+                {
+                    Vector3 wayPoint = currentPath.vectorPath[indexWayPoint];
 
-                indexTargetPatrolPoint = (indexTargetPatrolPoint + 1) % enemy.NumPatrolPoints;
+                    float distance = enemy.Data.Type == EnemyType.Ground ? Mathf.Abs(wayPoint.x - enemyPosition.x) : Vector2.Distance(wayPoint, enemyPosition);
 
-                seeker.StartPath(enemy.transform.position, enemy.GetPatrolPoint(indexTargetPatrolPoint));
-                currentPath = null;
+                    if (distance < 0.5f)
+                        ++indexWayPoint;
+
+
+                    if (indexWayPoint >= currentPath.vectorPath.Count)
+                    {
+                        rigidbody.velocity = Vector2.zero;
+
+                        IsMoving = false;
+
+
+                        t_finishWaiting = t + enemy.GetPatrolPointStayTime(indexTargetPatrolPoint);
+
+
+                        indexLastPatrolPoint = indexTargetPatrolPoint;
+                        indexTargetPatrolPoint = (indexTargetPatrolPoint + 1) % enemy.NumPatrolPoints;
+
+
+                        seeker.StartPath(enemy.transform.position, enemy.GetPatrolPoint(indexTargetPatrolPoint));
+                        currentPath = null;
+                    }
+                    else
+                    {
+                        Vector2 direction = (currentPath.vectorPath[indexWayPoint] - enemy.transform.position).normalized;
+
+                        if (enemy.Data.Type == EnemyType.Ground)
+                            direction = direction.x > 0 ? Vector2.right : Vector2.left;
+
+
+                        AdjustFacingDirection(direction);
+
+
+                        rigidbody.velocity = direction * speed;
+
+                        IsMoving = true;
+                    }
+                }
             }
             else
             {
-                Vector2 direction = (currentPath.vectorPath[indexWayPoint] - enemy.transform.position).normalized;
+                Vector3 patrolPoint = enemy.GetPatrolPoint(indexTargetPatrolPoint);
 
-                if (enemy.Data.Type == EnemyType.Ground)
-                    direction = direction.x > 0 ? Vector2.right : Vector2.left;
+                switch (enemy.Data.Type)
+                {
+                    case EnemyType.Ground:
+                        {
+                            float dx = patrolPoint.x - enemyPosition.x;
+
+                            if (Mathf.Abs(dx) < 0.5f)
+                            {
+                                rigidbody.velocity = Vector2.zero;
+
+                                IsMoving = false;
 
 
-                AdjustFacingDirection(direction);
+                                t_finishWaiting = t + enemy.GetPatrolPointStayTime(indexTargetPatrolPoint);
 
 
-                rigidbody.velocity = direction * speed;
+                                indexLastPatrolPoint = indexTargetPatrolPoint;
+                                indexTargetPatrolPoint = (indexTargetPatrolPoint + 1) % enemy.NumPatrolPoints;
+                            }
+                            else
+                            {
+                                Vector3 direction = dx > 0 ? Vector2.right : Vector2.left;
 
 
-                IsMoving = true;
+                                AdjustFacingDirection(direction);
+
+
+                                rigidbody.velocity = speed * direction;
+
+                                IsMoving = true;
+                            }
+                        }
+                        break;
+
+
+                    case EnemyType.Floating:
+                        {
+                            Vector3 v = patrolPoint - enemyPosition;
+
+                            if (v.magnitude < 0.5f)
+                            {
+                                rigidbody.velocity = Vector2.zero;
+
+                                IsMoving = false;
+
+
+                                t_finishWaiting = t + enemy.GetPatrolPointStayTime(indexTargetPatrolPoint);
+
+
+                                indexLastPatrolPoint = indexTargetPatrolPoint;
+                                indexTargetPatrolPoint = (indexTargetPatrolPoint + 1) % enemy.NumPatrolPoints;
+                            }
+                            else
+                            {
+                                Vector3 direction = v.normalized;
+
+
+                                AdjustFacingDirection(direction);
+
+
+                                rigidbody.velocity = speed * direction;
+
+                                IsMoving = true;
+                            }
+                        }
+                        break;
+                }
             }
         }
-
-
-        float now = Time.time;
 
 
         RangedWeaponConfiguration firingConfiguration = enemy.PatrolFiringConfiguration;
@@ -148,17 +240,17 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
                     AdjustFacingDirection((enemy.currentTarget.transform.position - enemy.transform.position).x > 0 ? Vector3.right : Vector3.left);
 
 
-                if (now >= t_nextFire)
+                if (t >= t_nextFire)
                 {
                     if (t_finishCharging == 0)
-                        t_finishCharging = now + firingConfiguration.ChargeTime;
+                        t_finishCharging = t + firingConfiguration.ChargeTime;
 
 
-                    if (now >= t_finishCharging)
+                    if (t >= t_finishCharging)
                     {
                         Fire(firingConfiguration);
 
-                        t_nextFire = now + firingConfiguration.FiringInterval;
+                        t_nextFire = t + firingConfiguration.FiringInterval;
                         t_finishCharging = 0;
                     }
                     else
@@ -182,29 +274,38 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
 
         if (enemy.NumPatrolPoints > 1)
         {
-            float m = Vector3.Distance(enemyPosition, enemy.GetPatrolPoint(indexTargetPatrolPoint));
-
-            for (int i = 1; i < enemy.NumPatrolPoints; ++i)
+            if (indexLastPatrolPoint >= 0)
+                indexTargetPatrolPoint = indexLastPatrolPoint;
+            else
             {
-                float d = Vector3.Distance(enemyPosition, enemy.GetPatrolPoint(i));
+                float m = Vector3.Distance(enemyPosition, enemy.GetPatrolPoint(indexTargetPatrolPoint));
 
-                if (d < m)
+                for (int i = 1; i < enemy.NumPatrolPoints; ++i)
                 {
-                    indexTargetPatrolPoint = i;
-                    m = d;
+                    float d = Vector3.Distance(enemyPosition, enemy.GetPatrolPoint(i));
+
+                    if (d < m)
+                    {
+                        indexTargetPatrolPoint = i;
+                        m = d;
+                    }
                 }
             }
 
 
-            seeker.pathCallback = StartPatrolling;
+            if (useAStar)
+            {
+                seeker.pathCallback = StartPatrolling;
 
-            seeker.StartPath(enemy.transform.position, enemy.GetPatrolPoint(indexTargetPatrolPoint));
+                seeker.StartPath(enemy.transform.position, enemy.GetPatrolPoint(indexTargetPatrolPoint));
+            }
         }
 
 
         currentPath = null;
 
 
+        t_finishWaiting = 0;
         t_finishCharging = 0;
 
 
@@ -217,6 +318,15 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
 
     public override void OnStateQuit(State nextState)
     {
+        base.OnStateQuit(nextState);
+
+
+        rigidbody.velocity = Vector2.zero;
+
+
+        indexLastPatrolPoint = indexTargetPatrolPoint;
+
+
         seeker.CancelCurrentPathRequest();
     }
 
@@ -226,6 +336,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
         base.OnMachineBoot();
 
         t_nextFire = 0;
+        indexLastPatrolPoint = -1;
     }
 
 

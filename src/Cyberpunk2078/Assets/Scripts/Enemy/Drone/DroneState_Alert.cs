@@ -4,13 +4,16 @@
 [CreateAssetMenuAttribute(fileName = "L2DroneState_Alert", menuName = "Enemy State/Drone/Alert")]
 public class DroneState_Alert : ESAlert<Drone>
 {
+    [SerializeField] private RandomSelector behaviorSelector;
+    [SerializeField] private float stayDuration = 0.5f;
     [SerializeField] private float chasingSpeed = 3f;
     [SerializeField] private float chasingDuration = 0.5f;
+    [SerializeField] private float backingSpeed = 1f;
 
     private Rigidbody2D rigidbody;
     private Animator animator;
 
-    private float t_chasing;
+    private float t_ready;
 
 
     public override void Initialize(Drone enemy)
@@ -20,25 +23,6 @@ public class DroneState_Alert : ESAlert<Drone>
 
         rigidbody = enemy.GetComponent<Rigidbody2D>();
         animator = enemy.GetComponent<Animator>();
-    }
-
-    public override void OnStateEnter(State previousState)
-    {
-        base.OnStateEnter(previousState);
-
-
-        t_chasing = 0;
-
-
-        animator.Play("L2Drone_Alert");
-    }
-
-    public override void OnStateQuit(State nextState)
-    {
-        base.OnStateQuit(nextState);
-
-
-        rigidbody.velocity = Vector2.zero;
     }
 
     public override int Update()
@@ -51,27 +35,71 @@ public class DroneState_Alert : ESAlert<Drone>
             return stateIndex_attacks[0];
 
 
-        AdjustFacingDirection((enemy.currentTarget.transform.position - enemy.transform.position).x > 0 ? Vector3.right : Vector3.left);
-
-
         Vector3 v = enemy.currentTarget.transform.position - enemy.transform.position;
+        float d = v.magnitude;
         float t = Time.time;
 
 
-        if (t > t_chasing)
+        if (d < enemy.NearRange) // Prioritize on keeping a good distance
         {
-            float d = v.magnitude;
+            Vector3 u = (Vector3)enemy.GuardZone.center - enemy.transform.position;
 
-
-            if (d < enemy.NearRange || (d < enemy.FarRange && Random.Range(0f, 100f) < 50))
-                return stateIndex_attacks[0];
-
-
-            rigidbody.velocity = chasingSpeed * v.normalized;
-            t_chasing = t + chasingDuration;
+            rigidbody.velocity = backingSpeed * ((-v.normalized + u.normalized) / 2).normalized;
         }
+        else
+        {
+            AdjustFacingDirection((enemy.currentTarget.transform.position - enemy.transform.position).x > 0 ? Vector3.right : Vector3.left);
 
+
+            if (d < enemy.NearRange + 0.5f) // Always fire before getting to close or far
+                return stateIndex_attacks[0];
+            else if (d <= enemy.FarRange)
+            {
+                if (t >= t_ready)
+                {
+                    switch (behaviorSelector.Select()[0])
+                    {
+                        case 0: // Fire
+                            return stateIndex_attacks[0];
+
+
+                        case 1: // Chase
+                            rigidbody.velocity = chasingSpeed * v.normalized;
+                            t_ready = t + chasingDuration;
+                            break;
+
+
+                        case 2: // Stay
+                            rigidbody.velocity = Vector2.zero;
+                            t_ready = t + stayDuration;
+                            break;
+                    }
+                }
+            }
+            else
+                rigidbody.velocity = chasingSpeed * v.normalized;
+        }
+        
 
         return Index;
+    }
+
+    public override void OnStateEnter(State previousState)
+    {
+        base.OnStateEnter(previousState);
+
+
+        t_ready = 0;
+
+
+        animator.Play(Drone.animation_alert);
+    }
+
+    public override void OnStateQuit(State nextState)
+    {
+        base.OnStateQuit(nextState);
+
+
+        rigidbody.velocity = Vector2.zero;
     }
 }

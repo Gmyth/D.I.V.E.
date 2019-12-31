@@ -16,7 +16,7 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
     private Vector3 direction;
     private bool bDash;
     private bool bStop;
-    private float t;
+    private float t_dashFinish;
     private float d;
 
 
@@ -37,7 +37,7 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
 
         bDash = true;
         bStop = false;
-        t = float.MaxValue;
+        t_dashFinish = float.MaxValue;
         d = float.MaxValue;
         
 
@@ -74,7 +74,7 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
             bDash = false;
 
 
-            t = currentTime + minDuration;
+            t_dashFinish = currentTime + minDuration;
 
 
             if (hitBox >= 0)
@@ -109,7 +109,7 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
                 return stateIndex_alert;
             }
         }
-        else if (currentTime >= t) // The dash has been finished
+        else if (currentTime >= t_dashFinish) // The dash has been finished
         {
             Stop();
 
@@ -127,6 +127,6 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
 
 
         bStop = true;
-        t = 0;
+        t_dashFinish = 0;
     }
 }
