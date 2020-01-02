@@ -13,12 +13,16 @@ MonoBehaviour:
   m_Name: PS_Attack_GH
   m_EditorClassIdentifier: 
   Name: AttackGH
-  pushForce: 2
-  actionTime: 0.05
-  recoveryTime: 0.25
+  n_pushForce: 2
+  n_actionTime: 0.2
+  n_recoveryTime: 0.2
+  f_pushForce: 2
+  f_actionTime: 0.2
+  f_recoveryTime: 0.2
   indexPSIdle: 0
   indexPSMoving: 1
   indexPSAirborne: 2
   indexPSDashing: 6
+  indexPSJumping1: 4
   EnergyConsume: 0
   SplashFX: {fileID: 410230216056590749, guid: 02377b4fd7417384d82806fc49d0d6da, type: 3}

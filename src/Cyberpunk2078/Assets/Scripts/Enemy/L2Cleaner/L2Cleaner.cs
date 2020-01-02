@@ -30,11 +30,19 @@ public class L2Cleaner : Enemy, IPatroller
         Boom.transform.localScale = Vector3.one;
 
         EnemyData enemyData = DataTableManager.singleton.GetEnemyData(typeID);
-        Player.CurrentPlayer.AddOverLoadEnergy(enemyData.Attributes[AttributeType.OspReward_c0]);
-
+        
+        PlayerCharacter.Singleton.AddOverLoadEnergy(enemyData.Attributes[AttributeType.OspReward_c0]);
+        PlayerCharacter.Singleton.AddKillCount(1);
+        
+        for (int i = 0; i < 3; i++)
+        {
+            var obj = ObjectRecycler.Singleton.GetObject<SoulBall>(5);
+            obj.transform.position = transform.position;
+            obj.gameObject.SetActive(true);
+        }
+        
         gameObject.SetActive(false);
-        CheckPointManager.Instance.EnterResetPool(gameObject);
-        //Destroy(gameObject);
+        CheckPointManager.Instance?.Dead(gameObject);
     }
 
 
@@ -54,9 +62,13 @@ public class L2Cleaner : Enemy, IPatroller
         }
     }
 
-
     Vector3 IPatroller.GetPatrolPoint(int index)
     {
         return patrolRoute[index];
+    }
+
+    float IPatroller.GetPatrolPointStayTime(int index)
+    {
+        return patrolRoute.GetStayTime(index);
     }
 }

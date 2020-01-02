@@ -3,7 +3,7 @@
 
 public abstract class EnemyState : State
 {
-    public static PlayerCharacter FindAvailableTarget(Vector3 enemyPosition, float range)
+    protected static PlayerCharacter FindAvailableTarget(Vector3 enemyPosition, float range)
     {
         PlayerCharacter player = PlayerCharacter.Singleton;
 
@@ -25,7 +25,7 @@ public abstract class EnemyState : State
     }
 
 
-    public static PlayerCharacter FindAvailableTarget(Vector3 enemyPosition, float range, Zone guardZone)
+    protected static PlayerCharacter FindAvailableTarget(Vector3 enemyPosition, float range, Zone guardZone)
     {
         PlayerCharacter player = PlayerCharacter.Singleton;
 
@@ -88,6 +88,7 @@ public abstract class EnemyState<T> : EnemyState where T : Enemy
         /* Check whether player is in the sight range */
         float d = Vector2.Distance(enemy.transform.position, player.transform.position);
 
+
         if (range > 0 && d > range)
             return null;
 
@@ -106,7 +107,7 @@ public abstract class EnemyState<T> : EnemyState where T : Enemy
 
     protected Vector2 GetGroundNormal()
     {
-        RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, Vector2.down, 3f);
+        RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, Vector2.down, 10f);
 
         if (hit.collider && hit.transform.CompareTag("Ground"))
             return hit.normal;
@@ -120,6 +121,15 @@ public abstract class EnemyState<T> : EnemyState where T : Enemy
         scale.x = Mathf.Sign(direction.x) * Mathf.Abs(scale.x);
 
         enemy.transform.localScale = scale;
+    }
+
+    protected PlayerCharacter FindAvailableTarget(bool useSightRange = true, bool useGuardZone = true)
+    {
+        if (useSightRange)
+            return useGuardZone ? FindAvailableTarget(enemy.transform.position, enemy[StatisticType.SightRange], enemy.GuardZone) : FindAvailableTarget(enemy.transform.position, enemy[StatisticType.SightRange]);
+
+
+        return null;
     }
 }
 
@@ -183,6 +193,19 @@ public class FSMEnemy : FiniteStateMachine<EnemyState>
 
     public override void Boot()
     {
+        OnMachineBoot();
+
+        currentStateIndex = startingStateIndex;
+
+        CurrentState.OnStateEnter(CurrentState);
+
+        OnCurrentStateChange.Invoke(currentStateIndex, -1);
+    }
+
+    public override void Reboot()
+    {
+        CurrentState.OnStateQuit(CurrentState);
+
         OnMachineBoot();
 
         currentStateIndex = startingStateIndex;

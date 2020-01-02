@@ -1,0 +1,200 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 292732a23d0fac94ebcb16d6f6729194, type: 3}
+  m_Name: Dialogue
+  m_EditorClassIdentifier: 
+  serializedEntries:
+  - id: 10101001
+    portrait: {fileID: 21300000, guid: d97e888971c361a42b03a98f114caba7, type: 3}
+    textID_speaker: 10001
+    textID_content: 1010101001
+    next: 10101002
+  - id: 10101002
+    portrait: {fileID: 21300000, guid: 7f5bdca1b029d0443b1dee823afa13aa, type: 3}
+    textID_speaker: 10000
+    textID_content: 1010101002
+    next: 10101003
+  - id: 10101003
+    portrait: {fileID: 21300000, guid: 3393b11759de4ab4884fef90db08c998, type: 3}
+    textID_speaker: 10000
+    textID_content: 1010101003
+    next: 10101004
+  - id: 10101004
+    portrait: {fileID: 21300000, guid: 3393b11759de4ab4884fef90db08c998, type: 3}
+    textID_speaker: 10000
+    textID_content: 1010101004
+    next: 10101005
+  - id: 10101005
+    portrait: {fileID: 21300000, guid: f5f6cd8408d7c754faa12f07a452c2a3, type: 3}
+    textID_speaker: 10001
+    textID_content: 1010101005
+    next: 10101006
+  - id: 10101006
+    portrait: {fileID: 21300000, guid: ad32b28970853d24e835fa0cd16b3edc, type: 3}
+    textID_speaker: 10000
+    textID_content: 1010101006
+    next: 10101007
+  - id: 10101007
+    portrait: {fileID: 21300000, guid: 6b66c92535435bd4bb8841d905283465, type: 3}
+    textID_speaker: 10001
+    textID_content: 1010101007
+    next: 10101008
+  - id: 10101008
+    portrait: {fileID: 21300000, guid: 6b66c92535435bd4bb8841d905283465, type: 3}
+    textID_speaker: 10001
+    textID_content: 1010101008
+    next: 10101009
+  - id: 10101009
+    portrait: {fileID: 21300000, guid: 27bb8183ff26e714fb50d5dca782dd43, type: 3}
+    textID_speaker: 10000
+    textID_content: 1010101009
+    next: 10101010
+  - id: 10101010
+    portrait: {fileID: 21300000, guid: 6b66c92535435bd4bb8841d905283465, type: 3}
+    textID_speaker: 10001
+    textID_content: 1010101010
+    next: -1
+  - id: 10102001
+    portrait: {fileID: 21300000, guid: 6b66c92535435bd4bb8841d905283465, type: 3}
+    textID_speaker: 10001
+    textID_content: 1010102001
+    next: -1
+  - id: 10103001
+    portrait: {fileID: 21300000, guid: 6b66c92535435bd4bb8841d905283465, type: 3}
+    textID_speaker: 10001
+    textID_content: 1010103001
+    next: -1
+  - id: 10104001
+    portrait: {fileID: 21300000, guid: ad32b28970853d24e835fa0cd16b3edc, type: 3}
+    textID_speaker: 10000
+    textID_content: 1010104001
+    next: 10104002
+  - id: 10104002
+    portrait: {fileID: 21300000, guid: d97e888971c361a42b03a98f114caba7, type: 3}
+    textID_speaker: 10001
+    textID_content: 1010104002
+    next: 10104003
+  - id: 10104003
+    portrait: {fileID: 21300000, guid: 3393b11759de4ab4884fef90db08c998, type: 3}
+    textID_speaker: 10000
+    textID_content: 1010104003
+    next: 10104004
+  - id: 10104004
+    portrait: {fileID: 21300000, guid: b4413a6e12f7a8a48976535f1984820e, type: 3}
+    textID_speaker: 10001
+    textID_content: 1010104004
+    next: 10104005
+  - id: 10104005
+    portrait: {fileID: 21300000, guid: ad32b28970853d24e835fa0cd16b3edc, type: 3}
+    textID_speaker: 10000
+    textID_content: 1010104005
+    next: 10104006
+  - id: 10104006
+    portrait: {fileID: 21300000, guid: 6b66c92535435bd4bb8841d905283465, type: 3}
+    textID_speaker: 10001
+    textID_content: 1010104006
+    next: -1
+  - id: 10105001
+    portrait: {fileID: 21300000, guid: da8b11ec1588ff34f8f0a63434d17d76, type: 3}
+    textID_speaker: 10002
+    textID_content: 1010105001
+    next: 10105002
+  - id: 10105002
+    portrait: {fileID: 21300000, guid: 2564f3c1278d4194d98031ac690e574e, type: 3}
+    textID_speaker: 10002
+    textID_content: 1010105002
+    next: 10105003
+  - id: 10105003
+    portrait: {fileID: 21300000, guid: 202ad5c8c288c80429836d6e49639160, type: 3}
+    textID_speaker: 10002
+    textID_content: 1010105003
+    next: 10105004
+  - id: 10105004
+    portrait: {fileID: 21300000, guid: 202ad5c8c288c80429836d6e49639160, type: 3}
+    textID_speaker: 10002
+    textID_content: 1010105004
+    next: 10105005
+  - id: 10105005
+    portrait: {fileID: 21300000, guid: 202ad5c8c288c80429836d6e49639160, type: 3}
+    textID_speaker: 10002
+    textID_content: 1010105005
+    next: -1
+  - id: 10201001
+    portrait: {fileID: 21300000, guid: ad32b28970853d24e835fa0cd16b3edc, type: 3}
+    textID_speaker: 10000
+    textID_content: 1010201001
+    next: 10201002
+  - id: 10201002
+    portrait: {fileID: 21300000, guid: 3393b11759de4ab4884fef90db08c998, type: 3}
+    textID_speaker: 10000
+    textID_content: 1010201002
+    next: 10201003
+  - id: 10201003
+    portrait: {fileID: 21300000, guid: 4381aeb5e317b094da34018e7a921138, type: 3}
+    textID_speaker: 10003
+    textID_content: 1010201003
+    next: 10201004
+  - id: 10301001
+    portrait: {fileID: 21300000, guid: 6b66c92535435bd4bb8841d905283465, type: 3}
+    textID_speaker: 10001
+    textID_content: 1010301001
+    next: 10301002
+  - id: 10301002
+    portrait: {fileID: 21300000, guid: f5f6cd8408d7c754faa12f07a452c2a3, type: 3}
+    textID_speaker: 10001
+    textID_content: 1010301002
+    next: -1
+  - id: 10106001
+    portrait: {fileID: 21300000, guid: ad32b28970853d24e835fa0cd16b3edc, type: 3}
+    textID_speaker: 10000
+    textID_content: 1010106001
+    next: 10106002
+  - id: 10106002
+    portrait: {fileID: 21300000, guid: d97e888971c361a42b03a98f114caba7, type: 3}
+    textID_speaker: 10001
+    textID_content: 1010106002
+    next: 10106003
+  - id: 10106003
+    portrait: {fileID: 21300000, guid: 3393b11759de4ab4884fef90db08c998, type: 3}
+    textID_speaker: 10000
+    textID_content: 1010106003
+    next: 10106004
+  - id: 10106004
+    portrait: {fileID: 21300000, guid: b4413a6e12f7a8a48976535f1984820e, type: 3}
+    textID_speaker: 10001
+    textID_content: 1010106004
+    next: 10106005
+  - id: 10106005
+    portrait: {fileID: 21300000, guid: 3393b11759de4ab4884fef90db08c998, type: 3}
+    textID_speaker: 10000
+    textID_content: 1010106005
+    next: 10106006
+  - id: 10106006
+    portrait: {fileID: 21300000, guid: 6b66c92535435bd4bb8841d905283465, type: 3}
+    textID_speaker: 10001
+    textID_content: 1010106006
+    next: 10106007
+  - id: 10106007
+    portrait: {fileID: 21300000, guid: 6b66c92535435bd4bb8841d905283465, type: 3}
+    textID_speaker: 10001
+    textID_content: 1010106007
+    next: 10106008
+  - id: 10106008
+    portrait: {fileID: 21300000, guid: 3393b11759de4ab4884fef90db08c998, type: 3}
+    textID_speaker: 10000
+    textID_content: 1010106008
+    next: -1
+  - id: 10201004
+    portrait: {fileID: 21300000, guid: 3393b11759de4ab4884fef90db08c998, type: 3}
+    textID_speaker: 10000
+    textID_content: 1010201004
+    next: -1

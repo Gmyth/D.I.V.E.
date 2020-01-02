@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,8 +7,14 @@ using UnityEngine.Events;
 [Serializable] public struct RangedWeaponConfiguration
 {
     [SerializeField] private float firingInterval;
+    [SerializeField] private float chargeTime;
+    [SerializeField] private Transform muzzle;
     [SerializeField] private int bulletID;
     [SerializeField] private float bulletSpeed;
+
+    [Header("Deviation")]
+    [SerializeField] private float minDeviationAngle;
+    [SerializeField] private float maxDeviationAngle;
 
 
     public float FiringInterval
@@ -15,6 +22,22 @@ using UnityEngine.Events;
         get
         {
             return firingInterval;
+        }
+    }
+
+    public float ChargeTime
+    {
+        get
+        {
+            return chargeTime;
+        }
+    }
+
+    public Transform Muzzle
+    {
+        get
+        {
+            return muzzle;
         }
     }
 
@@ -33,10 +56,26 @@ using UnityEngine.Events;
             return bulletSpeed;
         }
     }
+
+    public float MinDeviationAngle
+    {
+        get
+        {
+            return minDeviationAngle;
+        }
+    }
+
+    public float MaxDeviationAngle
+    {
+        get
+        {
+            return maxDeviationAngle;
+        }
+    }
 }
 
 
-[RequireComponent(typeof(SpriteRenderer), typeof(Rigidbody2D), typeof(Collision2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(Collision2D))]
 public abstract class Dummy : MonoBehaviour, IDamageable
 {
     [SerializeField] protected StatisticSystem statistics;
@@ -127,6 +166,14 @@ public abstract class Enemy : Dummy
         }
     }
 
+    public EnemyData Data
+    {
+        get
+        {
+            return data;
+        }
+    }
+
     public Vector2 Pos
     {
         get
@@ -147,6 +194,18 @@ public abstract class Enemy : Dummy
         hitBoxes[index].gameObject.SetActive(false);
     }
 
+    public void DisableAllHitBoxes()
+    {
+        foreach (HitBox hitBox in hitBoxes)
+            hitBox.gameObject.SetActive(false);
+    }
+
+    public void SwitchHitBox(int previousIndex, int currentIndex)
+    {
+        DisableHitBox(previousIndex);
+        EnableHitBox(currentIndex);
+    }
+
 
     protected virtual void Start()
     {
@@ -156,13 +215,20 @@ public abstract class Enemy : Dummy
         statistics = new StatisticSystem(data.Attributes, statusModifiers);
         statistics[StatisticType.Hp] = statistics[StatisticType.MaxHp];
 
-
-        fsm = fsm.Initialize(this);
-        fsm.Boot();
+        if (fsm)
+        {
+            fsm = fsm.Initialize(this);
+            fsm.Boot();
+        }
     }
 
     protected virtual void FixedUpdate()
     {
-        fsm.Update();
+        fsm?.Update();
+    }
+
+    public void Reset()
+    {
+        fsm?.Reboot();
     }
 }

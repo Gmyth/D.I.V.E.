@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Random = UnityEngine.Random;
+﻿using UnityEngine;
+
 
 public enum SoulBallState
 {
@@ -11,76 +8,85 @@ public enum SoulBallState
     Acquired
 }
 
+
 public class SoulBall : Recyclable
 {
-    private float MaxSpeed = 16f;
-    private SoulBallState currentState;
-    private float LastFloatingForceTime;
+    [SerializeField] private float maxSpeedIn = 30f;
+    [SerializeField] private float accelerationIn = 20f;
+    [SerializeField] private float minSpeedOut = 5f;
+    [SerializeField] private float accelerationOut = 10f;
+
     private Transform target;
     private Rigidbody2D rb2d;
 
-    private float t0;
+    private SoulBallState currentState;
+    private Vector2 outDir;
+    private float t;
+    private float v;
     private float timeIntervals = 0.6f;
-    // Start is called before the first frame update
+    private bool triggered;
 
-    // Update is called once per frame
-    void Update()
+
+    private void OnEnable()
     {
-        var bufferState = currentState;
+        target = PlayerCharacter.Singleton.transform;
+        rb2d = GetComponent<Rigidbody2D>();
+        rb2d.velocity = Vector2.zero;
+        
+        triggered = false;
+        currentState = SoulBallState.Move;
+        t = Time.time + timeIntervals + Random.Range(-0.2f, 0.2f);
+        v = Random.Range(6f, 10f);
+
+        outDir = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
+    }
+
+    private void Update()
+    {
         switch (currentState)
         {
             case SoulBallState.Move:
-                if (t0 + timeIntervals<Time.time)
+                if (Time.time >= t || v <= 1)
                 {
-                    bufferState = SoulBallState.Chase;
-                    rb2d.velocity = Vector2.zero;
+                    currentState = SoulBallState.Chase;
+                    v = -v;
+                    //rb2d.velocity = Vector2.zero;
                 }
+                else
+                {
+                    transform.Translate(outDir.normalized * v * Time.deltaTime);
+                    v = Mathf.Max(minSpeedOut, v - accelerationOut * Time.deltaTime);
+                }
+
                 break;
-            
+                
+
             case SoulBallState.Chase:
-                
-                if ((target.position - transform.position).sqrMagnitude < 0.1f)
+                Vector3 direction = target.position - transform.position;
+
+                if (direction.sqrMagnitude < 0.1f)
                 {
-                    // TODO  the absorb range could be attribute
-                    rb2d.drag = 0;
-                    bufferState = SoulBallState.Acquired;
-                    Acquire();
+                    rb2d.velocity = Vector2.zero;
+
+                    //rb2d.drag = 0;
+                    //bufferState = SoulBallState.Acquired;
+
+                    PlayerCharacter.Singleton.AddUltimateEnergy(4f);
+                    triggered = true;
+                    Die();
                 }
-                
-                var direction = (target.position - transform.position).normalized;
-                transform.Translate(direction * 9.5f * Time.deltaTime);
-                
+                else if(!triggered)
+                {
+                    float distance = v * Time.deltaTime;
+
+                    if (direction.sqrMagnitude <= distance * distance)
+                        transform.position = target.position;
+                    else
+                        transform.Translate(direction.normalized * distance);
+
+                    v = Mathf.Min(maxSpeedIn, v + accelerationIn * Time.deltaTime);
+                }
                 break;
-            
-            case SoulBallState.Acquired:
-                // do nothing
-                
-                break;
-            
         }
-
-        if (bufferState != currentState)
-        {
-            currentState = bufferState;
-        }
-
-    }
-
-    public void Active()
-    {
-        t0 = Time.time;
-        rb2d = GetComponent<Rigidbody2D>();
-        currentState = SoulBallState.Move;
-        var dir = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
-        rb2d.AddForce(Random.Range(15,40) * dir);
-        target = GameObject.FindObjectOfType<PlayerCharacter>().transform;
-        timeIntervals += Random.Range(-0.2f, 0.2f);
-    }
-
-    void Acquire()
-    {
-        //add 
-        Player.CurrentPlayer.AddHealthEnergy(2f);
-        Die();
     }
 }

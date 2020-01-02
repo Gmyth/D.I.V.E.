@@ -19,10 +19,10 @@ public class CheckPointTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.name == "Player")
+        if (other.gameObject.tag == "Player")
         {
-            Debug.Log(LogUtility.MakeLogStringFormat("CheckPointTrigger", "Enter check point"));
-            CheckPointManager.Instance.SetLastCheckPointTransform(gameObject.transform);
+            //Debug.Log(LogUtility.MakeLogStringFormat("CheckPointTrigger", "Enter check point"));
+            CheckPointManager.Instance.RecordPosition(gameObject.transform);
         }
     }
 }

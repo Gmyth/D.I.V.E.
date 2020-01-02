@@ -26,16 +26,17 @@ public class PSNoInput : PlayerState
 
     public override void OnStateEnter(State previousState)
     {
-        anim.Play("MainCharacter_Idle", -1, 0f);
-        KillSpeed();
-        playerCharacter.gameObject.GetComponent<Rigidbody2D>().gravityScale = 3;
+        //anim.Play("MainCharacter_Idle", -1, 0f);
+        //KillSpeed();
+        //playerCharacter.gameObject.GetComponent<Rigidbody2D>().gravityScale = 3;
     }
 
     public override void OnStateQuit(State nextState)
     {
-        playerCharacter.gameObject.GetComponent<Rigidbody2D>().simulated = true;
-        playerCharacter.gameObject.GetComponent<Rigidbody2D>().gravityScale = 3;
-        playerCharacter.gameObject.GetComponent<Rigidbody2D>().drag = 1;
+        //playerCharacter.gameObject.GetComponent<Rigidbody2D>().simulated = true;
+        //playerCharacter.gameObject.GetComponent<Rigidbody2D>().gravityScale = 3;
+        //playerCharacter.gameObject.GetComponent<Rigidbody2D>().drag = 1;
+        anim.Play("MainCharacter_Idle", -1, 0f);
     }
 
     public void KillSpeed()

@@ -22,4 +22,5 @@ public class SingleEffect : Recyclable
     {
         target = _target;
     }
+    
 }

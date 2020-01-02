@@ -13,12 +13,16 @@ MonoBehaviour:
   m_Name: PS_Jumping1
   m_EditorClassIdentifier: 
   Name: 
-  jumpForce: 6.8
-  wallJumpForce: 8
-  speedFactor: 6
-  accelerationFactor: 30
-  jumpCD: 0.02
-  wallJumpCD: 0.1
+  n_jumpForce: 5.5
+  n_wallJumpForce: 8
+  n_speedFactor: 7
+  n_accelerationFactor: 20
+  n_wallJumpCD: 0
+  f_jumpForce: 5.5
+  f_wallJumpForce: 8
+  f_speedFactor: 7
+  f_accelerationFactor: 20
+  f_wallJumpCD: 0
   indexPSIdle: 0
   indexPSMoving: 1
   indexJumping2: 5
@@ -27,4 +31,5 @@ MonoBehaviour:
   indexPSAttackGH: 3
   indexPSAirborne: 2
   indexPSClimb: 8
-  jumpIncreaser: 1.5
+  jumpIncreaser: 2.5
+  jumpIncreaserThreshold: 0.3

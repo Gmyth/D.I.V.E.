@@ -34,6 +34,23 @@ public abstract class GUIWidget : MonoBehaviour
 }
 
 
+/// <summary>
+/// The way to open the new window
+/// </summary>
+public enum UIMode : int
+{
+    /// <summary>
+    /// The window should be closed in a short period of time, therefore making the viewport not clear when it is not closed
+    /// </summary>
+    DEFAULT = 0,
+
+    /// <summary>
+    /// The windows is considered to be a part of the viewport
+    /// </summary>
+    PERMANENT,
+}
+
+
 public class GUIManager : MonoBehaviour
 {
     /// <summary>
@@ -41,29 +58,10 @@ public class GUIManager : MonoBehaviour
     /// </summary>
     public static GUIManager Singleton { get; private set; }
 
-    /// <summary>
-    /// The way to open the new window
-    /// </summary>
-    public enum UIMode : int
-    {
-        /// <summary>
-        /// The window should be closed in a short period of time, therefore making the viewport not clear when it is not closed
-        /// </summary>
-        DEFAULT = 0,
-
-        /// <summary>
-        /// The windows is considered to be a part of the viewport
-        /// </summary>
-        PERMANENT,
-    }
-
-    [Header("References")]
-    public Sprite emptyHeart;
-    public Sprite halfHeart;
-    public Sprite fullHeart;
 
     private Stack<string> uiWindowStack = new Stack<string>();
     private Dictionary<string, GUIWindow> uiWindowsOpened = new Dictionary<string, GUIWindow>();
+
 
     /// <summary>
     /// Whether the UI window is opened in the viewport (not considering the UIMode)
@@ -89,6 +87,11 @@ public class GUIManager : MonoBehaviour
         return uiWindowsOpened[name];
     }
 
+    public T GetGUIWindow<T>(string name)
+    {
+        return GetGUIWindow(name).GetComponent<T>();
+    }
+
     public GUIWindow Open(string name, params object[] args)
     {
         return Open(name, UIMode.DEFAULT, args);
@@ -110,6 +113,7 @@ public class GUIManager : MonoBehaviour
         if (IsInViewport(name))
             return uiWindowsOpened[name];
 
+
         GUIWindow uiWindow = Instantiate(ResourceUtility.GetGUIPrefab<GUIWindow>(name), transform, false);
 
         uiWindow.transform.SetAsFirstSibling();
@@ -120,6 +124,7 @@ public class GUIManager : MonoBehaviour
 
         if (mode != UIMode.PERMANENT)
             uiWindowStack.Push(name);
+
 
         return uiWindow;
     }
@@ -184,14 +189,16 @@ public class GUIManager : MonoBehaviour
         Vector2 referenceResolution = GetComponent<CanvasScaler>().referenceResolution;
         return new Vector3((position.x / Screen.width - 0.5f) * referenceResolution.x, (position.y / Screen.height - 0.5f) * referenceResolution.y, 0);
     }
+    
 
     private void Awake()
     {
         if (!Singleton)
         {
             Singleton = this;
-
-            DontDestroyOnLoad(gameObject);
+            
+            // TEMP: Reload the scene will have issue
+            //DontDestroyOnLoad(gameObject);
         }
         else if (Singleton != this)
             Destroy(gameObject);

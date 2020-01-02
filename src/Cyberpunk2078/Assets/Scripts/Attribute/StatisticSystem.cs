@@ -20,8 +20,10 @@ public enum AttributeType : int
 
     OspRecovery_c0 = 0x700,
     
-    MaxHsp_c0 = 0x800,
-
+    MaxUltimateEnergy_c0 = 0x800,
+    
+    FeverDecay_c0 = 0x900,
+    
     SightRange_c0 = 0xA00,
 
 
@@ -34,13 +36,15 @@ public enum AttributeType : int
     MaxFatigue_c1 = 0xE001,
     MaxFatigue_c2 = 0xE002,
     MaxFatigue_m0 = 0xE020,
-
+    
+    MaxKs_c0 = 0xA110,
+    KsDecay_c0 = 0xA210, // Kill Streak Decay
 
     SpReward_c0 = 0xF110,
 
     OspReward_c0 = 0xF210,
 
-    HspReward_c0 = 0xF310,
+    FeverReward_c0 = 0xF310,
 
     Fatigue_p0 = 0xF410,
     Fatigue_p1 = 0xF411,
@@ -56,18 +60,38 @@ public enum StatisticType : int
     SpRecovery_c0 = 0x5,
     MaxOsp = 0x6,
     OspRecovery = 0x7,
+    MaxUltimateEnergy = 0x8,
+    FeverDecay = 0x9,
     SightRange = 0xA,
 
     Damage = 0x10,
     Knowback = 0x20,
-
+    
+    KsDecay = 0xA1,
+    KsCount = 0xA2,
+    MaxKs = 0xA3,
+    
     MaxFatigue = 0xE0,
 
     Hp = 0xF0,
     Sp = 0xF1,
     Osp = 0xF2,
-    Hsp = 0xF3,
+    UltimateEnergy = 0xF3,
     Fatigue = 0xF4,
+}
+
+
+public struct StatisticModificationResult
+{
+    public readonly float previousValue;
+    public readonly float currentValue;
+
+
+    public StatisticModificationResult(float previousValue, float currentValue)
+    {
+        this.previousValue = previousValue;
+        this.currentValue = currentValue;
+    }
 }
 
 
@@ -90,6 +114,22 @@ public class StatisticSystem
 
             case StatisticType.MaxHp:
                 return AttributeSet.Sum(AttributeType.MaxHp_c0, attributeSets);
+
+
+            case StatisticType.MaxSp:
+                return AttributeSet.Sum(AttributeType.MaxSp_c0, attributeSets);
+
+
+            case StatisticType.MaxOsp:
+                return AttributeSet.Sum(AttributeType.MaxOsp_c0, attributeSets);
+
+
+            case StatisticType.MaxUltimateEnergy:
+                return AttributeSet.Sum(AttributeType.MaxUltimateEnergy_c0, attributeSets);
+
+
+            case StatisticType.FeverDecay:
+                return AttributeSet.Sum(AttributeType.FeverDecay_c0, attributeSets);
 
 
             case StatisticType.SightRange:
@@ -201,25 +241,37 @@ public class StatisticSystem
     }
 
 
-    public float Modify(StatisticType statistic, float value)
+    public StatisticModificationResult Modify(StatisticType statistic, float value)
     {
+        float previousValue = this[statistic];
+
+
         this[statistic] += value;
 
-        return this[statistic];
+
+        return new StatisticModificationResult(previousValue, this[statistic]);
     }
 
-    public float Modify(StatisticType statistic, float value, float max)
+    public StatisticModificationResult Modify(StatisticType statistic, float value, float min)
     {
-        this[statistic] = Mathf.Min(max, this[statistic] + value);
+        float previousValue = this[statistic];
 
-        return this[statistic];
+
+        this[statistic] = Mathf.Max(min, this[statistic] + value);
+
+
+        return new StatisticModificationResult(previousValue, this[statistic]);
     }
 
-    public float Modify(StatisticType statistic, float value, float min, float max)
+    public StatisticModificationResult Modify(StatisticType statistic, float value, float min, float max)
     {
-        this[statistic] += Mathf.Clamp(this[statistic] + value, min, max);
+        float previousValue = this[statistic];
 
-        return this[statistic];
+
+        this[statistic] = Mathf.Clamp(this[statistic] + value, min, max);
+
+
+        return new StatisticModificationResult(previousValue, this[statistic]);
     }
 
 

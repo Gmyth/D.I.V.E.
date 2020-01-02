@@ -14,51 +14,91 @@ public abstract class PlayerState : State
     protected Animator anim;
     protected bool flip;
     protected bool grounded;
+    protected float lastGroundedSec;
 
     public virtual void Initialize(int index, PlayerCharacter playerCharacter)
     {
         Index = index;
         this.playerCharacter = playerCharacter;
-        Player.CreatePlayer();
-        anim = playerCharacter.GetComponent<Animator>();
+
+        anim = playerCharacter.SpriteHolder.GetComponent<Animator>();
     }
 
 
-    //Player Ground check
-    public bool isGrounded()
+    // Player Ground check
+    // @return 0 - airborne   1 - ground   2 - enemy
+    public int GetGroundType()
     {
-        RaycastHit2D hitM = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,-0.7f,0f),-playerCharacter.transform.up, 0.6f);
-        RaycastHit2D hitL = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.12f,-0.7f,0f),-playerCharacter.transform.up, 0.6f);
-        RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.12f,-0.7f,0f),-playerCharacter.transform.up, 0.6f);
+        Vector2 slideCheck = playerCharacter.GetComponent<Rigidbody2D>().velocity.x > 0
+            ? new Vector2(0.5f, -0.5f)
+            : new Vector2(-0.5f, -0.5f);
+        
+        // this variable will reposition the ray start point 
+        float centerOffset = -0.7f;
 
-        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f, -0.7f, 0f), -playerCharacter.transform.up * 0.6f, Color.red);
+        float DistanceToTheGround = playerCharacter.GetComponent<CapsuleCollider2D>().bounds.extents.y + centerOffset;
+        //float DistanceToTheGround = centerOffset;
+        RaycastHit2D hitM = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.4f  );
+        RaycastHit2D hitL = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.3f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.4f );
+        RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.3f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.4f);
+        RaycastHit2D hitSlide = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,0f,0f),slideCheck, 2f );
 
-        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0.12f, -0.7f, 0f), -playerCharacter.transform.up * 0.6f, Color.green);
+        
+        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f, centerOffset, 0f), -playerCharacter.transform.up * (DistanceToTheGround + 0.4f), Color.red);
+        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0.3f, centerOffset, 0f), -playerCharacter.transform.up * (DistanceToTheGround + 0.4f), Color.green);
+        Debug.DrawRay(playerCharacter.transform.position + new Vector3(-0.3f, centerOffset, 0f), -playerCharacter.transform.up * (DistanceToTheGround + 0.4f), Color.yellow);
+        Debug.DrawRay(playerCharacter.transform.position, slideCheck * 2f, Color.green);
 
-        Debug.DrawRay(playerCharacter.transform.position + new Vector3(-0.12f, -0.7f, 0f), -playerCharacter.transform.up * 0.6f, Color.yellow);
+        bool margin = !(hitSlide.collider != null && (hitSlide.transform.CompareTag("Ground") || hitSlide.transform.CompareTag("Platform") && hitSlide.normal.x > 0.1f));
 
-        if (hitM.collider != null && hitM.transform.CompareTag("Ground") || hitR.collider != null && hitR.transform.CompareTag("Ground") || hitL.collider != null && hitL.transform.CompareTag("Ground"))
+        Player player = Player.CurrentPlayer;
+
+
+        if ((hitL.collider != null && (hitL.transform.CompareTag("Ground") || hitL.transform.CompareTag("Platform"))) ||
+            (hitR.collider != null && (hitR.transform.CompareTag("Ground") || hitR.transform.CompareTag("Platform"))) ||
+            (hitM.collider != null && (hitM.transform.CompareTag("Ground") || hitM.transform.CompareTag("Platform"))))
         {
-            
-            Player.CurrentPlayer.secondJumpReady = true;
+            //Character Margin
+            if (margin && !grounded)
+            {
+
+                //if (name == "Airborne")
+                //{
+                //   playerCharacter.transform.Translate(Vector2.up * (hitM.distance - DistanceToTheGround));
+                //}
+                //else
+                //{
+                //   playerCharacter.transform.Translate(Vector2.down* (hitM.distance - DistanceToTheGround));
+                //}
+            }
+
+            player.ChainWallJumpReady = false;
+            player.secondJumpReady = true;
+
             grounded = true;
-            return true;
-        }else if(hitM.collider != null && hitM.transform.CompareTag("Platform") || hitR.collider != null && hitR.transform.CompareTag("Platform") || hitL.collider != null && hitL.transform.CompareTag("Platform"))
+
+            return 1;
+        } 
+        else if ((hitL.collider != null && hitL.transform.CompareTag("Dummy")) ||
+                 (hitR.collider != null && hitR.transform.CompareTag("Dummy")) ||
+                 (hitM.collider != null && hitM.transform.CompareTag("Dummy")))
         {
-            
-            Player.CurrentPlayer.secondJumpReady = true;
-            grounded = true;
-            return true;
+            return 2;
         }
-        Player.CurrentPlayer.jumpForceGate = false;
+
+
+        player.jumpForceGate = false;
+
         grounded = false;
-        return false;
+
+
+        return 0;
     }
 
     //Player Ground Normal Vector, Used for Dash direction correction
     public Vector2 GroundNormal()
     {
-        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,-0.2f,0f),-playerCharacter.transform.up,1f);
+        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position,-playerCharacter.transform.up,1.2f);
 
         if (hit.collider != null && hit.transform.CompareTag("Ground") ) {
             return hit.normal;
@@ -67,73 +107,81 @@ public abstract class PlayerState : State
         return Vector2.zero;
     }
 
-    //Check the Wall is on left or right
-    public bool RightSideTest(string tag)
-    {
-        RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0.1f,0f,0f),playerCharacter.transform.right,0.4f);
-
-        if (hit.collider != null && hit.transform.CompareTag(tag) )
-        {
-            return true;
-        }
-        return false;
-    }
-
     //Check player is close to wall
     public Direction isCloseTo(string tag, string layerMask = "")
     {
         RaycastHit2D hit = layerMask.Length > 0 ? 
-                Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0.1f,0f,0f),playerCharacter.transform.right,0.35f,1 << LayerMask.NameToLayer(layerMask))
-                : Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(0.1f,0f,0f),playerCharacter.transform.right,0.35f);
+                Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.3f,0f,0f),playerCharacter.transform.right,0.8f,1 << LayerMask.NameToLayer(layerMask))
+                : Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.3f,0f,0f),playerCharacter.transform.right,0.8f);
         RaycastHit2D hit1 = layerMask.Length > 0 ? 
-                Physics2D.Raycast(playerCharacter.transform.position+ new Vector3(-0.1f,0f,0f),-playerCharacter.transform.right,0.35f, 1 << LayerMask.NameToLayer(layerMask))
-                : Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.1f,0f,0f),-playerCharacter.transform.right,0.35f);
+                Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.3f,0f,0f),-playerCharacter.transform.right,0.8f, 1 << LayerMask.NameToLayer(layerMask))
+                : Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.3f,0f,0f),-playerCharacter.transform.right,0.8f);
 
-        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f,-0f,0f), playerCharacter.transform.right * 0.35f, Color.red);
-        Debug.DrawRay(playerCharacter.transform.position + new Vector3(0.1f,-0f,0f), -playerCharacter.transform.right * 0.35f, Color.yellow);
-
+        Debug.DrawRay(playerCharacter.transform.position, playerCharacter.transform.right * 0.5f, Color.green);
+        Debug.DrawRay(playerCharacter.transform.position, -playerCharacter.transform.right * 0.5f, Color.green);
+        
         if (hit.collider != null && hit.transform.CompareTag(tag))
         {
             return Direction.Right;
             
         }else if (hit1.collider != null && hit1.transform.CompareTag(tag))
         {
-            
             return Direction.Left;
         }
-
         return Direction.None;
+    }
+    
+    public Vector2 LadderMargin(string tag = "Ladder", string layerMask = "")
+    {
+        RaycastHit2D hit = layerMask.Length > 0 ? 
+            Physics2D.Raycast(playerCharacter.transform.position +  new Vector3(-0.3f,0f,0f),playerCharacter.transform.right,1f,1 << LayerMask.NameToLayer(layerMask))
+            : Physics2D.Raycast(playerCharacter.transform.position +  new Vector3(-0.3f,0f,0f),playerCharacter.transform.right,1f);
+        RaycastHit2D hit1 = layerMask.Length > 0 ? 
+            Physics2D.Raycast(playerCharacter.transform.position +  new Vector3(0.3f,0f,0f),-playerCharacter.transform.right,1f, 1 << LayerMask.NameToLayer(layerMask))
+            : Physics2D.Raycast(playerCharacter.transform.position +  new Vector3(0.3f,0f,0f),-playerCharacter.transform.right,1f);
+
+        Debug.DrawRay(playerCharacter.transform.position, playerCharacter.transform.right * 0.8f, Color.red);
+        Debug.DrawRay(playerCharacter.transform.position, -playerCharacter.transform.right * 0.8f, Color.yellow);
+
+        float height = 0;
+        float center = 0;
+        if (hit.collider != null && hit.collider.transform.CompareTag(tag))
+        {
+            playerCharacter.transform.position = new Vector3(hit.transform.position.x,  playerCharacter.transform.position.y,  playerCharacter.transform.position.z);
+            height = hit.collider.bounds.extents.y;
+            center = hit.transform.position.y;
+        }else if (hit1.collider != null && hit1.collider.transform.CompareTag(tag))
+        {
+            playerCharacter.transform.position = new Vector3(hit1.transform.position.x,  playerCharacter.transform.position.y,  playerCharacter.transform.position.z);
+            height = hit1.collider.bounds.extents.y;
+            center = hit1.transform.position.y;
+        }
+
+        if (height > 0)
+        {
+            return new Vector2(center - height,center + height);
+        }
+        return Vector2.zero;
     }
 
 
     //if player is grounded, the direction to down left/right & down side are not allowed
-    public Vector2 getDirectionCorrection(Vector2 _direction, Vector2 _norm)
-    {
-        if (Vector2.Angle(_direction, _norm) < 85)
-        {
-            // Allowed for free dash
-            return _direction;
-        }
-        // need to be on the axis of perpendicular to norm
-        Vector2 corDir  = Vector2.Perpendicular(_norm);
-        if (_direction.x * corDir.x > 0) return corDir;
 
-        return -corDir;
-    }
 
 
     // Function : Keyboard Input => Physics Velocity, And Friction Calculation
-    public void PhysicsInputHelper(float h, float maxSpeed  = 9,  float Acceleration  = 20)
+    public void PhysicsInputHelper(float h, float maxSpeed  = 9,  float Acceleration  = 25)
     {
+        float feverFactor = playerCharacter.InFever ? Player.CurrentPlayer.FeverFactor : 1;
         Rigidbody2D rb2d = playerCharacter.GetComponent<Rigidbody2D>();
        
         // calculate speed on X axis
         if (Mathf.Abs(h) > 0.1f)
         {
             // has horizontal input
-            if (Mathf.Abs(rb2d.velocity.x) < maxSpeed)
+            if (Mathf.Abs(rb2d.velocity.x) < maxSpeed * feverFactor)
             {
-                var direction = Vector3.right * h * Acceleration;
+                var direction = Vector3.right * h * Acceleration * feverFactor;
                 if (direction.x * rb2d.velocity.x < 0)
                     direction = direction * 4f;
 
@@ -156,12 +204,24 @@ public abstract class PlayerState : State
                 }
             }
         }
-        else
+    }
+
+    public void EarlyUpdate()
+    {
+
+        if (Input.GetAxis("Trigger") <= 0)
         {
-            // does not has input
-            // reduce speed, friction
-            //if (grounded) rb2d.AddForce(new Vector2(-rb2d.velocity.x * 4, 0f));
-            if (grounded) rb2d.velocity = new Vector2(0f, rb2d.velocity.y);
+             Player.CurrentPlayer.triggerReady = true;
+        }
+        
+        if (Input.GetAxis("VerticalJoyStick") <= 0)
+        {
+            Player.CurrentPlayer.climbReady = true;
+        }
+        
+        if (Input.GetAxis("Vertical") <= 0)
+        {
+            Player.CurrentPlayer.climbReady = true;
         }
     }
 }
@@ -192,7 +252,7 @@ public class FSMPlayer : FiniteStateMachine<PlayerState>
                     return;
                 }
 #if UNITY_EDITOR
-                Debug.Log(LogUtility.MakeLogStringFormat("FSMPLayer", "Make transition from {0} to {1}", states[currentStateIndex].name, states[value].name));
+                //Debug.Log(LogUtility.MakeLogStringFormat("FSMPLayer", "Make transition from {0} to {1}", states[currentStateIndex].name, states[value].name));
 #endif
 
                 int previousStateIndex = currentStateIndex;
@@ -231,29 +291,47 @@ public class FSMPlayer : FiniteStateMachine<PlayerState>
     {
         OnMachineBoot();
 
+        foreach (PlayerState state in states)
+            state.OnMachineBoot();
+
+
         currentStateIndex = startingStateIndex;
 
-        CurrentState.OnStateEnter(CurrentState);
+        CurrentState.OnStateEnter(null);
 
         OnCurrentStateChange.Invoke(currentStateIndex, -1);
+    }
+
+    public override void Reboot()
+    {
+        ShutDown();
+        Boot();
     }
 
     public override void ShutDown()
     {
         int previousStateIndex = currentStateIndex;
 
+
         CurrentState.OnStateQuit(null);
 
         currentStateIndex = -1;
 
-        OnMachineShutDown();
-
         OnCurrentStateChange.Invoke(-1, previousStateIndex);
+
+
+        foreach (PlayerState state in states)
+            state.OnMachineShutDown();
+
+        OnMachineShutDown();
     }
 
     public void Update()
     {
         if (currentStateIndex >= 0)
+        {
+            CurrentState.EarlyUpdate();
             CurrentStateIndex = CurrentState.Update();
+        }
     }
 }

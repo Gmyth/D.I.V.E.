@@ -16,13 +16,14 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
     [SerializeField] private int stateIndex_targetLoss = -1;
     [SerializeField] private int stateIndex_afterAttack = -1;
 
-    private int previousStateIndex;
 
+    private EnemyType enemyType;
     private Rigidbody2D rigidbody;
     private Animator animator;
 
     private bool isMoving = false;
-    private float t = 0;
+    private float t = float.MaxValue;
+    private int previousStateIndex;
 
 
     private bool IsMoving
@@ -52,7 +53,7 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
     {
         base.Initialize(enemy);
 
-
+        enemyType = enemy.Data.Type;
         rigidbody = enemy.GetComponent<Rigidbody2D>();
         animator = enemy.GetComponent<Animator>();
     }
@@ -60,7 +61,7 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
     public override int Update()
     {
         float dt = Time.time - t;
-
+        
 
         if (dt < 0) // Check if the attack has not been made
         {
@@ -72,18 +73,27 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
                 Vector3 enemyPosition = enemy.transform.position;
 
 
-                float d = playerPosition.x - enemyPosition.x;
+                Vector3 d = playerPosition - enemyPosition;
 
-                if (Mathf.Abs(d) <= attackRange) // Check if the target is horizontally close enough
+                if (Mathf.Abs(d.x) <= attackRange) // Check if the target is horizontally close enough
                 {
-                    rigidbody.velocity = Vector2.zero;
+                    if (enemyType == EnemyType.Floating)
+                        rigidbody.velocity = Vector2.zero;
+                    else
+                    {
+                        Vector2 v = rigidbody.velocity;
+                        v.x = 0;
+
+                        rigidbody.velocity = v;
+                    }
+
 
                     IsMoving = false;
 
 
                     if (playerPosition.y - enemyPosition.y <= attackHeight) // Check if the target is low enough to get hit
                     {
-                        AdjustFacingDirection(d > 0 ? Vector2.right : Vector2.left);
+                        AdjustFacingDirection(d.x > 0 ? Vector2.right : Vector2.left);
 
 
                         t = Time.time;
@@ -95,13 +105,19 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
                 }
                 else
                 {
-                    Vector2 direction = d > 0 ? Vector2.right : Vector2.left;
+                    Vector2 direction = d.normalized;
 
-                    AdjustFacingDirection(direction);
+                    if (enemyType == EnemyType.Ground)
+                        direction = d.x > 0 ? Vector2.right : Vector2.left;
+
 
                     rigidbody.velocity = direction * chasingSpeed;
 
+
                     IsMoving = true;
+
+
+                    AdjustFacingDirection(direction);
                 }
 
 
@@ -124,11 +140,24 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
     public override void OnStateEnter(State previousState)
     {
         base.OnStateEnter(previousState);
-
-
+//        PlayerCharacter player = GameObject.FindObjectOfType<PlayerCharacter>();
+//        var dir = (player.transform.position - enemy.transform.position ).normalized;
+//        
+//        RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position + new Vector3(0,0.5f,0),dir.x < 0? Vector3.left : Vector3.right, 5f);
+//        if (hit.collider != null && hit.transform.CompareTag("Player"))
+//        {
+//            //hit! Hunch Trigger
+//            PlayerCharacter playerCharacter = hit.collider.GetComponent<PlayerCharacter>();
+//            if (playerCharacter.IsInFeverMode)
+//            {
+//                playerCharacter.ConsumeFever(30);
+//                TimeManager.Instance.startSlowMotion(0.5f);
+//                CameraManager.Instance.FocusAt(playerCharacter.transform,0.2f);
+//                CameraManager.Instance.FlashIn(7f,0.05f,0.15f,0.01f);
+//            }
+//        }
         isMoving = false;
-
-        previousStateIndex = previousState.Index;
         t = float.MaxValue;
+        previousStateIndex = previousState.Index;
     }
 }

@@ -2,87 +2,87 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlatformEffector : MonoBehaviour
 {
-    public enum PlatformType
-    {
-        WalkThrough = 0,
-        Stair
-
-    }
     private PlatformEffector2D effector;
-
     private float waitTime;
+    private bool isController;
 
     public float initialWaitTime;
-
-    public PlatformType platformType;
-
-    public float stairAngle;
-
-    private GameObject player;
+    public bool occupied;
+    
 
     // Start is called before the first frame update
     private void Start()
     {
         effector = gameObject.GetComponent<PlatformEffector2D>();
+        occupied = false;
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.S))
+        //Keyboard
+        if (Input.GetKeyUp(KeyCode.S) && !isController)
         {
             waitTime = initialWaitTime;
-            
         }
         if (Input.GetKey(KeyCode.S))
         {
-            if (waitTime <= 0)
+            if (occupied)
             {
-                if(platformType == PlatformType.WalkThrough)
+                if (waitTime <= 0)
+                {
                     effector.rotationalOffset = 180;
+                    PlayerCharacter.Singleton.GetComponent<Rigidbody2D>().gravityScale = 3;
+                    waitTime = initialWaitTime;
+                }
                 else
                 {
-                    effector.rotationalOffset = -180 + stairAngle;
+                    waitTime -= Time.deltaTime;
                 }
-                waitTime = initialWaitTime;
-            }
-            else
-            {
-                waitTime -= Time.deltaTime;
-            }
-
+            }       
         }
 
-        //if (PlayerCharacter.Singleton.gameObject.GetComponent<Rigidbody2D>().velocity.y > 0 )
-        //{
-        //    if (platformType == PlatformType.WalkThrough)
-        //        effector.rotationalOffset = 0;
-        //    else
-        //    {
-        //        effector.rotationalOffset = stairAngle;
-        //    }
-        //}
+        //Controller
+        if (Input.GetAxis("VerticalJoyStick") >= 0 && isController)
+        {
+            waitTime = initialWaitTime;
+        }
+        if (Input.GetAxis("VerticalJoyStick") < -0.7f)
+        {
+            if (occupied)
+            {
+                if (waitTime <= 0)
+                {
+                    effector.rotationalOffset = 180;
+                    PlayerCharacter.Singleton.GetComponent<Rigidbody2D>().gravityScale = 3;
+                    waitTime = initialWaitTime;
+                }
+                else
+                {
+                    isController = true;
+                    waitTime -= Time.deltaTime;
+                }
+            }
+        }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.name == "PlatformDetector")
         {
-            //collision.posit
-            var detectorPos = collision.gameObject.transform.position;
-            var platformPos = gameObject.transform.position;
-            //detector is above the platform
-            if ((detectorPos - platformPos).y > 0)
-            {
-                effector.rotationalOffset = 0;
-            }
-            else if((detectorPos - platformPos).y < 0)
-            {
-                effector.rotationalOffset = 0;
-            }
+            occupied = true;         
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.name == "PlatformDetector")
+        {
+            occupied = false;
+            effector.rotationalOffset = 0;
         }
     }
 }

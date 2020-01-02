@@ -20,7 +20,7 @@ public class PSAttackGD : PlayerState
     {
         if (Time.time - t0 > recoveryTime)
         {
-            if (Input.GetAxis("Horizontal") == 0)
+            if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("HorizontalJoyStick") == 0)
                 return index_PSIdle;
 
             return index_PSMoving;

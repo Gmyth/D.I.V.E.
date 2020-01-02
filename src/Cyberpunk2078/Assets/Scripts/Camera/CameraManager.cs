@@ -19,6 +19,7 @@ public class CameraManager : MonoBehaviour {
 	public static CameraManager Instance;
 	private float zoomVelocity;
 	private Vector2 velocity; // the speed reference for camera
+	private Vector2 focusVelocity;
 	[Header("Camera")]
 
     // the smooth time for camera change the position on Y - axis, the larger number will slow the camera moving speed. 0 will be response instantly 
@@ -140,12 +141,12 @@ public class CameraManager : MonoBehaviour {
 			shakeX = Random.Range(-1f, 1f) * shakeMagnitude;
 			shakeY = Random.Range(-1f, 1f) * shakeMagnitude;
 		}
-		var camera = GetComponent<Camera>();
+		var camera = GetComponentInChildren<Camera>();
+		var targetIndicator = findClosestIndicator();
 		switch (currentState)
 		{
 			case CameraState.Idle:
 				//Apply indicator config if indicator exists
-				var targetIndicator = findClosestIndicator();
 				float oX = targetIndicator && targetIndicator.changeOffset ? targetIndicator.offsetX : offsetX;
 				float oY = targetIndicator && targetIndicator.changeOffset ? targetIndicator.offsetY : offsetY;
 				
@@ -236,13 +237,66 @@ public class CameraManager : MonoBehaviour {
 						camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize, defaultFieldOfView, ref zoomVelocity, smoothTimeZoom);
 					}
 				}
+				
+				
 				break;
 			
 			case CameraState.Focusing:
-				camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize,cameraSizeOnFocusing, ref zoomVelocity, smoothTimeX / 10);
-				posX = Mathf.SmoothDamp(transform.position.x,target.position.x, ref velocity.x, smoothTimeX / 5);
-				posY = Mathf.SmoothDamp(transform.position.y,target.position.y, ref velocity.y, smoothTimeY / 5);
-				transform.position = new Vector3(posX + offsetX + shakeX, posY + offsetY + shakeY, transform.position.z);
+				
+				// prevent overchasing
+				if ((target.position - transform.position).sqrMagnitude > 1000)
+				{
+					break;
+				}
+
+				posX = Mathf.SmoothDamp(transform.position.x,target.position.x, ref focusVelocity.x, 0.001f);
+				posY = Mathf.SmoothDamp(transform.position.y,target.position.y, ref focusVelocity.y, 0.001f);
+				transform.position = new Vector3(posX, posY, transform.position.z);
+				
+				if (targetIndicator && targetIndicator.changeSize)
+				{
+					defaultSize = targetIndicator.targetCameraSize;
+					if (flash)
+					{
+						if (!flashOut)
+						{
+							// zoom in to target ZoomSize
+							camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize,targetZoomSize, ref zoomVelocity, smoothTimeQZ);
+						}
+						else
+						{
+							//zoom out to origin ZoomSize
+							camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize,defaultSize, ref zoomVelocity, smoothTimeQZ);
+						}
+					}
+					else
+					{
+						// back to normal
+						camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize, targetIndicator.targetCameraSize, ref zoomVelocity, targetIndicator.smoothZoomTime);
+					}
+				}
+				else
+				{
+					defaultSize = defaultFieldOfView;
+					if (flash)
+					{
+						if (!flashOut)
+						{
+							// zoom in to target ZoomSize
+							camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize,targetZoomSize, ref zoomVelocity, smoothTimeQZ);
+						}
+						else
+						{
+							//zoom out to origin ZoomSize
+							camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize,defaultSize, ref zoomVelocity, smoothTimeQZ);
+						}
+					}
+					else
+					{
+						// back to normal
+						camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize,cameraSizeOnFocusing, ref zoomVelocity, smoothTimeX / 10);
+					}
+				}
 				break;
 
             case CameraState.Reset:
@@ -297,25 +351,40 @@ public class CameraManager : MonoBehaviour {
 		//Gizmos.DrawSphere(center, 1);
 	}
 
-	public void focusAt(Transform _target)
+	public void FocusAt(Transform _target, float duration = -1f)
 	{
 		target = _target;
 		currentState = CameraState.Focusing;
+		if (duration > -1f) StartCoroutine(resetDelay(duration));
 	}
 
-    public void release()
+    public void Release()
     {
         currentState = CameraState.Release;
     }
 
 
-    public void reset()
+    public void Reset()
 	{
 		currentState = CameraState.Reset;
 	}
+    
+    public void Idle()
+    {
+	    currentState = CameraState.Idle;
+        flash = false;
+        flashOut = false;
+        shake = false;
+    }
 
+    private IEnumerator resetDelay(float duration)
+    {
+	    if(!target) Reset();
+	    yield return  new WaitForSeconds(duration);
+	    if(currentState != CameraState.Reset)Reset();
+    }
 
-    public void flashIn(float targetSize, float smoothTime, float inDuration, float outDuration)
+    public void FlashIn(float targetSize, float smoothTime, float inDuration, float outDuration)
     {
 	    if (!flash)
 	    {
@@ -396,7 +465,7 @@ public class CameraManager : MonoBehaviour {
 	    yield return null;
     }
 
-    public void Shaking(float strength,float duration)
+    public void Shaking(float strength, float duration, bool overwrite = false)
 	{
 		if (!shake)
 		{
@@ -407,26 +476,41 @@ public class CameraManager : MonoBehaviour {
 		}
 		else
 		{
-			shakeMagnitude = strength;
-			shakeRefreshing = true; // refresh current Coroutine
+			if (overwrite)
+			{
+				shakeMagnitude = strength;
+				StartCoroutine(shakeRelease(duration,overwrite));
+				shakeRefreshing = true; // refresh current Coroutine
+			}
+			
 		}
 	}
 
-	IEnumerator shakeRelease(float duration)
+    IEnumerator shakeRelease(float duration, bool overwrite = false)
 	{
+		if (shakeRefreshing)
+		{
+			shakeRefreshing = false;
+		}
+		
+		bool stop = true;
+		
 		int counter = 0;
 		while (counter * 0.01f < duration)
 		{
-			if (shakeRefreshing)
+			if (shakeRefreshing && !overwrite)
 			{
 				//get refreshed
-				counter = 0;
-				shakeRefreshing = false; 
+				stop = false;
+				break;
 			}
+			
 			yield return new WaitForSeconds(0.01f);
 			counter++;
 		}
-		shake = false;
+
+		if (stop) { shake = false; }
+		
 		yield return null;
 	}
 

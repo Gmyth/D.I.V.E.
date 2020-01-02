@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Collider2D), typeof(Rigidbody2D))]
 public class Bullet : Recyclable
@@ -7,14 +9,45 @@ public class Bullet : Recyclable
     public int numHits = 1;
     public int rawDamage = 1;
 
+    [SerializeField] private float hitEstimationTimeInterval = 0.02f;
+
+    [SerializeField] private bool disableHunch;
+    private float lastHitEstimation;
+    private bool hunchTriggered;
+
     private int numHitsRemaining;
 
 
     protected override void OnEnable()
     {
         base.OnEnable();
-
+        hunchTriggered = false;
         numHitsRemaining = numHits;
+    }
+
+    private void Update()
+    {
+        if (!disableHunch && lastHitEstimation + hitEstimationTimeInterval < Time.unscaledTime && !hunchTriggered && !isFriendly )
+        {
+            // time to check
+            var direction = GetComponent<LinearMovement>().orientation;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position,direction, 3.5f);
+            if (hit.collider != null && hit.transform.CompareTag("Player"))
+            {
+                //hit! Hunch Trigger
+                PlayerCharacter playerCharacter = hit.collider.GetComponent<PlayerCharacter>();
+                if (playerCharacter.InKillStreak)
+                {
+                    hunchTriggered = true;
+                    playerCharacter.AddKillCount(-2);
+                    TimeManager.Instance.startSlowMotion(1f);
+                    CameraManager.Instance.FocusAt(playerCharacter.transform,0.2f);
+                    CameraManager.Instance.FlashIn(7f,0.05f,0.15f,0.01f);
+                }
+            }
+            
+            lastHitEstimation = Time.unscaledTime;
+        }
     }
 
 
@@ -22,83 +55,6 @@ public class Bullet : Recyclable
     {
         if (numHitsRemaining <= 0)
             Die();
-
-
-        if (isFriendly)
-        {
-            if (other.tag == "Dummy")
-            {
-                CameraManager.Instance.Shaking(0.20f,0.05f);
-
-                other.GetComponent<Dummy>().ApplyDamage(rawDamage);
-                --numHitsRemaining;
-
-
-                SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
-                Hit.transform.position = other.transform.position - (other.transform.position - transform.position) * 0.2f;
-                Hit.transform.right = transform.right;
-                Hit.transform.position = other.transform.position + (transform.position  - other.transform.position) * 0.5f;
-                Hit.transform.localScale = Vector3.one;
-
-                Hit.gameObject.SetActive(true);
-
-                Die();
-            }
-        }
-        else if (other.tag == "Hunch" )
-        {
-            if(other.GetComponentInParent<PlayerCharacter>().State.Name == "Dash")
-            {
-                TimeManager.Instance.startSlowMotion(0.2f);
-                CameraManager.Instance.flashIn(7f,0.05f,0.15f,0.01f);
-            }
-        }
-        else if (other.tag == "Player")
-        {
-            if (other.GetComponent<PlayerCharacter>().State.Name != "Dash")
-            {
-                other.GetComponent<PlayerCharacter>().ApplyDamage(rawDamage);
-                --numHitsRemaining;
-
-
-                CameraManager.Instance.Shaking(0.20f, 0.05f);
-                SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
-                Hit.transform.right = transform.right;
-                Hit.transform.position = other.transform.position + (transform.position - other.transform.position) * 0.5f;
-                Hit.transform.localScale = Vector3.one;
-
-                Hit.gameObject.SetActive(true);
-                
-
-                Die();   
-            }
-        }
-        else if (other.tag == "PlayerAttack")
-        {
-            if (other.name != "DashAtkBox")
-            {
-                GetComponent<LinearMovement>().initialPosition = transform.position;
-                GetComponent<LinearMovement>().orientation = (Quaternion.Euler(0, 0,  Random.Range(-30, 30)) * (GetComponent<LinearMovement>().orientation * -1)).normalized;
-                GetComponent<LinearMovement>().spawnTime = Time.time;
-
-                transform.right = GetComponent<LinearMovement>().orientation;
-                
-                isFriendly = true;
-                
-
-                CameraManager.Instance.Shaking(0.10f,0.05f);
-
-
-                SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
-                Hit.transform.right = transform.right;
-                Hit.transform.position = other.transform.position + (transform.position  - other.transform.position) * 0.5f;
-                Hit.transform.localScale = Vector3.one;
-
-                Hit.gameObject.SetActive(true);
-            }
-            else
-                TimeManager.Instance.startSlowMotion(0.3f); 
-        }
         else if (other.tag == "Ground")
         {
             SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
@@ -111,5 +67,92 @@ public class Bullet : Recyclable
 
             Die();
         }
+        else if (isFriendly)
+        {
+            if (other.tag == "Dummy")
+            {
+                CameraManager.Instance.Shaking(0.20f,0.05f);
+
+                other.GetComponent<Dummy>().ApplyDamage(rawDamage);
+                --numHitsRemaining;
+                
+                TimeManager.Instance.endSlowMotion();
+                CameraManager.Instance.Idle();
+
+                SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
+                Hit.transform.position = other.transform.position - (other.transform.position - transform.position) * 0.2f;
+                Hit.transform.right = transform.right;
+                Hit.transform.position = other.transform.position + (transform.position  - other.transform.position) * 0.5f;
+                Hit.transform.localScale = Vector3.one;
+
+                Hit.gameObject.SetActive(true);
+
+                Die();
+            }else if (other.tag == "Ground")
+            {
+                SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
+                Hit.transform.right = transform.right;
+                Hit.transform.position = transform.position;
+                Hit.transform.localScale = Vector3.one;
+
+                Hit.gameObject.SetActive(true);
+
+
+                Die();
+            }
+        }
+        else if (other.tag == "Player")
+        {
+            if (other.GetComponent<PlayerCharacter>().State.Index != 6)
+            {
+                //Not in dash, deal damage
+                other.GetComponent<PlayerCharacter>().ApplyDamage(rawDamage);
+                other.GetComponent<PlayerCharacter>().Knockback(transform.position, 300f, 0.3f);
+                --numHitsRemaining;
+
+                TimeManager.Instance.endSlowMotion();
+                CameraManager.Instance.Idle();
+
+                CameraManager.Instance.Shaking(0.20f, 0.05f);
+                SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
+                Hit.transform.right = transform.right;
+                Hit.transform.position = other.transform.position + (transform.position - other.transform.position) * 0.5f;
+                Hit.transform.localScale = Vector3.one;
+
+                Hit.gameObject.SetActive(true);
+
+                Die();
+            }
+        }
+        else if (other.tag == "PlayerHitBox")
+        {
+            if (other.name != "DashAtkBox")
+            {
+                isFriendly = true;
+                GetComponent<LinearMovement>().initialPosition = transform.position;
+                GetComponent<LinearMovement>().speed *= 1.5f;
+                GetComponent<LinearMovement>().orientation = (Quaternion.Euler(0, 0,  Random.Range(-30, 30)) * (GetComponent<LinearMovement>().orientation * -1)).normalized;
+                GetComponent<LinearMovement>().spawnTime = Time.time;
+
+                transform.right = GetComponent<LinearMovement>().orientation;
+                
+                TimeManager.Instance.endSlowMotion();
+                CameraManager.Instance.Idle();
+                
+
+                CameraManager.Instance.Shaking(0.2f,0.05f,true);
+
+                CameraManager.Instance.FocusAt(transform,0.1f);
+                SingleEffect Hit1 = ObjectRecycler.Singleton.GetObject<SingleEffect>(12);
+                Hit1.transform.right = transform.right;
+                Hit1.transform.position = other.transform.position + (transform.position  - other.transform.position) * 0.3f;
+
+                Hit1.gameObject.SetActive(true);
+            }
+
+        }
+
+        if (numHitsRemaining <= 0)
+            Die();
     }
 }

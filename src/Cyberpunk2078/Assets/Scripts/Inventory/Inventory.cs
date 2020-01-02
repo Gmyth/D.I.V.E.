@@ -113,7 +113,7 @@ using UnityEngine;
         if (serializedItems == null || serializedItems.Length < items.Count)
             serializedItems = new Item[items.Count];
 #else
-        serializedItems = new Attribute[Items.Count];
+        serializedItems = new Item[items.Count];
 #endif
 
         int i = 0;
