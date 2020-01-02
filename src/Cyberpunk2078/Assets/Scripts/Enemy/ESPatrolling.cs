@@ -103,124 +103,127 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
         float t = Time.time;
 
 
-        if (t >= t_finishWaiting)
+        if (enemy.NumPatrolPoints > 0)
         {
-            if (useAStar)
+            if (t >= t_finishWaiting)
             {
-                if (currentPath != null)
+                if (useAStar)
                 {
-                    Vector3 wayPoint = currentPath.vectorPath[indexWayPoint];
-
-                    float distance = enemy.Data.Type == EnemyType.Ground ? Mathf.Abs(wayPoint.x - enemyPosition.x) : Vector2.Distance(wayPoint, enemyPosition);
-
-                    if (distance < 0.5f)
-                        ++indexWayPoint;
-
-
-                    if (indexWayPoint >= currentPath.vectorPath.Count)
+                    if (currentPath != null)
                     {
-                        rigidbody.velocity = Vector2.zero;
+                        Vector3 wayPoint = currentPath.vectorPath[indexWayPoint];
 
-                        IsMoving = false;
+                        float distance = enemy.Data.Type == EnemyType.Ground ? Mathf.Abs(wayPoint.x - enemyPosition.x) : Vector2.Distance(wayPoint, enemyPosition);
 
-
-                        t_finishWaiting = t + enemy.GetPatrolPointStayTime(indexTargetPatrolPoint);
-
-
-                        indexLastPatrolPoint = indexTargetPatrolPoint;
-                        indexTargetPatrolPoint = (indexTargetPatrolPoint + 1) % enemy.NumPatrolPoints;
+                        if (distance < 0.5f)
+                            ++indexWayPoint;
 
 
-                        seeker.StartPath(enemy.transform.position, enemy.GetPatrolPoint(indexTargetPatrolPoint));
-                        currentPath = null;
-                    }
-                    else
-                    {
-                        Vector2 direction = (currentPath.vectorPath[indexWayPoint] - enemy.transform.position).normalized;
+                        if (indexWayPoint >= currentPath.vectorPath.Count)
+                        {
+                            rigidbody.velocity = Vector2.zero;
 
-                        if (enemy.Data.Type == EnemyType.Ground)
-                            direction = direction.x > 0 ? Vector2.right : Vector2.left;
+                            IsMoving = false;
 
 
-                        AdjustFacingDirection(direction);
+                            t_finishWaiting = t + enemy.GetPatrolPointStayTime(indexTargetPatrolPoint);
 
 
-                        rigidbody.velocity = direction * speed;
+                            indexLastPatrolPoint = indexTargetPatrolPoint;
+                            indexTargetPatrolPoint = (indexTargetPatrolPoint + 1) % enemy.NumPatrolPoints;
 
-                        IsMoving = true;
+
+                            seeker.StartPath(enemy.transform.position, enemy.GetPatrolPoint(indexTargetPatrolPoint));
+                            currentPath = null;
+                        }
+                        else
+                        {
+                            Vector2 direction = (currentPath.vectorPath[indexWayPoint] - enemy.transform.position).normalized;
+
+                            if (enemy.Data.Type == EnemyType.Ground)
+                                direction = direction.x > 0 ? Vector2.right : Vector2.left;
+
+
+                            AdjustFacingDirection(direction);
+
+
+                            rigidbody.velocity = direction * speed;
+
+                            IsMoving = true;
+                        }
                     }
                 }
-            }
-            else
-            {
-                Vector3 patrolPoint = enemy.GetPatrolPoint(indexTargetPatrolPoint);
-
-                switch (enemy.Data.Type)
+                else
                 {
-                    case EnemyType.Ground:
-                        {
-                            float dx = patrolPoint.x - enemyPosition.x;
+                    Vector3 patrolPoint = enemy.GetPatrolPoint(indexTargetPatrolPoint);
 
-                            if (Mathf.Abs(dx) < 0.5f)
+                    switch (enemy.Data.Type)
+                    {
+                        case EnemyType.Ground:
                             {
-                                rigidbody.velocity = Vector2.zero;
+                                float dx = patrolPoint.x - enemyPosition.x;
 
-                                IsMoving = false;
+                                if (Mathf.Abs(dx) < 0.5f)
+                                {
+                                    rigidbody.velocity = Vector2.zero;
+
+                                    IsMoving = false;
 
 
-                                t_finishWaiting = t + enemy.GetPatrolPointStayTime(indexTargetPatrolPoint);
+                                    t_finishWaiting = t + enemy.GetPatrolPointStayTime(indexTargetPatrolPoint);
 
 
-                                indexLastPatrolPoint = indexTargetPatrolPoint;
-                                indexTargetPatrolPoint = (indexTargetPatrolPoint + 1) % enemy.NumPatrolPoints;
+                                    indexLastPatrolPoint = indexTargetPatrolPoint;
+                                    indexTargetPatrolPoint = (indexTargetPatrolPoint + 1) % enemy.NumPatrolPoints;
+                                }
+                                else
+                                {
+                                    Vector3 direction = dx > 0 ? Vector2.right : Vector2.left;
+
+
+                                    AdjustFacingDirection(direction);
+
+
+                                    rigidbody.velocity = speed * direction;
+
+                                    IsMoving = true;
+                                }
                             }
-                            else
+                            break;
+
+
+                        case EnemyType.Floating:
                             {
-                                Vector3 direction = dx > 0 ? Vector2.right : Vector2.left;
+                                Vector3 v = patrolPoint - enemyPosition;
+
+                                if (v.magnitude < 0.5f)
+                                {
+                                    rigidbody.velocity = Vector2.zero;
+
+                                    IsMoving = false;
 
 
-                                AdjustFacingDirection(direction);
+                                    t_finishWaiting = t + enemy.GetPatrolPointStayTime(indexTargetPatrolPoint);
 
 
-                                rigidbody.velocity = speed * direction;
+                                    indexLastPatrolPoint = indexTargetPatrolPoint;
+                                    indexTargetPatrolPoint = (indexTargetPatrolPoint + 1) % enemy.NumPatrolPoints;
+                                }
+                                else
+                                {
+                                    Vector3 direction = v.normalized;
 
-                                IsMoving = true;
+
+                                    AdjustFacingDirection(direction);
+
+
+                                    rigidbody.velocity = speed * direction;
+
+                                    IsMoving = true;
+                                }
                             }
-                        }
-                        break;
-
-
-                    case EnemyType.Floating:
-                        {
-                            Vector3 v = patrolPoint - enemyPosition;
-
-                            if (v.magnitude < 0.5f)
-                            {
-                                rigidbody.velocity = Vector2.zero;
-
-                                IsMoving = false;
-
-
-                                t_finishWaiting = t + enemy.GetPatrolPointStayTime(indexTargetPatrolPoint);
-
-
-                                indexLastPatrolPoint = indexTargetPatrolPoint;
-                                indexTargetPatrolPoint = (indexTargetPatrolPoint + 1) % enemy.NumPatrolPoints;
-                            }
-                            else
-                            {
-                                Vector3 direction = v.normalized;
-
-
-                                AdjustFacingDirection(direction);
-
-
-                                rigidbody.velocity = speed * direction;
-
-                                IsMoving = true;
-                            }
-                        }
-                        break;
+                            break;
+                    }
                 }
             }
         }

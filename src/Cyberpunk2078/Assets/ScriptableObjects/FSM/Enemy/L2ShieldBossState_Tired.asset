@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: L2ShieldBossState_Tired
   m_EditorClassIdentifier: 
   duration: 2
-  stateIndex_recovery: -1
+  stateIndex_recovery: 0
   stateIndex_onHit: -1
