@@ -10,13 +10,13 @@ public class Bullet : Recyclable
     public int rawDamage = 1;
 
     [SerializeField] private float hitEstimationTimeInterval = 0.02f;
-
     [SerializeField] private bool disableHunch;
+    [SerializeField] private string slowMotionSnapshot;
+
     private float lastHitEstimation;
     private bool hunchTriggered;
-
     private int numHitsRemaining;
-
+    private FMOD.Studio.EventInstance slowMotionInstance;
 
     protected override void OnEnable()
     {
@@ -41,6 +41,11 @@ public class Bullet : Recyclable
                     hunchTriggered = true;
                     playerCharacter.AddKillCount(-2);
                     TimeManager.Instance.startSlowMotion(1f);
+
+                    //audio
+                    slowMotionInstance = FMODUnity.RuntimeManager.CreateInstance(slowMotionSnapshot);
+                    slowMotionInstance.start();
+
                     CameraManager.Instance.FocusAt(playerCharacter.transform,0.2f);
                     CameraManager.Instance.FlashIn(7f,0.05f,0.15f,0.01f);
                 }
@@ -77,6 +82,9 @@ public class Bullet : Recyclable
                 --numHitsRemaining;
                 
                 TimeManager.Instance.endSlowMotion();
+
+                slowMotionInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+
                 CameraManager.Instance.Idle();
 
                 SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
@@ -111,6 +119,9 @@ public class Bullet : Recyclable
                 --numHitsRemaining;
 
                 TimeManager.Instance.endSlowMotion();
+
+                slowMotionInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+
                 CameraManager.Instance.Idle();
 
                 CameraManager.Instance.Shaking(0.20f, 0.05f);
@@ -137,6 +148,9 @@ public class Bullet : Recyclable
                 transform.right = GetComponent<LinearMovement>().orientation;
                 
                 TimeManager.Instance.endSlowMotion();
+
+                slowMotionInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+
                 CameraManager.Instance.Idle();
                 
 
@@ -148,6 +162,8 @@ public class Bullet : Recyclable
                 Hit1.transform.position = other.transform.position + (transform.position  - other.transform.position) * 0.3f;
 
                 Hit1.gameObject.SetActive(true);
+
+                FMODUnity.RuntimeManager.PlayOneShot("event:/DeflectBullet");
             }
 
         }

@@ -5,21 +5,22 @@ using UnityEngine;
 
 public class BouncePlatform : MonoBehaviour
 {
-    public float jumpForce;
+    [SerializeField] private GameObject BounceVFX;
+    [SerializeField] private float jumpForce;
+    [SerializeField] private float Threshold;
+    [SerializeField] private bool bounceReady = true;
+
+    [Range(0, 360)]
+    [SerializeField] private float angle = 90f;
+
+    [FMODUnity.EventRef]
+    [SerializeField] private string activateSound;
+
+    private float timer;
     private Rigidbody2D rb2d;
     private PlayerCharacter pc;
-    public float Threshold;
-    public bool bounceReady = true;
-    private float timer;
-    [SerializeField] private GameObject BounceVFX;
-    
-    [Range(0, 360)]
-    [SerializeField]
-    private float angle = 90f;
+    private Vector2 bounceDirection;
 
-    Vector2 bounceDirection;
-
-    // Start is called before the first frame update
     void Start()
     {
         timer = Threshold;
@@ -76,13 +77,16 @@ public class BouncePlatform : MonoBehaviour
 
                 var pos = col.gameObject.transform.position;
 
-                //col.gameObject.transform.position = new Vector3(pos.x + vec.x * 0.2f, pos.y + vec.y * 0.2f, pos.z);
+
 
                 BounceVFX.SetActive(true);
                 BounceVFX.GetComponent<Animator>().Play("BounceVFX", 0, 0);
 
+                //apply force
                 rb2d.AddForce(bounceDirection * jumpForce * 50 * 1/Time.timeScale);
-              
+
+                //sound
+                FMODUnity.RuntimeManager.PlayOneShot(activateSound);
 
                 PlayerCharacter.Singleton.AddNormalEnergy(1);
                 if (PlayerCharacter.Singleton.InFever) PlayerCharacter.Singleton.AddOverLoadEnergy(1);
