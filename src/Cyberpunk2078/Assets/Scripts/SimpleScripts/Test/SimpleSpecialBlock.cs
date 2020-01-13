@@ -65,6 +65,14 @@ public class SimpleSpecialBlock : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Dummy")
+        {
+            other.gameObject.GetComponent<Dummy>().Dead();
+        }
+    }
+
     private IEnumerator ChangeColliderAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
