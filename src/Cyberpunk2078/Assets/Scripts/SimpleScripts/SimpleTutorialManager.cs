@@ -115,7 +115,7 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         PlayerCharacter.Singleton.AddNormalEnergy(1);
 
         PlayerCharacter.Singleton.isInTutorial = true;
-        PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 11;
+        PlayerCharacter.Singleton.GetFSM().CurrentStateName = 11;
 
         DashTutorial_Drone.Fire(shootPoint_DashTutorial.position, false);
 
@@ -153,7 +153,7 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
 
         timelineManager_DeflectTutorial.PlayTimelineInIndex(0);
 
-        PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 13;
+        PlayerCharacter.Singleton.GetFSM().CurrentStateName = 13;
 
         StartCoroutine(ShowGameObjectAfterDelay(1.0f, null));
     }

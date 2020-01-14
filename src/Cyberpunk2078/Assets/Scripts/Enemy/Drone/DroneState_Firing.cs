@@ -56,7 +56,7 @@ public class DroneState_Firing : ESChargedAttack<Drone>
     }
 
 
-    protected override int Attack(float currentTime)
+    protected override string Attack(float currentTime)
     {
         float t = Time.time;
 
@@ -73,6 +73,6 @@ public class DroneState_Firing : ESChargedAttack<Drone>
         }
 
         
-        return t >= t_motion ? stateIndex_alert : Index;
+        return t >= t_motion ? "Alert" : Name;
     }
 }

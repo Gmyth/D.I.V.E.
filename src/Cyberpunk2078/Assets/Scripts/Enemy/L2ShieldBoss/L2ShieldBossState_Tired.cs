@@ -8,24 +8,24 @@ public class L2ShieldBossState_Tired : EnemyState<L2ShieldBoss>
     [SerializeField][Min(0)] private float duration;
 
     [Header("Connected States")]
-    [SerializeField] private int stateIndex_recovery = -1;
-    [SerializeField] private int stateIndex_onHit = -1;
+    [SerializeField] private string state_onRecovery = "";
+    [SerializeField] private string state_onHit = "";
 
     private float t = 0;
     private bool hasHit = false;
 
 
-    public override int Update()
+    public override string Update()
     {
         if (hasHit)
-            return stateIndex_onHit;
+            return state_onHit;
 
 
         if (Time.time >= t)
-            return stateIndex_recovery;
+            return state_onRecovery;
 
 
-        return Index;
+        return Name;
     }
 
     public override void OnStateEnter(State previousState)

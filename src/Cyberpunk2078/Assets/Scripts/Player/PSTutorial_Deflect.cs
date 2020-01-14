@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class PSTutorial_Deflect : PlayerState
 {
-    [SerializeField] private int indexPSNoInput;
     [SerializeField] private GameObject SplashFX;
 
     private float t = 0;
@@ -18,7 +17,7 @@ public class PSTutorial_Deflect : PlayerState
         base.Initialize(index, playerCharacter);
     }
 
-    public override int Update()
+    public override string Update()
     {
         if (t == 0)
         {
@@ -43,10 +42,10 @@ public class PSTutorial_Deflect : PlayerState
             }
         }
         else if (Time.unscaledTime > t)
-            return indexPSNoInput;
+            return "NoInput";
 
         
-        return Index;
+        return Name;
     }
 
     public override void OnStateEnter(State previousState)

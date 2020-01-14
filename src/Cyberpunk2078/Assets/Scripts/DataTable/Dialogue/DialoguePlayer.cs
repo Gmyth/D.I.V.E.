@@ -62,12 +62,12 @@ public class DialoguePlayer : MonoBehaviour
     {
         isInDialogue = false;
         CurrentTimelineManager = null;
-        PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = playerExitState;
+        PlayerCharacter.Singleton.GetFSM().CurrentStateName = playerExitState;
     }
 
     public void FreezePlayer()
     {
-        PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 9;
+        PlayerCharacter.Singleton.GetFSM().CurrentStateName = 9;
     }
 
     public void PlayAnimation(string name) {

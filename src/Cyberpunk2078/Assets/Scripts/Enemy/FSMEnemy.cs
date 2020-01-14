@@ -137,16 +137,16 @@ public abstract class EnemyState<T> : EnemyState where T : Enemy
 [CreateAssetMenuAttribute(fileName = "FSM_Enemy", menuName = "State Machine/Enemy")]
 public class FSMEnemy : FiniteStateMachine<EnemyState>
 {
-    public override int CurrentStateIndex
+    public override string CurrentStateName
     {
         get
         {
-            return currentStateIndex;
+            return currentStateName;
         }
 
         set
         {
-            if (value != currentStateIndex)
+            if (value != currentStateName)
             //{
 #if UNITY_EDITOR
             //    Debug.Log(LogUtility.MakeLogStringFormat(GetType().Name, "Reset on state {0}", currentStateIndex));
@@ -156,18 +156,19 @@ public class FSMEnemy : FiniteStateMachine<EnemyState>
             //else
             {
 #if UNITY_EDITOR
-                Debug.Log(LogUtility.MakeLogStringFormat(GetType().Name, "Make transition from state {0} to {1}", states[currentStateIndex].name, states[value].name));
+                Debug.Log(LogUtility.MakeLogStringFormat(GetType().Name, "Make transition from state {0} to {1}", states[currentStateName].name, states[value].name));
 #endif
 
-                int previousStateIndex = currentStateIndex;
+                string previousStateName = currentStateName;
+                EnemyState previousState = states[previousStateName];
 
                 CurrentState.OnStateQuit(states[value]);
 
-                currentStateIndex = value;
+                currentStateName = value;
 
-                CurrentState.OnStateEnter(states[previousStateIndex]);
+                CurrentState.OnStateEnter(previousState);
 
-                OnCurrentStateChange.Invoke(currentStateIndex, previousStateIndex);
+                OnCurrentStateChange.Invoke(states[currentStateName], previousState);
             }
         }
     }
@@ -177,15 +178,15 @@ public class FSMEnemy : FiniteStateMachine<EnemyState>
     {
         FSMEnemy fsmCopy = Instantiate(this);
 
-        for (int i = 0; i < states.Length; ++i)
+        for (int i = 0; i < serializedStates.Length; ++i)
         {
-            EnemyState stateCopy = Instantiate(states[i]);
+            EnemyState stateCopy = Instantiate(serializedStates[i]);
             stateCopy.Initialize(i, enemy);
 
-            fsmCopy.states[i] = stateCopy;
+            states.Add(stateCopy.Name, stateCopy);
         }
 
-        fsmCopy.currentStateIndex = -1;
+        fsmCopy.currentStateName = "";
 
 
         return fsmCopy;
@@ -195,11 +196,11 @@ public class FSMEnemy : FiniteStateMachine<EnemyState>
     {
         OnMachineBoot();
 
-        currentStateIndex = startingStateIndex;
+        currentStateName = startingState;
 
         CurrentState.OnStateEnter(CurrentState);
 
-        OnCurrentStateChange.Invoke(currentStateIndex, -1);
+        OnCurrentStateChange.Invoke(states[currentStateName], null);
     }
 
     public override void Reboot()
@@ -208,29 +209,29 @@ public class FSMEnemy : FiniteStateMachine<EnemyState>
 
         OnMachineBoot();
 
-        currentStateIndex = startingStateIndex;
+        currentStateName = startingState;
 
         CurrentState.OnStateEnter(CurrentState);
 
-        OnCurrentStateChange.Invoke(currentStateIndex, -1);
+        OnCurrentStateChange.Invoke(states[currentStateName], null);
     }
 
     public override void ShutDown()
     {
-        int previousStateIndex = currentStateIndex;
+        string previousStateName = currentStateName;
 
         CurrentState.OnStateQuit(null);
 
-        currentStateIndex = -1;
+        currentStateName = "";
 
         OnMachineShutDown();
 
-        OnCurrentStateChange.Invoke(-1, previousStateIndex);
+        OnCurrentStateChange.Invoke(null, states[previousStateName]);
     }
 
     public void Update()
     {
-        if (currentStateIndex >= 0)
-            CurrentStateIndex = CurrentState.Update();
+        if (currentStateName != "")
+            CurrentStateName = CurrentState.Update();
     }
 }

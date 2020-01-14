@@ -22,7 +22,7 @@ public class L2ShieldBossState_DiveBomb : ESChargedAttack<L2ShieldBoss>
     }
 
 
-    protected override int Attack(float currentTime)
+    protected override string Attack(float currentTime)
     {
         if (bJump)
         {
@@ -34,10 +34,10 @@ public class L2ShieldBossState_DiveBomb : ESChargedAttack<L2ShieldBoss>
         {
             // TODO: Deal damages
 
-            return stateIndex_alert;
+            return "Alert";
         }
 
 
-        return Index;
+        return Name;
     }
 }

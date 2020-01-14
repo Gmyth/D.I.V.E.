@@ -13,9 +13,8 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
     [SerializeField] private string attackAnimation = "";
 
     [Header("Connected States")]
-    [SerializeField] private int stateIndex_targetLoss = -1;
-    [SerializeField] private int stateIndex_afterAttack = -1;
-
+    [SerializeField] private string state_onTargetLoss = "";
+    [SerializeField] private string state_afterAttack = "";
 
     private EnemyType enemyType;
     private Rigidbody2D rigidbody;
@@ -23,7 +22,7 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
 
     private bool isMoving = false;
     private float t = float.MaxValue;
-    private int previousStateIndex;
+    private string previousStateName;
 
 
     private bool IsMoving
@@ -58,7 +57,7 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
         animator = enemy.GetComponent<Animator>();
     }
 
-    public override int Update()
+    public override string Update()
     {
         float dt = Time.time - t;
         
@@ -121,19 +120,19 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
                 }
 
 
-                return Index;
+                return Name;
             }
 
 
-            return stateIndex_targetLoss < 0 ? previousStateIndex : stateIndex_targetLoss;
+            return state_onTargetLoss == "" ? previousStateName : state_onTargetLoss;
         }
 
 
         if (dt < motionTime) // Stay in this state if the motion has not been done yet
-            return Index;
+            return Name;
 
 
-        return stateIndex_afterAttack < 0 ? previousStateIndex : stateIndex_afterAttack;
+        return state_afterAttack == "" ? previousStateName : state_afterAttack;
     }
 
 
@@ -158,6 +157,6 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
 //        }
         isMoving = false;
         t = float.MaxValue;
-        previousStateIndex = previousState.Index;
+        previousStateName = previousState.Name;
     }
 }

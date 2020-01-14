@@ -30,7 +30,7 @@ public class PSAttackGH: PlayerState
     private float defaultDrag;
 
 
-    public override int Update()
+    public override string Update()
     {
         var pushForce = n_pushForce;
         var actionTime = n_actionTime;

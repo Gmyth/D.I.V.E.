@@ -25,14 +25,14 @@ public class DroneState_Alert : ESAlert<Drone>
         animator = enemy.GetComponent<Animator>();
     }
 
-    public override int Update()
+    public override string Update()
     {
         if (!IsPlayerInSight(enemy.currentTarget, enemy[StatisticType.SightRange]))
-            return stateIndex_targetLoss;
+            return state_onTargetLoss;
 
 
         if (!enemy.GuardZone.Contains(enemy.currentTarget))
-            return stateIndex_attacks[0];
+            return states_attacks[0];
 
 
         Vector3 v = enemy.currentTarget.transform.position - enemy.transform.position;
@@ -52,7 +52,7 @@ public class DroneState_Alert : ESAlert<Drone>
 
 
             if (d < enemy.NearRange + 0.5f) // Always fire before getting to close or far
-                return stateIndex_attacks[0];
+                return states_attacks[0];
             else if (d <= enemy.FarRange)
             {
                 if (t >= t_ready)
@@ -60,7 +60,7 @@ public class DroneState_Alert : ESAlert<Drone>
                     switch (behaviorSelector.Select()[0])
                     {
                         case 0: // Fire
-                            return stateIndex_attacks[0];
+                            return states_attacks[0];
 
 
                         case 1: // Chase
@@ -81,7 +81,7 @@ public class DroneState_Alert : ESAlert<Drone>
         }
         
 
-        return Index;
+        return Name;
     }
 
     public override void OnStateEnter(State previousState)

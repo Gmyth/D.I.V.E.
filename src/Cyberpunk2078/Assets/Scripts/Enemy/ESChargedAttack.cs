@@ -9,9 +9,8 @@ public abstract class ESChargedAttack<T> : ESAttack<T> where T : Enemy
     [SerializeField] protected string animation_charging = "";
 
     [Header("Connected States")]
-    [SerializeField] protected int stateIndex_alert = -1;
-    [SerializeField] protected int stateIndex_afterAttack = -1;
-    [SerializeField] protected int stateIndex_onTargetLoss = -1;
+    [SerializeField] protected string stateIndex_afterAttack = "";
+    [SerializeField] protected string state_onTargetLoss = "";
 
     protected Animator animator;
 
@@ -25,7 +24,7 @@ public abstract class ESChargedAttack<T> : ESAttack<T> where T : Enemy
         animator = enemy.GetComponent<Animator>();
     }
 
-    public override int Update()
+    public override string Update()
     {
         float currentTime = Time.time;
 
@@ -35,7 +34,7 @@ public abstract class ESChargedAttack<T> : ESAttack<T> where T : Enemy
             return OnTargetLoss();
 
 
-        return Index;
+        return Name;
     }
 
 
@@ -51,10 +50,10 @@ public abstract class ESChargedAttack<T> : ESAttack<T> where T : Enemy
     }
 
 
-    protected abstract int Attack(float currentTime);
+    protected abstract string Attack(float currentTime);
 
-    protected virtual int OnTargetLoss()
+    protected virtual string OnTargetLoss()
     {
-        return stopChargingOnTargetLoss ? stateIndex_onTargetLoss : Index;
+        return stopChargingOnTargetLoss ? state_onTargetLoss : Name;
     }
 }

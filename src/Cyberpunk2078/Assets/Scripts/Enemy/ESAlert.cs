@@ -9,6 +9,6 @@ public abstract class ESAlert<T> : EnemyState<T> where T : Enemy
     [SerializeField] protected string animation;
 
     [Header("Connected States")]
-    [SerializeField] protected int[] stateIndex_attacks;
-    [SerializeField] protected int stateIndex_targetLoss = -1;
+    [SerializeField] protected string[] states_attacks;
+    [SerializeField] protected string state_onTargetLoss = "";
 }

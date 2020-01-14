@@ -64,7 +64,7 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
     }
 
 
-    protected override int Attack(float currentTime)
+    protected override string Attack(float currentTime)
     {
         if (bDash) // The dash has not been performed
         {
@@ -106,18 +106,18 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
             {
                 Stop();
 
-                return stateIndex_alert;
+                return "Alert";
             }
         }
         else if (currentTime >= t_dashFinish) // The dash has been finished
         {
             Stop();
 
-            return stateIndex_alert;
+            return "Alert";
         }
 
 
-        return Index;
+        return Name;
     }
 
 
