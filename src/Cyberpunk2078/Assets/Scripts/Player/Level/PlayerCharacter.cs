@@ -13,6 +13,7 @@ public class PlayerCharacter : Dummy
 
     public Transform SpriteHolder;
     public GameObject groundDust;
+    public GameObject FeverVFX;
     //public GUITutorial tutorial;
 
     public bool isInTutorial;
@@ -118,6 +119,7 @@ public class PlayerCharacter : Dummy
     {
         if (statistics[StatisticType.UltimateEnergy] > 30f && !InFever)
         {
+            FeverVFX.SetActive(true);
             InFever = true;
             CameraManager.Instance.FlashIn(7,0.05f,0.05f,0.05f);
             AddOverLoadEnergy(1);
@@ -214,6 +216,7 @@ public class PlayerCharacter : Dummy
         if (result.currentValue <= 0 && InFever)
         {
             InFever = false;
+            FeverVFX.SetActive(false);
             GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").DehighlightFeverBar();
             TimeManager.Instance.EndFeverMotion();
         }
