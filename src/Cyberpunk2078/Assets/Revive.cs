@@ -5,11 +5,15 @@ using UnityEngine;
 public class Revive : MonoBehaviour
 {
     public float RecoverTime = 2.0f;
-    public Drone[] drone;
+    public Drone[] drones;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        foreach (Drone drone in drones)
+        {
+            drone.dead.AddListener(DroneDead);
+        }
     }
 
     // Update is called once per frame
@@ -18,9 +22,14 @@ public class Revive : MonoBehaviour
 
     }
 
-    private IEnumerator Recover()
+    private IEnumerator Recover(Drone drone)
     {
         yield return new WaitForSeconds(RecoverTime);
-        gameObject.SetActive(true);
+        drone.gameObject.SetActive(true);
+    }
+
+    public void DroneDead(Drone drone)
+    {
+        StartCoroutine(Recover(drone));
     }
 }
