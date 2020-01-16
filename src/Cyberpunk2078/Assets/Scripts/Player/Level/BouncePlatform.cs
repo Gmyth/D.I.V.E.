@@ -63,7 +63,7 @@ public class BouncePlatform : MonoBehaviour
                 pc = col.gameObject.GetComponent<PlayerCharacter>();
                 Player.CurrentPlayer.jumpForceGate = true;
                 Player.CurrentPlayer.NoApplyFriction = true;
-                pc.GetFSM().CurrentStateName = 4;
+                pc.GetFSM().CurrentStateName = "Jumping";
 
                 CameraManager.Instance.Shaking(0.1f,0.03f);
                 CameraManager.Instance.Follow(0.3f);

@@ -7,7 +7,7 @@ public abstract class FiniteStateMachine<T> : ScriptableObject where T : State
     [SerializeField] protected T[] serializedStates;
     [SerializeField] protected string startingState;
 
-    protected Dictionary<string, T> states;
+    protected Dictionary<string, T> states = new Dictionary<string, T>();
     protected string currentStateName = "";
 
 

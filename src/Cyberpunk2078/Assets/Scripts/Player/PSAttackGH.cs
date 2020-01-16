@@ -16,13 +16,7 @@ public class PSAttackGH: PlayerState
     [SerializeField] private float f_actionTime = 0.25f;
     [SerializeField] private float f_recoveryTime = 0.05f;
     
-    [Header( "Transferable States" )]
-    [SerializeField] private int indexPSIdle;
-    [SerializeField] private int indexPSMoving;
-    [SerializeField] private int indexPSAirborne;
-    [SerializeField] private int indexPSDashing;
-    [SerializeField] private int indexPSJumping1;
-    [SerializeField] private float EnergyConsume = -10; 
+    [SerializeField] private float EnergyConsume = -10;
     
     [SerializeField] private GameObject SplashFX;
 
@@ -64,9 +58,10 @@ public class PSAttackGH: PlayerState
           //  playerCharacter.GetComponent<GhostSprites>().Occupied = false;
             if (h == 0)
                 // not moving
-            
-                return indexPSIdle;
-            return indexPSMoving;
+                return "Idle";
+
+
+            return "Moving";
         }
 
         if (Input.GetButtonDown("Ultimate"))
@@ -74,36 +69,40 @@ public class PSAttackGH: PlayerState
             //TODO add another ultimate
             playerCharacter.ActivateFever();
         }
-        
+
+
+        int groundType = GetGroundType();
+
+
         if (Time.time - t0 > actionTime)
         {
             // ok for dashing 
             if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
             {
                 Player.CurrentPlayer.triggerReady = false;
-                return indexPSDashing;
-            }else if (Input.GetButtonDown("Jump") && grounded)
-            {
-                return indexPSJumping1;
+                return "Dashing";
             }
-                
+            else if (Input.GetButtonDown("Jump") && grounded)
+            {
+                return "Jumping";
+            }
         }
         
         if (Time.time - t0 > (recoveryTime + actionTime))
         {
-
-            if (GetGroundType() == 0&& Vy < 0)
+            if (groundType == 0 && Vy < 0)
             {
-                return indexPSAirborne;
+                return "Airborne";
             }
             
             if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("HorizontalJoyStick") == 0)
-                 return indexPSIdle;
+                 return "Idle";
 
-            return indexPSMoving;
+            return "Moving";
         }
 
-        return Index;
+
+        return Name;
     }
 
     public override void OnStateQuit(State nextState)

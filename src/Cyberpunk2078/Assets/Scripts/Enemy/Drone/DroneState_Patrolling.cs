@@ -22,12 +22,12 @@ public class DroneState_Patrolling : ESPatrolling<Drone>
         gunAnimator = enemy.Gun.GetComponent<Animator>();
     }
 
-    public override int Update()
+    public override string Update()
     {
-        int baseUpdateResult = base.Update();
+        string baseUpdateResult = base.Update();
 
 
-        if (baseUpdateResult == Index)
+        if (baseUpdateResult == Name)
         {
             if (enemy.currentTarget)
             {

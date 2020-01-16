@@ -257,7 +257,7 @@ public class FSMPlayer : FiniteStateMachine<PlayerState>
                 }
 
 #if UNITY_EDITOR
-                //Debug.Log(LogUtility.MakeLogStringFormat("FSMPLayer", "Make transition from {0} to {1}", states[currentStateIndex].name, states[value].name));
+                Debug.Log(LogUtility.MakeLogStringFormat("FSMPLayer", "Make transition from {0} to {1}", currentStateName, value));
 #endif
 
                 string previousStateName = currentStateName;
@@ -286,7 +286,8 @@ public class FSMPlayer : FiniteStateMachine<PlayerState>
 
             fsmCopy.states.Add(stateCopy.Name, stateCopy);
         }
-
+        foreach (var kv in states)
+            Debug.Log(kv.Key.ToString() + " - " + kv.Value.Name);
         fsmCopy.currentStateName = "";
 
 

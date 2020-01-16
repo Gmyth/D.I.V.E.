@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bf4130f31cd63e498d17fed25938d4f, type: 3}
   m_Name: L2DroneState_Firing
   m_EditorClassIdentifier: 
+  stateName: Firing
   motionID: -1
   damage: 1
   knockback: 0
@@ -19,8 +20,7 @@ MonoBehaviour:
   chargeTime: 1
   stopChargingOnTargetLoss: 1
   animation_charging: L2Drone_Alert
-  stateIndex_alert: 1
-  stateIndex_afterAttack: -1
-  stateIndex_onTargetLoss: 0
+  state_afterAttack: Alert
+  state_onTargetLoss: Patrolling
   recoil: 10
   recoilDuration: 0.2

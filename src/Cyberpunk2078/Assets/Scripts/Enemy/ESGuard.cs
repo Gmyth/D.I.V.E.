@@ -9,8 +9,8 @@ public abstract class ESGuard<T> : EnemyState<T> where T : Enemy
     [SerializeField] private float duration = 3;
 
     [Header("Connected States")]
-    [SerializeField] private int stateIndex_idle = -1;
-    [SerializeField] private int stateIndex_alert = -1;
+    [SerializeField] private string state_onEnd = "";
+    [SerializeField] private string state_onTargetFound = "";
 
     protected Rigidbody2D rigidbody;
 
@@ -36,20 +36,20 @@ public abstract class ESGuard<T> : EnemyState<T> where T : Enemy
         t_stop = duration == 0 ? float.MaxValue : Time.time + duration;
     }
 
-    public override int Update()
+    public override string Update()
     {
         float t = Time.time;
 
         if (t >= t_stop)
-            return stateIndex_idle;
+            return state_onEnd;
 
 
         PlayerCharacter target = FindAvailableTarget(useSightRange, useGuardZone);
 
         if (target)
-            return stateIndex_alert;
+            return state_onTargetFound;
 
 
-        return Index;
+        return Name;
     }
 }

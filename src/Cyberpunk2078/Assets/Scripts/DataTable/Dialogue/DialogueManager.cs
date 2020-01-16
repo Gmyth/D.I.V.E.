@@ -139,9 +139,10 @@ public class DialogueManager : MonoBehaviour
         yield return waitForKeyPress(KeyCode.G, dialogueWin);
 
         GUIManager.Singleton.Close("DialogueUI");
-        if (currentTimelineManager.CheckEndState()) {
-            currentTimelineManager.OnTimelineEnd(1);
-        }
+
+        if (currentTimelineManager.CheckEndState())
+            currentTimelineManager.OnTimelineEnd("Moving");
+
         DialogueEnd.Invoke();      
     }
     private DialogueType CheckDialogueType(int index)

@@ -24,8 +24,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
     [SerializeField] private bool alwaysFacingTarget = true;
 
     [Header("Connected States")]
-    [SerializeField] private int index_ESIdle = -1;
-    [SerializeField] private int index_ESAlert = -1;
+    [SerializeField] private string state_onTargetFound = "";
 
     private SpriteRenderer renderer;
     private Rigidbody2D rigidbody;
@@ -76,12 +75,12 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
         seeker = enemy.GetComponent<Seeker>();
     }
 
-    public override int Update()
+    public override string Update()
     {
         Vector3 enemyPosition = enemy.transform.position;
 
 
-        if (index_ESAlert >= 0)
+        if (state_onTargetFound != "")
         {
             PlayerCharacter target = FindAvailableTarget(enemyPosition, enemy[StatisticType.SightRange], enemy.GuardZone);
 
@@ -95,7 +94,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
                 IsMoving = false;
 
 
-                return index_ESAlert;
+                return state_onTargetFound;
             }
         }
 
@@ -263,7 +262,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
         }
 
 
-        return Index;
+        return Name;
     }
 
 

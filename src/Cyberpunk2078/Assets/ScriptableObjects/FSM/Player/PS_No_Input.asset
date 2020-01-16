@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9b657f7d781a704fb40605ca95aaba7, type: 3}
   m_Name: PS_No_Input
   m_EditorClassIdentifier: 
-  Name: 
-  currentTimeline: {fileID: 0}
+  stateName: NoInput

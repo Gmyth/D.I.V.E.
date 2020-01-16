@@ -12,20 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1e9c19f531ef1e4394a7e9ec2cb363e, type: 3}
   m_Name: PS_WallSliding
   m_EditorClassIdentifier: 
-  Name: WallSliding
-  n_jumpForce: 4.5
-  n_jumpSpeed: 10
+  stateName: WallSliding
   n_stickWallTime: 0.25
   n_wallCheckCoolDown: 0.25
-  f_jumpForce: 4.5
-  f_jumpSpeed: 10
   f_stickWallTime: 0.25
   f_wallCheckCoolDown: 0.25
-  index_PSIdle: 0
-  index_PSMoving: 1
-  index_PSJumping1: 4
-  index_PSJumping2: 7
-  index_PSDashing: 6
-  index_PSAttackGH: 3
-  index_PSAirborne: 2
-  index_PSClimb: 8

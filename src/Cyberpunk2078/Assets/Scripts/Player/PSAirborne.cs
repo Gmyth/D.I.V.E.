@@ -9,17 +9,9 @@ public class PSAirborne : PlayerState
     
     [Header( "Fever" )]
     [SerializeField] private float f_jumpTolerance;
-    
-    [Header( "Transferable States" )]
-    [SerializeField] private int indexPSIdle;
-    [SerializeField] private int indexPSMoving;
-    [SerializeField] private int indexPSAttackGH;
-    [SerializeField] private int indexPSWallJumping;
-    [SerializeField] private int indexPSJumping1;
-    [SerializeField] private int indexPSDashing;
-    [SerializeField] private int indexPSClimb;
 
     private State previous;
+
 
     public override string Update()
     {
@@ -53,7 +45,7 @@ public class PSAirborne : PlayerState
         var dir = isCloseTo("Ground");
 
         if (dir != Direction.None && Mathf.Abs(h) > 0 && Vy < 0)
-            return "WallJumping";
+            return "WallSliding";
 
 
         if (Input.GetButtonDown("Jump") && Time.time < lastGroundedSec + jumpTolerance)
@@ -110,7 +102,7 @@ public class PSAirborne : PlayerState
     public override void OnStateEnter(State previousState)
     {
         // Add Ghost trail
-        if (previousState.Index == indexPSIdle || previousState.Index == indexPSMoving)
+        if (previousState.Name == "Idle" || previousState.Name == "Moving")
         {
             lastGroundedSec = Time.time;
         }

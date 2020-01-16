@@ -8,12 +8,6 @@ public class PSKnockback : PlayerState
 {
     [SerializeField] private float BlinkInterval= 0.02f;
 
-    [Header("Connected States")]
-    [SerializeField] private int stateIndex_Idle;
-    [SerializeField] private int stateIndex_Moving;
-    [SerializeField] private int stateIndex_jumping;
-    [SerializeField] private int stateIndex_Dashing;
-
     [HideInInspector] public Vector3 knockback;
     
     private Rigidbody2D rigidbody;
@@ -29,10 +23,10 @@ public class PSKnockback : PlayerState
         rigidbody = playerCharacter.GetComponent<Rigidbody2D>();
     }
 
-    public override int Update()
+    public override string Update()
     {
         if (Time.time >= t)
-            return stateIndex_Idle;
+            return "Idle";
         if (t0 + BlinkInterval < Time.time)
         {
             playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().color = counter % 2 ==0 ?Color.gray:Color.white;
@@ -40,7 +34,7 @@ public class PSKnockback : PlayerState
             t0 = Time.time;
         }
 
-        return Index;
+        return Name;
     }
 
     public override void OnStateEnter(State previousState)

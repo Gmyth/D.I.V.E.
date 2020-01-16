@@ -139,7 +139,11 @@ public class CheckPointManager : MonoBehaviour
             image.color = new Color(0, 0, 0, a);
             yield return null;
         }
-        PlayerCharacter.Singleton.GetFSM().CurrentStateName = 0;
+
+
+        PlayerCharacter.Singleton.GetFSM().CurrentStateName = "Idle";
+
+
         yield return null;
     }
 

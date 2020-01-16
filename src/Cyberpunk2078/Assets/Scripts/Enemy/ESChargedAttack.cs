@@ -9,7 +9,7 @@ public abstract class ESChargedAttack<T> : ESAttack<T> where T : Enemy
     [SerializeField] protected string animation_charging = "";
 
     [Header("Connected States")]
-    [SerializeField] protected string stateIndex_afterAttack = "";
+    [SerializeField] protected string state_afterAttack = "";
     [SerializeField] protected string state_onTargetLoss = "";
 
     protected Animator animator;

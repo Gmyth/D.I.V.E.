@@ -183,7 +183,7 @@ public class FSMEnemy : FiniteStateMachine<EnemyState>
             EnemyState stateCopy = Instantiate(serializedStates[i]);
             stateCopy.Initialize(i, enemy);
 
-            states.Add(stateCopy.Name, stateCopy);
+            fsmCopy.states.Add(stateCopy.Name, stateCopy);
         }
 
         fsmCopy.currentStateName = "";
@@ -198,22 +198,15 @@ public class FSMEnemy : FiniteStateMachine<EnemyState>
 
         currentStateName = startingState;
 
-        CurrentState.OnStateEnter(CurrentState);
+        CurrentState.OnStateEnter(null);
 
         OnCurrentStateChange.Invoke(states[currentStateName], null);
     }
 
     public override void Reboot()
     {
-        CurrentState.OnStateQuit(CurrentState);
-
-        OnMachineBoot();
-
-        currentStateName = startingState;
-
-        CurrentState.OnStateEnter(CurrentState);
-
-        OnCurrentStateChange.Invoke(states[currentStateName], null);
+        ShutDown();
+        Boot();
     }
 
     public override void ShutDown()

@@ -66,7 +66,7 @@ public class PlayerCharacter : Dummy
         rigidbody.velocity = Vector2.zero;
         rigidbody.AddForce(direction);
         Player.CurrentPlayer.knockBackDuration = duration;
-        fsm.CurrentStateName = 10;
+        fsm.CurrentStateName = "Knockback";
     }
 
 
@@ -105,7 +105,7 @@ public class PlayerCharacter : Dummy
 
     public override void Dead()
     {
-        fsm.CurrentStateName = 9;
+        fsm.CurrentStateName = "NoInput";
 
         ResetStatistics();
 
@@ -281,7 +281,7 @@ public class PlayerCharacter : Dummy
     {
         currentDialogueID = dialogueID;
         currentDialogueCallbacks = callbacks;
-        fsm.CurrentStateName = 12;
+        fsm.CurrentStateName = "InDialogue";
     }
 
 

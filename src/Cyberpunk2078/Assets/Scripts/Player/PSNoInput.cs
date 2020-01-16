@@ -7,7 +7,7 @@ public class PSNoInput : PlayerState
 {
     //public TimelineManager currentTimeline;
 
-    public override int Update()
+    public override string Update()
     {
         //if (isGrounded())
         //{
@@ -20,7 +20,7 @@ public class PSNoInput : PlayerState
         //    }
         //}
 
-        return Index;
+        return Name;
     }
 
 

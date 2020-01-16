@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9cc72006fbb28c49bdd128234eeabbe, type: 3}
   m_Name: FSM_Drone
   m_EditorClassIdentifier: 
-  states:
+  serializedStates:
   - {fileID: 11400000, guid: 9e4d5d264327a984ba3336c13681ab25, type: 2}
   - {fileID: 11400000, guid: 2684eae6df2da924fb4ee358a373c540, type: 2}
   - {fileID: 11400000, guid: 9722c851f15a10c4392019e718ebe93b, type: 2}
-  - {fileID: 11400000, guid: 448440fa3d10d8849bdb3b1746269b31, type: 2}
-  startingStateIndex: 0
+  startingState: 
