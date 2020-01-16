@@ -236,12 +236,6 @@ public abstract class PlayerState : State
         {
             Player.CurrentPlayer.climbReady = true;
         }
-        
-        if (Input.GetButtonDown("Fire"))
-        {
-            //TODO Temp code
-            Fire();
-        }
     }
 }
 

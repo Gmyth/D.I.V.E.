@@ -40,11 +40,11 @@ public class GrappleHook : Recyclable
     {
         var rb2d = GetComponent<Rigidbody2D>();
         
-
-        if (Input.GetButtonDown("Special1") && currentState == grappleState.Dead)
-        {
-            Fire();
-        }
+//      Disable Input for grapple hook
+//        if (Input.GetButtonDown("Special1") && currentState == grappleState.Dead)
+//        {
+//            Fire();
+//        }
         switch (currentState)
         {
             case grappleState.Shot:
