@@ -84,8 +84,8 @@ public abstract class Dummy : MonoBehaviour, IDamageable
     public bool isEvading = false;
 
     public Event<Hit> OnHit { get; private set; } = new Event<Hit>();
-    public UnityEvent On
-    { get; private set; } = new UnityEvent();
+    public UnityEvent On { get; private set; } = new UnityEvent();
+    public UnityEvent OnAttack { get; private set; } = new UnityEvent();
 
 
     public Vector2 GroundNormal
