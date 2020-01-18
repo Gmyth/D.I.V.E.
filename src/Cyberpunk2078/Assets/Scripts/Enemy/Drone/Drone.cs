@@ -14,9 +14,6 @@ public class Drone : Enemy, IPatroller
     [SerializeField] private SpriteRenderer gun;
     [SerializeField] private SpriteRenderer thruster;
 
-    [FMODUnity.EventRef]
-    public string ShootSound;
-
     public float Health;
     public float HealthCap = 1;
 
@@ -150,7 +147,7 @@ public class Drone : Enemy, IPatroller
         gameObject.SetActive(false);
         //Destroy(gameObject, 0.5f);
         CheckPointManager.Instance.Dead(gameObject);
-        FMODUnity.RuntimeManager.PlayOneShot(DeadAudio);
+        AudioManager.Instance.PlayOnce("KillDrone");
     }
 
 

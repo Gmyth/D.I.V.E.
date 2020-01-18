@@ -49,6 +49,6 @@ public class DroneState_Patrolling : ESPatrolling<Drone>
 
         gunAnimator.Play("L2Drone_Gun_Idle");
 
-        FMODUnity.RuntimeManager.PlayOneShot("event:/LaserBullet");
+        AudioManager.Instance.PlayOnce("LaserBullet");
     }
 }

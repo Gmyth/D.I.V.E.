@@ -43,7 +43,7 @@ public class L2Cleaner : Enemy, IPatroller
         }
         
         gameObject.SetActive(false);
-        FMODUnity.RuntimeManager.PlayOneShot(DeadAudio);
+        AudioManager.Instance.PlayOnce("KillRobot");
         CheckPointManager.Instance?.Dead(gameObject);
     }
 

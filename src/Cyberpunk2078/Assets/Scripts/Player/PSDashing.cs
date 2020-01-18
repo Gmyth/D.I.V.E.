@@ -40,10 +40,6 @@ public class PSDashing : PlayerState
     private bool Apply = true;
     private float lastJumpInput;
 
-    [Header("Audio")]
-    [FMODUnity.EventRef]
-    public string DashSound;
-
     public override int Update()
     {
 
@@ -173,8 +169,8 @@ public class PSDashing : PlayerState
         }
 
         Apply = true;
-
-        FMODUnity.RuntimeManager.PlayOneShot(DashSound);
+       
+        AudioManager.Instance.PlayOnce("Dash");
 
         //Dash has been pressed, set all config first
         //After delay is over, dash perform

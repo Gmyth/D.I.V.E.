@@ -21,11 +21,6 @@ public class PSMoving : PlayerState
     [SerializeField] private int indexPSClimb;
     [SerializeField] private int indexPSWallJumping;
 
-    [FMODUnity.EventRef]
-    public string PlayerStateEvent;
-    FMOD.Studio.EventInstance playerState;
-    FMOD.Studio.PLAYBACK_STATE playbackstate;
-
     public override int Update()
     {
         NormalizeSlope();
@@ -96,16 +91,9 @@ public class PSMoving : PlayerState
         
         Move(h);
 
-        //FMODUnity.RuntimeManager.PlayOneShot("event:/LaserBullet");
-
         anim.Play("MainCharacter_Run", -1, 0f);
 
-        playerState = FMODUnity.RuntimeManager.CreateInstance(PlayerStateEvent);
-        if(playerState.getPlaybackState(out playbackstate) == FMOD.RESULT.OK)
-        {
-            if (playbackstate != FMOD.Studio.PLAYBACK_STATE.PLAYING && playbackstate != FMOD.Studio.PLAYBACK_STATE.STARTING);
-                playerState.start();
-        }
+        AudioManager.Instance.PlayEvent("Footsteps");
             
         //Debug.Log("Moving Enter");
 
@@ -138,7 +126,8 @@ public class PSMoving : PlayerState
 
         anim.speed = 1f;
 
-        playerState.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        AudioManager.Instance.StopEvent("Footsteps");
+
     }
 
 

@@ -30,14 +30,6 @@ public class PlayerCharacter : Dummy
 
     public PlayerState State => fsm.CurrentState;
 
-    [Header("Audio")]
-    [FMODUnity.EventRef]
-    [SerializeField] private string feverSound;
-
-    [FMODUnity.EventRef]
-    [SerializeField] private string feverModeSnapShot;
-    private FMOD.Studio.EventInstance snapEvent;
-
     public float this[StatisticType statisticType]
     {
         get
@@ -129,9 +121,9 @@ public class PlayerCharacter : Dummy
             CameraManager.Instance.FlashIn(7,0.05f,0.05f,0.05f);
             AddOverLoadEnergy(1);
 
-            FMODUnity.RuntimeManager.PlayOneShot(feverSound);
-            snapEvent = FMODUnity.RuntimeManager.CreateInstance(feverModeSnapShot);
-            snapEvent.start();
+            AudioManager.Instance.PlayOnce("Fever");
+            AudioManager.Instance.PlayEvent("FeverMode");
+
         }
         return InFever;
         
@@ -225,8 +217,8 @@ public class PlayerCharacter : Dummy
         {
             InFever = false;
             GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").DehighlightFeverBar();
-            snapEvent.release();
-            snapEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+
+            AudioManager.Instance.StopEvent("FeverMode");
         }
         return true;
     }

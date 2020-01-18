@@ -13,9 +13,6 @@ public class BouncePlatform : MonoBehaviour
     [Range(0, 360)]
     [SerializeField] private float angle = 90f;
 
-    [FMODUnity.EventRef]
-    [SerializeField] private string activateSound;
-
     private float timer;
     private Rigidbody2D rb2d;
     private PlayerCharacter pc;
@@ -86,7 +83,7 @@ public class BouncePlatform : MonoBehaviour
                 rb2d.AddForce(bounceDirection * jumpForce * 50 * 1/Time.timeScale);
 
                 //sound
-                FMODUnity.RuntimeManager.PlayOneShot(activateSound);
+                AudioManager.Instance.PlayOnce("JumpPad");
 
                 PlayerCharacter.Singleton.AddNormalEnergy(1);
                 if (PlayerCharacter.Singleton.InFever) PlayerCharacter.Singleton.AddOverLoadEnergy(1);

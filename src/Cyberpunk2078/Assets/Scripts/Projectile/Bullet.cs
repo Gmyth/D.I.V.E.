@@ -16,7 +16,6 @@ public class Bullet : Recyclable
     private float lastHitEstimation;
     private bool hunchTriggered;
     private int numHitsRemaining;
-    private FMOD.Studio.EventInstance slowMotionInstance;
 
     protected override void OnEnable()
     {
@@ -43,8 +42,7 @@ public class Bullet : Recyclable
                     TimeManager.Instance.startSlowMotion(1f);
 
                     //audio
-                    slowMotionInstance = FMODUnity.RuntimeManager.CreateInstance(slowMotionSnapshot);
-                    slowMotionInstance.start();
+                    AudioManager.Instance.PlayEvent("SlowMotion");
 
                     CameraManager.Instance.FocusAt(playerCharacter.transform,0.2f);
                     CameraManager.Instance.FlashIn(7f,0.05f,0.15f,0.01f);
@@ -83,7 +81,7 @@ public class Bullet : Recyclable
                 
                 TimeManager.Instance.endSlowMotion();
 
-                slowMotionInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                AudioManager.Instance.StopEvent("SlowMotion");
 
                 CameraManager.Instance.Idle();
 
@@ -120,7 +118,7 @@ public class Bullet : Recyclable
 
                 TimeManager.Instance.endSlowMotion();
 
-                slowMotionInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                AudioManager.Instance.StopEvent("SlowMotion");
 
                 CameraManager.Instance.Idle();
 
@@ -149,7 +147,7 @@ public class Bullet : Recyclable
                 
                 TimeManager.Instance.endSlowMotion();
 
-                slowMotionInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                AudioManager.Instance.StopEvent("SlowMotion");
 
                 CameraManager.Instance.Idle();
                 
@@ -163,7 +161,7 @@ public class Bullet : Recyclable
 
                 Hit1.gameObject.SetActive(true);
 
-                FMODUnity.RuntimeManager.PlayOneShot("event:/DeflectBullet");
+                AudioManager.Instance.PlayOnce("DeflectBullet");
             }
 
         }

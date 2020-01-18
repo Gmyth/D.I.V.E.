@@ -18,7 +18,7 @@ MonoBehaviour:
     2078.fspro
   SourceProjectPathUnformatted: C:\Users\Yiyan Wang\Documents\FMOD Studio\Cyberpunk
     2078\Cyberpunk 2078.fspro
-  SourceBankPathUnformatted: Build\Desktop
+  SourceBankPathUnformatted: Build\Audio\Desktop
   AutomaticEventLoading: 1
   AutomaticSampleLoading: 0
   ImportType: 0
