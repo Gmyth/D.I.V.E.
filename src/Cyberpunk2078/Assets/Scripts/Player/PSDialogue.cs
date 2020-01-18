@@ -13,9 +13,6 @@ public class PSDialogue : PlayerState
         Done,
     }
     
-    
-    [SerializeField] private int indexPSIdle = 0;
-    
     private Rigidbody2D rb2d;
 
     private Status currentStatus = Status.None;
@@ -29,7 +26,7 @@ public class PSDialogue : PlayerState
         rb2d = playerCharacter.GetComponent<Rigidbody2D>();
     }
 
-    public override int Update()
+    public override string Update()
     {
         if (currentStatus == Status.Waiting)
         {
@@ -47,7 +44,7 @@ public class PSDialogue : PlayerState
 
                     GUIHUD hud = GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD");
                     if (!hud)
-                        return indexPSIdle;
+                        return "Idle";
 
                     Action[] newCallbacks = new Action[playerCharacter.currentDialogueCallbacks.Length + 1];
                     playerCharacter.currentDialogueCallbacks.CopyTo(newCallbacks, 0);
@@ -63,10 +60,10 @@ public class PSDialogue : PlayerState
 
 
         if (currentStatus == Status.Done)
-            return indexPSIdle;
+            return "Idle";
         
         
-        return Index;
+        return Name;
     }
 
     public override void OnStateEnter(State previousState)

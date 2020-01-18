@@ -30,7 +30,7 @@ public class L2ShieldBoss : Enemy
 
     public float ApplyFatigue(float rawFatigue)
     {
-        if (fsm.CurrentStateIndex == 4 || rawFatigue <= 0)
+        if (fsm.CurrentStateName == "Tired" || rawFatigue <= 0)
             return 0;
 
 
@@ -43,7 +43,7 @@ public class L2ShieldBoss : Enemy
         {
             statistics[StatisticType.Fatigue] = 0;
 
-            fsm.CurrentStateIndex = 4;
+            fsm.CurrentStateName = "Tired";
         }
 
 

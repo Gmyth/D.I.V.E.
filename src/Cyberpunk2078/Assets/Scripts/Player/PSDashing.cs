@@ -26,13 +26,6 @@ public class PSDashing : PlayerState
     [Header( "Common" )]
     [SerializeField] private float EnergyConsume = -70;
 
-    [Header( "Transferable States" )]
-    [SerializeField] private int indexPSIdle;
-    [SerializeField] private int indexPSMoving;
-    [SerializeField] private int indexPSJumping1;
-    [SerializeField] private int indexWallJumping;
-    [SerializeField] private int indexPSAirborne;
-
     private float lastDashSecond;
     private bool hyperSpeed;
     private float defaultDrag;
@@ -40,9 +33,9 @@ public class PSDashing : PlayerState
     private bool Apply = true;
     private float lastJumpInput;
 
-    public override int Update()
-    {
 
+    public override string Update()
+    {
         var dashDelayTime = playerCharacter.InKillStreak ? f_dashDelayTime:n_dashDelayTime;
         var dashReleaseTime = playerCharacter.InKillStreak ? f_dashReleaseTime:n_dashReleaseTime;
         var dashReleaseDelayTime = playerCharacter.InKillStreak ? f_dashReleaseTime:n_dashReleaseTime;
@@ -61,12 +54,12 @@ public class PSDashing : PlayerState
         if (!Apply)
         {
             if (GetGroundType() == 0)
-            {
-                return indexPSAirborne;
-            }
+                return "Airborne";
 
-            if (h == 0) return indexPSIdle;
-            return indexPSMoving;
+            if (h == 0)
+                return "Idle";
+
+            return "Moving";
         }
 
         if (Input.GetButtonDown("Jump"))
@@ -74,7 +67,7 @@ public class PSDashing : PlayerState
             if (Player.CurrentPlayer.secondJumpReady && lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.unscaledTime)
             {
                 Player.CurrentPlayer.secondJumpReady = false;
-                return indexPSJumping1;
+                return "Jumping";
             }
             else
             {
@@ -109,7 +102,7 @@ public class PSDashing : PlayerState
             if (lastJumpInput + JumpListenerInterval > Time.unscaledTime)
             {
                 Player.CurrentPlayer.secondJumpReady = false;
-                    return indexPSJumping1;
+                return "Jumping";
             }
 
             // the dash has already ended
@@ -142,18 +135,20 @@ public class PSDashing : PlayerState
         if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime  < Time.unscaledTime)
         {
             rb2d.velocity = rb2d.velocity * 0.3f;
-            PhysicsInputHelper(h);
-            if (GetGroundType() == 0)
-            {
-                return indexPSAirborne;
-            }
 
-            if (h == 0) return indexPSIdle;
-            return indexPSMoving;
+            PhysicsInputHelper(h);
+
+            if (GetGroundType() == 0)
+                return "Airborne";
+
+            if (h == 0)
+                return "Idle";
+
+            return "Moving";
         }
 
 
-        return Index;
+        return Name;
     }
 
 

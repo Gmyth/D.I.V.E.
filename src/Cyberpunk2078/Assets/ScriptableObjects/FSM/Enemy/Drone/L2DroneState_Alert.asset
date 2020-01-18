@@ -9,17 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c588709941353943be4314c0c1f8812, type: 3}
-  m_Name: L2CleanerState_Alert
+  m_Script: {fileID: 11500000, guid: 72629234212c32d43ab93cde8124faee, type: 3}
+  m_Name: L2DroneState_Alert
   m_EditorClassIdentifier: 
   stateName: Alert
-  waitTime: 0.2
+  waitTime: 0
+  animation: L2Drone_Alert
+  states_attacks: []
+  state_onTargetLoss: Patrolling
   behaviorSelector:
     n: 1
     repeats: 1
-    weights: 1e00000046000000
-  animation: L2Cleaner_Alert
-  states_attack:
-  - ChargedDash
-  - ChasingSlash
-  state_onTargetLoss: Patrolling
+    weights: 280000002800000014000000
+  stayDuration: 0.5
+  chasingSpeed: 3
+  chasingDuration: 0.5
+  backingSpeed: 1

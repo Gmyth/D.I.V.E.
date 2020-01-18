@@ -34,13 +34,13 @@ public class TimelineManager : MonoBehaviour
         }
     }
 
-    public void OnTimelineEnd(int playerExitState)
+    public void OnTimelineEnd(string name)
     {
         //When timeline end
         //gameObject.SetActive(false);
 
         //Recover gameplay
-        player.EndTimelineWithPlayerExitState(playerExitState);
+        player.EndTimelineWithPlayerExitState(name);
     }
 
     public void PlayCurrentTimeline() 

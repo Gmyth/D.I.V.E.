@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d611e7e5a94bf5a4a8aee93e1edddd50, type: 3}
   m_Name: PS_Jumping1
   m_EditorClassIdentifier: 
-  Name: 
+  stateName: Jumping
   n_jumpForce: 5.5
   n_speedFactor: 7
   n_accelerationFactor: 20
@@ -25,14 +25,6 @@ MonoBehaviour:
   f_wallJumpCD: 0
   f_wallJumpForce: 8
   f_wallJumpSpeed: 10
-  indexPSIdle: 0
-  indexPSMoving: 1
-  indexJumping2: 5
-  indexPSWallJumping: 7
-  indexPSDashing: 6
-  indexPSAttackGH: 3
-  indexPSAirborne: 2
-  indexPSClimb: 8
   jumpIncreaser: 2.5
   jumpIncreaserThreshold: 0.3
   JumpSound: event:/Jump

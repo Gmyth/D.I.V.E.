@@ -4,14 +4,57 @@
 [CreateAssetMenuAttribute(fileName = "DroneState_Patrolling", menuName = "Enemy State/Drone/Patrolling")]
 public class DroneState_Patrolling : ESPatrolling<Drone>
 {
+    [Header("Searching")]
+    [SerializeField] private float searchingDuration = 3;
+
+    private Animator droneAnimator;
     private Animator gunAnimator;
 
+    private float t_finishSearching = 0;
+
+
+    public override void Initialize(Drone enemy)
+    {
+        base.Initialize(enemy);
+
+
+        droneAnimator = enemy.GetComponent<Animator>();
+        gunAnimator = enemy.Gun.GetComponent<Animator>();
+    }
+
+    public override string Update()
+    {
+        string baseUpdateResult = base.Update();
+
+
+        if (baseUpdateResult == Name)
+        {
+            if (enemy.currentTarget)
+            {
+                float t = Time.time;
+
+
+                if (t < t_finishSearching)
+                    AdjustFacingDirection((enemy.currentTarget.transform.position - enemy.transform.position).x > 0 ? Vector3.right : Vector3.left);
+                else
+                {
+                    enemy.currentTarget = null;
+
+                    droneAnimator.Play(Drone.animation_idle);
+                }
+            }
+        }
+
+
+        return baseUpdateResult;
+    }
 
     public override void OnStateEnter(State previousState)
     {
         base.OnStateEnter(previousState);
 
-        gunAnimator = enemy.Gun.GetComponent<Animator>();
+
+        t_finishSearching = Time.time + searchingDuration;
     }
 
 

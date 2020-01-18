@@ -8,18 +8,18 @@ public class L2ShieldBossState_KnockedBack : EnemyState<L2ShieldBoss>
     [SerializeField][Min(0)] private float duration;
 
     [Header("Connected States")]
-    [SerializeField] private int stateIndex_recovery;
+    [SerializeField] private string state_onRecovery;
 
     private float t = 0;
 
 
-    public override int Update()
+    public override string Update()
     {
         if (Time.time >= t)
-            return stateIndex_recovery;
+            return state_onRecovery;
 
 
-        return Index;
+        return Name;
     }
 
     public override void OnStateEnter(State previousState)

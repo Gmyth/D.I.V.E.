@@ -9,22 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3123481849983f48bbdef42f1b042ce, type: 3}
-  m_Name: L2CleanerState_ChargedDash
+  m_Script: {fileID: 11500000, guid: 2bf4130f31cd63e498d17fed25938d4f, type: 3}
+  m_Name: L2DroneState_Firing
   m_EditorClassIdentifier: 
-  stateName: ChargedDash
+  stateName: Firing
   motionID: -1
   damage: 1
-  knockback: 100
-  hitBox: 2
+  knockback: 0
+  hitBox: -1
   chargeTime: 1
-  stopChargingOnTargetLoss: 0
-  animation_charging: 
+  stopChargingOnTargetLoss: 1
+  animation_charging: L2Drone_Alert
   state_afterAttack: Alert
   state_onTargetLoss: Patrolling
-  type: 1
-  dashForce: 3000
-  minDuration: 0.3
-  maxDuration: 0
-  stopDistance: 0.5
-  animation_dash: L2Cleaner_Dashing
+  recoil: 10
+  recoilDuration: 0.2

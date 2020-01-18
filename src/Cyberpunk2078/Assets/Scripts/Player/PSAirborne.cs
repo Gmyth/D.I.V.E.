@@ -9,19 +9,11 @@ public class PSAirborne : PlayerState
     
     [Header( "Fever" )]
     [SerializeField] private float f_jumpTolerance;
-    
-    [Header( "Transferable States" )]
-    [SerializeField] private int indexPSIdle;
-    [SerializeField] private int indexPSMoving;
-    [SerializeField] private int indexPSAttackGH;
-    [SerializeField] private int indexPSWallJumping;
-    [SerializeField] private int indexPSJumping1;
-    [SerializeField] private int indexPSDashing;
-    [SerializeField] private int indexPSClimb;
 
     private State previous;
 
-    public override int Update()
+
+    public override string Update()
     {
         var jumpTolerance = playerCharacter.InKillStreak ? f_jumpTolerance : n_jumpTolerance;
 
@@ -40,37 +32,39 @@ public class PSAirborne : PlayerState
 
         if (Input.GetButtonDown("Attack1"))
         {
-            return indexPSAttackGH;
+            return "Attack1";
         }
 
         if (Input.GetAxis("Vertical") > 0 || normalizedInput.y > 0.7f)
         {
             // up is pressed
-            if (isCloseTo("Ladder") != Direction.None) return indexPSClimb;
+            if (isCloseTo("Ladder") != Direction.None)
+                return "Climbing";
         }
 
         var dir = isCloseTo("Ground");
 
-        if (dir != Direction.None && Mathf.Abs(h) > 0 && Vy < 0) { return indexPSWallJumping; }
+        if (dir != Direction.None && Mathf.Abs(h) > 0 && Vy < 0)
+            return "WallSliding";
 
 
         if (Input.GetButtonDown("Jump") && Time.time < lastGroundedSec + jumpTolerance)
         {
-            return indexPSJumping1;
+            return "Jumping";
         }
 
 
         if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
         {
             Player.CurrentPlayer.triggerReady = false;
-            return indexPSDashing;
+            return "Dashing";
         }
 
 
         switch (GetGroundType())
         {
             case 1:
-                return (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("HorizontalJoyStick") != 0) ? indexPSMoving : indexPSIdle;
+                return (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("HorizontalJoyStick") != 0) ? "Moving" : "Idle";
 
 
             case 2:
@@ -92,11 +86,11 @@ public class PSAirborne : PlayerState
                     rb2d.AddForce(Global.enemyHeadJumpVerticalForce * playerCharacter.transform.up);
                 }
 
-                return indexPSJumping1;
+                return "Jumping";
         }
 
 
-        return Index;
+        return Name;
     }
 
     public override void OnStateQuit(State nextState)
@@ -108,7 +102,7 @@ public class PSAirborne : PlayerState
     public override void OnStateEnter(State previousState)
     {
         // Add Ghost trail
-        if (previousState.Index == indexPSIdle || previousState.Index == indexPSMoving)
+        if (previousState.Name == "Idle" || previousState.Name == "Moving")
         {
             lastGroundedSec = Time.time;
         }

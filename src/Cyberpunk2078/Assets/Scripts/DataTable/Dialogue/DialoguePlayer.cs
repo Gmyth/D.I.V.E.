@@ -55,22 +55,24 @@ public class DialoguePlayer : MonoBehaviour
 
     public void OnDialogueEnd()
     {
-        EndTimelineWithPlayerExitState(0);
+        EndTimelineWithPlayerExitState("Idle");
     }
 
-    public void EndTimelineWithPlayerExitState(int playerExitState)
+    public void EndTimelineWithPlayerExitState(string name)
     {
         isInDialogue = false;
         CurrentTimelineManager = null;
-        PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = playerExitState;
+
+        PlayerCharacter.Singleton.GetFSM().CurrentStateName = name;
     }
 
     public void FreezePlayer()
     {
-        PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 9;
+        PlayerCharacter.Singleton.GetFSM().CurrentStateName = "NoInput";
     }
 
-    public void PlayAnimation(string name) {
+    public void PlayAnimation(string name)
+    {
         playerAnimator.Play("MainCharacter_" + name);
     }
 

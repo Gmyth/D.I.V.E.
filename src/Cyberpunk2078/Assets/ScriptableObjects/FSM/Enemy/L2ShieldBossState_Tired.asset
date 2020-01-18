@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb055669d15156240aadd915e62d7145, type: 3}
   m_Name: L2ShieldBossState_Tired
   m_EditorClassIdentifier: 
+  stateName: Tired
   duration: 2
-  stateIndex_recovery: -1
-  stateIndex_onHit: -1
+  state_onRecovery: Alert
+  state_onHit: Knockback

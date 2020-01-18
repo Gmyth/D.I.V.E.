@@ -12,15 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd6146672bd35684a92676f98551bf16, type: 3}
   m_Name: L2ShieldBossState_ChargedDash
   m_EditorClassIdentifier: 
+  stateName: ChargedDash
   motionID: -1
   damage: 1
   knockback: 0
   hitBox: -1
   chargeTime: 1
   stopChargingOnTargetLoss: 0
-  chargeAnimation: 
-  stateIndex_alert: 0
+  animation_charging: 
+  state_afterAttack: Alert
+  state_onTargetLoss: 
+  type: 0
   dashForce: 8000
-  dashDuration: 0.15
+  minDuration: 0.15
+  maxDuration: 0
   stopDistance: 0
-  dashAnimation: 
+  animation_dash: 

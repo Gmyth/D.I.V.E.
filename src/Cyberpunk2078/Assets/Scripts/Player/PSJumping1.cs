@@ -22,29 +22,22 @@ public class PSJumping1 : PlayerState
     [SerializeField] private float f_wallJumpCD;
     [SerializeField] private float f_wallJumpForce = 4.5f;
     [SerializeField] private float f_wallJumpSpeed = 10f;
-    
-    [Header( "Transferable States" )]
-    [SerializeField] private int indexPSIdle;
-    [SerializeField] private int indexPSMoving;
-    [SerializeField] private int indexJumping2;
-    [SerializeField] private int indexPSWallJumping;
-    [SerializeField] private int indexPSDashing;
-    [SerializeField] private int indexPSAttackGH;
-    [SerializeField] private int indexPSAirborne;
-    [SerializeField] private int indexPSClimb;
+
+    [Header("")]
     [SerializeField] private float jumpIncreaser = 1.5f;
     [SerializeField] private float jumpIncreaserThreshold = 1.5f;
+
     private float lastJumpSec;
     private State previous;
     private float timer;
 
-    public override int Update()
+    public override string Update()
     {
-        
         var jumpForce =  n_jumpForce;
         var speedFactor = n_speedFactor;
         var accelerationFactor = n_accelerationFactor;
         var wallJumpSpeed = n_wallJumpSpeed;
+
 
         if (playerCharacter.InKillStreak)
         {
@@ -76,7 +69,7 @@ public class PSJumping1 : PlayerState
             {
                 if (lastJumpSec + 0.2f < Time.time && Player.CurrentPlayer.ChainWallJumpReady)
                 {
-                    return indexPSWallJumping;
+                    return "WallSliding";
                 }
          }
 
@@ -86,14 +79,14 @@ public class PSJumping1 : PlayerState
         if (Input.GetAxis("Vertical") > 0 || normalizedInput.y > 0.7f)
             {
                 // up is pressed
-                if(isCloseTo("Ladder") != Direction.None) return indexPSClimb;
+                if(isCloseTo("Ladder") != Direction.None) return "Climbing";
             }
 
         if (!ground && Vy < 0)
         {
-            return indexPSAirborne;
+            return "Airborne";
         }
-        else if (previous.Index != indexPSWallJumping)
+        else if (previous.Name != "WallSliding")
         {
             if (Input.GetButton("Jump"))
             {
@@ -110,14 +103,14 @@ public class PSJumping1 : PlayerState
         {
             // Landed
             if (h == 0)
-                return indexPSIdle;
+                return "Idle";
 
-            return indexPSMoving;
+            return "Moving";
         }
 
         if (Input.GetButtonDown("Attack1"))
         {
-            return indexPSAttackGH;
+            return "Attack1";
         }
 
         if (Input.GetButtonDown("Jump") && isCloseTo("Ground") != Direction.None)
@@ -141,12 +134,12 @@ public class PSJumping1 : PlayerState
         if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
         {
             Player.CurrentPlayer.triggerReady = false;
-            return indexPSDashing;
+            return "Dashing";
         }
         
         //isJumpKeyDown = Input.GetButtonDown("Jump");
 
-        return Index;
+        return Name;
     }
 
     public override void OnStateEnter(State previousState)
@@ -170,7 +163,7 @@ public class PSJumping1 : PlayerState
         // kill any Y-axis speed
         rb2d.velocity = new Vector2 (rb2d.velocity.x, 0);
         // Add Vertical Speed
-        if (previousState.Index == indexPSWallJumping && !Player.CurrentPlayer.jumpForceGate)
+        if (previousState.Name == "WallSliding" && !Player.CurrentPlayer.jumpForceGate)
         {
             performWallJump();
         }

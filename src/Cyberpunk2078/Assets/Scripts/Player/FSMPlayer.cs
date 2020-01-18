@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+
 
 public enum Direction
 {
@@ -7,14 +9,16 @@ public enum Direction
     Right
 }
 
+
 public abstract class PlayerState : State
 {
-    public string Name;
     protected PlayerCharacter playerCharacter;
     protected Animator anim;
+
     protected bool flip;
     protected bool grounded;
     protected float lastGroundedSec; 
+
 
     public virtual void Initialize(int index, PlayerCharacter playerCharacter)
     {
@@ -232,40 +236,42 @@ public abstract class PlayerState : State
 [CreateAssetMenuAttribute(fileName = "FSM_Player", menuName = "State Machine/Player")]
 public class FSMPlayer : FiniteStateMachine<PlayerState>
 {
-    public override int CurrentStateIndex
+    public override string CurrentStateName
     {
         get
         {
-            return currentStateIndex;
+            return currentStateName;
         }
 
         set
         {
-            if (value != currentStateIndex)
+            if (value != currentStateName)
             //{
                // Debug.Log(LogUtility.MakeLogStringFormat("FSMPLayer", "Reset on state {0}", currentStateIndex));
             //    CurrentState.OnStateReset();
             //}
             //else
             {
-                if (value < 0)
+                if (value == "")
                 {
-                    currentStateIndex = -1;
+                    ShutDown();
                     return;
                 }
+
 #if UNITY_EDITOR
-                Debug.Log(LogUtility.MakeLogStringFormat("FSMPLayer", "Make transition from {0} to {1}", states[currentStateIndex].name, states[value].name));
+                Debug.Log(LogUtility.MakeLogStringFormat("FSMPLayer", "Make transition from {0} to {1}", currentStateName, value));
 #endif
 
-                int previousStateIndex = currentStateIndex;
+                string previousStateName = currentStateName;
+                PlayerState previousState = states[previousStateName];
 
                 CurrentState.OnStateQuit(states[value]);
 
-                currentStateIndex = value;
+                currentStateName = value;
 
-                CurrentState.OnStateEnter(states[previousStateIndex]);
+                CurrentState.OnStateEnter(previousState);
 
-                OnCurrentStateChange.Invoke(currentStateIndex, previousStateIndex);
+                OnCurrentStateChange.Invoke(states[currentStateName], previousState);
             }
         }
     }
@@ -275,15 +281,16 @@ public class FSMPlayer : FiniteStateMachine<PlayerState>
     {
         FSMPlayer fsmCopy = Instantiate(this);
 
-        for (int i = 0; i < states.Length; ++i)
+        for (int i = 0; i < serializedStates.Length; ++i)
         {
-            PlayerState stateCopy = Instantiate(states[i]);
+            PlayerState stateCopy = Instantiate(serializedStates[i]);
             stateCopy.Initialize(i, player);
 
-            fsmCopy.states[i] = stateCopy;
+            fsmCopy.states.Add(stateCopy.Name, stateCopy);
         }
-
-        fsmCopy.currentStateIndex = -1;
+        foreach (var kv in states)
+            Debug.Log(kv.Key.ToString() + " - " + kv.Value.Name);
+        fsmCopy.currentStateName = "";
 
 
         return fsmCopy;
@@ -293,15 +300,15 @@ public class FSMPlayer : FiniteStateMachine<PlayerState>
     {
         OnMachineBoot();
 
-        foreach (PlayerState state in states)
-            state.OnMachineBoot();
+        foreach (KeyValuePair<string, PlayerState> kv in states)
+            kv.Value.OnMachineBoot();
 
 
-        currentStateIndex = startingStateIndex;
+        currentStateName = startingState;
 
         CurrentState.OnStateEnter(null);
 
-        OnCurrentStateChange.Invoke(currentStateIndex, -1);
+        OnCurrentStateChange.Invoke(states[currentStateName], null);
     }
 
     public override void Reboot()
@@ -312,28 +319,28 @@ public class FSMPlayer : FiniteStateMachine<PlayerState>
 
     public override void ShutDown()
     {
-        int previousStateIndex = currentStateIndex;
+        string previousStateName = currentStateName;
 
 
         CurrentState.OnStateQuit(null);
 
-        currentStateIndex = -1;
+        currentStateName = "";
 
-        OnCurrentStateChange.Invoke(-1, previousStateIndex);
+        OnCurrentStateChange.Invoke(null, states[previousStateName]);
 
 
-        foreach (PlayerState state in states)
-            state.OnMachineShutDown();
+        foreach (KeyValuePair<string, PlayerState> kv in states)
+            kv.Value.OnMachineShutDown();
 
         OnMachineShutDown();
     }
 
     public void Update()
     {
-        if (currentStateIndex >= 0)
+        if (currentStateName != "")
         {
             CurrentState.EarlyUpdate();
-            CurrentStateIndex = CurrentState.Update();
+            CurrentStateName = CurrentState.Update();
         }
     }
 }

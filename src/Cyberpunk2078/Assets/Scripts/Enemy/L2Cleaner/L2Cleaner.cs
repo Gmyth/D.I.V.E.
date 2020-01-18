@@ -64,9 +64,13 @@ public class L2Cleaner : Enemy, IPatroller
         }
     }
 
-
     Vector3 IPatroller.GetPatrolPoint(int index)
     {
         return patrolRoute[index];
+    }
+
+    float IPatroller.GetPatrolPointStayTime(int index)
+    {
+        return patrolRoute.GetStayTime(index);
     }
 }

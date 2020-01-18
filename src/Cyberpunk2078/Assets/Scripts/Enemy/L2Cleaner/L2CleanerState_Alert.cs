@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-[CreateAssetMenuAttribute(fileName = "L2CleanerState_Alert", menuName = "Enemy State/Level 2/Cleaner/Alert")]
+[CreateAssetMenuAttribute(fileName = "L2CleanerState_Alert", menuName = "Enemy State/L2Cleaner/Alert")]
 public class L2CleanerState_Alert : EnemyState<L2Cleaner>
 {
     [SerializeField] private float waitTime;
@@ -11,8 +11,8 @@ public class L2CleanerState_Alert : EnemyState<L2Cleaner>
     [SerializeField] private string animation;
 
     [Header("Connected States")]
-    [SerializeField] private int[] stateIndex_attacks;
-    [SerializeField] private int stateIndex_targetLoss = -1;
+    [SerializeField] private string[] states_attack;
+    [SerializeField] private string state_onTargetLoss = "";
 
     private Animator animator;
 
@@ -26,17 +26,17 @@ public class L2CleanerState_Alert : EnemyState<L2Cleaner>
         animator = enemy.GetComponent<Animator>();
     }
 
-    public override int Update()
+    public override string Update()
     {
         if (!enemy.GuardZone.Contains(enemy.currentTarget) || !IsPlayerInSight(enemy.currentTarget, enemy[StatisticType.SightRange]))
-            return stateIndex_targetLoss;
+            return state_onTargetLoss;
 
 
         if (Time.time >= t)
-            return stateIndex_attacks[behaviorSelector.Select()[0]];
+            return states_attack[behaviorSelector.Select()[0]];
 
 
-        return Index;
+        return Name;
     }
 
     public override void OnStateEnter(State previousState)
