@@ -82,7 +82,12 @@ public class PlayerCharacter : Dummy
 
         if (result.currentValue <= 0)
             Dead();
+        else if(result.currentValue <= 1f)
+        {
+            AudioManager.Instance.PlayEvent("LowHealth");
+        }
 
+        AudioManager.Instance.PlayOnce("Hurt");
 
         return result.previousValue - result.currentValue;
     }
@@ -98,6 +103,8 @@ public class PlayerCharacter : Dummy
 
         StatisticModificationResult result = statistics.Modify(StatisticType.Hp, rawHeal, 0, statistics[StatisticType.MaxHp]);
 
+        if (result.currentValue >= 1)
+            AudioManager.Instance.StopEvent("LowHealth");
 
         return result.previousValue - result.currentValue;
     }
@@ -205,7 +212,9 @@ public class PlayerCharacter : Dummy
             GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").HighlightFeverBar();
         else if(!InFever)
             GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").DehighlightFeverBar();
-        
+
+        AudioManager.Instance.PlayOnce("EnergyCharge");
+
         return true;
     }
 

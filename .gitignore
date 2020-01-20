@@ -56,7 +56,7 @@ sysinfo.txt
 /Assets/FMODStudioCache.asset
 /Assets/FMODStudioCache.asset.meta
 fmod.log
-fmod_editor.log
+src/Cyberpunk2078/fmod_editor.log
 
 # FMOD studio (In folder FMOD)
 /FMOD/**.user

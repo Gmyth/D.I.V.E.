@@ -277,6 +277,22 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
+--- !u!114 &-7216257820376206142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &-7020966152555539358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,6 +316,22 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 601
+--- !u!114 &-6482752819164908294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &-6406020936886171877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,7 +536,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: -8210308774228132873}
+  - {fileID: -6482752819164908294}
   MinDistance: 1
   MaxDistance: 20
   Length: 3616
@@ -660,12 +692,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: Build\Audio\Desktop\Master Bank.strings.bank
-  lastModified: 637149496049969260
+  lastModified: 637151388939831631
   LoadResult: 0
   FileSizes:
   - Name: 
-    Value: 1656
+    Value: 1832
   Exists: 1
+--- !u!114 &-4381178379574446320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Player/EnergyFull
+  guid: b4ae1e800431754982a1d979562cadbc
+  Banks:
+  - {fileID: 3792679407991796511}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 1285
 --- !u!114 &-4289001674243160636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -705,6 +760,22 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 240
+--- !u!114 &-3985471873606382755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &-3924866264727215439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -809,6 +880,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 963
+--- !u!114 &-3458792272631965509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Player/LowHealth
+  guid: c34f855772d5094790364671a49b355c
+  Banks:
+  - {fileID: 3792679407991796511}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 2200
 --- !u!114 &-3423429676738031973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -872,6 +966,22 @@ MonoBehaviour:
   Max: 1
   Default: 0
 --- !u!114 &-3324694370154257609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
+--- !u!114 &-2916238963080782476
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -971,6 +1081,22 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 315
+--- !u!114 &-1732497899837192376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &-1731778297649033975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -994,6 +1120,22 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 300
+--- !u!114 &-1614444870775066954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &-1572542361880210341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1107,6 +1249,38 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
+--- !u!114 &-81102006362718697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
+--- !u!114 &-43388207538962451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &-36421502987047196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1157,11 +1331,15 @@ MonoBehaviour:
   - {fileID: 7979462476896758813}
   - {fileID: -8179881743509928849}
   - {fileID: 1980363246570398324}
+  - {fileID: 1566188743866507279}
+  - {fileID: 1114591159486981309}
+  - {fileID: -4381178379574446320}
+  - {fileID: -3458792272631965509}
   MasterBanks:
   - {fileID: 3792679407991796511}
   StringsBanks:
   - {fileID: -4644422745808206642}
-  stringsBankWriteTime: 637149496049969260
+  stringsBankWriteTime: 637151388939831631
   cacheVersion: 3
 --- !u!114 &144810582387696642
 MonoBehaviour:
@@ -1264,6 +1442,45 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 100
+--- !u!114 &1114591159486981309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Player/EnergyCharge
+  guid: 8fa7f9fdcad9d542806f5094a342c526
+  Banks:
+  - {fileID: 3792679407991796511}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 110
+--- !u!114 &1174422911544703122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &1405263709026210299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1296,6 +1513,29 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
+--- !u!114 &1566188743866507279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Player/Hurt
+  guid: 34b48bdf69fb3a4aba41082db1d145db
+  Banks:
+  - {fileID: 3792679407991796511}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 230
 --- !u!114 &1570152101692875404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1358,6 +1598,22 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 300
+--- !u!114 &2300712922577123697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &2539246650249105331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1493,11 +1749,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: C:\Users\Yiyan Wang\Documents\GitHub\Cyberpunk2078\src\Cyberpunk2078\Build\Audio\Desktop\Master
     Bank.bank
-  lastModified: 637149496049851235
+  lastModified: 637151388939746663
   LoadResult: 0
   FileSizes:
   - Name: 
-    Value: 4514592
+    Value: 4570784
   Exists: 1
 --- !u!114 &3815070064187430924
 MonoBehaviour:
@@ -1570,6 +1826,22 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 812
+--- !u!114 &4244024506847793287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &4369840209382110184
 MonoBehaviour:
   m_ObjectHideFlags: 0
