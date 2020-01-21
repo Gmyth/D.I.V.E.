@@ -170,13 +170,15 @@ public class PSDashing : PlayerState
         var inDashingDragFactor = playerCharacter.InKillStreak ? f_inDashingDragFactor:n_inDashingDragFactor;
         if (playerCharacter.PowerDash)
         {
-            if (playerCharacter.ConsumeEnergy(EnergyConsume) * 2 <= 0)
+            if (!playerCharacter.PowerDashReady)
             {
                 // Energy is not enough, Cancel dash
                 Apply = false;
                 return;
             }
-            
+
+            playerCharacter.PowerDashReady = false;
+            playerCharacter.LastPowerDash = Time.unscaledTime;
             TimeManager.Instance.StartFeverMotion();
             playerCharacter.Spark.SetActive(true);
             playerCharacter.Spark.GetComponent<Animator>().Play("Spark", -1, 0f);
@@ -231,9 +233,9 @@ public class PSDashing : PlayerState
     {
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
-
+    
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Dummy"),false);
-
+        
         // reset drag & gravity
         rb2d.drag = 1;
         rb2d.gravityScale = 3;
