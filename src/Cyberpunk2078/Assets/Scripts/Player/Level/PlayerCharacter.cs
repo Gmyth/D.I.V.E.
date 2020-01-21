@@ -13,6 +13,7 @@ public class PlayerCharacter : Dummy
 
     public Transform SpriteHolder;
     public GameObject groundDust;
+    public GameObject FeverVFX;
     //public GUITutorial tutorial;
 
     public bool isInTutorial;
@@ -45,7 +46,7 @@ public class PlayerCharacter : Dummy
     }
 
     public bool InKillStreak { get; private set; } = false;
-    
+    public bool PowerDash = false;
     public bool InFever { get; private set; } = false;
     public bool MaxUltimateEnergy { get; private set; }
     //public PlayerCharacter(Player player)
@@ -118,9 +119,11 @@ public class PlayerCharacter : Dummy
     {
         if (statistics[StatisticType.UltimateEnergy] > 30f && !InFever)
         {
+            FeverVFX.SetActive(true);
             InFever = true;
             CameraManager.Instance.FlashIn(7,0.05f,0.05f,0.05f);
             AddOverLoadEnergy(1);
+            TimeManager.Instance.StartFeverMotion();
         }
         return InFever;
         
@@ -213,7 +216,9 @@ public class PlayerCharacter : Dummy
         if (result.currentValue <= 0 && InFever)
         {
             InFever = false;
+            FeverVFX.SetActive(false);
             GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").DehighlightFeverBar();
+            TimeManager.Instance.EndFeverMotion();
         }
         return true;
     }
@@ -262,7 +267,7 @@ public class PlayerCharacter : Dummy
         
         InKillStreak = true;
         SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
-        
+        TimeManager.Instance.startSlowMotion(0.5f);
         GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").ShowText("Kill Streak!!!");
     }
 

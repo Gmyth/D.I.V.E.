@@ -249,8 +249,8 @@ public class CameraManager : MonoBehaviour {
 					break;
 				}
 
-				posX = Mathf.SmoothDamp(transform.position.x,target.position.x, ref focusVelocity.x, 0.001f);
-				posY = Mathf.SmoothDamp(transform.position.y,target.position.y, ref focusVelocity.y, 0.001f);
+				posX = Mathf.SmoothDamp(transform.position.x,target.position.x, ref focusVelocity.x, 0.05f);
+				posY = Mathf.SmoothDamp(transform.position.y,target.position.y, ref focusVelocity.y, 0.05f);
 				transform.position = new Vector3(posX, posY, transform.position.z);
 				
 				if (targetIndicator && targetIndicator.changeSize)

@@ -5,6 +5,7 @@ public class Recyclable : MonoBehaviour
 {
     public int id = -1;
     public float lifeSpan = 0;
+    public bool enableTimeScale = true;
 
 
     protected void Die()
@@ -24,7 +25,23 @@ public class Recyclable : MonoBehaviour
 
     private IEnumerator RecycleAfter(float t)
     {
-        yield return new WaitForSeconds(t);
+        t = lifeSpan;
+
+
+        yield return null;
+
+
+        if (enableTimeScale)
+            while (t > 0)
+            {
+                t -= Time.deltaTime * TimeManager.Instance.TimeFactor;
+
+                yield return null;
+            }
+        else
+            yield return new WaitForSeconds(t);
+        
+
         Die();
     }
 }

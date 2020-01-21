@@ -64,7 +64,7 @@ public class HitBox : MonoBehaviour
                     hit.source.OnAttack.Invoke();
                     enemy.OnHit?.Invoke(hit);
                     
-                    TimeManager.Instance.endSlowMotion();
+                    //TimeManager.Instance.endSlowMotion();
                     CameraManager.Instance.Idle();
                     
                     enemy.ApplyDamage(hit.damage);
