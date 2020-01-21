@@ -9,7 +9,9 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
     [SerializeField] private float minDuration = 0.15f;
     [SerializeField] private float maxDuration = 0;
     [SerializeField] private float stopDistance = 1;
+    [SerializeField] private float dashEndTime = 0;
     [SerializeField] private string animation_dash = "";
+    [SerializeField] private string animation_dashEnd = "";
 
     private Rigidbody2D rigidbody;
 
@@ -56,10 +58,6 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
 
     public override void OnStateQuit(State nextState)
     {
-        if (hitBox >= 0)
-            enemy.DisableHitBox(hitBox);
-
-
         enemy.OnAttack.RemoveListener(Stop);
     }
 
@@ -121,12 +119,20 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
     }
 
 
-    private void Stop()
+    protected void Stop()
     {
+        if (hitBox >= 0)
+            enemy.DisableHitBox(hitBox);
+
+
         rigidbody.velocity = Vector2.zero;
 
 
         bStop = true;
-        t_dashFinish = 0;
+        t_dashFinish = Time.time + dashEndTime;
+
+
+        if (animation_dashEnd != "")
+            animator.Play(animation_dashEnd);
     }
 }

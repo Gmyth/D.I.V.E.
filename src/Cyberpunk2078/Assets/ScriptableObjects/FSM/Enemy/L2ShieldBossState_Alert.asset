@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateName: Alert
   waitTime: 1
-  animation: 
+  animation: L2ShieldBoss_Idle
   states_attacks:
   - ChasingShieldSlam
+  - ChargedDash
   state_onTargetLoss: 

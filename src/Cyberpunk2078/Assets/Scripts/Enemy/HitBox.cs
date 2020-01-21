@@ -102,6 +102,9 @@ public class HitBox : MonoBehaviour
 
             if (player.State.Name != "Dash" && !objectsHit.Contains(id))
             {
+                objectsHit.Add(id);
+
+
                 hit.source.OnAttack.Invoke();
                 player.OnHit?.Invoke(hit);
 
@@ -111,8 +114,7 @@ public class HitBox : MonoBehaviour
 
 
                 player.ApplyDamage(hit.damage);
-                objectsHit.Add(id);
-
+                
 
                 CreateRandomEffect(player.transform);
 

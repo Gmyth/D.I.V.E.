@@ -43,10 +43,10 @@ MonoBehaviour:
       - type: 768
         value: 3
       - type: 57344
-        value: 100
+        value: 30
       - type: 57345
-        value: 200
+        value: 30
       - type: 57346
-        value: 500
+        value: 30
       - type: 62480
         value: 9

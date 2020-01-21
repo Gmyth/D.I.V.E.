@@ -156,7 +156,7 @@ public class FSMEnemy : FiniteStateMachine<EnemyState>
             //else
             {
 #if UNITY_EDITOR
-                Debug.Log(LogUtility.MakeLogStringFormat(GetType().Name, "Make transition from state {0} to {1}", states[currentStateName].name, states[value].name));
+                Debug.Log(LogUtility.MakeLogStringFormat(GetType().Name, "Make transition from state {0} to {1}", currentStateName, value));
 #endif
 
                 string previousStateName = currentStateName;

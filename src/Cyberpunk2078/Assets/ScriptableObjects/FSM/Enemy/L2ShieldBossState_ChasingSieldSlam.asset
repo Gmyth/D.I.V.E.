@@ -20,7 +20,7 @@ MonoBehaviour:
   chasingSpeed: 1.5
   attackRange: 2
   attackHeight: 5
-  motionTime: 3
+  motionTime: 2
   idleAnimation: L2ShieldBoss_Idle
   chasingAnimation: L2ShieldBoss_ShieldMoving
   attackAnimation: L2ShieldBoss_ShieldSlam

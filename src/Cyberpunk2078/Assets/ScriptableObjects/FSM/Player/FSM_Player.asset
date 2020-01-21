@@ -13,17 +13,17 @@ MonoBehaviour:
   m_Name: FSM_Player
   m_EditorClassIdentifier: 
   serializedStates:
-  - {fileID: 11400000, guid: 0743fda78706c5a4186cdf1705815d47, type: 2}
-  - {fileID: 11400000, guid: e04c004279aaee64396e829c04fe492e, type: 2}
   - {fileID: 11400000, guid: 3a19861b2f75c4744bd60877e08ae506, type: 2}
   - {fileID: 11400000, guid: c96e5733257e37c4aa5ac0effede33a4, type: 2}
-  - {fileID: 11400000, guid: ff3db9902e05c6e4f8ea003a7a281da7, type: 2}
-  - {fileID: 11400000, guid: cd9e9127689fbd145bc6a487094eca48, type: 2}
-  - {fileID: 11400000, guid: 774e44cca19d2074189840161f8a5d42, type: 2}
   - {fileID: 11400000, guid: 1bac88007e938c54a923d4ce77d03bbf, type: 2}
-  - {fileID: 11400000, guid: b12d3039a9cf2c540926fd51798f129a, type: 2}
-  - {fileID: 11400000, guid: edf63d216f7fdbf4b9df17516342a37b, type: 2}
+  - {fileID: 11400000, guid: cd9e9127689fbd145bc6a487094eca48, type: 2}
   - {fileID: 11400000, guid: 3c00e836361d2d041a4bf6fce05a4ba9, type: 2}
+  - {fileID: 11400000, guid: 0743fda78706c5a4186cdf1705815d47, type: 2}
+  - {fileID: 11400000, guid: ff3db9902e05c6e4f8ea003a7a281da7, type: 2}
+  - {fileID: 11400000, guid: edf63d216f7fdbf4b9df17516342a37b, type: 2}
+  - {fileID: 11400000, guid: e04c004279aaee64396e829c04fe492e, type: 2}
+  - {fileID: 11400000, guid: b12d3039a9cf2c540926fd51798f129a, type: 2}
   - {fileID: 11400000, guid: ed50be897f8f9804ea14f331d6e22c23, type: 2}
   - {fileID: 11400000, guid: 5f45b4b93089b8c42a357e3323d9f375, type: 2}
+  - {fileID: 11400000, guid: 774e44cca19d2074189840161f8a5d42, type: 2}
   startingState: Idle

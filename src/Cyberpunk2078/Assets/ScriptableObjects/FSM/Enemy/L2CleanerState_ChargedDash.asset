@@ -27,4 +27,6 @@ MonoBehaviour:
   minDuration: 0.3
   maxDuration: 0
   stopDistance: 0.5
+  dashEndTime: 0
   animation_dash: L2Cleaner_Dashing
+  animation_dashEnd: 

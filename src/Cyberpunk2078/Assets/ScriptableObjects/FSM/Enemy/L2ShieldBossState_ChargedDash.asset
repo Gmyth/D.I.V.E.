@@ -15,16 +15,18 @@ MonoBehaviour:
   stateName: ChargedDash
   motionID: -1
   damage: 1
-  knockback: 0
-  hitBox: 0
+  knockback: 250
+  hitBox: 1
   chargeTime: 1
   stopChargingOnTargetLoss: 0
-  animation_charging: 
+  animation_charging: L2ShieldBoss_DashCharge
   state_afterAttack: Alert
   state_onTargetLoss: 
-  type: 0
+  type: 2
   dashForce: 8000
   minDuration: 0.15
   maxDuration: 0
   stopDistance: 0
-  animation_dash: 
+  dashEndTime: 0.3
+  animation_dash: L2ShieldBoss_Dashing
+  animation_dashEnd: L2ShieldBoss_DashEnd

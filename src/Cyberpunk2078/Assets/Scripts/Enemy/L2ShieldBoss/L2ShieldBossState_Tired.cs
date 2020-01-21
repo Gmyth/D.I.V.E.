@@ -11,9 +11,35 @@ public class L2ShieldBossState_Tired : EnemyState<L2ShieldBoss>
     [SerializeField] private string state_onRecovery = "";
     [SerializeField] private string state_onHit = "";
 
+    private Animator animator;
+
     private float t = 0;
     private bool hasHit = false;
 
+
+    public override void Initialize(L2ShieldBoss enemy)
+    {
+        base.Initialize(enemy);
+
+        animator = enemy.GetComponent<Animator>();
+    }
+
+    public override void OnStateEnter(State previousState)
+    {
+        enemy.OnHit.AddListener(OnHit);
+
+
+        t = Time.time + duration;
+        hasHit = false;
+
+
+        animator.Play("L2ShieldBoss_Tired");
+    }
+
+    public override void OnStateQuit(State nextState)
+    {
+        enemy.OnHit.RemoveListener(OnHit);
+    }
 
     public override string Update()
     {
@@ -26,19 +52,6 @@ public class L2ShieldBossState_Tired : EnemyState<L2ShieldBoss>
 
 
         return Name;
-    }
-
-    public override void OnStateEnter(State previousState)
-    {
-        enemy.OnHit.AddListener(OnHit);
-
-        t = Time.time + duration;
-        hasHit = false;
-    }
-
-    public override void OnStateQuit(State nextState)
-    {
-        enemy.OnHit.RemoveListener(OnHit);
     }
 
 
