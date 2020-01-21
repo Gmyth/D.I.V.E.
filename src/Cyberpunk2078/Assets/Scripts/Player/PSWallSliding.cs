@@ -130,6 +130,13 @@ public class PSWallSliding: PlayerState
             Player.CurrentPlayer.triggerReady = false;
             return index_PSDashing;
         }
+        
+        if (Input.GetButtonDown("Special1"))
+        {
+            Player.CurrentPlayer.triggerReady = false;
+            PlayerCharacter.Singleton.PowerDash = true;
+            return index_PSDashing;
+        }
 
 
         return Index;

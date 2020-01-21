@@ -46,7 +46,7 @@ public class PlayerCharacter : Dummy
     }
 
     public bool InKillStreak { get; private set; } = false;
-    
+    public bool PowerDash = false;
     public bool InFever { get; private set; } = false;
     public bool MaxUltimateEnergy { get; private set; }
     //public PlayerCharacter(Player player)
@@ -267,7 +267,7 @@ public class PlayerCharacter : Dummy
         
         InKillStreak = true;
         SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
-        
+        TimeManager.Instance.startSlowMotion(0.5f);
         GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").ShowText("Kill Streak!!!");
     }
 

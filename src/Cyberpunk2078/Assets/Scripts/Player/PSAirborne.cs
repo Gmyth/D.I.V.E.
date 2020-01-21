@@ -67,7 +67,16 @@ public class PSAirborne : PlayerState
             Player.CurrentPlayer.triggerReady = false;
             return indexPSDashing;
         }
-
+        
+        // temp code
+        if (Input.GetButtonDown("Special1"))
+        {
+            Player.CurrentPlayer.triggerReady = false;
+            PlayerCharacter.Singleton.PowerDash = true;
+            return indexPSDashing;
+        }
+        // temp code
+        
         if (Vy > 0)
             return Index;
 

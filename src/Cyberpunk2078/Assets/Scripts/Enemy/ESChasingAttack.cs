@@ -61,8 +61,7 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
     public override int Update()
     {
         float dt = Time.time - t;
-
-        animator.speed = TimeManager.Instance.TimeFactor * enemy.UnitTimeFactor;
+        
         if (dt < 0) // Check if the attack has not been made
         {
             PlayerCharacter player = IsPlayerInSight(enemy.currentTarget, enemy[StatisticType.SightRange]);

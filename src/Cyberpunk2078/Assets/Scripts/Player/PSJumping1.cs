@@ -147,6 +147,13 @@ public class PSJumping1 : PlayerState
             return indexPSDashing;
         }
         
+        if (Input.GetButtonDown("Special1"))
+        {
+            Player.CurrentPlayer.triggerReady = false;
+            PlayerCharacter.Singleton.PowerDash = true;
+            return indexPSDashing;
+        }
+        
         //isJumpKeyDown = Input.GetButtonDown("Jump");
 
         return Index;

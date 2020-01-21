@@ -86,6 +86,14 @@ public class PSAttackGH: PlayerState
             {
                 return indexPSJumping1;
             }
+            // temp code
+            else if (Input.GetButtonDown("Special1"))
+            {
+                Player.CurrentPlayer.triggerReady = false;
+                PlayerCharacter.Singleton.PowerDash = true;
+                return indexPSDashing;
+            }
+            // temp code
                 
         }
         

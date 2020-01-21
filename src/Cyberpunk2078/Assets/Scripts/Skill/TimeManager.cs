@@ -33,11 +33,17 @@ public class TimeManager : MonoBehaviour
         if (triggered)
         {
             smoothTime += 0.085f;
+            if (startTime + 0.15f < Time.unscaledTime)
+            {
+                CameraManager.Instance.FocusAt(FindObjectOfType<PlayerCharacter>().transform,0.2f);
+                CameraManager.Instance.FlashIn(7.5f,0.05f,0.1f,0.01f);
+            }
+
             if (Time.unscaledTime < endTime)
             { 
                 var newScale = Time.timeScale - (1f / smoothTime) * Time.unscaledDeltaTime;
                 Time.timeScale = Mathf.Clamp(newScale, targetScale, 1f);
-                Time.fixedDeltaTime = Time.timeScale * 0.02f;
+                //Time.fixedDeltaTime = Time.timeScale * 0.02f;
                 float current = blackScreen.color.a;
                 blackScreen.color =new Color(blackScreen.color.r,blackScreen.color.g,blackScreen.color.b, Mathf.SmoothDamp(current, targetFXAlpha, ref velocity, 0.1f));
             }
@@ -45,7 +51,7 @@ public class TimeManager : MonoBehaviour
             {
                 triggered = false;
                 Time.timeScale = 1;
-                Time.fixedDeltaTime = Time.timeScale * 0.02f;
+                //Time.fixedDeltaTime = Time.timeScale * 0.02f;
                 blackScreen.color =new Color(blackScreen.color.r,blackScreen.color.g,blackScreen.color.b, 0f);
             }
         }

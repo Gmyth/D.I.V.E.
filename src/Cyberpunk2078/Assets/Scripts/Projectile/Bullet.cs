@@ -34,7 +34,7 @@ public class Bullet : Recyclable
         {
             // time to check
             var direction = GetComponent<LinearMovement>().orientation;
-            RaycastHit2D hit = Physics2D.Raycast(transform.position,direction, 3.5f);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position,direction, 4f);
             if (hit.collider != null && hit.transform.CompareTag("Player"))
             {
                 //hit! Hunch Trigger
@@ -44,8 +44,7 @@ public class Bullet : Recyclable
                     hunchTriggered = true;
                     playerCharacter.AddKillCount(-2);
                     TimeManager.Instance.startSlowMotion(1f);
-                    CameraManager.Instance.FocusAt(playerCharacter.transform,0.2f);
-                    CameraManager.Instance.FlashIn(7f,0.05f,0.15f,0.01f);
+                   
                 }
             }
             
@@ -79,7 +78,7 @@ public class Bullet : Recyclable
                 other.GetComponent<Dummy>().ApplyDamage(rawDamage);
                 --numHitsRemaining;
                 
-                TimeManager.Instance.endSlowMotion();
+                //TimeManager.Instance.endSlowMotion();
                 CameraManager.Instance.Idle();
 
                 SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
@@ -113,7 +112,7 @@ public class Bullet : Recyclable
                 other.GetComponent<PlayerCharacter>().Knockback(transform.position, 300f, 0.3f);
                 --numHitsRemaining;
 
-                TimeManager.Instance.endSlowMotion();
+                //TimeManager.Instance.endSlowMotion();
                 CameraManager.Instance.Idle();
 
                 CameraManager.Instance.Shaking(0.20f, 0.05f);
@@ -134,18 +133,18 @@ public class Bullet : Recyclable
                 isFriendly = true;
                 GetComponent<LinearMovement>().initialPosition = transform.position;
                 GetComponent<LinearMovement>().speed *= 1.5f;
-                GetComponent<LinearMovement>().orientation = (Quaternion.Euler(0, 0,  Random.Range(-30, 30)) * (GetComponent<LinearMovement>().orientation * -1)).normalized;
+               // GetComponent<LinearMovement>().orientation = (Quaternion.Euler(0, 0,  Random.Range(-15, 15)) * (GetComponent<LinearMovement>().orientation * -1)).normalized;
+                GetComponent<LinearMovement>().orientation = other.transform.right;
                 GetComponent<LinearMovement>().spawnTime = Time.time;
 
                 transform.right = GetComponent<LinearMovement>().orientation;
                 
-                TimeManager.Instance.endSlowMotion();
+                //TimeManager.Instance.endSlowMotion();
                 CameraManager.Instance.Idle();
                 
-
-                CameraManager.Instance.Shaking(0.2f,0.05f,true);
-
-                CameraManager.Instance.FocusAt(transform,0.1f);
+                CameraManager.Instance.Shaking(0.5f,0.05f,true);
+                CameraManager.Instance.FocusAt(transform,0.02f);
+                
                 SingleEffect Hit1 = ObjectRecycler.Singleton.GetObject<SingleEffect>(12);
                 Hit1.transform.right = transform.right;
                 Hit1.transform.position = other.transform.position + (transform.position  - other.transform.position) * 0.3f;
