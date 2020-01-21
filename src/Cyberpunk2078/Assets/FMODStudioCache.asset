@@ -536,10 +536,26 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: -6482752819164908294}
+  - {fileID: 8441769216443984033}
   MinDistance: 1
   MaxDistance: 20
   Length: 3616
+--- !u!114 &-5688926231733720354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &-5503247088289461516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -692,7 +708,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: Build\Audio\Desktop\Master Bank.strings.bank
-  lastModified: 637151388939831631
+  lastModified: 637151542669952175
   LoadResult: 0
   FileSizes:
   - Name: 
@@ -880,6 +896,22 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 963
+--- !u!114 &-3530252674366426908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &-3458792272631965509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -898,11 +930,11 @@ MonoBehaviour:
   - {fileID: 3792679407991796511}
   IsStream: 0
   Is3D: 0
-  IsOneShot: 1
+  IsOneShot: 0
   Parameters: []
   MinDistance: 0
   MaxDistance: 0
-  Length: 2200
+  Length: 3000
 --- !u!114 &-3423429676738031973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1339,7 +1371,7 @@ MonoBehaviour:
   - {fileID: 3792679407991796511}
   StringsBanks:
   - {fileID: -4644422745808206642}
-  stringsBankWriteTime: 637151388939831631
+  stringsBankWriteTime: 637151542669952175
   cacheVersion: 3
 --- !u!114 &144810582387696642
 MonoBehaviour:
@@ -1675,6 +1707,22 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 170
+--- !u!114 &3054253632880063887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &3159754944477869264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1697,6 +1745,22 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 307
+--- !u!114 &3367376507741527749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &3409357621425590383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1749,11 +1813,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: C:\Users\Yiyan Wang\Documents\GitHub\Cyberpunk2078\src\Cyberpunk2078\Build\Audio\Desktop\Master
     Bank.bank
-  lastModified: 637151388939746663
+  lastModified: 637151542669523324
   LoadResult: 0
   FileSizes:
   - Name: 
-    Value: 4570784
+    Value: 4572192
   Exists: 1
 --- !u!114 &3815070064187430924
 MonoBehaviour:
@@ -2098,6 +2162,22 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
+--- !u!114 &6456753152102342724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &6560820147812970613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2332,6 +2412,22 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 243435
+--- !u!114 &8244356462630010978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &8268252279072446622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2354,6 +2450,22 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 300
+--- !u!114 &8329813587308856125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &8397735213519223670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2392,6 +2504,22 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 300
+--- !u!114 &8441769216443984033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &8605280998851336128
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -103,7 +103,7 @@ public class PlayerCharacter : Dummy
 
         StatisticModificationResult result = statistics.Modify(StatisticType.Hp, rawHeal, 0, statistics[StatisticType.MaxHp]);
 
-        if (result.currentValue >= 1)
+        if (result.currentValue >= 1 && result.currentValue < statistics[StatisticType.MaxHp])
             AudioManager.Instance.StopEvent("LowHealth");
 
         return result.previousValue - result.currentValue;
