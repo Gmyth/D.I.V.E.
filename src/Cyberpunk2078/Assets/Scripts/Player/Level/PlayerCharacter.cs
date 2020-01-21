@@ -14,6 +14,7 @@ public class PlayerCharacter : Dummy
     public Transform SpriteHolder;
     public GameObject groundDust;
     public GameObject FeverVFX;
+    public GameObject Spark;
     //public GUITutorial tutorial;
 
     public bool isInTutorial;
