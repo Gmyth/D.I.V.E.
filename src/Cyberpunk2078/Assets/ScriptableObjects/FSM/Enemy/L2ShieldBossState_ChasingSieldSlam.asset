@@ -21,8 +21,8 @@ MonoBehaviour:
   attackRange: 2
   attackHeight: 5
   motionTime: 3
-  idleAnimation: L2Cleaner_Idle
-  chasingAnimation: L2Cleaner_Run
-  attackAnimation: L2Cleaner_Melee
+  idleAnimation: L2ShieldBoss_Idle
+  chasingAnimation: L2ShieldBoss_ShieldMoving
+  attackAnimation: L2ShieldBoss_ShieldSlam
   state_onTargetLoss: 
   state_afterAttack: Alert

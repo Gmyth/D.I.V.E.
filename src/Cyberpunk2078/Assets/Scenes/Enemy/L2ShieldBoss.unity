@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1888,7 +1888,7 @@ Animator:
   m_GameObject: {fileID: 923652459}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0572cfe4e8aaa60409b4864c5310b725, type: 2}
+  m_Controller: {fileID: 9100000, guid: 790913e6119f8e54b99a581c2a10ee6e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1910,8 +1910,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.2, y: -0.1}
-  m_Size: {x: 2.6, y: 4.6}
+  m_Offset: {x: 0.038486958, y: 0.16890836}
+  m_Size: {x: 1.376462, y: 2.2994566}
   m_Direction: 0
 --- !u!50 &923652464
 Rigidbody2D:
@@ -1972,7 +1972,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 78532d83d5a12ea4295bd194b3efb693, type: 3}
+  m_Sprite: {fileID: 21300000, guid: af06da5fb1ccf494f89104b750502d3b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1991,8 +1991,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 923652459}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11, y: 0.7, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalPosition: {x: 10.66, y: 1.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1169216327}
   m_Father: {fileID: 0}

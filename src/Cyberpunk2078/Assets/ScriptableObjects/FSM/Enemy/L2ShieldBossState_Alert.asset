@@ -15,5 +15,6 @@ MonoBehaviour:
   stateName: Alert
   waitTime: 1
   animation: 
-  states_attacks: []
+  states_attacks:
+  - ChasingShieldSlam
   state_onTargetLoss: 
