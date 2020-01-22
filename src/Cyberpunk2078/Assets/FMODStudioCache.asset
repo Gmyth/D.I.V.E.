@@ -536,7 +536,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: 8441769216443984033}
+  - {fileID: 7227366692424831551}
   MinDistance: 1
   MaxDistance: 20
   Length: 3616
@@ -708,7 +708,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: Build\Audio\Desktop\Master Bank.strings.bank
-  lastModified: 637151542669952175
+  lastModified: 637152109224820654
   LoadResult: 0
   FileSizes:
   - Name: 
@@ -1371,7 +1371,7 @@ MonoBehaviour:
   - {fileID: 3792679407991796511}
   StringsBanks:
   - {fileID: -4644422745808206642}
-  stringsBankWriteTime: 637151542669952175
+  stringsBankWriteTime: 637152109224820654
   cacheVersion: 3
 --- !u!114 &144810582387696642
 MonoBehaviour:
@@ -1567,7 +1567,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 0
   MaxDistance: 0
-  Length: 230
+  Length: 500
 --- !u!114 &1570152101692875404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1813,11 +1813,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: C:\Users\Yiyan Wang\Documents\GitHub\Cyberpunk2078\src\Cyberpunk2078\Build\Audio\Desktop\Master
     Bank.bank
-  lastModified: 637151542669523324
+  lastModified: 637152109224820654
   LoadResult: 0
   FileSizes:
   - Name: 
-    Value: 4572192
+    Value: 4593408
   Exists: 1
 --- !u!114 &3815070064187430924
 MonoBehaviour:
@@ -2309,6 +2309,22 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 570
+--- !u!114 &7227366692424831551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &7454450011882206228
 MonoBehaviour:
   m_ObjectHideFlags: 0
