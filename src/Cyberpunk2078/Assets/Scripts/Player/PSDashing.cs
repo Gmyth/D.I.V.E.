@@ -279,9 +279,12 @@ public class PSDashing : PlayerState
         //Apply force to character
        // playerCharacter.GetComponent<CapsuleCollider2D>().isTrigger = true;
         playerCharacter.SpriteHolder.right = direction;
-        rb2d.AddForce(direction * dashForce * 200f * 1 / Time.timeScale);
+        //Time.fixedDeltaTime = 0.02f;
+        if (Time.timeScale!=0) rb2d.AddForce(direction * dashForce * 200f * 1 / Time.timeScale);
+        else rb2d.AddForce(direction * dashForce * 200f * 1);
 
         //Camera Tricks
+
         CameraManager.Instance.Shaking(0.1f,0.10f);
 
     }

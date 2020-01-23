@@ -29,7 +29,8 @@ public class Bullet : Recyclable
     private void Update()
     {
         GetComponentInChildren<Animator>().speed = TimeManager.Instance.TimeFactor;
-        GetComponent<LinearMovement>().speed = speed * TimeManager.Instance.TimeFactor;
+        GetComponent<LinearMovement>().speed *= TimeManager.Instance.TimeFactor;
+
         if (!disableHunch && lastHitEstimation + hitEstimationTimeInterval < Time.unscaledTime && !hunchTriggered && !isFriendly )
         {
             // time to check
@@ -39,13 +40,12 @@ public class Bullet : Recyclable
             {
                 //hit! Hunch Trigger
                 PlayerCharacter playerCharacter = hit.collider.GetComponent<PlayerCharacter>();
-                if (playerCharacter.InKillStreak)
-                {
-                    hunchTriggered = true;
-                    playerCharacter.AddKillCount(-2);
-                    TimeManager.Instance.startSlowMotion(1f);
-                   
-                }
+                //if (playerCharacter.InKillStreak)
+                //{
+                //    hunchTriggered = true;
+                //    playerCharacter.AddKillCount(-2);
+                //    TimeManager.Instance.startSlowMotion(1f);                  
+                //}
             }
             
             lastHitEstimation = Time.unscaledTime;
