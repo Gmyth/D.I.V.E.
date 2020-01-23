@@ -88,15 +88,25 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlayOnce(string _event)
+    public void PlayOnce(string _event, string param = null, float value = 0)
     {
         if (dic.ContainsKey(_event))
         {
-            FMODUnity.RuntimeManager.PlayOneShot(dic[_event]);
+            EventInstance ins = FMODUnity.RuntimeManager.CreateInstance(dic[_event]);
+
+            if(param != null)
+            {
+                ins.setParameterValue(param, value);
+            }
+            
+            ins.start();
+            ins.release();
         }
         else
         {
             Debug.LogError("[AudioManager] " + " Can't find " + _event);
         }
     }
+
+    
 }

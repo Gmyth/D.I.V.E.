@@ -213,7 +213,8 @@ public class PlayerCharacter : Dummy
         else if(!InFever)
             GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").DehighlightFeverBar();
 
-        AudioManager.Instance.PlayOnce("EnergyCharge");
+        float pitch = (statistics[StatisticType.UltimateEnergy] / statistics[StatisticType.MaxUltimateEnergy]);
+        AudioManager.Instance.PlayOnce("EnergyCharge", "Pitch", pitch);
 
         return true;
     }
