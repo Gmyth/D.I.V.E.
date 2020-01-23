@@ -7,7 +7,7 @@ public class L2ShieldBossState_Alert : ESAlert<L2ShieldBoss>
     public override string Update()
     {
         if (Time.time >= t_finishWait)
-            return states_attacks[1];
+            return states_attacks[2];
 
 
         return Name;

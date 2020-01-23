@@ -61,15 +61,12 @@ public class HitBox : MonoBehaviour
 
                 if (!enemy.isEvading && !objectsHit.Contains(id))
                 {
-                    hit.source.OnAttack.Invoke();
-                    enemy.OnHit?.Invoke(hit);
-                    
-                    TimeManager.Instance.endSlowMotion();
-                    CameraManager.Instance.Idle();
-                    
-                    enemy.ApplyDamage(hit.damage);
+                    GameUtility.ApplyDamage(hit, enemy);
+
+
                     objectsHit.Add(id);
                     
+
                     CreateRandomEffect(enemy.transform);
 
                     var trail = ObjectRecycler.Singleton.GetObject<SingleEffect>(8);

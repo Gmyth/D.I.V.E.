@@ -102,7 +102,7 @@ public abstract class Dummy : MonoBehaviour, IDamageable
     }
 
 
-    public bool IsOnGround()
+    public bool IsOnGround(float xOffset = 0.1f, float yOffset = 0, float length = 0.1f)
     {
         Vector3 position = transform.position;
         Vector3 up = transform.up;
@@ -110,14 +110,14 @@ public abstract class Dummy : MonoBehaviour, IDamageable
 
         int layerMask = LayerMask.GetMask("Obstacle");
 
-        RaycastHit2D hitM = Physics2D.Raycast(position + new Vector3(0f, -0.7f, 0f), -up, 0.6f, layerMask);
-        RaycastHit2D hitL = Physics2D.Raycast(position + new Vector3(0.12f, -0.7f, 0f), -up, 0.6f, layerMask);
-        RaycastHit2D hitR = Physics2D.Raycast(position + new Vector3(-0.12f, -0.7f, 0f), -up, 0.6f, layerMask);
+        RaycastHit2D hitM = Physics2D.Raycast(position + new Vector3(0f, yOffset, 0f), -up, length, layerMask);
+        RaycastHit2D hitL = Physics2D.Raycast(position + new Vector3(xOffset, yOffset, 0f), -up, length, layerMask);
+        RaycastHit2D hitR = Physics2D.Raycast(position + new Vector3(-xOffset, yOffset, 0f), -up, length, layerMask);
 
 
-        Debug.DrawRay(position + new Vector3(0f, -0.7f, 0f), -up * 0.6f, Color.red);
-        Debug.DrawRay(position + new Vector3(0.12f, -0.7f, 0f), -up * 0.6f, Color.green);
-        Debug.DrawRay(position + new Vector3(-0.12f, -0.7f, 0f), -up * 0.6f, Color.yellow);
+        Debug.DrawRay(position + new Vector3(0f, yOffset, 0f), -up * length, Color.red);
+        Debug.DrawRay(position + new Vector3(xOffset, yOffset, 0f), -up * length, Color.green);
+        Debug.DrawRay(position + new Vector3(-xOffset, yOffset, 0f), -up * length, Color.yellow);
 
 
         return hitM.collider || hitL.collider || hitR.collider;

@@ -18,4 +18,5 @@ MonoBehaviour:
   states_attacks:
   - ChasingShieldSlam
   - ChargedDash
+  - DiveBomb
   state_onTargetLoss: 

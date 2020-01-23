@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 public class L2ShieldBoss : Enemy
@@ -30,7 +28,7 @@ public class L2ShieldBoss : Enemy
 
     public float ApplyFatigue(float rawFatigue)
     {
-        if (fsm.CurrentStateName == "Tired" || rawFatigue <= 0)
+        if (fsm.CurrentStateName == "Tired" || fsm.CurrentStateName == "DiveBomb" || rawFatigue <= 0)
             return 0;
 
 
@@ -39,15 +37,20 @@ public class L2ShieldBoss : Enemy
 
         StatisticModificationResult result = statistics.Modify(StatisticType.Fatigue, fatigue, 0, statistics[StatisticType.MaxFatigue]);
 
-        if (result.currentValue >= statistics[StatisticType.MaxFatigue])
-        {
-            statistics[StatisticType.Fatigue] = 0;
-
-            fsm.CurrentStateName = "Tired";
-        }
-
 
         Debug.LogWarningFormat("[L2ShieldBoss] Fatigue: {0} / {1}", result.currentValue, statistics[StatisticType.MaxFatigue]);
+
+
+        if (result.currentValue >= statistics[StatisticType.MaxFatigue])
+        {
+            if (statusModifiers[AttributeType.MaxFatigue_m0] == 1)
+                fsm.CurrentStateName = "DiveBomb";
+            else
+                fsm.CurrentStateName = "Tired";
+
+
+            statistics[StatisticType.Fatigue] = 0;
+        }
 
 
         return result.currentValue - result.previousValue;

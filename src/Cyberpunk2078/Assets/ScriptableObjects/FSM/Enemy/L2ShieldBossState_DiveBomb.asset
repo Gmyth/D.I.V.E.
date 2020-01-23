@@ -19,7 +19,8 @@ MonoBehaviour:
   hitBox: -1
   chargeTime: 3
   stopChargingOnTargetLoss: 0
-  animation_charging: 
-  state_afterAttack: Tired
+  animation_charging: L2ShieldBoss_Charge
+  state_afterAttack: Alert
   state_onTargetLoss: 
-  jumpForce: 0
+  jumpForce: 2500
+  waitTime: 0.5
