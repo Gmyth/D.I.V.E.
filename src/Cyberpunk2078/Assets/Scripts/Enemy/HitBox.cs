@@ -92,7 +92,12 @@ public class HitBox : MonoBehaviour
             }
             else if (other.tag == "Platform" && other.GetComponent<SimpleBreakable>())
             {
-                other.GetComponent<SimpleBreakable>().DestoryBreakable();
+                other.GetComponent<SimpleBreakable>().DestroyBreakable();
+                var vfx = ObjectRecycler.Singleton.GetObject<SingleEffect>(16);
+                vfx.transform.position = new Vector3(transform.position.x,other.transform.position.y,0);
+                vfx.transform.right = transform.right;
+                vfx.gameObject.SetActive(true);
+                
             }
         }
         else if (other.tag == "Player")
