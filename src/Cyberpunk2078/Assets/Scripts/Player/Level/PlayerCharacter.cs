@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 
 public class PlayerCharacter : Dummy
@@ -14,6 +16,7 @@ public class PlayerCharacter : Dummy
     public Transform SpriteHolder;
     public GameObject groundDust;
     public GameObject FeverVFX;
+    public GameObject Spark;
     //public GUITutorial tutorial;
 
     public bool isInTutorial;
@@ -46,7 +49,12 @@ public class PlayerCharacter : Dummy
     }
 
     public bool InKillStreak { get; private set; } = false;
+    
     public bool PowerDash = false;
+    public bool PowerDashReady = true;
+    public float LastPowerDash;
+
+    private GameObject buttonTip;
     public bool InFever { get; private set; } = false;
     public bool MaxUltimateEnergy { get; private set; }
     //public PlayerCharacter(Player player)
@@ -245,8 +253,27 @@ public class PlayerCharacter : Dummy
             }
         }
     }
-    
-     public bool AddKillCount(float amount)
+
+    public void PowerDashCoolDown()
+    {
+        if (!PowerDashReady)
+        {
+            GameObject.Find("HealthEnergy").GetComponent<Slider>().value =
+                (Time.unscaledTime - LastPowerDash) / statistics[StatisticType.PDCoolDown];
+            if(LastPowerDash + statistics[StatisticType.PDCoolDown] < Time.unscaledTime)
+            {
+                PowerDashReady = true;
+                buttonTip.SetActive(true);
+            }
+            else
+            {
+                buttonTip.SetActive(false);
+            }
+        }
+
+    }
+
+    public bool AddKillCount(float amount)
      {
          StatisticModificationResult result = statistics.Modify(StatisticType.KsCount, amount, 0, statistics[StatisticType.MaxKs]);
     
@@ -333,6 +360,9 @@ public class PlayerCharacter : Dummy
         GUIManager.Singleton.Open("HUD", this);
         
         //StartDialogue(10102001);
+        
+        // TODO: delete later
+        buttonTip = GameObject.Find("HealthButton");
     }
 
     private void Update()
@@ -341,7 +371,7 @@ public class PlayerCharacter : Dummy
             ConsumeUltimateEnergy(statistics[StatisticType.FeverDecay] * Time.deltaTime);
         
         KillStreakDecay();
-
+        PowerDashCoolDown();
 
         fsm.Update();
     }
