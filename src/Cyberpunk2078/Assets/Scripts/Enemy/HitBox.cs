@@ -25,13 +25,14 @@ public class HitBox : MonoBehaviour
     public Hit hit;
     public bool isFriendly = false;
     [SerializeField] private int[] effects;
+    [SerializeField] private ContactFilter2D contactFilter = new ContactFilter2D();
 
-    private HitBoxGroup group;
-    private HashSet<int> objectsHit;
+    protected HitBoxGroup group;
+    protected HashSet<int> objectsHit;
 
-    private Coroutine bulletTimeCorotine = null;
+    protected Coroutine bulletTimeCorotine = null;
 
-    
+
     private void Awake()
     {
         HitBoxGroup group = transform.parent.GetComponent<HitBoxGroup>();
@@ -44,7 +45,7 @@ public class HitBox : MonoBehaviour
 
 
         List<Collider2D> list = new List<Collider2D>();
-        int n = GetComponent<Collider2D>().OverlapCollider(new ContactFilter2D(), list);
+        int n = GetComponent<Collider2D>().OverlapCollider(contactFilter, list);
 
         for (int i = 0; i < n; ++i)
             OnTriggerEnter2D(list[i]);
@@ -59,7 +60,7 @@ public class HitBox : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter2D(Collider2D other)
+    protected virtual void OnTriggerEnter2D(Collider2D other)
     {
         if (isFriendly)
         {
@@ -144,7 +145,7 @@ public class HitBox : MonoBehaviour
     }
 
 
-    private SingleEffect CreateRandomEffect(Transform targetTransform)
+    protected SingleEffect CreateRandomEffect(Transform targetTransform)
     {
         SingleEffect effect1 = ObjectRecycler.Singleton.GetObject<SingleEffect>(Random.Range(1,2));
         effect1.transform.position = targetTransform.position - (targetTransform.position - transform.position) * 0.2f;

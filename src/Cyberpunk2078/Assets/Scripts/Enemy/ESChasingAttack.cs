@@ -36,13 +36,23 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
         {
             if (value != isMoving)
             {
+                isMoving = value;
+
+
                 if (value)
                 {
                     if (chasingAnimation != "")
                         animator.Play(chasingAnimation);
+
+                    OnBeginChasing();
                 }
-                else if (idleAnimation != "")
-                    animator.Play(idleAnimation);
+                else
+                {
+                    if (idleAnimation != "")
+                        animator.Play(idleAnimation);
+
+                    OnEndChasing();
+                }
             }
         }
     }
@@ -139,24 +149,36 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
     public override void OnStateEnter(State previousState)
     {
         base.OnStateEnter(previousState);
-//        PlayerCharacter player = GameObject.FindObjectOfType<PlayerCharacter>();
-//        var dir = (player.transform.position - enemy.transform.position ).normalized;
-//        
-//        RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position + new Vector3(0,0.5f,0),dir.x < 0? Vector3.left : Vector3.right, 5f);
-//        if (hit.collider != null && hit.transform.CompareTag("Player"))
-//        {
-//            //hit! Hunch Trigger
-//            PlayerCharacter playerCharacter = hit.collider.GetComponent<PlayerCharacter>();
-//            if (playerCharacter.IsInFeverMode)
-//            {
-//                playerCharacter.ConsumeFever(30);
-//                TimeManager.Instance.startSlowMotion(0.5f);
-//                CameraManager.Instance.FocusAt(playerCharacter.transform,0.2f);
-//                CameraManager.Instance.FlashIn(7f,0.05f,0.15f,0.01f);
-//            }
-//        }
+        //        PlayerCharacter player = GameObject.FindObjectOfType<PlayerCharacter>();
+        //        var dir = (player.transform.position - enemy.transform.position ).normalized;
+        //        
+        //        RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position + new Vector3(0,0.5f,0),dir.x < 0? Vector3.left : Vector3.right, 5f);
+        //        if (hit.collider != null && hit.transform.CompareTag("Player"))
+        //        {
+        //            //hit! Hunch Trigger
+        //            PlayerCharacter playerCharacter = hit.collider.GetComponent<PlayerCharacter>();
+        //            if (playerCharacter.IsInFeverMode)
+        //            {
+        //                playerCharacter.ConsumeFever(30);
+        //                TimeManager.Instance.startSlowMotion(0.5f);
+        //                CameraManager.Instance.FocusAt(playerCharacter.transform,0.2f);
+        //                CameraManager.Instance.FlashIn(7f,0.05f,0.15f,0.01f);
+        //            }
+        //        }
+
+
         isMoving = false;
         t = float.MaxValue;
         previousStateName = previousState.Name;
+    }
+
+
+    protected virtual void OnBeginChasing()
+    {
+    }
+
+
+    protected virtual void OnEndChasing()
+    {
     }
 }
