@@ -7,7 +7,8 @@ public class TimeManager : MonoBehaviour
 {
     // Start is called before the first frame update
     public static TimeManager Instance { get; private set; } = null;
-    public float TimeFactor = 1;
+    
+
     [SerializeField]private float defaultSmoothTime;
     [SerializeField]private float slowMotionFactor;
     [SerializeField]private float targetFXAlpha;
@@ -18,6 +19,33 @@ public class TimeManager : MonoBehaviour
     private float targetScale;
     private float smoothTime;
     private bool triggered;
+    
+    private float timeFactor = 1;
+
+
+    public Event2<float> OnTimeFactorChange { get; private set; } = new Event2<float>();
+    
+    public float TimeFactor
+    {
+        get
+        {
+            return timeFactor;
+        }
+        
+        private set
+        {
+            if (value != timeFactor)
+            {
+                float previousValue = timeFactor;
+
+                timeFactor = value;
+                
+                OnTimeFactorChange.Invoke(value, previousValue);
+            }
+        }
+    }
+
+
     void Awake()
     {
         Instance = this;

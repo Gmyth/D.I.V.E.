@@ -29,7 +29,7 @@ public class Bullet : Recyclable
     private void Update()
     {
         GetComponentInChildren<Animator>().speed = TimeManager.Instance.TimeFactor;
-        GetComponent<LinearMovement>().speed *= TimeManager.Instance.TimeFactor;
+        // GetComponent<LinearMovement>().speed *= TimeManager.Instance.TimeFactor;
 
         if (!disableHunch && lastHitEstimation + hitEstimationTimeInterval < Time.unscaledTime && !hunchTriggered && !isFriendly )
         {

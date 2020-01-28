@@ -16,6 +16,12 @@ TagManager:
   - EnemyHitBox
   - PlayerAttack
   - GrappleHook
+  - Enemy
+  - ExplosionFX
+  - ground
+  - Obstacle
+  - HealthBar
+  - BombPickup
   layers:
   - Default
   - TransparentFX
@@ -32,7 +38,7 @@ TagManager:
   - Platform
   - Interactive
   - SoulBall
-  - 
+  - Fragment
   - PlayerHitBox
   - EnemyHitBox
   - 
