@@ -72,6 +72,7 @@ public class L2ShieldBossState_DiveBomb : ESChargedAttack<L2ShieldBoss>
                     if (playerCharacter.IsOnGround(0.12f, -0.7f, 0.6f))
                     {
                         Hit hit = new Hit();
+                        hit.type = Hit.Type.Melee;
                         hit.source = enemy;
                         hit.damage = damage;
                         hit.knockback = knockback;

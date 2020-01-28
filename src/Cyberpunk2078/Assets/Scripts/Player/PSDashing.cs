@@ -244,15 +244,14 @@ public class PSDashing : PlayerState
 
 
         var attack = ObjectRecycler.Singleton.GetObject<SingleEffect>(6);
-        attack.transform.position = playerCharacter.transform.position +  direction * 0.5f;
-        
+        attack.GetComponentInChildren<HitBox>().hit.source = playerCharacter;
         attack.setTarget(playerCharacter.transform);
+        attack.transform.position = playerCharacter.transform.position + direction * 0.5f;
         attack.transform.parent = playerCharacter.transform;
         attack.transform.right = direction;
         attack.transform.localScale = new Vector3(4,4,1);
         attack.gameObject.SetActive(true);
         
-        attack.GetComponentInChildren<HitBox>().hit.source = playerCharacter;
 
         var Dust = ObjectRecycler.Singleton.GetObject<SingleEffect>(9);
         Dust.transform.position = playerCharacter.transform.position +  direction * 0.5f;
@@ -277,8 +276,5 @@ public class PSDashing : PlayerState
 
         //Camera Tricks
         CameraManager.Instance.Shaking(0.1f,0.10f);
-
     }
-
-
 }

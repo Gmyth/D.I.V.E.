@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 [CreateAssetMenuAttribute(fileName = "PS_Attack_GH", menuName = "Player State/Attack GH")]
@@ -23,6 +21,14 @@ public class PSAttackGH: PlayerState
     private float t0 = 0;
     private float defaultDrag;
 
+
+    public override void Initialize(int index, PlayerCharacter playerCharacter)
+    {
+        base.Initialize(index, playerCharacter);
+
+
+        SplashFX.GetComponentInChildren<HitBox>().hit.source = playerCharacter;
+    }
 
     public override string Update()
     {
@@ -138,7 +144,7 @@ public class PSAttackGH: PlayerState
         attack.transform.position = playerCharacter.transform.position;
         attack.transform.right = direction;
         attack.transform.parent = playerCharacter.transform;
-        attack.GetComponentInChildren<HitBox>().hit.source = playerCharacter;
+        //attack.GetComponentInChildren<HitBox>().hit.source = playerCharacter;
 
         Destroy(attack, 0.2f);
 

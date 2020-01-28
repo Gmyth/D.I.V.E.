@@ -76,15 +76,17 @@ public class DroneState_Patrolling : ESPatrolling<Drone>
 
     protected override void Fire(RangedWeaponConfiguration firingConfiguration)
     {
-        LinearMovement bullet = ObjectRecycler.Singleton.GetObject<LinearMovement>(firingConfiguration.BulletID);
-        bullet.speed = firingConfiguration.BulletSpeed;
-        bullet.initialPosition = firingConfiguration.Muzzle ? firingConfiguration.Muzzle.position : enemy.transform.position;
-        bullet.orientation = enemy.GetDeviatedBulletDirection(firingConfiguration.MinDeviationAngle, firingConfiguration.MaxDeviationAngle);
+        Bullet bullet = ObjectRecycler.Singleton.GetObject<Bullet>(firingConfiguration.BulletID);
+        bullet.hit.source = enemy;
+        bullet.isFriendly = false;
 
-        bullet.GetComponent<Bullet>().isFriendly = false;
-        bullet.transform.right = bullet.orientation;
 
-        bullet.gameObject.SetActive(true);
+        LinearMovement bulletMovement = bullet.GetComponent<LinearMovement>();
+        bulletMovement.speed = firingConfiguration.BulletSpeed;
+        bulletMovement.initialPosition = firingConfiguration.Muzzle ? firingConfiguration.Muzzle.position : enemy.transform.position;
+        bulletMovement.orientation = enemy.GetDeviatedBulletDirection(firingConfiguration.MinDeviationAngle, firingConfiguration.MaxDeviationAngle);
+        bulletMovement.transform.right = bulletMovement.orientation;
+        bulletMovement.gameObject.SetActive(true);
 
 
         enemy.isGunCharging = false;

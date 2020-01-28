@@ -5,6 +5,14 @@ public class L2ShieldBoss : Enemy
 {
     public override float ApplyDamage(float rawDamage)
     {
+        if (isEvading)
+        {
+            Debug.LogFormat("[L2ShieldBoss] Blocked an incoming attack.");
+            isEvading = false;
+            return 0;
+        }
+
+
         if (isInvulnerable)
         {
             ApplyFatigue(rawDamage);
@@ -32,13 +40,13 @@ public class L2ShieldBoss : Enemy
             return 0;
 
 
-        float fatigue = rawFatigue * (1 + statistics.Sum(AttributeType.Fatigue_p0)) * (1 + statistics.Sum(AttributeType.Fatigue_p1));
+        float fatigue = rawFatigue * statistics.Sum(AttributeType.Fatigue_p0) * (1 + statistics.Sum(AttributeType.Fatigue_p1));
 
 
         StatisticModificationResult result = statistics.Modify(StatisticType.Fatigue, fatigue, 0, statistics[StatisticType.MaxFatigue]);
 
 
-        Debug.LogWarningFormat("[L2ShieldBoss] Fatigue: {0} / {1}", result.currentValue, statistics[StatisticType.MaxFatigue]);
+        Debug.LogFormat("[L2ShieldBoss] Fatigue: {0} / {1}", result.currentValue, statistics[StatisticType.MaxFatigue]);
 
 
         if (result.currentValue >= statistics[StatisticType.MaxFatigue])
@@ -62,8 +70,29 @@ public class L2ShieldBoss : Enemy
         base.Start();
 
 
+        OnHit.AddListener(Guard);
+
+
         currentTarget = PlayerCharacter.Singleton;
 
         isInvulnerable = true;
+    }
+
+
+    private void Guard(Hit hit)
+    {
+        switch (hit.type)
+        {
+            case Hit.Type.Melee:
+                if (Vector3.Angle(transform.localScale.x * transform.right, hit.source.transform.position - transform.position) < 90)
+                    isEvading = true;
+                break;
+
+
+            case Hit.Type.Projectile:
+                if (Vector3.Angle(transform.localScale.x * transform.right, -hit.bullet.GetComponent<LinearMovement>().orientation) < 90)
+                    isEvading = true;
+                break;
+        }
     }
 }

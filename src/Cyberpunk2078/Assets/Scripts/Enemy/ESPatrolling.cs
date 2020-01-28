@@ -348,15 +348,18 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
 
     protected virtual void Fire(RangedWeaponConfiguration firingConfiguration)
     {
-        LinearMovement bullet = ObjectRecycler.Singleton.GetObject<LinearMovement>(firingConfiguration.BulletID);
-        bullet.speed = firingConfiguration.BulletSpeed;
-        bullet.initialPosition = firingConfiguration.Muzzle ? firingConfiguration.Muzzle.position : enemy.transform.position;
-        bullet.orientation = (enemy.currentTarget.transform.position - bullet.initialPosition).normalized;
+        Bullet bullet = ObjectRecycler.Singleton.GetObject<Bullet>(firingConfiguration.BulletID);
+        bullet.hit.source = enemy;
+        bullet.isFriendly = false;
 
-        bullet.GetComponent<Bullet>().isFriendly = false;
-        bullet.transform.right = bullet.orientation;
 
-        bullet.gameObject.SetActive(true);
+        LinearMovement bulletMovement = bullet.GetComponent<LinearMovement>();
+        bulletMovement.speed = firingConfiguration.BulletSpeed;
+        bulletMovement.initialPosition = firingConfiguration.Muzzle ? firingConfiguration.Muzzle.position : enemy.transform.position;
+        bulletMovement.orientation = (enemy.currentTarget.transform.position - bulletMovement.initialPosition).normalized;
+        bulletMovement.GetComponent<Bullet>().isFriendly = false;
+        bulletMovement.transform.right = bulletMovement.orientation;
+        bulletMovement.gameObject.SetActive(true);
     }
 
 

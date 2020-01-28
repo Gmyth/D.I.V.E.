@@ -4,7 +4,16 @@ using UnityEngine;
 
 [System.Serializable] public struct Hit
 {
+    public enum Type : int
+    {
+        Melee = 0,
+        Projectile = 1,
+    }
+
+
+    public Type type;
     public Dummy source;
+    public Bullet bullet;
     public float damage;
     public float knockback;
 }

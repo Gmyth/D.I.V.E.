@@ -1,6 +1,6 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Random = UnityEngine.Random;
+
 
 [RequireComponent(typeof(Collider2D), typeof(Rigidbody2D))]
 public class Bullet : Recyclable
@@ -8,6 +8,7 @@ public class Bullet : Recyclable
     public bool isFriendly = false;
     public int numHits = 1;
     public int rawDamage = 1;
+    public Hit hit;
 
     [SerializeField] private float hitEstimationTimeInterval = 0.02f;
 
@@ -23,6 +24,12 @@ public class Bullet : Recyclable
         base.OnEnable();
         hunchTriggered = false;
         numHitsRemaining = numHits;
+    }
+
+
+    private void Start()
+    {
+        hit.bullet = this;
     }
 
     private void Update()
@@ -71,24 +78,32 @@ public class Bullet : Recyclable
         {
             if (other.tag == "Dummy")
             {
-                CameraManager.Instance.Shaking(0.20f,0.05f);
+                Dummy enemy = other.GetComponent<Dummy>();
 
-                other.GetComponent<Dummy>().ApplyDamage(rawDamage);
-                --numHitsRemaining;
+
+                enemy.OnHit?.Invoke(hit);
+
                 
+                enemy.ApplyDamage(rawDamage);
+                --numHitsRemaining;
+
+
+                CameraManager.Instance.Shaking(0.20f, 0.05f);
                 TimeManager.Instance.endSlowMotion();
                 CameraManager.Instance.Idle();
 
-                SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
-                Hit.transform.position = other.transform.position - (other.transform.position - transform.position) * 0.2f;
-                Hit.transform.right = transform.right;
-                Hit.transform.position = other.transform.position + (transform.position  - other.transform.position) * 0.5f;
-                Hit.transform.localScale = Vector3.one;
+                SingleEffect hitFx = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
+                hitFx.transform.position = other.transform.position - (other.transform.position - transform.position) * 0.2f;
+                hitFx.transform.right = transform.right;
+                hitFx.transform.position = other.transform.position + (transform.position  - other.transform.position) * 0.5f;
+                hitFx.transform.localScale = Vector3.one;
 
-                Hit.gameObject.SetActive(true);
+                hitFx.gameObject.SetActive(true);
+
 
                 Die();
-            }else if (other.tag == "Ground")
+            }
+            else if (other.tag == "Ground")
             {
                 SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
                 Hit.transform.right = transform.right;

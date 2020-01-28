@@ -37,7 +37,7 @@ public class L2ShieldBossState_KnockedBack : EnemyState<L2ShieldBoss>
         t_recovery = Time.time + duration;
 
 
-        enemy.statusModifiers.Set(AttributeType.Fatigue_p1, -0.5f);
+        enemy.statusModifiers.Set(AttributeType.Fatigue_p1, -0.8f);
 
 
         animator.Play("L2ShieldBoss_KnockBack");

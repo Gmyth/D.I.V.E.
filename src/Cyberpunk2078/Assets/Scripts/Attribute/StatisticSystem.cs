@@ -137,6 +137,7 @@ public class StatisticSystem
 
 
             case StatisticType.MaxFatigue:
+                Debug.LogWarning(AttributeSet.Sum(AttributeType.MaxFatigue_m0, attributeSets));
                 return Mathf.Min(AttributeSet.Sum(AttributeType.MaxFatigue_c2, attributeSets), AttributeSet.Sum(AttributeType.MaxFatigue_c0, attributeSets) + AttributeSet.Sum(AttributeType.MaxFatigue_m0, attributeSets) * AttributeSet.Sum(AttributeType.MaxFatigue_c1, attributeSets));
 
 
@@ -228,7 +229,7 @@ public class StatisticSystem
         this.attributeSets = attributeSets;
 
         foreach (IAttributeCollection attributeSet in attributeSets)
-            attributeSet.OnAttributeChange?.AddListener(UpdateChangedStatistics);
+            attributeSet.OnAttributeChange.AddListener(UpdateChangedStatistics);
 
         UpdateChangedStatistics(this.attributeSets);
     }

@@ -105,15 +105,17 @@ public class Drone : Enemy, IPatroller
 
     public void Fire(bool hasDeviation = true)
     {
-        LinearMovement bullet = ObjectRecycler.Singleton.GetObject<LinearMovement>(patrolFiringConfiguration.BulletID);
-        bullet.speed = patrolFiringConfiguration.BulletSpeed;
-        bullet.initialPosition = patrolFiringConfiguration.Muzzle ? patrolFiringConfiguration.Muzzle.position : transform.position;
-        bullet.orientation = hasDeviation ? GetDeviatedBulletDirection(patrolFiringConfiguration.MinDeviationAngle, patrolFiringConfiguration.MaxDeviationAngle) : AimingDirection;
+        Bullet bullet = ObjectRecycler.Singleton.GetObject<Bullet>(patrolFiringConfiguration.BulletID);
+        bullet.hit.source = this;
+        bullet.isFriendly = false;
 
-        bullet.GetComponent<Bullet>().isFriendly = false;
-        bullet.transform.right = bullet.orientation;
 
-        bullet.gameObject.SetActive(true);
+        LinearMovement bulletMovement = bullet.GetComponent<LinearMovement>();
+        bulletMovement.speed = patrolFiringConfiguration.BulletSpeed;
+        bulletMovement.initialPosition = patrolFiringConfiguration.Muzzle ? patrolFiringConfiguration.Muzzle.position : transform.position;
+        bulletMovement.orientation = hasDeviation ? GetDeviatedBulletDirection(patrolFiringConfiguration.MinDeviationAngle, patrolFiringConfiguration.MaxDeviationAngle) : AimingDirection;
+        bulletMovement.transform.right = bulletMovement.orientation;
+        bulletMovement.gameObject.SetActive(true);
     }
 
     public void Fire(Vector3 position, bool hasDeviation = true)
@@ -121,15 +123,16 @@ public class Drone : Enemy, IPatroller
         Vector3 aimDirection = Aim(position);
 
 
-        LinearMovement bullet = ObjectRecycler.Singleton.GetObject<LinearMovement>(patrolFiringConfiguration.BulletID);
-        bullet.speed = patrolFiringConfiguration.BulletSpeed;
-        bullet.initialPosition = patrolFiringConfiguration.Muzzle ? patrolFiringConfiguration.Muzzle.position : transform.position;
-        bullet.orientation = hasDeviation ? GetDeviatedBulletDirection(patrolFiringConfiguration.MinDeviationAngle, patrolFiringConfiguration.MaxDeviationAngle) : aimDirection;
+        Bullet bullet = ObjectRecycler.Singleton.GetObject<Bullet>(patrolFiringConfiguration.BulletID);
+        bullet.hit.source = this;
+        bullet.isFriendly = false;
 
-        bullet.GetComponent<Bullet>().isFriendly = false;
-        bullet.transform.right = bullet.orientation;
-
-        bullet.gameObject.SetActive(true);
+        LinearMovement bulletMovement = bullet.GetComponent<LinearMovement>();
+        bulletMovement.speed = patrolFiringConfiguration.BulletSpeed;
+        bulletMovement.initialPosition = patrolFiringConfiguration.Muzzle ? patrolFiringConfiguration.Muzzle.position : transform.position;
+        bulletMovement.orientation = hasDeviation ? GetDeviatedBulletDirection(patrolFiringConfiguration.MinDeviationAngle, patrolFiringConfiguration.MaxDeviationAngle) : aimDirection;
+        bulletMovement.transform.right = bulletMovement.orientation;
+        bulletMovement.gameObject.SetActive(true);
     }
 
 
