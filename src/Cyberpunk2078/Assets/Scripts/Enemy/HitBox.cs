@@ -8,6 +8,7 @@ using UnityEngine;
     {
         Melee = 0,
         Projectile = 1,
+        CounterAttack = 2,
     }
 
 

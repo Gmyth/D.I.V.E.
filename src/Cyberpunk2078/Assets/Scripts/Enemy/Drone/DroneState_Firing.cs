@@ -34,7 +34,7 @@ public class DroneState_Firing : ESChargedAttack<Drone>
         rigidbody.velocity = Vector2.zero;
 
 
-        AdjustFacingDirection((enemy.currentTarget.transform.position - enemy.transform.position).x > 0 ? Vector3.right : Vector3.left);
+        AdjustFacingDirection();
 
 
         enemy.Aim(enemy.currentTarget.transform.position);

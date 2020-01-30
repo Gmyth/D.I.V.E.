@@ -6,6 +6,9 @@ public class L2ShieldBossState_Alert : ESAlert<L2ShieldBoss>
 {
     public override string Update()
     {
+        AdjustFacingDirection();
+
+
         if (Time.time >= t_finishWait)
         {
             float r = Random.Range(0, 100);

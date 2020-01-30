@@ -182,6 +182,14 @@ public abstract class Enemy : Dummy
         }
     }
 
+    public FSMEnemy FSM
+    {
+        get
+        {
+            return fsm;
+        }
+    }
+
 
     public void EnableHitBox(int index)
     {

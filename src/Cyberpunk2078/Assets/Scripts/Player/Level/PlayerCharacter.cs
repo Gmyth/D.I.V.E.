@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -65,6 +63,8 @@ public class PlayerCharacter : Dummy
         direction = ((direction.x > 0 ? groundNormal.Right().normalized : groundNormal.Left().normalized) + groundNormal).normalized * force;
         rigidbody.velocity = Vector2.zero;
         rigidbody.AddForce(direction);
+
+
         Player.CurrentPlayer.knockBackDuration = duration;
         fsm.CurrentStateName = "Knockback";
     }

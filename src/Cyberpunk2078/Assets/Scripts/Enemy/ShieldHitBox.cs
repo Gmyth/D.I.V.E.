@@ -1,27 +1,25 @@
 ﻿using UnityEngine;
 
 
-public class ShieldHitBox : HitBox
+public abstract class ShieldHitBox : HitBox
 {
     protected override void OnTriggerEnter2D(Collider2D other)
     {
         if (isFriendly)
         {
+            if (other.tag == "EnemyHitBox")
+                OnHitEnemyHitBox((Enemy)other.GetComponent<HitBox>().hit.source);
         }
         else if (other.tag == "PlayerHitBox")
-        {
-            PlayerCharacter player = (PlayerCharacter)other.GetComponent<HitBox>().hit.source;
+            OnHitPlayerHitBox((PlayerCharacter)other.GetComponent<HitBox>().hit.source);
+    }
 
 
-            hit.source.OnAttack.Invoke();
-            player.OnHit?.Invoke(hit);
+    protected virtual void OnHitEnemyHitBox(Enemy enemy)
+    {
+    }
 
-
-            if (hit.knockback > 0)
-                player.Knockback(hit.source.transform.position, hit.knockback, 0.5f);
-
-
-            player.ApplyDamage(hit.damage);
-        }
+    protected virtual void OnHitPlayerHitBox(PlayerCharacter player)
+    {
     }
 }

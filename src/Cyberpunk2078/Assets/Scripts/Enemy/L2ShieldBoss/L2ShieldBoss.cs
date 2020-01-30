@@ -15,7 +15,7 @@ public class L2ShieldBoss : Enemy
 
         if (isInvulnerable)
         {
-            ApplyFatigue(rawDamage);
+            ApplyFatigue(rawDamage * statistics.Sum(AttributeType.Fatigue_p0) * (1 + statistics.Sum(AttributeType.Fatigue_p1)));
             return 0;
         }
 
@@ -40,10 +40,7 @@ public class L2ShieldBoss : Enemy
             return 0;
 
 
-        float fatigue = rawFatigue * statistics.Sum(AttributeType.Fatigue_p0) * (1 + statistics.Sum(AttributeType.Fatigue_p1));
-
-
-        StatisticModificationResult result = statistics.Modify(StatisticType.Fatigue, fatigue, 0, statistics[StatisticType.MaxFatigue]);
+        StatisticModificationResult result = statistics.Modify(StatisticType.Fatigue, rawFatigue, 0, statistics[StatisticType.MaxFatigue]);
 
 
         Debug.LogFormat("[L2ShieldBoss] Fatigue: {0} / {1}", result.currentValue, statistics[StatisticType.MaxFatigue]);

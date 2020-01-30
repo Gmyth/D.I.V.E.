@@ -4,7 +4,7 @@
 [CreateAssetMenuAttribute(fileName = "ES_Idle", menuName = "Enemy State/Idle")]
 public class ESIdle : EnemyState
 {
-    private Enemy enemy;
+    protected Enemy enemy;
 
 
     public override void Initialize(int index, Enemy enemy)
@@ -20,7 +20,7 @@ public class ESIdle : EnemyState
         enemy.currentTarget = FindAvailableTarget(enemy.transform.position, enemy[StatisticType.SightRange], enemy.GuardZone);
 
         if (enemy.currentTarget)
-            return "Idle";
+            return "Alert";
 
 
         return Name;

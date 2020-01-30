@@ -239,7 +239,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
             if (enemy.currentTarget)
             {
                 if (alwaysFacingTarget)
-                    AdjustFacingDirection((enemy.currentTarget.transform.position - enemy.transform.position).x > 0 ? Vector3.right : Vector3.left);
+                    AdjustFacingDirection();
 
 
                 if (t >= t_nextFire)

@@ -115,6 +115,12 @@ public abstract class EnemyState<T> : EnemyState where T : Enemy
         return Vector2.zero;
     }
 
+
+    protected void AdjustFacingDirection()
+    {
+        AdjustFacingDirection(enemy.currentTarget.transform.position - enemy.transform.position);
+    }
+
     protected void AdjustFacingDirection(Vector3 direction)
     {
         Vector3 scale = enemy.transform.localScale;
@@ -161,6 +167,7 @@ public class FSMEnemy : FiniteStateMachine<EnemyState>
 
                 string previousStateName = currentStateName;
                 EnemyState previousState = states[previousStateName];
+
 
                 CurrentState.OnStateQuit(states[value]);
 

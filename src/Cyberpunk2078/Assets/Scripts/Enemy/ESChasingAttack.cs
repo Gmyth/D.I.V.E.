@@ -102,7 +102,7 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
 
                     if (playerPosition.y - enemyPosition.y <= attackHeight) // Check if the target is low enough to get hit
                     {
-                        AdjustFacingDirection(d.x > 0 ? Vector2.right : Vector2.left);
+                        AdjustFacingDirection(d);
 
 
                         t = Time.time;
@@ -110,6 +110,9 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
 
                         if (attackAnimation != "")
                             animator.Play(attackAnimation, -1, 0f);
+
+
+                        Attack();
                     }
                 }
                 else
@@ -177,8 +180,11 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
     {
     }
 
-
     protected virtual void OnEndChasing()
+    {
+    }
+
+    protected virtual void Attack()
     {
     }
 }

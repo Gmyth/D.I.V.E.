@@ -35,7 +35,7 @@ public class DroneState_Patrolling : ESPatrolling<Drone>
 
 
                 if (t < t_finishSearching)
-                    AdjustFacingDirection((enemy.currentTarget.transform.position - enemy.transform.position).x > 0 ? Vector3.right : Vector3.left);
+                    AdjustFacingDirection();
                 else
                 {
                     enemy.currentTarget = null;

@@ -9,14 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b170d2cea7ec214fa739fe550c92f4b, type: 3}
-  m_Name: L2ShieldBossState_Alert
+  m_Script: {fileID: 11500000, guid: a6efe48e416ea8b4eac2a690d1bc3622, type: 3}
+  m_Name: L2ShieldBossState_PowerGuard
   m_EditorClassIdentifier: 
-  stateName: Alert
-  waitTime: 1
-  animation: L2ShieldBoss_Guard
-  states_attacks:
-  - ChasingShieldSlam
-  - ChargedDash
-  - DiveBomb
-  state_onTargetLoss: 
+  stateName: PowerGuard
+  hitBox: 3
+  duration: 1

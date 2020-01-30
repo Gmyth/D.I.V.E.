@@ -39,6 +39,12 @@ public abstract class ESAttack<T> : EnemyState<T> where T : Enemy
         enemy.currentHit = hit;
     }
 
+    public override void OnStateQuit(State nextState)
+    {
+        if (hitBox >= 0)
+            enemy.DisableHitBox(hitBox);
+    }
+
 
     protected virtual float CalculateAttackDamage()
     {

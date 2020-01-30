@@ -137,7 +137,6 @@ public class StatisticSystem
 
 
             case StatisticType.MaxFatigue:
-                Debug.LogWarning(AttributeSet.Sum(AttributeType.MaxFatigue_m0, attributeSets));
                 return Mathf.Min(AttributeSet.Sum(AttributeType.MaxFatigue_c2, attributeSets), AttributeSet.Sum(AttributeType.MaxFatigue_c0, attributeSets) + AttributeSet.Sum(AttributeType.MaxFatigue_m0, attributeSets) * AttributeSet.Sum(AttributeType.MaxFatigue_c1, attributeSets));
 
 

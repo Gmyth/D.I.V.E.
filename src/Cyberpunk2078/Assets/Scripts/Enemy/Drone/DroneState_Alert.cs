@@ -48,7 +48,7 @@ public class DroneState_Alert : ESAlert<Drone>
         }
         else
         {
-            AdjustFacingDirection((enemy.currentTarget.transform.position - enemy.transform.position).x > 0 ? Vector3.right : Vector3.left);
+            AdjustFacingDirection();
 
 
             if (d < enemy.NearRange + 0.5f) // Always fire before getting to close or far
