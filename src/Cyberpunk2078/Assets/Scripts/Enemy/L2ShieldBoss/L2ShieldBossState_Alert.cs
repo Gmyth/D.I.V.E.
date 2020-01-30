@@ -42,4 +42,12 @@ public class L2ShieldBossState_Alert : ESAlert<L2ShieldBoss>
 
         return Name;
     }
+
+    public override void OnStateQuit(State nextState)
+    {
+        base.OnStateQuit(nextState);
+
+
+        enemy.DisableHitBox(3);
+    }
 }

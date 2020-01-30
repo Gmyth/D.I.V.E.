@@ -36,7 +36,9 @@ public class Player
     
     public float knockBackDuration;
 
-    public float FeverFactor = 1.5f;
+    public float FeverFactor = 1.3f;
+    
+    
 
 
     public float this[AttributeType type]
@@ -53,9 +55,10 @@ public class Player
         float normalEnergyCap = 1, 
         float overloadEnergyCap = 1,
         float feverEnergyCap = 100, 
-        float feverDecayRate = 20, 
+        float feverDecayRate = 0, 
         float killStreakCap = 2,
-        float killStreakDecay = 4
+        float killStreakDecay = 4,
+        float powerDashCoolDown = 6
     )
     {
         inventory = new Inventory();
@@ -67,7 +70,7 @@ public class Player
         attributes.Set(AttributeType.FeverDecay_c0, feverDecayRate);
         attributes.Set(AttributeType.MaxKs_c0, killStreakCap);
         attributes.Set(AttributeType.KsDecay_c0, killStreakDecay);
-
+        attributes.Set(AttributeType.PDCoolDown_c0, powerDashCoolDown);
         energyLocked = false;
         overloadEnergyLocked = false;
         secondJumpReady = true;

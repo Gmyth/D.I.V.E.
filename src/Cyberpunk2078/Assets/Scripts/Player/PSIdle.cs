@@ -43,6 +43,13 @@ public class PSIdle : PlayerState
             Player.CurrentPlayer.triggerReady = false;
             return "Dashing";
         }
+        
+        if (Input.GetButtonDown("Special1"))
+        {
+            Player.CurrentPlayer.triggerReady = false;
+            PlayerCharacter.Singleton.PowerDash = true;
+            return "Dashing";
+        }
 
 
         return Name;

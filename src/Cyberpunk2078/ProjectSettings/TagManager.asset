@@ -6,7 +6,6 @@ TagManager:
   tags:
   - Dummy
   - Ground
-  - PlayerAtk
   - Shield
   - Ladder
   - Bullet
@@ -16,6 +15,7 @@ TagManager:
   - PlayerHitBox
   - EnemyHitBox
   - PlayerAttack
+  - GrappleHook
   layers:
   - Default
   - TransparentFX

@@ -16,7 +16,7 @@ MonoBehaviour:
   motionID: -1
   damage: 1
   knockback: 0
-  hitBox: -1
+  hitBox: 4
   motionTime: 1
   animation: L2ShieldBoss_ShieldAttack1
   state_afterAttack: Alert

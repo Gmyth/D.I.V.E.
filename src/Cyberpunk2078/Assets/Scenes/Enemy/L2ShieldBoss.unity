@@ -2011,6 +2011,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isInvulnerable: 1
   isEvading: 0
+  UnitTimeFactor: 1
   typeID: 67
   fsm: {fileID: 11400000, guid: b39545213b4965c4fa0d4dc34734f41d, type: 2}
   guardZone:
@@ -2470,12 +2471,12 @@ PrefabInstance:
     - target: {fileID: 7457358083262120160, guid: 30f904e572c0a79489e3033eaff79c6a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.13
+      value: 13.26
       objectReference: {fileID: 0}
     - target: {fileID: 7457358083262120160, guid: 30f904e572c0a79489e3033eaff79c6a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.14
+      value: 0.88
       objectReference: {fileID: 0}
     - target: {fileID: 7457358083262120160, guid: 30f904e572c0a79489e3033eaff79c6a,
         type: 3}
@@ -3064,6 +3065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6b8519f683e03541b63030f8f04c5a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TimeFactor: 1
   defaultSmoothTime: 0
   slowMotionFactor: 0.3
   targetFXAlpha: 0

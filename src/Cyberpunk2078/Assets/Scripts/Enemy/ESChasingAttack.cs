@@ -70,7 +70,6 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
     public override string Update()
     {
         float dt = Time.time - t;
-        
 
         if (dt < 0) // Check if the attack has not been made
         {
@@ -123,7 +122,7 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
                         direction = d.x > 0 ? Vector2.right : Vector2.left;
 
 
-                    rigidbody.velocity = direction * chasingSpeed;
+                    rigidbody.velocity = direction * chasingSpeed * TimeManager.Instance.TimeFactor * enemy.UnitTimeFactor;
 
 
                     IsMoving = true;

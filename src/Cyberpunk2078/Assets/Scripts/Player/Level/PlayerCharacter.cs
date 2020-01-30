@@ -1,5 +1,7 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 
 public class PlayerCharacter : Dummy
@@ -11,6 +13,8 @@ public class PlayerCharacter : Dummy
 
     public Transform SpriteHolder;
     public GameObject groundDust;
+    public GameObject FeverVFX;
+    public GameObject Spark;
     //public GUITutorial tutorial;
 
     public bool isInTutorial;
@@ -44,6 +48,11 @@ public class PlayerCharacter : Dummy
 
     public bool InKillStreak { get; private set; } = false;
     
+    public bool PowerDash = false;
+    public bool PowerDashReady = true;
+    public float LastPowerDash;
+
+    private GameObject buttonTip;
     public bool InFever { get; private set; } = false;
     public bool MaxUltimateEnergy { get; private set; }
     //public PlayerCharacter(Player player)
@@ -118,9 +127,11 @@ public class PlayerCharacter : Dummy
     {
         if (statistics[StatisticType.UltimateEnergy] > 30f && !InFever)
         {
+            FeverVFX.SetActive(true);
             InFever = true;
             CameraManager.Instance.FlashIn(7,0.05f,0.05f,0.05f);
             AddOverLoadEnergy(1);
+            TimeManager.Instance.StartFeverMotion();
         }
         return InFever;
         
@@ -213,7 +224,9 @@ public class PlayerCharacter : Dummy
         if (result.currentValue <= 0 && InFever)
         {
             InFever = false;
+            FeverVFX.SetActive(false);
             GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").DehighlightFeverBar();
+            TimeManager.Instance.EndFeverMotion();
         }
         return true;
     }
@@ -240,20 +253,40 @@ public class PlayerCharacter : Dummy
             }
         }
     }
+
+    public void PowerDashCoolDown()
+    {
+        if (!PowerDashReady)
+        {
+            if(LastPowerDash + statistics[StatisticType.PDCoolDown] < Time.unscaledTime)
+            {
+                PowerDashReady = true;
+                buttonTip.SetActive(true);
+            }
+            else
+            {
+                buttonTip.SetActive(false);
+            }
+        }
+
+    }
+
+    public bool AddKillCount(float amount)
+    {
+        StatisticModificationResult result = statistics.Modify(StatisticType.KsCount, amount, 0, statistics[StatisticType.MaxKs]);
     
-     public bool AddKillCount(float amount)
-     {
-         StatisticModificationResult result = statistics.Modify(StatisticType.KsCount, amount, 0, statistics[StatisticType.MaxKs]);
-    
-         if (result.currentValue >= statistics[StatisticType.MaxKs])
+        if (result.currentValue >= statistics[StatisticType.MaxKs])
              
-             ActivateKillStreak();
-         else
-             DeactivateKillStreak();
+            ActivateKillStreak();
+        else
+            DeactivateKillStreak();
          
-         lastKillStreakDecaySecond = Time.time;
-         return true;
-     }
+
+        lastKillStreakDecaySecond = Time.time;
+
+
+        return true;
+    }
     
     public void ActivateKillStreak()
     {
@@ -262,7 +295,7 @@ public class PlayerCharacter : Dummy
         
         InKillStreak = true;
         SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
-        
+        TimeManager.Instance.startSlowMotion(0.5f);
         GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").ShowText("Kill Streak!!!");
     }
 
@@ -328,6 +361,9 @@ public class PlayerCharacter : Dummy
         GUIManager.Singleton.Open("HUD", this);
         
         //StartDialogue(10102001);
+        
+        // TODO: delete later
+        buttonTip = GameObject.Find("HealthButton");
     }
 
     private void Update()
@@ -336,7 +372,7 @@ public class PlayerCharacter : Dummy
             ConsumeUltimateEnergy(statistics[StatisticType.FeverDecay] * Time.deltaTime);
         
         KillStreakDecay();
-
+        PowerDashCoolDown();
 
         fsm.Update();
     }

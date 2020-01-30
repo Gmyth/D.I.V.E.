@@ -80,6 +80,9 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
         Vector3 enemyPosition = enemy.transform.position;
 
 
+        animator.speed = TimeManager.Instance.TimeFactor * enemy.UnitTimeFactor;
+
+
         if (state_onTargetFound != "")
         {
             PlayerCharacter target = FindAvailableTarget(enemyPosition, enemy[StatisticType.SightRange], enemy.GuardZone);
@@ -146,8 +149,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
                             AdjustFacingDirection(direction);
 
 
-                            rigidbody.velocity = direction * speed;
-
+                            rigidbody.velocity = direction * speed * TimeManager.Instance.TimeFactor * enemy.UnitTimeFactor;
                             IsMoving = true;
                         }
                     }

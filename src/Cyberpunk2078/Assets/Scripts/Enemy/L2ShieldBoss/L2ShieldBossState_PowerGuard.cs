@@ -5,11 +5,14 @@
 public class L2ShieldBossState_PowerGuard : EnemyState<L2ShieldBoss>
 {
     [SerializeField] private int hitBox = 3;
-    [SerializeField] private float duration = 1f;
+    [SerializeField] private float knockbackDuration = 1f;
+    [SerializeField] private float counterAttackStartTime = 0.5f;
     
     private Animator animator;
 
     private float t_finish = 0;
+    private float t_counterAttack = 0;
+    private float r = 0;
 
 
     public override void Initialize(L2ShieldBoss enemy)
@@ -25,7 +28,11 @@ public class L2ShieldBossState_PowerGuard : EnemyState<L2ShieldBoss>
         base.OnStateEnter(previousState);
 
 
-        t_finish = Time.time + duration;
+        float t = Time.time;
+
+        t_finish = t + knockbackDuration;
+        t_counterAttack = t + counterAttackStartTime;
+        r = Random.Range(0, 100);
 
 
         enemy.EnableHitBox(hitBox);
@@ -49,11 +56,8 @@ public class L2ShieldBossState_PowerGuard : EnemyState<L2ShieldBoss>
         float t = Time.time;
 
 
-        if (t >= t_finish)
+        if (t >= t_counterAttack)
         {
-            float r = Random.Range(0, 100);
-
-
             if (r <= 15)
                 return "ChargedDash";
 
@@ -63,10 +67,11 @@ public class L2ShieldBossState_PowerGuard : EnemyState<L2ShieldBoss>
 
             if (r <= 50 && Mathf.Abs(d.x) < 2.5f)
                 return "CounterAttack";
-
-
-            return "Alert";
         }
+
+
+        if (t >= t_finish)
+            return "Alert";
 
 
         return Name;

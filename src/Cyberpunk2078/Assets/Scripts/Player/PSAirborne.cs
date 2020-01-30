@@ -29,6 +29,8 @@ public class PSAirborne : PlayerState
             //TODO add another ultimate
             playerCharacter.ActivateFever();
         }
+        
+
 
         if (Input.GetButtonDown("Attack1"))
         {
@@ -59,35 +61,45 @@ public class PSAirborne : PlayerState
             Player.CurrentPlayer.triggerReady = false;
             return "Dashing";
         }
-
-
-        switch (GetGroundType())
+        
+        // temp code
+        if (Input.GetButtonDown("Special1"))
         {
-            case 1:
-                return (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("HorizontalJoyStick") != 0) ? "Moving" : "Idle";
-
-
-            case 2:
-                Player.CurrentPlayer.jumpForceGate = true;
-
-                if (Mathf.Abs(rb2d.velocity.x) < 0.5)
-                {
-                    rb2d.velocity = Vector2.zero;
-
-                    rb2d.AddForce(Global.enemyHeadJumpVerticalForce * playerCharacter.transform.up + Global.enemyHeadJumpHorizontalForce * playerCharacter.transform.right);
-                }
-                else
-                {
-                    Vector2 velocity = rb2d.velocity;
-                    velocity.y = 0;
-
-                    rb2d.velocity = velocity;
-
-                    rb2d.AddForce(Global.enemyHeadJumpVerticalForce * playerCharacter.transform.up);
-                }
-
-                return "Jumping";
+            Player.CurrentPlayer.triggerReady = false;
+            PlayerCharacter.Singleton.PowerDash = true;
+            return "Dashing";
         }
+        // temp code
+        
+
+        if (Vy <= 0)
+            switch (GetGroundType())
+            {
+                case 1:
+                    return (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("HorizontalJoyStick") != 0) ? "Moving" : "Idle";
+
+
+                case 2:
+                    Player.CurrentPlayer.jumpForceGate = true;
+
+                    if (Mathf.Abs(rb2d.velocity.x) < 0.5)
+                    {
+                        rb2d.velocity = Vector2.zero;
+
+                        rb2d.AddForce(Global.enemyHeadJumpVerticalForce * playerCharacter.transform.up + Global.enemyHeadJumpHorizontalForce * playerCharacter.transform.right);
+                    }
+                    else
+                    {
+                        Vector2 velocity = rb2d.velocity;
+                        velocity.y = 0;
+
+                        rb2d.velocity = velocity;
+
+                        rb2d.AddForce(Global.enemyHeadJumpVerticalForce * playerCharacter.transform.up);
+                    }
+
+                    return "Jumping";
+            }
 
 
         return Name;

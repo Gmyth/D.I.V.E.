@@ -10,8 +10,11 @@ public class SingleEffect : Recyclable
     {
         if (target)
             transform.position = target.position;
-    }
 
+
+        if (GetComponentInChildren<Animator>())
+            GetComponentInChildren<Animator>().speed = TimeManager.Instance.TimeFactor;
+    }
 
     public void setTarget(Transform t)
     {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using MyBox;
 using UnityEngine;
 
 
@@ -40,7 +41,13 @@ public class PSDashing : PlayerState
         var dashReleaseTime = playerCharacter.InKillStreak ? f_dashReleaseTime:n_dashReleaseTime;
         var dashReleaseDelayTime = playerCharacter.InKillStreak ? f_dashReleaseTime:n_dashReleaseTime;
         var JumpListenerInterval = playerCharacter.InKillStreak ? f_JumpListenerInterval:n_JumpListenerInterval;
-
+        
+        if (playerCharacter.PowerDash)
+        {
+            dashDelayTime = 0.3f;
+            dashReleaseTime *= 2.15f;
+        }
+        
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
         float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
@@ -154,14 +161,37 @@ public class PSDashing : PlayerState
 
     public override void OnStateEnter(State previousState)
     {
-
         var inDashingDragFactor = playerCharacter.InKillStreak ? f_inDashingDragFactor:n_inDashingDragFactor;
-        if (playerCharacter.ConsumeEnergy(EnergyConsume) <= 0)
+        if (playerCharacter.PowerDash)
         {
-            // Energy is not enough, Cancel dash
-            Apply = false;
-            return;
+            if (!playerCharacter.PowerDashReady)
+            {
+                // Energy is not enough, Cancel dash
+                Apply = false;
+                return;
+            }
+
+            playerCharacter.PowerDashReady = false;
+            playerCharacter.LastPowerDash = Time.unscaledTime;
+            TimeManager.Instance.StartFeverMotion();
+            playerCharacter.Spark.SetActive(true);
+            playerCharacter.Spark.GetComponent<Animator>().Play("Spark", -1, 0f);
+            
+            var mouse = GameObject.FindObjectOfType<MouseIndicator>();
+            Vector3 direction = mouse.GetDirectionCorrection(GroundNormal());
+            playerCharacter.Spark.transform.right = direction;
         }
+        else
+        {
+            if (playerCharacter.ConsumeEnergy(EnergyConsume) <= 0)
+            {
+                // Energy is not enough, Cancel dash
+                Apply = false;
+                return;
+            }
+        }
+
+        
 
         Apply = true;
         //Dash has been pressed, set all config first
@@ -197,16 +227,18 @@ public class PSDashing : PlayerState
     {
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
-
+    
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Dummy"),false);
-
+        
         // reset drag & gravity
         rb2d.drag = 1;
         rb2d.gravityScale = 3;
 
         // Listening to move input
         PhysicsInputHelper(h);
-
+        
+        playerCharacter.Spark.SetActive(false);
+        
         playerCharacter.SpriteHolder.GetComponent<TrailRenderer>().emitting = false;
 
         // reset player facing
@@ -219,14 +251,17 @@ public class PSDashing : PlayerState
         // Kill Trail
         if(!playerCharacter.InKillStreak) playerCharacter.SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
 
-
+        if (playerCharacter.PowerDash) playerCharacter.PowerDash = false;
     }
 
     private void forceApply()
     {
         //avoid Slow Motion
-        TimeManager.Instance.endSlowMotion(0f);
-
+        //TimeManager.Instance.endSlowMotion(0f);
+        if(!playerCharacter.InFever)TimeManager.Instance.EndFeverMotion();
+        else TimeManager.Instance.StartFeverMotion();
+        
+        
         var dashForce = playerCharacter.InKillStreak ? f_dashForce:n_dashForce;
 
         // Fix sprite flip on X-axis
@@ -237,7 +272,7 @@ public class PSDashing : PlayerState
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         var mouse = GameObject.FindObjectOfType<MouseIndicator>();
 
-
+        playerCharacter.Spark.SetActive(false);
 
         //get Mouse direction
         Vector3 direction = mouse.GetDirectionCorrection(GroundNormal());
@@ -272,7 +307,15 @@ public class PSDashing : PlayerState
         //Apply force to character
        // playerCharacter.GetComponent<CapsuleCollider2D>().isTrigger = true;
         playerCharacter.SpriteHolder.right = direction;
-        rb2d.AddForce(direction * dashForce * 200f * 1);
+
+        if (playerCharacter.PowerDash)
+        {
+            rb2d.AddForce(direction * dashForce * 200f * 2.15f / Time.timeScale);
+        }
+        else
+        {
+            rb2d.AddForce(direction * dashForce * 200f * 1 / Time.timeScale);
+        }
 
         //Camera Tricks
         CameraManager.Instance.Shaking(0.1f,0.10f);

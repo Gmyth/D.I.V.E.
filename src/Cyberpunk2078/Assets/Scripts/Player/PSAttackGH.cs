@@ -92,6 +92,15 @@ public class PSAttackGH: PlayerState
             {
                 return "Jumping";
             }
+            // temp code
+            else if (Input.GetButtonDown("Special1"))
+            {
+                Player.CurrentPlayer.triggerReady = false;
+                PlayerCharacter.Singleton.PowerDash = true;
+                return "Dashing";
+            }
+            // temp code
+                
         }
         
         if (Time.time - t0 > (recoveryTime + actionTime))
