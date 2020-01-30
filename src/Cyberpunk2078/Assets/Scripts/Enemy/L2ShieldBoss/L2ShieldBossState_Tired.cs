@@ -26,7 +26,7 @@ public class L2ShieldBossState_Tired : EnemyState<L2ShieldBoss>
 
     public override void OnStateEnter(State previousState)
     {
-        enemy.OnHit.AddListener(OnHit);
+        enemy.OnHit.AddListener(HandleHit);
 
 
         t = Time.time + duration;
@@ -38,7 +38,7 @@ public class L2ShieldBossState_Tired : EnemyState<L2ShieldBoss>
 
     public override void OnStateQuit(State nextState)
     {
-        enemy.OnHit.RemoveListener(OnHit);
+        enemy.OnHit.RemoveListener(HandleHit);
     }
 
     public override string Update()
@@ -55,7 +55,7 @@ public class L2ShieldBossState_Tired : EnemyState<L2ShieldBoss>
     }
 
 
-    private void OnHit(Hit hit)
+    private void HandleHit(Hit hit, Collider2D collider)
     {
         enemy.isInvulnerable = false;
 

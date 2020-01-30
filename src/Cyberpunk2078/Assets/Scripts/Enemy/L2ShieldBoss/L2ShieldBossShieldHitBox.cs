@@ -12,13 +12,14 @@ public class L2ShieldBossShieldHitBox : ShieldHitBox
     [SerializeField] private float largeKnockbackFatigue = 2f;
 
 
-    protected override void OnHitPlayerHitBox(PlayerCharacter player)
+    protected override void OnHitPlayerHitBox(Collider2D other)
     {
+        PlayerCharacter player = (PlayerCharacter)other.GetComponent<HitBox>().hit.source;
         L2ShieldBoss shieldBoss = (L2ShieldBoss)hit.source;
 
 
-        shieldBoss.OnAttack.Invoke();
-        player.OnHit?.Invoke(hit);
+        shieldBoss.OnAttack.Invoke(hit, other);
+        player.OnHit?.Invoke(hit, other);
 
 
         player.ApplyDamage(hit.damage);
@@ -39,5 +40,8 @@ public class L2ShieldBossShieldHitBox : ShieldHitBox
 
             shieldBoss.ApplyFatigue(normalKnockbackFatigue);
         }
+
+
+        CreateEffect(transform);
     }
 }

@@ -78,7 +78,7 @@ public class L2ShieldBossState_DiveBomb : ESChargedAttack<L2ShieldBoss>
                         hit.knockback = knockback;
 
 
-                        GameUtility.ApplyDamage(hit, playerCharacter);
+                        GameUtility.ApplyDamage(playerCharacter, hit, null);
                     }
 
 

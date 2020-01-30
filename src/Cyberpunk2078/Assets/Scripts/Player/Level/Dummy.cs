@@ -78,13 +78,16 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Rigidbody2D), typeof(Collision2D))]
 public abstract class Dummy : MonoBehaviour, IDamageable
 {
+    public class HitEvent : UnityEvent<Hit, Collider2D> { }
+
+
     [SerializeField] protected StatisticSystem statistics;
 
     public bool isInvulnerable = false;
     public bool isEvading = false;
 
-    public Event<Hit> OnHit { get; private set; } = new Event<Hit>();
-    public UnityEvent OnAttack { get; private set; } = new UnityEvent();
+    public HitEvent OnHit { get; private set; } = new HitEvent();
+    public HitEvent OnAttack { get; private set; } = new HitEvent();
 
 
     public Vector2 GroundNormal

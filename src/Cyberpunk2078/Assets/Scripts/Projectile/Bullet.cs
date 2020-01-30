@@ -81,7 +81,7 @@ public class Bullet : Recyclable
                 Dummy enemy = other.GetComponent<Dummy>();
 
 
-                enemy.OnHit?.Invoke(hit);
+                enemy.OnHit?.Invoke(hit, other);
 
                 
                 enemy.ApplyDamage(rawDamage);

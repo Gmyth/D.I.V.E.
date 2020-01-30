@@ -135,4 +135,9 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
         if (animation_dashEnd != "")
             animator.Play(animation_dashEnd);
     }
+
+    protected void Stop(Hit hit, Collider2D collider)
+    {
+        Stop();
+    }
 }

@@ -67,7 +67,7 @@ public class L2ShieldBoss : Enemy
         base.Start();
 
 
-        OnHit.AddListener(Guard);
+        OnHit.AddListener(HandleHit);
 
 
         currentTarget = PlayerCharacter.Singleton;
@@ -76,20 +76,29 @@ public class L2ShieldBoss : Enemy
     }
 
 
-    private void Guard(Hit hit)
+    private void HandleHit(Hit hit, Collider2D collider)
     {
-        switch (hit.type)
+        if (hitBoxes[2].isActiveAndEnabled || hitBoxes[3].isActiveAndEnabled)
         {
-            case Hit.Type.Melee:
-                if (Vector3.Angle(transform.localScale.x * transform.right, hit.source.transform.position - transform.position) < 90)
-                    isEvading = true;
-                break;
+            switch (hit.type)
+            {
+                case Hit.Type.Melee:
+                    if (Vector3.Angle(transform.localScale.x * transform.right, hit.source.transform.position - transform.position) < 90)
+                        isEvading = true;
+                    break;
 
 
-            case Hit.Type.Projectile:
-                if (Vector3.Angle(transform.localScale.x * transform.right, -hit.bullet.GetComponent<LinearMovement>().orientation) < 90)
-                    isEvading = true;
-                break;
+                case Hit.Type.Projectile:
+                    if (Vector3.Angle(transform.localScale.x * transform.right, -hit.bullet.GetComponent<LinearMovement>().orientation) < 90)
+                        isEvading = true;
+                    break;
+            }
+        }
+        else
+        {
+            ObjectRecycler.Singleton.GetSingleEffect(15, transform);
+
+            TimeManager.Instance.startSlowMotion(0.5f, 0.2f);
         }
     }
 }

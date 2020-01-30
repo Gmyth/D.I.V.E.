@@ -72,30 +72,29 @@ public class HitBox : MonoBehaviour
 
                 if (!enemy.isEvading && !objectsHit.Contains(id))
                 {
-                    GameUtility.ApplyDamage(hit, enemy);
-
-
                     objectsHit.Add(id);
-                    
-
-                    CreateRandomEffect(enemy.transform);
-
-                    var trail = ObjectRecycler.Singleton.GetObject<SingleEffect>(8);
-                    trail.transform.position = enemy.transform.position;
-                    trail.setTarget(other.transform);
-                    trail.transform.right = transform.right;
-                    trail.transform.localScale = new Vector3(7, 1, 1);
-                    trail.gameObject.SetActive(true);
-
-                    var trail1 = ObjectRecycler.Singleton.GetObject<SingleEffect>(8);
-                    trail1.transform.position = enemy.transform.position;
-                    trail1.setTarget(other.transform);
-                    trail1.transform.right = -transform.right;
-                    trail1.transform.localScale = new Vector3(7, 1, 1);
-                    trail1.gameObject.SetActive(true);
 
 
-                    CameraManager.Instance.Shaking(0.20f, 0.10f, true);
+                    if (GameUtility.ApplyDamage(enemy, hit, other) > 0)
+                    {
+                        CreateRandomEffect(enemy.transform);
+
+                        var trail = ObjectRecycler.Singleton.GetObject<SingleEffect>(8);
+                        trail.transform.position = enemy.transform.position;
+                        trail.transform.right = transform.right;
+                        trail.transform.localScale = new Vector3(7, 1, 1);
+                        trail.target = other.transform;
+                        trail.gameObject.SetActive(true);
+
+                        var trail1 = ObjectRecycler.Singleton.GetObject<SingleEffect>(8);
+                        trail1.transform.position = enemy.transform.position;
+                        trail1.transform.right = -transform.right;
+                        trail1.transform.localScale = new Vector3(7, 1, 1);
+                        trail1.target = other.transform;
+                        trail1.gameObject.SetActive(true);
+
+                        CameraManager.Instance.Shaking(0.20f, 0.10f, true);
+                    }
                 }
             }
             else if (other.tag == "Platform" && other.GetComponent<SimpleBreakable>())
@@ -113,8 +112,8 @@ public class HitBox : MonoBehaviour
                 objectsHit.Add(id);
 
 
-                hit.source.OnAttack.Invoke();
-                player.OnHit?.Invoke(hit);
+                hit.source.OnAttack.Invoke(hit, other);
+                player.OnHit?.Invoke(hit, other);
 
 
                 if (hit.knockback > 0)
@@ -159,6 +158,24 @@ public class HitBox : MonoBehaviour
             
 
         SingleEffect effect = ObjectRecycler.Singleton.GetObject<SingleEffect>(effects[Random.Range(0, effects.Length)]);
+        effect.transform.position = targetTransform.position - (targetTransform.position - transform.position) * 0.2f;
+        effect.transform.right = transform.right;
+        effect.transform.localScale = Vector3.one;
+        effect.setTarget(targetTransform);
+        effect.gameObject.SetActive(true);
+
+
+        return effect;
+    }
+
+
+    protected SingleEffect CreateEffect(Transform targetTransform, int index = 0)
+    {
+        if (index < 0 || index >= effects.Length)
+            return null;
+
+
+        SingleEffect effect = ObjectRecycler.Singleton.GetObject<SingleEffect>(effects[index]);
         effect.transform.position = targetTransform.position - (targetTransform.position - transform.position) * 0.2f;
         effect.transform.right = transform.right;
         effect.transform.localScale = Vector3.one;

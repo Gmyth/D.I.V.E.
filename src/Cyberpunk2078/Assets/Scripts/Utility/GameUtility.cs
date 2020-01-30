@@ -1,13 +1,16 @@
-﻿public struct GameUtility
+﻿using UnityEngine;
+
+
+public struct GameUtility
 {
-    public static void ApplyDamage(Hit hit, Dummy target)
+    public static float ApplyDamage(Dummy target, Hit hit, Collider2D collider)
     {
-        hit.source?.OnAttack.Invoke();
-        target.OnHit?.Invoke(hit);
+        hit.source?.OnAttack.Invoke(hit, collider);
+        target.OnHit?.Invoke(hit, collider);
 
         TimeManager.Instance.endSlowMotion();
         CameraManager.Instance.Idle();
 
-        target.ApplyDamage(hit.damage);
+        return target.ApplyDamage(hit.damage);
     }
 }

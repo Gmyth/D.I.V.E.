@@ -8,18 +8,18 @@ public abstract class ShieldHitBox : HitBox
         if (isFriendly)
         {
             if (other.tag == "EnemyHitBox")
-                OnHitEnemyHitBox((Enemy)other.GetComponent<HitBox>().hit.source);
+                OnHitEnemyHitBox(other);
         }
         else if (other.tag == "PlayerHitBox")
-            OnHitPlayerHitBox((PlayerCharacter)other.GetComponent<HitBox>().hit.source);
+            OnHitPlayerHitBox(other);
     }
 
 
-    protected virtual void OnHitEnemyHitBox(Enemy enemy)
+    protected virtual void OnHitEnemyHitBox(Collider2D other)
     {
     }
 
-    protected virtual void OnHitPlayerHitBox(PlayerCharacter player)
+    protected virtual void OnHitPlayerHitBox(Collider2D other)
     {
     }
 }
