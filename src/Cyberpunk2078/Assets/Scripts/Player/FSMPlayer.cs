@@ -38,7 +38,7 @@ public abstract class PlayerState : State
             : new Vector2(-0.5f, -0.5f);
         
         // this variable will reposition the ray start point 
-        float centerOffset = -0.7f;
+        float centerOffset = -0.8f;
 
         float DistanceToTheGround = playerCharacter.GetComponent<CapsuleCollider2D>().bounds.extents.y + centerOffset;
         //float DistanceToTheGround = centerOffset;
@@ -81,8 +81,10 @@ public abstract class PlayerState : State
 
             grounded = true;
 
-            
+            AudioManager.Instance.PlayEvent("JumpLand");
 
+            
+            
             return 1;
         } 
         else if ((hitL.collider != null && hitL.transform.CompareTag("Dummy")) ||
@@ -96,6 +98,8 @@ public abstract class PlayerState : State
         player.jumpForceGate = false;
 
         grounded = false;
+    
+        AudioManager.Instance.StopEvent("JumpLand");
 
 
         return 0;
