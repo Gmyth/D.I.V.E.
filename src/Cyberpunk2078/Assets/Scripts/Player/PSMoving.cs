@@ -38,13 +38,6 @@ public class PSMoving : PlayerState
             Player.CurrentPlayer.triggerReady = false;
             return "Dashing";
         }
-        
-        if (Input.GetButtonDown("Special1"))
-        {
-            Player.CurrentPlayer.triggerReady = false;
-            PlayerCharacter.Singleton.PowerDash = true;
-            return indexPSDashing;
-        }
 
         if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("VerticalJoyStick") > 0.7f)
         {

@@ -7,7 +7,6 @@ public class TimeManager : MonoBehaviour
 {
     // Start is called before the first frame update
     public static TimeManager Instance { get; private set; } = null;
-    
 
     [SerializeField]private float defaultSmoothTime;
     [SerializeField]private float slowMotionFactor;
@@ -19,33 +18,6 @@ public class TimeManager : MonoBehaviour
     private float targetScale;
     private float smoothTime;
     private bool triggered;
-    
-    private float timeFactor = 1;
-
-
-    public Event2<float> OnTimeFactorChange { get; private set; } = new Event2<float>();
-    
-    public float TimeFactor
-    {
-        get
-        {
-            return timeFactor;
-        }
-        
-        private set
-        {
-            if (value != timeFactor)
-            {
-                float previousValue = timeFactor;
-
-                timeFactor = value;
-                
-                OnTimeFactorChange.Invoke(value, previousValue);
-            }
-        }
-    }
-
-
     void Awake()
     {
         Instance = this;
@@ -61,17 +33,11 @@ public class TimeManager : MonoBehaviour
         if (triggered)
         {
             smoothTime += 0.085f;
-            if (startTime + 0.15f < Time.unscaledTime)
-            {
-                CameraManager.Instance.FocusAt(FindObjectOfType<PlayerCharacter>().transform,0.2f);
-                CameraManager.Instance.FlashIn(7.5f,0.05f,0.1f,0.01f);
-            }
-
             if (Time.unscaledTime < endTime)
             { 
                 var newScale = Time.timeScale - (1f / smoothTime) * Time.unscaledDeltaTime;
                 Time.timeScale = Mathf.Clamp(newScale, targetScale, 1f);
-                //Time.fixedDeltaTime = Time.timeScale * 0.02f;
+                Time.fixedDeltaTime = Time.timeScale * 0.02f;
                 float current = blackScreen.color.a;
                 blackScreen.color =new Color(blackScreen.color.r,blackScreen.color.g,blackScreen.color.b, Mathf.SmoothDamp(current, targetFXAlpha, ref velocity, 0.1f));
             }
@@ -79,7 +45,7 @@ public class TimeManager : MonoBehaviour
             {
                 triggered = false;
                 Time.timeScale = 1;
-                //Time.fixedDeltaTime = Time.timeScale * 0.02f;
+                Time.fixedDeltaTime = Time.timeScale * 0.02f;
                 blackScreen.color =new Color(blackScreen.color.r,blackScreen.color.g,blackScreen.color.b, 0f);
             }
         }
@@ -97,31 +63,6 @@ public class TimeManager : MonoBehaviour
     public void endSlowMotion(float delay = 0f)
     {
         StartCoroutine(endSlowMotionDelay(delay));
-    }
-
-
-    public void StartFeverMotion()
-    {
-        TimeFactor = 0.2f;
-        StartCoroutine(applyBlackScreen());
-    }
-    
-    public void EndFeverMotion()
-    {
-        TimeFactor = 1f;
-        blackScreen.color =new Color(blackScreen.color.r,blackScreen.color.g,blackScreen.color.b, 0f);
-    }
-
-    private IEnumerator applyBlackScreen()
-    {
-        
-        while (TimeFactor!= 1f)
-        {
-            float current = blackScreen.color.a;
-            yield return new WaitForSeconds(0.01f);
-            blackScreen.color =new Color(blackScreen.color.r,blackScreen.color.g,blackScreen.color.b, Mathf.SmoothDamp(current, targetFXAlpha, ref velocity, 0.1f));
-            yield return null;
-        }
     }
 
     private IEnumerator endSlowMotionDelay(float delay)

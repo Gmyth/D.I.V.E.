@@ -63,7 +63,7 @@ public class Attack : MonoBehaviour
             }
             else if (other.tag == "Platform" && other.GetComponent<SimpleBreakable>())
             {
-                other.GetComponent<SimpleBreakable>().DestroyBreakable(transform.position);
+                other.GetComponent<SimpleBreakable>().DestoryBreakable();
             }
         }
         else if (other.tag == "Player")

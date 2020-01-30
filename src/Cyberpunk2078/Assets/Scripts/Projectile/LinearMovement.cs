@@ -26,7 +26,7 @@ public class LinearMovement : Movement
 
     private void Update()
     {
-        transform.position += Time.deltaTime * TimeManager.Instance.TimeFactor * orientation * speed;
+        transform.position = initialPosition + (Time.time - spawnTime) * orientation * speed;
     }
 
 #if UNITY_EDITOR

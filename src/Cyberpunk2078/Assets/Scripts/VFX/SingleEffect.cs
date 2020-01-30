@@ -15,7 +15,7 @@ public class SingleEffect : Recyclable
         {
             transform.position = target.position;
         }
-        if (GetComponentInChildren<Animator>()) GetComponentInChildren<Animator>().speed = TimeManager.Instance.TimeFactor;
+
     }
     
     public void setTarget(Transform _target)

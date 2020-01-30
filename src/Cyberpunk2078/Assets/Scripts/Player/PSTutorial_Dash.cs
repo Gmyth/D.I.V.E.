@@ -52,7 +52,7 @@ public class PSTutorial_Dash : PlayerState
         //rb2d.simulated = true;
         //rb2d.gravityScale = 3;
         //rb2d.drag = 1;
-        TimeManager.Instance.endSlowMotion();
+
         SimpleTutorialManager.Instance.AfterDashTutorial();
     }
 }

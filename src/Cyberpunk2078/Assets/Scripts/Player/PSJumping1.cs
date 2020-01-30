@@ -6,12 +6,8 @@ using UnityEngine;
 [CreateAssetMenuAttribute(fileName = "PS_Jumping1", menuName = "Player State/Attack Jumping 1")]
 public class PSJumping1 : PlayerState
 {
-    [Header( "General" )]
-    [SerializeField] private float jumpIncreaser = 1.5f;
-    [SerializeField] private float jumpIncreaserThreshold = 1.5f;
-    
-    
     [Header( "Normal" )]
+  
     [SerializeField] private float n_jumpForce = 8;
     [SerializeField] private float n_speedFactor = 3;
     [SerializeField] private float n_accelerationFactor = 20;
@@ -31,17 +27,6 @@ public class PSJumping1 : PlayerState
     [SerializeField] private float jumpIncreaser = 1.5f;
     [SerializeField] private float jumpIncreaserThreshold = 1.5f;
 
-    
-    [Header( "Transferable States" )]
-    [SerializeField] private int indexPSIdle;
-    [SerializeField] private int indexPSMoving;
-    [SerializeField] private int indexJumping2;
-    [SerializeField] private int indexPSWallJumping;
-    [SerializeField] private int indexPSDashing;
-    [SerializeField] private int indexPSAttackGH;
-    [SerializeField] private int indexPSAirborne;
-    [SerializeField] private int indexPSClimb;
-   
     private float lastJumpSec;
     private State previous;
     private float timer;
@@ -150,13 +135,6 @@ public class PSJumping1 : PlayerState
         {
             Player.CurrentPlayer.triggerReady = false;
             return "Dashing";
-        }
-        
-        if (Input.GetButtonDown("Special1"))
-        {
-            Player.CurrentPlayer.triggerReady = false;
-            PlayerCharacter.Singleton.PowerDash = true;
-            return indexPSDashing;
         }
         
         //isJumpKeyDown = Input.GetButtonDown("Jump");

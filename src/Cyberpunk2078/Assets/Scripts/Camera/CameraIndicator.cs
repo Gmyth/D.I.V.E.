@@ -10,8 +10,6 @@ public enum IndicatorType{
 
 public class CameraIndicator : MonoBehaviour
 {
-	 
-
 	// Actual range of this indicator can influence
 	
 	[Header("Indicator General")]
@@ -56,10 +54,11 @@ public class CameraIndicator : MonoBehaviour
 	public bool bounds;
 	[ConditionalField(nameof(bounds), false, true)] public Vector2 maxCameraPos;
 	[ConditionalField(nameof(bounds), false, true)] public Vector2 minCameraPos;
-
-	// Start is called before the first frame update
+	
+    // Start is called before the first frame update
     void Start()
     {
+        
     }
 
     
@@ -111,4 +110,5 @@ public class CameraIndicator : MonoBehaviour
 
 		return false;
 	}
+
 }

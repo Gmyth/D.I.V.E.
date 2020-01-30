@@ -1,6 +1,6 @@
 ﻿using Pathfinding;
 using UnityEngine;
-using UnityEngine.Events;
+
 
 [RequireComponent(typeof(Seeker))]
 public class Drone : Enemy, IPatroller
@@ -26,7 +26,6 @@ public class Drone : Enemy, IPatroller
     private int animationIndex;
     private float aimDeviation = 0;
 
-    public Event<Drone> dead = new Event<Drone>();
 
     public float FarRange
     {
@@ -177,7 +176,6 @@ public class Drone : Enemy, IPatroller
         return rawDamage;
     }
 
-
     public override void Dead()
     {
         var Boom = ObjectRecycler.Singleton.GetObject<SingleEffect>(3);
@@ -202,7 +200,6 @@ public class Drone : Enemy, IPatroller
         //Destroy(gameObject, 0.5f);
         CheckPointManager.Instance.Dead(gameObject);
         AudioManager.Instance.PlayOnce("KillDrone");
-        dead.Invoke(this);
     }
 
 

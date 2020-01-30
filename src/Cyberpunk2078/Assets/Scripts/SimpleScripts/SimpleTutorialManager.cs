@@ -110,8 +110,6 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         CameraManager.Instance.FlashIn(6f, 0.05f, 999999f, 0.01f);
         PlayerCharacter.Singleton.SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
         TimeManager.Instance.startSlowMotion(999999f, 0f, 0.001f);
-        
-
 
         Player.CurrentPlayer.energyLocked = false;
         PlayerCharacter.Singleton.AddNormalEnergy(1);
@@ -130,7 +128,6 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         CameraManager.Instance.Idle();
         PlayerCharacter.Singleton.SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
         timelineManager_DashTutorial.PlayNextTimeline();
-        //Time.fixedDeltaTime = 1 * 0.02f;
         TimeManager.Instance.endSlowMotion(0f);
 
         PlayerCharacter.Singleton.transform.parent.GetComponentInChildren<MouseIndicator>().ResetColor();

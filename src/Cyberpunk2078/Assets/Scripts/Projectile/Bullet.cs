@@ -8,7 +8,6 @@ public class Bullet : Recyclable
     public bool isFriendly = false;
     public int numHits = 1;
     public int rawDamage = 1;
-    public float speed;
 
     [SerializeField] private float hitEstimationTimeInterval = 0.02f;
     [SerializeField] private bool disableHunch;
@@ -27,14 +26,11 @@ public class Bullet : Recyclable
 
     private void Update()
     {
-        GetComponentInChildren<Animator>().speed = TimeManager.Instance.TimeFactor;
-        // GetComponent<LinearMovement>().speed *= TimeManager.Instance.TimeFactor;
-
         if (!disableHunch && lastHitEstimation + hitEstimationTimeInterval < Time.unscaledTime && !hunchTriggered && !isFriendly )
         {
             // time to check
             var direction = GetComponent<LinearMovement>().orientation;
-            RaycastHit2D hit = Physics2D.Raycast(transform.position,direction, 4f);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position,direction, 3.5f);
             if (hit.collider != null && hit.transform.CompareTag("Player"))
             {
                 //hit! Hunch Trigger
@@ -51,12 +47,6 @@ public class Bullet : Recyclable
                     CameraManager.Instance.FocusAt(playerCharacter.transform,0.2f);
                     CameraManager.Instance.FlashIn(7f,0.05f,0.15f,0.01f);
                 }
-                //if (playerCharacter.InKillStreak)
-                //{
-                //    hunchTriggered = true;
-                //    playerCharacter.AddKillCount(-2);
-                //    TimeManager.Instance.startSlowMotion(1f);                  
-                //}
             }
             
             lastHitEstimation = Time.unscaledTime;
@@ -93,7 +83,6 @@ public class Bullet : Recyclable
 
                 AudioManager.Instance.StopEvent("SlowMotion");
 
-                //TimeManager.Instance.endSlowMotion();
                 CameraManager.Instance.Idle();
 
                 SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
@@ -131,7 +120,6 @@ public class Bullet : Recyclable
 
                 AudioManager.Instance.StopEvent("SlowMotion");
 
-                //TimeManager.Instance.endSlowMotion();
                 CameraManager.Instance.Idle();
 
                 CameraManager.Instance.Shaking(0.20f, 0.05f);
@@ -152,8 +140,7 @@ public class Bullet : Recyclable
                 isFriendly = true;
                 GetComponent<LinearMovement>().initialPosition = transform.position;
                 GetComponent<LinearMovement>().speed *= 1.5f;
-               // GetComponent<LinearMovement>().orientation = (Quaternion.Euler(0, 0,  Random.Range(-15, 15)) * (GetComponent<LinearMovement>().orientation * -1)).normalized;
-                GetComponent<LinearMovement>().orientation = other.transform.right;
+                GetComponent<LinearMovement>().orientation = (Quaternion.Euler(0, 0,  Random.Range(-30, 30)) * (GetComponent<LinearMovement>().orientation * -1)).normalized;
                 GetComponent<LinearMovement>().spawnTime = Time.time;
 
                 transform.right = GetComponent<LinearMovement>().orientation;
@@ -162,12 +149,12 @@ public class Bullet : Recyclable
 
                 AudioManager.Instance.StopEvent("SlowMotion");
 
-                //TimeManager.Instance.endSlowMotion();
                 CameraManager.Instance.Idle();
                 
-                CameraManager.Instance.Shaking(0.5f,0.05f,true);
-                CameraManager.Instance.FocusAt(transform,0.02f);
-                
+
+                CameraManager.Instance.Shaking(0.2f,0.05f,true);
+
+                CameraManager.Instance.FocusAt(transform,0.1f);
                 SingleEffect Hit1 = ObjectRecycler.Singleton.GetObject<SingleEffect>(12);
                 Hit1.transform.right = transform.right;
                 Hit1.transform.position = other.transform.position + (transform.position  - other.transform.position) * 0.3f;

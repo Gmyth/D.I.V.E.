@@ -29,8 +29,6 @@ public class PSAirborne : PlayerState
             //TODO add another ultimate
             playerCharacter.ActivateFever();
         }
-        
-
 
         if (Input.GetButtonDown("Attack1"))
         {
@@ -61,20 +59,9 @@ public class PSAirborne : PlayerState
             Player.CurrentPlayer.triggerReady = false;
             return "Dashing";
         }
-        
-        // temp code
-        if (Input.GetButtonDown("Special1"))
-        {
-            Player.CurrentPlayer.triggerReady = false;
-            PlayerCharacter.Singleton.PowerDash = true;
-            return indexPSDashing;
-        }
-        // temp code
-        
-        if (Vy > 0)
-            return Index;
 
-            switch (GetGroundType())
+
+        switch (GetGroundType())
         {
             case 1:
                 return (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("HorizontalJoyStick") != 0) ? "Moving" : "Idle";

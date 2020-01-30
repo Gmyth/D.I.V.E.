@@ -82,7 +82,7 @@ public abstract class Dummy : MonoBehaviour, IDamageable
 
     public bool isInvulnerable = false;
     public bool isEvading = false;
-    public float UnitTimeFactor = 1;
+
     public Event<Hit> OnHit { get; private set; } = new Event<Hit>();
     public UnityEvent On { get; private set; } = new UnityEvent();
     public UnityEvent OnAttack { get; private set; } = new UnityEvent();
@@ -149,11 +149,6 @@ public abstract class Enemy : Dummy
     [HideInInspector] public Hit currentHit;
 
     public Vector3 lastCheckPointTransform;
-    
-    //Physics related --- Slow motion implementation
-    private Rigidbody2D rb2d;
-    private float defaultDrag;
-    private float defaultMass;
 
     public float this[StatisticType type]
     {
@@ -215,9 +210,8 @@ public abstract class Enemy : Dummy
     protected virtual void Start()
     {
         data = DataTableManager.singleton.GetEnemyData(typeID);
-        rb2d = GetComponent<Rigidbody2D>();
-        defaultDrag = rb2d.drag;
-        defaultMass = rb2d.mass;
+
+
         statistics = new StatisticSystem(data.Attributes, statusModifiers);
         statistics[StatisticType.Hp] = statistics[StatisticType.MaxHp];
 
@@ -230,9 +224,6 @@ public abstract class Enemy : Dummy
 
     protected virtual void FixedUpdate()
     {
-        rb2d.drag = defaultDrag / TimeManager.Instance.TimeFactor;
-        rb2d.mass = defaultMass / TimeManager.Instance.TimeFactor;
-        if (GetComponent<Animator>()) GetComponent<Animator>().speed = TimeManager.Instance.TimeFactor;
         fsm?.Update();
     }
 
