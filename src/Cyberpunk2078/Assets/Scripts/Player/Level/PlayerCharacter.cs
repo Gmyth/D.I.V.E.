@@ -272,9 +272,12 @@ public class PlayerCharacter : Dummy
     
     public void ActivateKillStreak()
     {
+
         if (InKillStreak)
             return;
-        
+
+        AudioManager.Instance.PlayOnce("KillStreak");
+
         InKillStreak = true;
         SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
         

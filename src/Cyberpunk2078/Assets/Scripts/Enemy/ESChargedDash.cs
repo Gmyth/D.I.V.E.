@@ -82,6 +82,7 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
 
 
             animator.Play(animation_dash);
+            AudioManager.Instance.PlayOnce("RobotDash");
         }
         else if (!bStop)
         {

@@ -44,5 +44,13 @@ public class L2CleanerState_Alert : EnemyState<L2Cleaner>
         t = Time.time + waitTime;
 
         animator.Play(animation);
+        AudioManager.Instance.PlayEvent("EnemyAlert");
+    }
+
+    public override void OnStateQuit(State nextState)
+    {
+        base.OnStateQuit(nextState);
+
+        AudioManager.Instance.StopEvent("EnemyAlert");
     }
 }

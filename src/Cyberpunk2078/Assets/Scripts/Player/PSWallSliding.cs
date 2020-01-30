@@ -75,6 +75,7 @@ public class PSWallSliding: PlayerState
             rigidbody.gravityScale = 1.2f;
 
             anim.Play("MainCharacter_WallJump", -1, 0f);
+            AudioManager.Instance.PlayEvent("WallSlide");
         }
         else if (wallType == Direction.Left && h < 0)
         {
@@ -85,6 +86,7 @@ public class PSWallSliding: PlayerState
             rigidbody.gravityScale = 1.2f;
 
             anim.Play("MainCharacter_WallJump", -1, 0f);
+            AudioManager.Instance.PlayEvent("WallSlide");
         }
         else
         {
@@ -95,6 +97,7 @@ public class PSWallSliding: PlayerState
             rigidbody.gravityScale = 3f;
 
             anim.Play("MainCharacter_Airborne", -1, 0f);
+            AudioManager.Instance.PlayEvent("WallSlide");
         }
 
         if (wallType == Direction.None && groundType == 0)
@@ -156,6 +159,7 @@ public class PSWallSliding: PlayerState
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         rb2d.gravityScale = 3;
         onWall = false;
+        AudioManager.Instance.StopEvent("WallSlide");
     }
 
 }
