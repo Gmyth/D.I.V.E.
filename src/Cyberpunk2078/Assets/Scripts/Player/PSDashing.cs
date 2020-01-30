@@ -228,7 +228,7 @@ public class PSDashing : PlayerState
     private void forceApply()
     {
         //avoid Slow Motion
-        TimeManager.Instance.endSlowMotion(0f);
+        //TimeManager.Instance.endSlowMotion(0f);
 
         var dashForce = playerCharacter.InKillStreak ? f_dashForce:n_dashForce;
 
@@ -276,9 +276,12 @@ public class PSDashing : PlayerState
         //Apply force to character
        // playerCharacter.GetComponent<CapsuleCollider2D>().isTrigger = true;
         playerCharacter.SpriteHolder.right = direction;
-        rb2d.AddForce(direction * dashForce * 200f * 1);
+        //Time.fixedDeltaTime = 0.02f;
+        if (Time.timeScale!=0) rb2d.AddForce(direction * dashForce * 200f * 1 / Time.timeScale);
+        else rb2d.AddForce(direction * dashForce * 200f * 1);
 
         //Camera Tricks
+
         CameraManager.Instance.Shaking(0.1f,0.10f);
 
     }

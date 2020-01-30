@@ -64,7 +64,7 @@ public class HitBox : MonoBehaviour
                     hit.source.OnAttack.Invoke();
                     enemy.OnHit?.Invoke(hit);
                     
-                    TimeManager.Instance.endSlowMotion();
+                    //TimeManager.Instance.endSlowMotion();
                     CameraManager.Instance.Idle();
                     
                     enemy.ApplyDamage(hit.damage);
@@ -92,7 +92,12 @@ public class HitBox : MonoBehaviour
             }
             else if (other.tag == "Platform" && other.GetComponent<SimpleBreakable>())
             {
-                other.GetComponent<SimpleBreakable>().DestoryBreakable();
+                other.GetComponent<SimpleBreakable>().DestroyBreakable(transform.position);
+                var vfx = ObjectRecycler.Singleton.GetObject<SingleEffect>(16);
+                vfx.transform.position = new Vector3(transform.position.x,other.transform.position.y,0);
+                vfx.transform.right = transform.right;
+                vfx.gameObject.SetActive(true);
+                
             }
         }
         else if (other.tag == "Player")

@@ -28,6 +28,7 @@ public class L2CleanerState_Alert : EnemyState<L2Cleaner>
 
     public override string Update()
     {
+        animator.speed = TimeManager.Instance.TimeFactor * enemy.UnitTimeFactor;
         if (!enemy.GuardZone.Contains(enemy.currentTarget) || !IsPlayerInSight(enemy.currentTarget, enemy[StatisticType.SightRange]))
             return state_onTargetLoss;
 

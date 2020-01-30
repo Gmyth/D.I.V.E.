@@ -86,6 +86,15 @@ public class PSAttackGH: PlayerState
             {
                 return "Jumping";
             }
+            // temp code
+            else if (Input.GetButtonDown("Special1"))
+            {
+                Player.CurrentPlayer.triggerReady = false;
+                PlayerCharacter.Singleton.PowerDash = true;
+                return indexPSDashing;
+            }
+            // temp code
+                
         }
         
         if (Time.time - t0 > (recoveryTime + actionTime))
@@ -122,7 +131,7 @@ public class PSAttackGH: PlayerState
         
         var pushForce = playerCharacter.InKillStreak ? f_pushForce : n_pushForce;
 
-        playerCharacter.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        //playerCharacter.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         //playerCharacter.GetComponent<GhostSprites>().Occupied = true;
         
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
