@@ -25,9 +25,13 @@ public class L2ShieldBossShieldHitBox : ShieldHitBox
         player.ApplyDamage(hit.damage);
 
 
+        Vector3 d = player.transform.position - shieldBoss.transform.position;
+        Vector3 direction = d.x > 0 ? new Vector3(1, 1, 0) : new Vector3(-1, 1, 0);
+
+
         if (player.State.Name == "Dashing")
         {
-            player.Knockback(shieldBoss.transform.position, largeKnockbackMultiplier * hit.knockback, largeKnockbackDuration);
+            player.Knockback(direction, largeKnockbackMultiplier * hit.knockback, largeKnockbackDuration);
 
 
             shieldBoss.ApplyFatigue(largeKnockbackFatigue);
@@ -35,7 +39,7 @@ public class L2ShieldBossShieldHitBox : ShieldHitBox
         }
         else
         {
-            player.Knockback(shieldBoss.transform.position, hit.knockback, normalKnockbackDuration);
+            player.Knockback(direction, hit.knockback, normalKnockbackDuration);
 
 
             shieldBoss.ApplyFatigue(normalKnockbackFatigue);

@@ -124,7 +124,7 @@ public class Bullet : Recyclable
             {
                 //Not in dash, deal damage
                 other.GetComponent<PlayerCharacter>().ApplyDamage(rawDamage);
-                other.GetComponent<PlayerCharacter>().Knockback(transform.position, 300f, 0.3f);
+                other.GetComponent<PlayerCharacter>().KnockbackHorizontal(transform.position, 300f, 0.3f);
                 --numHitsRemaining;
 
                 //TimeManager.Instance.endSlowMotion();

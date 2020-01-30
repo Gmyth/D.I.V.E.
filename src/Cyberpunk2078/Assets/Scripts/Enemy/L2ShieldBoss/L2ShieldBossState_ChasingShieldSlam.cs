@@ -18,16 +18,7 @@ public class L2ShieldBossState_ChasingShieldSlam : ESChasingAttack<L2ShieldBoss>
         base.OnBeginChasing();
 
 
-        Hit hit = new Hit();
-        hit.type = Hit.Type.Melee;
-        hit.source = enemy;
-        hit.damage = 0;
-        hit.knockback = 150;
-
-        enemy.currentHit = hit;
-
-
-        enemy.EnableHitBox(2);
+        enemy.EnableHitBox(2, false);
     }
 
     protected override void OnEndChasing()

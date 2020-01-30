@@ -1913,7 +1913,7 @@ MonoBehaviour:
     source: {fileID: 923652460}
     bullet: {fileID: 0}
     damage: 0
-    knockback: 150
+    knockback: 10
   isFriendly: 0
   effects: 0d000000
   contactFilter:
@@ -1932,8 +1932,8 @@ MonoBehaviour:
     maxNormalAngle: 0
   normalKnockbackDuration: 0.5
   normalKnockbackFatigue: 0
-  largeKnockbackMultiplier: 5
-  largeKnockbackDuration: 1.5
+  largeKnockbackMultiplier: 3
+  largeKnockbackDuration: 1
   largeKnockbackFatigue: 0
 --- !u!61 &570904106
 BoxCollider2D:
@@ -2342,7 +2342,7 @@ MonoBehaviour:
     source: {fileID: 923652460}
     bullet: {fileID: 0}
     damage: 0
-    knockback: 100
+    knockback: 10
   isFriendly: 0
   effects: 0d000000
   contactFilter:
@@ -2361,8 +2361,8 @@ MonoBehaviour:
     maxNormalAngle: 0
   normalKnockbackDuration: 0.5
   normalKnockbackFatigue: 0
-  largeKnockbackMultiplier: 5
-  largeKnockbackDuration: 1.5
+  largeKnockbackMultiplier: 3
+  largeKnockbackDuration: 1
   largeKnockbackFatigue: 2
 --- !u!1 &1169216326
 GameObject:

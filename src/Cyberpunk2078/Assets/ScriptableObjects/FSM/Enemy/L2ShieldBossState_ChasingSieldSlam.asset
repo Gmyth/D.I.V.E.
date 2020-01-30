@@ -15,7 +15,7 @@ MonoBehaviour:
   stateName: ChasingShieldSlam
   motionID: -1
   damage: 1
-  knockback: 500
+  knockback: 5
   hitBox: 0
   chasingSpeed: 1.5
   attackRange: 1.5

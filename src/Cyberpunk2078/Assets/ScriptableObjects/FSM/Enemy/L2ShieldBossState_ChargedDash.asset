@@ -15,7 +15,7 @@ MonoBehaviour:
   stateName: ChargedDash
   motionID: -1
   damage: 1
-  knockback: 250
+  knockback: 15
   hitBox: 1
   chargeTime: 1
   stopChargingOnTargetLoss: 0

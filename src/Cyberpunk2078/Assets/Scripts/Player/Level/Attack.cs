@@ -73,7 +73,7 @@ public class Attack : MonoBehaviour
                 ObjectRecycler.Singleton.GetObject<SingleEffect>(getRandomEffect());
 
 
-                other.GetComponent<PlayerCharacter>().Knockback(transform.position, 10f);
+                other.GetComponent<PlayerCharacter>().KnockbackHorizontal(transform.position, 10f);
                 other.GetComponent<PlayerCharacter>().ApplyDamage(damage);
 
                 objectsHit.Add(other.gameObject.GetInstanceID());

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 [CreateAssetMenuAttribute(fileName = "PS_Knockback", menuName = "Player State/Knockback")]
@@ -29,7 +27,7 @@ public class PSKnockback : PlayerState
             return "Idle";
         if (t0 + BlinkInterval < Time.time)
         {
-            playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().color = counter % 2 ==0 ?Color.gray:Color.white;
+            playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().color = counter % 2 == 0 ? Color.gray : Color.white;
             counter++;
             t0 = Time.time;
         }
@@ -39,10 +37,6 @@ public class PSKnockback : PlayerState
 
     public override void OnStateEnter(State previousState)
     {
-        //kill velocity
-        var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-        rb2d.velocity = Vector2.zero;
-
         anim.Play("MainCharacter_Hurt", -1, 0f);
         duration = Player.CurrentPlayer.knockBackDuration;
         t = Time.time + duration;

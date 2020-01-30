@@ -63,19 +63,24 @@ public class PlayerCharacter : Dummy
     //    OnStatisticChange = statistic.onStatisticChange;
     //}
 
- 
-    public void Knockback(Vector3 origin, float force, float duration = 1f)
+
+    public void Knockback(Vector3 direction, float force, float duration = 1f)
+    {
+        rigidbody.velocity = Vector2.zero;
+        rigidbody.AddForce(force * direction.normalized, ForceMode2D.Impulse);
+
+        
+        Player.CurrentPlayer.knockBackDuration = duration;
+        fsm.CurrentStateName = "Knockback";
+    }
+
+    public void KnockbackHorizontal(Vector3 origin, float force, float duration = 1f)
     {
         Vector3 direction = transform.position - origin;
         Vector2 groundNormal = GroundNormal;
 
-        direction = ((direction.x > 0 ? groundNormal.Right().normalized : groundNormal.Left().normalized) + groundNormal).normalized * force;
-        rigidbody.velocity = Vector2.zero;
-        rigidbody.AddForce(direction);
 
-
-        Player.CurrentPlayer.knockBackDuration = duration;
-        fsm.CurrentStateName = "Knockback";
+        Knockback((direction.x > 0 ? groundNormal.Right().normalized : groundNormal.Left().normalized + groundNormal).normalized, force, duration);
     }
 
 

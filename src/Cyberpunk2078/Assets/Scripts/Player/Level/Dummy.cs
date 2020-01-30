@@ -205,6 +205,14 @@ public abstract class Enemy : Dummy
         hitBoxes[index].gameObject.SetActive(true);
     }
 
+    public void EnableHitBox(int index, bool overwriteHit)
+    {
+        if (overwriteHit)
+            hitBoxes[index].hit = currentHit;
+
+        hitBoxes[index].gameObject.SetActive(true);
+    }
+
     public void DisableHitBox(int index)
     {
         hitBoxes[index].gameObject.SetActive(false);

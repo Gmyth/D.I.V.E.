@@ -7,7 +7,8 @@ public class L2ShieldBossState_PowerGuard : EnemyState<L2ShieldBoss>
     [SerializeField] private int hitBox = 3;
     [SerializeField] private float knockbackDuration = 1f;
     [SerializeField] private float counterAttackStartTime = 0.5f;
-    
+
+    private Rigidbody2D rigidbody;
     private Animator animator;
 
     private float t_finish = 0;
@@ -20,6 +21,7 @@ public class L2ShieldBossState_PowerGuard : EnemyState<L2ShieldBoss>
         base.Initialize(enemy);
 
 
+        rigidbody = enemy.GetComponent<Rigidbody2D>();
         animator = enemy.GetComponent<Animator>();
     }
 
@@ -35,8 +37,10 @@ public class L2ShieldBossState_PowerGuard : EnemyState<L2ShieldBoss>
         r = Random.Range(0, 100);
 
 
-        enemy.EnableHitBox(hitBox);
+        enemy.EnableHitBox(hitBox, false);
 
+
+        rigidbody.velocity = Vector2.zero;
         animator.Play("L2ShieldBoss_Guard");
     }
 
