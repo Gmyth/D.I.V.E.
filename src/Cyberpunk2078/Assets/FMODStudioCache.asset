@@ -58,22 +58,6 @@ MonoBehaviour:
   - Name: 
     Value: 4514592
   Exists: 1
---- !u!114 &-8854782106800619425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Speed
-  Min: 0
-  Max: 1
-  Default: 0
 --- !u!114 &-8849660826524896808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,22 +134,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Speed
-  Min: 0
-  Max: 1
-  Default: 0
---- !u!114 &-8543689139744113858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Pitch
   Min: 0
   Max: 1
   Default: 0
@@ -341,22 +309,6 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 0
---- !u!114 &-7761279514166617493
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Speed
-  Min: 0
-  Max: 1
-  Default: 0
 --- !u!114 &-7705490966272450926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,22 +354,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Speed
-  Min: 0
-  Max: 1
-  Default: 0
---- !u!114 &-7356138312075182825
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Pitch
   Min: 0
   Max: 1
   Default: 0
@@ -544,7 +480,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: 9098319043290550583}
+  - {fileID: 8166752864496782236}
   MinDistance: 0
   MaxDistance: 0
   Length: 260
@@ -586,22 +522,6 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
---- !u!114 &-6057021481777127175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Pitch
-  Min: 0
-  Max: 1
-  Default: 0
 --- !u!114 &-5998368405715732944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -620,7 +540,7 @@ MonoBehaviour:
   - {fileID: 3792679407991796511}
   IsStream: 1
   Is3D: 0
-  IsOneShot: 0
+  IsOneShot: 1
   Parameters: []
   MinDistance: 0
   MaxDistance: 0
@@ -777,7 +697,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: -7761279514166617493}
+  - {fileID: -648013085242049165}
   MinDistance: 1
   MaxDistance: 20
   Length: 2524
@@ -813,22 +733,6 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
---- !u!114 &-5498005930528726348
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Pitch
-  Min: 0
-  Max: 1
-  Default: 0
 --- !u!114 &-5378711225492042801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -851,39 +755,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 287
---- !u!114 &-5234889341341251099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Pitch
-  Min: 0
-  Max: 1
-  Default: 0
 --- !u!114 &-5230075312521966314
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Speed
-  Min: 0
-  Max: 1
-  Default: 0
---- !u!114 &-5086963313807443573
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -937,7 +809,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 0
   MaxDistance: 0
-  Length: 260
+  Length: 1349
 --- !u!114 &-4847411463161972721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -997,28 +869,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: Build\Audio\Desktop\Master Bank.strings.bank
-  lastModified: 637159090464900181
+  lastModified: 637158949043044291
   LoadResult: 0
   FileSizes:
   - Name: 
-    Value: 1880
+    Value: 1832
   Exists: 1
---- !u!114 &-4551925862501612089
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Speed
-  Min: 0
-  Max: 1
-  Default: 0
 --- !u!114 &-4381178379574446320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1074,22 +930,6 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
---- !u!114 &-4176271637640066551
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Pitch
-  Min: 0
-  Max: 1
-  Default: 0
 --- !u!114 &-4063431731809804100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1113,22 +953,6 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 240
---- !u!114 &-4006936378058938733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Pitch
-  Min: 0
-  Max: 1
-  Default: 0
 --- !u!114 &-3985471873606382755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1188,22 +1012,6 @@ MonoBehaviour:
   - Name: 
     Value: 1536
   Exists: 0
---- !u!114 &-3845172449315905205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Pitch
-  Min: 0
-  Max: 1
-  Default: 0
 --- !u!114 &-3585484204619439978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1624,22 +1432,6 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 300
---- !u!114 &-1239133173012846242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Pitch
-  Min: 0
-  Max: 1
-  Default: 0
 --- !u!114 &-1235204246140875334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1778,22 +1570,6 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 243435
---- !u!114 &-398222293221605208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Pitch
-  Min: 0
-  Max: 1
-  Default: 0
 --- !u!114 &-85720851260979461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1896,13 +1672,11 @@ MonoBehaviour:
   - {fileID: 1114591159486981309}
   - {fileID: -4381178379574446320}
   - {fileID: -3458792272631965509}
-  - {fileID: 6749656012646019575}
-  - {fileID: 5441805997811433323}
   MasterBanks:
   - {fileID: 3792679407991796511}
   StringsBanks:
   - {fileID: -4644422745808206642}
-  stringsBankWriteTime: 637159090464900181
+  stringsBankWriteTime: 637158949043044291
   cacheVersion: 3
 --- !u!114 &144810582387696642
 MonoBehaviour:
@@ -2073,7 +1847,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: -5498005930528726348}
+  - {fileID: -1697022261507977035}
   MinDistance: 0
   MaxDistance: 0
   Length: 110
@@ -2090,22 +1864,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Speed
-  Min: 0
-  Max: 1
-  Default: 0
---- !u!114 &1236522383691178393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Pitch
   Min: 0
   Max: 1
   Default: 0
@@ -2235,39 +1993,7 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
---- !u!114 &1744130629161528525
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Pitch
-  Min: 0
-  Max: 1
-  Default: 0
 --- !u!114 &1810854200277976656
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Pitch
-  Min: 0
-  Max: 1
-  Default: 0
---- !u!114 &1845894520484512534
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2338,22 +2064,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 300
---- !u!114 &2160617608351546658
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Speed
-  Min: 0
-  Max: 1
-  Default: 0
 --- !u!114 &2300712922577123697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2469,22 +2179,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 307
---- !u!114 &3261244538178681567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Speed
-  Min: 0
-  Max: 1
-  Default: 0
 --- !u!114 &3367376507741527749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2569,11 +2263,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: C:\Users\Yiyan Wang\Documents\GitHub\Cyberpunk2078\src\Cyberpunk2078\Build\Audio\Desktop\Master
     Bank.bank
-  lastModified: 637159090464810422
+  lastModified: 637158949042964183
   LoadResult: 0
   FileSizes:
   - Name: 
-    Value: 4589120
+    Value: 4566048
   Exists: 1
 --- !u!114 &3815070064187430924
 MonoBehaviour:
@@ -2646,22 +2340,6 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 812
---- !u!114 &4191896394971961187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Speed
-  Min: 0
-  Max: 1
-  Default: 0
 --- !u!114 &4244024506847793287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2675,22 +2353,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Speed
-  Min: 0
-  Max: 1
-  Default: 0
---- !u!114 &4333738288452016922
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Pitch
   Min: 0
   Max: 1
   Default: 0
@@ -2723,22 +2385,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Pitch
-  Min: 0
-  Max: 1
-  Default: 0
---- !u!114 &4436297671711660478
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Speed
   Min: 0
   Max: 1
   Default: 0
@@ -2912,29 +2558,6 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
---- !u!114 &5441805997811433323
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Path: event:/Interface/BreakWindow
-  guid: 4f74833f6a09f044b342a1cfd819aff2
-  Banks:
-  - {fileID: 3792679407991796511}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 0
-  MaxDistance: 0
-  Length: 1984
 --- !u!114 &5572227756707937826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3021,55 +2644,7 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 0
---- !u!114 &6115331309910158266
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Pitch
-  Min: 0
-  Max: 1
-  Default: 0
---- !u!114 &6168826457365138936
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Pitch
-  Min: 0
-  Max: 1
-  Default: 0
 --- !u!114 &6192439642090220848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Pitch
-  Min: 0
-  Max: 1
-  Default: 0
---- !u!114 &6215538675105363626
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3193,29 +2768,6 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
---- !u!114 &6749656012646019575
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Path: event:/Player/JumpLand
-  guid: 9298b0525d39f340a8d6b52af260e1d5
-  Banks:
-  - {fileID: 3792679407991796511}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 0
-  MaxDistance: 0
-  Length: 275
 --- !u!114 &6788278751234617504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3265,38 +2817,6 @@ MonoBehaviour:
   Max: 1
   Default: 0
 --- !u!114 &6904033271954282015
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Speed
-  Min: 0
-  Max: 1
-  Default: 0
---- !u!114 &7133024078004071221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Pitch
-  Min: 0
-  Max: 1
-  Default: 0
---- !u!114 &7185270729839902027
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3496,22 +3016,6 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 170
---- !u!114 &8054680530340104132
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Speed
-  Min: 0
-  Max: 1
-  Default: 0
 --- !u!114 &8158278221800416930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3706,22 +3210,6 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
---- !u!114 &8574951667305829116
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Pitch
-  Min: 0
-  Max: 1
-  Default: 0
 --- !u!114 &8592256473976782738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3854,22 +3342,6 @@ MonoBehaviour:
   MaxDistance: 0
   Length: 307
 --- !u!114 &9030989898599581548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Pitch
-  Min: 0
-  Max: 1
-  Default: 0
---- !u!114 &9098319043290550583
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
