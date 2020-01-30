@@ -5,6 +5,8 @@
 public class L2ShieldBossState_PowerGuard : EnemyState<L2ShieldBoss>
 {
     [SerializeField] private int hitBox = 3;
+    [SerializeField] private float knockbackDrag = 5f;
+    [SerializeField] private float knockbackSpeed = 5f;
     [SerializeField] private float knockbackDuration = 1f;
     [SerializeField] private float counterAttackStartTime = 0.5f;
 
@@ -14,6 +16,7 @@ public class L2ShieldBossState_PowerGuard : EnemyState<L2ShieldBoss>
     private float t_finish = 0;
     private float t_counterAttack = 0;
     private float r = 0;
+    private Vector3 backDirection;
 
 
     public override void Initialize(L2ShieldBoss enemy)
@@ -35,12 +38,16 @@ public class L2ShieldBossState_PowerGuard : EnemyState<L2ShieldBoss>
         t_finish = t + knockbackDuration;
         t_counterAttack = t + counterAttackStartTime;
         r = Random.Range(0, 100);
+        backDirection = -enemy.transform.localScale.x * enemy.transform.right;
 
 
         enemy.EnableHitBox(hitBox, false);
 
 
-        rigidbody.velocity = Vector2.zero;
+        rigidbody.drag = knockbackDrag;
+        rigidbody.velocity = backDirection * knockbackSpeed;
+
+
         animator.Play("L2ShieldBoss_Guard");
     }
 
@@ -50,6 +57,10 @@ public class L2ShieldBossState_PowerGuard : EnemyState<L2ShieldBoss>
 
 
         enemy.DisableHitBox(hitBox);
+
+
+        rigidbody.drag = 0;
+        rigidbody.velocity = Vector2.zero;
     }
 
     public override string Update()

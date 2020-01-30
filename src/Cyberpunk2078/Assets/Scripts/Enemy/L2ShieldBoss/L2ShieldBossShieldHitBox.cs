@@ -18,34 +18,37 @@ public class L2ShieldBossShieldHitBox : ShieldHitBox
         L2ShieldBoss shieldBoss = (L2ShieldBoss)hit.source;
 
 
-        shieldBoss.OnAttack.Invoke(hit, other);
-        player.OnHit?.Invoke(hit, other);
-
-
-        player.ApplyDamage(hit.damage);
-
-
-        Vector3 d = player.transform.position - shieldBoss.transform.position;
-        Vector3 direction = d.x > 0 ? new Vector3(1, 1, 0) : new Vector3(-1, 1, 0);
-
-
-        if (player.State.Name == "Dashing")
+        if (Vector3.Angle(shieldBoss.transform.localScale.x * shieldBoss.transform.right, player.transform.position - shieldBoss.transform.position) < 90)
         {
-            player.Knockback(direction, largeKnockbackMultiplier * hit.knockback, largeKnockbackDuration);
+            shieldBoss.OnAttack.Invoke(hit, other);
+            player.OnHit?.Invoke(hit, other);
 
 
-            shieldBoss.ApplyFatigue(largeKnockbackFatigue);
-            shieldBoss.FSM.CurrentStateName = "PowerGuard";
+            player.ApplyDamage(hit.damage);
+
+
+            Vector3 d = player.transform.position - shieldBoss.transform.position;
+            Vector3 direction = d.x > 0 ? new Vector3(1, 1, 0) : new Vector3(-1, 1, 0);
+
+
+            if (player.State.Name == "Dashing")
+            {
+                player.Knockback(direction, largeKnockbackMultiplier * hit.knockback, largeKnockbackDuration);
+
+
+                shieldBoss.ApplyFatigue(largeKnockbackFatigue);
+                shieldBoss.FSM.CurrentStateName = "PowerGuard";
+            }
+            else
+            {
+                player.Knockback(direction, hit.knockback, normalKnockbackDuration);
+
+
+                shieldBoss.ApplyFatigue(normalKnockbackFatigue);
+            }
+
+
+            CreateEffect(transform);
         }
-        else
-        {
-            player.Knockback(direction, hit.knockback, normalKnockbackDuration);
-
-
-            shieldBoss.ApplyFatigue(normalKnockbackFatigue);
-        }
-
-
-        CreateEffect(transform);
     }
 }

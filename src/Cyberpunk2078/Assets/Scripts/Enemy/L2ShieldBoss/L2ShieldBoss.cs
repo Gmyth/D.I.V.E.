@@ -3,6 +3,16 @@
 
 public class L2ShieldBoss : Enemy
 {
+    private Rigidbody2D rb2d;
+
+
+    public void Knockback(Vector3 direction, float force)
+    {
+        rb2d.velocity = Vector2.zero;
+        rb2d.AddForce(force * direction.normalized, ForceMode2D.Impulse);
+    }
+
+
     public override float ApplyDamage(float rawDamage)
     {
         if (isEvading)
@@ -67,6 +77,9 @@ public class L2ShieldBoss : Enemy
         base.Start();
 
 
+        rb2d = GetComponent<Rigidbody2D>();
+
+
         OnHit.AddListener(HandleHit);
 
 
@@ -98,7 +111,12 @@ public class L2ShieldBoss : Enemy
         {
             ObjectRecycler.Singleton.GetSingleEffect(15, transform);
 
-            TimeManager.Instance.startSlowMotion(0.5f, 0.2f);
+
+            if (fsm.CurrentStateName != "Knockback")
+            {
+                TimeManager.Instance.startSlowMotion(0.7f, 0.3f, 0.2f);
+                CameraManager.Instance.FlashIn(7.5f, 0.1f, 1f, 0.2f);
+            }
         }
     }
 }
