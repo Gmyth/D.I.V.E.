@@ -8,6 +8,8 @@ public class L2ShieldBossState_PowerGuard : EnemyState<L2ShieldBoss>
     [SerializeField] private float knockbackDrag = 5f;
     [SerializeField] private float knockbackSpeed = 5f;
     [SerializeField] private float knockbackDuration = 1f;
+    [SerializeField] private string counterAttack = "ChargedDash";
+    [SerializeField][Range(0, 1)] private float counterAttackChance = 30;
     [SerializeField] private float counterAttackStartTime = 0.5f;
 
     private Rigidbody2D rigidbody;
@@ -41,6 +43,7 @@ public class L2ShieldBossState_PowerGuard : EnemyState<L2ShieldBoss>
         backDirection = -enemy.transform.localScale.x * enemy.transform.right;
 
 
+        enemy.AdjustFacingImmediately();
         enemy.EnableHitBox(hitBox, false);
 
 
@@ -65,24 +68,14 @@ public class L2ShieldBossState_PowerGuard : EnemyState<L2ShieldBoss>
 
     public override string Update()
     {
-        AdjustFacingDirection();
+        enemy.AdjustFacing();
 
 
         float t = Time.time;
 
 
-        if (t >= t_counterAttack)
-        {
-            if (r <= 15)
-                return "ChargedDash";
-
-
-            Vector3 d = enemy.currentTarget.transform.position - enemy.transform.position;
-
-
-            if (r <= 50 && Mathf.Abs(d.x) < 2.5f)
-                return "CounterAttack";
-        }
+        if (counterAttack != "" && t >= t_counterAttack && r <= counterAttackChance)
+            return counterAttack;
 
 
         if (t >= t_finish)

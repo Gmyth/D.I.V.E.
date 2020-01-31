@@ -4,9 +4,17 @@
 [CreateAssetMenuAttribute(fileName = "L2ShieldBossState_Alert", menuName = "Enemy State/Level 2/Shield Boss/Alert")]
 public class L2ShieldBossState_Alert : ESAlert<L2ShieldBoss>
 {
+    public override void OnStateEnter(State previousState)
+    {
+        base.OnStateEnter(previousState);
+
+
+        enemy.AdjustFacingImmediately();
+    }
+
     public override string Update()
     {
-        AdjustFacingDirection();
+        enemy.AdjustFacing();
 
 
         if (Time.time >= t_finishWait)

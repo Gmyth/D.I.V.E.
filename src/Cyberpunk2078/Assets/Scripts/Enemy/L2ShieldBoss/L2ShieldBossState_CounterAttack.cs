@@ -29,6 +29,9 @@ public class L2ShieldBossState_CounterAttack : ESAttack<L2ShieldBoss>
         t_finish = Time.time + motionTime;
 
 
+        enemy.AdjustFacingImmediately();
+
+
         animator.Play(animation);
     }
 

@@ -17,6 +17,6 @@ MonoBehaviour:
   damage: 1
   knockback: 0
   hitBox: 4
-  motionTime: 1
-  animation: L2ShieldBoss_ShieldAttack1
+  motionTime: 1.5
+  animation: L2ShieldBoss_ShieldAttack2
   state_afterAttack: Alert

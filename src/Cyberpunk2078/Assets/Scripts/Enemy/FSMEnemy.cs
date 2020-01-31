@@ -116,19 +116,6 @@ public abstract class EnemyState<T> : EnemyState where T : Enemy
     }
 
 
-    protected void AdjustFacingDirection()
-    {
-        AdjustFacingDirection(enemy.currentTarget.transform.position - enemy.transform.position);
-    }
-
-    protected void AdjustFacingDirection(Vector3 direction)
-    {
-        Vector3 scale = enemy.transform.localScale;
-        scale.x = Mathf.Sign(direction.x) * Mathf.Abs(scale.x);
-
-        enemy.transform.localScale = scale;
-    }
-
     protected PlayerCharacter FindAvailableTarget(bool useSightRange = true, bool useGuardZone = true)
     {
         if (useSightRange)

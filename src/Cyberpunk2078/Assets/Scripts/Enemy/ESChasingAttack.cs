@@ -101,7 +101,7 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
 
                     if (playerPosition.y - enemyPosition.y <= attackHeight) // Check if the target is low enough to get hit
                     {
-                        AdjustFacingDirection(d);
+                        enemy.AdjustFacing(d);
 
 
                         t = Time.time;
@@ -128,7 +128,7 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
                     IsMoving = true;
 
 
-                    AdjustFacingDirection(direction);
+                    enemy.AdjustFacing(direction);
                 }
 
 

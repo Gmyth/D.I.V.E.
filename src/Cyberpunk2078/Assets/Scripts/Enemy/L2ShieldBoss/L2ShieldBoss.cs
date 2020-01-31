@@ -3,13 +3,50 @@
 
 public class L2ShieldBoss : Enemy
 {
+    [SerializeField] private float angerDecrease = 5f;
+    [SerializeField] private float counterThreshhold = 20f;
+    [SerializeField] private float turnTime = 0.5f;
+
     private Rigidbody2D rb2d;
 
+    private float anger = 0;
+    private bool isTurning = false;
+    private float t_turn = 0;
+    
 
     public void Knockback(Vector3 direction, float force)
     {
         rb2d.velocity = Vector2.zero;
         rb2d.AddForce(force * direction.normalized, ForceMode2D.Impulse);
+    }
+
+
+    public override void AdjustFacing(Vector3 direction)
+    {
+        if (direction.x * transform.localScale.x < 0 && !isTurning)
+        {
+            isTurning = true;
+            t_turn = turnTime;
+        }
+    }
+
+    public void AdjustFacingImmediately()
+    {
+        AdjustFacingImmediately(currentTarget.transform.position - transform.position);        
+
+
+        isTurning = false;
+        t_turn = 0;
+    }
+
+    public void AdjustFacingImmediately(Vector2 direction)
+    {
+        AdjustFacingImmediately((Vector3)direction);
+    }
+
+    public void AdjustFacingImmediately(Vector3 direction)
+    {
+        GameUtility.AdjustFacing(this, direction);
     }
 
 
@@ -46,7 +83,7 @@ public class L2ShieldBoss : Enemy
 
     public float ApplyFatigue(float rawFatigue)
     {
-        if (fsm.CurrentStateName == "Tired" || fsm.CurrentStateName == "DiveBomb" || rawFatigue <= 0)
+        if (rawFatigue <= 0 || fsm.CurrentStateName == "Tired" || fsm.CurrentStateName == "DiveBomb" || fsm.CurrentStateName == "CounterAttack")
             return 0;
 
 
@@ -66,6 +103,8 @@ public class L2ShieldBoss : Enemy
 
             statistics[StatisticType.Fatigue] = 0;
         }
+        else if (fsm.CurrentStateName != "Knockback" && fsm.CurrentStateName != "DiveBomb")
+            anger += rawFatigue;
 
 
         return result.currentValue - result.previousValue;
@@ -74,6 +113,9 @@ public class L2ShieldBoss : Enemy
 
     protected override void Start()
     {
+        currentTarget = PlayerCharacter.Singleton;
+
+
         base.Start();
 
 
@@ -83,9 +125,39 @@ public class L2ShieldBoss : Enemy
         OnHit.AddListener(HandleHit);
 
 
-        currentTarget = PlayerCharacter.Singleton;
-
         isInvulnerable = true;
+        anger = 0;
+    }
+
+
+    private void Update()
+    {
+        float scaledDt = Time.deltaTime * TimeManager.Instance.TimeFactor;
+
+
+        if (anger >= 20)
+        {
+            fsm.CurrentStateName = "CounterAttack";
+            anger = 0;
+        }
+        else
+            anger = Mathf.Max(0, anger - angerDecrease * scaledDt);
+
+
+        if (isTurning)
+        {
+            if ((currentTarget.transform.position - transform.position).x * transform.localScale.x > 0)
+            {
+                isTurning = false;
+                t_turn = 0;
+            }
+
+
+            if (t_turn <= 0)
+                AdjustFacingImmediately();
+            else
+                t_turn -= scaledDt;
+        }
     }
 
 
@@ -112,7 +184,7 @@ public class L2ShieldBoss : Enemy
             ObjectRecycler.Singleton.GetSingleEffect(15, transform);
 
 
-            if (fsm.CurrentStateName != "Knockback")
+            if (fsm.CurrentStateName != "Knockback" && fsm.CurrentStateName != "DiveBomb")
             {
                 TimeManager.Instance.startSlowMotion(0.7f, 0.3f, 0.2f);
                 CameraManager.Instance.FlashIn(7.5f, 0.1f, 1f, 0.2f);

@@ -27,6 +27,6 @@ MonoBehaviour:
   minDuration: 0.15
   maxDuration: 0
   stopDistance: 0
-  dashEndTime: 0.3
+  dashEndTime: 0.5
   animation_dash: L2ShieldBoss_Dashing
   animation_dashEnd: L2ShieldBoss_DashEnd

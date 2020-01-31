@@ -199,6 +199,23 @@ public abstract class Enemy : Dummy
     }
 
 
+    public void AdjustFacing()
+    {
+        if (currentTarget)
+            AdjustFacing(currentTarget.transform.position - transform.position);
+    }
+
+    public void AdjustFacing(Vector2 direction)
+    {
+        GameUtility.AdjustFacing(this, (Vector3)direction);
+    }
+
+    public virtual void AdjustFacing(Vector3 direction)
+    {
+        GameUtility.AdjustFacing(this, direction);
+    }
+
+
     public void EnableHitBox(int index)
     {
         hitBoxes[index].hit = currentHit;
