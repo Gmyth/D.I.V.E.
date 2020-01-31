@@ -47,6 +47,8 @@ public abstract class ESChargedAttack<T> : ESAttack<T> where T : Enemy
 
 
         animator.Play(animation_charging);
+
+        
     }
 
 

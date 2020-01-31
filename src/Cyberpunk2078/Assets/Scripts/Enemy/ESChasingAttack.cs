@@ -99,7 +99,11 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
 
 
                         if (attackAnimation != "")
+                        {
                             animator.Play(attackAnimation, -1, 0f);
+                            AudioManager.Instance.PlayOnce("RobotAttack");
+                        }
+                            
                     }
                 }
                 else

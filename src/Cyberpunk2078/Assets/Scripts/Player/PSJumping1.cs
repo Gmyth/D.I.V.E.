@@ -193,6 +193,7 @@ public class PSJumping1 : PlayerState
     {
         playerCharacter.groundDust.transform.localPosition = Vector3.zero;
         playerCharacter.groundDust.GetComponent<ParticleSystem>().Stop();
+        
     }
 
     private void performWallJump()
