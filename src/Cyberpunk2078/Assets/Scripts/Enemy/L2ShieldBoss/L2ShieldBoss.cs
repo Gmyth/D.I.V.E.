@@ -186,8 +186,8 @@ public class L2ShieldBoss : Enemy
 
             if (fsm.CurrentStateName != "Knockback" && fsm.CurrentStateName != "DiveBomb")
             {
-                TimeManager.Instance.startSlowMotion(0.7f, 0.3f, 0.2f);
-                CameraManager.Instance.FlashIn(7.5f, 0.1f, 1f, 0.2f);
+                TimeManager.Instance.startSlowMotion(0.4f, 0.5f, 0.2f);
+                CameraManager.Instance.FlashIn(7.5f, 0.1f, 0.7f, 0.2f);
             }
         }
     }
