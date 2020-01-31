@@ -50,6 +50,29 @@ public class L2ShieldBoss : Enemy
     }
 
 
+    public void EmitShockwave()
+    {
+        EmitShockwave(transform.localScale, true);
+    }
+
+    public void EmitShockwave(bool cameraShake)
+    {
+        EmitShockwave(transform.localScale, cameraShake);
+    }
+
+    public void EmitShockwave(Vector3 direction, bool cameraShake = true)
+    {
+        LinearMovement shockWave = ObjectRecycler.Singleton.GetObject<LinearMovement>(16);
+        shockWave.initialPosition = transform.position + new Vector3(1, 0, 0);
+        shockWave.orientation = direction.x > 0 ? Vector3.right : Vector3.left;
+        shockWave.gameObject.SetActive(true);
+
+
+        if (cameraShake)
+            CameraManager.Instance.Shaking(0.2f, 0.2f);
+    }
+
+
     public override float ApplyDamage(float rawDamage)
     {
         if (isEvading)

@@ -310,7 +310,7 @@ public class PSDashing : PlayerState
 
         if (playerCharacter.PowerDash)
         {
-            rb2d.AddForce(direction * dashForce * 200f * 2.15f / Time.timeScale);
+            rb2d.AddForce(direction * dashForce * 200f * 1.8f / Time.timeScale);
         }
         else
         {
@@ -318,6 +318,7 @@ public class PSDashing : PlayerState
         }
 
         //Camera Tricks
+
         CameraManager.Instance.Shaking(0.1f,0.10f);
     }
 }

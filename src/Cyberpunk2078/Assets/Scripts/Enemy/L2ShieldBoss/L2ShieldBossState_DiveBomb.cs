@@ -82,15 +82,11 @@ public class L2ShieldBossState_DiveBomb : ESChargedAttack<L2ShieldBoss>
                     }
 
 
-                    LinearMovement shockWave = ObjectRecycler.Singleton.GetObject<LinearMovement>(16);
-                    shockWave.initialPosition = enemy.transform.position + new Vector3(1, 0, 0);
-                    shockWave.orientation = Vector3.right;
-                    shockWave.gameObject.SetActive(true);
+                    enemy.EmitShockwave(Vector3.right, false);
+                    enemy.EmitShockwave(Vector3.left, false);
 
-                    shockWave = ObjectRecycler.Singleton.GetObject<LinearMovement>(16);
-                    shockWave.initialPosition = enemy.transform.position + new Vector3(-1, 0, 0);
-                    shockWave.orientation = Vector3.left;
-                    shockWave.gameObject.SetActive(true);
+
+                    CameraManager.Instance.Shaking(0.4f, 0.2f, true);
 
 
                     ++state;

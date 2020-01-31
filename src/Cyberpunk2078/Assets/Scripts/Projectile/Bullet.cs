@@ -46,13 +46,12 @@ public class Bullet : Recyclable
             {
                 //hit! Hunch Trigger
                 PlayerCharacter playerCharacter = hit.collider.GetComponent<PlayerCharacter>();
-                if (playerCharacter.InKillStreak)
-                {
-                    hunchTriggered = true;
-                    playerCharacter.AddKillCount(-2);
-                    TimeManager.Instance.startSlowMotion(1f);
-                   
-                }
+                //if (playerCharacter.InKillStreak)
+                //{
+                //    hunchTriggered = true;
+                //    playerCharacter.AddKillCount(-2);
+                //    TimeManager.Instance.startSlowMotion(1f);                  
+                //}
             }
             
             lastHitEstimation = Time.unscaledTime;
