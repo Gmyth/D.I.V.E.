@@ -30,26 +30,26 @@ public class Bullet : Recyclable
     {
         GetComponentInChildren<Animator>().speed = TimeManager.Instance.TimeFactor;
         GetComponent<LinearMovement>().speed = speed * TimeManager.Instance.TimeFactor;
-        if (!disableHunch && lastHitEstimation + hitEstimationTimeInterval < Time.unscaledTime && !hunchTriggered && !isFriendly )
-        {
-            // time to check
-            var direction = GetComponent<LinearMovement>().orientation;
-            RaycastHit2D hit = Physics2D.Raycast(transform.position,direction, 4f);
-            if (hit.collider != null && hit.transform.CompareTag("Player"))
-            {
-                //hit! Hunch Trigger
-                PlayerCharacter playerCharacter = hit.collider.GetComponent<PlayerCharacter>();
-                if (playerCharacter.InKillStreak)
-                {
-                    hunchTriggered = true;
-                    playerCharacter.AddKillCount(-2);
-                    TimeManager.Instance.startSlowMotion(1f);
-                   
-                }
-            }
-            
-            lastHitEstimation = Time.unscaledTime;
-        }
+//        if (!disableHunch && lastHitEstimation + hitEstimationTimeInterval < Time.unscaledTime && !hunchTriggered && !isFriendly )
+//        {
+//            // time to check
+//            var direction = GetComponent<LinearMovement>().orientation;
+//            RaycastHit2D hit = Physics2D.Raycast(transform.position,direction, 4f);
+//            if (hit.collider != null && hit.transform.CompareTag("Player"))
+//            {
+//                //hit! Hunch Trigger
+//                PlayerCharacter playerCharacter = hit.collider.GetComponent<PlayerCharacter>();
+//                if (playerCharacter.InKillStreak)
+//                {
+//                    hunchTriggered = true;
+//                    playerCharacter.AddKillCount(-2);
+//                    TimeManager.Instance.startSlowMotion(1f);
+//                   
+//                }
+//            }
+//            
+//            lastHitEstimation = Time.unscaledTime;
+//        }
     }
 
 

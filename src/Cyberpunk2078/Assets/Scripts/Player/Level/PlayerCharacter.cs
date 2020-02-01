@@ -294,7 +294,7 @@ public class PlayerCharacter : Dummy
         
         InKillStreak = true;
         SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
-        TimeManager.Instance.startSlowMotion(0.5f);
+        TimeManager.Instance.startSlowMotion(0.3f);
         GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").ShowText("Kill Streak!!!");
     }
 
