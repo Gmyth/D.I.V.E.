@@ -8462,6 +8462,7 @@ MonoBehaviour:
   angerDecrease: 2
   counterThreshhold: 20
   turnTime: 0.5
+  spark: {fileID: 2092657177}
 --- !u!114 &923652461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11327,7 +11328,6 @@ GameObject:
   - component: {fileID: 2092657178}
   - component: {fileID: 2092657181}
   - component: {fileID: 2092657180}
-  - component: {fileID: 2092657179}
   m_Layer: 11
   m_Name: Spark
   m_TagString: Untagged
@@ -11343,35 +11343,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2092657177}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.39, y: 2.024, z: 0}
+  m_LocalPosition: {x: -0.037, y: 1.821, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 260362619}
   m_Father: {fileID: 923652466}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2092657179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2092657177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7faab07bfed337045833385bbca3304e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sprites:
-  - {fileID: 21300000, guid: c98c7e11bd527a24e9261314579eb1d7, type: 3}
-  - {fileID: 21300000, guid: 3c15b9c26654cf144a2eeede38f5b01a, type: 3}
-  - {fileID: 21300000, guid: 0c3582db63a91574ea2040a0efcdbf21, type: 3}
-  - {fileID: 21300000, guid: e634510a42d6a94468bd9382ce3a8976, type: 3}
-  - {fileID: 21300000, guid: c92affbdc7a64514ba55cdaae545ba9a, type: 3}
-  - {fileID: 21300000, guid: b20734380e08efb48971d9f2649649a6, type: 3}
-  - {fileID: 21300000, guid: 7f81cc67d9ed9fd42b28354310f5a3b0, type: 3}
-  SpriteReplaceInterval: 0.001
-  loop: 0
 --- !u!95 &2092657180
 Animator:
   serializedVersion: 3

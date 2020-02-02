@@ -6,7 +6,7 @@ public class L2ShieldBoss : Enemy
     [SerializeField] private float angerDecrease = 5f;
     [SerializeField] private float counterThreshhold = 20f;
     [SerializeField] private float turnTime = 0.5f;
-
+    public GameObject spark;
     private float anger = 0;
     private bool isTurning = false;
     private float t_turn = 0;

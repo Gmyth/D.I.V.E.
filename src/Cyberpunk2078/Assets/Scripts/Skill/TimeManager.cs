@@ -44,8 +44,8 @@ public class TimeManager : MonoBehaviour
 
             if (startTime + 0.15f < Time.unscaledTime)
             {
-                CameraManager.Instance.FocusAt(FindObjectOfType<PlayerCharacter>().transform,0.2f);
-                CameraManager.Instance.FlashIn(7.5f,0.05f,0.1f,0.01f);
+                CameraManager.Instance.FocusTo(FindObjectOfType<PlayerCharacter>().transform.position,0.2f);
+                //CameraManager.Instance.FlashIn(7.5f,0.05f,0.1f,0.01f);
             }
 
             if (Time.unscaledTime < endTime)
@@ -95,7 +95,7 @@ public class TimeManager : MonoBehaviour
     public void ApplyBlackScreen() 
     {
 
-        StartCoroutine(applyBlackScreen());
+        blackScreen.color = new Color(blackScreen.color.r, blackScreen.color.g, blackScreen.color.b, 0.7f);
 
     }
     public void StartFeverMotion()

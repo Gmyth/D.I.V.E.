@@ -19,7 +19,7 @@ public class L2ShieldBossState_Alert : ESAlert<L2ShieldBoss>
 
         if (Time.time >= t_finishWait)
         {
-            return "CounterAttack";
+            return "DiveBomb";
 
             float r = Random.Range(0, 100);
 

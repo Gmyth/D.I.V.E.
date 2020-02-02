@@ -156,7 +156,7 @@ public class Bullet : Recyclable
                 CameraManager.Instance.Idle();
                 
                 CameraManager.Instance.Shaking(0.5f,0.05f,true);
-                CameraManager.Instance.FocusAt(transform,0.02f);
+                CameraManager.Instance.FocusTo(transform.position,0.02f);
                 
                 SingleEffect Hit1 = ObjectRecycler.Singleton.GetObject<SingleEffect>(12);
                 Hit1.transform.right = transform.right;

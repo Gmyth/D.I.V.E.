@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using MyBox;
 using UnityEngine;
 
 
@@ -39,7 +40,9 @@ public class L2ShieldBossState_CounterAttack : ESAttack<L2ShieldBoss>
         //TimeManager.Instance.startSlowMotion(1f, 0.05f, 0.5f);
         TimeManager.Instance.endSlowMotion();
         enemy.StartCoroutine(SlowMotion());
-        CameraManager.Instance.FlashIn(7f, 0.2f, 0.7f, 0.3f);
+        CameraManager.Instance.FocusTo(
+            (enemy.transform.position - FindObjectOfType<PlayerCharacter>().transform.position)/2
+            + FindObjectOfType<PlayerCharacter>().transform.position,  0.3f);
     }
 
     public override string Update()
@@ -57,27 +60,31 @@ public class L2ShieldBossState_CounterAttack : ESAttack<L2ShieldBoss>
     }
 
 
-    private IEnumerator SlowMotion(float duration = 1f)
+    private IEnumerator SlowMotion(float duration = 0.3f)
     {
         float originalTimeScale = Time.timeScale;
 
 
-        TimeManager.Instance.ApplyBlackScreen();
+        
 
         Time.timeScale = 0.2f;
-
-
-        var spark = enemy.GetComponentInChildren(typeof(CustomAnimator), true) as CustomAnimator;
-        spark.gameObject.SetActive(true);
-        spark.Play(false);
+        
+        TimeManager.Instance.ApplyBlackScreen();
+        
+        animator.speed = 0;
+        
+        enemy.spark.gameObject.SetActive(true);
+        enemy.spark.GetComponent<Animator>().Play("Spark",0,-1);
+        enemy.spark.GetComponent<Animator>().speed = 8f;
 
 
         yield return new WaitForSecondsRealtime(duration);
         
         
-        spark.gameObject.SetActive(false);
-
-
+        enemy.spark.gameObject.SetActive(false);
+        TimeManager.Instance.EndFeverMotion();
+        
+        animator.speed = 1f;
         Time.timeScale = originalTimeScale;
     }
 }

@@ -74,6 +74,8 @@ public class CameraManager : MonoBehaviour {
 	
 	//Focusing related
 	private Transform target;
+	private Vector3 focusPos;
+	private bool usingPos;
 
 	private float defaultSize;
 	private float lastZoomIn; // record the last second for zooming in
@@ -102,7 +104,7 @@ public class CameraManager : MonoBehaviour {
 		Initialize();
 	}
 
-    public void resetTarget()
+    public void ResetTarget()
     {
 	    mainTarget = GameObject.FindGameObjectWithTag("Player");
 		targetList.Clear();
@@ -110,14 +112,15 @@ public class CameraManager : MonoBehaviour {
     }
 	
 	//change the target, clear current list and add the target to new one
-	public void changeTarget(GameObject focusPoint)
+	public void ChangeTarget(GameObject focusPoint)
 	{
+		mainTarget = focusPoint;
 		targetList.Clear();
 		targetList.Add(focusPoint);
 	}
 	
 	//add the target to list, and can set release aftere serval seconds;
-	public void addTempTarget(GameObject newItem, float releaseDlay = 0f)
+	public void AddTempTarget(GameObject newItem, float releaseDlay = 0f)
 	{
 		targetList.Add(newItem);
 		if (releaseDlay > 0 )
@@ -243,14 +246,14 @@ public class CameraManager : MonoBehaviour {
 			
 			case CameraState.Focusing:
 				
-				// prevent overchasing
-				if ((target.position - transform.position).sqrMagnitude > 1000)
-				{
-					break;
-				}
+				// prevent over-chasing
+				if (usingPos && (focusPos - transform.position).sqrMagnitude > 1000) break;
+				else if (!usingPos && ((target.position - transform.position).sqrMagnitude > 1000)) break;
 
-				posX = Mathf.SmoothDamp(transform.position.x,target.position.x, ref focusVelocity.x, 0.05f);
-				posY = Mathf.SmoothDamp(transform.position.y,target.position.y, ref focusVelocity.y, 0.05f);
+				Vector3 curFocusPos = usingPos? focusPos : target.position; 
+
+				posX = Mathf.SmoothDamp(transform.position.x,curFocusPos.x, ref focusVelocity.x, 0.05f);
+				posY = Mathf.SmoothDamp(transform.position.y,curFocusPos.y, ref focusVelocity.y, 0.05f);
 				transform.position = new Vector3(posX, posY, transform.position.z);
 				
 				if (targetIndicator && targetIndicator.changeSize)
@@ -351,9 +354,18 @@ public class CameraManager : MonoBehaviour {
 		//Gizmos.DrawSphere(center, 1);
 	}
 
-	public void FocusAt(Transform _target, float duration = -1f)
+	public void FocusTo(Transform _target, float duration = -1f)
 	{
 		target = _target;
+		usingPos = false;
+		currentState = CameraState.Focusing;
+		if (duration > -1f) StartCoroutine(resetDelay(duration));
+	}
+	
+	public void FocusTo(Vector3 _target, float duration = -1f)
+	{
+		focusPos = _target;
+		usingPos = true;
 		currentState = CameraState.Focusing;
 		if (duration > -1f) StartCoroutine(resetDelay(duration));
 	}
@@ -367,6 +379,7 @@ public class CameraManager : MonoBehaviour {
     public void Reset()
 	{
 		currentState = CameraState.Reset;
+		focusPos = Vector3.zero;
 	}
     
     public void Idle()
@@ -375,11 +388,12 @@ public class CameraManager : MonoBehaviour {
         flash = false;
         flashOut = false;
         shake = false;
+        focusPos = Vector3.zero;
     }
 
     private IEnumerator resetDelay(float duration)
     {
-	    if(!target) Reset();
+	    if(!target && focusPos == Vector3.zero) Reset();
 	    yield return  new WaitForSeconds(duration);
 	    if(currentState != CameraState.Reset)Reset();
     }
@@ -459,8 +473,9 @@ public class CameraManager : MonoBehaviour {
 
     IEnumerator followRelease(CameraState previous, float duration)
     {
-	    float start = Time.time;
+	
 	    yield return  new WaitForSeconds(duration);
+	    ResetTarget();
 	    currentState = previous;
 	    yield return null;
     }
@@ -586,6 +601,6 @@ public class CameraManager : MonoBehaviour {
 	{
 		yield return  new WaitForSeconds(delay);
 		targetList.Remove(item);
-		if(targetList.Count == 0) resetTarget();
+		if(targetList.Count == 0) ResetTarget();
 	}
 }

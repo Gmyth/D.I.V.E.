@@ -106,7 +106,7 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
 
         //Change button sprite according to the controller
         //UI_DashKey.GetComponent<SpriteRenderer>().sprite = ;
-        CameraManager.Instance.FocusAt(PlayerCharacter.Singleton.transform, 99999f);
+        CameraManager.Instance.FocusTo(PlayerCharacter.Singleton.transform, 99999f);
         CameraManager.Instance.FlashIn(6f, 0.05f, 999999f, 0.01f);
         PlayerCharacter.Singleton.SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
         TimeManager.Instance.startSlowMotion(999999f, 0f, 0.001f);
