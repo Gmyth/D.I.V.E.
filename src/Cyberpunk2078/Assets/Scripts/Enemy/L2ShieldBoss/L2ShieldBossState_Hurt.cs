@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 
 
-[CreateAssetMenuAttribute(fileName = "L2ShieldBossState_Tired", menuName = "Enemy State/Level 2/Shield Boss/Tired")]
-public class L2ShieldBossState_Tired : EnemyState<L2ShieldBoss>
+[CreateAssetMenuAttribute(fileName = "L2ShieldBossState_Hurt", menuName = "Enemy State/Shield Boss/Hurt")]
+public class L2ShieldBossState_Hurt : EnemyState<L2ShieldBoss>
 {
     [Header("Configuration")]
-    [SerializeField][Min(0)] private float duration;
-    [SerializeField] private string animation = "L2ShieldBoss_Tired";
+    [SerializeField] [Min(0)] private float duration;
+    [SerializeField] private string animation = "L2ShieldBoss_Hurt";
 
     [Header("Connected States")]
     [SerializeField] private string nextState = "Alert";
+
 
     private Animator animator;
 
@@ -25,17 +26,18 @@ public class L2ShieldBossState_Tired : EnemyState<L2ShieldBoss>
 
     public override void OnStateEnter(State previousState)
     {
+        base.OnStateEnter(previousState);
+
+
         t = 0;
 
 
         animator.Play(animation);
     }
 
-
     public override string Update()
     {
         t += TimeManager.Instance.ScaledDeltaTime;
-
 
         if (t >= duration)
             return nextState;

@@ -17,7 +17,7 @@ MonoBehaviour:
   damage: 1
   knockback: 15
   hitBox: 1
-  chargeTime: 1
+  chargeTime: 0.5
   stopChargingOnTargetLoss: 0
   animation_charging: L2ShieldBoss_DashCharge
   state_afterAttack: Alert

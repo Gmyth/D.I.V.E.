@@ -20,23 +20,23 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
     private Rigidbody2D rigidbody;
     private Animator animator;
 
-    private bool isMoving = false;
-    private float t = float.MaxValue;
+    private bool isChasing = false;
+    private float t_attack = float.MaxValue;
     private string previousStateName;
 
 
-    private bool IsMoving
+    private bool IsChasing
     {
         get
         {
-            return isMoving;
+            return isChasing;
         }
 
         set
         {
-            if (value != isMoving)
+            if (value != isChasing)
             {
-                isMoving = value;
+                isChasing = value;
 
 
                 if (value)
@@ -44,14 +44,14 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
                     if (chasingAnimation != "")
                         animator.Play(chasingAnimation);
 
-                    OnBeginChasing();
+                    StartChasing();
                 }
                 else
                 {
                     if (idleAnimation != "")
                         animator.Play(idleAnimation);
 
-                    OnEndChasing();
+                    StopChasing();
                 }
             }
         }
@@ -69,7 +69,7 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
 
     public override string Update()
     {
-        float dt = Time.time - t;
+        float dt = Time.time - t_attack;
 
 
         if (dt < 0) // Check if the attack has not been made
@@ -86,52 +86,30 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
 
                 if (Mathf.Abs(d.x) <= attackRange) // Check if the target is horizontally close enough
                 {
-                    if (enemyType == EnemyType.Floating)
-                        rigidbody.velocity = Vector2.zero;
-                    else
-                    {
-                        Vector2 v = rigidbody.velocity;
-                        v.x = 0;
-
-                        rigidbody.velocity = v;
-                    }
-
-
-                    IsMoving = false;
+                    IsChasing = false;
 
 
                     if (playerPosition.y - enemyPosition.y <= attackHeight) // Check if the target is low enough to get hit
                     {
-                        enemy.AdjustFacing(d);
+                        t_attack = Time.time;
 
 
-                        t = Time.time;
+                        string nextStateName = Attack(d);
 
-
-                        if (attackAnimation != "")
-                            animator.Play(attackAnimation, -1, 0f);
-
-
-                        Attack();
+                        if (nextStateName != "")
+                            return nextStateName;
                     }
                 }
                 else
                 {
-                    Vector2 direction = d.normalized;
-
-                    if (enemyType == EnemyType.Ground)
-                        direction = d.x > 0 ? Vector2.right : Vector2.left;
+                    IsChasing = true;
 
 
-                    rigidbody.velocity = direction * chasingSpeed * TimeManager.Instance.TimeFactor * enemy.UnitTimeFactor;
+                    string nextStateName = Chase(d);
 
-
-                    IsMoving = true;
-
-
-                    enemy.AdjustFacing(direction);
+                    if (nextStateName != "")
+                        return nextStateName;
                 }
-
 
                 return Name;
             }
@@ -170,21 +148,55 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
         //        }
 
 
-        isMoving = false;
-        t = float.MaxValue;
+        isChasing = false;
+        t_attack = float.MaxValue;
         previousStateName = previousState.Name;
     }
 
 
-    protected virtual void OnBeginChasing()
+    protected virtual void StartChasing()
     {
     }
 
-    protected virtual void OnEndChasing()
+    protected virtual string Chase(Vector3 direction)
     {
+        Vector3 d = ((Vector2)direction).normalized;
+
+        if (enemyType == EnemyType.Ground)
+            d = d.x > 0 ? Vector2.right : Vector2.left;
+
+
+        rigidbody.velocity = d * chasingSpeed * TimeManager.Instance.TimeFactor * enemy.UnitTimeFactor;
+
+
+        enemy.AdjustFacing(d);
+
+
+        return "";
     }
 
-    protected virtual void Attack()
+    protected virtual void StopChasing()
     {
+        if (enemyType == EnemyType.Floating)
+            rigidbody.velocity = Vector2.zero;
+        else
+        {
+            Vector2 v = rigidbody.velocity;
+            v.x = 0;
+
+            rigidbody.velocity = v;
+        }
+    }
+
+    protected virtual string Attack(Vector3 direction)
+    {
+        enemy.AdjustFacing(direction);
+
+
+        if (attackAnimation != "")
+            animator.Play(attackAnimation, -1, 0f);
+
+
+        return "";
     }
 }

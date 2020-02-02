@@ -68,7 +68,7 @@ public class Attack : MonoBehaviour
         }
         else if (other.tag == "Player")
         {
-            if (other.GetComponent<PlayerCharacter>().State.Name != "Dash")
+            if (other.GetComponent<PlayerCharacter>().State.Name != "Dashing")
             {
                 ObjectRecycler.Singleton.GetObject<SingleEffect>(getRandomEffect());
 

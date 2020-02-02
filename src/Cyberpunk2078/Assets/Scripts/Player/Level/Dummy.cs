@@ -154,7 +154,7 @@ public abstract class Enemy : Dummy
     public Vector3 lastCheckPointTransform;
     
     //Physics related --- Slow motion implementation
-    private Rigidbody2D rb2d;
+    protected Rigidbody2D rb2d;
     private float defaultDrag;
     private float defaultMass;
 

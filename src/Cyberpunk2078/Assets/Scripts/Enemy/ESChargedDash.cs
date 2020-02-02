@@ -18,7 +18,8 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
     private Vector3 direction;
     private bool bDash;
     private bool bStop;
-    private float t_dashFinish;
+    private float t_dash;
+    private float t_dashEnd;
     private float d;
 
 
@@ -39,7 +40,8 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
 
         bDash = true;
         bStop = false;
-        t_dashFinish = float.MaxValue;
+        t_dash = 0;
+        t_dashEnd = 0;
         d = float.MaxValue;
         
 
@@ -59,11 +61,17 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
     public override void OnStateQuit(State nextState)
     {
         enemy.OnAttack.RemoveListener(Stop);
+
+
+        rigidbody.velocity = Vector2.zero;
     }
 
 
     protected override string Attack(float currentTime)
     {
+        t_dash += TimeManager.Instance.ScaledDeltaTime;
+
+
         if (bDash) // The dash has not been performed
         {
             rigidbody.AddForce(direction * dashForce);
@@ -72,7 +80,7 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
             bDash = false;
 
 
-            t_dashFinish = currentTime + minDuration;
+            t_dash = 0;
 
 
             if (hitBox >= 0)
@@ -107,33 +115,46 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
                 return "Alert";
             }
         }
-        else if (currentTime >= t_dashFinish) // The dash has been finished
-        {
-            Stop();
-
-            return "Alert";
-        }
+        else if (t_dash >= minDuration) // The dash has been finished
+            return Stop();
 
 
         return Name;
     }
 
 
-    protected void Stop()
+    protected string Stop()
     {
-        if (hitBox >= 0)
-            enemy.DisableHitBox(hitBox);
+        if (t_dashEnd == 0)
+        {
+            if (hitBox >= 0)
+                enemy.DisableHitBox(hitBox);
 
 
-        rigidbody.velocity = Vector2.zero;
+            rigidbody.velocity /= 10;
+            rigidbody.drag = 300;
+
+            bStop = true;
 
 
-        bStop = true;
-        t_dashFinish = Time.time + dashEndTime;
+            if (animation_dashEnd != "")
+                animator.Play(animation_dashEnd);
+        }
+        
+
+        t_dashEnd += TimeManager.Instance.ScaledDeltaTime;
+
+        if (t_dashEnd >= dashEndTime)
+        {
+            rigidbody.drag = 0;
+            rigidbody.velocity = Vector2.zero;
 
 
-        if (animation_dashEnd != "")
-            animator.Play(animation_dashEnd);
+            return "Alert";
+        }
+
+
+        return Name;
     }
 
     protected void Stop(Hit hit, Collider2D collider)

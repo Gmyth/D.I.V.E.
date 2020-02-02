@@ -310,11 +310,11 @@ public class PSDashing : PlayerState
 
         if (playerCharacter.PowerDash)
         {
-            rb2d.AddForce(direction * dashForce * 200f * 1.8f / Time.timeScale);
+            rb2d.AddForce(direction * dashForce * 200f * 1.8f);
         }
         else
         {
-            rb2d.AddForce(direction * dashForce * 200f * 1 / Time.timeScale);
+            rb2d.AddForce(direction * dashForce * 200f * 1);
         }
 
         //Camera Tricks

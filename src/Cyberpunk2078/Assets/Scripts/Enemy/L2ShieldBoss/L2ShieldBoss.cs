@@ -7,8 +7,6 @@ public class L2ShieldBoss : Enemy
     [SerializeField] private float counterThreshhold = 20f;
     [SerializeField] private float turnTime = 0.5f;
 
-    private Rigidbody2D rb2d;
-
     private float anger = 0;
     private bool isTurning = false;
     private float t_turn = 0;
@@ -52,20 +50,28 @@ public class L2ShieldBoss : Enemy
 
     public void EmitShockwave()
     {
-        EmitShockwave(transform.localScale, true);
+        EmitShockwave(17, transform.localScale, true);
     }
 
     public void EmitShockwave(bool cameraShake)
     {
-        EmitShockwave(transform.localScale, cameraShake);
+        EmitShockwave(17, transform.localScale, cameraShake);
     }
 
-    public void EmitShockwave(Vector3 direction, bool cameraShake = true)
+    public void EmitShockwave(int id, Vector3 direction, bool cameraShake = true)
     {
-        LinearMovement shockWave = ObjectRecycler.Singleton.GetObject<LinearMovement>(16);
-        shockWave.initialPosition = transform.position + new Vector3(1, 0, 0);
-        shockWave.orientation = direction.x > 0 ? Vector3.right : Vector3.left;
-        shockWave.gameObject.SetActive(true);
+        LinearMovement shockwaveMovement = ObjectRecycler.Singleton.GetObject<LinearMovement>(id);
+        shockwaveMovement.initialPosition = transform.position + new Vector3(1, 0, 0);
+        shockwaveMovement.orientation = direction.x > 0 ? Vector3.right : Vector3.left;
+
+
+        HitBox shockwaveHitbox = shockwaveMovement.GetComponent<HitBox>();
+
+        if (shockwaveHitbox)
+            shockwaveHitbox.hit.source = this;
+
+
+        shockwaveMovement.gameObject.SetActive(true);
 
 
         if (cameraShake)
@@ -158,13 +164,7 @@ public class L2ShieldBoss : Enemy
         float scaledDt = Time.deltaTime * TimeManager.Instance.TimeFactor;
 
 
-        if (anger >= 20)
-        {
-            fsm.CurrentStateName = "CounterAttack";
-            anger = 0;
-        }
-        else
-            anger = Mathf.Max(0, anger - angerDecrease * scaledDt);
+        anger = Mathf.Max(0, anger - angerDecrease * scaledDt);
 
 
         if (isTurning)
@@ -202,15 +202,40 @@ public class L2ShieldBoss : Enemy
                     break;
             }
         }
-        else
+        else if (fsm.CurrentStateName != "Hurt")
         {
             ObjectRecycler.Singleton.GetSingleEffect(15, transform);
 
 
-            if (fsm.CurrentStateName != "Knockback" && fsm.CurrentStateName != "DiveBomb")
+            if (fsm.CurrentStateName == "Tired")
             {
-                TimeManager.Instance.startSlowMotion(0.4f, 0.5f, 0.2f);
+                TimeManager.Instance.startSlowMotion(0.4f, 0.7f, 0.2f);
                 CameraManager.Instance.FlashIn(7.5f, 0.1f, 0.7f, 0.2f);
+
+
+                isInvulnerable = false;
+
+                ApplyDamage(1);
+                statusModifiers.Modify(AttributeType.MaxFatigue_m0, 1);
+
+                isInvulnerable = true;
+
+
+                fsm.CurrentStateName = "Knockback";
+            }
+            else if (fsm.CurrentStateName != "Knockback" && fsm.CurrentStateName != "DiveBomb")
+            {
+                TimeManager.Instance.startSlowMotion(0.4f, 0.7f, 0.2f);
+                CameraManager.Instance.FlashIn(7.5f, 0.1f, 0.7f, 0.2f);
+
+                
+                if (anger >= 20)
+                {
+                    fsm.CurrentStateName = "CounterAttack";
+                    anger = 0;
+                }
+                else if (fsm.CurrentStateName != "ChargedDash" && fsm.CurrentStateName != "CounterAttack")
+                    fsm.CurrentStateName = "Hurt";
             }
         }
     }

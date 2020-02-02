@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Random = UnityEngine.Random;
 
 
 [RequireComponent(typeof(Collider2D), typeof(Rigidbody2D))]

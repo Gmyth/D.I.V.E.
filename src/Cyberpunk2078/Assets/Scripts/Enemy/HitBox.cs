@@ -25,11 +25,18 @@ public class HitBox : MonoBehaviour
 {
     public Hit hit;
     public bool isFriendly = false;
-    [SerializeField] private int[] effects;
-    [SerializeField] private ContactFilter2D contactFilter = new ContactFilter2D();
+
+    [Header("Configuration")]
+    [SerializeField] protected int maxNumHits = int.MaxValue;
+    [SerializeField] protected int maxNumHitsPerUnit = 1;
+    
+    [Header("")]
+    [SerializeField] protected int[] effects;
+    [SerializeField] protected ContactFilter2D contactFilter = new ContactFilter2D();
 
     protected HitBoxGroup group;
-    protected HashSet<int> objectsHit;
+    protected Dictionary<int, int> objectsHit;
+    protected int numHitsRemaining;
 
     protected Coroutine bulletTimeCorotine = null;
 
@@ -37,12 +44,15 @@ public class HitBox : MonoBehaviour
     private void Awake()
     {
         HitBoxGroup group = transform.parent.GetComponent<HitBoxGroup>();
-        objectsHit = group ? group.objectsHit : new HashSet<int>();
+        objectsHit = group ? group.objectsHit : new Dictionary<int, int>();
     }
 
     private void OnEnable()
     {
         group?.OnHitBoxEnable(this);
+
+
+        numHitsRemaining = maxNumHits;
 
 
         List<Collider2D> list = new List<Collider2D>();
@@ -63,85 +73,120 @@ public class HitBox : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
+        if (numHitsRemaining <= 0)
+            return;
+
+
         if (isFriendly)
         {
             if (other.tag == "Dummy")
-            {
-                Enemy enemy = other.GetComponent<Enemy>();
-                int id = enemy.gameObject.GetInstanceID();
-
-                if (!enemy.isEvading && !objectsHit.Contains(id))
-                {
-                    objectsHit.Add(id);
-
-
-                    if (GameUtility.ApplyDamage(enemy, hit, other) > 0)
-                    {
-                        CreateRandomEffect(enemy.transform);
-
-                        var trail = ObjectRecycler.Singleton.GetObject<SingleEffect>(8);
-                        trail.transform.position = enemy.transform.position;
-                        trail.transform.right = transform.right;
-                        trail.transform.localScale = new Vector3(7, 1, 1);
-                        trail.target = other.transform;
-                        trail.gameObject.SetActive(true);
-
-                        var trail1 = ObjectRecycler.Singleton.GetObject<SingleEffect>(8);
-                        trail1.transform.position = enemy.transform.position;
-                        trail1.transform.right = -transform.right;
-                        trail1.transform.localScale = new Vector3(7, 1, 1);
-                        trail1.target = other.transform;
-                        trail1.gameObject.SetActive(true);
-
-                        CameraManager.Instance.Shaking(0.20f, 0.10f, true);
-                    }
-                }
-            }
+                OnHitEnemy(other);
             else if (other.tag == "Platform" && other.GetComponent<SimpleBreakable>())
-            {
-                other.GetComponent<SimpleBreakable>().DestoryBreakable();
-            }
+                OnHitBreakable(other);
         }
         else if (other.tag == "Player")
+            OnHitPlayer(other);
+    }
+
+
+    protected virtual void OnHitEnemy(Collider2D other)
+    {
+        Enemy enemy = other.GetComponent<Enemy>();
+        int id = enemy.gameObject.GetInstanceID();
+
+
+        if (!enemy.isEvading && CheckHitObject(id))
         {
-            PlayerCharacter player = other.GetComponent<PlayerCharacter>();
-            int id = player.gameObject.GetInstanceID();
-
-            if (player.State.Name != "Dash" && !objectsHit.Contains(id))
+            if (GameUtility.ApplyDamage(enemy, hit, other) > 0)
             {
-                objectsHit.Add(id);
-
-
-                hit.source.OnAttack.Invoke(hit, other);
-                player.OnHit?.Invoke(hit, other);
-
-
-                if (hit.knockback > 0)
-                    player.KnockbackHorizontal(hit.source.transform.position, hit.knockback, 0.5f);
-
-
-                player.ApplyDamage(hit.damage);
-                
-
-                CreateRandomEffect(player.transform);
-
+                CreateRandomEffect(enemy.transform);
 
                 var trail = ObjectRecycler.Singleton.GetObject<SingleEffect>(8);
-                trail.transform.position = other.transform.position - (other.transform.position - transform.position) * 0.2f;
+                trail.transform.position = enemy.transform.position;
                 trail.transform.right = transform.right;
-                trail.transform.localScale = new Vector3(20, 1, 1);
-                trail.setTarget(other.transform);
+                trail.transform.localScale = new Vector3(7, 1, 1);
+                trail.target = other.transform;
                 trail.gameObject.SetActive(true);
 
-
                 var trail1 = ObjectRecycler.Singleton.GetObject<SingleEffect>(8);
-                trail1.transform.position = other.transform.position - (other.transform.position - transform.position) * 0.2f;
+                trail1.transform.position = enemy.transform.position;
                 trail1.transform.right = -transform.right;
-                trail1.transform.localScale = new Vector3(20, 1, 1);
-                trail1.setTarget(other.transform);
+                trail1.transform.localScale = new Vector3(7, 1, 1);
+                trail1.target = other.transform;
                 trail1.gameObject.SetActive(true);
+
+                CameraManager.Instance.Shaking(0.20f, 0.10f, true);
             }
         }
+    }
+
+    protected virtual void OnHitBreakable(Collider2D other)
+    {
+        other.GetComponent<SimpleBreakable>().DestoryBreakable();
+    }
+
+    protected virtual void OnHitPlayer(Collider2D other)
+    {
+        PlayerCharacter player = other.GetComponent<PlayerCharacter>();
+        int id = player.gameObject.GetInstanceID();
+
+        if (player.State.Name != "Dashing" && CheckHitObject(id))
+        {
+            hit.source.OnAttack.Invoke(hit, other);
+            player.OnHit?.Invoke(hit, other);
+
+
+            if (hit.knockback > 0)
+                player.KnockbackHorizontal(hit.source.transform.position, hit.knockback, 0.5f);
+
+
+            player.ApplyDamage(hit.damage);
+
+
+            CreateRandomEffect(player.transform);
+
+
+            var trail = ObjectRecycler.Singleton.GetObject<SingleEffect>(8);
+            trail.transform.position = other.transform.position - (other.transform.position - transform.position) * 0.2f;
+            trail.transform.right = transform.right;
+            trail.transform.localScale = new Vector3(20, 1, 1);
+            trail.setTarget(other.transform);
+            trail.gameObject.SetActive(true);
+
+
+            var trail1 = ObjectRecycler.Singleton.GetObject<SingleEffect>(8);
+            trail1.transform.position = other.transform.position - (other.transform.position - transform.position) * 0.2f;
+            trail1.transform.right = -transform.right;
+            trail1.transform.localScale = new Vector3(20, 1, 1);
+            trail1.setTarget(other.transform);
+            trail1.gameObject.SetActive(true);
+        }
+    }
+
+
+    protected bool CheckHitObject(int id)
+    {
+        if (!objectsHit.ContainsKey(id))
+        {
+            objectsHit[id] = 1;
+
+            --numHitsRemaining;
+
+            return true;
+        }
+
+
+        if (objectsHit[id] < maxNumHitsPerUnit)
+        {
+            ++objectsHit[id];
+
+            --numHitsRemaining;
+
+            return true;
+        }
+
+
+        return false;
     }
 
 

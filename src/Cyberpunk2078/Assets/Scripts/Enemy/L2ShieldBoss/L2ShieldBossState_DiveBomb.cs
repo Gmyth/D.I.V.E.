@@ -82,8 +82,8 @@ public class L2ShieldBossState_DiveBomb : ESChargedAttack<L2ShieldBoss>
                     }
 
 
-                    enemy.EmitShockwave(Vector3.right, false);
-                    enemy.EmitShockwave(Vector3.left, false);
+                    enemy.EmitShockwave(16, Vector3.right, false);
+                    enemy.EmitShockwave(16, Vector3.left, false);
 
 
                     CameraManager.Instance.Shaking(0.4f, 0.2f, true);
