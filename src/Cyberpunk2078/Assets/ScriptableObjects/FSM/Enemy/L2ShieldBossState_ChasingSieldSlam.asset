@@ -15,7 +15,7 @@ MonoBehaviour:
   stateName: ChasingShieldSlam
   motionID: -1
   damage: 1
-  knockback: 5
+  knockback: 10
   hitBox: 0
   chasingSpeed: 1.5
   attackRange: 2
@@ -23,7 +23,7 @@ MonoBehaviour:
   motionTime: 2
   idleAnimation: L2ShieldBoss_Guard
   chasingAnimation: L2ShieldBoss_ShieldMoving
-  attackAnimation: L2ShieldBoss_ShieldSlam
+  attackAnimation: L2ShieldBoss_QuickShieldSlam
   state_onTargetLoss: 
   state_afterAttack: Alert
   maxChaseTime: 3

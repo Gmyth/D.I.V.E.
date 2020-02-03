@@ -289,9 +289,10 @@ MonoBehaviour:
     damage: 0
     knockback: 0
   isFriendly: 0
+  ignoreInvulnerbility: 1
   maxNumHits: 2147483647
   maxNumHitsPerUnit: 1
-  effects: 
+  effects: 0c000000
   contactFilter:
     useTriggers: 0
     useLayerMask: 0
@@ -7671,6 +7672,7 @@ MonoBehaviour:
     damage: 0
     knockback: 10
   isFriendly: 0
+  ignoreInvulnerbility: 0
   maxNumHits: 2147483647
   maxNumHitsPerUnit: 1
   effects: 0d000000
@@ -8461,7 +8463,7 @@ MonoBehaviour:
   lastCheckPointTransform: {x: 0, y: 0, z: 0}
   angerDecrease: 2
   counterThreshhold: 20
-  turnTime: 0.5
+  turnTime: 1
   spark: {fileID: 2092657177}
 --- !u!114 &923652461
 MonoBehaviour:
@@ -8945,6 +8947,7 @@ MonoBehaviour:
     damage: 0
     knockback: 10
   isFriendly: 0
+  ignoreInvulnerbility: 0
   maxNumHits: 2147483647
   maxNumHitsPerUnit: 1
   effects: 0d000000
@@ -9016,11 +9019,12 @@ MonoBehaviour:
     source: {fileID: 923652460}
     bullet: {fileID: 0}
     damage: 0
-    knockback: 5
+    knockback: 10
   isFriendly: 0
+  ignoreInvulnerbility: 1
   maxNumHits: 2147483647
   maxNumHitsPerUnit: 1
-  effects: 
+  effects: 0c000000
   contactFilter:
     useTriggers: 0
     useLayerMask: 0
@@ -10200,6 +10204,7 @@ MonoBehaviour:
     damage: 0
     knockback: 5
   isFriendly: 0
+  ignoreInvulnerbility: 1
   maxNumHits: 2147483647
   maxNumHitsPerUnit: 1
   effects: 

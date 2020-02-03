@@ -32,7 +32,7 @@ public class TimeManager : MonoBehaviour
         Instance = this;
         blackScreen = Camera.main.GetComponentInChildren<SpriteRenderer>();
         Time.timeScale = 1;
-        //Time.fixedDeltaTime = Time.timeScale * 0.02f;
+        //Time.fixedDeltaTime = Time.timeScale / 60;
     }
 
     // Update is called once per frame

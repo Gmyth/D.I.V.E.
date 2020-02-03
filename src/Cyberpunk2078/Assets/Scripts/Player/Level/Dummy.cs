@@ -140,6 +140,7 @@ public abstract class Enemy : Dummy
     [SerializeField] protected FSMEnemy fsm;
     [SerializeField] protected Zone guardZone;
     [SerializeField] protected HitBox[] hitBoxes;
+    [SerializeField] private float turnTime = 0;
 
     [Header("Patrolling")]
     [SerializeField][Path(true)] protected Route patrolRoute;
@@ -151,12 +152,17 @@ public abstract class Enemy : Dummy
     [HideInInspector] public PlayerCharacter currentTarget;
     [HideInInspector] public Hit currentHit;
 
+    protected bool isTurning = false;
+
     public Vector3 lastCheckPointTransform;
     
     //Physics related --- Slow motion implementation
     protected Rigidbody2D rb2d;
     private float defaultDrag;
     private float defaultMass;
+
+    private Vector3 turnDirection = Vector3.zero;
+    private float t_turn = 0;
 
     public float this[StatisticType type]
     {
@@ -198,21 +204,67 @@ public abstract class Enemy : Dummy
         }
     }
 
+    public bool IsTurning
+    {
+        get
+        {
+            return isTurning;
+        }
+    }
 
-    public void AdjustFacing()
+
+    public void Turn()
     {
         if (currentTarget)
-            AdjustFacing(currentTarget.transform.position - transform.position);
+            Turn(currentTarget.transform.position - transform.position);
     }
 
-    public void AdjustFacing(Vector2 direction)
+    public void Turn(Vector2 direction)
     {
-        GameUtility.AdjustFacing(this, (Vector3)direction);
+        Turn((Vector3)direction);
     }
 
-    public virtual void AdjustFacing(Vector3 direction)
+    public virtual void Turn(Vector3 direction)
     {
-        GameUtility.AdjustFacing(this, direction);
+        if (turnTime <= 0)
+            TurnImmediately(direction);
+        else
+        {
+            bool isInSameDirection = direction.x * transform.localScale.x > 0;
+
+            if (isInSameDirection)
+                StopTurning();
+            else if (!isTurning)
+            {
+                turnDirection = direction;
+                isTurning = true;
+                t_turn = turnTime;
+            }
+        }
+    }
+
+    public void StopTurning()
+    {
+        isTurning = false;
+        t_turn = 0;
+    }
+
+    public void TurnImmediately()
+    {
+        TurnImmediately(currentTarget.transform.position - transform.position);
+    }
+
+    public void TurnImmediately(Vector2 direction)
+    {
+        TurnImmediately((Vector3)direction);
+    }
+
+    public void TurnImmediately(Vector3 direction)
+    {
+        StopTurning();
+
+
+        GameUtility.Turn(this, direction);
     }
 
 
@@ -248,6 +300,12 @@ public abstract class Enemy : Dummy
     }
 
 
+    public void Reset()
+    {
+        fsm?.Reboot();
+    }
+
+
     protected virtual void Start()
     {
         data = DataTableManager.singleton.GetEnemyData(typeID);
@@ -266,6 +324,25 @@ public abstract class Enemy : Dummy
         }
     }
 
+    protected virtual void Update()
+    {
+        float scaledDt = Time.deltaTime * TimeManager.Instance.TimeFactor;
+
+        
+        if (isTurning)
+        {
+            if (turnDirection.x * transform.localScale.x > 0)
+                StopTurning();
+            Debug.LogWarning(turnDirection);
+            Debug.LogWarning(transform.localScale.x);
+            Debug.LogWarning(t_turn);
+            if (t_turn <= 0)
+                TurnImmediately(turnDirection);
+            else
+                t_turn -= scaledDt;
+        }
+    }
+
     protected virtual void FixedUpdate()
     {
         rb2d.drag = defaultDrag / TimeManager.Instance.TimeFactor;
@@ -277,10 +354,5 @@ public abstract class Enemy : Dummy
 
 
         fsm?.Update();
-    }
-
-    public void Reset()
-    {
-        fsm?.Reboot();
     }
 }

@@ -65,7 +65,7 @@ public class ESReposition : EnemyState
             return nextState;
 
 
-        enemy.AdjustFacing(d);
+        enemy.Turn(d);
 
         rigidbody.velocity = v;
 

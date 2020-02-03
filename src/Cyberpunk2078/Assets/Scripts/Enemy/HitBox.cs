@@ -27,6 +27,7 @@ public class HitBox : MonoBehaviour
     public bool isFriendly = false;
 
     [Header("Configuration")]
+    [SerializeField] protected bool ignoreInvulnerbility = false;
     [SerializeField] protected int maxNumHits = int.MaxValue;
     [SerializeField] protected int maxNumHitsPerUnit = 1;
     
@@ -130,7 +131,7 @@ public class HitBox : MonoBehaviour
         PlayerCharacter player = other.GetComponent<PlayerCharacter>();
         int id = player.gameObject.GetInstanceID();
 
-        if (player.State.Name != "Dashing" && CheckHitObject(id))
+        if ((ignoreInvulnerbility || player.State.Name != "Dashing") && CheckHitObject(id))
         {
             hit.source.OnAttack.Invoke(hit, other);
             player.OnHit?.Invoke(hit, other);

@@ -31,7 +31,7 @@ public class L2ShieldBossState_CounterAttack : ESAttack<L2ShieldBoss>
         t_finish = 0;
 
 
-        enemy.AdjustFacingImmediately();
+        enemy.TurnImmediately();
 
 
         animator.Play(animation);

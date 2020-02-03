@@ -4,20 +4,15 @@
 [CreateAssetMenuAttribute(fileName = "L2ShieldBossState_Alert", menuName = "Enemy State/Level 2/Shield Boss/Alert")]
 public class L2ShieldBossState_Alert : ESAlert<L2ShieldBoss>
 {
-    public override void OnStateEnter(State previousState)
-    {
-        base.OnStateEnter(previousState);
-
-
-        enemy.AdjustFacingImmediately();
-    }
-
     public override string Update()
     {
-        enemy.AdjustFacing();
+        enemy.Turn();
 
 
-        if (Time.time >= t_finishWait)
+        if (!enemy.IsTurning)
+            t_wait += TimeManager.Instance.ScaledDeltaTime;
+
+        if (t_wait >= waitTime)
         {
             float r = Random.Range(0, 100);
 

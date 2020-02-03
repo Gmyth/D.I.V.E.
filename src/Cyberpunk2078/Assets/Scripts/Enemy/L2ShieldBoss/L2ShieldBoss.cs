@@ -5,48 +5,16 @@ public class L2ShieldBoss : Enemy
 {
     [SerializeField] private float angerDecrease = 5f;
     [SerializeField] private float counterThreshhold = 20f;
-    [SerializeField] private float turnTime = 0.5f;
     public GameObject spark;
+
     private float anger = 0;
-    private bool isTurning = false;
-    private float t_turn = 0;
-    
+
 
     public void Knockback(Vector3 direction, float force)
     {
         rb2d.velocity = Vector2.zero;
         rb2d.AddForce(force * direction.normalized, ForceMode2D.Impulse);
     }
-
-
-    public override void AdjustFacing(Vector3 direction)
-    {
-        if (direction.x * transform.localScale.x < 0 && !isTurning)
-        {
-            isTurning = true;
-            t_turn = turnTime;
-        }
-    }
-
-    public void AdjustFacingImmediately()
-    {
-        AdjustFacingImmediately(currentTarget.transform.position - transform.position);        
-
-
-        isTurning = false;
-        t_turn = 0;
-    }
-
-    public void AdjustFacingImmediately(Vector2 direction)
-    {
-        AdjustFacingImmediately((Vector3)direction);
-    }
-
-    public void AdjustFacingImmediately(Vector3 direction)
-    {
-        GameUtility.AdjustFacing(this, direction);
-    }
-
 
     public void EmitShockwave()
     {
@@ -159,28 +127,12 @@ public class L2ShieldBoss : Enemy
     }
 
 
-    private void Update()
+    protected override void Update()
     {
-        float scaledDt = Time.deltaTime * TimeManager.Instance.TimeFactor;
+        anger = Mathf.Max(0, anger - angerDecrease * TimeManager.Instance.ScaledDeltaTime);
 
 
-        anger = Mathf.Max(0, anger - angerDecrease * scaledDt);
-
-
-        if (isTurning)
-        {
-            if ((currentTarget.transform.position - transform.position).x * transform.localScale.x > 0)
-            {
-                isTurning = false;
-                t_turn = 0;
-            }
-
-
-            if (t_turn <= 0)
-                AdjustFacingImmediately();
-            else
-                t_turn -= scaledDt;
-        }
+        base.Update();
     }
 
 

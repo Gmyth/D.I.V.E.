@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b170d2cea7ec214fa739fe550c92f4b, type: 3}
-  m_Name: L2ShieldBossState_Alert
+  m_Script: {fileID: 11500000, guid: 2af66ef86b414744fa5f5289d291725a, type: 3}
+  m_Name: L2ShieldBossState_ShieldSlam
   m_EditorClassIdentifier: 
-  stateName: Alert
-  waitTime: 1
-  animation: L2ShieldBoss_Guard
-  states_attacks:
-  - ShieldSlamChase
-  - ChargedDash
-  - DiveBomb
-  state_onTargetLoss: 
+  stateName: ShieldSlam
+  motionID: -1
+  damage: 1
+  knockback: 10
+  hitBox: 0
+  motionTime: 0.7
+  animation: L2ShieldBoss_ShieldSlam2
+  state_afterAttack: Alert

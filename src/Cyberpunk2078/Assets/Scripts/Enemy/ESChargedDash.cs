@@ -55,7 +55,7 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
         }
 
 
-        enemy.AdjustFacing(direction);
+        enemy.Turn(direction);
     }
 
     public override void OnStateQuit(State nextState)

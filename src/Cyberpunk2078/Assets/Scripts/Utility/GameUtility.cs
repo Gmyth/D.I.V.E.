@@ -11,7 +11,7 @@ public struct GameUtility
         dummy.transform.localScale = scale;
     }
 
-    public static void AdjustFacing(Dummy dummy, Vector3 direction)
+    public static void Turn(Dummy dummy, Vector3 direction)
     {
         Vector3 scale = dummy.transform.localScale;
         scale.x = Mathf.Sign(direction.x) * Mathf.Abs(scale.x);

@@ -7,7 +7,6 @@ public class L2ShieldBossState_ChasingShieldSlam : ESChasingAttack<L2ShieldBoss>
     [SerializeField] private float maxChaseTime = 3f;
 
     private float t_chase;
-    private bool stopChasing;
 
 
     public override void OnStateQuit(State nextState)

@@ -166,10 +166,13 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
             d = d.x > 0 ? Vector2.right : Vector2.left;
 
 
-        rigidbody.velocity = d * chasingSpeed * TimeManager.Instance.TimeFactor * enemy.UnitTimeFactor;
+        enemy.Turn(d);
 
 
-        enemy.AdjustFacing(d);
+        if (enemy.IsTurning)
+            rigidbody.velocity = Vector2.zero;
+        else
+            rigidbody.velocity = d * chasingSpeed * TimeManager.Instance.TimeFactor * enemy.UnitTimeFactor;
 
 
         return "";
@@ -190,10 +193,10 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
 
     protected virtual string Attack(Vector3 direction)
     {
-        enemy.AdjustFacing(direction);
+        enemy.Turn(direction);
 
 
-        if (attackAnimation != "")
+        if (!enemy.IsTurning)
             animator.Play(attackAnimation, -1, 0f);
 
 
