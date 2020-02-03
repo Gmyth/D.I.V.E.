@@ -68,12 +68,12 @@ public class Attack : MonoBehaviour
         }
         else if (other.tag == "Player")
         {
-            if (other.GetComponent<PlayerCharacter>().State.Name != "Dash")
+            if (other.GetComponent<PlayerCharacter>().State.Name != "Dashing")
             {
                 ObjectRecycler.Singleton.GetObject<SingleEffect>(getRandomEffect());
 
 
-                other.GetComponent<PlayerCharacter>().Knockback(transform.position, 10f);
+                other.GetComponent<PlayerCharacter>().KnockbackHorizontal(transform.position, 10f);
                 other.GetComponent<PlayerCharacter>().ApplyDamage(damage);
 
                 objectsHit.Add(other.gameObject.GetInstanceID());

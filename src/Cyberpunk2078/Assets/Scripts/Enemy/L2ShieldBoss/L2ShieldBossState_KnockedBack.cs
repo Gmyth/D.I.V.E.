@@ -8,25 +8,39 @@ public class L2ShieldBossState_KnockedBack : EnemyState<L2ShieldBoss>
     [SerializeField][Min(0)] private float duration;
 
     [Header("Connected States")]
-    [SerializeField] private int stateIndex_recovery;
+    [SerializeField] private string state_onRecovery;
 
-    private float t = 0;
+    private Animator animator;
+
+    private float t_recovery = 0;
 
 
-    public override int Update()
+    public override void Initialize(L2ShieldBoss enemy)
     {
-        if (Time.time >= t)
-            return stateIndex_recovery;
+        base.Initialize(enemy);
+
+        animator = enemy.GetComponent<Animator>();
+    }
 
 
-        return Index;
+    public override string Update()
+    {
+        if (Time.time >= t_recovery)
+            return state_onRecovery;
+
+
+        return Name;
     }
 
     public override void OnStateEnter(State previousState)
     {
-        t = Time.time + duration;
+        t_recovery = Time.time + duration;
 
-        enemy.statusModifiers.Set(AttributeType.Fatigue_p1, -0.5f);
+
+        enemy.statusModifiers.Set(AttributeType.Fatigue_p1, -0.8f);
+
+
+        animator.Play("L2ShieldBoss_KnockBack");
     }
 
     public override void OnStateQuit(State nextState)

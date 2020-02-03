@@ -1,6 +1,5 @@
-﻿using System;
-using UnityEngine;
-using Random = UnityEngine.Random;
+﻿using UnityEngine;
+
 
 [RequireComponent(typeof(Collider2D), typeof(Rigidbody2D))]
 public class Bullet : Recyclable
@@ -8,7 +7,7 @@ public class Bullet : Recyclable
     public bool isFriendly = false;
     public int numHits = 1;
     public int rawDamage = 1;
-    public float speed;
+    public Hit hit;
 
     [SerializeField] private float hitEstimationTimeInterval = 0.02f;
 
@@ -24,6 +23,12 @@ public class Bullet : Recyclable
         base.OnEnable();
         hunchTriggered = false;
         numHitsRemaining = numHits;
+    }
+
+
+    private void Start()
+    {
+        hit.bullet = this;
     }
 
     private void Update()
@@ -44,10 +49,10 @@ public class Bullet : Recyclable
                 //{
                 //    hunchTriggered = true;
                 //    playerCharacter.AddKillCount(-2);
-                //    TimeManager.Instance.startSlowMotion(1f);                  
+                //    TimeManager.Instance.startSlowMotion(1f);
                 //}
             }
-            
+
             lastHitEstimation = Time.unscaledTime;
         }
     }
@@ -73,24 +78,32 @@ public class Bullet : Recyclable
         {
             if (other.tag == "Dummy")
             {
-                CameraManager.Instance.Shaking(0.20f,0.05f);
+                Dummy enemy = other.GetComponent<Dummy>();
 
-                other.GetComponent<Dummy>().ApplyDamage(rawDamage);
+
+                enemy.OnHit?.Invoke(hit, other);
+
+
+                enemy.ApplyDamage(rawDamage);
                 --numHitsRemaining;
-                
+
+
+                CameraManager.Instance.Shaking(0.20f, 0.05f);
                 //TimeManager.Instance.endSlowMotion();
                 CameraManager.Instance.Idle();
 
-                SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
-                Hit.transform.position = other.transform.position - (other.transform.position - transform.position) * 0.2f;
-                Hit.transform.right = transform.right;
-                Hit.transform.position = other.transform.position + (transform.position  - other.transform.position) * 0.5f;
-                Hit.transform.localScale = Vector3.one;
+                SingleEffect hitFx = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
+                hitFx.transform.position = other.transform.position - (other.transform.position - transform.position) * 0.2f;
+                hitFx.transform.right = transform.right;
+                hitFx.transform.position = other.transform.position + (transform.position  - other.transform.position) * 0.5f;
+                hitFx.transform.localScale = Vector3.one;
 
-                Hit.gameObject.SetActive(true);
+                hitFx.gameObject.SetActive(true);
+
 
                 Die();
-            }else if (other.tag == "Ground")
+            }
+            else if (other.tag == "Ground")
             {
                 SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
                 Hit.transform.right = transform.right;
@@ -109,7 +122,7 @@ public class Bullet : Recyclable
             {
                 //Not in dash, deal damage
                 other.GetComponent<PlayerCharacter>().ApplyDamage(rawDamage);
-                other.GetComponent<PlayerCharacter>().Knockback(transform.position, 300f, 0.3f);
+                other.GetComponent<PlayerCharacter>().KnockbackHorizontal(transform.position, 300f, 0.3f);
                 --numHitsRemaining;
 
                 //TimeManager.Instance.endSlowMotion();
@@ -138,13 +151,13 @@ public class Bullet : Recyclable
                 GetComponent<LinearMovement>().spawnTime = Time.time;
 
                 transform.right = GetComponent<LinearMovement>().orientation;
-                
+
                 //TimeManager.Instance.endSlowMotion();
                 CameraManager.Instance.Idle();
-                
+
                 CameraManager.Instance.Shaking(0.5f,0.05f,true);
-                CameraManager.Instance.FocusAt(transform,0.02f);
-                
+                CameraManager.Instance.FocusTo(transform.position,0.02f);
+
                 SingleEffect Hit1 = ObjectRecycler.Singleton.GetObject<SingleEffect>(12);
                 Hit1.transform.right = transform.right;
                 Hit1.transform.position = other.transform.position + (transform.position  - other.transform.position) * 0.3f;

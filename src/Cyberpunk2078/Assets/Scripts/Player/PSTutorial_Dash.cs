@@ -1,15 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
 
 [CreateAssetMenuAttribute(fileName = "PS_Tutorial_Dash", menuName = "Player State/Tutorial Dash")]
-
 public class PSTutorial_Dash : PlayerState
 {
-    [SerializeField] private int indexPSDashing;
-
     private Rigidbody2D rb2d;
     private Animator animator;
+
 
     public override void Initialize(int index, PlayerCharacter playerCharacter)
     {
@@ -19,7 +16,7 @@ public class PSTutorial_Dash : PlayerState
         animator = playerCharacter.gameObject.GetComponentInChildren<Animator>();
     }
 
-    public override int Update()
+    public override string Update()
     {
         Vector2 idealDirection = (SimpleTutorialManager.Instance.DashTutorial_Drone.transform.position - PlayerCharacter.Singleton.transform.position).normalized;
         if (PlayerCharacter.Singleton.transform.parent.GetComponentInChildren<MouseIndicator>().DirectionNotification(idealDirection, 15f))
@@ -27,11 +24,11 @@ public class PSTutorial_Dash : PlayerState
             if ((Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady)) && !playerCharacter.isInTutorial)
             {
                 Player.CurrentPlayer.triggerReady = false;
-                return indexPSDashing;
+                return "Dashing";
             }
         }
 
-        return Index;
+        return Name;
     }
 
     public override void OnStateEnter(State previousState)
@@ -58,5 +55,4 @@ public class PSTutorial_Dash : PlayerState
         TimeManager.Instance.endSlowMotion();
         SimpleTutorialManager.Instance.AfterDashTutorial();
     }
-
 }

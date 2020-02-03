@@ -11,18 +11,9 @@ public class PSMoving : PlayerState
     [Header("Fever Mode")]
     [SerializeField] private float f_speedFactor;
     [SerializeField] private float f_accelerationFactor;
-    
-    [Header( "Transferable States" )]
-    [SerializeField] private int indexPSIdle;
-    [SerializeField] private int indexPSAttackGH;
-    [SerializeField] private int indexPSJumping1;
-    [SerializeField] private int indexPSDashing;
-    [SerializeField] private int indexPSAirborne;
-    [SerializeField] private int indexPSClimb;
-    [SerializeField] private int indexPSWallJumping;
 
 
-    public override int Update()
+    public override string Update()
     {
         NormalizeSlope();
         if (playerCharacter.InKillStreak) anim.speed = 1.1f;
@@ -38,27 +29,27 @@ public class PSMoving : PlayerState
         
         if (Input.GetButtonDown("Attack1"))
         {
-            return indexPSAttackGH;
+            return "Attack1";
         }
             
         
         if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
         {
             Player.CurrentPlayer.triggerReady = false;
-            return indexPSDashing;
+            return "Dashing";
         }
         
         if (Input.GetButtonDown("Special1"))
         {
             Player.CurrentPlayer.triggerReady = false;
             PlayerCharacter.Singleton.PowerDash = true;
-            return indexPSDashing;
+            return "Dashing";
         }
 
         if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("VerticalJoyStick") > 0.7f)
         {
             // up is pressed
-            if(isCloseTo("Ladder") != Direction.None) return indexPSClimb;
+            if(isCloseTo("Ladder") != Direction.None) return "Climbing";
         }
         
 
@@ -67,7 +58,7 @@ public class PSMoving : PlayerState
         
         flip = x <= 0;
         if (x == 0)
-            return indexPSIdle;
+            return "Idle";
         
         
         playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipX = flip;
@@ -75,16 +66,16 @@ public class PSMoving : PlayerState
 
         if (GetGroundType() == 0 && Vy < 0)
         {
-            return indexPSAirborne;
+            return "Airborne";
         }
 
         if (Input.GetButtonDown("Jump"))
         {
-            return indexPSJumping1;
+            return "Jumping";
         }
            
         
-        return Index;
+        return Name;
     }
     
 

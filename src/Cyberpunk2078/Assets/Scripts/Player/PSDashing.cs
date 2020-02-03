@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using MyBox;
 using UnityEngine;
 
 
@@ -26,13 +27,6 @@ public class PSDashing : PlayerState
     [Header( "Common" )]
     [SerializeField] private float EnergyConsume = -70;
 
-    [Header( "Transferable States" )]
-    [SerializeField] private int indexPSIdle;
-    [SerializeField] private int indexPSMoving;
-    [SerializeField] private int indexPSJumping1;
-    [SerializeField] private int indexWallJumping;
-    [SerializeField] private int indexPSAirborne;
-
     private float lastDashSecond;
     private bool hyperSpeed;
     private float defaultDrag;
@@ -41,14 +35,19 @@ public class PSDashing : PlayerState
     private float lastJumpInput;
 
 
-    public override int Update()
+    public override string Update()
     {
-
         var dashDelayTime = playerCharacter.InKillStreak ? f_dashDelayTime:n_dashDelayTime;
         var dashReleaseTime = playerCharacter.InKillStreak ? f_dashReleaseTime:n_dashReleaseTime;
         var dashReleaseDelayTime = playerCharacter.InKillStreak ? f_dashReleaseTime:n_dashReleaseTime;
         var JumpListenerInterval = playerCharacter.InKillStreak ? f_JumpListenerInterval:n_JumpListenerInterval;
-
+        
+        if (playerCharacter.PowerDash)
+        {
+            dashDelayTime = 0.3f;
+            dashReleaseTime *= 2.15f;
+        }
+        
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
         float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
@@ -62,12 +61,12 @@ public class PSDashing : PlayerState
         if (!Apply)
         {
             if (GetGroundType() == 0)
-            {
-                return indexPSAirborne;
-            }
+                return "Airborne";
 
-            if (h == 0) return indexPSIdle;
-            return indexPSMoving;
+            if (h == 0)
+                return "Idle";
+
+            return "Moving";
         }
 
         if (Input.GetButtonDown("Jump"))
@@ -75,7 +74,7 @@ public class PSDashing : PlayerState
             if (Player.CurrentPlayer.secondJumpReady && lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.unscaledTime)
             {
                 Player.CurrentPlayer.secondJumpReady = false;
-                return indexPSJumping1;
+                return "Jumping";
             }
             else
             {
@@ -110,7 +109,7 @@ public class PSDashing : PlayerState
             if (lastJumpInput + JumpListenerInterval > Time.unscaledTime)
             {
                 Player.CurrentPlayer.secondJumpReady = false;
-                    return indexPSJumping1;
+                return "Jumping";
             }
 
             // the dash has already ended
@@ -143,31 +142,56 @@ public class PSDashing : PlayerState
         if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime  < Time.unscaledTime)
         {
             rb2d.velocity = rb2d.velocity * 0.3f;
-            PhysicsInputHelper(h);
-            if (GetGroundType() == 0)
-            {
-                return indexPSAirborne;
-            }
 
-            if (h == 0) return indexPSIdle;
-            return indexPSMoving;
+            PhysicsInputHelper(h);
+
+            if (GetGroundType() == 0)
+                return "Airborne";
+
+            if (h == 0)
+                return "Idle";
+
+            return "Moving";
         }
 
 
-        return Index;
+        return Name;
     }
 
 
     public override void OnStateEnter(State previousState)
     {
-
         var inDashingDragFactor = playerCharacter.InKillStreak ? f_inDashingDragFactor:n_inDashingDragFactor;
-        if (playerCharacter.ConsumeEnergy(EnergyConsume) <= 0)
+        if (playerCharacter.PowerDash)
         {
-            // Energy is not enough, Cancel dash
-            Apply = false;
-            return;
+            if (!playerCharacter.PowerDashReady)
+            {
+                // Energy is not enough, Cancel dash
+                Apply = false;
+                return;
+            }
+
+            playerCharacter.PowerDashReady = false;
+            playerCharacter.LastPowerDash = Time.unscaledTime;
+            TimeManager.Instance.StartFeverMotion();
+            playerCharacter.Spark.SetActive(true);
+            playerCharacter.Spark.GetComponent<Animator>().Play("Spark", -1, 0f);
+            
+            var mouse = GameObject.FindObjectOfType<MouseIndicator>();
+            Vector3 direction = mouse.GetDirectionCorrection(GroundNormal());
+            playerCharacter.Spark.transform.right = direction;
         }
+        else
+        {
+            if (playerCharacter.ConsumeEnergy(EnergyConsume) <= 0)
+            {
+                // Energy is not enough, Cancel dash
+                Apply = false;
+                return;
+            }
+        }
+
+        
 
         Apply = true;
         //Dash has been pressed, set all config first
@@ -203,16 +227,18 @@ public class PSDashing : PlayerState
     {
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
-
+    
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Dummy"),false);
-
+        
         // reset drag & gravity
         rb2d.drag = 1;
         rb2d.gravityScale = 3;
 
         // Listening to move input
         PhysicsInputHelper(h);
-
+        
+        playerCharacter.Spark.SetActive(false);
+        
         playerCharacter.SpriteHolder.GetComponent<TrailRenderer>().emitting = false;
 
         // reset player facing
@@ -225,14 +251,17 @@ public class PSDashing : PlayerState
         // Kill Trail
         if(!playerCharacter.InKillStreak) playerCharacter.SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
 
-
+        if (playerCharacter.PowerDash) playerCharacter.PowerDash = false;
     }
 
     private void forceApply()
     {
         //avoid Slow Motion
         //TimeManager.Instance.endSlowMotion(0f);
-
+        if(!playerCharacter.InFever)TimeManager.Instance.EndFeverMotion();
+        else TimeManager.Instance.StartFeverMotion();
+        
+        
         var dashForce = playerCharacter.InKillStreak ? f_dashForce:n_dashForce;
 
         // Fix sprite flip on X-axis
@@ -243,22 +272,21 @@ public class PSDashing : PlayerState
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         var mouse = GameObject.FindObjectOfType<MouseIndicator>();
 
-
+        playerCharacter.Spark.SetActive(false);
 
         //get Mouse direction
         Vector3 direction = mouse.GetDirectionCorrection(GroundNormal());
 
 
         var attack = ObjectRecycler.Singleton.GetObject<SingleEffect>(6);
-        attack.transform.position = playerCharacter.transform.position +  direction * 0.5f;
-        
+        attack.GetComponentInChildren<HitBox>().hit.source = playerCharacter;
         attack.setTarget(playerCharacter.transform);
+        attack.transform.position = playerCharacter.transform.position + direction * 0.5f;
         attack.transform.parent = playerCharacter.transform;
         attack.transform.right = direction;
         attack.transform.localScale = new Vector3(4,4,1);
         attack.gameObject.SetActive(true);
         
-        attack.GetComponentInChildren<HitBox>().hit.source = playerCharacter;
 
         var Dust = ObjectRecycler.Singleton.GetObject<SingleEffect>(9);
         Dust.transform.position = playerCharacter.transform.position +  direction * 0.5f;
@@ -279,15 +307,18 @@ public class PSDashing : PlayerState
         //Apply force to character
        // playerCharacter.GetComponent<CapsuleCollider2D>().isTrigger = true;
         playerCharacter.SpriteHolder.right = direction;
-        //Time.fixedDeltaTime = 0.02f;
-        if (Time.timeScale!=0) rb2d.AddForce(direction * dashForce * 200f * 1 / Time.timeScale);
-        else rb2d.AddForce(direction * dashForce * 200f * 1);
+
+        if (playerCharacter.PowerDash)
+        {
+            rb2d.AddForce(direction * dashForce * 200f * 1.8f);
+        }
+        else
+        {
+            rb2d.AddForce(direction * dashForce * 200f * 1);
+        }
 
         //Camera Tricks
 
         CameraManager.Instance.Shaking(0.1f,0.10f);
-
     }
-
-
 }

@@ -3,17 +3,18 @@
 
 public abstract class ESChargedAttack<T> : ESAttack<T> where T : Enemy
 {
-    [Header("Charge Configuration")]
+    [Header("Charge")]
     [SerializeField] protected float chargeTime = 1;
     [SerializeField] protected bool stopChargingOnTargetLoss = false;
     [SerializeField] protected string animation_charging = "";
 
     [Header("Connected States")]
-    [SerializeField] protected int stateIndex_alert = -1;
+    [SerializeField] protected string state_afterAttack = "";
+    [SerializeField] protected string state_onTargetLoss = "";
 
     protected Animator animator;
 
-    protected float t_charge;
+    protected float t_chargeFinish;
 
 
     public override void Initialize(T enemy)
@@ -23,17 +24,17 @@ public abstract class ESChargedAttack<T> : ESAttack<T> where T : Enemy
         animator = enemy.GetComponent<Animator>();
     }
 
-    public override int Update()
+    public override string Update()
     {
         float currentTime = Time.time;
 
-        if (currentTime >= t_charge)
+        if (currentTime >= t_chargeFinish)
             return Attack(currentTime);
-        else if (stopChargingOnTargetLoss && IsPlayerInSight(enemy.currentTarget, enemy[StatisticType.SightRange]))
-            return stateIndex_alert;
+        else if (!IsPlayerInSight(enemy.currentTarget, enemy[StatisticType.SightRange]))
+            return OnTargetLoss();
 
 
-        return Index;
+        return Name;
     }
 
 
@@ -42,12 +43,17 @@ public abstract class ESChargedAttack<T> : ESAttack<T> where T : Enemy
         base.OnStateEnter(previousState);
 
 
-        t_charge = Time.time + chargeTime;
+        t_chargeFinish = Time.time + chargeTime;
 
 
         animator.Play(animation_charging);
     }
 
 
-    protected abstract int Attack(float currentTime);
+    protected abstract string Attack(float currentTime);
+
+    protected virtual string OnTargetLoss()
+    {
+        return stopChargingOnTargetLoss ? state_onTargetLoss : Name;
+    }
 }

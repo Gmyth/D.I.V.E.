@@ -12,10 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 477017d218a169e4eaf2c1f264812f65, type: 3}
   m_Name: PS_Knockback
   m_EditorClassIdentifier: 
-  Name: 
-  duration: 1
-  stateIndex_Idle: 0
-  stateIndex_Moving: 1
-  stateIndex_jumping: 4
-  stateIndex_Dashing: 6
-  knowback: {x: 0, y: 0, z: 0}
+  stateName: Knockback
+  BlinkInterval: 0.02
+  knockback: {x: 0, y: 0, z: 0}

@@ -9,14 +9,17 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
     [SerializeField] private float minDuration = 0.15f;
     [SerializeField] private float maxDuration = 0;
     [SerializeField] private float stopDistance = 1;
+    [SerializeField] private float dashEndTime = 0;
     [SerializeField] private string animation_dash = "";
+    [SerializeField] private string animation_dashEnd = "";
 
     private Rigidbody2D rigidbody;
 
     private Vector3 direction;
     private bool bDash;
     private bool bStop;
-    private float t;
+    private float t_dash;
+    private float t_dashEnd;
     private float d;
 
 
@@ -37,7 +40,8 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
 
         bDash = true;
         bStop = false;
-        t = float.MaxValue;
+        t_dash = 0;
+        t_dashEnd = 0;
         d = float.MaxValue;
         
 
@@ -51,21 +55,23 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
         }
 
 
-        AdjustFacingDirection(direction);
+        enemy.AdjustFacing(direction);
     }
 
     public override void OnStateQuit(State nextState)
     {
-        if (hitBox >= 0)
-            enemy.DisableHitBox(hitBox);
-
-
         enemy.OnAttack.RemoveListener(Stop);
+
+
+        rigidbody.velocity = Vector2.zero;
     }
 
 
-    protected override int Attack(float currentTime)
+    protected override string Attack(float currentTime)
     {
+        t_dash += TimeManager.Instance.ScaledDeltaTime;
+
+
         if (bDash) // The dash has not been performed
         {
             rigidbody.AddForce(direction * dashForce);
@@ -74,7 +80,7 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
             bDash = false;
 
 
-            t = currentTime + minDuration;
+            t_dash = 0;
 
 
             if (hitBox >= 0)
@@ -106,27 +112,53 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
             {
                 Stop();
 
-                return stateIndex_alert;
+                return "Alert";
             }
         }
-        else if (currentTime >= t) // The dash has been finished
-        {
-            Stop();
-
-            return stateIndex_alert;
-        }
+        else if (t_dash >= minDuration) // The dash has been finished
+            return Stop();
 
 
-        return Index;
+        return Name;
     }
 
 
-    private void Stop()
+    protected string Stop()
     {
-        rigidbody.velocity = Vector2.zero;
+        if (t_dashEnd == 0)
+        {
+            if (hitBox >= 0)
+                enemy.DisableHitBox(hitBox);
 
 
-        bStop = true;
-        t = 0;
+            rigidbody.velocity /= 10;
+            rigidbody.drag = 300;
+
+            bStop = true;
+
+
+            if (animation_dashEnd != "")
+                animator.Play(animation_dashEnd);
+        }
+        
+
+        t_dashEnd += TimeManager.Instance.ScaledDeltaTime;
+
+        if (t_dashEnd >= dashEndTime)
+        {
+            rigidbody.drag = 0;
+            rigidbody.velocity = Vector2.zero;
+
+
+            return "Alert";
+        }
+
+
+        return Name;
+    }
+
+    protected void Stop(Hit hit, Collider2D collider)
+    {
+        Stop();
     }
 }

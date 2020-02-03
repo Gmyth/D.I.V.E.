@@ -40,7 +40,7 @@ public enum AttributeType : int
     MaxKs_c0 = 0xA110,
     KsDecay_c0 = 0xA210, // Kill Streak Decay
 
-    SpReward_c0 = 0xF110,
+    PDCoolDown_c0 = 0xB100, // PowerDash CoolDown
 
     OspReward_c0 = 0xF210,
 
@@ -57,7 +57,6 @@ public enum StatisticType : int
     JumpPower = 0x2,
     MaxHp = 0x3,
     MaxSp = 0x4,
-    SpRecovery_c0 = 0x5,
     MaxOsp = 0x6,
     OspRecovery = 0x7,
     MaxUltimateEnergy = 0x8,
@@ -70,6 +69,8 @@ public enum StatisticType : int
     KsDecay = 0xA1,
     KsCount = 0xA2,
     MaxKs = 0xA3,
+    
+    PDCoolDown = 0xB1,
     
     MaxFatigue = 0xE0,
 
@@ -137,9 +138,13 @@ public class StatisticSystem
 
 
             case StatisticType.MaxFatigue:
-                return Mathf.Min(AttributeSet.Sum(AttributeType.MaxFatigue_c2, attributeSets), AttributeSet.Sum(AttributeType.MaxFatigue_c0, attributeSets) + AttributeSet.Sum(AttributeType.MaxFatigue_m0, attributeSets) * AttributeSet.Sum(AttributeType.MaxFatigue_c1, attributeSets));
+                return AttributeSet.Sum(AttributeType.MaxFatigue_c0, attributeSets) + AttributeSet.Sum(AttributeType.MaxFatigue_m0, attributeSets) * AttributeSet.Sum(AttributeType.MaxFatigue_c1, attributeSets);
 
+            
+            case StatisticType.PDCoolDown:
+                return AttributeSet.Sum(AttributeType.PDCoolDown_c0, attributeSets);
 
+            
             default:
                 return 0;
         }
@@ -228,7 +233,7 @@ public class StatisticSystem
         this.attributeSets = attributeSets;
 
         foreach (IAttributeCollection attributeSet in attributeSets)
-            attributeSet.OnAttributeChange?.AddListener(UpdateChangedStatistics);
+            attributeSet.OnAttributeChange.AddListener(UpdateChangedStatistics);
 
         UpdateChangedStatistics(this.attributeSets);
     }

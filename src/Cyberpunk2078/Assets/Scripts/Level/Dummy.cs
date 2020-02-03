@@ -78,14 +78,18 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Rigidbody2D), typeof(Collision2D))]
 public abstract class Dummy : MonoBehaviour, IDamageable
 {
+    public class HitEvent : UnityEvent<Hit, Collider2D> { }
+
+
     [SerializeField] protected StatisticSystem statistics;
 
     public bool isInvulnerable = false;
     public bool isEvading = false;
     public float UnitTimeFactor = 1;
-    public Event<Hit> OnHit { get; private set; } = new Event<Hit>();
-    public UnityEvent OnAttack { get; private set; } = new UnityEvent();
 
+
+    public HitEvent OnHit { get; private set; } = new HitEvent();
+    public HitEvent OnAttack { get; private set; } = new HitEvent();
 
     public Vector2 GroundNormal
     {
@@ -102,7 +106,7 @@ public abstract class Dummy : MonoBehaviour, IDamageable
     }
 
 
-    public bool IsOnGround()
+    public bool IsOnGround(float xOffset = 0.1f, float yOffset = 0, float length = 0.1f)
     {
         Vector3 position = transform.position;
         Vector3 up = transform.up;
@@ -110,14 +114,14 @@ public abstract class Dummy : MonoBehaviour, IDamageable
 
         int layerMask = LayerMask.GetMask("Obstacle");
 
-        RaycastHit2D hitM = Physics2D.Raycast(position + new Vector3(0f, -0.7f, 0f), -up, 0.6f, layerMask);
-        RaycastHit2D hitL = Physics2D.Raycast(position + new Vector3(0.12f, -0.7f, 0f), -up, 0.6f, layerMask);
-        RaycastHit2D hitR = Physics2D.Raycast(position + new Vector3(-0.12f, -0.7f, 0f), -up, 0.6f, layerMask);
+        RaycastHit2D hitM = Physics2D.Raycast(position + new Vector3(0f, yOffset, 0f), -up, length, layerMask);
+        RaycastHit2D hitL = Physics2D.Raycast(position + new Vector3(xOffset, yOffset, 0f), -up, length, layerMask);
+        RaycastHit2D hitR = Physics2D.Raycast(position + new Vector3(-xOffset, yOffset, 0f), -up, length, layerMask);
 
 
-        Debug.DrawRay(position + new Vector3(0f, -0.7f, 0f), -up * 0.6f, Color.red);
-        Debug.DrawRay(position + new Vector3(0.12f, -0.7f, 0f), -up * 0.6f, Color.green);
-        Debug.DrawRay(position + new Vector3(-0.12f, -0.7f, 0f), -up * 0.6f, Color.yellow);
+        Debug.DrawRay(position + new Vector3(0f, yOffset, 0f), -up * length, Color.red);
+        Debug.DrawRay(position + new Vector3(xOffset, yOffset, 0f), -up * length, Color.green);
+        Debug.DrawRay(position + new Vector3(-xOffset, yOffset, 0f), -up * length, Color.yellow);
 
 
         return hitM.collider || hitL.collider || hitR.collider;
@@ -150,7 +154,7 @@ public abstract class Enemy : Dummy
     public Vector3 lastCheckPointTransform;
     
     //Physics related --- Slow motion implementation
-    private Rigidbody2D rb2d;
+    protected Rigidbody2D rb2d;
     private float defaultDrag;
     private float defaultMass;
 
@@ -186,10 +190,43 @@ public abstract class Enemy : Dummy
         }
     }
 
+    public FSMEnemy FSM
+    {
+        get
+        {
+            return fsm;
+        }
+    }
+
+
+    public void AdjustFacing()
+    {
+        if (currentTarget)
+            AdjustFacing(currentTarget.transform.position - transform.position);
+    }
+
+    public void AdjustFacing(Vector2 direction)
+    {
+        GameUtility.AdjustFacing(this, (Vector3)direction);
+    }
+
+    public virtual void AdjustFacing(Vector3 direction)
+    {
+        GameUtility.AdjustFacing(this, direction);
+    }
+
 
     public void EnableHitBox(int index)
     {
         hitBoxes[index].hit = currentHit;
+        hitBoxes[index].gameObject.SetActive(true);
+    }
+
+    public void EnableHitBox(int index, bool overwriteHit)
+    {
+        if (overwriteHit)
+            hitBoxes[index].hit = currentHit;
+
         hitBoxes[index].gameObject.SetActive(true);
     }
 
@@ -217,6 +254,8 @@ public abstract class Enemy : Dummy
         rb2d = GetComponent<Rigidbody2D>();
         defaultDrag = rb2d.drag;
         defaultMass = rb2d.mass;
+
+
         statistics = new StatisticSystem(data.Attributes, statusModifiers);
         statistics[StatisticType.Hp] = statistics[StatisticType.MaxHp];
 
@@ -231,7 +270,12 @@ public abstract class Enemy : Dummy
     {
         rb2d.drag = defaultDrag / TimeManager.Instance.TimeFactor;
         rb2d.mass = defaultMass / TimeManager.Instance.TimeFactor;
-        if (GetComponent<Animator>()) GetComponent<Animator>().speed = TimeManager.Instance.TimeFactor;
+
+
+        if (GetComponent<Animator>())
+            GetComponent<Animator>().speed = TimeManager.Instance.TimeFactor;
+
+
         fsm?.Update();
     }
 

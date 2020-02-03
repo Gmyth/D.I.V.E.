@@ -1,26 +1,23 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
 
 public class SingleEffect : Recyclable
 {
-
-    private Transform target;
+    public Transform target;
     
     
     private void Update()
     {
         if (target)
-        {
             transform.position = target.position;
-        }
-        if (GetComponentInChildren<Animator>()) GetComponentInChildren<Animator>().speed = TimeManager.Instance.TimeFactor;
+
+
+        if (GetComponentInChildren<Animator>())
+            GetComponentInChildren<Animator>().speed = TimeManager.Instance.TimeFactor;
     }
-    
-    public void setTarget(Transform _target)
+
+    public void setTarget(Transform t)
     {
-        target = _target;
+        target = t;
     }
-    
 }

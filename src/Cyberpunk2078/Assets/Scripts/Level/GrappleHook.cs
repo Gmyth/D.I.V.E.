@@ -30,7 +30,7 @@ public class GrappleHook : Recyclable
     private void OnEnable()
     {
         currentState = grappleState.Dead;
-        laser = GetComponent<LineRenderer>();
+        laser = GetComponent<LineRenderer>(); 
         GetComponent<SpriteRenderer>().color = Color.clear;
         Joints = new List<Vector3>();
     }
@@ -168,7 +168,7 @@ public class GrappleHook : Recyclable
     private IEnumerator PullDelay()
     {
         yield return new WaitForSecondsRealtime(pullDelay);
-        PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 14;
+        PlayerCharacter.Singleton.GetFSM().CurrentStateName = "GrapplingHook";
     }
 
     private void drawCurve()

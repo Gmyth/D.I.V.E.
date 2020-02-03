@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcf0e81a3663f484aa84473a341b87c4, type: 3}
   m_Name: DroneState_Patrolling
   m_EditorClassIdentifier: 
+  stateName: Patrolling
+  useAStar: 0
   speed: 2
   delay: 4
   idleAnimation: 
   patrollingAnimation: 
-  index_ESIdle: -1
-  index_ESAlert: -1
+  alwaysFacingTarget: 0
+  state_onTargetFound: Alert
+  searchingDuration: 3

@@ -15,19 +15,9 @@ public class PSJumping2 : PlayerState
     [SerializeField] private float f_jumpForce = 3f;
     [SerializeField] private float f_speedFactor = 3;
     [SerializeField] private float f_accelerationFactor = 20;
-    
-    [Header( "Transferable States" )]
-  
-    [SerializeField] private int index_PSIdle;
-    [SerializeField] private int index_PSMoving;
-    [SerializeField] private int index_PSWallJumping;
-    [SerializeField] private int index_PSDashing;
-    [SerializeField] private int indexPSAttackGH;
-    [SerializeField] private int indexPSAirborne;
-    [SerializeField] private int indexPSClimb;
 
 
-    public override int Update()
+    public override string Update()
     {
         var jumpForce =  n_jumpForce;
         var speedFactor = n_speedFactor;
@@ -50,7 +40,7 @@ public class PSJumping2 : PlayerState
 
         if (!ground && Vy < 0)
         {
-            return indexPSAirborne;
+            return "Airborne";
         }
         
         if (Input.GetButtonDown("Ultimate"))
@@ -62,34 +52,36 @@ public class PSJumping2 : PlayerState
         if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("VerticalJoyStick") > 0.7f)
         {
             // up is pressed
-            if(isCloseTo("Ladder") != Direction.None) return indexPSClimb;
+            if(isCloseTo("Ladder") != Direction.None) return "Climbing";
         }
         
         
         if (ground)
         {
-                if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("HorizontalJoyStick") == 0)
-                    return index_PSIdle;
+            if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("HorizontalJoyStick") == 0)
+                return "Idle";
 
-                return index_PSMoving;
+            return "Moving";
         }
         
         if (Input.GetButtonDown("Attack1"))
         {
-            return indexPSAttackGH;
+            return "Attack1";
         }
         
         if (isCloseTo("Ground")!= Direction.None)
         {
-            return index_PSWallJumping;
+            return "WallSliding";
         }
         
         if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
         {
             Player.CurrentPlayer.triggerReady = false;
-            return index_PSDashing;
+            return "Dashing";
         }
-        return Index;
+
+
+        return Name;
     }
 
 

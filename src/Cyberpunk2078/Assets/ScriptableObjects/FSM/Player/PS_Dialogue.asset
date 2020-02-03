@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36ec89bb1e1f81440a0c8056f6ef0ff6, type: 3}
   m_Name: PS_Dialogue
   m_EditorClassIdentifier: 
-  Name: Dialogue
+  stateName: InDialogue
   indexPSIdle: 0

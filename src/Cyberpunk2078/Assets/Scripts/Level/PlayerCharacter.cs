@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 
 public class PlayerCharacter : Dummy
@@ -14,6 +14,7 @@ public class PlayerCharacter : Dummy
     public Transform SpriteHolder;
     public GameObject groundDust;
     public GameObject FeverVFX;
+    public GameObject Spark;
     //public GUITutorial tutorial;
 
     public bool isInTutorial;
@@ -46,7 +47,12 @@ public class PlayerCharacter : Dummy
     }
 
     public bool InKillStreak { get; private set; } = false;
+    
     public bool PowerDash = false;
+    public bool PowerDashReady = true;
+    public float LastPowerDash;
+
+    private GameObject buttonTip;
     public bool InFever { get; private set; } = false;
     public bool MaxUltimateEnergy { get; private set; }
     //public PlayerCharacter(Player player)
@@ -57,17 +63,24 @@ public class PlayerCharacter : Dummy
     //    OnStatisticChange = statistic.onStatisticChange;
     //}
 
- 
-    public void Knockback(Vector3 origin, float force, float duration = 1f)
+
+    public void Knockback(Vector3 direction, float force, float duration = 1f)
+    {
+        rigidbody.velocity = Vector2.zero;
+        rigidbody.AddForce(force * direction.normalized, ForceMode2D.Impulse);
+
+        
+        Player.CurrentPlayer.knockBackDuration = duration;
+        fsm.CurrentStateName = "Knockback";
+    }
+
+    public void KnockbackHorizontal(Vector3 origin, float force, float duration = 1f)
     {
         Vector3 direction = transform.position - origin;
         Vector2 groundNormal = GroundNormal;
 
-        direction = ((direction.x > 0 ? groundNormal.Right().normalized : groundNormal.Left().normalized) + groundNormal).normalized * force;
-        rigidbody.velocity = Vector2.zero;
-        rigidbody.AddForce(direction);
-        Player.CurrentPlayer.knockBackDuration = duration;
-        fsm.CurrentStateIndex = 10;
+
+        Knockback((direction.x > 0 ? groundNormal.Right().normalized : groundNormal.Left().normalized + groundNormal).normalized, force, duration);
     }
 
 
@@ -106,7 +119,7 @@ public class PlayerCharacter : Dummy
 
     public override void Dead()
     {
-        fsm.CurrentStateIndex = 9;
+        fsm.CurrentStateName = "NoInput";
 
         ResetStatistics();
 
@@ -245,20 +258,40 @@ public class PlayerCharacter : Dummy
             }
         }
     }
+
+    public void PowerDashCoolDown()
+    {
+        if (!PowerDashReady)
+        {
+            if(LastPowerDash + statistics[StatisticType.PDCoolDown] < Time.unscaledTime)
+            {
+                PowerDashReady = true;
+                buttonTip.SetActive(true);
+            }
+            else
+            {
+                buttonTip.SetActive(false);
+            }
+        }
+
+    }
+
+    public bool AddKillCount(float amount)
+    {
+        StatisticModificationResult result = statistics.Modify(StatisticType.KsCount, amount, 0, statistics[StatisticType.MaxKs]);
     
-     public bool AddKillCount(float amount)
-     {
-         StatisticModificationResult result = statistics.Modify(StatisticType.KsCount, amount, 0, statistics[StatisticType.MaxKs]);
-    
-         if (result.currentValue >= statistics[StatisticType.MaxKs])
+        if (result.currentValue >= statistics[StatisticType.MaxKs])
              
-             ActivateKillStreak();
-         else
-             DeactivateKillStreak();
+            ActivateKillStreak();
+        else
+            DeactivateKillStreak();
          
-         lastKillStreakDecaySecond = Time.time;
-         return true;
-     }
+
+        lastKillStreakDecaySecond = Time.time;
+
+
+        return true;
+    }
     
     public void ActivateKillStreak()
     {
@@ -286,7 +319,7 @@ public class PlayerCharacter : Dummy
     {
         currentDialogueID = dialogueID;
         currentDialogueCallbacks = callbacks;
-        fsm.CurrentStateIndex = 12;
+        fsm.CurrentStateName = "InDialogue";
     }
 
 
@@ -333,6 +366,9 @@ public class PlayerCharacter : Dummy
         GUIManager.Singleton.Open("HUD", this);
         
         //StartDialogue(10102001);
+        
+        // TODO: delete later
+        buttonTip = GameObject.Find("HealthButton");
     }
 
     private void Update()
@@ -341,7 +377,7 @@ public class PlayerCharacter : Dummy
             ConsumeUltimateEnergy(statistics[StatisticType.FeverDecay] * Time.deltaTime);
         
         KillStreakDecay();
-
+        PowerDashCoolDown();
 
         fsm.Update();
     }

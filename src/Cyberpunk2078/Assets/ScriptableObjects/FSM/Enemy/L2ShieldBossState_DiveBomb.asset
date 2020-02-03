@@ -12,12 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 654e59e219753b44fbe4f2c4faee3e2d, type: 3}
   m_Name: L2ShieldBossState_DiveBomb
   m_EditorClassIdentifier: 
+  stateName: DiveBomb
   motionID: -1
   damage: 1
   knockback: 0
   hitBox: -1
   chargeTime: 3
   stopChargingOnTargetLoss: 0
-  chargeAnimation: 
-  stateIndex_alert: 0
-  jumpForce: 0
+  animation_charging: L2ShieldBoss_Charge
+  state_afterAttack: Alert
+  state_onTargetLoss: 
+  jumpForce: 2500
+  waitTime: 0.5
