@@ -125,7 +125,7 @@ public class L2ShieldBoss : Enemy
         if (result.currentValue >= statistics[StatisticType.MaxFatigue])
         {
             if (statusModifiers[AttributeType.MaxFatigue_m0] == 1)
-                fsm.CurrentStateName = "DiveBomb";
+                fsm.CurrentStateName = "DiveBombReposition";
             else
                 fsm.CurrentStateName = "Tired";
 
@@ -223,7 +223,7 @@ public class L2ShieldBoss : Enemy
 
                 fsm.CurrentStateName = "Knockback";
             }
-            else if (fsm.CurrentStateName != "Knockback" && fsm.CurrentStateName != "DiveBomb")
+            else if (fsm.CurrentStateName != "Knockback" && fsm.CurrentStateName != "DiveBombReposition" && fsm.CurrentStateName != "DiveBomb")
             {
                 TimeManager.Instance.startSlowMotion(0.4f, 0.7f, 0.2f);
                 CameraManager.Instance.FlashIn(7.5f, 0.1f, 0.7f, 0.2f);

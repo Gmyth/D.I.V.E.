@@ -29,20 +29,33 @@ public class L2ShieldBossState_DiveBomb : ESChargedAttack<L2ShieldBoss>
     {
         base.Initialize(enemy);
 
+
         rigidbody = enemy.GetComponent<Rigidbody2D>();
     }
 
     public override void OnStateEnter(global::State previousState)
     {
         base.OnStateEnter(previousState);
-        CameraManager.Instance.ChangeTarget(enemy.gameObject);
-        CameraManager.Instance.Follow(6f);
-        state = State.Charging;
-        
-        isTired = enemy[StatisticType.Fatigue] >= enemy[StatisticType.MaxFatigue];
 
+
+        state = State.Charging;
+        isTired = enemy[StatisticType.Fatigue] >= enemy[StatisticType.MaxFatigue];
         t_finishWait = 0;
+
+
+        CameraManager.Instance.ChangeTarget(enemy.gameObject);
+        CameraManager.Instance.Follow();
     }
+
+    public override void OnStateQuit(global::State previousState)
+    {
+        base.OnStateQuit(previousState);
+
+
+        CameraManager.Instance.ResetTarget();
+        CameraManager.Instance.Idle();
+    }
+
 
 
     protected override string Attack(float currentTime)

@@ -467,8 +467,9 @@ public class CameraManager : MonoBehaviour {
 	    }
 	    else
 	    {
-		    // already followed
-	    }
+            // already 
+            followOffset = transform.position - mainTarget.transform.position;
+        }
     }
 
     IEnumerator followRelease(CameraState previous, float duration)
