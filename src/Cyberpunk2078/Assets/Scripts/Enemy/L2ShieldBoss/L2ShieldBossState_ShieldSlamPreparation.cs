@@ -18,6 +18,7 @@ public class L2ShieldBossState_ShieldSlamPreparation : EnemyState<L2ShieldBoss>
     protected Animator animator;
 
     private float t_motion = 0;
+    private bool attack = false;
 
 
     public override void Initialize(L2ShieldBoss enemy)
@@ -31,17 +32,27 @@ public class L2ShieldBossState_ShieldSlamPreparation : EnemyState<L2ShieldBoss>
     public override void OnStateEnter(State previousState)
     {
         t_motion = 0;
-
-
+        attack = false;
+        
+        
         enemy.StopTurning();
+        enemy.OnHit.AddListener(HandleHit);
 
 
         animator.Play(animation);
     }
-
+    
+    public override void OnStateQuit(State nextState)
+    {
+        enemy.OnHit.RemoveListener(HandleHit);
+    }
 
     public override string Update()
     {
+        if (attack)
+            return "ShieldSlam";
+        
+        
         t_motion += TimeManager.Instance.ScaledDeltaTime;
 
 
@@ -64,5 +75,11 @@ public class L2ShieldBossState_ShieldSlamPreparation : EnemyState<L2ShieldBoss>
 
 
         return Name;
+    }
+
+
+    private void HandleHit(Hit hit, Collider2D collider)
+    {
+        attack = true;
     }
 }

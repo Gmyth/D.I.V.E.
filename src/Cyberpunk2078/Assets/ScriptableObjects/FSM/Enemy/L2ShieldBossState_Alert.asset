@@ -16,7 +16,7 @@ MonoBehaviour:
   waitTime: 1
   animation: L2ShieldBoss_Guard
   states_attacks:
-  - ShieldSlamChase
+  - ChasingShieldSlam
   - ChargedDash
   - DiveBomb
   state_onTargetLoss: 

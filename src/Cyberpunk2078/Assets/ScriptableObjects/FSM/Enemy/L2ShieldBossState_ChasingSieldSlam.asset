@@ -19,7 +19,7 @@ MonoBehaviour:
   hitBox: 0
   chasingSpeed: 1.5
   attackRange: 2
-  attackHeight: 4
+  attackHeight: 5
   motionTime: 2
   idleAnimation: L2ShieldBoss_Guard
   chasingAnimation: L2ShieldBoss_ShieldMoving

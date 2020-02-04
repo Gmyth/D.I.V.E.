@@ -138,22 +138,23 @@ public class L2ShieldBoss : Enemy
 
     private void HandleHit(Hit hit, Collider2D collider)
     {
-        if (hitBoxes[2].isActiveAndEnabled || hitBoxes[3].isActiveAndEnabled)
+        float hitAngle = 0;
+            
+        switch (hit.type)
         {
-            switch (hit.type)
-            {
-                case Hit.Type.Melee:
-                    if (Vector3.Angle(transform.localScale.x * transform.right, hit.source.transform.position - transform.position) < 90)
-                        isEvading = true;
-                    break;
+            case Hit.Type.Melee:
+                hitAngle = Vector3.Angle(transform.localScale.x * transform.right, hit.source.transform.position - transform.position);
+                break;
 
 
-                case Hit.Type.Projectile:
-                    if (Vector3.Angle(transform.localScale.x * transform.right, -hit.bullet.GetComponent<LinearMovement>().orientation) < 90)
-                        isEvading = true;
-                    break;
-            }
+            case Hit.Type.Projectile:
+                hitAngle = Vector3.Angle(transform.localScale.x * transform.right, -hit.bullet.GetComponent<LinearMovement>().orientation);
+                break;
         }
+        
+        
+        if ((hitBoxes[2].isActiveAndEnabled || hitBoxes[3].isActiveAndEnabled) && hitAngle < 90)
+            isEvading = true;
         else if (fsm.CurrentStateName != "Hurt")
         {
             ObjectRecycler.Singleton.GetSingleEffect(15, transform);
@@ -186,7 +187,7 @@ public class L2ShieldBoss : Enemy
                     fsm.CurrentStateName = "CounterAttack";
                     anger = 0;
                 }
-                else if (fsm.CurrentStateName != "ChargedDash" && fsm.CurrentStateName != "CounterAttack")
+                else if (fsm.CurrentStateName != "ChargedDash" && fsm.CurrentStateName != "CounterAttack" && hitAngle > 90)
                     fsm.CurrentStateName = "Hurt";
             }
         }
