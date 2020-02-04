@@ -10,15 +10,9 @@ public class SimpleItem : MonoBehaviour
     
     private void OnEnable()
     {
-        TimeManager.Instance.OnTimeFactorChange.AddListener(HandleTimeFactorChange);
         var rb2d = GetComponent<Rigidbody2D>();
         defaultDrag = rb2d.drag;
         defaultMass = rb2d.mass;
-    }
-
-    private void OnDisable()
-    {
-        TimeManager.Instance.OnTimeFactorChange.RemoveListener(HandleTimeFactorChange);
     }
 
     // Update is called once per frame
@@ -28,9 +22,5 @@ public class SimpleItem : MonoBehaviour
         rb2d.drag = defaultDrag / TimeManager.Instance.TimeFactor;
         rb2d.mass = defaultMass / TimeManager.Instance.TimeFactor;
     }
-
-    private void HandleTimeFactorChange(float currentValue, float previousValue)
-    {
-        //GetComponent<Rigidbody2D>().velocity *= currentValue / previousValue;
-    }
+    
 }

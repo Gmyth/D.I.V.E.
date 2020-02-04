@@ -13,9 +13,5 @@ MonoBehaviour:
   m_Name: PS_Climb
   m_EditorClassIdentifier: 
   stateName: Climbing
-  climbSpeed: 3
-  f_climbSpeed: 3
-  indexPSIdle: 0
-  indexPSMoving: 1
-  indexPSJumping1: 4
-  indexPSDashing: 6
+  climbSpeed: 3.6
+  f_climbSpeed: 4.1

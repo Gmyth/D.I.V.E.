@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: PS_Jumping1
   m_EditorClassIdentifier: 
   stateName: Jumping
-  n_jumpForce: 5.5
+  jumpIncreaser: 2.5
+  jumpIncreaserThreshold: 0.3
+  n_jumpForce: 6.587
   n_speedFactor: 7
   n_accelerationFactor: 20
   n_wallJumpCD: 0
@@ -25,5 +27,3 @@ MonoBehaviour:
   f_wallJumpCD: 0
   f_wallJumpForce: 8
   f_wallJumpSpeed: 10
-  jumpIncreaser: 2.5
-  jumpIncreaserThreshold: 0.3

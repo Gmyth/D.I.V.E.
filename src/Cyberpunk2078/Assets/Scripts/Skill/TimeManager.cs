@@ -18,6 +18,7 @@ public class TimeManager : MonoBehaviour
     private float smoothTime;
     private bool triggered;
 
+    public float TimeFactor = 1;
 
     public float ScaledDeltaTime
     {
@@ -33,7 +34,8 @@ public class TimeManager : MonoBehaviour
         Instance = this;
         blackScreen = Camera.main.GetComponentInChildren<SpriteRenderer>();
         Time.timeScale = 1;
-        //Time.fixedDeltaTime = Time.timeScale * 0.02f;
+        Time.fixedDeltaTime = Time.timeScale/60;
+        //Debug.LogWarning(Time.fixedDeltaTime);
     }
 
     // Update is called once per frame

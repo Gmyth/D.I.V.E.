@@ -122,7 +122,7 @@ public class HitBox : MonoBehaviour
 
     protected virtual void OnHitBreakable(Collider2D other)
     {
-        other.GetComponent<SimpleBreakable>().DestoryBreakable();
+        other.GetComponent<SimpleBreakable>().DestroyBreakable(other.transform.position);
     }
 
     protected virtual void OnHitPlayer(Collider2D other)

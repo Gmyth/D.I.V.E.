@@ -81,7 +81,7 @@ public class BouncePlatform : MonoBehaviour
                 BounceVFX.SetActive(true);
                 BounceVFX.GetComponent<Animator>().Play("BounceVFX", 0, 0);
 
-                rb2d.AddForce(bounceDirection * jumpForce * 50 * 1/Time.timeScale);
+                rb2d.AddForce(bounceDirection * jumpForce * 50 / 0.835f);
               
 
                 PlayerCharacter.Singleton.AddNormalEnergy(1);

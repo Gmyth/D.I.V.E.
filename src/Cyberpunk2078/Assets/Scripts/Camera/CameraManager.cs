@@ -106,7 +106,7 @@ public class CameraManager : MonoBehaviour {
 
     public void ResetTarget()
     {
-	    mainTarget = GameObject.FindGameObjectWithTag("Player");
+	    mainTarget = GameObject.FindObjectOfType<PlayerCharacter>().gameObject;
 		targetList.Clear();
 	    targetList.Add(mainTarget);
     }
