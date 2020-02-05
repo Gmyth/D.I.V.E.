@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using FMOD.Studio;
+using System.Runtime.InteropServices;
 using static FMOD.Studio.STOP_MODE;
 using System;
 
@@ -44,26 +45,41 @@ public class AudioManager : MonoBehaviour
     {
         
     }
-
-    public void PlayEvent(string _event)
+    public EventInstance GetEventInstance(string _event)
     {
         if (dic.ContainsKey(_event))
         {
             if (instanceDic.ContainsKey(_event))
             {
+                return instanceDic[_event];
+            }
+        }
 
+            Debug.LogError("Can't get eventinstance");
+            return FMODUnity.RuntimeManager.CreateInstance(dic[_event]);
+
+    }
+
+    public bool PlayEvent(string _event)
+    {
+        if (dic.ContainsKey(_event))
+        {
+            if (instanceDic.ContainsKey(_event))
+            {
+                return false;
             }
             else
             {
                 EventInstance ins = FMODUnity.RuntimeManager.CreateInstance(dic[_event]);
                 instanceDic.Add(_event, ins);
                 ins.start();
-
+                return true;
             }     
         }
         else
         {
             Debug.LogError("[AudioManager] " + " Can't find " + _event);
+            return false;
         }
     }
 
