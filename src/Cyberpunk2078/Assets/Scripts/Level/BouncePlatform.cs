@@ -82,7 +82,9 @@ public class BouncePlatform : MonoBehaviour
                 BounceVFX.GetComponent<Animator>().Play("BounceVFX", 0, 0);
 
                 rb2d.AddForce(bounceDirection * jumpForce * 50 / 0.835f);
-              
+
+                //sound
+                AudioManager.Instance.PlayOnce("JumpPad");
 
                 PlayerCharacter.Singleton.AddNormalEnergy(1);
                 if (PlayerCharacter.Singleton.InFever) PlayerCharacter.Singleton.AddOverLoadEnergy(1);

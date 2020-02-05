@@ -159,6 +159,9 @@ public class PSAttackGH: PlayerState
 
 
         anim.Play("MainCharacter_Atk", -1, 0f);
+
+        AudioManager.Instance.PlayOnce("Swing");
+
         playerCharacter.GetComponent<Rigidbody2D>().AddForce(direction * pushForce * 100f);
         playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipX = direction.x < 0;
 

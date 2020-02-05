@@ -97,7 +97,12 @@ public class PlayerCharacter : Dummy
 
         if (result.currentValue <= 0)
             Dead();
+        else if (result.currentValue <= 1f)
+        {
+            AudioManager.Instance.PlayEvent("LowHealth");
+        }
 
+        AudioManager.Instance.PlayOnce("Hurt");
 
         return result.previousValue - result.currentValue;
     }
@@ -112,7 +117,8 @@ public class PlayerCharacter : Dummy
 
 
         StatisticModificationResult result = statistics.Modify(StatisticType.Hp, rawHeal, 0, statistics[StatisticType.MaxHp]);
-
+        if (result.currentValue >= 1 && result.currentValue < statistics[StatisticType.MaxHp])
+            AudioManager.Instance.StopEvent("LowHealth");
 
         return result.previousValue - result.currentValue;
     }
@@ -137,6 +143,9 @@ public class PlayerCharacter : Dummy
             CameraManager.Instance.FlashIn(7,0.05f,0.05f,0.05f);
             AddOverLoadEnergy(1);
             TimeManager.Instance.StartFeverMotion();
+
+            AudioManager.Instance.PlayOnce("Fever");
+            AudioManager.Instance.PlayEvent("FeverMode");
         }
         return InFever;
         
@@ -218,7 +227,10 @@ public class PlayerCharacter : Dummy
             GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").HighlightFeverBar();
         else if(!InFever)
             GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").DehighlightFeverBar();
-        
+
+        float pitch = (statistics[StatisticType.UltimateEnergy] / statistics[StatisticType.MaxUltimateEnergy]);
+        AudioManager.Instance.PlayOnce("EnergyCharge", "Pitch", pitch);
+
         return true;
     }
 
@@ -232,6 +244,8 @@ public class PlayerCharacter : Dummy
             FeverVFX.SetActive(false);
             GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").DehighlightFeverBar();
             TimeManager.Instance.EndFeverMotion();
+
+            AudioManager.Instance.StopEvent("FeverMode");
         }
         return true;
     }
@@ -297,7 +311,9 @@ public class PlayerCharacter : Dummy
     {
         if (InKillStreak)
             return;
-        
+
+        AudioManager.Instance.PlayOnce("KillStreak");
+
         InKillStreak = true;
         SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
         TimeManager.Instance.startSlowMotion(0.5f);

@@ -163,6 +163,8 @@ public class Bullet : Recyclable
                 Hit1.transform.position = other.transform.position + (transform.position  - other.transform.position) * 0.3f;
 
                 Hit1.gameObject.SetActive(true);
+
+                AudioManager.Instance.PlayOnce("DeflectBullet");
             }
 
         }

@@ -171,6 +171,7 @@ public class PSDashing : PlayerState
                 return;
             }
 
+
             playerCharacter.PowerDashReady = false;
             playerCharacter.LastPowerDash = Time.unscaledTime;
             TimeManager.Instance.StartFeverMotion();
@@ -191,7 +192,8 @@ public class PSDashing : PlayerState
             }
         }
 
-        
+        AudioManager.Instance.PlayOnce("Dash");
+
 
         Apply = true;
         //Dash has been pressed, set all config first

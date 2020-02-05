@@ -81,6 +81,8 @@ public abstract class PlayerState : State
 
             grounded = true;
 
+            AudioManager.Instance.PlayEvent("JumpLand");
+            
             return 1;
         } 
         else if ((hitL.collider != null && hitL.transform.CompareTag("Dummy")) ||
@@ -94,6 +96,7 @@ public abstract class PlayerState : State
         player.jumpForceGate = false;
 
         grounded = false;
+        AudioManager.Instance.StopEvent("JumpLand");
 
 
         return 0;

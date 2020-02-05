@@ -163,6 +163,9 @@ public class PSJumping1 : PlayerState
         previous = previousState;
         timer = jumpIncreaserThreshold;
         anim.Play("MainCharacter_Jump", -1, 0f);
+
+        AudioManager.Instance.PlayOnce("Jump");
+
         //Perform jump
         lastJumpSec = Time.time;
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
