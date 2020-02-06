@@ -44,7 +44,7 @@ public class L2ShieldBossState_PowerGuard : EnemyState<L2ShieldBoss>
 
 
         enemy.TurnImmediately();
-        enemy.EnableHitBox(hitBox, false);
+        enemy.EnableHitBox(hitBox);
 
 
         rigidbody.drag = knockbackDrag;

@@ -11,49 +11,41 @@ public enum OrientationType
 
 public abstract class ESAttack<T> : EnemyState<T> where T : Enemy
 {
-    [SerializeField] protected int motionID = -1;
-    [SerializeField] protected float damage = 1;
-    [SerializeField] protected float knockback = 0;
+    [SerializeField] protected int hitDataID = -1;
     [SerializeField] protected int hitBox = -1;
 
-    private MotionData motionData;
+    protected HitData hitData;
 
 
     public override void Initialize(T enemy)
     {
         base.Initialize(enemy);
 
-        if (motionID >= 0)
-            motionData = DataTableManager.singleton.GetMotionData(motionID);
-    }
 
+        hitData = DataTableManager.singleton.GetHitData(hitDataID);
+    }
 
     public override void OnStateEnter(State previousState)
     {
-        Hit hit = new Hit();
-        hit.type = Hit.Type.Melee;
-        hit.source = enemy;
-        hit.damage = CalculateAttackDamage();
-        hit.knockback = CalculateAttackKnowback();
+        enemy.OnEnableHitBox.AddListener(InitializeHitBox);
 
-        enemy.currentHit = hit;
+
+        if (hitBox >= 0)
+            enemy.EnableHitBox(hitBox);
     }
 
     public override void OnStateQuit(State nextState)
     {
+        enemy.OnEnableHitBox.RemoveListener(InitializeHitBox);
+
+
         if (hitBox >= 0)
             enemy.DisableHitBox(hitBox);
     }
 
 
-    protected virtual float CalculateAttackDamage()
+    protected virtual void InitializeHitBox(HitBox hitBox)
     {
-        return damage;
-    }
-
-
-    protected virtual float CalculateAttackKnowback()
-    {
-        return knockback;
+        hitBox.LoadHitData(hitData);
     }
 }

@@ -137,6 +137,8 @@ public abstract class Dummy : MonoBehaviour, IDamageable
 public abstract class Enemy : Dummy
 {
     [SerializeField] protected int typeID;
+    protected EnemyData data;
+
     [SerializeField] protected FSMEnemy fsm;
     [SerializeField] protected Zone guardZone;
     [SerializeField] protected HitBox[] hitBoxes;
@@ -145,12 +147,11 @@ public abstract class Enemy : Dummy
     [Header("Patrolling")]
     [SerializeField][Path(true)] protected Route patrolRoute;
     [SerializeField] protected RangedWeaponConfiguration patrolFiringConfiguration;
-
-    protected EnemyData data;
-
+    
     [HideInInspector] public AttributeSet statusModifiers = new AttributeSet();
+
     [HideInInspector] public PlayerCharacter currentTarget;
-    [HideInInspector] public Hit currentHit;
+    private int numEnabledHitBoxes = 0;
 
     protected bool isTurning = false;
 
@@ -164,6 +165,9 @@ public abstract class Enemy : Dummy
     private Vector3 turnDirection = Vector3.zero;
     private float t_turn = 0;
 
+
+    public Event<HitBox> OnEnableHitBox { get; } = new Event<HitBox>();
+    
     public float this[StatisticType type]
     {
         get
@@ -243,12 +247,6 @@ public abstract class Enemy : Dummy
         }
     }
 
-    public void StopTurning()
-    {
-        isTurning = false;
-        t_turn = 0;
-    }
-
     public void TurnImmediately()
     {
         TurnImmediately(currentTarget.transform.position - transform.position);
@@ -267,19 +265,25 @@ public abstract class Enemy : Dummy
         GameUtility.Turn(this, direction);
     }
 
+    public void StopTurning()
+    {
+        isTurning = false;
+        t_turn = 0;
+    }
+
 
     public void EnableHitBox(int index)
     {
-        hitBoxes[index].hit = currentHit;
-        hitBoxes[index].gameObject.SetActive(true);
-    }
+        HitBox hitBox = hitBoxes[index];
 
-    public void EnableHitBox(int index, bool overwriteHit)
-    {
-        if (overwriteHit)
-            hitBoxes[index].hit = currentHit;
 
-        hitBoxes[index].gameObject.SetActive(true);
+        OnEnableHitBox.Invoke(hitBox);
+
+
+        hitBox.gameObject.SetActive(true);
+
+
+        ++numEnabledHitBoxes;
     }
 
     public void DisableHitBox(int index)
@@ -289,8 +293,8 @@ public abstract class Enemy : Dummy
 
     public void DisableAllHitBoxes()
     {
-        foreach (HitBox hitBox in hitBoxes)
-            hitBox.gameObject.SetActive(false);
+        for (int i = 0; i < hitBoxes.Length; ++i)
+            DisableHitBox(i);
     }
 
     public void SwitchHitBox(int previousIndex, int currentIndex)
@@ -303,6 +307,8 @@ public abstract class Enemy : Dummy
     public void Reset()
     {
         fsm?.Reboot();
+
+        DisableAllHitBoxes();
     }
 
 

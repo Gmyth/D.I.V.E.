@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: L2ShieldBossState_CounterAttack
   m_EditorClassIdentifier: 
   stateName: CounterAttack
-  motionID: -1
-  damage: 1
-  knockback: 10
+  hitDataID: 0
   hitBox: 4
   motionTime: 1.5
   animation: L2ShieldBoss_ShieldAttack2

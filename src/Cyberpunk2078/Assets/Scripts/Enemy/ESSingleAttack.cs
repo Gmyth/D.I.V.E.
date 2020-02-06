@@ -5,9 +5,7 @@
 public class ESSingleAttack : EnemyState
 {
     [Header("Configuration")]
-    [SerializeField] protected int motionID = -1;
-    [SerializeField] protected float damage = 1;
-    [SerializeField] protected float knockback = 0;
+    [SerializeField] protected int hitID = -1;
     [SerializeField] protected int hitBox = -1;
     [SerializeField] [Min(0)] private float motionTime;
     [SerializeField] private string animation;
@@ -16,6 +14,7 @@ public class ESSingleAttack : EnemyState
     [SerializeField] private string state_afterAttack;
 
     protected Enemy enemy;
+    protected HitData hitData;
     protected Animator animator;
 
     private float t_motion = 0;
@@ -28,7 +27,7 @@ public class ESSingleAttack : EnemyState
 
         this.enemy = enemy;
 
-
+        hitData = DataTableManager.singleton.GetHitData(hitID);
         animator = enemy.GetComponent<Animator>();
     }
 
@@ -37,13 +36,7 @@ public class ESSingleAttack : EnemyState
         t_motion = 0;
 
 
-        Hit hit = new Hit();
-        hit.type = Hit.Type.Melee;
-        hit.source = enemy;
-        hit.damage = damage;
-        hit.knockback = knockback;
-
-        enemy.currentHit = hit;
+        enemy.OnEnableHitBox.AddListener(InitializeHitBox);
 
 
         if (hitBox >= 0)
@@ -55,6 +48,9 @@ public class ESSingleAttack : EnemyState
 
     public override void OnStateQuit(State nextState)
     {
+        enemy.OnEnableHitBox.RemoveListener(InitializeHitBox);
+
+
         if (hitBox >= 0)
             enemy.DisableHitBox(hitBox);
     }
@@ -70,5 +66,11 @@ public class ESSingleAttack : EnemyState
 
 
         return Name;
+    }
+
+
+    protected virtual void InitializeHitBox(HitBox hitBox)
+    {
+        hitBox.LoadHitData(hitData);
     }
 }

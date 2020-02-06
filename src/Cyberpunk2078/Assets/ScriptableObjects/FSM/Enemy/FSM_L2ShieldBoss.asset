@@ -23,7 +23,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6ccc8b76cdc18fa45b05a03e57363b1c, type: 2}
   - {fileID: 11400000, guid: e7360b3d182102c42b09a1693deed6e0, type: 2}
   - {fileID: 11400000, guid: 4d7fae3b5b9c8164bb48ac982d24b841, type: 2}
-  - {fileID: 11400000, guid: 8d41dccf9eb4f894da8245233093045e, type: 2}
   - {fileID: 11400000, guid: 7b9a61ec3c570514b96b197f30251e01, type: 2}
   - {fileID: 11400000, guid: 08d0837beabcb8d44af8924fd47b7423, type: 2}
+  - {fileID: 11400000, guid: 8d41dccf9eb4f894da8245233093045e, type: 2}
+  - {fileID: 11400000, guid: 6bf37ab47a39bd54b90a7909a647ab9e, type: 2}
+  - {fileID: 11400000, guid: 4fa6a5f5505b10a4cb5875b456892c8b, type: 2}
   startingState: Alert

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+
 public class Recyclable : MonoBehaviour
 {
     public int id = -1;

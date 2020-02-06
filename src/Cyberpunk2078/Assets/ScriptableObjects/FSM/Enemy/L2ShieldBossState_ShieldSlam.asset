@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: L2ShieldBossState_ShieldSlam
   m_EditorClassIdentifier: 
   stateName: ShieldSlam
-  motionID: -1
-  damage: 1
-  knockback: 10
+  hitID: 0
   hitBox: 0
   motionTime: 0.7
   animation: L2ShieldBoss_ShieldSlam2

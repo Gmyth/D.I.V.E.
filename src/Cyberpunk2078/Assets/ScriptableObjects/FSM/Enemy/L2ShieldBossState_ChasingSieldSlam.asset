@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: L2ShieldBossState_ChasingSieldSlam
   m_EditorClassIdentifier: 
   stateName: ChasingShieldSlam
-  motionID: -1
-  damage: 1
-  knockback: 10
-  hitBox: 0
+  hitDataID: 0
+  hitBox: -1
   chasingSpeed: 1.5
   attackRange: 2
   attackHeight: 5

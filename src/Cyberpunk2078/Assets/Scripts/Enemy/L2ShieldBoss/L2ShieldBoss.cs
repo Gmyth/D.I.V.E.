@@ -147,7 +147,7 @@ public class L2ShieldBoss : Enemy
                 break;
 
 
-            case Hit.Type.Projectile:
+            case Hit.Type.Bullet:
                 hitAngle = Vector3.Angle(transform.localScale.x * transform.right, -hit.bullet.GetComponent<LinearMovement>().orientation);
                 break;
         }

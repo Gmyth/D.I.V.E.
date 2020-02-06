@@ -26,7 +26,7 @@ public class L2ShieldBossState_ChasingShieldSlam : ESChasingAttack<L2ShieldBoss>
         t_chase = 0;
 
 
-        enemy.EnableHitBox(2, false);
+        enemy.EnableHitBox(2);
     }
 
     protected override string Chase(Vector3 direction)
