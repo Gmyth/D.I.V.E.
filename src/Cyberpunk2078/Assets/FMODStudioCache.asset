@@ -14,12 +14,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: C:\Users\Yiyan Wang\Documents\GitHub\Cyberpunk2078\src\Cyberpunk2078\Build\Audio\Desktop\Master
     Bank.bank
-  lastModified: 637165133329207332
+  lastModified: 637165842038879338
   LoadResult: 0
   FileSizes:
   - Name: 
     Value: 5230400
   Exists: 1
+--- !u!114 &-8554546727393843628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &-8224548748089845923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43,6 +59,22 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1550
+--- !u!114 &-8144476184725960462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Pitch
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &-8034932219524034638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,10 +304,26 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: 8592606494666722729}
+  - {fileID: -8144476184725960462}
   MinDistance: 0
   MaxDistance: 0
   Length: 110
+--- !u!114 &-4170365212526799459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Pitch
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &-4060613894257661262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -631,7 +679,7 @@ MonoBehaviour:
   - {fileID: -8570572328667734177}
   StringsBanks:
   - {fileID: 6887345803722958588}
-  stringsBankWriteTime: 637165133329297086
+  stringsBankWriteTime: 637165842038879338
   cacheVersion: 3
 --- !u!114 &36348704661832673
 MonoBehaviour:
@@ -745,7 +793,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: 6168940872497406466}
+  - {fileID: -4170365212526799459}
   MinDistance: 0
   MaxDistance: 0
   Length: 540
@@ -815,7 +863,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: -289682439117337086}
+  - {fileID: -8554546727393843628}
   MinDistance: 1
   MaxDistance: 20
   Length: 2524
@@ -956,7 +1004,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: Build\Audio\Desktop\Master Bank.strings.bank
-  lastModified: 637165133329297086
+  lastModified: 637165842038879338
   LoadResult: 0
   FileSizes:
   - Name: 

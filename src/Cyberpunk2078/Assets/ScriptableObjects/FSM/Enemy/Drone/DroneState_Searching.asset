@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 828cd845ddfeb794f82ffb05891d4f10, type: 3}
   m_Name: DroneState_Searching
   m_EditorClassIdentifier: 
+  stateName: Searching
   useSightRange: 1
   useGuardZone: 0
   duration: 3
-  stateIndex_idle: 0
-  stateIndex_alert: 1
+  state_onEnd: 
+  state_onTargetFound: 

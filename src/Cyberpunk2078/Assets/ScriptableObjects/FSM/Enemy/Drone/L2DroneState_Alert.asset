@@ -15,7 +15,8 @@ MonoBehaviour:
   stateName: Alert
   waitTime: 0
   animation: L2Drone_Alert
-  states_attacks: []
+  states_attacks:
+  - Firing
   state_onTargetLoss: Patrolling
   behaviorSelector:
     n: 1
