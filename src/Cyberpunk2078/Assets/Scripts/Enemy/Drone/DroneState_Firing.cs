@@ -43,6 +43,8 @@ public class DroneState_Firing : ESChargedAttack<Drone>
         enemy.isGunCharging = true;
 
         gunAnimator.Play("L2Drone_Gun_Charging");
+
+        AudioManager.Instance.PlayOnce("LaserCharge");
     }
 
     public override void OnStateQuit(State nextState)

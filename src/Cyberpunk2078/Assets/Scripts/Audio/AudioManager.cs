@@ -20,7 +20,8 @@ public class AudioManager : MonoBehaviour
 
     private EventInstance eventInsatance;
     private FMOD.Studio.EventDescription MovingDesription;
-    
+
+    [SerializeField] private AudioData[] AudioData;
 
     // Start is called before the first frame update
     void Awake()
@@ -29,14 +30,18 @@ public class AudioManager : MonoBehaviour
         instanceDic = new Dictionary<string, EventInstance>();
         Instance = this;
 
-        foreach (string s in events)
+        for(int i=0; i < AudioData.Length; ++i)
         {
-            int pFrom = s.LastIndexOf("/") + "/".Length;
-            int pTo = s.Length;
+            foreach (string s in AudioData[i].events)
+            {
+                int pFrom = s.LastIndexOf("/") + "/".Length;
+                int pTo = s.Length;
 
-            string result = s.Substring(pFrom, pTo - pFrom);
-            dic.Add(result, s);
+                string result = s.Substring(pFrom, pTo - pFrom);
+                dic.Add(result, s);
+            }
         }
+        
 
     }
 
