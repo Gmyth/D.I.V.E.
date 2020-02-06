@@ -68,7 +68,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1909596859
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 258456577e459fa4397583ff205eda0f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -174,7 +174,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1909596859
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ebc5533139ab2df489188957a298bba7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -285,38 +285,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isInvulnerable: 0
   isEvading: 0
+  UnitTimeFactor: 1
   typeID: 0
   fsm: {fileID: 11400000, guid: 7caa8b84ed0fa374a8a1db0c15e3f1e9, type: 2}
   guardZone:
     type: 0
     center: {x: 0, y: 0}
-    w: 0
-    h: 0
+    w: 20
+    h: 20
   hitBoxes: []
   patrolRoute:
     wayPoints: []
+    stayTimes: []
   patrolFiringConfiguration:
     firingInterval: 2
     chargeTime: 0.5
     muzzle: {fileID: 2013669344}
     bulletID: 0
-    bulletSpeed: 30
+    bulletSpeed: 20
     minDeviationAngle: 5
     maxDeviationAngle: 15
   statusModifiers:
     serializedAttributes: []
   currentTarget: {fileID: 0}
   currentHit:
+    type: 0
     source: {fileID: 0}
+    bullet: {fileID: 0}
     damage: 0
     knockback: 0
   lastCheckPointTransform: {x: 0, y: 0, z: 0}
-  farRange: 0
-  nearRange: 0
+  farRange: 12
+  nearRange: 6
   gun: {fileID: 8849360307540039034}
   thruster: {fileID: 2675494265900334673}
-  Health: 5
-  HealthCap: 5
+  Health: 1
+  HealthCap: 1
   isGunCharging: 0
 --- !u!1 &7044390677542357071
 GameObject:
@@ -385,7 +389,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1909596859
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 3b992699a38f8554eaf819b2de3bcbc8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -467,7 +471,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1909596859
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 0a174ffcc5462a94a8cb31befd0d09d3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
