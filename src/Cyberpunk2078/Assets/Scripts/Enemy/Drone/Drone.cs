@@ -1,14 +1,16 @@
-﻿using System.Collections.Generic;
-using Pathfinding;
+﻿using Pathfinding;
 using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Seeker))]
 public class Drone : Enemy, IPatroller
 {
-    private static readonly string animation_idle = "L2Drone_Idle";
-    private static readonly string animation_alert = "L2Drone_Alert";
+    public static readonly string animation_idle = "L2Drone_Idle";
+    public static readonly string animation_alert = "L2Drone_Alert";
 
+
+    [SerializeField] private float farRange;
+    [SerializeField] private float nearRange;
 
     [Header("Parts")]
     [SerializeField] private SpriteRenderer gun;
@@ -26,6 +28,22 @@ public class Drone : Enemy, IPatroller
 
     public Event<Drone> dead = new Event<Drone>();
 
+    public float FarRange
+    {
+        get
+        {
+            return farRange;
+        }
+    }
+
+    public float NearRange
+    {
+        get
+        {
+            return nearRange;
+        }
+    }
+
     public SpriteRenderer Gun
     {
         get
@@ -35,10 +53,19 @@ public class Drone : Enemy, IPatroller
     }
 
 
-    public Vector3 GetDeviatedBulletDirection(float minAngle, float maxAngle)
+    public Vector3 AimingDirection
     {
-        return ProjectileUtility.GetDeviatedBulletDirection(Mathf.Sign(transform.localScale.x) * gun.transform.right, minAngle, maxAngle, aimDeviation);
+        get
+        {
+            return Mathf.Sign(transform.localScale.x) * gun.transform.right;
+        }
+
+        private set
+        {
+            gun.transform.right = value;
+        }
     }
+
 
     public Vector3 Aim(Vector3 targetPosition)
     {
@@ -54,11 +81,18 @@ public class Drone : Enemy, IPatroller
         aimDeviation = Mathf.Min(1, aimDeviation + 0.01f * angle * angle);
 
 
-        gun.transform.right = direction;
+        AimingDirection = direction;
 
 
         return direction;
     }
+
+    public Vector3 GetDeviatedBulletDirection(float minAngle, float maxAngle)
+    {
+        return ProjectileUtility.GetDeviatedBulletDirection(AimingDirection, minAngle, maxAngle, aimDeviation);
+    }
+
+
 
     public void ResetGunDirection()
     {
@@ -69,20 +103,37 @@ public class Drone : Enemy, IPatroller
         gun.transform.right = Vector3.right;
     }
 
+
+    public void Fire(bool hasDeviation = true)
+    {
+        Bullet bullet = ObjectRecycler.Singleton.GetObject<Bullet>(patrolFiringConfiguration.BulletID);
+        bullet.hit.source = this;
+        bullet.isFriendly = false;
+
+
+        LinearMovement bulletMovement = bullet.GetComponent<LinearMovement>();
+        bulletMovement.speed = patrolFiringConfiguration.BulletSpeed;
+        bulletMovement.initialPosition = patrolFiringConfiguration.Muzzle ? patrolFiringConfiguration.Muzzle.position : transform.position;
+        bulletMovement.orientation = hasDeviation ? GetDeviatedBulletDirection(patrolFiringConfiguration.MinDeviationAngle, patrolFiringConfiguration.MaxDeviationAngle) : AimingDirection;
+        bulletMovement.transform.right = bulletMovement.orientation;
+        bulletMovement.gameObject.SetActive(true);
+    }
+
     public void Fire(Vector3 position, bool hasDeviation = true)
     {
         Vector3 aimDirection = Aim(position);
 
 
-        LinearMovement bullet = ObjectRecycler.Singleton.GetObject<LinearMovement>(patrolFiringConfiguration.BulletID);
-        bullet.speed = patrolFiringConfiguration.BulletSpeed;
-        bullet.initialPosition = patrolFiringConfiguration.Muzzle ? patrolFiringConfiguration.Muzzle.position : transform.position;
-        bullet.orientation = hasDeviation ? GetDeviatedBulletDirection(patrolFiringConfiguration.MinDeviationAngle, patrolFiringConfiguration.MaxDeviationAngle) : aimDirection;
+        Bullet bullet = ObjectRecycler.Singleton.GetObject<Bullet>(patrolFiringConfiguration.BulletID);
+        bullet.hit.source = this;
+        bullet.isFriendly = false;
 
-        bullet.GetComponent<Bullet>().isFriendly = false;
-        bullet.transform.right = bullet.orientation;
-
-        bullet.gameObject.SetActive(true);
+        LinearMovement bulletMovement = bullet.GetComponent<LinearMovement>();
+        bulletMovement.speed = patrolFiringConfiguration.BulletSpeed;
+        bulletMovement.initialPosition = patrolFiringConfiguration.Muzzle ? patrolFiringConfiguration.Muzzle.position : transform.position;
+        bulletMovement.orientation = hasDeviation ? GetDeviatedBulletDirection(patrolFiringConfiguration.MinDeviationAngle, patrolFiringConfiguration.MaxDeviationAngle) : aimDirection;
+        bulletMovement.transform.right = bulletMovement.orientation;
+        bulletMovement.gameObject.SetActive(true);
     }
 
 
@@ -102,10 +153,14 @@ public class Drone : Enemy, IPatroller
         }
     }
 
-
     Vector3 IPatroller.GetPatrolPoint(int index)
     {
         return patrolRoute[index];
+    }
+
+    float IPatroller.GetPatrolPointStayTime(int index)
+    {
+        return patrolRoute.GetStayTime(index);
     }
 
 
@@ -148,6 +203,8 @@ public class Drone : Enemy, IPatroller
         //Destroy(gameObject, 0.5f);
         CheckPointManager.Instance.Dead(gameObject);
         dead.Invoke(this);
+
+        AudioManager.Instance.PlayOnce("KillDrone");
     }
 
 

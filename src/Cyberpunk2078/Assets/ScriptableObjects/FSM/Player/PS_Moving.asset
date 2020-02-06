@@ -12,15 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d52a7593960bdd4090046793c01f063, type: 3}
   m_Name: PS_Moving
   m_EditorClassIdentifier: 
-  Name: Move
-  n_speedFactor: 9
+  stateName: Moving
+  n_speedFactor: 10.77
   n_accelerationFactor: 30
-  f_speedFactor: 10
+  f_speedFactor: 11.97
   f_accelerationFactor: 35
-  indexPSIdle: 0
-  indexPSAttackGH: 3
-  indexPSJumping1: 4
-  indexPSDashing: 6
-  indexPSAirborne: 2
-  indexPSClimb: 8
-  indexPSWallJumping: 7

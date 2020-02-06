@@ -138,7 +138,7 @@ public class StatisticSystem
 
 
             case StatisticType.MaxFatigue:
-                return Mathf.Min(AttributeSet.Sum(AttributeType.MaxFatigue_c2, attributeSets), AttributeSet.Sum(AttributeType.MaxFatigue_c0, attributeSets) + AttributeSet.Sum(AttributeType.MaxFatigue_m0, attributeSets) * AttributeSet.Sum(AttributeType.MaxFatigue_c1, attributeSets));
+                return AttributeSet.Sum(AttributeType.MaxFatigue_c0, attributeSets) + AttributeSet.Sum(AttributeType.MaxFatigue_m0, attributeSets) * AttributeSet.Sum(AttributeType.MaxFatigue_c1, attributeSets);
 
             
             case StatisticType.PDCoolDown:
@@ -233,7 +233,7 @@ public class StatisticSystem
         this.attributeSets = attributeSets;
 
         foreach (IAttributeCollection attributeSet in attributeSets)
-            attributeSet.OnAttributeChange?.AddListener(UpdateChangedStatistics);
+            attributeSet.OnAttributeChange.AddListener(UpdateChangedStatistics);
 
         UpdateChangedStatistics(this.attributeSets);
     }

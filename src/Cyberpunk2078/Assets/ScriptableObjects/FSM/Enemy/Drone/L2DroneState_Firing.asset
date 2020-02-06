@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf4130f31cd63e498d17fed25938d4f, type: 3}
+  m_Name: L2DroneState_Firing
+  m_EditorClassIdentifier: 
+  stateName: Firing
+  motionID: -1
+  damage: 1
+  knockback: 0
+  hitBox: -1
+  chargeTime: 1
+  stopChargingOnTargetLoss: 1
+  animation_charging: L2Drone_Alert
+  state_afterAttack: Alert
+  state_onTargetLoss: Patrolling
+  recoil: 10
+  recoilDuration: 0.2

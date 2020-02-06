@@ -1,34 +1,36 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 
 public abstract class FiniteStateMachine<T> : ScriptableObject where T : State
 {
-    [SerializeField] protected T[] states;
-    [SerializeField] protected int startingStateIndex;
+    [SerializeField] protected T[] serializedStates;
+    [SerializeField] protected string startingState;
 
-    protected int currentStateIndex = -1;
+    protected Dictionary<string, T> states = new Dictionary<string, T>();
+    protected string currentStateName = "";
 
 
-    public Event2<int> OnCurrentStateChange { get; } = new Event2<int>();
+    public Event2<T> OnCurrentStateChange { get; } = new Event2<T>();
 
-    public T this[int index]
+    public T this[string name]
     {
         get
         {
-            return states[index];
+            return states[name];
         }
     }
 
-    public virtual int CurrentStateIndex
+    public virtual string CurrentStateName
     {
         get
         {
-            return currentStateIndex;
+            return currentStateName;
         }
 
         set
         {
-            currentStateIndex = value;
+            currentStateName = value;
         }
     }
 
@@ -36,7 +38,7 @@ public abstract class FiniteStateMachine<T> : ScriptableObject where T : State
     {
         get
         {
-            return currentStateIndex >= 0 ? states[currentStateIndex] : null;
+            return currentStateName == "" ? null : states[currentStateName];
         }
     }
 

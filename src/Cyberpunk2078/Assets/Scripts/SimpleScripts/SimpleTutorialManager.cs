@@ -106,7 +106,7 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
 
         //Change button sprite according to the controller
         //UI_DashKey.GetComponent<SpriteRenderer>().sprite = ;
-        CameraManager.Instance.FocusAt(PlayerCharacter.Singleton.transform, 99999f);
+        CameraManager.Instance.FocusTo(PlayerCharacter.Singleton.transform, 99999f);
         CameraManager.Instance.FlashIn(6f, 0.05f, 999999f, 0.01f);
         PlayerCharacter.Singleton.SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
         TimeManager.Instance.startSlowMotion(999999f, 0f, 0.001f);
@@ -117,7 +117,7 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         PlayerCharacter.Singleton.AddNormalEnergy(1);
 
         PlayerCharacter.Singleton.isInTutorial = true;
-        PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 11;
+        PlayerCharacter.Singleton.GetFSM().CurrentStateName = "InTutorial_Dash";
 
         DashTutorial_Drone.Fire(shootPoint_DashTutorial.position, false);
 
@@ -156,7 +156,7 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
 
         timelineManager_DeflectTutorial.PlayTimelineInIndex(0);
 
-        PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 13;
+        PlayerCharacter.Singleton.GetFSM().CurrentStateName = "InTutorial_Deflect";
 
         StartCoroutine(ShowGameObjectAfterDelay(1.0f, null));
     }

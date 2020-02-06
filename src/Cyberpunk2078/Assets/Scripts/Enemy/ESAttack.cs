@@ -31,11 +31,18 @@ public abstract class ESAttack<T> : EnemyState<T> where T : Enemy
     public override void OnStateEnter(State previousState)
     {
         Hit hit = new Hit();
+        hit.type = Hit.Type.Melee;
         hit.source = enemy;
         hit.damage = CalculateAttackDamage();
         hit.knockback = CalculateAttackKnowback();
 
         enemy.currentHit = hit;
+    }
+
+    public override void OnStateQuit(State nextState)
+    {
+        if (hitBox >= 0)
+            enemy.DisableHitBox(hitBox);
     }
 
 

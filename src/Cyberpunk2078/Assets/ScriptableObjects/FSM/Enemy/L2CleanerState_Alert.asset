@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c588709941353943be4314c0c1f8812, type: 3}
   m_Name: L2CleanerState_Alert
   m_EditorClassIdentifier: 
+  stateName: Alert
   waitTime: 0.2
+  animation: L2Cleaner_Alert
+  states_attacks:
+  - ChargedDash
+  - ChasingSlash
+  state_onTargetLoss: Patrolling
   behaviorSelector:
     n: 1
     repeats: 1
     weights: 1e00000046000000
-  animation: L2Cleaner_Alert
-  stateIndex_attacks: 0300000001000000
-  stateIndex_targetLoss: 0

@@ -26,7 +26,7 @@ public class SimpleLaser : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
 
-            if (PlayerCharacter.Singleton.GetFSM().CurrentStateIndex != 6)
+            if (PlayerCharacter.Singleton.GetFSM().CurrentStateName != "Dashing")
             {
 
                 if (PlayerCharacter.Singleton[StatisticType.Hp] > 0)

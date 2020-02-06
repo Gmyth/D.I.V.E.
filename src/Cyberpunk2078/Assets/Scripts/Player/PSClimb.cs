@@ -10,24 +10,19 @@ public class PSClimb : PlayerState
     
     [Header("Fever Mode")]
     [SerializeField] private float f_climbSpeed;
-    
-    [Header( "Transferable States" )]
-    [SerializeField] private int indexPSIdle;
-    [SerializeField] private int indexPSMoving;
-    [SerializeField] private int indexPSJumping1;
-    [SerializeField] private int indexPSDashing;
 
     private float t0;
     private float timeInterval = 0.5f;
     private Vector2 climbBoundary;
 
 
-    public override int Update()
+    public override string Update()
     {
         float feverFactor = playerCharacter.InFever ? Player.CurrentPlayer.FeverFactor : 1f;
         var v = Input.GetAxis("VerticalJoyStick")!=0? Input.GetAxis("VerticalJoyStick"): Input.GetAxis("Vertical");
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         
+
         if (Input.GetButtonDown("Ultimate"))
         {
             //TODO add another ultimate
@@ -37,14 +32,14 @@ public class PSClimb : PlayerState
         if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
         {
             Player.CurrentPlayer.triggerReady = false;
-            return indexPSDashing;
+            return "Dashing";
         }
         
         if (Input.GetButtonDown("Special1"))
         {
             Player.CurrentPlayer.triggerReady = false;
             PlayerCharacter.Singleton.PowerDash = true;
-            return indexPSDashing;
+            return "Dashing";
         }
         
         
@@ -53,7 +48,8 @@ public class PSClimb : PlayerState
             anim.speed = 0;
             rb2d.velocity = Vector2.zero;
             
-        }else if (v > 0)
+        }
+        else if (v > 0)
         {
             anim.speed = 1;
             rb2d.velocity = new Vector2(0, playerCharacter.InKillStreak ? f_climbSpeed * feverFactor:climbSpeed * feverFactor);
@@ -69,28 +65,29 @@ public class PSClimb : PlayerState
         {
             anim.speed = 1;
             rb2d.gravityScale = 3;
-            return indexPSIdle;
+            return "Idle";
         }
         
+
         if (GetGroundType() == 1)
         {
             if(v < 0){
                 anim.speed = 1;
                 rb2d.gravityScale = 3;
-                return indexPSIdle;
+                return "Idle";
             }
         }
+
 
         if (Input.GetAxis("Jump") > 0)
         {
             anim.speed = 1;
             rb2d.gravityScale = 3;
-            return indexPSJumping1;
+            return "Jumping";
         }
 
-
             
-        return Index;
+        return Name;
     }
     
     public override void OnStateEnter(State previousState)

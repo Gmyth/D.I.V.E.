@@ -13,37 +13,46 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
     [SerializeField] private string attackAnimation = "";
 
     [Header("Connected States")]
-    [SerializeField] private int stateIndex_targetLoss = -1;
-    [SerializeField] private int stateIndex_afterAttack = -1;
-
+    [SerializeField] private string state_onTargetLoss = "";
+    [SerializeField] private string state_afterAttack = "";
 
     private EnemyType enemyType;
     private Rigidbody2D rigidbody;
     private Animator animator;
 
-    private bool isMoving = false;
-    private float t = float.MaxValue;
-    private int previousStateIndex;
+    private bool isChasing = false;
+    private float t_attack = float.MaxValue;
+    private string previousStateName;
 
 
-    private bool IsMoving
+    private bool IsChasing
     {
         get
         {
-            return isMoving;
+            return isChasing;
         }
 
         set
         {
-            if (value != isMoving)
+            if (value != isChasing)
             {
+                isChasing = value;
+
+
                 if (value)
                 {
                     if (chasingAnimation != "")
                         animator.Play(chasingAnimation);
+
+                    StartChasing();
                 }
-                else if (idleAnimation != "")
-                    animator.Play(idleAnimation);
+                else
+                {
+                    if (idleAnimation != "")
+                        animator.Play(idleAnimation);
+
+                    StopChasing();
+                }
             }
         }
     }
@@ -58,10 +67,11 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
         animator = enemy.GetComponent<Animator>();
     }
 
-    public override int Update()
+    public override string Update()
     {
-        float dt = Time.time - t;
-        
+        float dt = Time.time - t_attack;
+
+
         if (dt < 0) // Check if the attack has not been made
         {
             PlayerCharacter player = IsPlayerInSight(enemy.currentTarget, enemy[StatisticType.SightRange]);
@@ -76,87 +86,117 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
 
                 if (Mathf.Abs(d.x) <= attackRange) // Check if the target is horizontally close enough
                 {
-                    if (enemyType == EnemyType.Floating)
-                        rigidbody.velocity = Vector2.zero;
-                    else
-                    {
-                        Vector2 v = rigidbody.velocity;
-                        v.x = 0;
-
-                        rigidbody.velocity = v;
-                    }
-
-
-                    IsMoving = false;
+                    IsChasing = false;
 
 
                     if (playerPosition.y - enemyPosition.y <= attackHeight) // Check if the target is low enough to get hit
                     {
-                        AdjustFacingDirection(d.x > 0 ? Vector2.right : Vector2.left);
+                        t_attack = Time.time;
 
 
-                        t = Time.time;
+                        string nextStateName = Attack(d);
 
-
-                        if (attackAnimation != "")
-                            animator.Play(attackAnimation, -1, 0f);
+                        if (nextStateName != "")
+                            return nextStateName;
                     }
                 }
                 else
                 {
-                    Vector2 direction = d.normalized;
-
-                    if (enemyType == EnemyType.Ground)
-                        direction = d.x > 0 ? Vector2.right : Vector2.left;
+                    IsChasing = true;
 
 
-                    rigidbody.velocity = direction * chasingSpeed * TimeManager.Instance.TimeFactor * enemy.UnitTimeFactor;
+                    string nextStateName = Chase(d);
 
-
-                    IsMoving = true;
-
-
-                    AdjustFacingDirection(direction);
+                    if (nextStateName != "")
+                        return nextStateName;
                 }
 
-
-                return Index;
+                return Name;
             }
 
 
-            return stateIndex_targetLoss < 0 ? previousStateIndex : stateIndex_targetLoss;
+            return state_onTargetLoss == "" ? previousStateName : state_onTargetLoss;
         }
 
 
         if (dt < motionTime) // Stay in this state if the motion has not been done yet
-            return Index;
+            return Name;
 
 
-        return stateIndex_afterAttack < 0 ? previousStateIndex : stateIndex_afterAttack;
+        return state_afterAttack == "" ? previousStateName : state_afterAttack;
     }
 
 
     public override void OnStateEnter(State previousState)
     {
         base.OnStateEnter(previousState);
-//        PlayerCharacter player = GameObject.FindObjectOfType<PlayerCharacter>();
-//        var dir = (player.transform.position - enemy.transform.position ).normalized;
-//        
-//        RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position + new Vector3(0,0.5f,0),dir.x < 0? Vector3.left : Vector3.right, 5f);
-//        if (hit.collider != null && hit.transform.CompareTag("Player"))
-//        {
-//            //hit! Hunch Trigger
-//            PlayerCharacter playerCharacter = hit.collider.GetComponent<PlayerCharacter>();
-//            if (playerCharacter.IsInFeverMode)
-//            {
-//                playerCharacter.ConsumeFever(30);
-//                TimeManager.Instance.startSlowMotion(0.5f);
-//                CameraManager.Instance.FocusAt(playerCharacter.transform,0.2f);
-//                CameraManager.Instance.FlashIn(7f,0.05f,0.15f,0.01f);
-//            }
-//        }
-        isMoving = false;
-        t = float.MaxValue;
-        previousStateIndex = previousState.Index;
+        //        PlayerCharacter player = GameObject.FindObjectOfType<PlayerCharacter>();
+        //        var dir = (player.transform.position - enemy.transform.position ).normalized;
+        //        
+        //        RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position + new Vector3(0,0.5f,0),dir.x < 0? Vector3.left : Vector3.right, 5f);
+        //        if (hit.collider != null && hit.transform.CompareTag("Player"))
+        //        {
+        //            //hit! Hunch Trigger
+        //            PlayerCharacter playerCharacter = hit.collider.GetComponent<PlayerCharacter>();
+        //            if (playerCharacter.IsInFeverMode)
+        //            {
+        //                playerCharacter.ConsumeFever(30);
+        //                TimeManager.Instance.startSlowMotion(0.5f);
+        //                CameraManager.Instance.FocusAt(playerCharacter.transform,0.2f);
+        //                CameraManager.Instance.FlashIn(7f,0.05f,0.15f,0.01f);
+        //            }
+        //        }
+
+
+        isChasing = false;
+        t_attack = float.MaxValue;
+        previousStateName = previousState.Name;
+    }
+
+
+    protected virtual void StartChasing()
+    {
+    }
+
+    protected virtual string Chase(Vector3 direction)
+    {
+        Vector3 d = ((Vector2)direction).normalized;
+
+        if (enemyType == EnemyType.Ground)
+            d = d.x > 0 ? Vector2.right : Vector2.left;
+
+
+        rigidbody.velocity = d * chasingSpeed * TimeManager.Instance.TimeFactor * enemy.UnitTimeFactor;
+
+
+        enemy.AdjustFacing(d);
+
+
+        return "";
+    }
+
+    protected virtual void StopChasing()
+    {
+        if (enemyType == EnemyType.Floating)
+            rigidbody.velocity = Vector2.zero;
+        else
+        {
+            Vector2 v = rigidbody.velocity;
+            v.x = 0;
+
+            rigidbody.velocity = v;
+        }
+    }
+
+    protected virtual string Attack(Vector3 direction)
+    {
+        enemy.AdjustFacing(direction);
+
+
+        if (attackAnimation != "")
+            animator.Play(attackAnimation, -1, 0f);
+
+
+        return "";
     }
 }

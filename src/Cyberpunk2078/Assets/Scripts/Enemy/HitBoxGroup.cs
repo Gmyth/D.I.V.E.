@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class HitBoxGroup : MonoBehaviour
 {
-    [HideInInspector] public HashSet<int> objectsHit = new HashSet<int>();
+    [HideInInspector] public Dictionary<int, int> objectsHit = new Dictionary<int, int>();
 
     private int numActivatedHitBoxes = 0;
 

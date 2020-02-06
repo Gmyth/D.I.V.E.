@@ -12,16 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfae2310580653a46a21f7dfbd2c4249, type: 3}
   m_Name: L2ShieldBossState_ChasingSieldSlam
   m_EditorClassIdentifier: 
+  stateName: ChasingShieldSlam
   motionID: -1
   damage: 1
-  knockback: 500
+  knockback: 5
   hitBox: 0
   chasingSpeed: 1.5
   attackRange: 2
-  attackHeight: 5
-  motionTime: 3
-  idleAnimation: L2Cleaner_Idle
-  chasingAnimation: L2Cleaner_Run
-  attackAnimation: L2Cleaner_Melee
-  stateIndex_targetLoss: 0
-  stateIndex_afterAttack: 0
+  attackHeight: 4
+  motionTime: 2
+  idleAnimation: L2ShieldBoss_Guard
+  chasingAnimation: L2ShieldBoss_ShieldMoving
+  attackAnimation: L2ShieldBoss_ShieldSlam
+  state_onTargetLoss: 
+  state_afterAttack: Alert
+  maxChaseTime: 3

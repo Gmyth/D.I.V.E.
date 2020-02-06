@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c35d7ff042cf864db26d157f7bbb234, type: 3}
   m_Name: L2ShieldBossState_KnockedBack
   m_EditorClassIdentifier: 
+  stateName: Knockback
   duration: 5
-  stateIndex_recovery: 0
+  state_onRecovery: Alert

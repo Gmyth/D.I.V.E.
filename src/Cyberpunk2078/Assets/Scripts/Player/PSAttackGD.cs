@@ -9,24 +9,20 @@ public class PSAttackGD : PlayerState
     [Header("Configuration")]
     [SerializeField] private float recoveryTime = 0.5f;
 
-    [Header("Connected States")]
-    [SerializeField] private int index_PSIdle;
-    [SerializeField] private int index_PSMoving;
-
     private float t0 = 0;
 
 
-    public override int Update()
+    public override string Update()
     {
         if (Time.time - t0 > recoveryTime)
         {
             if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("HorizontalJoyStick") == 0)
-                return index_PSIdle;
+                return "Idle";
 
-            return index_PSMoving;
+            return "Moving";
         }
 
-        return Index;
+        return Name;
     }
 
     public override void OnStateEnter(State previousState)

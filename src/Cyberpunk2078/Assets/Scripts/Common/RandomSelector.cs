@@ -76,11 +76,16 @@ using UnityEngine;
         if (weights == null)
         {
             weights = new int[thresholds.Length];
-            for (int i = weights.Length - 1; i > 0;)
-                weights[i] = thresholds[i] - thresholds[--i];
-            weights[0] = thresholds[0];
 
-            sumWeights = 0;
+            if (weights.Length > 0)
+            {
+                for (int i = weights.Length - 1; i > 0;)
+                    weights[i] = thresholds[i] - thresholds[--i];
+                weights[0] = thresholds[0];
+
+                sumWeights = 0;
+            }
+
 
             thresholds = null;
         }

@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 321a8166a44e443448d3657e185bf3cc, type: 3}
   m_Name: PS_Tutorial_Dash
   m_EditorClassIdentifier: 
-  Name: 
-  indexPSDashing: 6
+  stateName: InTutorial_Dash

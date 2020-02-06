@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
 
 [CreateAssetMenuAttribute(fileName = "PS_Tutorial_Deflect", menuName = "Player State/Tutorial Deflect")]
-
 public class PSTutorial_Deflect : PlayerState
 {
-    [SerializeField] private int indexPSNoInput;
     [SerializeField] private GameObject SplashFX;
 
     private float t = 0;
@@ -16,9 +13,12 @@ public class PSTutorial_Deflect : PlayerState
     public override void Initialize(int index, PlayerCharacter playerCharacter)
     {
         base.Initialize(index, playerCharacter);
+
+
+        SplashFX.GetComponentInChildren<HitBox>().hit.source = playerCharacter;
     }
 
-    public override int Update()
+    public override string Update()
     {
         if (t == 0)
         {
@@ -34,7 +34,7 @@ public class PSTutorial_Deflect : PlayerState
                     attackEffect.transform.position = playerCharacter.transform.position;
                     attackEffect.transform.right = PlayerCharacter.Singleton.transform.parent.GetComponentInChildren<MouseIndicator>().GetAttackDirection();
                     attackEffect.transform.parent = playerCharacter.transform;
-                    attackEffect.GetComponentInChildren<HitBox>().hit.source = playerCharacter;
+                    //attackEffect.GetComponentInChildren<HitBox>().hit.source = playerCharacter;
 
                     t = Time.unscaledTime + 0.5f;
 
@@ -43,10 +43,10 @@ public class PSTutorial_Deflect : PlayerState
             }
         }
         else if (Time.unscaledTime > t)
-            return indexPSNoInput;
+            return "NoInput";
 
         
-        return Index;
+        return Name;
     }
 
     public override void OnStateEnter(State previousState)

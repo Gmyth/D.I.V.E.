@@ -12,17 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3123481849983f48bbdef42f1b042ce, type: 3}
   m_Name: L2CleanerState_ChargedDash
   m_EditorClassIdentifier: 
+  stateName: ChargedDash
   motionID: -1
   damage: 1
   knockback: 100
   hitBox: 2
   chargeTime: 1
   stopChargingOnTargetLoss: 0
-  chargeAnimation: L2Cleaner_Alert
-  stateIndex_alert: 2
+  animation_charging: 
+  state_afterAttack: Alert
+  state_onTargetLoss: Patrolling
   type: 1
   dashForce: 3000
   minDuration: 0.3
   maxDuration: 0
   stopDistance: 0.5
+  dashEndTime: 0
   animation_dash: L2Cleaner_Dashing
+  animation_dashEnd: 

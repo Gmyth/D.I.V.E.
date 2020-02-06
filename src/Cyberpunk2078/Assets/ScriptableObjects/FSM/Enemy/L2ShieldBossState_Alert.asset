@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b170d2cea7ec214fa739fe550c92f4b, type: 3}
   m_Name: L2ShieldBossState_Alert
   m_EditorClassIdentifier: 
+  stateName: Alert
   waitTime: 1
-  animation: 
-  stateIndex_attacks: 01000000
-  stateIndex_targetLoss: 0
+  animation: L2ShieldBoss_Guard
+  states_attacks:
+  - ChasingShieldSlam
+  - ChargedDash
+  - DiveBomb
+  state_onTargetLoss: 

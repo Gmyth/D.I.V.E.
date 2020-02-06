@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 6
-  lifeSpan: 0.2
+  lifeSpan: 0.25
   enableTimeScale: 0
 --- !u!1 &8896376127337918413
 GameObject:

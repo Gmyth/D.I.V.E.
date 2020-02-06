@@ -7,18 +7,10 @@ public class PSWallSliding: PlayerState
     [Header("Normal")]
     [SerializeField] private float n_stickWallTime = 0.25f;
     [SerializeField] private float n_wallCheckCoolDown = 0.25f;
+
     [Header("Fever")]
     [SerializeField] private float f_stickWallTime = 0.25f;
     [SerializeField] private float f_wallCheckCoolDown = 0.25f;
-    
-    [SerializeField] private int index_PSIdle;
-    [SerializeField] private int index_PSMoving;
-    [SerializeField] private int index_PSJumping1;
-    [SerializeField] private int index_PSJumping2;
-    [SerializeField] private int index_PSDashing;
-    [SerializeField] private int index_PSAttackGH;
-    [SerializeField] private int index_PSAirborne;
-    [SerializeField] private int index_PSClimb;
 
     private Rigidbody2D rigidbody;
 
@@ -34,7 +26,7 @@ public class PSWallSliding: PlayerState
         rigidbody = playerCharacter.GetComponent<Rigidbody2D>();
     }
 
-    public override int Update()
+    public override string Update()
     {
         var stickWallTime = n_stickWallTime;
         var wallCheckCoolDown = n_wallCheckCoolDown;
@@ -56,9 +48,9 @@ public class PSWallSliding: PlayerState
         {
             // Landed
             if (h == 0)
-                return index_PSIdle;
+                return "Idle";
 
-            return index_PSMoving;
+            return "Moving";
         }
 
         if (groundType == 2)
@@ -68,7 +60,7 @@ public class PSWallSliding: PlayerState
             rigidbody.velocity = Vector2.zero;
             rigidbody.AddForce(Global.enemyHeadJumpVerticalForce * playerCharacter.transform.up - Global.enemyHeadJumpHorizontalForce * playerCharacter.transform.right);
 
-            return index_PSJumping1;
+            return "Jumping";
         }
 
 
@@ -83,6 +75,7 @@ public class PSWallSliding: PlayerState
             rigidbody.gravityScale = 1.2f;
 
             anim.Play("MainCharacter_WallJump", -1, 0f);
+            AudioManager.Instance.PlayEvent("WallSlide");
         }
         else if (wallType == Direction.Left && h < 0)
         {
@@ -93,6 +86,7 @@ public class PSWallSliding: PlayerState
             rigidbody.gravityScale = 1.2f;
 
             anim.Play("MainCharacter_WallJump", -1, 0f);
+            AudioManager.Instance.PlayEvent("WallSlide");
         }
         else
         {
@@ -103,43 +97,44 @@ public class PSWallSliding: PlayerState
             rigidbody.gravityScale = 3f;
 
             anim.Play("MainCharacter_Airborne", -1, 0f);
+            AudioManager.Instance.PlayEvent("WallSlide");
         }
 
         if (wallType == Direction.None && groundType == 0)
-            return index_PSAirborne;
+            return "Airborne";
 
 
         if (Input.GetButtonDown("Attack1"))
-            return index_PSAttackGH;
+            return "Attack1";
 
 
         if (Input.GetButtonDown("Jump"))
-            return index_PSJumping1;
+            return "Jumping";
 
 
         if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("VerticalJoyStick") > 0.7f)
         {
             // up is pressed
             if(isCloseTo("Ladder") != Direction.None)
-                return index_PSClimb;
+                return "Climbing";
         }
         
         // perform Dashing
         if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
         {
             Player.CurrentPlayer.triggerReady = false;
-            return index_PSDashing;
+            return "Dashing";
         }
         
         if (Input.GetButtonDown("Special1"))
         {
             Player.CurrentPlayer.triggerReady = false;
             PlayerCharacter.Singleton.PowerDash = true;
-            return index_PSDashing;
+            return "Dashing";
         }
 
 
-        return Index;
+        return Name;
     }
 
     public override void OnStateEnter(State previousState)
@@ -171,6 +166,8 @@ public class PSWallSliding: PlayerState
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         rb2d.gravityScale = 3;
         onWall = false;
+
+        AudioManager.Instance.StopEvent("WallSlide");
     }
 
 }

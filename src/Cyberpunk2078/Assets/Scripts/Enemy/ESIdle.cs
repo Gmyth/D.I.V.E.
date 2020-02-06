@@ -4,10 +4,7 @@
 [CreateAssetMenuAttribute(fileName = "ES_Idle", menuName = "Enemy State/Idle")]
 public class ESIdle : EnemyState
 {
-    [Header("Connected States")]
-    [SerializeField] private int index_ESAlert;
-
-    private Enemy enemy;
+    protected Enemy enemy;
 
 
     public override void Initialize(int index, Enemy enemy)
@@ -18,14 +15,14 @@ public class ESIdle : EnemyState
     }
 
 
-    public override int Update()
+    public override string Update()
     {
         enemy.currentTarget = FindAvailableTarget(enemy.transform.position, enemy[StatisticType.SightRange], enemy.GuardZone);
 
         if (enemy.currentTarget)
-            return index_ESAlert;
+            return "Alert";
 
 
-        return Index;
+        return Name;
     }
 }

@@ -12,7 +12,7 @@ public class RouteDrawer : PropertyDrawer
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         SerializedProperty wayPointsProperty = property.FindPropertyRelative("wayPoints");
-
+        
 
         EditorGUI.BeginProperty(position, label, property);
 
@@ -70,6 +70,15 @@ public class RouteDrawer : PropertyDrawer
         }
 
 
+        SerializedProperty stayTimesProperty = property.FindPropertyRelative("stayTimes");
+
+
+        position.y += position.height;
+
+
+        EditorGUI.PropertyField(position, property.FindPropertyRelative("stayTimes"), true);
+
+
         EditorGUI.indentLevel = indent;
 
         EditorGUI.EndProperty();
@@ -80,12 +89,15 @@ public class RouteDrawer : PropertyDrawer
     {
         SerializedProperty wayPointsProperty = property.FindPropertyRelative("wayPoints");
 
-
         int numWayPoints = wayPointsProperty.arraySize;
 
         if (numWayPoints == 0)
             return lineHeight;
 
-        return (1 + numWayPoints) * lineHeight;
+
+        SerializedProperty stayTimesProperty = property.FindPropertyRelative("stayTimes");
+
+
+        return (1 + numWayPoints + (stayTimesProperty.isExpanded ? 2 + stayTimesProperty.arraySize : 1)) * lineHeight;
     }
 }

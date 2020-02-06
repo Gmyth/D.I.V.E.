@@ -6,52 +6,41 @@ public class L2ShieldBossState_Tired : EnemyState<L2ShieldBoss>
 {
     [Header("Configuration")]
     [SerializeField][Min(0)] private float duration;
+    [SerializeField] private string animation = "L2ShieldBoss_Tired";
 
     [Header("Connected States")]
-    [SerializeField] private int stateIndex_recovery = -1;
-    [SerializeField] private int stateIndex_onHit = -1;
+    [SerializeField] private string nextState = "Alert";
+
+    private Animator animator;
 
     private float t = 0;
-    private bool hasHit = false;
 
 
-    public override int Update()
+    public override void Initialize(L2ShieldBoss enemy)
     {
-        if (hasHit)
-            return stateIndex_onHit;
+        base.Initialize(enemy);
 
-
-        if (Time.time >= t)
-            return stateIndex_recovery;
-
-
-        return Index;
+        animator = enemy.GetComponent<Animator>();
     }
 
     public override void OnStateEnter(State previousState)
     {
-        enemy.OnHit.AddListener(OnHit);
+        t = 0;
 
-        t = Time.time + duration;
-        hasHit = false;
-    }
 
-    public override void OnStateQuit(State nextState)
-    {
-        enemy.OnHit.RemoveListener(OnHit);
+        animator.Play(animation);
     }
 
 
-    private void OnHit(Hit hit)
+    public override string Update()
     {
-        enemy.isInvulnerable = false;
-
-        enemy.ApplyDamage(1);
-        enemy.statusModifiers.Modify(AttributeType.MaxFatigue_m0, 1);
-
-        enemy.isInvulnerable = true;
+        t += TimeManager.Instance.ScaledDeltaTime;
 
 
-        hasHit = true;
+        if (t >= duration)
+            return nextState;
+
+
+        return Name;
     }
 }

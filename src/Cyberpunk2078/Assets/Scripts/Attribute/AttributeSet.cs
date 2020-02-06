@@ -55,7 +55,7 @@ public class EventOnAttributeChange : UnityEvent<AttributeType, float, float> { 
     private Dictionary<AttributeType, float> attributes = new Dictionary<AttributeType, float>();
 
 
-    public EventOnAttributeChange OnAttributeChange { get; } = null;
+    public EventOnAttributeChange OnAttributeChange { get; } = new EventOnAttributeChange();
 
     //public float this[int id]
     //{
@@ -138,10 +138,21 @@ public class EventOnAttributeChange : UnityEvent<AttributeType, float, float> { 
 
     public void Modify(AttributeType type, float value, int t = 1)
     {
+        float previousValue;
+
         if (!attributes.ContainsKey(type))
+        {
+            previousValue = 0;
             attributes.Add(type, value * t);
+        }
         else
+        {
+            previousValue = attributes[type];
             attributes[type] += value * t;
+        }
+
+
+        OnAttributeChange.Invoke(type, previousValue, attributes[type]);
     }
 
     public void Modify(IAttributeCollection attributes, int t = 1)
@@ -165,6 +176,7 @@ public class EventOnAttributeChange : UnityEvent<AttributeType, float, float> { 
             attributes[type] += value * t;
         }
 
+        OnAttributeChange.Invoke(type, previousValue, attributes[type]);
         onAttributeChange.Invoke(type, previousValue, attributes[type]);
     }
 

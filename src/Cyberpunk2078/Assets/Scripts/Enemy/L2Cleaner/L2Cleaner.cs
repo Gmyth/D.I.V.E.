@@ -43,6 +43,8 @@ public class L2Cleaner : Enemy, IPatroller
         
         gameObject.SetActive(false);
         CheckPointManager.Instance?.Dead(gameObject);
+
+        AudioManager.Instance.PlayOnce("KillRobot");
     }
 
 
@@ -62,9 +64,13 @@ public class L2Cleaner : Enemy, IPatroller
         }
     }
 
-
     Vector3 IPatroller.GetPatrolPoint(int index)
     {
         return patrolRoute[index];
+    }
+
+    float IPatroller.GetPatrolPointStayTime(int index)
+    {
+        return patrolRoute.GetStayTime(index);
     }
 }

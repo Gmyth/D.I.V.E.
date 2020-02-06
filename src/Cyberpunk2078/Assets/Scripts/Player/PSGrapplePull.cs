@@ -26,7 +26,7 @@ public class PSGrapplePull : PlayerState
     private bool initial;
     private float speed;
 
-    public override int Update()
+    public override string Update()
     {
         if (initial) OnStateEnter();
         Vector2 direction = (grapple.transform.position - playerCharacter.transform.position).normalized;
@@ -40,11 +40,11 @@ public class PSGrapplePull : PlayerState
 
         if (distance < 1f)
         {
-            if (GetGroundType() == 0) return indexPSAirborne;
+            if (GetGroundType() == 0) return "Airborne";
 
 
-            if (h == 0) return indexPSIdle;
-            return indexPSMoving;
+            if (h == 0) return "Idle";
+            return "Moving";
         }
 
         speed = speed < maxSpeed ? speed + Time.deltaTime * acceleration : maxSpeed;
@@ -57,23 +57,23 @@ public class PSGrapplePull : PlayerState
 
         if (Input.GetButtonDown("Attack1"))
         {
-            return indexPSAttackGH;
+            return "Attack1";
         }
 
         if (Input.GetAxis("Vertical") > 0 || normalizedInput.y > 0.7f)
         {
             // up is pressed
-            if (isCloseTo("Ladder") != Direction.None) return indexPSClimb;
+            if (isCloseTo("Ladder") != Direction.None) return "Climbing";
         }
 
         var dir = isCloseTo("Ground");
 
-        if (dir != Direction.None && Mathf.Abs(h) > 0 && Vy < 0) { return indexPSWallJumping; }
+        if (dir != Direction.None && Mathf.Abs(h) > 0 && Vy < 0) { return "WallSliding"; }
 
 
         if (Input.GetButtonDown("Jump"))
         {
-            return indexPSJumping1;
+            return "Jumping";
         }
 
 
@@ -81,12 +81,11 @@ public class PSGrapplePull : PlayerState
         {
             //break pull
             Player.CurrentPlayer.triggerReady = false;
-            return indexPSDashing;
+            return "Dashing";
         }
 
 
-
-        return Index;
+        return Name;
     }
 
     public override void OnStateQuit(State nextState)
