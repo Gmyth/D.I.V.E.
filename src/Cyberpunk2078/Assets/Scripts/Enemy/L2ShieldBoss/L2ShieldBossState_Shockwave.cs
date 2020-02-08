@@ -4,10 +4,6 @@
 [CreateAssetMenuAttribute(fileName = "L2ShieldBossState_Shockwave", menuName = "Enemy State/Shield Boss/Shock Wave")]
 public class L2ShieldBossState_Shockwave : ESChargedAttack<L2ShieldBoss>
 {
-    [Header("Attack")]
-    [SerializeField] private float motionTime = 1.5f;
-    [SerializeField] private string animation_attack = "L2ShieldBoss_Shockwave1";
-
     private float t_attack;
 
 
@@ -34,7 +30,7 @@ public class L2ShieldBossState_Shockwave : ESChargedAttack<L2ShieldBoss>
 
         t_attack += TimeManager.Instance.ScaledDeltaTime;
 
-        if (t_attack >= motionTime)
+        if (t_attack >= attackDuration)
             return state_afterAttack;
 
 

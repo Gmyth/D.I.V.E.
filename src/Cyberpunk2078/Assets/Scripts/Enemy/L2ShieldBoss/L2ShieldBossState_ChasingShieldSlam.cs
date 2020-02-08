@@ -14,6 +14,7 @@ public class L2ShieldBossState_ChasingShieldSlam : ESChasingAttack<L2ShieldBoss>
         base.OnStateQuit(nextState);
 
 
+        enemy.DisableHitBox(0);
         enemy.DisableHitBox(2);
     }
 

@@ -9,20 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fa4c8411b136d54aa464f4427f54a25, type: 3}
-  m_Name: L2ShieldBossState_Shockwave
+  m_Script: {fileID: 11500000, guid: 9bba3f4bdb18e74429317229f5a233f0, type: 3}
+  m_Name: L2ShieldBossState_GrenadeThrow
   m_EditorClassIdentifier: 
-  stateName: Shockwave
-  attackPoint: 0
+  stateName: GrenadeThrow
+  attackPoint: 0.5
   animation_beforeAttack: 
-  hitDataID: 0
+  hitDataID: -1
   hitBox: -1
-  attackDuration: 1.5
-  animation_attack: L2ShieldBoss_Shockwave1
-  attackBackswing: 0
+  attackDuration: 0
+  animation_attack: 
+  attackBackswing: 1
   animation_afterAttack: 
   state_afterAttack: Alert
-  chargeTime: 0.7
-  stopChargingOnTargetLoss: 0
-  animation_charging: L2ShieldBoss_Charge2
-  state_onTargetLoss: 
+  projectileObjectID: 19

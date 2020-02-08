@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: L2ShieldBossState_ShieldSlam
   m_EditorClassIdentifier: 
   stateName: ShieldSlam
-  hitID: 0
+  attackPoint: 0
+  animation_beforeAttack: 
+  hitDataID: 0
   hitBox: 0
-  motionTime: 0.7
-  animation: L2ShieldBoss_ShieldSlam2
+  attackDuration: 0
+  animation_attack: L2ShieldBoss_QuickShieldSlam
+  attackBackswing: 0.5
+  animation_afterAttack: 
   state_afterAttack: Alert

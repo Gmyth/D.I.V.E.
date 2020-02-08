@@ -16,5 +16,5 @@ MonoBehaviour:
   waitTime: 1
   animation: L2ShieldBoss_Guard
   states_attacks:
-  - Shockwave
+  - GrenadeThrow
   state_onTargetLoss: 

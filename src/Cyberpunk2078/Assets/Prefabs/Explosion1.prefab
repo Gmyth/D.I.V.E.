@@ -12,13 +12,13 @@ GameObject:
   - component: {fileID: 1429245947}
   - component: {fileID: 1801868350216261786}
   - component: {fileID: 1429245946}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Explosion1
-  m_TagString: Untagged
+  m_TagString: EnemyHitBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1779421876197937258
 Transform:
   m_ObjectHideFlags: 0
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1779421876197937257}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children:
   - {fileID: 1779421876794816517}
   m_Father: {fileID: 0}
@@ -44,7 +44,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: -1
-  lifeSpan: 0
+  lifeSpan: 1
   enableTimeScale: 1
 --- !u!114 &1429245946
 MonoBehaviour:

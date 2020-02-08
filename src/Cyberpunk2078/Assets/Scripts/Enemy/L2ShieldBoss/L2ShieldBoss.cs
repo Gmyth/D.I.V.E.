@@ -16,6 +16,7 @@ public class L2ShieldBoss : Enemy
         rb2d.AddForce(force * direction.normalized, ForceMode2D.Impulse);
     }
 
+
     public void EmitShockwave()
     {
         EmitShockwave(17, transform.localScale, true);
@@ -44,6 +45,26 @@ public class L2ShieldBoss : Enemy
 
         if (cameraShake)
             CameraManager.Instance.Shaking(0.2f, 0.2f);
+    }
+
+
+    public void Throw(int objectID)
+    {
+        Vector3 handOffset = new Vector3(1, 2, 0);
+        handOffset.Scale(transform.localScale);
+
+
+        Explosive projectile = ObjectRecycler.Singleton.GetObject<Explosive>(objectID);
+        projectile.source = this;
+
+
+        ParabolaMovement projectileMovement = projectile.GetComponent<ParabolaMovement>();
+        projectileMovement.targetTime = 1.5f;
+        projectileMovement.initialPosition = transform.position + handOffset;
+        projectileMovement.targetPosition = currentTarget.transform.position;
+
+
+        projectile.gameObject.SetActive(true);
     }
 
 

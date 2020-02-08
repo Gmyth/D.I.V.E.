@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Recyclable : MonoBehaviour
 {
+    [Header("Recyclable")]
     public int id = -1;
     public float lifeSpan = 0;
     public bool enableTimeScale = true;
