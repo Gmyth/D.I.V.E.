@@ -108,7 +108,7 @@ public class PSAirborne : PlayerState
     public override void OnStateQuit(State nextState)
     {
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-        rb2d.gravityScale = 3;
+        rb2d.gravityScale = playerCharacter.Gravity;
     }
 
     public override void OnStateEnter(State previousState)
@@ -121,7 +121,7 @@ public class PSAirborne : PlayerState
         
         previous = previousState;
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-        rb2d.gravityScale = 3;
+        rb2d.gravityScale = playerCharacter.Gravity;
         anim.Play("MainCharacter_Airborne", -1, 0f);
     }
 }

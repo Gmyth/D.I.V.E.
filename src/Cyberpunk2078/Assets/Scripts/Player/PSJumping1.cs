@@ -96,7 +96,7 @@ public class PSJumping1 : PlayerState
                 timer -= Time.deltaTime;
                 if (timer > 0)
                 {
-                    rb2d.AddForce(playerCharacter.transform.up * jumpForce * jumpIncreaser);
+                    rb2d.AddForce(playerCharacter.transform.up * jumpForce * 30 * Time.deltaTime);
                 }
             }
         }
@@ -182,7 +182,7 @@ public class PSJumping1 : PlayerState
         }
         else
         {
-            rb2d.AddForce(playerCharacter.transform.up * jumpForce * 100);
+            rb2d.AddForce(playerCharacter.transform.up * jumpForce * 180);
         }
         
         //VFX 

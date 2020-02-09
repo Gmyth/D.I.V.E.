@@ -24,7 +24,6 @@ public abstract class PlayerState : State
     {
         Index = index;
         this.playerCharacter = playerCharacter;
-
         anim = playerCharacter.SpriteHolder.GetComponent<Animator>();
     }
 
@@ -189,7 +188,7 @@ public abstract class PlayerState : State
 
 
     // Function : Keyboard Input => Physics Velocity, And Friction Calculation
-    public void PhysicsInputHelper(float h, float maxSpeed  = 9,  float Acceleration  = 25)
+    public void PhysicsInputHelper(float h, float maxSpeed  = 8,  float Acceleration  = 50)
     {
         float feverFactor = playerCharacter.InFever ? Player.CurrentPlayer.FeverFactor : 1;
         Rigidbody2D rb2d = playerCharacter.GetComponent<Rigidbody2D>();
@@ -219,7 +218,7 @@ public abstract class PlayerState : State
                     else
                         direction.x = -1;
 
-                    rb2d.AddForce(new Vector2(-direction.x * 8f, 0f));
+                    rb2d.AddForce(new Vector2(-direction.x * 30f, 0f));
                 }
             }
         }

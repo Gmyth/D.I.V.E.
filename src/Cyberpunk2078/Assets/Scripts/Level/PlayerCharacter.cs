@@ -16,7 +16,7 @@ public class PlayerCharacter : Dummy
     public GameObject FeverVFX;
     public GameObject Spark;
     //public GUITutorial tutorial;
-
+   
     public bool isInTutorial;
 
 
@@ -51,7 +51,8 @@ public class PlayerCharacter : Dummy
     public bool PowerDash = false;
     public bool PowerDashReady = true;
     public float LastPowerDash;
-
+    public float Gravity = 3.5f;
+    
     private GameObject buttonTip;
     public bool InFever { get; private set; } = false;
     public bool MaxUltimateEnergy { get; private set; }

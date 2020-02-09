@@ -70,7 +70,7 @@ public class BouncePlatform : MonoBehaviour
 
                 // kill any Y-axis speed
                 rb2d.velocity = Vector2.zero;
-                rb2d.gravityScale = 3;
+                rb2d.gravityScale = pc.Gravity;
                 //Debug.Log("Direction:"+ gameObject.transform.up);
                 //Debug.Log(LogUtility.MakeLogStringFormat("Bounce Platform","Force:" + gameObject.transform.up * jumpForce * 50 * 1 / Time.timeScale));
 
@@ -81,7 +81,7 @@ public class BouncePlatform : MonoBehaviour
                 BounceVFX.SetActive(true);
                 BounceVFX.GetComponent<Animator>().Play("BounceVFX", 0, 0);
 
-                rb2d.AddForce(bounceDirection * jumpForce * 50 / 0.835f);
+                rb2d.AddForce(bounceDirection * jumpForce * 70 / 0.835f);
 
                 //sound
                 AudioManager.Instance.PlayOnce("JumpPad");
