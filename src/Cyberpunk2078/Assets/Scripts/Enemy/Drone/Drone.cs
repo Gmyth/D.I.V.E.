@@ -117,6 +117,8 @@ public class Drone : Enemy, IPatroller
         bulletMovement.orientation = hasDeviation ? GetDeviatedBulletDirection(patrolFiringConfiguration.MinDeviationAngle, patrolFiringConfiguration.MaxDeviationAngle) : AimingDirection;
         bulletMovement.transform.right = bulletMovement.orientation;
         bulletMovement.gameObject.SetActive(true);
+
+        AudioManager.Singleton.PlayOnce("Bullet_shoot");
     }
 
     public void Fire(Vector3 position, bool hasDeviation = true)
@@ -204,7 +206,8 @@ public class Drone : Enemy, IPatroller
         CheckPointManager.Instance.Dead(gameObject);
         dead.Invoke(this);
 
-        AudioManager.Instance.PlayOnce("KillDrone");
+        AudioManager.Singleton.PlayOnce("KillDrone");
+        AudioManager.Singleton.StopEvent("Bullet_charge");
     }
 
 

@@ -16,3 +16,4 @@ MonoBehaviour:
   - event:/UI/Dialogue_next
   - event:/UI/Menu_move
   - event:/UI/Menu_select
+  - event:/UI/Dialogue_printing

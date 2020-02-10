@@ -16,9 +16,9 @@ public class Music : MonoBehaviour
     {
         bS = GetComponent<BeatSystem>();
 
-        if (AudioManager.Instance.PlayEvent("BGM"))
+        if (AudioManager.Singleton.PlayEvent("BGM"))
         {
-            instance = AudioManager.Instance.GetEventInstance("BGM");
+            instance = AudioManager.Singleton.GetEventInstance("BGM");
         }
        
         bS.AssignBeatEvent(instance);

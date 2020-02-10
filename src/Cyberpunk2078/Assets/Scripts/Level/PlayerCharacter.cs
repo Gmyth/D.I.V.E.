@@ -99,10 +99,10 @@ public class PlayerCharacter : Dummy
             Dead();
         else if (result.currentValue <= 1f)
         {
-            AudioManager.Instance.PlayEvent("LowHealth");
+            AudioManager.Singleton.PlayEvent("LowHealth");
         }
 
-        AudioManager.Instance.PlayOnce("Hurt");
+        AudioManager.Singleton.PlayOnce("Hurt");
 
         return result.previousValue - result.currentValue;
     }
@@ -118,7 +118,7 @@ public class PlayerCharacter : Dummy
 
         StatisticModificationResult result = statistics.Modify(StatisticType.Hp, rawHeal, 0, statistics[StatisticType.MaxHp]);
         if (result.currentValue >= 1 && result.currentValue < statistics[StatisticType.MaxHp])
-            AudioManager.Instance.StopEvent("LowHealth");
+            AudioManager.Singleton.StopEvent("LowHealth");
 
         return result.previousValue - result.currentValue;
     }
@@ -144,8 +144,8 @@ public class PlayerCharacter : Dummy
             AddOverLoadEnergy(1);
             TimeManager.Instance.StartFeverMotion();
 
-            AudioManager.Instance.PlayOnce("Fever");
-            AudioManager.Instance.PlayEvent("FeverMode");
+            AudioManager.Singleton.PlayOnce("Fever");
+            AudioManager.Singleton.PlayEvent("FeverMode");
         }
         return InFever;
         
@@ -229,7 +229,7 @@ public class PlayerCharacter : Dummy
             GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").DehighlightFeverBar();
 
         float pitch = (statistics[StatisticType.UltimateEnergy] / statistics[StatisticType.MaxUltimateEnergy]);
-        AudioManager.Instance.PlayOnce("EnergyCharge", "Pitch", pitch);
+        AudioManager.Singleton.PlayOnce("EnergyCharge", "Pitch", pitch);
 
         return true;
     }
@@ -245,7 +245,7 @@ public class PlayerCharacter : Dummy
             GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").DehighlightFeverBar();
             TimeManager.Instance.EndFeverMotion();
 
-            AudioManager.Instance.StopEvent("FeverMode");
+            AudioManager.Singleton.StopEvent("FeverMode");
         }
         return true;
     }
@@ -312,7 +312,7 @@ public class PlayerCharacter : Dummy
         if (InKillStreak)
             return;
 
-        AudioManager.Instance.PlayOnce("KillStreak");
+        AudioManager.Singleton.PlayOnce("KillStreak");
 
         InKillStreak = true;
         SpriteHolder.GetComponent<GhostSprites>().Occupied = true;

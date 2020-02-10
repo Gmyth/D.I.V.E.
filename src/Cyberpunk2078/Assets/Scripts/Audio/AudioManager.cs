@@ -8,7 +8,7 @@ using System;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager Instance { get; private set; } = null;
+    public static AudioManager Singleton { get; private set; } = null;
 
     [FMODUnity.EventRef] 
     [SerializeField] private List<string> events;
@@ -28,7 +28,7 @@ public class AudioManager : MonoBehaviour
     {
         dic = new Dictionary<string, string>();
         instanceDic = new Dictionary<string, EventInstance>();
-        Instance = this;
+        Singleton = this;
 
         for(int i=0; i < AudioData.Length; ++i)
         {
@@ -60,9 +60,8 @@ public class AudioManager : MonoBehaviour
             }
         }
 
-            Debug.LogError("Can't get eventinstance");
-            return FMODUnity.RuntimeManager.CreateInstance(dic[_event]);
-
+        Debug.LogError("Can't get eventinstance");
+        return FMODUnity.RuntimeManager.CreateInstance(dic[_event]);
     }
 
     public bool PlayEvent(string _event)
@@ -96,6 +95,7 @@ public class AudioManager : MonoBehaviour
             {
                 instanceDic[_event].release();
                 instanceDic[_event].stop(ALLOWFADEOUT);
+                
                 instanceDic.Remove(_event);
             }
             else

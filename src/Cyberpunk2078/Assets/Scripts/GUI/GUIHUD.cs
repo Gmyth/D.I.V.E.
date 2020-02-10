@@ -163,7 +163,7 @@ public class GUIHUD : GUIWindow
 
     private IEnumerator BlinkFeverBar()
     {
-        AudioManager.Instance.PlayOnce("EnergyFull");
+        AudioManager.Singleton.PlayOnce("EnergyFull");
 
         float t = Time.time;
 

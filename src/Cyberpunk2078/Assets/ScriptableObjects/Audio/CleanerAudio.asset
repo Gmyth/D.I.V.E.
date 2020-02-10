@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   events:
   - event:/Enemy/Cleaner/KillRobot
-  - event:/Enemy/Cleaner/RobotAttack
+  - event:/Enemy/Cleaner/Robot_attack
   - event:/Enemy/Cleaner/RobotDash
   - event:/Enemy/Cleaner/RobotDashCharge
   - event:/Enemy/Cleaner/RobotMove

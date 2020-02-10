@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DroneAudio
   m_EditorClassIdentifier: 
   events:
-  - event:/Enemy/Drone/DroneMove
+  - event:/Enemy/Drone/Drone_move
   - event:/Enemy/Drone/KillDrone
-  - event:/Enemy/Drone/LaserBullet
-  - event:/Enemy/Drone/LaserCharge
+  - event:/Enemy/Drone/Bullet_shoot
+  - event:/Enemy/Drone/Bullet_charge

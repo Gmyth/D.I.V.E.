@@ -192,7 +192,7 @@ public class PSDashing : PlayerState
             }
         }
 
-        AudioManager.Instance.PlayOnce("Dash");
+        AudioManager.Singleton.PlayOnce("Dash");
 
 
         Apply = true;

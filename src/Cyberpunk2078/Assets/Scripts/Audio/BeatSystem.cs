@@ -63,7 +63,7 @@ class BeatSystem : MonoBehaviour
                         timelineInfo.currentMusicBeat = parameter.beat;
                         var beatsPbar = parameter.timesignatureupper;
                         beat = timelineInfo.currentMusicBeat;
-                        Debug.Log("beatsPbar" + beatsPbar);
+                        //Debug.Log("beatsPbar" + beatsPbar);
 
                         if (timelineInfo.currentMusicBeat % beatsPbar == 0 || timelineInfo.currentMusicBeat == 1)
                             onBeat.Invoke();

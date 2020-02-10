@@ -21,7 +21,7 @@ public class GUIDialogueWidget : GUIWidget
     }
 
 
-    public float textSpeed = 0.1f;
+    public float textSpeed = 1f;
     [SerializeField] private Image portrait;
     [SerializeField] private TextMeshProUGUI textField;
 
@@ -87,7 +87,12 @@ public class GUIDialogueWidget : GUIWidget
             while (textField.maxVisibleCharacters < numCharacters)
             {
                 if (Input.GetButtonDown("Attack1"))
+                {
+                    AudioManager.Singleton.PlayOnce("Dialogue_next");
                     break;
+                }
+
+                AudioManager.Singleton.PlayEvent("Dialogue_printing");
 
 
                 float dt = Time.unscaledTime - t;
@@ -101,10 +106,13 @@ public class GUIDialogueWidget : GUIWidget
                 yield return null;
             }
 
+            AudioManager.Singleton.StopEvent("Dialogue_printing");
+
             textField.maxVisibleCharacters = numCharacters;
 
-
             yield return WaitForKeyPress("Attack1");
+
+            AudioManager.Singleton.PlayOnce("Dialogue_next");
 
 
             if (dialogue.Next < 0)
