@@ -17,7 +17,7 @@ public class TimeManager : MonoBehaviour
     private float targetScale;
     private float smoothTime;
     private bool triggered;
-
+    public float GlobalGravity = 6;
     public float TimeFactor = 1;
 
     public float ScaledDeltaTime
@@ -34,7 +34,7 @@ public class TimeManager : MonoBehaviour
         Instance = this;
         blackScreen = Camera.main.GetComponentInChildren<SpriteRenderer>();
         Time.timeScale = 1;
-        Time.fixedDeltaTime = Time.timeScale/60;
+        Time.fixedDeltaTime = Time.timeScale/60f;
         //Debug.LogWarning(Time.fixedDeltaTime);
     }
 
@@ -68,6 +68,11 @@ public class TimeManager : MonoBehaviour
             }
         }
     }
+    public void startSlowMotionBlink(float duration, float scale){
+        Time.timeScale = scale >= 0 ? scale: slowMotionFactor;
+        //Time.fixedDeltaTime = Time.timeScale * 0.02f;
+        StartCoroutine(endSlowMotionDelay(duration));
+    }
 
     public void startSlowMotion(float duration, float scale = -1f, float _smoothTime = -1f)
     {
@@ -89,7 +94,6 @@ public class TimeManager : MonoBehaviour
     public void EndSlowMotionImmediately()
     {
         Time.timeScale = 1;
-
         //Time.fixedDeltaTime = Time.timeScale * 0.02f;
         blackScreen.color = new Color(blackScreen.color.r, blackScreen.color.g, blackScreen.color.b, 0f);
         triggered = false;
@@ -127,7 +131,7 @@ public class TimeManager : MonoBehaviour
 
     private IEnumerator endSlowMotionDelay(float delay)
     {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSecondsRealtime(delay);
 
 
         EndSlowMotionImmediately();

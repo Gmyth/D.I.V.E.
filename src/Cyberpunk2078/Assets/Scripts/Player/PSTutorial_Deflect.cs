@@ -36,13 +36,13 @@ public class PSTutorial_Deflect : PlayerState
                     attackEffect.transform.parent = playerCharacter.transform;
                     //attackEffect.GetComponentInChildren<HitBox>().hit.source = playerCharacter;
 
-                    t = Time.unscaledTime + 0.5f;
+                    t = Time.time + 0.5f;
 
                     SimpleTutorialManager.Instance.AfterDeflectTutorial();
                 }
             }
         }
-        else if (Time.unscaledTime > t)
+        else if (Time.time > t)
             return "NoInput";
 
         

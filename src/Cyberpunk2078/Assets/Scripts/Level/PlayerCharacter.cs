@@ -16,7 +16,7 @@ public class PlayerCharacter : Dummy
     public GameObject FeverVFX;
     public GameObject Spark;
     //public GUITutorial tutorial;
-
+   
     public bool isInTutorial;
 
 
@@ -51,7 +51,8 @@ public class PlayerCharacter : Dummy
     public bool PowerDash = false;
     public bool PowerDashReady = true;
     public float LastPowerDash;
-
+    public float Gravity;
+    
     private GameObject buttonTip;
     public bool InFever { get; private set; } = false;
     public bool MaxUltimateEnergy { get; private set; }
@@ -387,7 +388,7 @@ public class PlayerCharacter : Dummy
         buttonTip = GameObject.Find("HealthButton");
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (InFever)
             ConsumeUltimateEnergy(statistics[StatisticType.FeverDecay] * Time.deltaTime);
@@ -397,7 +398,7 @@ public class PlayerCharacter : Dummy
 
         fsm.Update();
     }
-
+    
     private void OnDestroy()
     {
         if (Singleton == this)
