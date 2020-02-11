@@ -59,7 +59,7 @@ public class L2ShieldBoss : Enemy
 
 
         ParabolaMovement projectileMovement = projectile.GetComponent<ParabolaMovement>();
-        projectileMovement.targetTime = 1.5f;
+        projectileMovement.targetTime = 1f;
         projectileMovement.initialPosition = transform.position + handOffset;
         projectileMovement.targetPosition = currentTarget.transform.position;
 

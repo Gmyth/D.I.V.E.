@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: L2ShieldBossState_GrenadeThrow
   m_EditorClassIdentifier: 
   stateName: GrenadeThrow
-  attackPoint: 0.5
-  animation_beforeAttack: 
+  attackPoint: 0.7
+  animation_beforeAttack: L2ShieldBoss_ThrowPreparation
   hitDataID: -1
   hitBox: -1
   attackDuration: 0
-  animation_attack: 
+  animation_attack: L2ShieldBoss_Throw
   attackBackswing: 1
   animation_afterAttack: 
   state_afterAttack: Alert

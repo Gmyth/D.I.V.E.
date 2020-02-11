@@ -61,7 +61,7 @@ public class HitBox : MonoBehaviour
         if (hitDataID < 0)
             hit.LoadData(data);
         else
-            Debug.LogWarningFormat("[HitBox] {0}: The hit data is not going to be loaded. If you want to load new data, set hitDataID to 0.", gameObject.name);
+            Debug.LogWarningFormat("[HitBox] {0}: The hit data is not going to be loaded because a static data has been bound. You can disable the data bound by setting hitDataID to -1.", gameObject.name);
     }
 
 

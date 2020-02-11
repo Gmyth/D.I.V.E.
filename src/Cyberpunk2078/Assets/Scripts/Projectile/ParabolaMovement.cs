@@ -10,7 +10,7 @@ public class ParabolaMovement : Movement
 
     private Vector3 v0;
     private Vector3 vg;
-    private float t = 0;
+    private float t;
 
 
     private void OnEnable()
@@ -19,6 +19,7 @@ public class ParabolaMovement : Movement
 
         v0 = new Vector3((targetPosition.x - initialPosition.x) / targetTime, (targetPosition.y - initialPosition.y) / targetTime + 0.5f * g * targetTime, (targetPosition.z - initialPosition.z) / targetTime);
         vg = Vector3.zero;
+        t = 0;
     }
     
     private void Update()
@@ -26,6 +27,8 @@ public class ParabolaMovement : Movement
         float dt = TimeManager.Instance.ScaledDeltaTime;
 
         vg.y = -g * (t += dt);
+
+
         transform.Translate((v0 + vg) * dt);
     }
 }

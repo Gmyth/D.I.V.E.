@@ -13,6 +13,7 @@ public class L2ShieldBossState_Throw : ESAttack<L2ShieldBoss>
         base.Attack();
 
 
+        enemy.DisableHitBox(2);
         enemy.Throw(projectileObjectID);
 
 

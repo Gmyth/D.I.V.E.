@@ -54,15 +54,12 @@ public abstract class ESAttack<T> : EnemyState<T> where T : Enemy
 
     public override void OnStateEnter(State previousState)
     {
-        phase = attackPoint == 0 ? Phase.BeforeAttack : Phase.Attack;
+        phase = attackPoint > 0 ? Phase.BeforeAttack : Phase.Attack;
         t_phase = 0;
     }
 
     public override string Update()
     {
-        t_phase += TimeManager.Instance.ScaledDeltaTime;
-
-
         if (phase == Phase.BeforeAttack)
         {
             string nextStateName = BeforeAttack();
@@ -86,6 +83,9 @@ public abstract class ESAttack<T> : EnemyState<T> where T : Enemy
             if (nextStateName != "")
                 return nextStateName;
         }
+
+
+        t_phase += TimeManager.Instance.ScaledDeltaTime;
 
 
         return Name;

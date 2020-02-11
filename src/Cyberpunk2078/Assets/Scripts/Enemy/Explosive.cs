@@ -12,7 +12,6 @@ public class Explosive : Recyclable
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.LogWarning(other.tag);
         Explode();
     }
 
