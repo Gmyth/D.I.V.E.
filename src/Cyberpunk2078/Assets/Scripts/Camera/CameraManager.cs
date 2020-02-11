@@ -72,7 +72,7 @@ public class CameraManager : MonoBehaviour {
 	
 	
 	
-	//Focusing related
+	// Focusing related
 	private Transform target;
 	private Vector3 focusPos;
 	private bool usingPos;
@@ -83,7 +83,7 @@ public class CameraManager : MonoBehaviour {
 	private float targetZoomSize;
 	private float smoothTimeQZ;
 
-	//Follow related
+	// Follow related
 	private Vector2 followOffset;
 	
 	// The helper function return value
@@ -91,6 +91,12 @@ public class CameraManager : MonoBehaviour {
 	private Vector2 currentLargestTolerancePos; // position of largest TolerancePos that allow character to move without Camera Correction
 
 
+	// Parallax
+	public delegate void ParallaxCameraDelegate(Vector2 deltaMovement);
+	public ParallaxCameraDelegate onCameraTranslate;
+	private Vector2 previousPosition;
+	
+	
 	private bool zoomInChasing; // the need of chasing character for a while 
 	private CameraState currentState = CameraState.Reset;
 	void Start ()
@@ -101,6 +107,7 @@ public class CameraManager : MonoBehaviour {
 		indicatorList = new List<CameraIndicator>();
 		targetList.Add(mainTarget);
 		Instance = this;
+		previousPosition = transform.position;
 		Initialize();
 	}
 
@@ -137,6 +144,8 @@ public class CameraManager : MonoBehaviour {
 
 	void LateUpdate()
 	{
+		
+		
 		float shakeX = 0;
 		float shakeY = 0;
 		if (shake)
@@ -336,9 +345,9 @@ public class CameraManager : MonoBehaviour {
 					0.2f);
 				transform.position = new Vector3(posX + offsetX + shakeX, posY + offsetY + shakeY, transform.position.z);
 				break;
+		}
 
-            
-        }
+		updateParallaxConfig();
 	}
 	
 	void OnDrawGizmos()
@@ -352,6 +361,20 @@ public class CameraManager : MonoBehaviour {
 		Gizmos.DrawCube (center, currentLargestTolerancePos - currentSmallestTolerancePos); 
 
 		//Gizmos.DrawSphere(center, 1);
+	}
+
+	private void updateParallaxConfig()
+	{
+		if (transform.position.x != previousPosition.x||
+		    transform.position.y != previousPosition.y)
+		{
+			if (onCameraTranslate != null)
+			{
+				Vector2 delta = previousPosition - (Vector2)transform.position;
+				onCameraTranslate(delta);
+			}
+			previousPosition = transform.position;
+		}
 	}
 
 	public void FocusTo(Transform _target, float duration = -1f)
