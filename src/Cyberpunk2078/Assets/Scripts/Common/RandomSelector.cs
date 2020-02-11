@@ -17,7 +17,7 @@ using UnityEngine;
     {
         List<int> result = new List<int>(n);
 
-        if (repeats)
+        if (repeats || n == 1)
         {
             for (int i = 0; i < n; ++i)
                 result.Add(Select(UnityEngine.Random.Range(0f, sumWeights)));
@@ -34,7 +34,7 @@ using UnityEngine;
     {
         int l = 0;
         int r = thresholds.Length - 1;
-
+        
         while (l < r)
         {
             int m = l + (r - l) / 2;
@@ -49,7 +49,7 @@ using UnityEngine;
                 l = m + 1;
         }
 
-
+        
         return l;
     }
 

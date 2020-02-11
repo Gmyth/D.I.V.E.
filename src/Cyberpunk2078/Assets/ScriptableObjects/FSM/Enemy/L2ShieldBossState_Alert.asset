@@ -17,6 +17,29 @@ MonoBehaviour:
   animation: L2ShieldBoss_Guard
   states_attacks:
   - ChasingShieldSlam
+  - RushingGolfAttack
+  - GrenadeThrow
+  - Shockwave
+  - LeapShieldSlam
   - ChargedDash
   - DiveBomb
   state_onTargetLoss: 
+  meleeRange: 2.5
+  meleeBehaviorSelector:
+    n: 1
+    repeats: 0
+    weights: 64000000000000000000000000000000000000000000000000000000
+  nearRange: 5
+  nearBehaviorSelector:
+    n: 1
+    repeats: 0
+    weights: 32000000320000000000000000000000000000000000000000000000
+  midRange: 5
+  midBehaviorSelector:
+    n: 1
+    repeats: 0
+    weights: 32000000000000000f0000000f0000000a0000000000000000000000
+  farBehaviorSelector:
+    n: 1
+    repeats: 0
+    weights: 00000000000000001e000000000000001e0000000000000000000000

@@ -10807,5 +10807,15 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 1.801712
       objectReference: {fileID: 0}
+    - target: {fileID: 5343205244154792200, guid: ee8e0209b86f57e4ca4e3b75ae4c0c2f,
+        type: 3}
+      propertyPath: turnTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5343205244154792200, guid: ee8e0209b86f57e4ca4e3b75ae4c0c2f,
+        type: 3}
+      propertyPath: isInvulnerable
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee8e0209b86f57e4ca4e3b75ae4c0c2f, type: 3}

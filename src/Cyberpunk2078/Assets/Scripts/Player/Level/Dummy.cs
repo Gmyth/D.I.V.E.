@@ -339,9 +339,8 @@ public abstract class Enemy : Dummy
         {
             if (turnDirection.x * transform.localScale.x > 0)
                 StopTurning();
-            Debug.LogWarning(turnDirection);
-            Debug.LogWarning(transform.localScale.x);
-            Debug.LogWarning(t_turn);
+
+
             if (t_turn <= 0)
                 TurnImmediately(turnDirection);
             else

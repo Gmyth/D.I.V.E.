@@ -30,4 +30,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4fa6a5f5505b10a4cb5875b456892c8b, type: 2}
   - {fileID: 11400000, guid: f2945430a48eced43af395cb7ad7a243, type: 2}
   - {fileID: 11400000, guid: 1893fb22565d431419aea748e2f330cc, type: 2}
-  startingState: RushingGolfAttack
+  startingState: GrenadeThrow

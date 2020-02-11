@@ -64,6 +64,10 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
 
 
         rigidbody.velocity = Vector2.zero;
+
+
+        if (hitBox >= 0)
+            enemy.DisableHitBox(hitBox);
     }
 
 

@@ -48,10 +48,16 @@ public abstract class ESAlert<T> : EnemyState<T> where T : Enemy
             t_wait += TimeManager.Instance.ScaledDeltaTime;
 
 
-        if (t_wait >= waitTime)
-            return states_attacks[0];
+        if (t_wait < waitTime)
+            return Name;
 
 
-        return Name;
+        return ChooseBehavior();
+    }
+
+
+    protected virtual string ChooseBehavior()
+    {
+        return states_attacks[0];
     }
 }

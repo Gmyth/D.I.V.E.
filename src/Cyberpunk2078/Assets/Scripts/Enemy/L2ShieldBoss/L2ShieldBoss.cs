@@ -13,6 +13,7 @@ public class L2ShieldBoss : Enemy
     public void Knockback(Vector3 direction, float force)
     {
         rb2d.velocity = Vector2.zero;
+        rb2d.angularVelocity = 0;
         rb2d.AddForce(force * direction.normalized, ForceMode2D.Impulse);
     }
 
@@ -60,6 +61,7 @@ public class L2ShieldBoss : Enemy
 
         ParabolaMovement projectileMovement = projectile.GetComponent<ParabolaMovement>();
         projectileMovement.targetTime = 1f;
+        projectileMovement.g = 30;
         projectileMovement.initialPosition = transform.position + handOffset;
         projectileMovement.targetPosition = currentTarget.transform.position;
 
@@ -70,18 +72,24 @@ public class L2ShieldBoss : Enemy
 
     public override float ApplyDamage(float rawDamage)
     {
+        if (isInvulnerable)
+            return 0;
+
+
         if (isEvading)
         {
-            Debug.LogFormat("[L2ShieldBoss] Blocked an incoming attack.");
             isEvading = false;
-            return 0;
-        }
 
 
-        if (isInvulnerable)
-        {
-            ApplyFatigue(rawDamage * statistics.Sum(AttributeType.Fatigue_p0) * (1 + statistics.Sum(AttributeType.Fatigue_p1)));
-            return 0;
+            if (hitBoxes[2].isActiveAndEnabled || hitBoxes[3].isActiveAndEnabled)
+            {
+                Debug.LogFormat("[L2ShieldBoss] Blocked an incoming attack.");
+
+                return 0;
+            }
+            
+
+            return ApplyFatigue(rawDamage * statistics.Sum(AttributeType.Fatigue_p0) * (1 + statistics.Sum(AttributeType.Fatigue_p1)));
         }
 
 
@@ -101,7 +109,7 @@ public class L2ShieldBoss : Enemy
 
     public float ApplyFatigue(float rawFatigue)
     {
-        if (rawFatigue <= 0 || fsm.CurrentStateName == "Tired" || fsm.CurrentStateName == "DiveBomb" || fsm.CurrentStateName == "CounterAttack")
+        if (rawFatigue <= 0 || fsm.CurrentStateName == "Tired" || fsm.CurrentStateName == "DiveBomb")
             return 0;
 
 
@@ -143,7 +151,6 @@ public class L2ShieldBoss : Enemy
         OnHit.AddListener(HandleHit);
 
 
-        isInvulnerable = true;
         anger = 0;
     }
 
@@ -159,58 +166,69 @@ public class L2ShieldBoss : Enemy
 
     private void HandleHit(Hit hit, Collider2D collider)
     {
-        float hitAngle = 0;
+        if (!isInvulnerable)
+        {
+            PlayerCharacter player = hit.source.GetComponent<PlayerCharacter>();
+
+            Vector3 position = transform.position;
+            Vector3 playerPosition = player.transform.position;
             
-        switch (hit.type)
-        {
-            case Hit.Type.Melee:
-                hitAngle = Vector3.Angle(transform.localScale.x * transform.right, hit.source.transform.position - transform.position);
-                break;
 
+            float hitAngle = 0;
 
-            case Hit.Type.Bullet:
-                hitAngle = Vector3.Angle(transform.localScale.x * transform.right, -hit.bullet.GetComponent<LinearMovement>().orientation);
-                break;
-        }
-        
-        
-        if ((hitBoxes[2].isActiveAndEnabled || hitBoxes[3].isActiveAndEnabled) && hitAngle < 90)
-            isEvading = true;
-        else if (fsm.CurrentStateName != "Hurt")
-        {
-            ObjectRecycler.Singleton.GetSingleEffect(15, transform);
-
-
-            if (fsm.CurrentStateName == "Tired")
+            switch (hit.type)
             {
-                TimeManager.Instance.startSlowMotion(0.4f, 0.7f, 0.2f);
-                CameraManager.Instance.FlashIn(7.5f, 0.1f, 0.7f, 0.2f);
+                case Hit.Type.Melee:
+                    hitAngle = Vector3.Angle(transform.localScale.x * transform.right, playerPosition - position);
+                    break;
 
 
-                isInvulnerable = false;
-
-                ApplyDamage(1);
-                statusModifiers.Modify(AttributeType.MaxFatigue_m0, 1);
-
-                isInvulnerable = true;
-
-
-                fsm.CurrentStateName = "Knockback";
+                case Hit.Type.Bullet:
+                    hitAngle = Vector3.Angle(transform.localScale.x * transform.right, -hit.bullet.GetComponent<LinearMovement>().orientation);
+                    break;
             }
-            else if (fsm.CurrentStateName != "Knockback" && fsm.CurrentStateName != "DiveBombReposition" && fsm.CurrentStateName != "DiveBomb")
-            {
-                TimeManager.Instance.startSlowMotion(0.4f, 0.7f, 0.2f);
-                CameraManager.Instance.FlashIn(7.5f, 0.1f, 0.7f, 0.2f);
 
-                
-                if (anger >= 20)
+
+            if (hitAngle < 90)
+                isEvading = true;
+            else if (fsm.CurrentStateName != "Hurt")
+            {
+                ObjectRecycler.Singleton.GetSingleEffect(15, transform);
+
+
+                if (fsm.CurrentStateName == "Tired")
                 {
-                    fsm.CurrentStateName = "CounterAttack";
-                    anger = 0;
+                    TimeManager.Instance.startSlowMotion(0.4f, 0.7f, 0.2f);
+                    CameraManager.Instance.FlashIn(7.5f, 0.1f, 0.7f, 0.2f);
+
+
+                    ApplyDamage(1);
+                    // statusModifiers.Modify(AttributeType.MaxFatigue_m0, 1);
+
+
+                    fsm.CurrentStateName = "Alert";
                 }
-                else if (fsm.CurrentStateName != "ChargedDash" && fsm.CurrentStateName != "CounterAttack" && hitAngle > 90)
-                    fsm.CurrentStateName = "Hurt";
+                else if (fsm.CurrentStateName != "Knockback" && fsm.CurrentStateName != "DiveBombReposition" && fsm.CurrentStateName != "DiveBomb")
+                {
+                    TimeManager.Instance.startSlowMotion(0.4f, 0.7f, 0.2f);
+                    CameraManager.Instance.FlashIn(7.5f, 0.1f, 0.7f, 0.2f);
+
+
+                    if (anger >= 20)
+                    {
+                        fsm.CurrentStateName = "CounterAttack";
+                        anger = 0;
+                    }
+                    else if (fsm.CurrentStateName != "ChargedDash" && fsm.CurrentStateName != "CounterAttack")
+                        fsm.CurrentStateName = "Hurt";
+                }
             }
+
+
+            Vector3 knockbackDirection = playerPosition.x > position.x ? Vector3.right : Vector3.left;
+
+            Knockback(-knockbackDirection, 30);
+            player.Knockback(Vector3.up + knockbackDirection, 20, 0);
         }
     }
 }

@@ -41,12 +41,12 @@ MonoBehaviour:
     attributes:
       serializedAttributes:
       - type: 768
-        value: 3
+        value: 5
       - type: 57344
-        value: 50
+        value: 30
       - type: 57345
-        value: 50
+        value: 0
       - type: 57346
-        value: 50
+        value: 0
       - type: 62480
         value: 10
