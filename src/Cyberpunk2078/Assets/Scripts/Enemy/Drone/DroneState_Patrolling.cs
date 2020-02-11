@@ -94,6 +94,6 @@ public class DroneState_Patrolling : ESPatrolling<Drone>
 
         gunAnimator.Play("L2Drone_Gun_Idle");
 
-        AudioManager.Instance.PlayOnce("LaserBullet");
+        AudioManager.Singleton.PlayOnce("LaserBullet");
     }
 }

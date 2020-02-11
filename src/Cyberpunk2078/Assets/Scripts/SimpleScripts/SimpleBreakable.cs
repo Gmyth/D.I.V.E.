@@ -11,6 +11,10 @@ public class SimpleBreakable : MonoBehaviour
     private bool triggered;
 
     private List<GameObject> frags;
+
+    [SerializeField] private float min = 1f;
+
+    [SerializeField] private float max = 1.5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -64,7 +68,7 @@ public class SimpleBreakable : MonoBehaviour
         {
             float force = Random.Range(500, 1000);
             frag.GetComponent<Rigidbody2D>().AddForce(force * (frag.transform.position - pos).normalized);
-            Destroy(frag,Random.Range(3f,8f));
+            Destroy(frag,Random.Range(min,max));
         }
         
     }

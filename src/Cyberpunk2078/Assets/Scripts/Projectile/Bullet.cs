@@ -171,7 +171,7 @@ public class Bullet : Recyclable
 
                 Hit1.gameObject.SetActive(true);
 
-                AudioManager.Instance.PlayOnce("DeflectBullet");
+                AudioManager.Singleton.PlayOnce("DeflectBullet");
             }
 
         }

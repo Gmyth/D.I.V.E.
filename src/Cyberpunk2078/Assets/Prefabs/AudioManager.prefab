@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6006811009535778933}
   - component: {fileID: 6006811009535778932}
-  - component: {fileID: 6006811009535778934}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -69,26 +68,13 @@ MonoBehaviour:
   - event:/Enemy/Cleaner/RobotDashCharge
   - event:/Enemy/Cleaner/RobotAttack
   - event:/Player/KillStreak
---- !u!114 &6006811009535778934
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6006811009535778935}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: event:/BGM/BGM
-  PlayEvent: 1
-  StopEvent: 0
-  CollisionTag: 
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 0
-  OverrideMaxDistance: 0
+  - event:/BGM/BGM
+  - event:/Enemy/Drone/LaserCharge
+  AudioData:
+  - {fileID: 11400000, guid: bea8d70f331fb324ea1051db75ea325e, type: 2}
+  - {fileID: 11400000, guid: 6ce049cc5f875d94a8b7f8e3864604da, type: 2}
+  - {fileID: 11400000, guid: 263c0f5f019b5a44993d2c7163d8a5f7, type: 2}
+  - {fileID: 11400000, guid: 427b776e2141e8e478a8f600e90a25d0, type: 2}
+  - {fileID: 11400000, guid: 74421010416705b458c15a5cf01996cc, type: 2}
+  - {fileID: 11400000, guid: 9f8bd3a4303f4434fb112804c9d0037a, type: 2}
+  - {fileID: 11400000, guid: 06bba6652ba149141b3855bac1042d07, type: 2}

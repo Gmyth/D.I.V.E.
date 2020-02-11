@@ -8,7 +8,7 @@ using System;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager Instance { get; private set; } = null;
+    public static AudioManager Singleton { get; private set; } = null;
 
     [FMODUnity.EventRef] 
     [SerializeField] private List<string> events;
@@ -20,23 +20,28 @@ public class AudioManager : MonoBehaviour
 
     private EventInstance eventInsatance;
     private FMOD.Studio.EventDescription MovingDesription;
-    
+
+    [SerializeField] private AudioData[] AudioData;
 
     // Start is called before the first frame update
     void Awake()
     {
         dic = new Dictionary<string, string>();
         instanceDic = new Dictionary<string, EventInstance>();
-        Instance = this;
+        Singleton = this;
 
-        foreach (string s in events)
+        for(int i=0; i < AudioData.Length; ++i)
         {
-            int pFrom = s.LastIndexOf("/") + "/".Length;
-            int pTo = s.Length;
+            foreach (string s in AudioData[i].events)
+            {
+                int pFrom = s.LastIndexOf("/") + "/".Length;
+                int pTo = s.Length;
 
-            string result = s.Substring(pFrom, pTo - pFrom);
-            dic.Add(result, s);
+                string result = s.Substring(pFrom, pTo - pFrom);
+                dic.Add(result, s);
+            }
         }
+        
 
     }
 
@@ -55,9 +60,8 @@ public class AudioManager : MonoBehaviour
             }
         }
 
-            Debug.LogError("Can't get eventinstance");
-            return FMODUnity.RuntimeManager.CreateInstance(dic[_event]);
-
+        Debug.LogError("Can't get eventinstance");
+        return FMODUnity.RuntimeManager.CreateInstance(dic[_event]);
     }
 
     public bool PlayEvent(string _event)
@@ -91,6 +95,7 @@ public class AudioManager : MonoBehaviour
             {
                 instanceDic[_event].release();
                 instanceDic[_event].stop(ALLOWFADEOUT);
+                
                 instanceDic.Remove(_event);
             }
             else

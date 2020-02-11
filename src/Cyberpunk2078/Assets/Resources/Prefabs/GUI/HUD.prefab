@@ -964,7 +964,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a6b9cd861576c24882ed27adcdec212, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textSpeed: 0.07
+  textSpeed: 0.02
   portrait: {fileID: 1796710437620796853}
   textField: {fileID: 5805795492344798762}
 --- !u!1 &6060806684637125137

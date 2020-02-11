@@ -80,7 +80,7 @@ public abstract class PlayerState : State
 
             grounded = true;
 
-            AudioManager.Instance.PlayEvent("JumpLand");
+            AudioManager.Singleton.PlayEvent("JumpLand");
             
             return 1;
         } 
@@ -95,7 +95,7 @@ public abstract class PlayerState : State
         //player.JumpForceGate = false;
 
         grounded = false;
-        AudioManager.Instance.StopEvent("JumpLand");
+        AudioManager.Singleton.StopEvent("JumpLand");
 
 
         return 0;

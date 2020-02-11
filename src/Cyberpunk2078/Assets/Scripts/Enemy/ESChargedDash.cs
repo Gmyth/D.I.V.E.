@@ -34,7 +34,7 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
     {
         base.OnStateEnter(previousState);
 
-        AudioManager.Instance.PlayOnce("RobotDashCharge");
+        AudioManager.Singleton.PlayOnce("RobotDashCharge");
 
         enemy.OnAttack.AddListener(Stop);
 
@@ -90,7 +90,7 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
 
             animator.Play(animation_dash);
 
-            AudioManager.Instance.PlayOnce("RobotDash");
+            AudioManager.Singleton.PlayOnce("RobotDash");
         }
         else if (!bStop)
         {

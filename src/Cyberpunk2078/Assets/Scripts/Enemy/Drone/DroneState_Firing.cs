@@ -43,6 +43,8 @@ public class DroneState_Firing : ESChargedAttack<Drone>
         enemy.isGunCharging = true;
 
         gunAnimator.Play("L2Drone_Gun_Charging");
+
+        AudioManager.Singleton.PlayEvent("Bullet_charge");
     }
 
     public override void OnStateQuit(State nextState)
@@ -53,6 +55,8 @@ public class DroneState_Firing : ESChargedAttack<Drone>
         enemy.isGunCharging = false;
 
         gunAnimator.Play("L2Drone_Gun_Idle");
+
+        AudioManager.Singleton.StopEvent("Bullet_charge");
     }
 
 
@@ -73,6 +77,9 @@ public class DroneState_Firing : ESChargedAttack<Drone>
         }
 
         
+
         return t >= t_motion ? "Alert" : Name;
+
+        
     }
 }
