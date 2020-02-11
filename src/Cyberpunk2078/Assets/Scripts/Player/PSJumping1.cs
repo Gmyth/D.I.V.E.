@@ -65,8 +65,8 @@ public class PSJumping1 : PlayerState
         }
 
         //Still support Horizontal update during jumping, delete following to kill Horizontal input
-            if(lastJumpSec + 0.2f < Time.time) PhysicsInputHelper(h,speedFactor,accelerationFactor);
-         
+        if(Player.CurrentPlayer.LastBounceSec + 0.5f < Time.time && lastJumpSec + 0.5f < Time.time) PhysicsInputHelper(h);
+
             var dir = isCloseTo("Ground");
             if (dir != Direction.None)
             {
@@ -96,7 +96,7 @@ public class PSJumping1 : PlayerState
                 timer -= Time.deltaTime;
                 if (timer > 0)
                 {
-                    rb2d.AddForce(playerCharacter.transform.up * jumpForce * 30 * Time.deltaTime);
+                    rb2d.AddForce(playerCharacter.transform.up * jumpForce * 30 * Time.deltaTime * jumpIncreaser);
                 }
             }
         }
@@ -172,13 +172,13 @@ public class PSJumping1 : PlayerState
         // kill any Y-axis speed
         rb2d.velocity = new Vector2 (rb2d.velocity.x, 0);
         // Add Vertical Speed
-        if (previousState.Name == "WallSliding" && !Player.CurrentPlayer.jumpForceGate)
+        if (previousState.Name == "WallSliding" && !Player.CurrentPlayer.JumpForceGate)
         {
             performWallJump();
         }
-        else if (Player.CurrentPlayer.jumpForceGate) {
+        else if (Player.CurrentPlayer.JumpForceGate || Player.CurrentPlayer.LastBounceSec + 0.2f > Time.time) {
             // skip the force add
-            Player.CurrentPlayer.jumpForceGate = false;
+            Player.CurrentPlayer.JumpForceGate = false;
         }
         else
         {
@@ -202,6 +202,7 @@ public class PSJumping1 : PlayerState
     {
         playerCharacter.groundDust.transform.localPosition = Vector3.zero;
         playerCharacter.groundDust.GetComponent<ParticleSystem>().Stop();
+        Player.CurrentPlayer.JumpForceGate = false;
     }
 
     private void performWallJump()

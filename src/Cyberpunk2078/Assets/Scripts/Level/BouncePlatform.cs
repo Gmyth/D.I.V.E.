@@ -8,7 +8,7 @@ public class BouncePlatform : MonoBehaviour
     public float jumpForce;
     private Rigidbody2D rb2d;
     private PlayerCharacter pc;
-    public float Threshold;
+    private float Threshold = 0.5f;
     public bool bounceReady = true;
     private float timer;
     [SerializeField] private GameObject BounceVFX;
@@ -56,13 +56,14 @@ public class BouncePlatform : MonoBehaviour
     {
         if (col.gameObject.tag.CompareTo("Player") == 0)
         {
-            if (bounceReady == true)
+            if (bounceReady)
             {
                
                 rb2d = col.gameObject.GetComponent<Rigidbody2D>();
                 pc = col.gameObject.GetComponent<PlayerCharacter>();
-                Player.CurrentPlayer.jumpForceGate = true;
+                Player.CurrentPlayer.JumpForceGate = true;
                 Player.CurrentPlayer.NoApplyFriction = true;
+                Player.CurrentPlayer.LastBounceSec = Time.time;
                 pc.GetFSM().CurrentStateName = "Jumping";
 
                 CameraManager.Instance.Shaking(0.1f,0.03f);
@@ -72,7 +73,8 @@ public class BouncePlatform : MonoBehaviour
                 rb2d.velocity = Vector2.zero;
                 rb2d.gravityScale = pc.Gravity;
                 //Debug.Log("Direction:"+ gameObject.transform.up);
-                //Debug.Log(LogUtility.MakeLogStringFormat("Bounce Platform","Force:" + gameObject.transform.up * jumpForce * 50 * 1 / Time.timeScale));
+               // Debug.Log(LogUtility.MakeLogStringFormat("Bounce Platform",
+                //    "Force:" + gameObject.transform.up * jumpForce * 50));
 
                 var pos = col.gameObject.transform.position;
 

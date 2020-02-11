@@ -100,11 +100,11 @@ public class PSDashing : PlayerState
                 hyperSpeed = false;
                 rb2d.drag = defaultDrag;
                 //rb2d.velocity = rb2d.velocity * 0.3f;
-                var volX = h * rb2d.velocity.x > 0?rb2d.velocity.x * 0.4f:0;
-                var volY = rb2d.velocity.y > 0?rb2d.velocity.y * 0.1f : rb2d.velocity.y;
+                var volX = h * rb2d.velocity.x > 0?rb2d.velocity.x * 0.3f:0;
+                var volY = rb2d.velocity.y * 0.1f;
                 rb2d.velocity = new Vector2(volX,volY);
             }
-            //PhysicsInputHelper(h);
+            PhysicsInputHelper(h);
 
         } else if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.time)
         {
@@ -129,14 +129,14 @@ public class PSDashing : PlayerState
         if (hit1.collider != null)
         {
             if(hit1.transform.CompareTag("Ground")){
-                if( Mathf.Abs(hit1.normal.x) > 0f)rb2d.velocity = new Vector2(rb2d.velocity.x, 0 );
-                if( Mathf.Abs(hit1.normal.y) > 0f)rb2d.velocity =  new Vector2(0, rb2d.velocity.y );
+                if( Mathf.Abs(hit1.normal.x) > 0f)rb2d.velocity = new Vector2(rb2d.velocity.x * 0.4f, 0 );
+                if( Mathf.Abs(hit1.normal.y) > 0f)rb2d.velocity =  new Vector2(0, rb2d.velocity.y * 0.8f);
             }
             else if(hit1.transform.CompareTag("Platform") && rb2d.velocity.normalized.y < 0)
             {
                 //upper ward
-                if( Mathf.Abs(hit1.normal.x) > 0f)rb2d.velocity = new Vector2(rb2d.velocity.x, 0 );
-                if( Mathf.Abs(hit1.normal.y) > 0f)rb2d.velocity =  new Vector2(0, rb2d.velocity.y );
+                if( Mathf.Abs(hit1.normal.x) > 0f)rb2d.velocity = new Vector2(rb2d.velocity.x * 0.4f, 0 );
+                if( Mathf.Abs(hit1.normal.y) > 0f)rb2d.velocity =  new Vector2(0, rb2d.velocity.y * 0.8f);
             }
         }
 
@@ -144,9 +144,9 @@ public class PSDashing : PlayerState
         // Player is grounded and dash has finished
         if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime  < Time.time)
         {
-            var volX = h * rb2d.velocity.x > 0?rb2d.velocity.x * 0.4f:0;
-            var volY = rb2d.velocity.y > 0?rb2d.velocity.y * 0.1f : rb2d.velocity.y;
-            rb2d.velocity = new Vector2(volX,volY);
+//            var volX = h * rb2d.velocity.x > 0?rb2d.velocity.x * 0.3f:0;
+//            var volY = rb2d.velocity.y > 0?rb2d.velocity.y * 0.2f : rb2d.velocity.y;
+//            rb2d.velocity = new Vector2(volX,volY);
             PhysicsInputHelper(h);
 
             if (GetGroundType() == 0)
@@ -157,11 +157,9 @@ public class PSDashing : PlayerState
 
             return "Moving";
         }
-
-
+        
         return Name;
     }
-
 
     public override void OnStateEnter(State previousState)
     {

@@ -51,7 +51,7 @@ public class PlayerCharacter : Dummy
     public bool PowerDash = false;
     public bool PowerDashReady = true;
     public float LastPowerDash;
-    public float Gravity = 3.5f;
+    public float Gravity;
     
     private GameObject buttonTip;
     public bool InFever { get; private set; } = false;
@@ -388,7 +388,7 @@ public class PlayerCharacter : Dummy
         buttonTip = GameObject.Find("HealthButton");
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (InFever)
             ConsumeUltimateEnergy(statistics[StatisticType.FeverDecay] * Time.deltaTime);
@@ -398,7 +398,7 @@ public class PlayerCharacter : Dummy
 
         fsm.Update();
     }
-
+    
     private void OnDestroy()
     {
         if (Singleton == this)
