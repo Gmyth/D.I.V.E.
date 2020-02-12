@@ -39,7 +39,7 @@ public class L2ShieldBossState_ChasingShieldSlam : ESChasingAttack<L2ShieldBoss>
 
 
         if (t_chase >= maxChaseTime)
-            return "GrenadeThrow";
+            return "Alert";
 
 
         return "";

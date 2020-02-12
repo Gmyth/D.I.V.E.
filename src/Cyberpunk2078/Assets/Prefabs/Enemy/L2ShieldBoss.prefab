@@ -184,7 +184,7 @@ Transform:
   m_GameObject: {fileID: 5343205244154792207}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.01, y: 5.6, z: 0}
-  m_LocalScale: {x: 1.3, y: 1.3, z: 1}
+  m_LocalScale: {x: -1.3, y: 1.3, z: 1}
   m_Children:
   - {fileID: 5343205244918876963}
   - {fileID: 5343205243817579344}
@@ -258,7 +258,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 5
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -312,7 +312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60f3f8a12e7017246a42baf88830aa84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isInvulnerable: 1
+  isInvulnerable: 0
   isEvading: 0
   UnitTimeFactor: 1
   typeID: 67
@@ -344,6 +344,10 @@ MonoBehaviour:
     serializedAttributes: []
   currentTarget: {fileID: 0}
   lastCheckPointTransform: {x: 0, y: 0, z: 0}
+  knockbackOnHit: 30
+  knockbackOnHitFromBack: 50
+  playerKnockbackOnHit: 20
+  playerKnockbackOnHitFromBack: 15
   angerDecrease: 2
   counterThreshhold: 20
   spark: {fileID: 5343205245037015677}
@@ -359,7 +363,7 @@ GameObject:
   - component: {fileID: 5343205244473136718}
   - component: {fileID: 5343205244473136717}
   m_Layer: 17
-  m_Name: HitBox_Guard
+  m_Name: HitBox_StrongShield
   m_TagString: EnemyHitBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -531,7 +535,7 @@ GameObject:
   - component: {fileID: 5343205245025275341}
   - component: {fileID: 5343205245025275342}
   m_Layer: 17
-  m_Name: HitBox_ShieldWalking
+  m_Name: HitBox_WeakShield
   m_TagString: EnemyHitBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

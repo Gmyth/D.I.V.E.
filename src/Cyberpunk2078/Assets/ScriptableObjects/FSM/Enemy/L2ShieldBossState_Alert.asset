@@ -28,18 +28,42 @@ MonoBehaviour:
   meleeBehaviorSelector:
     n: 1
     repeats: 0
-    weights: 64000000000000000000000000000000000000000000000000000000
+    weights:
+    - data: ChasingShieldSlam
+      weight: 100
   nearRange: 5
   nearBehaviorSelector:
     n: 1
     repeats: 0
-    weights: 32000000320000000000000000000000000000000000000000000000
-  midRange: 5
+    weights:
+    - data: ChasingShieldSlam
+      weight: 50
+    - data: RushingGolfAttack
+      weight: 50
+  midRange: 10
   midBehaviorSelector:
     n: 1
     repeats: 0
-    weights: 32000000000000000f0000000f0000000a0000000000000000000000
+    weights:
+    - data: ChasingShieldSlam
+      weight: 30
+    - data: Shockwave
+      weight: 30
+    - data: GrenadeThrow
+      weight: 10
+    - data: LeapShieldSlam
+      weight: 10
+    - data: ChargedDash
+      weight: 20
   farBehaviorSelector:
     n: 1
     repeats: 0
-    weights: 00000000000000001e000000000000001e0000000000000000000000
+    weights:
+    - data: ChasingShieldSlam
+      weight: 15
+    - data: ChargedDash
+      weight: 30
+    - data: LeapShieldSlam
+      weight: 25
+    - data: GrenadeThrow
+      weight: 30

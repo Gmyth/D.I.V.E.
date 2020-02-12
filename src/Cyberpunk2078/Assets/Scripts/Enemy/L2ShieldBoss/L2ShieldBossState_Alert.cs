@@ -6,18 +6,18 @@ public class L2ShieldBossState_Alert : ESAlert<L2ShieldBoss>
 {
     [Header("Melee")]
     [SerializeField] private float meleeRange = 2.5f;
-    [SerializeField] private RandomSelector meleeBehaviorSelector;
+    [SerializeField] private BehaviorSelector meleeBehaviorSelector;
 
     [Header("Near")]
     [SerializeField] private float nearRange = 5f;
-    [SerializeField] private RandomSelector nearBehaviorSelector;
+    [SerializeField] private BehaviorSelector nearBehaviorSelector;
 
     [Header("Middle")]
     [SerializeField] private float midRange = 8f;
-    [SerializeField] private RandomSelector midBehaviorSelector;
+    [SerializeField] private BehaviorSelector midBehaviorSelector;
 
     [Header("Far")]
-    [SerializeField] private RandomSelector farBehaviorSelector;
+    [SerializeField] private BehaviorSelector farBehaviorSelector;
 
 
     public override void OnStateQuit(State nextState)
@@ -37,17 +37,17 @@ public class L2ShieldBossState_Alert : ESAlert<L2ShieldBoss>
 
 
         if (distance <= meleeRange)
-            return states_attacks[meleeBehaviorSelector.Select()[0]];
+            return meleeBehaviorSelector.Select()[0];
 
 
         if (distance <= nearRange)
-            return states_attacks[nearBehaviorSelector.Select()[0]];
+            return nearBehaviorSelector.Select()[0];
 
 
         if (distance <= midRange)
-            return states_attacks[midBehaviorSelector.Select()[0]];
+            return midBehaviorSelector.Select()[0];
 
 
-        return states_attacks[farBehaviorSelector.Select()[0]];
+        return farBehaviorSelector.Select()[0];
     }
 }
