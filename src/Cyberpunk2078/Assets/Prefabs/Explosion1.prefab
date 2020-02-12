@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: -1
-  lifeSpan: 1
+  lifeSpan: 0.3
   enableTimeScale: 1
 --- !u!114 &1429245946
 MonoBehaviour:
