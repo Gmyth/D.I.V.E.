@@ -32,4 +32,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1893fb22565d431419aea748e2f330cc, type: 2}
   - {fileID: 11400000, guid: 98255bdf167ef284c8151399515f1270, type: 2}
   - {fileID: 11400000, guid: 9ddda6cab03d5694984abbf623546744, type: 2}
-  startingState: GrabAndThrow
+  startingState: DiveBomb
