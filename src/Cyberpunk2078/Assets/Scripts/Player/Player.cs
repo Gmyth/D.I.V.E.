@@ -40,8 +40,6 @@ public class Player
 
     public float FeverFactor = 1.3f;
     
-    
-
 
     public float this[AttributeType type]
     {

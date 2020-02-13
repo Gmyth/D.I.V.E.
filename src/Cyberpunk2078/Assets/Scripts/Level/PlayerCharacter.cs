@@ -78,7 +78,10 @@ public class PlayerCharacter : Dummy
 
         rigidbody.velocity = Vector2.zero;
         rigidbody.angularVelocity = 0;
-        rigidbody.AddForce(force * direction.normalized, ForceMode2D.Impulse);
+
+
+        if (force > 0 && direction != Vector3.zero)
+            rigidbody.AddForce(force * direction.normalized, ForceMode2D.Impulse);
     }
 
     public void KnockbackHorizontal(Vector3 origin, float force, float duration = 1f)
