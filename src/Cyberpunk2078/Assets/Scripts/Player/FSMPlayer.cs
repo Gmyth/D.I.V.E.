@@ -369,7 +369,15 @@ public class FSMPlayer : FiniteStateMachine<PlayerState>
         if (currentStateName != "")
         {
             CurrentState.EarlyUpdate();
-            CurrentStateName = CurrentState.Update();
+
+
+            string lastUpdatedState = "";
+
+            while (CurrentStateName != lastUpdatedState)
+            {
+                lastUpdatedState = CurrentState.Update();
+                CurrentStateName = lastUpdatedState;
+            }
         }
     }
 }

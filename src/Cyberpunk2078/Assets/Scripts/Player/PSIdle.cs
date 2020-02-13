@@ -6,11 +6,6 @@ public class PSIdle : PlayerState
 {
     public override string Update()
     {
-        // NormalizeSlope();
-        var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-        float Vy = rb2d.velocity.y;
-        
-
         if (Input.GetButtonDown("Ultimate"))
         {
             //TODO add another ultimate
@@ -59,11 +54,10 @@ public class PSIdle : PlayerState
         if (PlayerCharacter.Singleton.InFever) PlayerCharacter.Singleton.AddOverLoadEnergy(1);
         Rigidbody2D rb2d = playerCharacter.GetComponent<Rigidbody2D>();
        // rb2d.bodyType = RigidbodyType2D.Kinematic;
-       rb2d.velocity = Vector2.zero;
-       rb2d.gravityScale = 0;
-       anim.Play("MainCharacter_Idle", -1, 0f);
-        
-        
+       //rb2d.velocity = Vector2.zero;
+       //rb2d.gravityScale = 0;
+
+        anim.Play("MainCharacter_Idle", -1, 0f);
     }
 
     public override void OnStateQuit(State nextState)
