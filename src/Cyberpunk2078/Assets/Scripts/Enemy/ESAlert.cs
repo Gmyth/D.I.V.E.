@@ -14,7 +14,7 @@ public abstract class ESAlert<T> : EnemyState<T> where T : Enemy
 
     protected Animator animator;
 
-    protected float t_finishWait;
+    protected float t_wait;
 
 
     public override void Initialize(T enemy)
@@ -31,7 +31,7 @@ public abstract class ESAlert<T> : EnemyState<T> where T : Enemy
         base.OnStateEnter(previousState);
 
 
-        t_finishWait = Time.time + waitTime;
+        t_wait = 0;
 
 
         if (animation != "")
@@ -41,10 +41,23 @@ public abstract class ESAlert<T> : EnemyState<T> where T : Enemy
 
     public override string Update()
     {
-        if (Time.time >= t_finishWait)
-            return states_attacks[0];
+        enemy.Turn();
 
 
-        return Name;
+        if (!enemy.IsTurning)
+            t_wait += TimeManager.Instance.ScaledDeltaTime;
+
+
+        if (t_wait < waitTime)
+            return Name;
+
+
+        return ChooseBehavior();
+    }
+
+
+    protected virtual string ChooseBehavior()
+    {
+        return states_attacks[0];
     }
 }

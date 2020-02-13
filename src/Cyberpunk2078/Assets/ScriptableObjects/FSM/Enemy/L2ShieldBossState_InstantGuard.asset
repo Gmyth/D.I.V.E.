@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2af66ef86b414744fa5f5289d291725a, type: 3}
+  m_Name: L2ShieldBossState_InstantGuard
+  m_EditorClassIdentifier: 
+  stateName: InstantGuard
+  attackPoint: 0.2
+  animation_beforeAttack: L2ShieldBoss_Guard2
+  hitDataID: -1
+  hitBox: 3
+  attackDuration: 0.5
+  animation_attack: 
+  attackBackswing: 0
+  animation_afterAttack: 
+  state_afterAttack: Alert
