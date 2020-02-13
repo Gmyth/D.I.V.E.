@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: L2ShieldBossState_DiveBomb
   m_EditorClassIdentifier: 
   stateName: DiveBomb
-  motionID: -1
-  damage: 1
-  knockback: 0
+  hitDataID: 0
   hitBox: -1
   chargeTime: 3
   stopChargingOnTargetLoss: 0

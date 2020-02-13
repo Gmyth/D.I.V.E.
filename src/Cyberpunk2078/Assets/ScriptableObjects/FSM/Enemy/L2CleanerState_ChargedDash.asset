@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: L2CleanerState_ChargedDash
   m_EditorClassIdentifier: 
   stateName: ChargedDash
-  motionID: -1
-  damage: 1
-  knockback: 100
+  hitDataID: 0
   hitBox: 2
   chargeTime: 1
   stopChargingOnTargetLoss: 0
