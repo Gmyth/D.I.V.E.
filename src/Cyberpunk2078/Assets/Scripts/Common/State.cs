@@ -17,7 +17,7 @@ public abstract class State : ScriptableObject
 
 
     public abstract string Update();
-
+    
 
     public virtual void OnStateEnter(State previousState) { }
     //public abstract void OnStateReset();

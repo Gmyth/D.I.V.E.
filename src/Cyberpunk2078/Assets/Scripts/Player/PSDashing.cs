@@ -51,7 +51,7 @@ public class PSDashing : PlayerState
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
         float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
-
+        float v = Input.GetAxis("VerticalJoyStick") != 0 ? Input.GetAxis("VerticalJoyStick") : Input.GetAxis("Vertical");
         if (Input.GetButtonDown("Ultimate"))
         {
             //TODO add another ultimate
@@ -71,7 +71,7 @@ public class PSDashing : PlayerState
 
         if (Input.GetButtonDown("Jump"))
         {
-            if (Player.CurrentPlayer.secondJumpReady && lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.unscaledTime)
+            if (Player.CurrentPlayer.secondJumpReady && lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.time)
             {
                 Player.CurrentPlayer.secondJumpReady = false;
                 return "Jumping";
@@ -79,11 +79,11 @@ public class PSDashing : PlayerState
             else
             {
                 // save jump for later
-                lastJumpInput = Time.unscaledTime;
+                lastJumpInput = Time.time;
             }
         }
 
-        if (lastDashSecond + dashDelayTime < Time.unscaledTime && readyToPush)
+        if (lastDashSecond + dashDelayTime < Time.time && readyToPush)
         {
             // Press delay ends. time to actual dash
             readyToPush = false;
@@ -91,7 +91,7 @@ public class PSDashing : PlayerState
         }
 
 
-        if (lastDashSecond + dashReleaseTime + dashDelayTime < Time.unscaledTime)
+        if (lastDashSecond + dashReleaseTime + dashDelayTime < Time.time)
         {
             // the dash has already ended
             if (hyperSpeed)
@@ -99,14 +99,17 @@ public class PSDashing : PlayerState
                 // kill speed after dash
                 hyperSpeed = false;
                 rb2d.drag = defaultDrag;
-                rb2d.velocity = rb2d.velocity * 0.3f;
+                //rb2d.velocity = rb2d.velocity * 0.3f;
+                var volX = h * rb2d.velocity.x > 0?rb2d.velocity.x * 0.3f:0;
+                var volY = rb2d.velocity.y * 0.1f;
+                rb2d.velocity = new Vector2(volX,volY);
             }
             PhysicsInputHelper(h);
 
-        } else if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.unscaledTime)
+        } else if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.time)
         {
             //cast listened jump right after dash finish
-            if (lastJumpInput + JumpListenerInterval > Time.unscaledTime)
+            if (lastJumpInput + JumpListenerInterval > Time.time)
             {
                 Player.CurrentPlayer.secondJumpReady = false;
                 return "Jumping";
@@ -126,23 +129,24 @@ public class PSDashing : PlayerState
         if (hit1.collider != null)
         {
             if(hit1.transform.CompareTag("Ground")){
-                if( Mathf.Abs(hit1.normal.x) > 0f)rb2d.velocity = new Vector2(rb2d.velocity.x, 0 );
-                if( Mathf.Abs(hit1.normal.y) > 0f)rb2d.velocity =  new Vector2(0, rb2d.velocity.y );
+                if( Mathf.Abs(hit1.normal.x) > 0f)rb2d.velocity = new Vector2(rb2d.velocity.x * 0.4f, 0 );
+                if( Mathf.Abs(hit1.normal.y) > 0f)rb2d.velocity =  new Vector2(0, rb2d.velocity.y * 0.8f);
             }
             else if(hit1.transform.CompareTag("Platform") && rb2d.velocity.normalized.y < 0)
             {
                 //upper ward
-                if( Mathf.Abs(hit1.normal.x) > 0f)rb2d.velocity = new Vector2(rb2d.velocity.x, 0 );
-                if( Mathf.Abs(hit1.normal.y) > 0f)rb2d.velocity =  new Vector2(0, rb2d.velocity.y );
+                if( Mathf.Abs(hit1.normal.x) > 0f)rb2d.velocity = new Vector2(rb2d.velocity.x * 0.4f, 0 );
+                if( Mathf.Abs(hit1.normal.y) > 0f)rb2d.velocity =  new Vector2(0, rb2d.velocity.y * 0.8f);
             }
         }
 
 
         // Player is grounded and dash has finished
-        if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime  < Time.unscaledTime)
+        if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime  < Time.time)
         {
-            rb2d.velocity = rb2d.velocity * 0.3f;
-
+//            var volX = h * rb2d.velocity.x > 0?rb2d.velocity.x * 0.3f:0;
+//            var volY = rb2d.velocity.y > 0?rb2d.velocity.y * 0.2f : rb2d.velocity.y;
+//            rb2d.velocity = new Vector2(volX,volY);
             PhysicsInputHelper(h);
 
             if (GetGroundType() == 0)
@@ -153,11 +157,9 @@ public class PSDashing : PlayerState
 
             return "Moving";
         }
-
-
+        
         return Name;
     }
-
 
     public override void OnStateEnter(State previousState)
     {
@@ -171,8 +173,9 @@ public class PSDashing : PlayerState
                 return;
             }
 
+
             playerCharacter.PowerDashReady = false;
-            playerCharacter.LastPowerDash = Time.unscaledTime;
+            playerCharacter.LastPowerDash = Time.time;
             TimeManager.Instance.StartFeverMotion();
             playerCharacter.Spark.SetActive(true);
             playerCharacter.Spark.GetComponent<Animator>().Play("Spark", -1, 0f);
@@ -191,7 +194,8 @@ public class PSDashing : PlayerState
             }
         }
 
-        
+        AudioManager.Instance.PlayOnce("Dash");
+
 
         Apply = true;
         //Dash has been pressed, set all config first
@@ -200,7 +204,7 @@ public class PSDashing : PlayerState
 
         // Add Ghost trail
         if(!playerCharacter.InKillStreak) playerCharacter.SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
-        lastDashSecond = Time.unscaledTime;
+        lastDashSecond = Time.time;
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
 
         // Record the default Drag of rb2d
@@ -232,7 +236,7 @@ public class PSDashing : PlayerState
         
         // reset drag & gravity
         rb2d.drag = 1;
-        rb2d.gravityScale = 3;
+        rb2d.gravityScale = playerCharacter.Gravity;
 
         // Listening to move input
         PhysicsInputHelper(h);

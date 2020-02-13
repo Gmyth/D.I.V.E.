@@ -86,7 +86,7 @@ public class PSDialogue : PlayerState
         switch (GetGroundType())
         {
             case 0:
-                rb2d.gravityScale = 3;
+                rb2d.gravityScale = playerCharacter.Gravity;
                 anim.Play("MainCharacter_Airborne", -1, 0f);
                 break;
             

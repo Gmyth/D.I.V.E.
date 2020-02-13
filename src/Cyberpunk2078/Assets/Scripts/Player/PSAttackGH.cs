@@ -125,7 +125,7 @@ public class PSAttackGH: PlayerState
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         
         //rb2d.drag = defaultDrag;
-        rb2d.gravityScale = 3;
+        rb2d.gravityScale = playerCharacter.Gravity;
                      
         // Kill Trail
         //playerCharacter.GetComponent<GhostSprites>().Occupied = false;
@@ -137,7 +137,7 @@ public class PSAttackGH: PlayerState
         
         var pushForce = playerCharacter.InKillStreak ? f_pushForce : n_pushForce;
 
-        playerCharacter.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        //playerCharacter.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         //playerCharacter.GetComponent<GhostSprites>().Occupied = true;
         
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
@@ -159,7 +159,9 @@ public class PSAttackGH: PlayerState
 
 
         anim.Play("MainCharacter_Atk", -1, 0f);
-        playerCharacter.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+
+        AudioManager.Instance.PlayOnce("Swing");
+
         playerCharacter.GetComponent<Rigidbody2D>().AddForce(direction * pushForce * 100f);
         playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipX = direction.x < 0;
 

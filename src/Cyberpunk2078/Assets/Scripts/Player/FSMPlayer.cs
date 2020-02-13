@@ -24,7 +24,6 @@ public abstract class PlayerState : State
     {
         Index = index;
         this.playerCharacter = playerCharacter;
-
         anim = playerCharacter.SpriteHolder.GetComponent<Animator>();
     }
 
@@ -33,19 +32,18 @@ public abstract class PlayerState : State
     // @return 0 - airborne   1 - ground   2 - enemy
     public int GetGroundType()
     {
-        Vector2 slideCheck = playerCharacter.GetComponent<Rigidbody2D>().velocity.x > 0
-            ? new Vector2(0.5f, -0.5f)
-            : new Vector2(-0.5f, -0.5f);
+        Vector2 slideCheck = playerCharacter.GetComponent<Rigidbody2D>().velocity.x > 0 ? new Vector2(0.5f, -0.5f) : new Vector2(-0.5f, -0.5f);
         
         // this variable will reposition the ray start point 
         float centerOffset = -0.7f;
 
         float DistanceToTheGround = playerCharacter.GetComponent<CapsuleCollider2D>().bounds.extents.y + centerOffset;
         //float DistanceToTheGround = centerOffset;
-        RaycastHit2D hitM = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.4f  );
-        RaycastHit2D hitL = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.3f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.4f );
-        RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.3f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.4f);
-        RaycastHit2D hitSlide = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,0f,0f),slideCheck, 2f );
+
+        RaycastHit2D hitM = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f, centerOffset, 0f),-playerCharacter.transform.up, DistanceToTheGround + 0.4f);
+        RaycastHit2D hitL = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.3f, centerOffset, 0f),-playerCharacter.transform.up, DistanceToTheGround + 0.4f);
+        RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.3f, centerOffset, 0f),-playerCharacter.transform.up, DistanceToTheGround + 0.4f);
+        RaycastHit2D hitSlide = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f, 0f, 0f), slideCheck, 2f);
 
         
         Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f, centerOffset, 0f), -playerCharacter.transform.up * (DistanceToTheGround + 0.4f), Color.red);
@@ -81,6 +79,8 @@ public abstract class PlayerState : State
 
             grounded = true;
 
+            AudioManager.Instance.PlayEvent("JumpLand");
+            
             return 1;
         } 
         else if ((hitL.collider != null && hitL.transform.CompareTag("Dummy")) ||
@@ -91,9 +91,10 @@ public abstract class PlayerState : State
         }
 
 
-        player.jumpForceGate = false;
+        //player.JumpForceGate = false;
 
         grounded = false;
+        AudioManager.Instance.StopEvent("JumpLand");
 
 
         return 0;
@@ -132,6 +133,7 @@ public abstract class PlayerState : State
         {
             return Direction.Left;
         }
+        
         return Direction.None;
     }
     
@@ -186,40 +188,57 @@ public abstract class PlayerState : State
 
 
     // Function : Keyboard Input => Physics Velocity, And Friction Calculation
-    public void PhysicsInputHelper(float h, float maxSpeed  = 9,  float Acceleration  = 25)
+    public void PhysicsInputHelper(float h, float maxSpeed  = 8,  float Acceleration  = 50)
     {
         float feverFactor = playerCharacter.InFever ? Player.CurrentPlayer.FeverFactor : 1;
+        var MaxFallY = 50f;
+        var SlopeY = 15f;
+        var MaxX =  Player.CurrentPlayer.OnSlope? maxSpeed * Mathf.Cos(45f) : maxSpeed;
+        var MaxY =  Player.CurrentPlayer.OnSlope? SlopeY * Mathf.Cos(45f) : MaxFallY;
+        
         Rigidbody2D rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-       
-        // calculate speed on X axis
-        if (Mathf.Abs(h) > 0.1f)
+        var horizontalInput = (h > 0 ? 1 : (h < 0 ? -1 : 0));
+        Vector2 velocityPlaceHolder = rb2d.velocity;
+        if (horizontalInput * velocityPlaceHolder.x < MaxX)
         {
-            // has horizontal input
-            if (Mathf.Abs(rb2d.velocity.x) < maxSpeed * feverFactor)
-            {
-                var direction = Vector3.right * h * Acceleration * feverFactor;
-                if (direction.x * rb2d.velocity.x < 0)
-                    direction = direction * 4f;
-
-                rb2d.AddForce(direction);
-            }
-            else
-            {
-                if (rb2d.velocity.x * h < 0 && grounded)
-                {
-                    // not in the same direction
-                    // reduce speed,friction
-                    Vector2 direction = rb2d.velocity.normalized;
-
-                    if (direction.x > 0)
-                        direction.x = 1;
-                    else
-                        direction.x = -1;
-
-                    rb2d.AddForce(new Vector2(-direction.x * 8f, 0f));
-                }
-            }
+            velocityPlaceHolder.x = horizontalInput * MaxX * feverFactor;
         }
+        
+        if(Mathf.Abs(velocityPlaceHolder.y) > MaxY)
+        {
+            velocityPlaceHolder.y = MaxY * (velocityPlaceHolder.y/Mathf.Abs(velocityPlaceHolder.y));
+        }
+        
+        rb2d.velocity = velocityPlaceHolder;
+
+//        // calculate speed on X axis
+//        if (Mathf.Abs(h) > 0.1f)
+//        {
+//            // has horizontal input
+//            if (Mathf.Abs(rb2d.velocity.x) < maxSpeed * feverFactor)
+//            {
+//                var direction = Vector3.right * h * Acceleration * feverFactor;
+//                if (direction.x * rb2d.velocity.x < 0)
+//                    direction = direction * 4f;
+//
+//                rb2d.AddForce(direction);
+//            }
+//            else
+//            {
+//                if (rb2d.velocity.x * h < 0 && grounded)
+//                {
+//                    // not in the same direction
+//                    // reduce speed,friction
+//                    Vector2 direction = rb2d.velocity.normalized;
+//
+//                    if (direction.x > 0)
+//                        direction.x = 1;
+//                    else
+//                        direction.x = -1;
+//                    rb2d.velocity = new Vector3(direction.x * maxSpeed * feverFactor,rb2d.velocity.y);
+//                }
+//            }
+//        }
     }
 
     public void EarlyUpdate()

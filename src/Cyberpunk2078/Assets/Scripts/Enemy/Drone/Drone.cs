@@ -203,6 +203,8 @@ public class Drone : Enemy, IPatroller
         //Destroy(gameObject, 0.5f);
         CheckPointManager.Instance.Dead(gameObject);
         dead.Invoke(this);
+
+        AudioManager.Instance.PlayOnce("KillDrone");
     }
 
 

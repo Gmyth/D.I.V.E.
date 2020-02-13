@@ -55,7 +55,7 @@ public class PSWallSliding: PlayerState
 
         if (groundType == 2)
         {
-            Player.CurrentPlayer.jumpForceGate = true;
+            Player.CurrentPlayer.JumpForceGate = true;
 
             rigidbody.velocity = Vector2.zero;
             rigidbody.AddForce(Global.enemyHeadJumpVerticalForce * playerCharacter.transform.up - Global.enemyHeadJumpHorizontalForce * playerCharacter.transform.right);
@@ -75,6 +75,7 @@ public class PSWallSliding: PlayerState
             rigidbody.gravityScale = 1.2f;
 
             anim.Play("MainCharacter_WallJump", -1, 0f);
+            AudioManager.Instance.PlayEvent("WallSlide");
         }
         else if (wallType == Direction.Left && h < 0)
         {
@@ -85,6 +86,7 @@ public class PSWallSliding: PlayerState
             rigidbody.gravityScale = 1.2f;
 
             anim.Play("MainCharacter_WallJump", -1, 0f);
+            AudioManager.Instance.PlayEvent("WallSlide");
         }
         else
         {
@@ -92,9 +94,10 @@ public class PSWallSliding: PlayerState
             playerCharacter.groundDust.GetComponent<ParticleSystem>().gravityModifier = 0;
             playerCharacter.groundDust.GetComponent<ParticleSystem>().Stop();
 
-            rigidbody.gravityScale = 3f;
+            rigidbody.gravityScale = playerCharacter.Gravity;
 
             anim.Play("MainCharacter_Airborne", -1, 0f);
+            AudioManager.Instance.PlayEvent("WallSlide");
         }
 
         if (wallType == Direction.None && groundType == 0)
@@ -161,8 +164,10 @@ public class PSWallSliding: PlayerState
         playerCharacter.groundDust.GetComponent<ParticleSystem>().gravityModifier = 0;
         playerCharacter.groundDust.GetComponent<ParticleSystem>().Stop();
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-        rb2d.gravityScale = 3;
+        rb2d.gravityScale = playerCharacter.Gravity;
         onWall = false;
+
+        AudioManager.Instance.StopEvent("WallSlide");
     }
 
 }

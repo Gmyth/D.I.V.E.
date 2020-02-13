@@ -22,7 +22,7 @@ public class PSAirborne : PlayerState
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
         Vector2 normalizedInput = new Vector2(h, v).normalized;
-        PhysicsInputHelper(h);
+        if(Player.CurrentPlayer.LastBounceSec + 0.5f < Time.time) PhysicsInputHelper(h);
         
         if (Input.GetButtonDown("Ultimate"))
         {
@@ -80,7 +80,7 @@ public class PSAirborne : PlayerState
 
 
                 case 2:
-                    Player.CurrentPlayer.jumpForceGate = true;
+                    Player.CurrentPlayer.JumpForceGate = true;
 
                     if (Mathf.Abs(rb2d.velocity.x) < 0.5)
                     {
@@ -107,8 +107,9 @@ public class PSAirborne : PlayerState
 
     public override void OnStateQuit(State nextState)
     {
-        var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-        rb2d.gravityScale = 3;
+        //var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
+        //rb2d.gravityScale = playerCharacter.Gravity;
+        Player.CurrentPlayer.JumpForceGate = false; 
     }
 
     public override void OnStateEnter(State previousState)
@@ -120,8 +121,10 @@ public class PSAirborne : PlayerState
         }
         
         previous = previousState;
+
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-        rb2d.gravityScale = 3;
+        rb2d.gravityScale = playerCharacter.Gravity;
+
         anim.Play("MainCharacter_Airborne", -1, 0f);
     }
 }

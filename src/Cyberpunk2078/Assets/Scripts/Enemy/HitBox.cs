@@ -45,6 +45,7 @@ public class HitBox : MonoBehaviour
     [SerializeField] protected int maxNumHits = int.MaxValue;
     [SerializeField] protected int maxNumHitsPerUnit = 1;
 
+    [Header("")]
     [SerializeField] protected int[] effects;
 
     [HideInInspector] public Hit hit;
@@ -129,6 +130,8 @@ public class HitBox : MonoBehaviour
         {
             if (GameUtility.ApplyDamage(enemy, hit, other) > 0)
             {
+                TimeManager.Instance.startSlowMotionBlink(0.1f,0.7f);
+                
                 CreateRandomEffect(enemy.transform);
 
                 var trail = ObjectRecycler.Singleton.GetObject<SingleEffect>(8);
@@ -152,7 +155,7 @@ public class HitBox : MonoBehaviour
 
     protected virtual void OnHitBreakable(Collider2D other)
     {
-        other.GetComponent<SimpleBreakable>().DestoryBreakable();
+        other.GetComponent<SimpleBreakable>().DestroyBreakable(other.transform.position);
     }
 
     protected virtual void OnHitPlayer(Collider2D other)
@@ -175,6 +178,7 @@ public class HitBox : MonoBehaviour
 
             CreateRandomEffect(player.transform);
 
+            TimeManager.Instance.startSlowMotionBlink(0.05f,0.2f);
 
             var trail = ObjectRecycler.Singleton.GetObject<SingleEffect>(8);
             trail.transform.position = other.transform.position - (other.transform.position - transform.position) * 0.2f;
@@ -227,10 +231,10 @@ public class HitBox : MonoBehaviour
         effect1.transform.right = transform.right;
         effect1.setTarget(targetTransform);
         effect1.gameObject.SetActive(true);
-        
+
         if (effects.Length == 0)
             return null;
-            
+
 
         SingleEffect effect = ObjectRecycler.Singleton.GetObject<SingleEffect>(effects[Random.Range(0, effects.Length)]);
         effect.transform.position = targetTransform.position - (targetTransform.position - transform.position) * 0.2f;

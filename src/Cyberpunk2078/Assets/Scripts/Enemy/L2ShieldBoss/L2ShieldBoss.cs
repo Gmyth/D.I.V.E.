@@ -115,6 +115,10 @@ public class L2ShieldBoss : Enemy
 
         StatisticModificationResult result = statistics.Modify(StatisticType.Hp, -rawDamage, 0, statistics[StatisticType.MaxHp]);
 
+
+        Debug.LogFormat("[L2ShieldBoss] HP: {0} / {1}", result.currentValue, statistics[StatisticType.MaxHp]);
+
+
         if (result.currentValue <= 0)
             Dead();
 

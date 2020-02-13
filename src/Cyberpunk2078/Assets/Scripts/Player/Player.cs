@@ -23,7 +23,9 @@ public class Player
     public readonly AttributeSet attributes;
     public readonly Inventory inventory;
 
-    public bool jumpForceGate;
+    public bool JumpForceGate;
+    public bool OnSlope;
+    public float LastBounceSec;
     public bool NoApplyFriction = false;
     public bool secondJumpReady;
     public bool ChainWallJumpReady;
