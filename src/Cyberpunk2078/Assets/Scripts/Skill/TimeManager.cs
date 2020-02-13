@@ -34,7 +34,7 @@ public class TimeManager : MonoBehaviour
         Instance = this;
         blackScreen = Camera.main.GetComponentInChildren<SpriteRenderer>();
         Time.timeScale = 1;
-        Time.fixedDeltaTime = Time.timeScale/60f;
+        Time.fixedDeltaTime = Time.timeScale / 60f;
         //Debug.LogWarning(Time.fixedDeltaTime);
     }
 
