@@ -22,5 +22,5 @@ MonoBehaviour:
   animation_charging: L2Drone_Alert
   state_afterAttack: Alert
   state_onTargetLoss: Patrolling
-  recoil: 10
+  recoil: 5
   recoilDuration: 0.2

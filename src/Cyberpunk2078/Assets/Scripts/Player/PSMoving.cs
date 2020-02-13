@@ -124,6 +124,8 @@ public class PSMoving : PlayerState
         anim.speed = 1f;
 
         AudioManager.Singleton.StopEvent("Footsteps");
+        
+        Player.CurrentPlayer.OnSlope = false;
     }
 
 
@@ -138,6 +140,7 @@ public class PSMoving : PlayerState
         // Attempt vertical normalization
         RaycastHit2D hit = Physics2D.Raycast(playerCharacter.transform.position, -Vector2.up, 4f);
         if (hit.collider != null && Mathf.Abs(hit.normal.x) > 0.1f && hit.transform.tag == "Ground"){
+                Player.CurrentPlayer.OnSlope = true;
                 Rigidbody2D rb2d = playerCharacter.GetComponent<Rigidbody2D>();
                 // Apply the opposite force against the slope force 
                 // You will need to provide your own slopeFriction to stabalize movement
@@ -146,6 +149,10 @@ public class PSMoving : PlayerState
                 Vector3 pos = playerCharacter.transform.position;
                 pos.y += -hit.normal.x * Mathf.Abs(rb2d.velocity.x) * Time.deltaTime * (rb2d.velocity.x - hit.normal.x > 0 ? 1 : -1);
                 playerCharacter.transform.position = pos;
+        }
+        else
+        {
+            Player.CurrentPlayer.OnSlope = false;
         }
     }
     

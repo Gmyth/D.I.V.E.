@@ -99,6 +99,8 @@ public class HitBox : MonoBehaviour
         {
             if (GameUtility.ApplyDamage(enemy, hit, other) > 0)
             {
+                TimeManager.Instance.startSlowMotionBlink(0.1f,0.7f);
+                
                 CreateRandomEffect(enemy.transform);
 
                 var trail = ObjectRecycler.Singleton.GetObject<SingleEffect>(8);
@@ -145,6 +147,7 @@ public class HitBox : MonoBehaviour
 
             CreateRandomEffect(player.transform);
 
+            TimeManager.Instance.startSlowMotionBlink(0.05f,0.2f);
 
             var trail = ObjectRecycler.Singleton.GetObject<SingleEffect>(8);
             trail.transform.position = other.transform.position - (other.transform.position - transform.position) * 0.2f;

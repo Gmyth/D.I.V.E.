@@ -23,6 +23,6 @@ MonoBehaviour:
     repeats: 1
     weights: 280000002800000014000000
   stayDuration: 0.5
-  chasingSpeed: 3
+  chasingSpeed: 2.5
   chasingDuration: 0.5
   backingSpeed: 1

@@ -24,7 +24,6 @@ public abstract class PlayerState : State
     {
         Index = index;
         this.playerCharacter = playerCharacter;
-
         anim = playerCharacter.SpriteHolder.GetComponent<Animator>();
     }
 
@@ -93,7 +92,7 @@ public abstract class PlayerState : State
         }
 
 
-        player.jumpForceGate = false;
+        //player.JumpForceGate = false;
 
         grounded = false;
         AudioManager.Singleton.StopEvent("JumpLand");
@@ -135,6 +134,7 @@ public abstract class PlayerState : State
         {
             return Direction.Left;
         }
+        
         return Direction.None;
     }
     
@@ -189,12 +189,64 @@ public abstract class PlayerState : State
 
 
     // Function : Keyboard Input => Physics Velocity, And Friction Calculation
-    public void PhysicsInputHelper(float h, float maxSpeed  = 9,  float Acceleration  = 25)
+    public void PhysicsInputHelper(float h, float maxSpeed  = 8,  float Acceleration  = 50)
     {
         float feverFactor = playerCharacter.InFever ? Player.CurrentPlayer.FeverFactor : 1;
+        var MaxFallY = 50f;
+        var SlopeY = 15f;
+        var MaxX =  Player.CurrentPlayer.OnSlope? maxSpeed * Mathf.Cos(45f) : maxSpeed;
+        var MaxY =  Player.CurrentPlayer.OnSlope? SlopeY * Mathf.Cos(45f) : MaxFallY;
+        
         Rigidbody2D rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-       
+        var horizontalInput = (h > 0 ? 1 : (h < 0 ? -1 : 0));
+        Vector2 velocityPlaceHolder = rb2d.velocity;
+        if (horizontalInput * velocityPlaceHolder.x < MaxX)
+        {
+            velocityPlaceHolder.x = horizontalInput * MaxX * feverFactor;
+        }
+        
+        if(Mathf.Abs(velocityPlaceHolder.y) > MaxY)
+        {
+            velocityPlaceHolder.y = MaxY * (velocityPlaceHolder.y/Mathf.Abs(velocityPlaceHolder.y));
+        }
+        
+        rb2d.velocity = velocityPlaceHolder;
+        Debug.Log("Y:"+rb2d.velocity.y);
+//        // calculate speed on X axis
+//        if (Mathf.Abs(h) > 0.1f)
+//        {
+//            // has horizontal input
+//            if (Mathf.Abs(rb2d.velocity.x) < maxSpeed * feverFactor)
+//            {
+//                var direction = Vector3.right * h * Acceleration * feverFactor;
+//                if (direction.x * rb2d.velocity.x < 0)
+//                    direction = direction * 4f;
+//
+//                rb2d.AddForce(direction);
+//            }
+//            else
+//            {
+//                if (rb2d.velocity.x * h < 0 && grounded)
+//                {
+//                    // not in the same direction
+//                    // reduce speed,friction
+//                    Vector2 direction = rb2d.velocity.normalized;
+//
+//                    if (direction.x > 0)
+//                        direction.x = 1;
+//                    else
+//                        direction.x = -1;
+//                    rb2d.velocity = new Vector3(direction.x * maxSpeed * feverFactor,rb2d.velocity.y);
+//                }
+//            }
+//        }
+    }
+
+    public void SimplePhysicsInputHelper(float h, float maxSpeed = 8, float Acceleration = 50)
+    {
+        float feverFactor = playerCharacter.InFever ? Player.CurrentPlayer.FeverFactor : 1;
         // calculate speed on X axis
+        Rigidbody2D rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         if (Mathf.Abs(h) > 0.1f)
         {
             // has horizontal input
@@ -218,8 +270,7 @@ public abstract class PlayerState : State
                         direction.x = 1;
                     else
                         direction.x = -1;
-
-                    rb2d.AddForce(new Vector2(-direction.x * 8f, 0f));
+                    rb2d.velocity = new Vector3(direction.x * maxSpeed * feverFactor, rb2d.velocity.y);
                 }
             }
         }

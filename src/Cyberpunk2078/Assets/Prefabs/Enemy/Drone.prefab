@@ -292,8 +292,8 @@ MonoBehaviour:
   guardZone:
     type: 0
     center: {x: 0, y: 0}
-    w: 0
-    h: 0
+    w: 20
+    h: 20
   hitBoxes: []
   patrolRoute:
     wayPoints: []
@@ -303,7 +303,7 @@ MonoBehaviour:
     chargeTime: 0.5
     muzzle: {fileID: 2013669344}
     bulletID: 0
-    bulletSpeed: 30
+    bulletSpeed: 20
     minDeviationAngle: 5
     maxDeviationAngle: 15
   statusModifiers:
@@ -316,12 +316,12 @@ MonoBehaviour:
     damage: 0
     knockback: 0
   lastCheckPointTransform: {x: 0, y: 0, z: 0}
-  farRange: 0
-  nearRange: 0
+  farRange: 12
+  nearRange: 6
   gun: {fileID: 8849360307540039034}
   thruster: {fileID: 2675494265900334673}
-  Health: 5
-  HealthCap: 5
+  Health: 1
+  HealthCap: 1
   isGunCharging: 0
 --- !u!114 &8999689374722418468
 MonoBehaviour:
