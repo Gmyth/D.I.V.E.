@@ -242,6 +242,40 @@ public abstract class PlayerState : State
 //        }
     }
 
+    public void SimplePhysicsInputHelper(float h, float maxSpeed = 8, float Acceleration = 50)
+    {
+        float feverFactor = playerCharacter.InFever ? Player.CurrentPlayer.FeverFactor : 1;
+        // calculate speed on X axis
+        Rigidbody2D rb2d = playerCharacter.GetComponent<Rigidbody2D>();
+        if (Mathf.Abs(h) > 0.1f)
+        {
+            // has horizontal input
+            if (Mathf.Abs(rb2d.velocity.x) < maxSpeed * feverFactor)
+            {
+                var direction = Vector3.right * h * Acceleration * feverFactor;
+                if (direction.x * rb2d.velocity.x < 0)
+                    direction = direction * 4f;
+
+                rb2d.AddForce(direction);
+            }
+            else
+            {
+                if (rb2d.velocity.x * h < 0 && grounded)
+                {
+                    // not in the same direction
+                    // reduce speed,friction
+                    Vector2 direction = rb2d.velocity.normalized;
+
+                    if (direction.x > 0)
+                        direction.x = 1;
+                    else
+                        direction.x = -1;
+                    rb2d.velocity = new Vector3(direction.x * maxSpeed * feverFactor, rb2d.velocity.y);
+                }
+            }
+        }
+    }
+
     public void EarlyUpdate()
     {
 
