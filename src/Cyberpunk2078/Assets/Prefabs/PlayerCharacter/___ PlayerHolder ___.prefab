@@ -10664,7 +10664,7 @@ MonoBehaviour:
   PowerDash: 0
   PowerDashReady: 1
   LastPowerDash: 0
-  Gravity: 6
+  Gravity: 5
 --- !u!70 &7457358081769736768
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
