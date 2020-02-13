@@ -43,13 +43,9 @@ public class L2ShieldBossState_LeapShieldSlam : ESAttack<L2ShieldBoss>
             if (t_leap == 0)
             {
                 Vector3 playerPosition = enemy.currentTarget.transform.position;
+                Vector3 enemyPosition = enemy.transform.position;
 
-
-                Vector3 initialPosition = enemy.transform.position;
-                Vector3 targetPosition = playerPosition + new Vector3(Mathf.Sign((initialPosition - playerPosition).x) * 2, 0, 0);
-                float g = -Physics2D.gravity.y * rigidbody.gravityScale;
-
-                rigidbody.velocity = new Vector3((targetPosition.x - initialPosition.x) / attackPoint, (targetPosition.y - initialPosition.y) / attackPoint + 0.5f * g * attackPoint, (targetPosition.z - initialPosition.z) / attackPoint);
+                rigidbody.velocity = MathUtility.GetInitialVelocityForParabolaMovement(enemyPosition, playerPosition + new Vector3(Mathf.Sign((enemyPosition - playerPosition).x) * 2, 0, 0), attackPoint, -Physics2D.gravity.y * rigidbody.gravityScale);
 
 
                 animator.Play(animation_beforeAttack);

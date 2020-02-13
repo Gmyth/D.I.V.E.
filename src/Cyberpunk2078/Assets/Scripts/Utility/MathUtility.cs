@@ -5,16 +5,11 @@
 using System;
 using UnityEngine;
 
+
 public struct MathUtility
 {
     public static readonly float sqrt2 = Mathf.Sqrt(2);
-    public static readonly Vector3[] orientations = new Vector3[360];
 
-    public static void Initialize()
-    {
-        for (int a = 0; a < 360; a++)
-            orientations[a] = Quaternion.Euler(0, 0, a) * Vector3.right;
-    }
 
     public static int ManhattanDistance(int xA, int yA, int xB, int yB)
     {
@@ -66,18 +61,8 @@ public struct MathUtility
         return Math.Max(Math.Abs(xA - xB), Math.Max(Math.Abs(yA - yB), Math.Abs(zA - zB)));
     }
 
-    public static float CubicCurve1(float x)
+    public static Vector3 GetInitialVelocityForParabolaMovement(Vector3 initialPosition, Vector3 targetPosition, float time, float g)
     {
-        return (Mathf.Pow(3 * x - 1, 3) + 1) / 9;
-    }
-
-    public static float CubicCurve2(float x)
-    {
-        return (Mathf.Pow(4 * x - 2, 3) + 8) / 16;
-    }
-
-    public static Vector3 GetOrientation(int angle)
-    {
-        return orientations[angle % 360];
+        return new Vector3((targetPosition.x - initialPosition.x) / time, (targetPosition.y - initialPosition.y) / time + 0.5f * g * time, (targetPosition.z - initialPosition.z) / time);
     }
 }

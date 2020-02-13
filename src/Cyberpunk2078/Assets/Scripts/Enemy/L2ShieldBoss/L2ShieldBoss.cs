@@ -3,6 +3,10 @@
 
 public class L2ShieldBoss : Enemy
 {
+    [Header("Field")]
+    [SerializeField] private Vector3 leftThrowPoint;
+    [SerializeField] private Vector3 rightThrowPoint;
+
     [Header("On Hit")]
     [SerializeField] private float knockbackOnHit = 30;
     [SerializeField] private float knockbackOnHitFromBack = 50;
@@ -13,10 +17,37 @@ public class L2ShieldBoss : Enemy
     [SerializeField] private float angerDecrease = 5f;
     [SerializeField] private float counterThreshhold = 20f;
 
+    [Header("Hand")]
+    [SerializeField] private Transform handAnchor;
+
     public GameObject spark;
 
     private float anger = 0;
 
+
+    public Vector3 LeftThrowPoint
+    {
+        get
+        {
+            return leftThrowPoint;
+        }
+    }
+
+    public Vector3 RightThrowPoint
+    {
+        get
+        {
+            return rightThrowPoint;
+        }
+    }
+
+    public Transform HandAnchor
+    {
+        get
+        {
+            return handAnchor;
+        }
+    }
 
     public bool IsGuarding
     {
