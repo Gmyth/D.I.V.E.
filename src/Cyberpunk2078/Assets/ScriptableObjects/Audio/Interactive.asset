@@ -16,3 +16,4 @@ MonoBehaviour:
   - event:/Interactive/BreakGround
   - event:/Interactive/BreakWindow
   - event:/Interactive/LogOut
+  - event:/Interactive/Scene_trans
