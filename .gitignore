@@ -74,5 +74,4 @@ crashlytics-build.properties
 /src/Cyberpunk2078/Assets/Xlsx/Json(server)
 /src/Cyberpunk2078/Assets/Xlsx/Tab(client)
 src/Cyberpunk2078/fmod_editor.log
-src/Cyberpunk2078/Assets/Resources/FMODStudioSettings.asset
 src/Cyberpunk2078/Assets/FMODStudioCache.asset
