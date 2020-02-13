@@ -35,7 +35,7 @@ public class DroneState_Patrolling : ESPatrolling<Drone>
 
 
                 if (t < t_finishSearching)
-                    enemy.AdjustFacing();
+                    enemy.Turn();
                 else
                 {
                     enemy.currentTarget = null;

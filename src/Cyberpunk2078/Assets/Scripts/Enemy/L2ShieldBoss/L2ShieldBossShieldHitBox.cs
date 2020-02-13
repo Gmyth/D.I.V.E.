@@ -4,11 +4,11 @@
 public class L2ShieldBossShieldHitBox : ShieldHitBox
 {
     [Header("Normal Knockback")]
-    [SerializeField] private float normalKnockbackDuration = 0.5f;
     [SerializeField] private float normalKnockbackFatigue = 0f;
+
     [Header("Large Knockback")]
     [SerializeField] private float largeKnockbackMultiplier = 5f;
-    [SerializeField] private float largeKnockbackDuration = 1.5f;
+    [SerializeField] private float largeKnockbackDurationMultiplider = 3f;
     [SerializeField] private float largeKnockbackFatigue = 2f;
 
 
@@ -16,7 +16,6 @@ public class L2ShieldBossShieldHitBox : ShieldHitBox
     {
         PlayerCharacter player = (PlayerCharacter)other.GetComponent<HitBox>().hit.source;
         L2ShieldBoss shieldBoss = (L2ShieldBoss)hit.source;
-
 
         if (Vector3.Angle(shieldBoss.transform.localScale.x * shieldBoss.transform.right, player.transform.position - shieldBoss.transform.position) < 90)
         {
@@ -33,7 +32,7 @@ public class L2ShieldBossShieldHitBox : ShieldHitBox
 
             if (player.State.Name == "Dashing")
             {
-                player.Knockback(direction, largeKnockbackMultiplier * hit.knockback, largeKnockbackDuration);
+                player.Knockback(direction, largeKnockbackMultiplier * hit.knockback, largeKnockbackDurationMultiplider * hit.knockbackDuration);
 
 
                 shieldBoss.ApplyFatigue(largeKnockbackFatigue);
@@ -41,7 +40,7 @@ public class L2ShieldBossShieldHitBox : ShieldHitBox
             }
             else
             {
-                player.Knockback(direction, hit.knockback, normalKnockbackDuration);
+                player.Knockback(direction, hit.knockback, hit.knockbackDuration);
 
 
                 shieldBoss.ApplyFatigue(normalKnockbackFatigue);

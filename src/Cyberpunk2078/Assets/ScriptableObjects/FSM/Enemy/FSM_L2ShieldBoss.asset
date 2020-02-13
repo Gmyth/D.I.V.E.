@@ -22,4 +22,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f12322ffc4c42524e90ca856f796db2b, type: 2}
   - {fileID: 11400000, guid: 6ccc8b76cdc18fa45b05a03e57363b1c, type: 2}
   - {fileID: 11400000, guid: e7360b3d182102c42b09a1693deed6e0, type: 2}
-  startingState: Alert
+  - {fileID: 11400000, guid: 4d7fae3b5b9c8164bb48ac982d24b841, type: 2}
+  - {fileID: 11400000, guid: 7b9a61ec3c570514b96b197f30251e01, type: 2}
+  - {fileID: 11400000, guid: 08d0837beabcb8d44af8924fd47b7423, type: 2}
+  - {fileID: 11400000, guid: 8d41dccf9eb4f894da8245233093045e, type: 2}
+  - {fileID: 11400000, guid: 5be3158ddcff9bb4d9acfe56be9a1b49, type: 2}
+  - {fileID: 11400000, guid: 4fa6a5f5505b10a4cb5875b456892c8b, type: 2}
+  - {fileID: 11400000, guid: f2945430a48eced43af395cb7ad7a243, type: 2}
+  - {fileID: 11400000, guid: 1893fb22565d431419aea748e2f330cc, type: 2}
+  - {fileID: 11400000, guid: 98255bdf167ef284c8151399515f1270, type: 2}
+  - {fileID: 11400000, guid: 9ddda6cab03d5694984abbf623546744, type: 2}
+  startingState: GrabAndThrow

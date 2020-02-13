@@ -10,8 +10,9 @@ public class PSKnockback : PlayerState
     
     private Rigidbody2D rigidbody;
 
+    private float defaultDrag;
     private float duration;
-    private float t_finish;
+    private float t_duration = 0;
     private float t_blink;
     private int counter;
 
@@ -25,21 +26,12 @@ public class PSKnockback : PlayerState
 
     public override string Update()
     {
-        float t = Time.time;
-
-
-        if (t >= t_finish)
+        if ((t_duration += TimeManager.Instance.ScaledDeltaTime) >= duration)
             return "Idle";
 
 
-        while (t >= t_blink)
-        {
-            playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().color = (counter & 1) == 0 ? Color.white : Color.grey;
-
-
-            t_blink += BlinkInterval;
-            counter++;
-        }
+        for (; t_duration >= t_blink; t_blink += BlinkInterval)
+            playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().color = (counter++ & 1) == 0 ? Color.white : Color.grey;
 
 
         return Name;
@@ -50,10 +42,13 @@ public class PSKnockback : PlayerState
         anim.Play("MainCharacter_Hurt", -1, 0f);
 
 
+        defaultDrag = rigidbody.drag;
         duration = Player.CurrentPlayer.knockBackDuration;
-        t_finish = Time.time + duration;
-        t_blink = Time.time + BlinkInterval;
+        t_duration = 0;
+        t_blink = BlinkInterval;
         counter = 0;
+
+        rigidbody.drag = 0;
 
 
         playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().color = Color.gray;
@@ -61,6 +56,9 @@ public class PSKnockback : PlayerState
 
     public override void OnStateQuit(State nextState)
     {
+        rigidbody.drag = defaultDrag;
+
+
         playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().color = Color.white;
     }
 }
