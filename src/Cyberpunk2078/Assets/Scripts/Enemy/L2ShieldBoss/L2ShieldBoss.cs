@@ -89,7 +89,7 @@ public class L2ShieldBoss : Enemy
 
     public override float ApplyDamage(float rawDamage)
     {
-        if (isInvulnerable)
+        if (IsInvulnerable)
             return 0;
 
 
@@ -108,6 +108,9 @@ public class L2ShieldBoss : Enemy
 
             return ApplyFatigue(rawDamage * statistics.Sum(AttributeType.Fatigue_p0) * (1 + statistics.Sum(AttributeType.Fatigue_p1)));
         }
+
+
+        statistics[StatisticType.Fatigue] = 0;
 
 
         StatisticModificationResult result = statistics.Modify(StatisticType.Hp, -rawDamage, 0, statistics[StatisticType.MaxHp]);
@@ -138,11 +141,7 @@ public class L2ShieldBoss : Enemy
 
         if (result.currentValue >= statistics[StatisticType.MaxFatigue])
         {
-            if (statusModifiers[AttributeType.MaxFatigue_m0] == 1)
-                fsm.CurrentStateName = "DiveBombReposition";
-            else
-                fsm.CurrentStateName = "Tired";
-
+            fsm.CurrentStateName = "Tired";
 
             statistics[StatisticType.Fatigue] = 0;
         }
@@ -183,7 +182,7 @@ public class L2ShieldBoss : Enemy
 
     private void HandleHit(Hit hit, Collider2D collider)
     {
-        if (!isInvulnerable)
+        if (!IsInvulnerable)
         {
             PlayerCharacter player = hit.source.GetComponent<PlayerCharacter>();
 

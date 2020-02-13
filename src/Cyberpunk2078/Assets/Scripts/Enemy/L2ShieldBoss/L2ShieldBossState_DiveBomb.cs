@@ -43,6 +43,9 @@ public class L2ShieldBossState_DiveBomb : ESChargedAttack<L2ShieldBoss>
         t_finishWait = 0;
 
 
+        enemy.TurnImmediately();
+
+
         CameraManager.Instance.ChangeTarget(enemy.gameObject);
         CameraManager.Instance.Follow();
     }
@@ -81,21 +84,20 @@ public class L2ShieldBossState_DiveBomb : ESChargedAttack<L2ShieldBoss>
             case State.Falling:
                 if (enemy.IsOnGround())
                 {
-                    PlayerCharacter playerCharacter = PlayerCharacter.Singleton;
+                    //PlayerCharacter playerCharacter = PlayerCharacter.Singleton;
 
-                    if (playerCharacter.IsOnGround(0.12f, -0.7f, 0.6f))
-                    {
-                        Hit hit = new Hit();
-                        hit.LoadData(hitData);
-                        hit.source = enemy;
-
-
-                        GameUtility.ApplyDamage(playerCharacter, hit, null);
-                    }
+                    //if (playerCharacter.IsOnGround(0.12f, -0.7f, 0.6f))
+                    //{
+                    //    Hit hit = new Hit();
+                    //    hit.LoadData(hitData);
+                    //    hit.source = enemy;
 
 
-                    enemy.EmitShockwave(16, Vector3.right, false);
-                    enemy.EmitShockwave(16, Vector3.left, false);
+                    //    GameUtility.ApplyDamage(playerCharacter, hit, null);
+                    //}
+
+
+                    enemy.EmitShockwave(16, Mathf.Sign(enemy.transform.localScale.x) * Vector3.right, false);
 
 
                     CameraManager.Instance.Shaking(0.4f, 0.2f, true);

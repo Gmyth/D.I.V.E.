@@ -83,13 +83,26 @@ public abstract class Dummy : MonoBehaviour, IDamageable
 
     [SerializeField] protected StatisticSystem statistics;
 
-    public bool isInvulnerable = false;
+    [SerializeField] private bool isInvulnerable = false;
     public bool isEvading = false;
     public float UnitTimeFactor = 1;
 
 
     public HitEvent OnHit { get; private set; } = new HitEvent();
     public HitEvent OnAttack { get; private set; } = new HitEvent();
+
+    public bool IsInvulnerable
+    {
+        get
+        {
+            return isInvulnerable;
+        }
+
+        set
+        {
+            isInvulnerable = value;
+        }
+    }
 
     public Vector2 GroundNormal
     {

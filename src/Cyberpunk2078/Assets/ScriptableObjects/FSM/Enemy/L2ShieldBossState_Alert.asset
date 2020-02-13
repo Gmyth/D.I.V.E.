@@ -51,8 +51,6 @@ MonoBehaviour:
       weight: 30
     - data: GrenadeThrow
       weight: 10
-    - data: LeapShieldSlam
-      weight: 10
     - data: ChargedDash
       weight: 20
   farBehaviorSelector:
@@ -64,6 +62,6 @@ MonoBehaviour:
     - data: ChargedDash
       weight: 30
     - data: LeapShieldSlam
-      weight: 25
-    - data: GrenadeThrow
       weight: 30
+    - data: GrenadeThrow
+      weight: 25
