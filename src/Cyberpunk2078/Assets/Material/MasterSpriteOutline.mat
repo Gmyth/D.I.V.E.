@@ -31,8 +31,8 @@ Material:
     - Inner: 0
     - PixelSnap: 0
     - _Inner: 0
-    - _OutlineSize: 3.86
+    - _OutlineSize: 5
     m_Colors:
     - _Colo: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _OutlineColor: {r: 1, g: 0.42769682, b: 0, a: 1}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}

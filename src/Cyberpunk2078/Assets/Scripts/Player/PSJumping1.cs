@@ -65,25 +65,35 @@ public class PSJumping1 : PlayerState
         }
 
         //Still support Horizontal update during jumping, delete following to kill Horizontal input
-        if(Player.CurrentPlayer.LastBounceSec + 0.5f < Time.time && lastJumpSec + 0.5f < Time.time) PhysicsInputHelper(h);
+       
+        if(previous.Name == "WallSliding"){
+            if (lastJumpSec + 0.3f < Time.time ) PhysicsInputHelper(h);
+        }
+        else
+        {
+            if (Player.CurrentPlayer.LastBounceSec + 0.3f < Time.time) PhysicsInputHelper(h);
+        
+        }
 
-            var dir = isCloseTo("Ground");
-            if (dir != Direction.None)
+                 
+
+        var dir = isCloseTo("Ground");
+        if (dir != Direction.None)
+        {
+            if (lastJumpSec + 0.2f < Time.time && Player.CurrentPlayer.ChainWallJumpReady)
             {
-                if (lastJumpSec + 0.2f < Time.time && Player.CurrentPlayer.ChainWallJumpReady)
-                {
                     return "WallSliding";
-                }
-         }
+            }
+        }
 
 
         bool ground = GetGroundType() == 1;
 
         if (Input.GetAxis("Vertical") > 0 || normalizedInput.y > 0.7f)
-            {
+        {
                 // up is pressed
                 if(isCloseTo("Ladder") != Direction.None) return "Climbing";
-            }
+        }
 
         if (!ground && Vy < 0)
         {
