@@ -381,7 +381,7 @@ public class PlayerCharacter : Dummy
 
         
         GUIManager.Singleton.Open("HUD", this);
-        
+        GUIManager.Singleton.Open("MainMenu", this);
         //StartDialogue(10102001);
         
         // TODO: delete later
