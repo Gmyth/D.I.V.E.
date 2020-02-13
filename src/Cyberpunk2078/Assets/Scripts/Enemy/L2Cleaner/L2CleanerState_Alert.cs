@@ -16,7 +16,7 @@ public class L2CleanerState_Alert : ESAlert<L2Cleaner>
             return state_onTargetLoss;
 
 
-        if (Time.time >= t_wait)
+        if (Time.time >= t_finishWait)
             return states_attacks[behaviorSelector.Select()[0]];
 
 

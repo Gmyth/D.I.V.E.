@@ -51,12 +51,12 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
         if ((type == OrientationType.UpwardOnly && direction.y < 0) || type == OrientationType.Horizontal)
         {
             Vector2 groundNormal = GetGroundNormal();
-            
+
             direction = direction.x > 0 ? groundNormal.Right().normalized : groundNormal.Left().normalized;
         }
 
 
-        enemy.Turn(direction);
+        enemy.AdjustFacing(direction);
     }
 
     public override void OnStateQuit(State nextState)
@@ -65,10 +65,6 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
 
 
         rigidbody.velocity = Vector2.zero;
-
-
-        if (hitBox >= 0)
-            enemy.DisableHitBox(hitBox);
     }
 
 
@@ -117,20 +113,14 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
             }
             else
             {
-                string nextStateName = Stop();
+                Stop();
 
-                if (nextStateName != "")
-                    return nextStateName;
+                return "Alert";
             }
         }
         else if (t_dash >= minDuration) // The dash has been finished
-        {
-            string nextStateName = Stop();
+            return Stop();
 
-            if (nextStateName != "")
-                return nextStateName;
-        }
-        
 
         return Name;
     }
@@ -167,7 +157,7 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
         }
 
 
-        return "";
+        return Name;
     }
 
     protected void Stop(Hit hit, Collider2D collider)

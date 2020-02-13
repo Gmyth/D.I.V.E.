@@ -7,7 +7,12 @@ public abstract class ESChargedAttack<T> : ESAttack<T> where T : Enemy
     [SerializeField] protected float chargeTime = 1;
     [SerializeField] protected bool stopChargingOnTargetLoss = false;
     [SerializeField] protected string animation_charging = "";
+
+    [Header("Connected States")]
+    [SerializeField] protected string state_afterAttack = "";
     [SerializeField] protected string state_onTargetLoss = "";
+
+    protected Animator animator;
 
     protected float t_chargeFinish;
 

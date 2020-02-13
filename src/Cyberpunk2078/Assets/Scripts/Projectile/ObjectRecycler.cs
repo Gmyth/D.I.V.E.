@@ -74,19 +74,6 @@ public class ObjectRecycler : MonoBehaviour
         return effect;
     }
 
-    public SingleEffect GetSingleEffect(int id, Transform target, Vector3 positionOffset)
-    {
-        SingleEffect effect = GetObject<SingleEffect>(id);
-        effect.transform.position = target.position + positionOffset;
-        effect.transform.right = transform.right;
-        effect.transform.localScale = Vector3.one;
-        effect.setTarget(target);
-        effect.gameObject.SetActive(true);
-
-
-        return effect;
-    }
-
 
     public void Recycle(Recyclable recyclable)
     {

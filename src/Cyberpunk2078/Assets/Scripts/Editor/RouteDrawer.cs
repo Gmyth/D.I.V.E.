@@ -70,16 +70,13 @@ public class RouteDrawer : PropertyDrawer
         }
 
 
-        if (wayPointsProperty.arraySize > 0)
-        {
-            SerializedProperty stayTimesProperty = property.FindPropertyRelative("stayTimes");
+        SerializedProperty stayTimesProperty = property.FindPropertyRelative("stayTimes");
 
 
-            position.y += position.height;
+        position.y += position.height;
 
 
-            EditorGUI.PropertyField(position, property.FindPropertyRelative("stayTimes"), true);
-        }
+        EditorGUI.PropertyField(position, property.FindPropertyRelative("stayTimes"), true);
 
 
         EditorGUI.indentLevel = indent;

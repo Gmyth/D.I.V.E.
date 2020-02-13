@@ -13,21 +13,17 @@ MonoBehaviour:
   m_Name: L2ShieldBossState_ChasingSieldSlam
   m_EditorClassIdentifier: 
   stateName: ChasingShieldSlam
-  attackPoint: 0
-  animation_beforeAttack: 
-  hitDataID: 0
-  hitBox: -1
-  attackDuration: 0
-  animation_attack: 
-  attackBackswing: 0
-  animation_afterAttack: 
-  state_afterAttack: Alert
+  motionID: -1
+  damage: 1
+  knockback: 5
+  hitBox: 0
   chasingSpeed: 1.5
-  attackRange: 2.5
-  attackHeight: 5
+  attackRange: 2
+  attackHeight: 4
   motionTime: 2
   idleAnimation: L2ShieldBoss_Guard
   chasingAnimation: L2ShieldBoss_ShieldMoving
-  attackAnimation: L2ShieldBoss_QuickShieldSlam
+  attackAnimation: L2ShieldBoss_ShieldSlam
   state_onTargetLoss: 
+  state_afterAttack: Alert
   maxChaseTime: 3

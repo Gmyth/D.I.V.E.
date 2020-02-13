@@ -8,6 +8,9 @@ public class L2ShieldBossState_CounterAttack : ESAttack<L2ShieldBoss>
 {
     [SerializeField] private float motionTime;
     [SerializeField] private string animation;
+    [SerializeField] private string state_afterAttack;
+
+    private Animator animator;
 
     private float t_finish = 0;
 
@@ -28,7 +31,7 @@ public class L2ShieldBossState_CounterAttack : ESAttack<L2ShieldBoss>
         t_finish = 0;
 
 
-        enemy.TurnImmediately();
+        enemy.AdjustFacingImmediately();
 
 
         animator.Play(animation);

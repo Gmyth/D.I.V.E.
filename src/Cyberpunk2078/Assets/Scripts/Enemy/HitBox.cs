@@ -6,49 +6,33 @@ using UnityEngine;
 {
     public enum Type : int
     {
-        Melee = 0x00,
-        CounterAttack = 0x01,
-
-        Bullet = 0x10,
-
-        AOE = 0x20,
+        Melee = 0,
+        Projectile = 1,
+        CounterAttack = 2,
     }
 
 
     public Type type;
-    public float damage;
-    public float damageRange;
-    public float knockback;
-    public float knockbackDuration;
-
     public Dummy source;
     public Bullet bullet;
-
-
-    public void LoadData(HitData data)
-    {
-        type = data.Type;
-        damage = data.Damage;
-        damageRange = data.DamageRange;
-        knockback = data.Knockback;
-        knockbackDuration = data.KnockbackDuration;
-    }
+    public float damage;
+    public float knockback;
 }
 
 
 [RequireComponent(typeof(Collider2D))]
 public class HitBox : MonoBehaviour
 {
-    [SerializeField] protected int hitDataID = -1;
+    public Hit hit;
     public bool isFriendly = false;
-    [SerializeField] protected bool ignoreInvulnerbility = false;
+
+    [Header("Configuration")]
     [SerializeField] protected int maxNumHits = int.MaxValue;
     [SerializeField] protected int maxNumHitsPerUnit = 1;
 
     [Header("")]
     [SerializeField] protected int[] effects;
-
-    [HideInInspector] public Hit hit;
+    [SerializeField] protected ContactFilter2D contactFilter = new ContactFilter2D();
 
     protected HitBoxGroup group;
     protected Dictionary<int, int> objectsHit;
@@ -57,25 +41,10 @@ public class HitBox : MonoBehaviour
     protected Coroutine bulletTimeCorotine = null;
 
 
-    public virtual void LoadHitData(HitData data)
-    {
-        if (hitDataID < 0)
-            hit.LoadData(data);
-        else
-            Debug.LogWarningFormat("[HitBox] {0}: The hit data is not going to be loaded because a static data has been bound. You can disable the data bound by setting hitDataID to -1.", gameObject.name);
-    }
-
-
     private void Awake()
     {
         HitBoxGroup group = transform.parent.GetComponent<HitBoxGroup>();
         objectsHit = group ? group.objectsHit : new Dictionary<int, int>();
-    }
-
-    private void Start()
-    {
-        if (hitDataID >= 0)
-            hit.LoadData(DataTableManager.singleton.GetHitData(hitDataID));
     }
 
     private void OnEnable()
@@ -87,7 +56,7 @@ public class HitBox : MonoBehaviour
 
 
         List<Collider2D> list = new List<Collider2D>();
-        int n = GetComponent<Collider2D>().OverlapCollider(new ContactFilter2D(), list);
+        int n = GetComponent<Collider2D>().OverlapCollider(contactFilter, list);
 
         for (int i = 0; i < n; ++i)
             OnTriggerEnter2D(list[i]);
@@ -163,7 +132,7 @@ public class HitBox : MonoBehaviour
         PlayerCharacter player = other.GetComponent<PlayerCharacter>();
         int id = player.gameObject.GetInstanceID();
 
-        if ((ignoreInvulnerbility || player.State.Name != "Dashing") && CheckHitObject(id))
+        if (player.State.Name != "Dashing" && CheckHitObject(id))
         {
             hit.source.OnAttack.Invoke(hit, other);
             player.OnHit?.Invoke(hit, other);

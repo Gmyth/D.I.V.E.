@@ -16,9 +16,7 @@ public enum CameraState
 public class CameraManager : MonoBehaviour {
 
 	// Use this for initialization
-	public static CameraManager Instance = null;
-
-
+	public static CameraManager Instance;
 	private float zoomVelocity;
 	private Vector2 velocity; // the speed reference for camera
 	private Vector2 focusVelocity;
@@ -44,9 +42,9 @@ public class CameraManager : MonoBehaviour {
 	[SerializeField]private float offsetY = 0;
 	
 	//Tracking list for all gameobject should be in screen at this moment
-	private List<GameObject> targetList = new List<GameObject>();
+	private List<GameObject> targetList;
 	private GameObject mainTarget;
-	private List<CameraIndicator> indicatorList = new List<CameraIndicator>();
+	private List<CameraIndicator> indicatorList;
 	
 	
 
@@ -101,26 +99,17 @@ public class CameraManager : MonoBehaviour {
 	
 	private bool zoomInChasing; // the need of chasing character for a while 
 	private CameraState currentState = CameraState.Reset;
-
-
-    private void Awake()
-    {
-        if (Instance == null)
-            Instance = this;
-        else
-            Destroy(gameObject);
-    }
-
-    void Start ()
+	void Start ()
 	{
 		defaultSize = Camera.main.orthographicSize;
 		mainTarget = GameObject.FindGameObjectWithTag("Player");
+		targetList = new List<GameObject>();
+		indicatorList = new List<CameraIndicator>();
 		targetList.Add(mainTarget);
-		
+		Instance = this;
 		previousPosition = transform.position;
 		Initialize();
 	}
-
 
     public void ResetTarget()
     {
@@ -150,7 +139,7 @@ public class CameraManager : MonoBehaviour {
 	public void Initialize()
 	{
 		//collect all indicators in level
-		indicatorList = FindObjectsOfType<CameraIndicator>().ToList();
+		indicatorList = GameObject.FindObjectsOfType<CameraIndicator>().ToList();
 	}
 
 	void LateUpdate()
@@ -501,9 +490,8 @@ public class CameraManager : MonoBehaviour {
 	    }
 	    else
 	    {
-            // already 
-            followOffset = transform.position - mainTarget.transform.position;
-        }
+		    // already followed
+	    }
     }
 
     IEnumerator followRelease(CameraState previous, float duration)

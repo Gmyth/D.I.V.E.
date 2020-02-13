@@ -7,6 +7,7 @@ public class L2ShieldBossState_ChasingShieldSlam : ESChasingAttack<L2ShieldBoss>
     [SerializeField] private float maxChaseTime = 3f;
 
     private float t_chase;
+    private bool stopChasing;
 
 
     public override void OnStateQuit(State nextState)
@@ -14,7 +15,6 @@ public class L2ShieldBossState_ChasingShieldSlam : ESChasingAttack<L2ShieldBoss>
         base.OnStateQuit(nextState);
 
 
-        enemy.DisableHitBox(0);
         enemy.DisableHitBox(2);
     }
 
@@ -27,7 +27,7 @@ public class L2ShieldBossState_ChasingShieldSlam : ESChasingAttack<L2ShieldBoss>
         t_chase = 0;
 
 
-        enemy.EnableHitBox(2);
+        enemy.EnableHitBox(2, false);
     }
 
     protected override string Chase(Vector3 direction)
@@ -39,7 +39,7 @@ public class L2ShieldBossState_ChasingShieldSlam : ESChasingAttack<L2ShieldBoss>
 
 
         if (t_chase >= maxChaseTime)
-            return "Alert";
+            return "ChargedDash";
 
 
         return "";

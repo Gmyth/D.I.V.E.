@@ -51,7 +51,7 @@ public class PlayerCharacter : Dummy
     public bool PowerDash = false;
     public bool PowerDashReady = true;
     public float LastPowerDash;
-    public float Gravity = 3;
+    public float Gravity;
     
     private GameObject buttonTip;
     public bool InFever { get; private set; } = false;
@@ -67,18 +67,12 @@ public class PlayerCharacter : Dummy
 
     public void Knockback(Vector3 direction, float force, float duration = 1f)
     {
-        if (duration > 0)
-        {
-            Player.CurrentPlayer.knockBackDuration = duration;
-            fsm.CurrentStateName = "Knockback";
-        }
-        else
-            fsm.CurrentStateName = "Bounced";
-
-
         rigidbody.velocity = Vector2.zero;
-        rigidbody.angularVelocity = 0;
         rigidbody.AddForce(force * direction.normalized, ForceMode2D.Impulse);
+
+        
+        Player.CurrentPlayer.knockBackDuration = duration;
+        fsm.CurrentStateName = "Knockback";
     }
 
     public void KnockbackHorizontal(Vector3 origin, float force, float duration = 1f)
@@ -387,15 +381,14 @@ public class PlayerCharacter : Dummy
 
         
         GUIManager.Singleton.Open("HUD", this);
-
-
+        
         //StartDialogue(10102001);
-
+        
         // TODO: delete later
         buttonTip = GameObject.Find("HealthButton");
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (InFever)
             ConsumeUltimateEnergy(statistics[StatisticType.FeverDecay] * Time.deltaTime);

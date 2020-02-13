@@ -43,8 +43,8 @@ public class L2ShieldBossState_PowerGuard : EnemyState<L2ShieldBoss>
         backDirection = -enemy.transform.localScale.x * enemy.transform.right;
 
 
-        enemy.TurnImmediately();
-        enemy.EnableHitBox(hitBox);
+        enemy.AdjustFacingImmediately();
+        enemy.EnableHitBox(hitBox, false);
 
 
         rigidbody.drag = knockbackDrag;
@@ -68,7 +68,7 @@ public class L2ShieldBossState_PowerGuard : EnemyState<L2ShieldBoss>
 
     public override string Update()
     {
-        enemy.Turn();
+        enemy.AdjustFacing();
 
 
         float t = Time.time;

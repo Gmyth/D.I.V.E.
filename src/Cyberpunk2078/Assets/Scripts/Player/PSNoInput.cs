@@ -1,21 +1,14 @@
-﻿using UnityEngine;
-
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 [CreateAssetMenuAttribute(fileName = "PS_No_Input", menuName = "Player State/No Input")]
 public class PSNoInput : PlayerState
 {
-    [SerializeField] private float maxDuration = float.MaxValue;
     //public TimelineManager currentTimeline;
-    private float t_duration = 0;
-
 
     public override string Update()
     {
-        t_duration += TimeManager.Instance.ScaledDeltaTime;
-
-        if (t_duration >= maxDuration)
-            return "Idle";
-
         //if (isGrounded())
         //{
         //    KillSpeed();
@@ -40,9 +33,6 @@ public class PSNoInput : PlayerState
 
     public override void OnStateQuit(State nextState)
     {
-        t_duration = 0;
-
-
         //playerCharacter.gameObject.GetComponent<Rigidbody2D>().simulated = true;
         //playerCharacter.gameObject.GetComponent<Rigidbody2D>().gravityScale = 3;
         //playerCharacter.gameObject.GetComponent<Rigidbody2D>().drag = 1;

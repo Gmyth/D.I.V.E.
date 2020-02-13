@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: L2CleanerState_ChasingSlash
   m_EditorClassIdentifier: 
   stateName: ChasingSlash
-  hitDataID: 0
+  motionID: -1
+  damage: 1
+  knockback: 0
   hitBox: -1
   chasingSpeed: 3
   attackRange: 2

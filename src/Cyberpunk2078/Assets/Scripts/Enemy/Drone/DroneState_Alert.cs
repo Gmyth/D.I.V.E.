@@ -48,7 +48,7 @@ public class DroneState_Alert : ESAlert<Drone>
         }
         else
         {
-            enemy.Turn();
+            enemy.AdjustFacing();
 
 
             if (d < enemy.NearRange + 0.5f) // Always fire before getting to close or far

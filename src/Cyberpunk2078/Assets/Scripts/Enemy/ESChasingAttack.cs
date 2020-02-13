@@ -3,7 +3,7 @@
 
 public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
 {
-    [Header("Chasing")]
+    [Header("Configuration")]
     [SerializeField] private float chasingSpeed;
     [SerializeField][Min(0)] private float attackRange;
     [SerializeField][Min(0)] private float attackHeight;
@@ -11,10 +11,14 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
     [SerializeField] private string idleAnimation = "";
     [SerializeField] private string chasingAnimation = "";
     [SerializeField] private string attackAnimation = "";
+
+    [Header("Connected States")]
     [SerializeField] private string state_onTargetLoss = "";
+    [SerializeField] private string state_afterAttack = "";
 
     private EnemyType enemyType;
     private Rigidbody2D rigidbody;
+    private Animator animator;
 
     private bool isChasing = false;
     private float t_attack = float.MaxValue;
@@ -58,9 +62,9 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
     {
         base.Initialize(enemy);
 
-
         enemyType = enemy.Data.Type;
         rigidbody = enemy.GetComponent<Rigidbody2D>();
+        animator = enemy.GetComponent<Animator>();
     }
 
     public override string Update()
@@ -162,13 +166,10 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
             d = d.x > 0 ? Vector2.right : Vector2.left;
 
 
-        enemy.Turn(d);
+        rigidbody.velocity = d * chasingSpeed * TimeManager.Instance.TimeFactor * enemy.UnitTimeFactor;
 
 
-        if (enemy.IsTurning)
-            rigidbody.velocity = Vector2.zero;
-        else
-            rigidbody.velocity = d * chasingSpeed * TimeManager.Instance.TimeFactor * enemy.UnitTimeFactor;
+        enemy.AdjustFacing(d);
 
 
         return "";
@@ -189,16 +190,10 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
 
     protected virtual string Attack(Vector3 direction)
     {
-        enemy.OnEnableHitBox.AddListener(InitializeHitBox);
-
-        if (hitBox >= 0)
-            enemy.EnableHitBox(hitBox);
+        enemy.AdjustFacing(direction);
 
 
-        enemy.Turn(direction);
-
-
-        if (!enemy.IsTurning)
+        if (attackAnimation != "")
             animator.Play(attackAnimation, -1, 0f);
 
         AudioManager.Singleton.PlayOnce("Robot_attack");

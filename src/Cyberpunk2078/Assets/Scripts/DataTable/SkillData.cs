@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 
-
 [Serializable] public class SkillData : DataTableEntry
 {
     [SerializeField] private int id;
