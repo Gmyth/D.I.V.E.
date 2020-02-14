@@ -41,8 +41,8 @@ public class AudioManager : MonoBehaviour
                 dic.Add(result, s);
             }
         }
-        
 
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame

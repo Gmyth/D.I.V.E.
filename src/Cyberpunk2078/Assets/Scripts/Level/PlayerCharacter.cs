@@ -357,10 +357,19 @@ public class PlayerCharacter : Dummy
         if (Singleton)
             Destroy(gameObject);
         else
+        {
             Singleton = this;
+            
+        }
+            
     }
 
     private void Start()
+    {
+        init();
+        GUIManager.Singleton.Open("HUD", this);
+    }
+    public void init()
     {
         player = Player.CurrentPlayer == null ? Player.CreatePlayer() : Player.CurrentPlayer;
 
@@ -379,15 +388,14 @@ public class PlayerCharacter : Dummy
         fsm = fsm.Initialize(this);
         fsm.Boot();
 
+
         
-        GUIManager.Singleton.Open("HUD", this);
-        GUIManager.Singleton.Open("MainMenu", this);
+        //GUIManager.Singleton.Open("MainMenu", this);
         //StartDialogue(10102001);
-        
+
         // TODO: delete later
         buttonTip = GameObject.Find("HealthButton");
     }
-
     private void FixedUpdate()
     {
         if (InFever)

@@ -101,7 +101,7 @@ public class ObjectRecycler : MonoBehaviour
         {
             Singleton = this;
             //TEMP: Reload the scene will have issue
-            //DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject);
 
             recycledObjects = new Stack<Recyclable>[prefabs.Length];
 

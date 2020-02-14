@@ -211,7 +211,7 @@ public abstract class PlayerState : State
         }
         
         rb2d.velocity = velocityPlaceHolder;
-        Debug.Log("Y:"+rb2d.velocity.y);
+        //Debug.Log("Y:"+rb2d.velocity.y);
 //        // calculate speed on X axis
 //        if (Mathf.Abs(h) > 0.1f)
 //        {
