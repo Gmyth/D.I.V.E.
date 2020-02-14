@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: PS_Attack1
   m_EditorClassIdentifier: 
   stateName: Attack1
-  n_pushForce: 2.4
+  n_pushForce: 3
   n_actionTime: 0.2
   n_recoveryTime: 0.2
-  f_pushForce: 2.4
+  f_pushForce: 3
   f_actionTime: 0.2
   f_recoveryTime: 0.2
   EnergyConsume: 0

@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateName: Alert
   waitTime: 0.2
+  animation: L2Cleaner_Alert
+  states_attacks:
+  - ChargedDash
+  - ChasingSlash
+  state_onTargetLoss: Patrolling
   behaviorSelector:
     n: 1
     repeats: 1
     weights: 1e00000046000000
-  animation: L2Cleaner_Alert
-  states_attack:
-  - ChargedDash
-  - ChasingSlash
-  state_onTargetLoss: Patrolling

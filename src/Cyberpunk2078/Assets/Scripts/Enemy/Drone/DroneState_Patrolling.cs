@@ -35,7 +35,7 @@ public class DroneState_Patrolling : ESPatrolling<Drone>
 
 
                 if (t < t_finishSearching)
-                    enemy.AdjustFacing();
+                    enemy.Turn();
                 else
                 {
                     enemy.currentTarget = null;
@@ -94,6 +94,6 @@ public class DroneState_Patrolling : ESPatrolling<Drone>
 
         gunAnimator.Play("L2Drone_Gun_Idle");
 
-        AudioManager.Instance.PlayOnce("LaserBullet");
+        AudioManager.Singleton.PlayOnce("LaserBullet");
     }
 }

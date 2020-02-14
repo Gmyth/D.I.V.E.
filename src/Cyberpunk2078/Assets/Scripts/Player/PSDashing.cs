@@ -170,6 +170,7 @@ public class PSDashing : PlayerState
             {
                 // Energy is not enough, Cancel dash
                 Apply = false;
+                AudioManager.Singleton.PlayOnce("Negative_dash");
                 return;
             }
 
@@ -190,11 +191,12 @@ public class PSDashing : PlayerState
             {
                 // Energy is not enough, Cancel dash
                 Apply = false;
+                AudioManager.Singleton.PlayOnce("Negative_dash");
                 return;
             }
         }
 
-        AudioManager.Instance.PlayOnce("Dash");
+        AudioManager.Singleton.PlayOnce("Dash");
 
 
         Apply = true;

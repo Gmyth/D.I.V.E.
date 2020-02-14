@@ -48,11 +48,11 @@ public class PSAttackGH: PlayerState
         float Vy = rb2d.velocity.y;
         PhysicsInputHelper(h);
 
-        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,0.8f);
+        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position, rb2d.velocity.normalized, 0.8f);
         if (hit1.collider != null && hit1.transform.CompareTag("Ground"))
         {
             // kill all speed
-            rb2d.velocity = new Vector2(0,0);
+            rb2d.velocity = new Vector2(0, 0);
             
             // reset drag & gravity 
 //            rb2d.drag = defaultDrag;
@@ -129,12 +129,10 @@ public class PSAttackGH: PlayerState
                      
         // Kill Trail
         //playerCharacter.GetComponent<GhostSprites>().Occupied = false;
-
     }
 
     public override void OnStateEnter(State previousState)
     {
-        
         var pushForce = playerCharacter.InKillStreak ? f_pushForce : n_pushForce;
 
         //playerCharacter.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -160,7 +158,7 @@ public class PSAttackGH: PlayerState
 
         anim.Play("MainCharacter_Atk", -1, 0f);
 
-        AudioManager.Instance.PlayOnce("Swing");
+        AudioManager.Singleton.PlayOnce("Swing");
 
         playerCharacter.GetComponent<Rigidbody2D>().AddForce(direction * pushForce * 100f);
         playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipX = direction.x < 0;

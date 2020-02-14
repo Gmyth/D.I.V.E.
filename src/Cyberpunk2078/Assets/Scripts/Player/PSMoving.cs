@@ -92,7 +92,7 @@ public class PSMoving : PlayerState
         
         anim.Play("MainCharacter_Run", -1, 0f);
 
-        AudioManager.Instance.PlayEvent("Footsteps");
+        AudioManager.Singleton.PlayEvent("Footsteps");
 
         //VFX 
         if (Mathf.Abs(h) > 0)
@@ -123,7 +123,7 @@ public class PSMoving : PlayerState
 
         anim.speed = 1f;
 
-        AudioManager.Instance.StopEvent("Footsteps");
+        AudioManager.Singleton.StopEvent("Footsteps");
         
         Player.CurrentPlayer.OnSlope = false;
     }

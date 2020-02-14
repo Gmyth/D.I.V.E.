@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6006811009535778935
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6006811009535778933}
+  - component: {fileID: 6006811009535778932}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6006811009535778933
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6006811009535778935}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6006811009535778932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6006811009535778935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 672d085f36e44f744b4b7f6fb56b67df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  events:
+  - event:/Player/PlayerDash/Dash
+  - event:/Enemy/Cleaner/KillRobot
+  - event:/Enemy/Drone/KillDrone
+  - snapshot:/FeverMode
+  - event:/Player/Fever
+  - event:/Enemy/Drone/LaserBullet
+  - event:/Player/Footsteps
+  - event:/Player/DeflectBullet
+  - event:/Player/PlayerSwing/Swing
+  - event:/Player/Heal
+  - event:/Player/Jump
+  - event:/Player/JumpPad
+  - snapshot:/SlowMotion
+  - event:/Player/Hurt
+  - event:/Player/EnergyCharge
+  - event:/Player/EnergyFull
+  - event:/Player/LowHealth
+  - event:/Player/WallSlide
+  - event:/Enemy/Cleaner/RobotDash
+  - event:/Enemy/EnemyAlert
+  - event:/Player/JumpLand
+  - event:/Enemy/Cleaner/RobotDashCharge
+  - event:/Enemy/Cleaner/RobotAttack
+  - event:/Player/KillStreak
+  - event:/BGM/BGM
+  - event:/Enemy/Drone/LaserCharge
+  AudioData:
+  - {fileID: 11400000, guid: bea8d70f331fb324ea1051db75ea325e, type: 2}
+  - {fileID: 11400000, guid: 6ce049cc5f875d94a8b7f8e3864604da, type: 2}
+  - {fileID: 11400000, guid: 263c0f5f019b5a44993d2c7163d8a5f7, type: 2}
+  - {fileID: 11400000, guid: 427b776e2141e8e478a8f600e90a25d0, type: 2}
+  - {fileID: 11400000, guid: 74421010416705b458c15a5cf01996cc, type: 2}
+  - {fileID: 11400000, guid: 9f8bd3a4303f4434fb112804c9d0037a, type: 2}
+  - {fileID: 11400000, guid: 06bba6652ba149141b3855bac1042d07, type: 2}
+  - {fileID: 11400000, guid: b924900b072a42c48bac138130f7a7cb, type: 2}

@@ -34,7 +34,7 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
     {
         base.OnStateEnter(previousState);
 
-        AudioManager.Instance.PlayOnce("RobotDashCharge");
+        AudioManager.Singleton.PlayOnce("RobotDashCharge");
 
         enemy.OnAttack.AddListener(Stop);
 
@@ -51,12 +51,12 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
         if ((type == OrientationType.UpwardOnly && direction.y < 0) || type == OrientationType.Horizontal)
         {
             Vector2 groundNormal = GetGroundNormal();
-
+            
             direction = direction.x > 0 ? groundNormal.Right().normalized : groundNormal.Left().normalized;
         }
 
 
-        enemy.AdjustFacing(direction);
+        enemy.Turn(direction);
     }
 
     public override void OnStateQuit(State nextState)
@@ -65,6 +65,10 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
 
 
         rigidbody.velocity = Vector2.zero;
+
+
+        if (hitBox >= 0)
+            enemy.DisableHitBox(hitBox);
     }
 
 
@@ -90,7 +94,7 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
 
             animator.Play(animation_dash);
 
-            AudioManager.Instance.PlayOnce("RobotDash");
+            AudioManager.Singleton.PlayOnce("RobotDash");
         }
         else if (!bStop)
         {
@@ -113,14 +117,20 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
             }
             else
             {
-                Stop();
+                string nextStateName = Stop();
 
-                return "Alert";
+                if (nextStateName != "")
+                    return nextStateName;
             }
         }
         else if (t_dash >= minDuration) // The dash has been finished
-            return Stop();
+        {
+            string nextStateName = Stop();
 
+            if (nextStateName != "")
+                return nextStateName;
+        }
+        
 
         return Name;
     }
@@ -157,7 +167,7 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
         }
 
 
-        return Name;
+        return "";
     }
 
     protected void Stop(Hit hit, Collider2D collider)

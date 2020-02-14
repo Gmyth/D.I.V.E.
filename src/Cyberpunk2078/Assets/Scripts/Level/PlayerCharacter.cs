@@ -67,12 +67,21 @@ public class PlayerCharacter : Dummy
 
     public void Knockback(Vector3 direction, float force, float duration = 1f)
     {
-        rigidbody.velocity = Vector2.zero;
-        rigidbody.AddForce(force * direction.normalized, ForceMode2D.Impulse);
+        if (duration > 0)
+        {
+            Player.CurrentPlayer.knockBackDuration = duration;
+            fsm.CurrentStateName = "Knockback";
+        }
+        else
+            fsm.CurrentStateName = "Bounced";
 
-        
-        Player.CurrentPlayer.knockBackDuration = duration;
-        fsm.CurrentStateName = "Knockback";
+
+        rigidbody.velocity = Vector2.zero;
+        rigidbody.angularVelocity = 0;
+
+
+        if (force > 0 && direction != Vector3.zero)
+            rigidbody.AddForce(force * direction.normalized, ForceMode2D.Impulse);
     }
 
     public void KnockbackHorizontal(Vector3 origin, float force, float duration = 1f)
@@ -100,10 +109,10 @@ public class PlayerCharacter : Dummy
             Dead();
         else if (result.currentValue <= 1f)
         {
-            AudioManager.Instance.PlayEvent("LowHealth");
+            AudioManager.Singleton.PlayEvent("LowHealth");
         }
 
-        AudioManager.Instance.PlayOnce("Hurt");
+        AudioManager.Singleton.PlayOnce("Hurt");
 
         return result.previousValue - result.currentValue;
     }
@@ -119,7 +128,7 @@ public class PlayerCharacter : Dummy
 
         StatisticModificationResult result = statistics.Modify(StatisticType.Hp, rawHeal, 0, statistics[StatisticType.MaxHp]);
         if (result.currentValue >= 1 && result.currentValue < statistics[StatisticType.MaxHp])
-            AudioManager.Instance.StopEvent("LowHealth");
+            AudioManager.Singleton.StopEvent("LowHealth");
 
         return result.previousValue - result.currentValue;
     }
@@ -145,8 +154,8 @@ public class PlayerCharacter : Dummy
             AddOverLoadEnergy(1);
             TimeManager.Instance.StartFeverMotion();
 
-            AudioManager.Instance.PlayOnce("Fever");
-            AudioManager.Instance.PlayEvent("FeverMode");
+            AudioManager.Singleton.PlayOnce("Fever");
+            AudioManager.Singleton.PlayEvent("FeverMode");
         }
         return InFever;
         
@@ -230,7 +239,7 @@ public class PlayerCharacter : Dummy
             GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").DehighlightFeverBar();
 
         float pitch = (statistics[StatisticType.UltimateEnergy] / statistics[StatisticType.MaxUltimateEnergy]);
-        AudioManager.Instance.PlayOnce("EnergyCharge", "Pitch", pitch);
+        AudioManager.Singleton.PlayOnce("EnergyCharge", "Pitch", pitch);
 
         return true;
     }
@@ -246,7 +255,7 @@ public class PlayerCharacter : Dummy
             GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").DehighlightFeverBar();
             TimeManager.Instance.EndFeverMotion();
 
-            AudioManager.Instance.StopEvent("FeverMode");
+            AudioManager.Singleton.StopEvent("FeverMode");
         }
         return true;
     }
@@ -313,7 +322,7 @@ public class PlayerCharacter : Dummy
         if (InKillStreak)
             return;
 
-        AudioManager.Instance.PlayOnce("KillStreak");
+        AudioManager.Singleton.PlayOnce("KillStreak");
 
         InKillStreak = true;
         SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
@@ -381,9 +390,9 @@ public class PlayerCharacter : Dummy
 
         
         GUIManager.Singleton.Open("HUD", this);
-        
+        //GUIManager.Singleton.Open("MainMenu", this);
         //StartDialogue(10102001);
-        
+
         // TODO: delete later
         buttonTip = GameObject.Find("HealthButton");
     }

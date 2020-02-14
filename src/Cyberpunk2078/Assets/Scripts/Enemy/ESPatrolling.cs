@@ -146,7 +146,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
                                 direction = direction.x > 0 ? Vector2.right : Vector2.left;
 
 
-                            enemy.AdjustFacing(direction);
+                            enemy.Turn(direction);
 
 
                             rigidbody.velocity = direction * speed * TimeManager.Instance.TimeFactor * enemy.UnitTimeFactor;
@@ -182,7 +182,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
                                     Vector3 direction = dx > 0 ? Vector2.right : Vector2.left;
 
 
-                                    enemy.AdjustFacing(direction);
+                                    enemy.Turn(direction);
 
 
                                     rigidbody.velocity = speed * direction;
@@ -215,7 +215,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
                                     Vector3 direction = v.normalized;
 
 
-                                    enemy.AdjustFacing(direction);
+                                    enemy.Turn(direction);
 
 
                                     rigidbody.velocity = speed * direction;
@@ -241,7 +241,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
             if (enemy.currentTarget)
             {
                 if (alwaysFacingTarget)
-                    enemy.AdjustFacing();
+                    enemy.Turn();
 
 
                 if (t >= t_nextFire)

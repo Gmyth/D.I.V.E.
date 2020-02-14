@@ -3,6 +3,32 @@
 
 public abstract class EnemyState : State
 {
+    protected static PlayerCharacter IsPlayerInSight(PlayerCharacter player, Enemy enemy, float range)
+    {
+        if (!player)
+            return null;
+
+
+        /* Check whether player is in the sight range */
+        float d = Vector2.Distance(enemy.transform.position, player.transform.position);
+
+
+        if (range > 0 && d > range)
+            return null;
+
+
+        /* Check whether there is something in the way */
+        int collidedLayer = (1 << LayerMask.NameToLayer("Player")) | (1 << LayerMask.NameToLayer("Obstacle"));
+
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(enemy.transform.position, player.transform.position - enemy.transform.position, d, collidedLayer);
+
+        if (raycastHit2D.collider && raycastHit2D.collider.gameObject != player.gameObject)
+            return null;
+
+
+        return player;
+    }
+
     protected static PlayerCharacter FindAvailableTarget(Vector3 enemyPosition, float range)
     {
         PlayerCharacter player = PlayerCharacter.Singleton;
@@ -57,6 +83,8 @@ public abstract class EnemyState : State
 public abstract class EnemyState<T> : EnemyState where T : Enemy
 {
     protected T enemy;
+    protected Rigidbody2D enemyRigidBody;
+    protected Animator enemyAnimator;
 
 
     public override void Initialize(int index, Enemy enemy)
@@ -70,6 +98,8 @@ public abstract class EnemyState<T> : EnemyState where T : Enemy
     public virtual void Initialize(T enemy)
     {
         this.enemy = enemy;
+        enemyRigidBody = enemy.GetComponent<Rigidbody2D>();
+        enemyAnimator = enemy.GetComponent<Animator>();
     }
 
 
@@ -78,39 +108,22 @@ public abstract class EnemyState<T> : EnemyState where T : Enemy
         return IsPlayerInSight(PlayerCharacter.Singleton, range);
     }
 
-
     protected PlayerCharacter IsPlayerInSight(PlayerCharacter player, float range)
     {
-        if (!player)
-            return null;
-
-
-        /* Check whether player is in the sight range */
-        float d = Vector2.Distance(enemy.transform.position, player.transform.position);
-
-
-        if (range > 0 && d > range)
-            return null;
-
-
-        /* Check whether there is something in the way */
-        int collidedLayer = (1 << LayerMask.NameToLayer("Player")) | (1 << LayerMask.NameToLayer("Obstacle"));
-
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(enemy.transform.position, player.transform.position - enemy.transform.position, d, collidedLayer);
-
-        if (raycastHit2D.collider && raycastHit2D.collider.gameObject != player.gameObject)
-            return null;
-
-
-        return player;
+        return IsPlayerInSight(player, enemy, range);
     }
+
 
     protected Vector2 GetGroundNormal()
     {
-        RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, Vector2.down, 10f);
+        int layerMask = LayerMask.GetMask("Obstacle");
+
+
+        RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position + 0.1f * Vector3.up, Vector2.down, 0.5f, layerMask);
 
         if (hit.collider && hit.transform.CompareTag("Ground"))
             return hit.normal;
+
 
         return Vector2.zero;
     }

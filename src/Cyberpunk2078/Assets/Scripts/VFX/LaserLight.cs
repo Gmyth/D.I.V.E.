@@ -20,13 +20,16 @@ public class LaserLight : MonoBehaviour
     private float beatCounter;
     private float MoveSpeed;
     private float beatDivider;
+
     void Start()
     {
         beatCounter = 0;
         MoveAngle= Random.Range(15,40);
         beatDivider = 2;
         acceptableBeat = Random.Range(0, 1);
-        AudioProcessor.Instance.onBeat.AddListener(onBeat);
+
+        BeatSystem.onBeat.AddListener(onBeat);
+        //AudioProcessor.Instance.onBeat.AddListener(onBeat);
     }
 
     void onBeat()

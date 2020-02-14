@@ -118,12 +118,19 @@ public class Bullet : Recyclable
         }
         else if (other.tag == "Player")
         {
-            if (other.GetComponent<PlayerCharacter>().State.Index != 6)
+            PlayerCharacter player = other.GetComponent<PlayerCharacter>();
+
+            if (player.State.Index != 6)
             {
                 //Not in dash, deal damage
-                other.GetComponent<PlayerCharacter>().ApplyDamage(rawDamage);
-                other.GetComponent<PlayerCharacter>().KnockbackHorizontal(transform.position, 300f, 0.3f);
+                player.ApplyDamage(rawDamage);
+
+                if (hit.knockback > 0)
+                    player.KnockbackHorizontal(transform.position, hit.knockback, 0.3f);
+
+
                 --numHitsRemaining;
+
 
                 //TimeManager.Instance.endSlowMotion();
                 CameraManager.Instance.Idle();
@@ -133,8 +140,8 @@ public class Bullet : Recyclable
                 Hit.transform.right = transform.right;
                 Hit.transform.position = other.transform.position + (transform.position - other.transform.position) * 0.5f;
                 Hit.transform.localScale = Vector3.one;
-
                 Hit.gameObject.SetActive(true);
+
 
                 Die();
             }
@@ -164,7 +171,7 @@ public class Bullet : Recyclable
 
                 Hit1.gameObject.SetActive(true);
 
-                AudioManager.Instance.PlayOnce("DeflectBullet");
+                AudioManager.Singleton.PlayOnce("DeflectBullet");
             }
 
         }

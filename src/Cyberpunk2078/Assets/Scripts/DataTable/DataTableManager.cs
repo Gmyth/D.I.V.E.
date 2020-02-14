@@ -17,6 +17,7 @@ public class DataTableManager
         foreach (DataTable dataPage in Resources.LoadAll<DataTable>("DataTables"))
             dataTables.Add(dataPage.name, dataPage);
 
+
         ReadTextTable();
     }
 
@@ -48,9 +49,9 @@ public class DataTableManager
         return textTable[id][(int)language];
     }
 
-    public MotionData GetMotionData(int id)
+    public HitData GetMotionData(int id)
     {
-        return GetData<MotionData>("Motion", id);
+        return GetData<HitData>("Motion", id);
     }
 
     public ItemData GetItemData(int id)
@@ -66,6 +67,11 @@ public class DataTableManager
     public DialogueData GetDialogueData(int id)
     {
         return GetData<DialogueData>("Dialogue", id);
+    }
+
+    public HitData GetHitData(int id)
+    {
+        return GetData<HitData>("Hit", id);
     }
 
 
