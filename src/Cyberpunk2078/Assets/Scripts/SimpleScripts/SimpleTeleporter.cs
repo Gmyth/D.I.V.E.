@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public enum MovingDirection
 {
@@ -39,14 +40,19 @@ public class SimpleTeleporter : MonoBehaviour
         {
             if (mask.GetComponent<RectTransform>().position.x <= 1920f)
             {
-                TargetLevel.SetActive(true);
+                //TargetLevel.SetActive(true);
                 CameraManager.Instance.Initialize();
 
                 capc.isTrigger = true;
-                c.gameObject.transform.position = TargetTeleportPosition.position;
+                GameObject level = GameProcessManager.Singleton.LoadLevel(1);
+                var sp = level.GetComponent<LevelInfo>().StartPoint;
+                c.gameObject.transform.position = sp.transform.position;
+                CameraManager.Instance.ResetTarget();
+                CameraManager.Instance.Reset();
                 capc.isTrigger = false;
 
                 transform.parent.gameObject.SetActive(false);
+                
             }
         }
         
@@ -101,8 +107,8 @@ public class SimpleTeleporter : MonoBehaviour
     {
         Gizmos.color = GizmoColor;
         Gizmos.DrawCube(transform.position, transform.localScale);
-        if (TargetTeleportPosition != null)
-            Gizmos.DrawCube(TargetTeleportPosition.position, new Vector3(1, 2, 1));
+       // if (TargetTeleportPosition != null)
+        //    Gizmos.DrawCube(TargetTeleportPosition.position, new Vector3(1, 2, 1));
     }
 
 
