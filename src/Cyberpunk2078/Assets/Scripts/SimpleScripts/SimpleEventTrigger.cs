@@ -36,7 +36,7 @@ public class SimpleEventTrigger : MonoBehaviour
 
     private IEnumerator InvokeEvents()
     {
-        CheckPointManager.Instance.RestoreObject(gameObject);
+        //CheckPointManager.Instance.RestoreObject(gameObject);
 
         for (int i = 0; i < triggeredEvents.Length; ++i)
         {

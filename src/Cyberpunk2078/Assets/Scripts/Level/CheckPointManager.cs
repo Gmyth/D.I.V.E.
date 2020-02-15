@@ -39,7 +39,8 @@ public class CheckPointManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        killedEnemies = new List<GameObject>();       
+        killedEnemies = new List<GameObject>();
+        //DontDestroyOnLoad(gameObject);
     }
 
     // Start is called before the first frame update

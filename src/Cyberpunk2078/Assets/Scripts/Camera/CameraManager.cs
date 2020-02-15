@@ -119,6 +119,7 @@ public class CameraManager : MonoBehaviour {
 		
 		previousPosition = transform.position;
 		Initialize();
+		DontDestroyOnLoad(gameObject);
 	}
 
 
@@ -323,20 +324,22 @@ public class CameraManager : MonoBehaviour {
 				break;
 
             case CameraState.Reset:
-	            
-	            Vector2 origin = mainTarget.transform.position;
-	            posX = Mathf.SmoothDamp(transform.position.x, origin.x, ref velocity.x, 0.2f);
-	            posY = Mathf.SmoothDamp(transform.position.y, origin.y, ref velocity.y, 0.2f);
+				if (mainTarget != null)
+				{
+					Vector2 origin = mainTarget.transform.position;
+					posX = Mathf.SmoothDamp(transform.position.x, origin.x, ref velocity.x, 0.2f);
+					posY = Mathf.SmoothDamp(transform.position.y, origin.y, ref velocity.y, 0.2f);
 
-	            if (((Vector2) transform.position - origin).magnitude < 2)
-	            {
-		            currentState = CameraState.Idle;
-	            }
-	            
-	            transform.position = new Vector3(posX + offsetX + shakeX, posY + offsetY + shakeY, transform.position.z);
-                break;
-            
-            case CameraState.Release:
+					if (((Vector2)transform.position - origin).magnitude < 2)
+					{
+						currentState = CameraState.Idle;
+					}
+
+					transform.position = new Vector3(posX + offsetX + shakeX, posY + offsetY + shakeY, transform.position.z);
+
+				}
+				break;
+			case CameraState.Release:
                 break;
             
             

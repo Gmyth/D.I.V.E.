@@ -6,7 +6,10 @@ public class PlayerTransformSync : MonoBehaviour
 {
 
     public Transform player;
-    
+    public void Awake()
+    {      
+    }
+
     // Update is called once per frame
     void Update()
     {

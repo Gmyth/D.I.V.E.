@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public enum MovingDirection
 {
@@ -11,26 +12,19 @@ public enum MovingDirection
 
 public class SimpleTeleporter : MonoBehaviour
 { 
-    public Transform TargetTeleportPosition;
-
-    public GameObject TargetLevel;
-
-    public Color GizmoColor;
+    //public Color GizmoColor;
 
     private GameObject mask;
-
-    public MovingDirection d;
-
-    [SerializeField] private float speed = 5f;
 
     private CapsuleCollider2D capc;
 
     private Collider2D c;
 
-    private void Awake()
-    {
-        
-    }
+    [SerializeField] private MovingDirection direction;
+
+    [SerializeField] private float speed = 5f;
+
+    [SerializeField] private int TargetLevelIndex;
 
     // Update is called once per frame
     void Update()
@@ -39,14 +33,20 @@ public class SimpleTeleporter : MonoBehaviour
         {
             if (mask.GetComponent<RectTransform>().position.x <= 1920f)
             {
-                TargetLevel.SetActive(true);
                 CameraManager.Instance.Initialize();
 
                 capc.isTrigger = true;
-                c.gameObject.transform.position = TargetTeleportPosition.position;
+
+                GameObject nextLevel = GameProcessManager.Singleton.LoadLevel(TargetLevelIndex);
+
+                GameProcessManager.Singleton.InitPlayer(nextLevel);
+
+                GameProcessManager.Singleton.InitCamera();
+
                 capc.isTrigger = false;
 
                 transform.parent.gameObject.SetActive(false);
+                
             }
         }
         
@@ -64,11 +64,12 @@ public class SimpleTeleporter : MonoBehaviour
             {
                 mask = GameObject.Find("HUD_Mask");
                 Vector3 pos = mask.transform.position;
+                Vector3 l_pos = mask.transform.localPosition;
                 mask.AddComponent<LinearMovement>().enabled = false;
                 LinearMovement lm = mask.GetComponent<LinearMovement>();
                 lm.speed = speed;
 
-                if (d == MovingDirection.R2L)
+                if (direction == MovingDirection.R2L)
                 {                  
                     lm.orientation = Vector3.left;
 
@@ -79,12 +80,13 @@ public class SimpleTeleporter : MonoBehaviour
                 {
                     lm.orientation = Vector3.right;
 
-                    pos = new Vector3(pos.x - 1920, pos.x, pos.z);
+                    mask.transform.localPosition = new Vector3(l_pos.x - 5760, l_pos.y, l_pos.z);
 
-                    lm.initialPosition = pos;
+                    lm.initialPosition = mask.transform.position;
                 }
 
                 lm.enabled = true;
+                
 
                 AudioManager.Singleton.PlayOnce("Scene_trans");
 
@@ -99,10 +101,10 @@ public class SimpleTeleporter : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = GizmoColor;
-        Gizmos.DrawCube(transform.position, transform.localScale);
-        if (TargetTeleportPosition != null)
-            Gizmos.DrawCube(TargetTeleportPosition.position, new Vector3(1, 2, 1));
+        //Gizmos.color = GizmoColor;
+        //Gizmos.DrawCube(transform.position, transform.localScale);
+        //if (TargetTeleportPosition != null)
+        //    Gizmos.DrawCube(TargetTeleportPosition.position, new Vector3(1, 2, 1));
     }
 
 

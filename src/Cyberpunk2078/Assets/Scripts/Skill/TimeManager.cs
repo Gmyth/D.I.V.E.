@@ -36,6 +36,7 @@ public class TimeManager : MonoBehaviour
         Time.timeScale = 1;
         Time.fixedDeltaTime = Time.timeScale / 60f;
         //Debug.LogWarning(Time.fixedDeltaTime);
+        //DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame

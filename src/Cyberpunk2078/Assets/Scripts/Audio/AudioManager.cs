@@ -10,9 +10,6 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Singleton { get; private set; } = null;
 
-    [FMODUnity.EventRef] 
-    [SerializeField] private List<string> events;
-
     //dic to match acutal fmod string with sound string
     private Dictionary<string, string> dic;
 
@@ -41,8 +38,6 @@ public class AudioManager : MonoBehaviour
                 dic.Add(result, s);
             }
         }
-        
-
     }
 
     // Update is called once per frame
