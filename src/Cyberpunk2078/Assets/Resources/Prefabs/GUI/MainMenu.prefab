@@ -592,4 +592,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NewGame: {fileID: 7496893421626863115}
+  LoadGame: {fileID: 7496893421660604447}
+  Options: {fileID: 7496893421412184462}
   quit: {fileID: 7496893421953105557}

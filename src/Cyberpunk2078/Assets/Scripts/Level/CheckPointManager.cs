@@ -40,7 +40,7 @@ public class CheckPointManager : MonoBehaviour
     {
         Instance = this;
         killedEnemies = new List<GameObject>();
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     // Start is called before the first frame update

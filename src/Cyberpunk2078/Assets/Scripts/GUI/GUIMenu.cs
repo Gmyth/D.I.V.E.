@@ -6,11 +6,15 @@ using UnityEngine.UI;
 public class GUIMenu : GUIWindow
 {
     public GameObject NewGame;
+    public GameObject LoadGame;
+    public GameObject Options;
     public GameObject quit;
     // Start is called before the first frame update
     void Start()
     {
         quit.GetComponent<Button>().onClick.AddListener(QuitClicked);
+        LoadGame.GetComponent<Button>().onClick.AddListener(LoadGameClicked);
+        Options.GetComponent<Button>().onClick.AddListener(OptionsClicked);
         NewGame.GetComponent<Button>().onClick.AddListener(NewGameClicked);
     }
 
@@ -20,19 +24,29 @@ public class GUIMenu : GUIWindow
         
     }
 
-    public void test()
-    {
-        Debug.Log("dawdaw");
-
-    }
 
     private void QuitClicked()
     {
+
         GameProcessManager.Singleton.Quit();
     }
 
     private void NewGameClicked()
     {
-        GameProcessManager.Singleton.StartGame();
+       // Camera.main.GetComponent<FadeCamera>().RedoFade();
+
+        GameProcessManager.Singleton.StartGame(0);
+    }
+
+    private void LoadGameClicked()
+    {
+
+        Camera.main.GetComponent<FadeCamera>().RedoFade();
+    }
+
+    private void OptionsClicked()
+    {
+
+      
     }
 }

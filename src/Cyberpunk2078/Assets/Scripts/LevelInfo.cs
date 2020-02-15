@@ -5,16 +5,5 @@ using UnityEngine;
 public class LevelInfo : MonoBehaviour
 {
     public GameObject StartPoint;
-    public GameObject EndPoint;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public int LevelIndex;
 }
