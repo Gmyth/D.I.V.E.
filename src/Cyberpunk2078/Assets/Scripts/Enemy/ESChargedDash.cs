@@ -5,7 +5,7 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
 {
     [Header("Dash Configuration")]
     [SerializeField] private OrientationType type = OrientationType.Omnidirectional;
-    [SerializeField] private float dashForce = 8000;
+    [SerializeField] private float dashSpeed = 8000;
     [SerializeField] private float minDuration = 0.15f;
     [SerializeField] private float maxDuration = 0;
     [SerializeField] private float stopDistance = 1;
@@ -65,6 +65,7 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
 
 
         rigidbody.velocity = Vector2.zero;
+        rigidbody.drag = 0;
 
 
         if (hitBox >= 0)
@@ -79,7 +80,7 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
 
         if (bDash) // The dash has not been performed
         {
-            rigidbody.AddForce(direction * dashForce);
+            rigidbody.velocity = direction * dashSpeed * TimeManager.Instance.TimeFactor;
 
 
             bDash = false;
@@ -88,8 +89,12 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
             t_dash = 0;
 
 
+            enemy.OnEnableHitBox.AddListener(InitializeHitBox);
+
             if (hitBox >= 0)
                 enemy.EnableHitBox(hitBox);
+
+            enemy.OnEnableHitBox.RemoveListener(InitializeHitBox);
 
 
             animator.Play(animation_dash);
@@ -98,6 +103,9 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
         }
         else if (!bStop)
         {
+            rigidbody.velocity = direction * dashSpeed * TimeManager.Instance.TimeFactor;
+
+
             if (enemy.GuardZone.Contains(enemy.transform.position))
             {
                 if (type == OrientationType.Horizontal)

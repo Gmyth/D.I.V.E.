@@ -14,6 +14,9 @@ public class L2ShieldBossState_ChasingShieldSlam : ESChasingAttack<L2ShieldBoss>
         base.OnStateQuit(nextState);
 
 
+        enemy.IsInvulnerable = false;
+
+
         enemy.DisableHitBox(0);
         enemy.DisableHitBox(2);
     }
@@ -25,6 +28,7 @@ public class L2ShieldBossState_ChasingShieldSlam : ESChasingAttack<L2ShieldBoss>
 
 
         t_chase = 0;
+        enemy.IsInvulnerable = true;
 
 
         enemy.EnableHitBox(2);

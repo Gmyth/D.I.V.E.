@@ -24,14 +24,14 @@ MonoBehaviour:
   - ChargedDash
   - DiveBomb
   state_onTargetLoss: 
-  meleeRange: 2.5
+  meleeRange: 3
   meleeBehaviorSelector:
     n: 1
     repeats: 0
     weights:
     - data: ChasingShieldSlam
       weight: 100
-  nearRange: 5
+  nearRange: 6
   nearBehaviorSelector:
     n: 1
     repeats: 0
@@ -40,7 +40,9 @@ MonoBehaviour:
       weight: 50
     - data: RushingGolfAttack
       weight: 50
-  midRange: 10
+    - data: ChargedDash
+      weight: 10
+  midRange: 15
   midBehaviorSelector:
     n: 1
     repeats: 0
@@ -58,10 +60,12 @@ MonoBehaviour:
     repeats: 0
     weights:
     - data: ChasingShieldSlam
-      weight: 15
+      weight: 10
     - data: ChargedDash
-      weight: 30
+      weight: 25
     - data: LeapShieldSlam
       weight: 30
     - data: GrenadeThrow
-      weight: 25
+      weight: 45
+    - data: DiveBomb
+      weight: 40

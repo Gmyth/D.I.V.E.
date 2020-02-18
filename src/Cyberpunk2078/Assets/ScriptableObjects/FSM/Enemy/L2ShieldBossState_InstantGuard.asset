@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: L2ShieldBossState_InstantGuard
   m_EditorClassIdentifier: 
   stateName: InstantGuard
-  attackPoint: 0.2
+  attackPoint: 0
   animation_beforeAttack: L2ShieldBoss_Guard2
-  hitDataID: -1
+  hitDataID: 6700
   hitBox: 3
   attackDuration: 0.5
   animation_attack: 

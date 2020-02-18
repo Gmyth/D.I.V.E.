@@ -15,11 +15,11 @@ MonoBehaviour:
   stateName: RushingGolfAttack
   attackPoint: 0.5
   animation_beforeAttack: L2ShieldBoss_DashCharge
-  hitDataID: 0
+  hitDataID: 6713
   hitBox: 4
   attackDuration: 0
   animation_attack: L2ShieldBoss_GolfAttack
-  attackBackswing: 2
+  attackBackswing: 0.6
   animation_afterAttack: 
   state_afterAttack: Alert
   rushForce: 1500
