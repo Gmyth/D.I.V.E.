@@ -27,7 +27,6 @@ public class GUIMenu : GUIWindow
 
     private void QuitClicked()
     {
-
         GameProcessManager.Singleton.Quit();
     }
 

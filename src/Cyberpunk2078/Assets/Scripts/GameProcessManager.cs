@@ -109,4 +109,21 @@ public class GameProcessManager : MonoBehaviour
         CameraManager.Instance.ResetTarget();
         CameraManager.Instance.Reset();
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            //Camera.main.GetComponent<FadeCamera>().RedoFade();
+            GUIManager.Singleton.Open("PauseMenu");
+            GUIManager.Singleton.Close("HUD");
+        }
+    }
+
+    public void ResumeGame()
+    {
+        
+        GUIManager.Singleton.Close("PauseMenu");
+        GUIManager.Singleton.Open("HUD", PlayerHolder.GetComponentInChildren<PlayerCharacter>());
+    }
 }
