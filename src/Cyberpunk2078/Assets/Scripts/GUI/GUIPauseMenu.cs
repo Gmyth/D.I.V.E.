@@ -37,7 +37,7 @@ public class GUIPauseMenu : GUIWindow
 
     private void BK_MainMenuClicked()
     {
-
+        GameProcessManager.Singleton.BK_MainMenu();
     }
 
     private void QuitClicked()

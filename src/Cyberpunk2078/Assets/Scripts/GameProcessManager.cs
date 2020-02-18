@@ -11,7 +11,6 @@ public class GameProcessManager : MonoBehaviour
     [SerializeField] private GameObject[] levels;
     [SerializeField] private GameObject PlayerHolder;
 
-    private PlayerCharacter playerCharacter;
     private int currentLevelIndex = -1;
     private GameObject currentLevel = null;
     private List<GameObject> LoadedLevel = new List<GameObject>();
@@ -81,7 +80,7 @@ public class GameProcessManager : MonoBehaviour
             
             if(ResetingStats == true)
             {
-                playerCharacter = PlayerHolder.GetComponentInChildren<PlayerCharacter>();
+                PlayerCharacter playerCharacter = PlayerHolder.GetComponentInChildren<PlayerCharacter>();
                 playerCharacter.init();
             }               
         }    
@@ -117,6 +116,8 @@ public class GameProcessManager : MonoBehaviour
             //Camera.main.GetComponent<FadeCamera>().RedoFade();
             GUIManager.Singleton.Open("PauseMenu");
             GUIManager.Singleton.Close("HUD");
+            PlayerHolder.GetComponentInChildren<MouseIndicator>().Hide();
+            TimeManager.Instance.Pause();
         }
     }
 
@@ -125,5 +126,29 @@ public class GameProcessManager : MonoBehaviour
         
         GUIManager.Singleton.Close("PauseMenu");
         GUIManager.Singleton.Open("HUD", PlayerHolder.GetComponentInChildren<PlayerCharacter>());
+        PlayerHolder.GetComponentInChildren<MouseIndicator>().Show();
+        TimeManager.Instance.Resume();
+    }
+     
+    public void BK_MainMenu()
+    {
+        GUIManager.Singleton.Close("HUD");
+        GUIManager.Singleton.Close("PauseMenu");
+
+        for (int i = 0; i < LoadedLevel.Count; i++)
+        {
+            Destroy(LoadedLevel[i]);
+        }
+
+        LoadedLevel.Clear();
+        
+        currentLevelIndex = - 1;
+
+        PlayerHolder.SetActive(false);
+
+        //CameraManager.Instance.Release();
+        TimeManager.Instance.Resume();
+
+        GUIManager.Singleton.Open("MainMenu");
     }
 }

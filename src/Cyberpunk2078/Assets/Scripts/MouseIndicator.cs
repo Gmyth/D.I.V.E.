@@ -19,6 +19,16 @@ public class MouseIndicator : MonoBehaviour
     private Color defaultColor;
     private Vector3 defaultScale;
     private SpriteRenderer renderer;
+
+    public void Hide()
+    {
+        renderer.enabled = false;
+    }
+
+    public void Show()
+    {
+        renderer.enabled = true;
+    }
     void Start()
     {
         player  = GameObject.FindGameObjectWithTag("Player");
