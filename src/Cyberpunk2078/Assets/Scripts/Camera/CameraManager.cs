@@ -116,7 +116,6 @@ public class CameraManager : MonoBehaviour {
 		defaultSize = Camera.main.orthographicSize;
 		mainTarget = GameObject.FindGameObjectWithTag("Player");
 		targetList.Add(mainTarget);
-		
 		previousPosition = transform.position;
 		Initialize();
 	}
@@ -376,8 +375,7 @@ public class CameraManager : MonoBehaviour {
 
 	private void updateParallaxConfig()
 	{
-		if (transform.position.x != previousPosition.x||
-		    transform.position.y != previousPosition.y)
+		if (transform.position.x != previousPosition.x)
 		{
 			if (onCameraTranslate != null)
 			{
