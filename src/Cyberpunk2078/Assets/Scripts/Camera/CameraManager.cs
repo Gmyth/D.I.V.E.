@@ -599,21 +599,25 @@ public class CameraManager : MonoBehaviour {
 		bool found = false;
 		foreach (var indicator in indicatorList)
 		{
-			if (indicator.inRange(pos))
+			if(indicator != null)
 			{
-
-				if (found && targetIndicator.influenceLevel > indicator.influenceLevel)
+				if (indicator.inRange(pos))
 				{
-					//found new indicator with higher priority 
 
-					targetIndicator = indicator;
-				}
-				else if (!found)
-				{
-					targetIndicator = indicator;
-					found = true;
+					if (found && targetIndicator.influenceLevel > indicator.influenceLevel)
+					{
+						//found new indicator with higher priority 
+
+						targetIndicator = indicator;
+					}
+					else if (!found)
+					{
+						targetIndicator = indicator;
+						found = true;
+					}
 				}
 			}
+			
 		}
 
 		return found?targetIndicator:null;

@@ -120620,8 +120620,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: 0
-  speed: 150
-  TargetLevelIndex: 1
+  speed: 100
+  TargetLevelIndex: 2
 --- !u!1 &6645941438788031202
 GameObject:
   m_ObjectHideFlags: 0
@@ -136330,7 +136330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartPoint: {fileID: 6645941438771460431}
-  LevelIndex: 0
+  LevelIndex: 1
 --- !u!1 &6645941439050139618
 GameObject:
   m_ObjectHideFlags: 0

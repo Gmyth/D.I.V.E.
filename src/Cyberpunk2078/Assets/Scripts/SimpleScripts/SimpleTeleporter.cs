@@ -31,9 +31,8 @@ public class SimpleTeleporter : MonoBehaviour
     {
         if(mask != null)
         {
-            if (mask.GetComponent<RectTransform>().position.x <= 1920f)
+            if (mask.GetComponent<RectTransform>().localPosition.x <= 0f)
             {
-                CameraManager.Instance.Initialize();
 
                 capc.isTrigger = true;
 
@@ -41,12 +40,11 @@ public class SimpleTeleporter : MonoBehaviour
 
                 GameProcessManager.Singleton.InitPlayer(nextLevel);
 
+                GameProcessManager.Singleton.DestroyLevel(transform.parent.gameObject);
+
                 GameProcessManager.Singleton.InitCamera();
 
                 capc.isTrigger = false;
-
-                transform.parent.gameObject.SetActive(false);
-                
             }
         }
         

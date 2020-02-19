@@ -127,7 +127,7 @@ public class GhostSprites : MonoBehaviour
 
 	}
 
-    private void KillSwitchEngage()
+    public void KillSwitchEngage()
     {
         killSwitch = true;
         foreach (GameObject g in ghostList)

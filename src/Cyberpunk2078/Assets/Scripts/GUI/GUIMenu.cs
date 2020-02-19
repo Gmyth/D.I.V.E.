@@ -34,13 +34,12 @@ public class GUIMenu : GUIWindow
     {
        // Camera.main.GetComponent<FadeCamera>().RedoFade();
 
-        GameProcessManager.Singleton.StartGame(0);
+        GameProcessManager.Singleton.StartGame(1);
     }
 
     private void LoadGameClicked()
     {
-
-        Camera.main.GetComponent<FadeCamera>().RedoFade();
+        GameProcessManager.Singleton.OpenLevelSelection();       
     }
 
     private void OptionsClicked()

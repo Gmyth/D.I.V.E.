@@ -2476,21 +2476,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1567390700
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1567390698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcc1c98b99479974a99dda12112eb64f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m: {fileID: 2100000, guid: 983f91d7c0f5d7d4bba0f5460de26d9a, type: 2}
-  cameraRenderTex: {fileID: 0}
-  mainCamera: {fileID: 1159890512}
 --- !u!1 &1673347222
 GameObject:
   m_ObjectHideFlags: 0

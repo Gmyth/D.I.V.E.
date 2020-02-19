@@ -10,6 +10,12 @@ public class GUIPauseMenu : GUIWindow
     public GameObject bk_mainmenu;
     public GameObject quit;
 
+    public GameObject Panel;
+    public GameObject Yes;
+    public GameObject No;
+
+
+    private string currentEvent = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +23,7 @@ public class GUIPauseMenu : GUIWindow
         levelSelection.GetComponent<Button>().onClick.AddListener(LevelSelectionClicked);
         bk_mainmenu.GetComponent<Button>().onClick.AddListener(BK_MainMenuClicked);
         quit.GetComponent<Button>().onClick.AddListener(QuitClicked);
+
     }
 
     // Update is called once per frame
@@ -30,18 +37,68 @@ public class GUIPauseMenu : GUIWindow
         GameProcessManager.Singleton.ResumeGame();
     }
 
+    private void ActivePanel( )
+    { 
+        Panel.SetActive(true);
+        Yes.GetComponent<Button>().onClick.AddListener(YesClicked);
+        No.GetComponent<Button>().onClick.AddListener(NoClicked);
+    }
+
+    private void DeactivePanel()
+    {
+        Yes.GetComponent<Button>().onClick.RemoveAllListeners();
+        No.GetComponent<Button>().onClick.RemoveAllListeners();
+        Panel.SetActive(false);
+    }
+
     private void LevelSelectionClicked()
     {
+        ActivePanel();
 
+        currentEvent = "LevelSelection";
     }
 
     private void BK_MainMenuClicked()
     {
-        GameProcessManager.Singleton.BK_MainMenu();
+        ActivePanel();
+
+        currentEvent = "MainMenu";
+
     }
 
     private void QuitClicked()
     {
-        GameProcessManager.Singleton.Quit();
+        ActivePanel();
+
+        currentEvent = "Quit";
+    }
+
+    private void YesClicked()
+    {
+        if(currentEvent != null)
+        {
+            if(currentEvent == "LevelSelection")
+            {
+                DeactivePanel();
+
+                //TODO
+                GameProcessManager.Singleton.OpenLevelSelection();
+            }
+            else if(currentEvent == "MainMenu")
+            {
+                DeactivePanel();
+                GameProcessManager.Singleton.BK_MainMenu();
+            }
+            else if(currentEvent == "Quit")
+            {
+                DeactivePanel();
+                GameProcessManager.Singleton.Quit();
+            }
+        }
+    }
+
+    private void NoClicked()
+    {
+        DeactivePanel();
     }
 }
