@@ -18,7 +18,7 @@ public class SimpleBreakable : MonoBehaviour
     
     [SerializeField] private bool triggerSlowMotion = false;
     // Start is called before the first frame update
-    [SerializeField] private GameObject[] triggers;
+    [SerializeField] private TriggerObject[] triggers;
     void Start()
     {
         anim = gameObject.GetComponent<Animator>();
@@ -77,12 +77,12 @@ public class SimpleBreakable : MonoBehaviour
         if (triggerSlowMotion)
         {
             
-            TimeManager.Instance.startSlowMotionBlink(1f,0.5f);
+            TimeManager.Instance.startSlowMotion(1f,0.5f);
             if (triggers.Length != 0)
             {
                 foreach (var trigger in triggers)
                 {
-                    trigger.GetComponent<SimpleBlackMask>().Trigger();
+                    trigger.Enable();
                 }
                 
             }
