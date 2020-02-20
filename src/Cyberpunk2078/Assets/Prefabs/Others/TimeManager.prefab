@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultSmoothTime: 0.01
-  slowMotionFactor: 0.5
+  slowMotionFactor: 0.3
   targetFXAlpha: 0.7
   GlobalGravity: 6
   TimeFactor: 1

@@ -141,7 +141,7 @@ public class PlayerCharacter : Dummy
 
 
         ObjectRecycler.Singleton.RecycleAll();
-        CheckPointManager.Instance?.RestoreCheckPoint();
+        CheckPointManager.Instance?.Restore();
     }
 
     public bool ActivateFever()
@@ -398,8 +398,7 @@ public class PlayerCharacter : Dummy
         fsm.Boot();
 
 
-
-        GUIManager.Singleton.Open("HUD", this);
+        //GUIManager.Singleton.Open("HUD", this);
         //GUIManager.Singleton.Open("MainMenu", this);
         //StartDialogue(10102001);
 

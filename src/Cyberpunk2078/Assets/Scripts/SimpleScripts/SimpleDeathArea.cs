@@ -37,7 +37,7 @@ public class SimpleDeathArea : MonoBehaviour
             }
             else
             {
-                CheckPointManager.Instance.RestoreCheckPoint();
+                CheckPointManager.Instance.Restore();
             }
 
         }

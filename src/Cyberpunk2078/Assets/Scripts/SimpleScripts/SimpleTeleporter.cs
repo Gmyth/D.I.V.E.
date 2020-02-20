@@ -31,9 +31,8 @@ public class SimpleTeleporter : MonoBehaviour
     {
         if(mask != null)
         {
-            if (mask.GetComponent<RectTransform>().position.x <= 1920f)
+            if (mask.GetComponent<RectTransform>().localPosition.x <= 0f)
             {
-                CameraManager.Instance.Initialize();
 
                 capc.isTrigger = true;
 
@@ -41,12 +40,13 @@ public class SimpleTeleporter : MonoBehaviour
 
                 GameProcessManager.Singleton.InitPlayer(nextLevel);
 
+                GameProcessManager.Singleton.DestroyLevel(transform.parent.gameObject);
+
                 GameProcessManager.Singleton.InitCamera();
 
-                capc.isTrigger = false;
+                CheckPointManager.Instance.Initialize();
 
-                transform.parent.gameObject.SetActive(false);
-                
+                capc.isTrigger = false;
             }
         }
         
@@ -68,6 +68,7 @@ public class SimpleTeleporter : MonoBehaviour
                 mask.AddComponent<LinearMovement>().enabled = false;
                 LinearMovement lm = mask.GetComponent<LinearMovement>();
                 lm.speed = speed;
+                lm.isPersistent = false;
 
                 if (direction == MovingDirection.R2L)
                 {                  
