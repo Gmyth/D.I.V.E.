@@ -20,7 +20,7 @@ MonoBehaviour:
   - event:/Player/Footsteps
   - event:/Player/Heal
   - event:/Player/Hurt
-  - event:/Player/Jump
+  - event:/Player/PlayerJump/Jump
   - event:/Player/JumpLand
   - event:/Player/JumpPad
   - event:/Player/KillStreak
