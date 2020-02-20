@@ -75,6 +75,8 @@ public class GameProcessManager : MonoBehaviour
         InitPlayer(currentLevel, true);
         InitCamera();
         InitHUD();
+        CheckPointManager.Instance.Initialize();
+
         yield return null;
     }
 

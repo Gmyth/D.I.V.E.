@@ -39,7 +39,7 @@ public class SimpleLaser : MonoBehaviour
                 }
                 else
                 {
-                    CheckPointManager.Instance.RestoreCheckPoint();
+                    CheckPointManager.Instance.Restore();
                 }
 
             }

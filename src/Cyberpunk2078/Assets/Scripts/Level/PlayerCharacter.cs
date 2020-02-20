@@ -132,7 +132,7 @@ public class PlayerCharacter : Dummy
 
 
         ObjectRecycler.Singleton.RecycleAll();
-        CheckPointManager.Instance?.RestoreCheckPoint();
+        CheckPointManager.Instance?.Restore();
     }
 
     public bool ActivateFever()
