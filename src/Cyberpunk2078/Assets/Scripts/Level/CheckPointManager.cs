@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,27 +9,27 @@ public class CheckPointManager : MonoBehaviour
 {
     public static CheckPointManager Instance { get; private set; } = null;
 
-    [SerializeField] private GameObject checkPointPrefab;
-
     /// <summary>
     /// Enemies needed to be reset and restore position
     /// </summary>
-    [SerializeField] private List<GameObject> savedEnemies = new List<GameObject>();
+    private List<GameObject> savedEnemies = new List<GameObject>();
 
     /// <summary>
     /// Dummy reference
     /// </summary>
-    [SerializeField] private GameObject[] dummies;
+    private List<GameObject> Enemies = new List<GameObject>();
 
     /// <summary>
     /// //Objects needed to be restored
     /// </summary>
-    [SerializeField] private List<GameObject> objects;
+    private List<GameObject> objects = new List<GameObject>();
 
     /// <summary>
     /// Blackscreen Reference
     /// </summary>
     [SerializeField] private GameObject blackScreen;
+
+    [SerializeField] private float SpeedFactor = 1;
 
     private Transform playerLastCheckPoint;
 
@@ -39,7 +40,14 @@ public class CheckPointManager : MonoBehaviour
 
     public void Initialize()
     {
-        dummies = GameObject.FindGameObjectsWithTag("Dummy");
+        GameObject dummyHolder = GameProcessManager.Singleton.GetCurrentDummies();
+        var dummies = dummyHolder.GetComponentsInChildren<Dummy>();
+        Enemies.Clear();
+        for (int i = 0; i < dummies.Length; i++)
+        {
+            Enemies.Add(dummies[i].gameObject);
+        }
+
     }
 
     public void Save(Transform _playertransform)
@@ -51,15 +59,17 @@ public class CheckPointManager : MonoBehaviour
         objects.Clear();
         
         //save enemies position
-        for(int i = 0; i < dummies.Length; i++)
+        for(int i = 0; i < Enemies.Count; i++)
         {
             //record position
-            dummies[i].GetComponent<Enemy>().lastCheckPointTransform = dummies[i].gameObject.transform.position;
+            Enemies[i].GetComponent<Enemy>().lastCheckPointTransform = Enemies[i].gameObject.transform.position;
         }
     }
 
     public void Restore()
     {
+        //AudioManager.Singleton.StopBus("Enemy");
+
         PlayerCharacter.Singleton.GetFSM().CurrentStateName = "NoInput";
 
         StartCoroutine(Restoring());
@@ -88,11 +98,11 @@ public class CheckPointManager : MonoBehaviour
         }
 
         //Restore all enemies position
-        for (int i = 0; i < dummies.Length; i++)
+        for (int i = 0; i < Enemies.Count; i++)
         {
-            var lastPos = dummies[i].GetComponent<Enemy>().lastCheckPointTransform;
-            dummies[i].transform.position = lastPos;
-            dummies[i].GetComponent<Enemy>().Reset();
+            var lastPos = Enemies[i].GetComponent<Enemy>().lastCheckPointTransform;
+            Enemies[i].transform.position = lastPos;
+            Enemies[i].GetComponent<Enemy>().Reset();
         }
     }
 
@@ -103,7 +113,7 @@ public class CheckPointManager : MonoBehaviour
         float a = 0;
         while (a < 1)
         {
-            a += (Time.deltaTime/2);
+            a += (Time.deltaTime* SpeedFactor);
             image.color = new Color(0, 0, 0, a);
             yield return null;
         }
@@ -119,7 +129,7 @@ public class CheckPointManager : MonoBehaviour
         //Black Screen Fade out
         while (a > 0)
         {
-            a -= (Time.deltaTime/2);
+            a -= (Time.deltaTime* SpeedFactor);
             image.color = new Color(0, 0, 0, a);
             yield return null;
         }

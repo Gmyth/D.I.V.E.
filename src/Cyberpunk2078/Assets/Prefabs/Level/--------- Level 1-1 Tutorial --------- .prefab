@@ -120543,7 +120543,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6645941438771460431}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -25.2, y: 98.8, z: 0}
+  m_LocalPosition: {x: 92.75, y: 178.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6645941439033568975}
@@ -136331,6 +136331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartPoint: {fileID: 6645941438771460431}
   LevelIndex: 1
+  DummyHolder: {fileID: 6645941437379940998}
 --- !u!1 &6645941439050139618
 GameObject:
   m_ObjectHideFlags: 0
@@ -138983,11 +138984,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437582762131}
     m_Modifications:
-    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
-        type: 3}
-      propertyPath: m_Name
-      value: Corridor Light (3)
-      objectReference: {fileID: 0}
     - target: {fileID: 9143941626726301716, guid: d749b444b62988744a2720b7ffbf7eef,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -139042,6 +139038,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
+        type: 3}
+      propertyPath: m_Name
+      value: Corridor Light (3)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d749b444b62988744a2720b7ffbf7eef, type: 3}
@@ -139558,11 +139559,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941438145255305}
     m_Modifications:
-    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
-        type: 3}
-      propertyPath: m_Name
-      value: Jump-Platform-2 (9)
-      objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997528, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -139617,6 +139613,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
+        type: 3}
+      propertyPath: m_Name
+      value: Jump-Platform-2 (9)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 165f2655dd963754c96c21505f2d11c5, type: 3}
@@ -139787,11 +139788,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941439124829325}
     m_Modifications:
-    - target: {fileID: 7284698924816019117, guid: 08e0ee4a05ded4942b13d9658217fdb6,
-        type: 3}
-      propertyPath: m_Name
-      value: Breakable-H-Glass
-      objectReference: {fileID: 0}
     - target: {fileID: 7284698924816019116, guid: 08e0ee4a05ded4942b13d9658217fdb6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -139851,6 +139847,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.x
       value: 2.5379891
+      objectReference: {fileID: 0}
+    - target: {fileID: 7284698924816019117, guid: 08e0ee4a05ded4942b13d9658217fdb6,
+        type: 3}
+      propertyPath: m_Name
+      value: Breakable-H-Glass
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08e0ee4a05ded4942b13d9658217fdb6, type: 3}
@@ -140100,11 +140101,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437582762131}
     m_Modifications:
-    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
-        type: 3}
-      propertyPath: m_Name
-      value: Corridor Light (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 9143941626726301716, guid: d749b444b62988744a2720b7ffbf7eef,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -140159,6 +140155,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
+        type: 3}
+      propertyPath: m_Name
+      value: Corridor Light (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d749b444b62988744a2720b7ffbf7eef, type: 3}
@@ -140355,11 +140356,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941438145255305}
     m_Modifications:
-    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
-        type: 3}
-      propertyPath: m_Name
-      value: Jump-Platform-2 (5)
-      objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997528, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -140415,6 +140411,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
+        type: 3}
+      propertyPath: m_Name
+      value: Jump-Platform-2 (5)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 165f2655dd963754c96c21505f2d11c5, type: 3}
 --- !u!4 &268272913185682597 stripped
@@ -140430,11 +140431,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437235037576}
     m_Modifications:
-    - target: {fileID: 1462316831131145130, guid: fa45ea65221450e41ad48b7ef780c052,
-        type: 3}
-      propertyPath: m_Name
-      value: Pink-Light (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 1462316831131145131, guid: fa45ea65221450e41ad48b7ef780c052,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -140490,6 +140486,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1462316831131145130, guid: fa45ea65221450e41ad48b7ef780c052,
+        type: 3}
+      propertyPath: m_Name
+      value: Pink-Light (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 1462316831131145128, guid: fa45ea65221450e41ad48b7ef780c052,
         type: 3}
       propertyPath: m_ApplyToSortingLayers.Array.size
@@ -140535,11 +140536,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941438145255305}
     m_Modifications:
-    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
-        type: 3}
-      propertyPath: m_Name
-      value: Jump-Platform-2 (3)
-      objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997528, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -140595,6 +140591,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
+        type: 3}
+      propertyPath: m_Name
+      value: Jump-Platform-2 (3)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 165f2655dd963754c96c21505f2d11c5, type: 3}
 --- !u!4 &268272913209633390 stripped
@@ -140610,11 +140611,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437808038687}
     m_Modifications:
-    - target: {fileID: 7747615744522533420, guid: 5ccc5f2042384d743a2d3560d92f26ab,
-        type: 3}
-      propertyPath: m_Name
-      value: Clothing-Figure-1
-      objectReference: {fileID: 0}
     - target: {fileID: 7747615744522533423, guid: 5ccc5f2042384d743a2d3560d92f26ab,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -140669,6 +140665,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7747615744522533420, guid: 5ccc5f2042384d743a2d3560d92f26ab,
+        type: 3}
+      propertyPath: m_Name
+      value: Clothing-Figure-1
       objectReference: {fileID: 0}
     - target: {fileID: 7747615745589092330, guid: 5ccc5f2042384d743a2d3560d92f26ab,
         type: 3}
@@ -141011,11 +141012,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437582762131}
     m_Modifications:
-    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
-        type: 3}
-      propertyPath: m_Name
-      value: Corridor Light (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 9143941626726301716, guid: d749b444b62988744a2720b7ffbf7eef,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -141071,6 +141067,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
+        type: 3}
+      propertyPath: m_Name
+      value: Corridor Light (2)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d749b444b62988744a2720b7ffbf7eef, type: 3}
 --- !u!4 &2512708360489842277 stripped
@@ -141086,11 +141087,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437235037576}
     m_Modifications:
-    - target: {fileID: 1657758847424069749, guid: aa844c6a1a926514ea9109c3924092b3,
-        type: 3}
-      propertyPath: m_Name
-      value: Purple-Light (6)
-      objectReference: {fileID: 0}
     - target: {fileID: 1657758847424069748, guid: aa844c6a1a926514ea9109c3924092b3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -141145,6 +141141,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1657758847424069749, guid: aa844c6a1a926514ea9109c3924092b3,
+        type: 3}
+      propertyPath: m_Name
+      value: Purple-Light (6)
       objectReference: {fileID: 0}
     - target: {fileID: 1657758847424069750, guid: aa844c6a1a926514ea9109c3924092b3,
         type: 3}
@@ -141444,11 +141445,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437582762131}
     m_Modifications:
-    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
-        type: 3}
-      propertyPath: m_Name
-      value: Corridor Light (5)
-      objectReference: {fileID: 0}
     - target: {fileID: 9143941626726301716, guid: d749b444b62988744a2720b7ffbf7eef,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -141503,6 +141499,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
+        type: 3}
+      propertyPath: m_Name
+      value: Corridor Light (5)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d749b444b62988744a2720b7ffbf7eef, type: 3}
@@ -141604,11 +141605,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941438281663069}
     m_Modifications:
-    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
-        type: 3}
-      propertyPath: m_Name
-      value: Jump-Platform-2 (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997528, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -141664,6 +141660,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
+        type: 3}
+      propertyPath: m_Name
+      value: Jump-Platform-2 (2)
+      objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997531, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
       propertyPath: m_SortingLayerID
@@ -141689,11 +141690,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437831951733}
     m_Modifications:
-    - target: {fileID: 5536892084200399048, guid: 5733dc6eae5d27a489f2eb603a81f9bb,
-        type: 3}
-      propertyPath: m_Name
-      value: (Orange)Three-Hanged-Light
-      objectReference: {fileID: 0}
     - target: {fileID: 5536892084200399049, guid: 5733dc6eae5d27a489f2eb603a81f9bb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -141749,6 +141745,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5536892084200399048, guid: 5733dc6eae5d27a489f2eb603a81f9bb,
+        type: 3}
+      propertyPath: m_Name
+      value: (Orange)Three-Hanged-Light
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5733dc6eae5d27a489f2eb603a81f9bb, type: 3}
 --- !u!4 &1219875738334839181 stripped
@@ -141764,11 +141765,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437582762131}
     m_Modifications:
-    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
-        type: 3}
-      propertyPath: m_Name
-      value: Corridor Light (3)
-      objectReference: {fileID: 0}
     - target: {fileID: 9143941626726301716, guid: d749b444b62988744a2720b7ffbf7eef,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -141823,6 +141819,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
+        type: 3}
+      propertyPath: m_Name
+      value: Corridor Light (3)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d749b444b62988744a2720b7ffbf7eef, type: 3}
@@ -141999,11 +142000,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941438145255305}
     m_Modifications:
-    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
-        type: 3}
-      propertyPath: m_Name
-      value: Jump-Platform-2
-      objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997528, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -142059,6 +142055,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
+        type: 3}
+      propertyPath: m_Name
+      value: Jump-Platform-2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 165f2655dd963754c96c21505f2d11c5, type: 3}
 --- !u!4 &268272914027477145 stripped
@@ -142074,11 +142075,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437582762131}
     m_Modifications:
-    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
-        type: 3}
-      propertyPath: m_Name
-      value: Corridor Light (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 9143941626726301716, guid: d749b444b62988744a2720b7ffbf7eef,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -142133,6 +142129,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
+        type: 3}
+      propertyPath: m_Name
+      value: Corridor Light (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d749b444b62988744a2720b7ffbf7eef, type: 3}
@@ -142224,11 +142225,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437235037576}
     m_Modifications:
-    - target: {fileID: 1657758847424069749, guid: aa844c6a1a926514ea9109c3924092b3,
-        type: 3}
-      propertyPath: m_Name
-      value: Purple-Light
-      objectReference: {fileID: 0}
     - target: {fileID: 1657758847424069748, guid: aa844c6a1a926514ea9109c3924092b3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -142283,6 +142279,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1657758847424069749, guid: aa844c6a1a926514ea9109c3924092b3,
+        type: 3}
+      propertyPath: m_Name
+      value: Purple-Light
       objectReference: {fileID: 0}
     - target: {fileID: 1657758847424069750, guid: aa844c6a1a926514ea9109c3924092b3,
         type: 3}
@@ -142557,11 +142558,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941438145255305}
     m_Modifications:
-    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
-        type: 3}
-      propertyPath: m_Name
-      value: Jump-Platform-2 (6)
-      objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997528, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -142616,6 +142612,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
+        type: 3}
+      propertyPath: m_Name
+      value: Jump-Platform-2 (6)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 165f2655dd963754c96c21505f2d11c5, type: 3}
@@ -142717,11 +142718,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437582762131}
     m_Modifications:
-    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
-        type: 3}
-      propertyPath: m_Name
-      value: Corridor Light (4)
-      objectReference: {fileID: 0}
     - target: {fileID: 9143941626726301716, guid: d749b444b62988744a2720b7ffbf7eef,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -142777,6 +142773,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
+        type: 3}
+      propertyPath: m_Name
+      value: Corridor Light (4)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d749b444b62988744a2720b7ffbf7eef, type: 3}
 --- !u!4 &2512708360271842948 stripped
@@ -142792,11 +142793,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941438281663069}
     m_Modifications:
-    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
-        type: 3}
-      propertyPath: m_Name
-      value: Jump-Platform-2 (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997528, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -142856,6 +142852,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.x
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
+        type: 3}
+      propertyPath: m_Name
+      value: Jump-Platform-2 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997531, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
@@ -142947,11 +142948,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: -1
       objectReference: {fileID: 0}
-    - target: {fileID: 4626528150849743859, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 4422422707932968807, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
         type: 3}
       propertyPath: typeID
@@ -142996,6 +142992,11 @@ PrefabInstance:
         type: 3}
       propertyPath: patrolFiringConfiguration.bulletSpeed
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4626528150849743859, guid: ef1d5c7ccd4afa8498b1d2bfe3122116,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1d5c7ccd4afa8498b1d2bfe3122116, type: 3}
@@ -143111,11 +143112,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437235037576}
     m_Modifications:
-    - target: {fileID: 5399986727191249937, guid: afad8f7fb4ad2964f89122eda3e37767,
-        type: 3}
-      propertyPath: m_Name
-      value: Green-Light
-      objectReference: {fileID: 0}
     - target: {fileID: 5399986727191249936, guid: afad8f7fb4ad2964f89122eda3e37767,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -143171,6 +143167,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5399986727191249937, guid: afad8f7fb4ad2964f89122eda3e37767,
+        type: 3}
+      propertyPath: m_Name
+      value: Green-Light
+      objectReference: {fileID: 0}
     - target: {fileID: 5399986727191249951, guid: afad8f7fb4ad2964f89122eda3e37767,
         type: 3}
       propertyPath: m_ApplyToSortingLayers.Array.size
@@ -143216,11 +143217,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941438721344435}
     m_Modifications:
-    - target: {fileID: 1317493947639081304, guid: 021391413e1eab6469f771c362a43536,
-        type: 3}
-      propertyPath: m_Name
-      value: Bubble Lightefx (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 1317493947639081305, guid: 021391413e1eab6469f771c362a43536,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -143285,6 +143281,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1317493947639081304, guid: 021391413e1eab6469f771c362a43536,
+        type: 3}
+      propertyPath: m_Name
+      value: Bubble Lightefx (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 021391413e1eab6469f771c362a43536, type: 3}
@@ -143397,11 +143398,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437582762131}
     m_Modifications:
-    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
-        type: 3}
-      propertyPath: m_Name
-      value: Corridor Light (6)
-      objectReference: {fileID: 0}
     - target: {fileID: 9143941626726301716, guid: d749b444b62988744a2720b7ffbf7eef,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -143456,6 +143452,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
+        type: 3}
+      propertyPath: m_Name
+      value: Corridor Light (6)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d749b444b62988744a2720b7ffbf7eef, type: 3}
@@ -143557,11 +143558,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941438281663069}
     m_Modifications:
-    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
-        type: 3}
-      propertyPath: m_Name
-      value: Jump-Platform-2 (4)
-      objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997528, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -143617,6 +143613,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
+        type: 3}
+      propertyPath: m_Name
+      value: Jump-Platform-2 (4)
+      objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997531, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
       propertyPath: m_SortingLayerID
@@ -143642,11 +143643,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437808038687}
     m_Modifications:
-    - target: {fileID: 4628264911868906628, guid: ad8bdaa0c519bc54289aa1ae266cb29f,
-        type: 3}
-      propertyPath: m_Name
-      value: Dancing Partner 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4628264911868906629, guid: ad8bdaa0c519bc54289aa1ae266cb29f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -143701,6 +143697,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4628264911868906628, guid: ad8bdaa0c519bc54289aa1ae266cb29f,
+        type: 3}
+      propertyPath: m_Name
+      value: Dancing Partner 3
       objectReference: {fileID: 0}
     - target: {fileID: 4628264910755721324, guid: ad8bdaa0c519bc54289aa1ae266cb29f,
         type: 3}
@@ -143817,11 +143818,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437235037576}
     m_Modifications:
-    - target: {fileID: 5399986727191249937, guid: afad8f7fb4ad2964f89122eda3e37767,
-        type: 3}
-      propertyPath: m_Name
-      value: Green-Light
-      objectReference: {fileID: 0}
     - target: {fileID: 5399986727191249936, guid: afad8f7fb4ad2964f89122eda3e37767,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -143876,6 +143872,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5399986727191249937, guid: afad8f7fb4ad2964f89122eda3e37767,
+        type: 3}
+      propertyPath: m_Name
+      value: Green-Light
       objectReference: {fileID: 0}
     - target: {fileID: 5399986727191249951, guid: afad8f7fb4ad2964f89122eda3e37767,
         type: 3}
@@ -144347,11 +144348,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437235037576}
     m_Modifications:
-    - target: {fileID: 1657758847424069749, guid: aa844c6a1a926514ea9109c3924092b3,
-        type: 3}
-      propertyPath: m_Name
-      value: Purple-Light (7)
-      objectReference: {fileID: 0}
     - target: {fileID: 1657758847424069748, guid: aa844c6a1a926514ea9109c3924092b3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -144407,6 +144403,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1657758847424069749, guid: aa844c6a1a926514ea9109c3924092b3,
+        type: 3}
+      propertyPath: m_Name
+      value: Purple-Light (7)
+      objectReference: {fileID: 0}
     - target: {fileID: 1657758847424069750, guid: aa844c6a1a926514ea9109c3924092b3,
         type: 3}
       propertyPath: factor
@@ -144452,11 +144453,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437457178140}
     m_Modifications:
-    - target: {fileID: 7711597962429536050, guid: 8eea6e4e03c6ec24db422457d77be001,
-        type: 3}
-      propertyPath: m_Name
-      value: Direction Arrow (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 7711597962429536051, guid: 8eea6e4e03c6ec24db422457d77be001,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -144512,6 +144508,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7711597962429536050, guid: 8eea6e4e03c6ec24db422457d77be001,
+        type: 3}
+      propertyPath: m_Name
+      value: Direction Arrow (2)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8eea6e4e03c6ec24db422457d77be001, type: 3}
 --- !u!4 &3980682874957059078 stripped
@@ -144527,11 +144528,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437582762131}
     m_Modifications:
-    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
-        type: 3}
-      propertyPath: m_Name
-      value: Corridor Light (5)
-      objectReference: {fileID: 0}
     - target: {fileID: 9143941626726301716, guid: d749b444b62988744a2720b7ffbf7eef,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -144587,6 +144583,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
+        type: 3}
+      propertyPath: m_Name
+      value: Corridor Light (5)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d749b444b62988744a2720b7ffbf7eef, type: 3}
 --- !u!4 &2512708359887329521 stripped
@@ -144602,11 +144603,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437457178140}
     m_Modifications:
-    - target: {fileID: 7711597962429536050, guid: 8eea6e4e03c6ec24db422457d77be001,
-        type: 3}
-      propertyPath: m_Name
-      value: Direction Arrow (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 7711597962429536051, guid: 8eea6e4e03c6ec24db422457d77be001,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -144661,6 +144657,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7711597962429536050, guid: 8eea6e4e03c6ec24db422457d77be001,
+        type: 3}
+      propertyPath: m_Name
+      value: Direction Arrow (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8eea6e4e03c6ec24db422457d77be001, type: 3}
@@ -145055,11 +145056,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941438281663069}
     m_Modifications:
-    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
-        type: 3}
-      propertyPath: m_Name
-      value: Jump-Platform-2 (10)
-      objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997528, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -145115,6 +145111,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
+        type: 3}
+      propertyPath: m_Name
+      value: Jump-Platform-2 (10)
+      objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997531, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
       propertyPath: m_SortingLayerID
@@ -145140,11 +145141,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437235037576}
     m_Modifications:
-    - target: {fileID: 5399986727191249937, guid: afad8f7fb4ad2964f89122eda3e37767,
-        type: 3}
-      propertyPath: m_Name
-      value: Green-Light (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 5399986727191249936, guid: afad8f7fb4ad2964f89122eda3e37767,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -145199,6 +145195,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5399986727191249937, guid: afad8f7fb4ad2964f89122eda3e37767,
+        type: 3}
+      propertyPath: m_Name
+      value: Green-Light (1)
       objectReference: {fileID: 0}
     - target: {fileID: 5399986727191249951, guid: afad8f7fb4ad2964f89122eda3e37767,
         type: 3}
@@ -145350,11 +145351,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941438880478858}
     m_Modifications:
-    - target: {fileID: 1019036255019722538, guid: 536b95c3c2772c5499beb4c0cc63e162,
-        type: 3}
-      propertyPath: m_Name
-      value: Jack
-      objectReference: {fileID: 0}
     - target: {fileID: 1019036255019722539, guid: 536b95c3c2772c5499beb4c0cc63e162,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -145410,6 +145406,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1019036255019722538, guid: 536b95c3c2772c5499beb4c0cc63e162,
+        type: 3}
+      propertyPath: m_Name
+      value: Jack
+      objectReference: {fileID: 0}
     - target: {fileID: 3267739507313359575, guid: 536b95c3c2772c5499beb4c0cc63e162,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -145452,11 +145453,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437457178140}
     m_Modifications:
-    - target: {fileID: 7711597962429536050, guid: 8eea6e4e03c6ec24db422457d77be001,
-        type: 3}
-      propertyPath: m_Name
-      value: Direction Arrow
-      objectReference: {fileID: 0}
     - target: {fileID: 7711597962429536051, guid: 8eea6e4e03c6ec24db422457d77be001,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -145511,6 +145507,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7711597962429536050, guid: 8eea6e4e03c6ec24db422457d77be001,
+        type: 3}
+      propertyPath: m_Name
+      value: Direction Arrow
       objectReference: {fileID: 0}
     - target: {fileID: 7711597962429536060, guid: 8eea6e4e03c6ec24db422457d77be001,
         type: 3}
@@ -145612,11 +145613,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437235037576}
     m_Modifications:
-    - target: {fileID: 1462316831131145130, guid: fa45ea65221450e41ad48b7ef780c052,
-        type: 3}
-      propertyPath: m_Name
-      value: Pink-Light
-      objectReference: {fileID: 0}
     - target: {fileID: 1462316831131145131, guid: fa45ea65221450e41ad48b7ef780c052,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -145671,6 +145667,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1462316831131145130, guid: fa45ea65221450e41ad48b7ef780c052,
+        type: 3}
+      propertyPath: m_Name
+      value: Pink-Light
       objectReference: {fileID: 0}
     - target: {fileID: 1462316831131145128, guid: fa45ea65221450e41ad48b7ef780c052,
         type: 3}
@@ -145871,11 +145872,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437582762131}
     m_Modifications:
-    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
-        type: 3}
-      propertyPath: m_Name
-      value: Corridor Light (4)
-      objectReference: {fileID: 0}
     - target: {fileID: 9143941626726301716, guid: d749b444b62988744a2720b7ffbf7eef,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -145930,6 +145926,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
+        type: 3}
+      propertyPath: m_Name
+      value: Corridor Light (4)
       objectReference: {fileID: 0}
     - target: {fileID: 9143941626746288966, guid: d749b444b62988744a2720b7ffbf7eef,
         type: 3}
@@ -146026,11 +146027,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437235037576}
     m_Modifications:
-    - target: {fileID: 1657758847424069749, guid: aa844c6a1a926514ea9109c3924092b3,
-        type: 3}
-      propertyPath: m_Name
-      value: Purple-Light (3)
-      objectReference: {fileID: 0}
     - target: {fileID: 1657758847424069748, guid: aa844c6a1a926514ea9109c3924092b3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -146085,6 +146081,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1657758847424069749, guid: aa844c6a1a926514ea9109c3924092b3,
+        type: 3}
+      propertyPath: m_Name
+      value: Purple-Light (3)
       objectReference: {fileID: 0}
     - target: {fileID: 1657758847424069750, guid: aa844c6a1a926514ea9109c3924092b3,
         type: 3}
@@ -146141,14 +146142,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941438331559307}
     m_Modifications:
-    - target: {fileID: 1896739112910884, guid: 6ada59c8fe7959f419f89bee61941dd6, type: 3}
-      propertyPath: m_Name
-      value: Tutorial-Bullet
-      objectReference: {fileID: 0}
     - target: {fileID: 114593199792259714, guid: 6ada59c8fe7959f419f89bee61941dd6,
         type: 3}
       propertyPath: lifeSpan
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1896739112910884, guid: 6ada59c8fe7959f419f89bee61941dd6, type: 3}
+      propertyPath: m_Name
+      value: Tutorial-Bullet
       objectReference: {fileID: 0}
     - target: {fileID: 4355792668289868, guid: 6ada59c8fe7959f419f89bee61941dd6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -146270,11 +146271,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941438145255305}
     m_Modifications:
-    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
-        type: 3}
-      propertyPath: m_Name
-      value: Jump-Platform-2 (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997528, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -146329,6 +146325,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
+        type: 3}
+      propertyPath: m_Name
+      value: Jump-Platform-2 (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 165f2655dd963754c96c21505f2d11c5, type: 3}
@@ -146499,11 +146500,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941438281663069}
     m_Modifications:
-    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
-        type: 3}
-      propertyPath: m_Name
-      value: Jump-Platform-2 (8)
-      objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997528, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -146559,6 +146555,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
+        type: 3}
+      propertyPath: m_Name
+      value: Jump-Platform-2 (8)
+      objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997531, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
       propertyPath: m_SortingLayerID
@@ -146584,11 +146585,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941438281663069}
     m_Modifications:
-    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
-        type: 3}
-      propertyPath: m_Name
-      value: Jump-Platform-2
-      objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997528, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -146643,6 +146639,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
+        type: 3}
+      propertyPath: m_Name
+      value: Jump-Platform-2
       objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997531, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
@@ -146897,11 +146898,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941438721344435}
     m_Modifications:
-    - target: {fileID: 1317493947639081304, guid: 021391413e1eab6469f771c362a43536,
-        type: 3}
-      propertyPath: m_Name
-      value: Bubble Lightefx
-      objectReference: {fileID: 0}
     - target: {fileID: 1317493947639081305, guid: 021391413e1eab6469f771c362a43536,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -146957,6 +146953,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1317493947639081304, guid: 021391413e1eab6469f771c362a43536,
+        type: 3}
+      propertyPath: m_Name
+      value: Bubble Lightefx
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 021391413e1eab6469f771c362a43536, type: 3}
 --- !u!4 &5653017285647827788 stripped
@@ -146972,11 +146973,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941438281663069}
     m_Modifications:
-    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
-        type: 3}
-      propertyPath: m_Name
-      value: Jump-Platform-2 (7)
-      objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997528, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -147032,6 +147028,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
+        type: 3}
+      propertyPath: m_Name
+      value: Jump-Platform-2 (7)
+      objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997531, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
       propertyPath: m_SortingLayerID
@@ -147057,11 +147058,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437235037576}
     m_Modifications:
-    - target: {fileID: 1657758847424069749, guid: aa844c6a1a926514ea9109c3924092b3,
-        type: 3}
-      propertyPath: m_Name
-      value: Purple-Light
-      objectReference: {fileID: 0}
     - target: {fileID: 1657758847424069748, guid: aa844c6a1a926514ea9109c3924092b3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -147117,6 +147113,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1657758847424069749, guid: aa844c6a1a926514ea9109c3924092b3,
+        type: 3}
+      propertyPath: m_Name
+      value: Purple-Light
+      objectReference: {fileID: 0}
     - target: {fileID: 1657758847424069750, guid: aa844c6a1a926514ea9109c3924092b3,
         type: 3}
       propertyPath: factor
@@ -147162,11 +147163,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941438145255305}
     m_Modifications:
-    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
-        type: 3}
-      propertyPath: m_Name
-      value: Jump-Platform-2 (7)
-      objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997528, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -147222,6 +147218,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
+        type: 3}
+      propertyPath: m_Name
+      value: Jump-Platform-2 (7)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 165f2655dd963754c96c21505f2d11c5, type: 3}
 --- !u!4 &268272914995596877 stripped
@@ -147237,11 +147238,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437582762131}
     m_Modifications:
-    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
-        type: 3}
-      propertyPath: m_Name
-      value: Corridor Light
-      objectReference: {fileID: 0}
     - target: {fileID: 9143941626726301716, guid: d749b444b62988744a2720b7ffbf7eef,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -147297,6 +147293,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
+        type: 3}
+      propertyPath: m_Name
+      value: Corridor Light
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d749b444b62988744a2720b7ffbf7eef, type: 3}
 --- !u!4 &2512708359331689187 stripped
@@ -147312,11 +147313,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941438145255305}
     m_Modifications:
-    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
-        type: 3}
-      propertyPath: m_Name
-      value: Jump-Platform-2 (4)
-      objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997528, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -147372,6 +147368,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
+        type: 3}
+      propertyPath: m_Name
+      value: Jump-Platform-2 (4)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 165f2655dd963754c96c21505f2d11c5, type: 3}
 --- !u!4 &268272915015540366 stripped
@@ -147387,11 +147388,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941439124829325}
     m_Modifications:
-    - target: {fileID: 7284698924816019117, guid: 08e0ee4a05ded4942b13d9658217fdb6,
-        type: 3}
-      propertyPath: m_Name
-      value: Breakable-H-Glass (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 7284698924816019116, guid: 08e0ee4a05ded4942b13d9658217fdb6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -147452,6 +147448,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: 3.2996259
       objectReference: {fileID: 0}
+    - target: {fileID: 7284698924816019117, guid: 08e0ee4a05ded4942b13d9658217fdb6,
+        type: 3}
+      propertyPath: m_Name
+      value: Breakable-H-Glass (1)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08e0ee4a05ded4942b13d9658217fdb6, type: 3}
 --- !u!4 &4117226386358360506 stripped
@@ -147467,11 +147468,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437235037576}
     m_Modifications:
-    - target: {fileID: 1462316831131145130, guid: fa45ea65221450e41ad48b7ef780c052,
-        type: 3}
-      propertyPath: m_Name
-      value: Pink-Light
-      objectReference: {fileID: 0}
     - target: {fileID: 1462316831131145131, guid: fa45ea65221450e41ad48b7ef780c052,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -147527,6 +147523,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1462316831131145130, guid: fa45ea65221450e41ad48b7ef780c052,
+        type: 3}
+      propertyPath: m_Name
+      value: Pink-Light
+      objectReference: {fileID: 0}
     - target: {fileID: 1462316831131145128, guid: fa45ea65221450e41ad48b7ef780c052,
         type: 3}
       propertyPath: m_ApplyToSortingLayers.Array.size
@@ -147572,11 +147573,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437582762131}
     m_Modifications:
-    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
-        type: 3}
-      propertyPath: m_Name
-      value: Corridor Light (6)
-      objectReference: {fileID: 0}
     - target: {fileID: 9143941626726301716, guid: d749b444b62988744a2720b7ffbf7eef,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -147631,6 +147627,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
+        type: 3}
+      propertyPath: m_Name
+      value: Corridor Light (6)
       objectReference: {fileID: 0}
     - target: {fileID: 9143941626726301715, guid: d749b444b62988744a2720b7ffbf7eef,
         type: 3}
@@ -147727,11 +147728,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437582762131}
     m_Modifications:
-    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
-        type: 3}
-      propertyPath: m_Name
-      value: Corridor Light (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 9143941626726301716, guid: d749b444b62988744a2720b7ffbf7eef,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -147786,6 +147782,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
+        type: 3}
+      propertyPath: m_Name
+      value: Corridor Light (1)
       objectReference: {fileID: 0}
     - target: {fileID: 9143941626746288966, guid: d749b444b62988744a2720b7ffbf7eef,
         type: 3}
@@ -147917,11 +147918,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941438281663069}
     m_Modifications:
-    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
-        type: 3}
-      propertyPath: m_Name
-      value: Jump-Platform-2 (5)
-      objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997528, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -147976,6 +147972,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
+        type: 3}
+      propertyPath: m_Name
+      value: Jump-Platform-2 (5)
       objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997531, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
@@ -148202,11 +148203,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941438281663069}
     m_Modifications:
-    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
-        type: 3}
-      propertyPath: m_Name
-      value: Jump-Platform-2 (6)
-      objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997528, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -148261,6 +148257,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
+        type: 3}
+      propertyPath: m_Name
+      value: Jump-Platform-2 (6)
       objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997531, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
@@ -148679,11 +148680,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437235037576}
     m_Modifications:
-    - target: {fileID: 1657758847424069749, guid: aa844c6a1a926514ea9109c3924092b3,
-        type: 3}
-      propertyPath: m_Name
-      value: Purple-Light (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 1657758847424069748, guid: aa844c6a1a926514ea9109c3924092b3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -148738,6 +148734,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1657758847424069749, guid: aa844c6a1a926514ea9109c3924092b3,
+        type: 3}
+      propertyPath: m_Name
+      value: Purple-Light (1)
       objectReference: {fileID: 0}
     - target: {fileID: 1657758847424069750, guid: aa844c6a1a926514ea9109c3924092b3,
         type: 3}
@@ -148949,11 +148950,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437235037576}
     m_Modifications:
-    - target: {fileID: 1657758847424069749, guid: aa844c6a1a926514ea9109c3924092b3,
-        type: 3}
-      propertyPath: m_Name
-      value: Purple-Light (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 1657758847424069748, guid: aa844c6a1a926514ea9109c3924092b3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -149009,6 +149005,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1657758847424069749, guid: aa844c6a1a926514ea9109c3924092b3,
+        type: 3}
+      propertyPath: m_Name
+      value: Purple-Light (2)
+      objectReference: {fileID: 0}
     - target: {fileID: 1657758847424069750, guid: aa844c6a1a926514ea9109c3924092b3,
         type: 3}
       propertyPath: factor
@@ -149054,11 +149055,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437235037576}
     m_Modifications:
-    - target: {fileID: 1657758847424069749, guid: aa844c6a1a926514ea9109c3924092b3,
-        type: 3}
-      propertyPath: m_Name
-      value: Purple-Light (4)
-      objectReference: {fileID: 0}
     - target: {fileID: 1657758847424069748, guid: aa844c6a1a926514ea9109c3924092b3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -149113,6 +149109,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1657758847424069749, guid: aa844c6a1a926514ea9109c3924092b3,
+        type: 3}
+      propertyPath: m_Name
+      value: Purple-Light (4)
       objectReference: {fileID: 0}
     - target: {fileID: 1657758847424069750, guid: aa844c6a1a926514ea9109c3924092b3,
         type: 3}
@@ -149174,11 +149175,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941438145255305}
     m_Modifications:
-    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
-        type: 3}
-      propertyPath: m_Name
-      value: Jump-Platform-2 (8)
-      objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997528, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -149233,6 +149229,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
+        type: 3}
+      propertyPath: m_Name
+      value: Jump-Platform-2 (8)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 165f2655dd963754c96c21505f2d11c5, type: 3}
@@ -149344,11 +149345,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941438145255305}
     m_Modifications:
-    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
-        type: 3}
-      propertyPath: m_Name
-      value: Jump-Platform-2 (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997528, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -149404,6 +149400,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
+        type: 3}
+      propertyPath: m_Name
+      value: Jump-Platform-2 (1)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 165f2655dd963754c96c21505f2d11c5, type: 3}
 --- !u!4 &268272914691913519 stripped
@@ -149419,11 +149420,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941438281663069}
     m_Modifications:
-    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
-        type: 3}
-      propertyPath: m_Name
-      value: Jump-Platform-2 (9)
-      objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997528, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -149478,6 +149474,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6882125086569997529, guid: 165f2655dd963754c96c21505f2d11c5,
+        type: 3}
+      propertyPath: m_Name
+      value: Jump-Platform-2 (9)
       objectReference: {fileID: 0}
     - target: {fileID: 6882125086569997531, guid: 165f2655dd963754c96c21505f2d11c5,
         type: 3}
@@ -149704,11 +149705,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437235037576}
     m_Modifications:
-    - target: {fileID: 1657758847424069749, guid: aa844c6a1a926514ea9109c3924092b3,
-        type: 3}
-      propertyPath: m_Name
-      value: Purple-Light (5)
-      objectReference: {fileID: 0}
     - target: {fileID: 1657758847424069748, guid: aa844c6a1a926514ea9109c3924092b3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -149763,6 +149759,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1657758847424069749, guid: aa844c6a1a926514ea9109c3924092b3,
+        type: 3}
+      propertyPath: m_Name
+      value: Purple-Light (5)
       objectReference: {fileID: 0}
     - target: {fileID: 1657758847424069750, guid: aa844c6a1a926514ea9109c3924092b3,
         type: 3}
@@ -149824,11 +149825,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941437582762131}
     m_Modifications:
-    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
-        type: 3}
-      propertyPath: m_Name
-      value: Corridor Light
-      objectReference: {fileID: 0}
     - target: {fileID: 9143941626726301716, guid: d749b444b62988744a2720b7ffbf7eef,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -149884,6 +149880,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9143941626726301717, guid: d749b444b62988744a2720b7ffbf7eef,
+        type: 3}
+      propertyPath: m_Name
+      value: Corridor Light
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d749b444b62988744a2720b7ffbf7eef, type: 3}
 --- !u!4 &2512708358911275627 stripped
@@ -149899,10 +149900,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6645941438477103838}
     m_Modifications:
-    - target: {fileID: 1896739112910884, guid: 6ada59c8fe7959f419f89bee61941dd6, type: 3}
-      propertyPath: m_Name
-      value: Tutorial-Bullet
-      objectReference: {fileID: 0}
     - target: {fileID: 114593199792259714, guid: 6ada59c8fe7959f419f89bee61941dd6,
         type: 3}
       propertyPath: lifeSpan
@@ -149912,6 +149909,10 @@ PrefabInstance:
         type: 3}
       propertyPath: disableHunch
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1896739112910884, guid: 6ada59c8fe7959f419f89bee61941dd6, type: 3}
+      propertyPath: m_Name
+      value: Tutorial-Bullet
       objectReference: {fileID: 0}
     - target: {fileID: 4355792668289868, guid: 6ada59c8fe7959f419f89bee61941dd6, type: 3}
       propertyPath: m_LocalPosition.x

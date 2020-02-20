@@ -44,6 +44,8 @@ public class SimpleTeleporter : MonoBehaviour
 
                 GameProcessManager.Singleton.InitCamera();
 
+                CheckPointManager.Instance.Initialize();
+
                 capc.isTrigger = false;
             }
         }

@@ -111,6 +111,8 @@ public class GameProcessManager : MonoBehaviour
         currentLevel = Instantiate(LevelDictionary[index]);
         LoadedLevel.Add(currentLevel);
 
+        
+
         return currentLevel;
     }
 
@@ -200,5 +202,15 @@ public class GameProcessManager : MonoBehaviour
         }
 
         GUIManager.Singleton.Open("LevelSelection");
+    }
+
+    public GameObject GetCurrentDummies()
+    {
+        if(currentLevelIndex != -1)
+        {
+            return currentLevel.GetComponent<LevelInfo>().DummyHolder;
+        }
+
+        return null;
     }
 }

@@ -81,6 +81,12 @@ public class AudioManager : MonoBehaviour
             return false;
         }
     }
+    public void StopBus(string busName)
+    {
+        Bus bus = FMODUnity.RuntimeManager.GetBus("bus:/" + busName);
+
+        bus.stopAllEvents(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+    }
 
     public void StopEvent(string _event)
     {
