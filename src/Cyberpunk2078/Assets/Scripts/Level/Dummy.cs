@@ -167,6 +167,9 @@ public abstract class Enemy : Dummy
     [SerializeField] protected FSMEnemy fsm;
     [SerializeField] protected Zone guardZone;
     [SerializeField] protected HitBox[] hitBoxes;
+
+    [Header("Turning")]
+    [SerializeField] private bool enableTurn = true;
     [SerializeField] private float turnTime = 0;
 
     [Header("Patrolling")]
@@ -255,19 +258,22 @@ public abstract class Enemy : Dummy
 
     public virtual void Turn(Vector3 direction)
     {
-        if (turnTime <= 0)
-            TurnImmediately(direction);
-        else
+        if (enableTurn)
         {
-            bool isInSameDirection = direction.x * transform.localScale.x > 0;
-
-            if (isInSameDirection)
-                StopTurning();
-            else if (!isTurning)
+            if (turnTime <= 0)
+                TurnImmediately(direction);
+            else
             {
-                turnDirection = direction;
-                isTurning = true;
-                t_turn = turnTime;
+                bool isInSameDirection = direction.x * transform.localScale.x > 0;
+
+                if (isInSameDirection)
+                    StopTurning();
+                else if (!isTurning)
+                {
+                    turnDirection = direction;
+                    isTurning = true;
+                    t_turn = turnTime;
+                }
             }
         }
     }
@@ -284,10 +290,13 @@ public abstract class Enemy : Dummy
 
     public void TurnImmediately(Vector3 direction)
     {
-        StopTurning();
+        if (enableTurn)
+        {
+            StopTurning();
 
 
-        GameUtility.Turn(this, direction);
+            GameUtility.Turn(this, direction);
+        }
     }
 
     public void StopTurning()
@@ -334,6 +343,16 @@ public abstract class Enemy : Dummy
         fsm?.Reboot();
 
         DisableAllHitBoxes();
+    }
+
+
+    public override void Dead()
+    {
+        PlayerCharacter.Singleton.AddOverLoadEnergy(data.Attributes[AttributeType.OspReward_c0]);
+        PlayerCharacter.Singleton.AddKillCount(1);
+
+
+        gameObject.SetActive(false);
     }
 
 

@@ -244,7 +244,7 @@ GameObject:
   - component: {fileID: 5343205244154792200}
   m_Layer: 10
   m_Name: L2ShieldBoss
-  m_TagString: Dummy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -27,7 +27,7 @@ MonoBehaviour:
   animation_charging: 
   state_onTargetLoss: Patrolling
   type: 1
-  dashForce: 3000
+  dashSpeed: 20
   minDuration: 0.3
   maxDuration: 0
   stopDistance: 0.5

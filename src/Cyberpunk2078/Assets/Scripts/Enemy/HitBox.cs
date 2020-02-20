@@ -110,7 +110,7 @@ public class HitBox : MonoBehaviour
 
         if (isFriendly)
         {
-            if (other.tag == "Dummy")
+            if (other.tag == "Enemy")
                 OnHitEnemy(other);
             else if (other.tag == "Platform" && other.GetComponent<SimpleBreakable>())
                 OnHitBreakable(other);

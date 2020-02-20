@@ -316,7 +316,7 @@ public class PSDashing : PlayerState
 
         if (playerCharacter.PowerDash)
         {
-            rb2d.AddForce(direction * dashForce * 200f * 1.8f);
+            rb2d.AddForce(direction * dashForce * 200f * 1.2f);
         }
         else
         {

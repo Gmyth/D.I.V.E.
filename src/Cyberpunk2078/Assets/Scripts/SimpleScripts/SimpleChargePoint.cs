@@ -39,7 +39,7 @@ public class SimpleChargePoint : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        Debug.Log("Charge point collide with " + other.gameObject.name);
+        //Debug.Log("Charge point collide with " + other.gameObject.name);
 
         if (isReady)
         {

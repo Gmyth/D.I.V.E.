@@ -50,3 +50,12 @@ MonoBehaviour:
         value: 0
       - type: 62480
         value: 10
+  - id: 2
+    name: LaserRobot
+    type: 1
+    attributes:
+      serializedAttributes:
+      - type: 768
+        value: 1
+      - type: 61968
+        value: 1

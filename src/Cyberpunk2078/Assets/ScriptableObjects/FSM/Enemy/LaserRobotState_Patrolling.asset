@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6f49ff6ec06adf4bbdd1b8a20d47cfe, type: 3}
   m_Name: LaserRobotState_Patrolling
   m_EditorClassIdentifier: 
-  stateName: 
+  stateName: Patrolling
   useAStar: 0
   speed: 5
   delay: 0

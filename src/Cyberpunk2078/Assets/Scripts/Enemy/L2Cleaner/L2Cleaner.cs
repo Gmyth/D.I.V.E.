@@ -3,11 +3,6 @@
 
 public class L2Cleaner : Enemy, IPatroller
 {
-//    [Header("Patrolling")]
-//    [SerializeField] private Vector3[] patrolPoints;
-//    public RangedWeaponConfiguration patrolFiringConfiguration;
-
-    
     public override void Dead()
     {
         var Boom = ObjectRecycler.Singleton.GetObject<SingleEffect>(3);

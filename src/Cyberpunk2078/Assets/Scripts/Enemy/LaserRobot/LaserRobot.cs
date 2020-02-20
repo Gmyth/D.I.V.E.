@@ -30,10 +30,4 @@ public class LaserRobot : Enemy, IPatroller
     {
         return patrolRoute.GetStayTime(index);
     }
-
-
-    public override void Dead()
-    {
-        throw new System.NotImplementedException();
-    }
 }
