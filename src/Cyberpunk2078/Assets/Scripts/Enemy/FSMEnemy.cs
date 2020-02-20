@@ -83,7 +83,7 @@ public abstract class EnemyState : State
 public abstract class EnemyState<T> : EnemyState where T : Enemy
 {
     protected T enemy;
-    protected Rigidbody2D enemyRigidBody;
+    protected Rigidbody2D enemyRigidbody;
     protected Animator enemyAnimator;
 
 
@@ -98,7 +98,7 @@ public abstract class EnemyState<T> : EnemyState where T : Enemy
     public virtual void Initialize(T enemy)
     {
         this.enemy = enemy;
-        enemyRigidBody = enemy.GetComponent<Rigidbody2D>();
+        enemyRigidbody = enemy.GetComponent<Rigidbody2D>();
         enemyAnimator = enemy.GetComponent<Animator>();
     }
 
