@@ -238,7 +238,7 @@ public class PSDashing : PlayerState
         
         // reset drag & gravity
         rb2d.drag = 1;
-        rb2d.gravityScale = playerCharacter.Gravity;
+        rb2d.gravityScale = playerCharacter.DefaultGravity;
 
         // Listening to move input
         PhysicsInputHelper(h);

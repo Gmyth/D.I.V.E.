@@ -65,7 +65,7 @@ public class PSIdle : PlayerState
     {
         Rigidbody2D rb2d = playerCharacter.GetComponent<Rigidbody2D>();
        // rb2d.bodyType = RigidbodyType2D.Dynamic;
-       rb2d.gravityScale = playerCharacter.Gravity;
+       rb2d.gravityScale = playerCharacter.DefaultGravity;
     }
     
 

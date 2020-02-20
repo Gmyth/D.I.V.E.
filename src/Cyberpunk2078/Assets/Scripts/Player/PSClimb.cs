@@ -64,7 +64,7 @@ public class PSClimb : PlayerState
         if (playerCharacter.transform.position.y < climbBoundary.x || playerCharacter.transform.position.y > climbBoundary.y)
         {
             anim.speed = 1;
-            rb2d.gravityScale = playerCharacter.Gravity;
+            rb2d.gravityScale = playerCharacter.DefaultGravity;
             return "Idle";
         }
         
@@ -73,7 +73,7 @@ public class PSClimb : PlayerState
         {
             if(v < 0){
                 anim.speed = 1;
-                rb2d.gravityScale = playerCharacter.Gravity;
+                rb2d.gravityScale = playerCharacter.DefaultGravity;
                 return "Idle";
             }
         }
@@ -82,7 +82,7 @@ public class PSClimb : PlayerState
         if (Input.GetAxis("Jump") > 0)
         {
             anim.speed = 1;
-            rb2d.gravityScale = playerCharacter.Gravity;
+            rb2d.gravityScale = playerCharacter.DefaultGravity;
             return "Jumping";
         }
 

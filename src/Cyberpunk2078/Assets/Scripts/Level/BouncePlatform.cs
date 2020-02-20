@@ -71,7 +71,7 @@ public class BouncePlatform : MonoBehaviour
 
                 // kill any Y-axis speed
                 rb2d.velocity = Vector2.zero;
-                rb2d.gravityScale = pc.Gravity;
+                rb2d.gravityScale = pc.DefaultGravity;
                 //Debug.Log("Direction:"+ gameObject.transform.up);
                // Debug.Log(LogUtility.MakeLogStringFormat("Bounce Platform",
                 //    "Force:" + gameObject.transform.up * jumpForce * 50));
