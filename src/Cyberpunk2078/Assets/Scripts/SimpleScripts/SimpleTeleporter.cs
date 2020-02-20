@@ -68,6 +68,7 @@ public class SimpleTeleporter : MonoBehaviour
                 mask.AddComponent<LinearMovement>().enabled = false;
                 LinearMovement lm = mask.GetComponent<LinearMovement>();
                 lm.speed = speed;
+                lm.isPersistent = false;
 
                 if (direction == MovingDirection.R2L)
                 {                  

@@ -6,9 +6,9 @@ public class LinearMovement : Movement
     public float speed;
     public Vector3 orientation;
     public Vector3 initialPosition;
-    public float spawnTime;
+    public float spawnTime = 0;
 
-
+    public bool isPersistent = true;
     private void OnEnable()
     {
         orientation = orientation.normalized;
@@ -27,6 +27,13 @@ public class LinearMovement : Movement
     private void Update()
     {
         transform.position += Time.deltaTime * TimeManager.Instance.TimeFactor * orientation * speed;
+        if(isPersistent == false)
+        {
+            if(Time.time - spawnTime > 8f)
+            {
+                Destroy(this);
+            }
+        }
     }
 
 #if UNITY_EDITOR
