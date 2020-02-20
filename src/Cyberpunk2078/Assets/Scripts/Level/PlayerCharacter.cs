@@ -67,12 +67,21 @@ public class PlayerCharacter : Dummy
 
     public void Knockback(Vector3 direction, float force, float duration = 1f)
     {
-        rigidbody.velocity = Vector2.zero;
-        rigidbody.AddForce(force * direction.normalized, ForceMode2D.Impulse);
+        if (duration > 0)
+        {
+            Player.CurrentPlayer.knockBackDuration = duration;
+            fsm.CurrentStateName = "Knockback";
+        }
+        else
+            fsm.CurrentStateName = "Bounced";
 
-        
-        Player.CurrentPlayer.knockBackDuration = duration;
-        fsm.CurrentStateName = "Knockback";
+
+        rigidbody.velocity = Vector2.zero;
+        rigidbody.angularVelocity = 0;
+
+
+        if (force > 0 && direction != Vector3.zero)
+            rigidbody.AddForce(force * direction.normalized, ForceMode2D.Impulse);
     }
 
     public void KnockbackHorizontal(Vector3 origin, float force, float duration = 1f)

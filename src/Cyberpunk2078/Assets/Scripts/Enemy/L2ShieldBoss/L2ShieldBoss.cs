@@ -3,48 +3,66 @@
 
 public class L2ShieldBoss : Enemy
 {
+    [Header("Field")]
+    [SerializeField] private Vector3 leftThrowPoint;
+    [SerializeField] private Vector3 rightThrowPoint;
+
+    [Header("On Hit")]
+    [SerializeField] private float knockbackOnHit = 30;
+    [SerializeField] private float knockbackOnHitFromBack = 50;
+    [SerializeField] private float playerKnockbackOnHit = 20;
+    [SerializeField] private float playerKnockbackOnHitFromBack = 15;
+
+    [Header("Anger")]
     [SerializeField] private float angerDecrease = 5f;
     [SerializeField] private float counterThreshhold = 20f;
-    [SerializeField] private float turnTime = 0.5f;
+
+    [Header("Hand")]
+    [SerializeField] private Transform handAnchor;
+
     public GameObject spark;
+
     private float anger = 0;
-    private bool isTurning = false;
-    private float t_turn = 0;
-    
+
+
+    public Vector3 LeftThrowPoint
+    {
+        get
+        {
+            return leftThrowPoint;
+        }
+    }
+
+    public Vector3 RightThrowPoint
+    {
+        get
+        {
+            return rightThrowPoint;
+        }
+    }
+
+    public Transform HandAnchor
+    {
+        get
+        {
+            return handAnchor;
+        }
+    }
+
+    public bool IsGuarding
+    {
+        get
+        {
+            return hitBoxes[2].isActiveAndEnabled || hitBoxes[3].isActiveAndEnabled;
+        }
+    }
+
 
     public void Knockback(Vector3 direction, float force)
     {
         rb2d.velocity = Vector2.zero;
+        rb2d.angularVelocity = 0;
         rb2d.AddForce(force * direction.normalized, ForceMode2D.Impulse);
-    }
-
-
-    public override void AdjustFacing(Vector3 direction)
-    {
-        if (direction.x * transform.localScale.x < 0 && !isTurning)
-        {
-            isTurning = true;
-            t_turn = turnTime;
-        }
-    }
-
-    public void AdjustFacingImmediately()
-    {
-        AdjustFacingImmediately(currentTarget.transform.position - transform.position);        
-
-
-        isTurning = false;
-        t_turn = 0;
-    }
-
-    public void AdjustFacingImmediately(Vector2 direction)
-    {
-        AdjustFacingImmediately((Vector3)direction);
-    }
-
-    public void AdjustFacingImmediately(Vector3 direction)
-    {
-        GameUtility.AdjustFacing(this, direction);
     }
 
 
@@ -58,9 +76,9 @@ public class L2ShieldBoss : Enemy
         EmitShockwave(17, transform.localScale, cameraShake);
     }
 
-    public void EmitShockwave(int id, Vector3 direction, bool cameraShake = true)
+    public void EmitShockwave(int objectID, Vector3 direction, bool cameraShake = true)
     {
-        LinearMovement shockwaveMovement = ObjectRecycler.Singleton.GetObject<LinearMovement>(id);
+        LinearMovement shockwaveMovement = ObjectRecycler.Singleton.GetObject<LinearMovement>(objectID);
         shockwaveMovement.initialPosition = transform.position + new Vector3(1, 0, 0);
         shockwaveMovement.orientation = direction.x > 0 ? Vector3.right : Vector3.left;
 
@@ -79,24 +97,58 @@ public class L2ShieldBoss : Enemy
     }
 
 
+    public void Throw(int objectID)
+    {
+        Vector3 handOffset = new Vector3(1, 2, 0);
+        handOffset.Scale(transform.localScale);
+
+
+        Explosive projectile = ObjectRecycler.Singleton.GetObject<Explosive>(objectID);
+        projectile.source = this;
+
+
+        ParabolaMovement projectileMovement = projectile.GetComponent<ParabolaMovement>();
+        projectileMovement.targetTime = 1f;
+        projectileMovement.g = 30;
+        projectileMovement.initialPosition = transform.position + handOffset;
+        projectileMovement.targetPosition = currentTarget.transform.position;
+
+
+        projectile.gameObject.SetActive(true);
+    }
+
+
     public override float ApplyDamage(float rawDamage)
     {
+        if (IsInvulnerable)
+            return 0;
+
+
         if (isEvading)
         {
-            Debug.LogFormat("[L2ShieldBoss] Blocked an incoming attack.");
             isEvading = false;
-            return 0;
+
+
+            if (IsGuarding)
+            {
+                Debug.LogFormat("[L2ShieldBoss] Blocked an incoming attack.");
+
+                return 0;
+            }
+            
+
+            return ApplyFatigue(rawDamage * statistics.Sum(AttributeType.Fatigue_p0) * (1 + statistics.Sum(AttributeType.Fatigue_p1)));
         }
 
 
-        if (isInvulnerable)
-        {
-            ApplyFatigue(rawDamage * statistics.Sum(AttributeType.Fatigue_p0) * (1 + statistics.Sum(AttributeType.Fatigue_p1)));
-            return 0;
-        }
+        statistics[StatisticType.Fatigue] = 0;
 
 
         StatisticModificationResult result = statistics.Modify(StatisticType.Hp, -rawDamage, 0, statistics[StatisticType.MaxHp]);
+
+
+        Debug.LogFormat("[L2ShieldBoss] HP: {0} / {1}", result.currentValue, statistics[StatisticType.MaxHp]);
+
 
         if (result.currentValue <= 0)
             Dead();
@@ -112,7 +164,7 @@ public class L2ShieldBoss : Enemy
 
     public float ApplyFatigue(float rawFatigue)
     {
-        if (rawFatigue <= 0 || fsm.CurrentStateName == "Tired" || fsm.CurrentStateName == "DiveBomb" || fsm.CurrentStateName == "CounterAttack")
+        if (rawFatigue <= 0 || fsm.CurrentStateName == "Tired" || fsm.CurrentStateName == "DiveBomb")
             return 0;
 
 
@@ -124,11 +176,7 @@ public class L2ShieldBoss : Enemy
 
         if (result.currentValue >= statistics[StatisticType.MaxFatigue])
         {
-            if (statusModifiers[AttributeType.MaxFatigue_m0] == 1)
-                fsm.CurrentStateName = "DiveBomb";
-            else
-                fsm.CurrentStateName = "Tired";
-
+            fsm.CurrentStateName = "Tired";
 
             statistics[StatisticType.Fatigue] = 0;
         }
@@ -154,81 +202,87 @@ public class L2ShieldBoss : Enemy
         OnHit.AddListener(HandleHit);
 
 
-        isInvulnerable = true;
         anger = 0;
     }
 
 
-    private void Update()
+    protected override void Update()
     {
-        float scaledDt = Time.deltaTime * TimeManager.Instance.TimeFactor;
+        anger = Mathf.Max(0, anger - angerDecrease * TimeManager.Instance.ScaledDeltaTime);
 
 
-        anger = Mathf.Max(0, anger - angerDecrease * scaledDt);
-
-
-        if (isTurning)
-        {
-            if ((currentTarget.transform.position - transform.position).x * transform.localScale.x > 0)
-            {
-                isTurning = false;
-                t_turn = 0;
-            }
-
-
-            if (t_turn <= 0)
-                AdjustFacingImmediately();
-            else
-                t_turn -= scaledDt;
-        }
+        base.Update();
     }
 
 
     private void HandleHit(Hit hit, Collider2D collider)
     {
-        if (hitBoxes[2].isActiveAndEnabled || hitBoxes[3].isActiveAndEnabled)
+        if (!IsInvulnerable)
         {
+            PlayerCharacter player = hit.source.GetComponent<PlayerCharacter>();
+
+            Vector3 position = transform.position;
+            Vector3 playerPosition = player.transform.position;
+            Vector3 knockbackDirection = playerPosition.x > position.x ? Vector3.right : Vector3.left;
+
+
+            float hitAngle = 0;
+
             switch (hit.type)
             {
                 case Hit.Type.Melee:
-                    if (Vector3.Angle(transform.localScale.x * transform.right, hit.source.transform.position - transform.position) < 90)
-                        isEvading = true;
+                    hitAngle = Vector3.Angle(transform.localScale.x * transform.right, playerPosition - position);
                     break;
 
 
-                case Hit.Type.Projectile:
-                    if (Vector3.Angle(transform.localScale.x * transform.right, -hit.bullet.GetComponent<LinearMovement>().orientation) < 90)
-                        isEvading = true;
+                case Hit.Type.Bullet:
+                    hitAngle = Vector3.Angle(transform.localScale.x * transform.right, -hit.bullet.GetComponent<LinearMovement>().orientation);
                     break;
             }
-        }
-        else if (fsm.CurrentStateName != "Hurt")
-        {
-            ObjectRecycler.Singleton.GetSingleEffect(15, transform);
 
 
             if (fsm.CurrentStateName == "Tired")
             {
+                ObjectRecycler.Singleton.GetSingleEffect(15, transform, new Vector3(0, 1, 0));
+
+
                 TimeManager.Instance.startSlowMotion(0.4f, 0.7f, 0.2f);
                 CameraManager.Instance.FlashIn(7.5f, 0.1f, 0.7f, 0.2f);
 
 
-                isInvulnerable = false;
-
-                ApplyDamage(1);
-                statusModifiers.Modify(AttributeType.MaxFatigue_m0, 1);
-
-                isInvulnerable = true;
+                Knockback(-knockbackDirection, knockbackOnHitFromBack);
+                player.Knockback(Vector3.up + knockbackDirection, playerKnockbackOnHitFromBack, 0);
 
 
-                fsm.CurrentStateName = "Knockback";
+                fsm.CurrentStateName = "Hurt";
             }
-            else if (fsm.CurrentStateName != "Knockback" && fsm.CurrentStateName != "DiveBomb")
+            else if (hitAngle < 90)
             {
+                isEvading = true;
+
+
+                if (!IsGuarding)
+                {
+                    Knockback(-knockbackDirection, knockbackOnHit);
+                    player.Knockback(Vector3.up + knockbackDirection, playerKnockbackOnHit, 0);
+
+
+                    fsm.CurrentStateName = "InstantGuard";
+                }
+            }
+            else if (fsm.CurrentStateName != "Knockback" && fsm.CurrentStateName != "DiveBombReposition" && fsm.CurrentStateName != "DiveBomb")
+            {
+                ObjectRecycler.Singleton.GetSingleEffect(15, transform, new Vector3(0, 1, 0));
+
+
                 TimeManager.Instance.startSlowMotion(0.4f, 0.7f, 0.2f);
                 CameraManager.Instance.FlashIn(7.5f, 0.1f, 0.7f, 0.2f);
 
-                
+
+                Knockback(-knockbackDirection, knockbackOnHitFromBack);
+                player.Knockback(Vector3.up + knockbackDirection, playerKnockbackOnHitFromBack, 0);
+
+
                 if (anger >= 20)
                 {
                     fsm.CurrentStateName = "CounterAttack";

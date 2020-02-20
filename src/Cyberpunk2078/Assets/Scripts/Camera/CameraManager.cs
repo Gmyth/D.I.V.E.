@@ -16,7 +16,9 @@ public enum CameraState
 public class CameraManager : MonoBehaviour {
 
 	// Use this for initialization
-	public static CameraManager Instance;
+	public static CameraManager Instance = null;
+
+
 	private float zoomVelocity;
 	private Vector2 velocity; // the speed reference for camera
 	private Vector2 focusVelocity;
@@ -42,9 +44,9 @@ public class CameraManager : MonoBehaviour {
 	[SerializeField]private float offsetY = 0;
 	
 	//Tracking list for all gameobject should be in screen at this moment
-	private List<GameObject> targetList;
+	private List<GameObject> targetList = new List<GameObject>();
 	private GameObject mainTarget;
-	private List<CameraIndicator> indicatorList;
+	private List<CameraIndicator> indicatorList = new List<CameraIndicator>();
 	
 	
 
@@ -99,18 +101,26 @@ public class CameraManager : MonoBehaviour {
 	
 	private bool zoomInChasing; // the need of chasing character for a while 
 	private CameraState currentState = CameraState.Reset;
-	void Start ()
+
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+    }
+
+    void Start ()
 	{
 		defaultSize = Camera.main.orthographicSize;
 		mainTarget = GameObject.FindGameObjectWithTag("Player");
-		targetList = new List<GameObject>();
-		indicatorList = new List<CameraIndicator>();
 		targetList.Add(mainTarget);
-		Instance = this;
 		previousPosition = transform.position;
 		Initialize();
 		DontDestroyOnLoad(gameObject);
 	}
+
 
     public void ResetTarget()
     {
@@ -140,7 +150,7 @@ public class CameraManager : MonoBehaviour {
 	public void Initialize()
 	{
 		//collect all indicators in level
-		indicatorList = GameObject.FindObjectsOfType<CameraIndicator>().ToList();
+		indicatorList = FindObjectsOfType<CameraIndicator>().ToList();
 	}
 
 	void LateUpdate()
@@ -368,8 +378,7 @@ public class CameraManager : MonoBehaviour {
 
 	private void updateParallaxConfig()
 	{
-		if (transform.position.x != previousPosition.x||
-		    transform.position.y != previousPosition.y)
+		if (transform.position.x != previousPosition.x)
 		{
 			if (onCameraTranslate != null)
 			{
@@ -493,8 +502,9 @@ public class CameraManager : MonoBehaviour {
 	    }
 	    else
 	    {
-		    // already followed
-	    }
+            // already 
+            followOffset = transform.position - mainTarget.transform.position;
+        }
     }
 
     IEnumerator followRelease(CameraState previous, float duration)

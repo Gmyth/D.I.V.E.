@@ -49,7 +49,7 @@ public class LaserLight : MonoBehaviour
                  flash = false;
                   var color = gameObject.GetComponentInChildren<SpriteRenderer>().color;
                  gameObject.GetComponentInChildren<SpriteRenderer>().color = 
-                     new Color(color.r, color.g, color.b, Random.Range(0.2f,0.6f));
+                     new Color(color.r, color.g, color.b, Random.Range(0.1f,0.3f));
                  
                   transform.rotation = Quaternion.Euler(0,0,MoveAngle * Mathf.Cos(Time.time * MoveSpeed));
              }

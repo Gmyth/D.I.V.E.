@@ -32,19 +32,18 @@ public abstract class PlayerState : State
     // @return 0 - airborne   1 - ground   2 - enemy
     public int GetGroundType()
     {
-        Vector2 slideCheck = playerCharacter.GetComponent<Rigidbody2D>().velocity.x > 0
-            ? new Vector2(0.5f, -0.5f)
-            : new Vector2(-0.5f, -0.5f);
+        Vector2 slideCheck = playerCharacter.GetComponent<Rigidbody2D>().velocity.x > 0 ? new Vector2(0.5f, -0.5f) : new Vector2(-0.5f, -0.5f);
         
         // this variable will reposition the ray start point 
         float centerOffset = -0.7f;
 
         float DistanceToTheGround = playerCharacter.GetComponent<CapsuleCollider2D>().bounds.extents.y + centerOffset;
         //float DistanceToTheGround = centerOffset;
-        RaycastHit2D hitM = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.4f  );
-        RaycastHit2D hitL = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.3f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.4f );
-        RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.3f,centerOffset,0f),-playerCharacter.transform.up, DistanceToTheGround + 0.4f);
-        RaycastHit2D hitSlide = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f,0f,0f),slideCheck, 2f );
+
+        RaycastHit2D hitM = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f, centerOffset, 0f),-playerCharacter.transform.up, DistanceToTheGround + 0.4f);
+        RaycastHit2D hitL = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0.3f, centerOffset, 0f),-playerCharacter.transform.up, DistanceToTheGround + 0.4f);
+        RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-0.3f, centerOffset, 0f),-playerCharacter.transform.up, DistanceToTheGround + 0.4f);
+        RaycastHit2D hitSlide = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(0f, 0f, 0f), slideCheck, 2f);
 
         
         Debug.DrawRay(playerCharacter.transform.position + new Vector3(0f, centerOffset, 0f), -playerCharacter.transform.up * (DistanceToTheGround + 0.4f), Color.red);
@@ -212,6 +211,7 @@ public abstract class PlayerState : State
         
         rb2d.velocity = velocityPlaceHolder;
         //Debug.Log("Y:"+rb2d.velocity.y);
+
 //        // calculate speed on X axis
 //        if (Mathf.Abs(h) > 0.1f)
 //        {
@@ -404,7 +404,15 @@ public class FSMPlayer : FiniteStateMachine<PlayerState>
         if (currentStateName != "")
         {
             CurrentState.EarlyUpdate();
-            CurrentStateName = CurrentState.Update();
+
+
+            string lastUpdatedState = "";
+
+            while (CurrentStateName != lastUpdatedState)
+            {
+                lastUpdatedState = CurrentState.Update();
+                CurrentStateName = lastUpdatedState;
+            }
         }
     }
 }

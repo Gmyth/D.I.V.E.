@@ -83,13 +83,26 @@ public abstract class Dummy : MonoBehaviour, IDamageable
 
     [SerializeField] protected StatisticSystem statistics;
 
-    public bool isInvulnerable = false;
+    [SerializeField] private bool isInvulnerable = false;
     public bool isEvading = false;
     public float UnitTimeFactor = 1;
 
 
     public HitEvent OnHit { get; private set; } = new HitEvent();
     public HitEvent OnAttack { get; private set; } = new HitEvent();
+
+    public bool IsInvulnerable
+    {
+        get
+        {
+            return isInvulnerable;
+        }
+
+        set
+        {
+            isInvulnerable = value;
+        }
+    }
 
     public Vector2 GroundNormal
     {
@@ -137,19 +150,23 @@ public abstract class Dummy : MonoBehaviour, IDamageable
 public abstract class Enemy : Dummy
 {
     [SerializeField] protected int typeID;
+    protected EnemyData data;
+
     [SerializeField] protected FSMEnemy fsm;
     [SerializeField] protected Zone guardZone;
     [SerializeField] protected HitBox[] hitBoxes;
+    [SerializeField] private float turnTime = 0;
 
     [Header("Patrolling")]
     [SerializeField][Path(true)] protected Route patrolRoute;
     [SerializeField] protected RangedWeaponConfiguration patrolFiringConfiguration;
-
-    protected EnemyData data;
-
+    
     [HideInInspector] public AttributeSet statusModifiers = new AttributeSet();
+
     [HideInInspector] public PlayerCharacter currentTarget;
-    [HideInInspector] public Hit currentHit;
+    private int numEnabledHitBoxes = 0;
+
+    protected bool isTurning = false;
 
     public Vector3 lastCheckPointTransform;
     
@@ -158,6 +175,12 @@ public abstract class Enemy : Dummy
     private float defaultDrag;
     private float defaultMass;
 
+    private Vector3 turnDirection = Vector3.zero;
+    private float t_turn = 0;
+
+
+    public Event<HitBox> OnEnableHitBox { get; } = new Event<HitBox>();
+    
     public float this[StatisticType type]
     {
         get
@@ -198,36 +221,82 @@ public abstract class Enemy : Dummy
         }
     }
 
+    public bool IsTurning
+    {
+        get
+        {
+            return isTurning;
+        }
+    }
 
-    public void AdjustFacing()
+
+    public void Turn()
     {
         if (currentTarget)
-            AdjustFacing(currentTarget.transform.position - transform.position);
+            Turn(currentTarget.transform.position - transform.position);
     }
 
-    public void AdjustFacing(Vector2 direction)
+    public void Turn(Vector2 direction)
     {
-        GameUtility.AdjustFacing(this, (Vector3)direction);
+        Turn((Vector3)direction);
     }
 
-    public virtual void AdjustFacing(Vector3 direction)
+    public virtual void Turn(Vector3 direction)
     {
-        GameUtility.AdjustFacing(this, direction);
+        if (turnTime <= 0)
+            TurnImmediately(direction);
+        else
+        {
+            bool isInSameDirection = direction.x * transform.localScale.x > 0;
+
+            if (isInSameDirection)
+                StopTurning();
+            else if (!isTurning)
+            {
+                turnDirection = direction;
+                isTurning = true;
+                t_turn = turnTime;
+            }
+        }
+    }
+
+    public void TurnImmediately()
+    {
+        TurnImmediately(currentTarget.transform.position - transform.position);
+    }
+
+    public void TurnImmediately(Vector2 direction)
+    {
+        TurnImmediately((Vector3)direction);
+    }
+
+    public void TurnImmediately(Vector3 direction)
+    {
+        StopTurning();
+
+
+        GameUtility.Turn(this, direction);
+    }
+
+    public void StopTurning()
+    {
+        isTurning = false;
+        t_turn = 0;
     }
 
 
     public void EnableHitBox(int index)
     {
-        hitBoxes[index].hit = currentHit;
-        hitBoxes[index].gameObject.SetActive(true);
-    }
+        HitBox hitBox = hitBoxes[index];
 
-    public void EnableHitBox(int index, bool overwriteHit)
-    {
-        if (overwriteHit)
-            hitBoxes[index].hit = currentHit;
 
-        hitBoxes[index].gameObject.SetActive(true);
+        OnEnableHitBox.Invoke(hitBox);
+
+
+        hitBox.gameObject.SetActive(true);
+
+
+        ++numEnabledHitBoxes;
     }
 
     public void DisableHitBox(int index)
@@ -237,14 +306,22 @@ public abstract class Enemy : Dummy
 
     public void DisableAllHitBoxes()
     {
-        foreach (HitBox hitBox in hitBoxes)
-            hitBox.gameObject.SetActive(false);
+        for (int i = 0; i < hitBoxes.Length; ++i)
+            DisableHitBox(i);
     }
 
     public void SwitchHitBox(int previousIndex, int currentIndex)
     {
         DisableHitBox(previousIndex);
         EnableHitBox(currentIndex);
+    }
+
+
+    public void Reset()
+    {
+        fsm?.Reboot();
+
+        DisableAllHitBoxes();
     }
 
 
@@ -266,6 +343,24 @@ public abstract class Enemy : Dummy
         }
     }
 
+    protected virtual void Update()
+    {
+        float scaledDt = Time.deltaTime * TimeManager.Instance.TimeFactor;
+
+        
+        if (isTurning)
+        {
+            if (turnDirection.x * transform.localScale.x > 0)
+                StopTurning();
+
+
+            if (t_turn <= 0)
+                TurnImmediately(turnDirection);
+            else
+                t_turn -= scaledDt;
+        }
+    }
+
     protected virtual void FixedUpdate()
     {
         rb2d.drag = defaultDrag / TimeManager.Instance.TimeFactor;
@@ -277,10 +372,5 @@ public abstract class Enemy : Dummy
 
 
         fsm?.Update();
-    }
-
-    public void Reset()
-    {
-        fsm?.Reboot();
     }
 }

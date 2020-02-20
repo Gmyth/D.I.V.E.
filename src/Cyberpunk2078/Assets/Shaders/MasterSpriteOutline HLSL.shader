@@ -13,10 +13,10 @@ Shader "Unlit/MasterSpriteOutline HLSL"
     }
     SubShader
     {
-		Tags
-		{
-			"RenderType" = "Transparent"
-		}
+		//Tags
+		//{
+		//	"RenderType" = "Transparent"
+		//}
 
 		Blend SrcAlpha OneMinusSrcAlpha
         Cull Off

@@ -4,53 +4,21 @@
 [CreateAssetMenuAttribute(fileName = "L2ShieldBossState_Alert", menuName = "Enemy State/Level 2/Shield Boss/Alert")]
 public class L2ShieldBossState_Alert : ESAlert<L2ShieldBoss>
 {
-    public override void OnStateEnter(State previousState)
-    {
-        base.OnStateEnter(previousState);
+    [Header("Melee")]
+    [SerializeField] private float meleeRange = 2.5f;
+    [SerializeField] private BehaviorSelector meleeBehaviorSelector;
 
+    [Header("Near")]
+    [SerializeField] private float nearRange = 5f;
+    [SerializeField] private BehaviorSelector nearBehaviorSelector;
 
-        enemy.AdjustFacingImmediately();
-    }
+    [Header("Middle")]
+    [SerializeField] private float midRange = 8f;
+    [SerializeField] private BehaviorSelector midBehaviorSelector;
 
-    public override string Update()
-    {
-        enemy.AdjustFacing();
+    [Header("Far")]
+    [SerializeField] private BehaviorSelector farBehaviorSelector;
 
-
-        if (Time.time >= t_finishWait)
-        {
-
-            float r = Random.Range(0, 100);
-
-
-            switch (enemy.statusModifiers[AttributeType.MaxFatigue_m0])
-            {
-                case 0:
-                    return states_attacks[0];
-
-
-                case 1:
-                    if (r < 70)
-                        return states_attacks[0];
-
-                    return states_attacks[1];
-
-
-                case 2:
-                    if (r < 60)
-                        return states_attacks[0];
-
-                    if (r < 95)
-                        return states_attacks[1];
-
-                    
-                    return states_attacks[2];
-            }
-        }
-
-
-        return Name;
-    }
 
     public override void OnStateQuit(State nextState)
     {
@@ -58,5 +26,28 @@ public class L2ShieldBossState_Alert : ESAlert<L2ShieldBoss>
 
 
         enemy.DisableHitBox(3);
+    }
+
+
+    protected override string ChooseBehavior()
+    {
+        Vector3 d = enemy.currentTarget.transform.position - enemy.transform.position;
+
+        float distance = Mathf.Abs(d.x);
+
+
+        if (distance <= meleeRange)
+            return meleeBehaviorSelector.Select()[0];
+
+
+        if (distance <= nearRange)
+            return nearBehaviorSelector.Select()[0];
+
+
+        if (distance <= midRange)
+            return midBehaviorSelector.Select()[0];
+
+
+        return farBehaviorSelector.Select()[0];
     }
 }
