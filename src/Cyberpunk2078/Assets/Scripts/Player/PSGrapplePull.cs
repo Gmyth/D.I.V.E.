@@ -93,7 +93,7 @@ public class PSGrapplePull : PlayerState
         playerCharacter.transform.right = Vector3.right;
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         grapple.GetComponent<GrappleHook>().Dead();
-        rb2d.gravityScale = playerCharacter.Gravity;
+        rb2d.gravityScale = playerCharacter.DefaultGravity;
         initial = true;
     }
 

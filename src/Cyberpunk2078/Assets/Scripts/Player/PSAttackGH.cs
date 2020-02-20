@@ -125,7 +125,7 @@ public class PSAttackGH: PlayerState
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         
         //rb2d.drag = defaultDrag;
-        rb2d.gravityScale = playerCharacter.Gravity;
+        rb2d.gravityScale = playerCharacter.DefaultGravity;
                      
         // Kill Trail
         //playerCharacter.GetComponent<GhostSprites>().Occupied = false;

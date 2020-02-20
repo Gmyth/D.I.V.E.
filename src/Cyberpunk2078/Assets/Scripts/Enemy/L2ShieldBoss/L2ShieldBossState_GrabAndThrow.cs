@@ -22,6 +22,7 @@ public class L2ShieldBossState_GrabAndThrow : ESAttack<L2ShieldBoss>
         enemy.EnableHitBox(hitBox);
     }
 
+
     protected override string BeforeAttack()
     {
         PlayerCharacter player = enemy.currentTarget;
@@ -48,8 +49,8 @@ public class L2ShieldBossState_GrabAndThrow : ESAttack<L2ShieldBoss>
     protected override string Attack()
     {
         PlayerCharacter player = enemy.currentTarget;
-
         Vector3 enemyPosition = enemy.transform.position;
+        Rigidbody2D playerRigidbody = player.GetComponent<Rigidbody2D>();
 
 
         if (t_phase == 0)
@@ -61,7 +62,8 @@ public class L2ShieldBossState_GrabAndThrow : ESAttack<L2ShieldBoss>
 
             player.transform.parent.parent = enemy.HandAnchor;
             player.transform.parent.localPosition = Vector3.zero;
-            player.GetComponent<Rigidbody2D>().isKinematic = true;
+
+            playerRigidbody.gravityScale = 0;
 
 
             enemyAnimator.Play(animation_attack);
@@ -70,13 +72,9 @@ public class L2ShieldBossState_GrabAndThrow : ESAttack<L2ShieldBoss>
 
         if (t_phase >= attackDuration)
         {
-            player.GetComponent<Rigidbody2D>().isKinematic = false;
-
             player.transform.parent.parent = null;
 
-
-            Rigidbody2D playerRigidbody = player.GetComponent<Rigidbody2D>();
-
+            playerRigidbody.gravityScale = player.DefaultGravity;
             playerRigidbody.velocity = MathUtility.GetInitialVelocityForParabolaMovement(player.transform.position, enemyPosition.x < enemy.GuardZone.center.x ? enemy.RightThrowPoint : enemy.LeftThrowPoint, attackPoint, -Physics2D.gravity.y * playerRigidbody.gravityScale);
 
 

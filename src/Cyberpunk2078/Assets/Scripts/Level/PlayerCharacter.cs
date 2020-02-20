@@ -51,7 +51,7 @@ public class PlayerCharacter : Dummy
     public bool PowerDash = false;
     public bool PowerDashReady = true;
     public float LastPowerDash;
-    public float Gravity = 3;
+    public float DefaultGravity = 3;
     
     private GameObject buttonTip;
     public bool InFever { get; private set; } = false;

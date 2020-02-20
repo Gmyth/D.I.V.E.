@@ -343,7 +343,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: 1389165215249095784}
+  - {fileID: 2128902889611383928}
   MinDistance: 0
   MaxDistance: 0
   Length: 110
@@ -501,6 +501,22 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 3000
+--- !u!114 &-2246294302678953555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Pitch
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &-2228366991507506789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -750,7 +766,7 @@ MonoBehaviour:
   - {fileID: 1982445798013530902}
   StringsBanks:
   - {fileID: 6887345803722958588}
-  stringsBankWriteTime: 637171886062124395
+  stringsBankWriteTime: 637176211822032738
   cacheVersion: 3
 --- !u!114 &36348704661832673
 MonoBehaviour:
@@ -844,6 +860,22 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 260
+--- !u!114 &1060730802781853121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &1208412024969076381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -900,7 +932,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: 6677760047991639046}
+  - {fileID: -2246294302678953555}
   MinDistance: 0
   MaxDistance: 0
   Length: 540
@@ -941,7 +973,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: D:\Profiles\zz9691\Workspace\Cyberpunk2078\src\Cyberpunk2078\Build\Audio\Desktop\Master
     Bank.bank
-  lastModified: 637171886062124395
+  lastModified: 637176211822032738
   LoadResult: 0
   FileSizes:
   - Name: 
@@ -960,6 +992,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Speed
+  Min: 0
+  Max: 1
+  Default: 0
+--- !u!114 &2128902889611383928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Pitch
   Min: 0
   Max: 1
   Default: 0
@@ -1022,7 +1070,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: 8720345802600535373}
+  - {fileID: 1060730802781853121}
   MinDistance: 1
   MaxDistance: 20
   Length: 2524
@@ -1163,7 +1211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: Build\Audio\Desktop\Master Bank.strings.bank
-  lastModified: 637171886062124395
+  lastModified: 637176211822032738
   LoadResult: 0
   FileSizes:
   - Name: 
