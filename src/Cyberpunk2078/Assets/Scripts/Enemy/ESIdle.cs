@@ -2,25 +2,27 @@
 
 
 [CreateAssetMenuAttribute(fileName = "ES_Idle", menuName = "Enemy State/Idle")]
-public class ESIdle : EnemyState
+public class ESIdle : ESIdle<Enemy>
 {
-    protected Enemy enemy;
+}
 
 
-    public override void Initialize(int index, Enemy enemy)
-    {
-        base.Initialize(index, enemy);
 
-        this.enemy = enemy;
-    }
+public class ESIdle<T> : EnemyState<T> where T : Enemy
+{
+    [Header("Detection")]
+    [SerializeField] private bool enableDetection = true;
 
 
     public override string Update()
     {
-        enemy.currentTarget = FindAvailableTarget(enemy.transform.position, enemy[StatisticType.SightRange], enemy.GuardZone);
+        if (enableDetection)
+        {
+            enemy.currentTarget = FindAvailableTarget(enemy.transform.position, enemy[StatisticType.SightRange], enemy.GuardZone);
 
-        if (enemy.currentTarget)
-            return "Alert";
+            if (enemy.currentTarget)
+                return "Alert";
+        }
 
 
         return Name;

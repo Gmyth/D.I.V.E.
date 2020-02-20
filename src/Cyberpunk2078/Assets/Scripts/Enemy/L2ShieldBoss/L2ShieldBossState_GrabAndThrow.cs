@@ -32,13 +32,13 @@ public class L2ShieldBossState_GrabAndThrow : ESAttack<L2ShieldBoss>
         {
             enemyAnimator.Play(animation_waitting);
 
-            enemyRigidBody.velocity = Vector2.zero;
+            enemyRigidbody.velocity = Vector2.zero;
         }
         else
         {
             enemyAnimator.Play(animation_beforeAttack);
 
-            enemyRigidBody.velocity = chargeSpeed * (d.x > 0 ? Vector2.right : Vector2.left);
+            enemyRigidbody.velocity = chargeSpeed * (d.x > 0 ? Vector2.right : Vector2.left);
         }
 
 
@@ -101,7 +101,7 @@ public class L2ShieldBossState_GrabAndThrow : ESAttack<L2ShieldBoss>
                 t_phase = 0;
 
 
-                enemyRigidBody.velocity = Vector2.zero;
+                enemyRigidbody.velocity = Vector2.zero;
 
                 enemy.OnAttack.RemoveListener(Grab);
 
