@@ -10,12 +10,14 @@ public class BackGroundCar : MonoBehaviour
     private Vector2 bound;
     
     [SerializeField] private GameObject children;
-    
-    
+
+    private BackGroundCarHandler handler;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        handler = GetComponentInParent<BackGroundCarHandler>();
+        if(handler) bound = new Vector2(-handler.width/2,handler.width/2);
         bound = Bound;
         if (Random.Range(0, 1) == 0)bound = new Vector2(bound.y,bound.x);
         speed = Random.Range(3, 5);
@@ -28,7 +30,7 @@ public class BackGroundCar : MonoBehaviour
         float direction = (bound.y - bound.x) > 0 ? 1 : -1;
         transform.Translate(Time.fixedDeltaTime * TimeManager.Instance.TimeFactor * transform.right * speed * direction);
 
-        if ((transform.localPosition - new Vector3(bound.y, transform.localPosition.y, transform.localPosition.z)).magnitude < 0.1f)
+        if ((direction > 0 && transform.localPosition.x > bound.y) ||(direction < 0 && transform.localPosition.x < bound.y))
         {
             //reached
             bound = new Vector2(bound.y,bound.x);

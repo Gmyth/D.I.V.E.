@@ -6,28 +6,40 @@ public class SimpleLocker : MonoBehaviour
 {
 
     public SimpleLockedDoor ConnectedDoor;
-    bool b = true;
 
+    [SerializeField] private GameObject condition;
+    [SerializeField] private GameObject notification;
+    [SerializeField] private Sprite unlocked;
+    private bool triggered = true;
+
+    private bool okForTrigger = false;
     // Start is called before the first frame update
     void Awake()
     {
         ConnectedDoor.AddLocker(this);
+        notification.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (condition && !condition.activeInHierarchy)
+        {
+            okForTrigger = true;
+            notification.SetActive(true);
+        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (b && (other.gameObject.tag == "PlayerHitBox" || other.gameObject.tag == "Player"))
+        if (okForTrigger && triggered && (other.gameObject.tag == "PlayerHitBox" || other.gameObject.tag == "Player"))
         {
             ConnectedDoor.DeleteLocker();
             gameObject.SetActive(false);
-
-            b = false;
+            notification.SetActive(false);
+            triggered = false;
+            GetComponent<SpriteRenderer>().sprite = unlocked;
         }
     }
 
