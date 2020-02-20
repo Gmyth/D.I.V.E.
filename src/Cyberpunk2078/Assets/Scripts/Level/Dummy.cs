@@ -141,7 +141,19 @@ public abstract class Dummy : MonoBehaviour, IDamageable
     }
 
 
-    public abstract float ApplyDamage(float rawDamage);
+    public virtual float ApplyDamage(float rawDamage)
+    {
+        float damage = rawDamage;
+
+
+        StatisticModificationResult result = statistics.Modify(StatisticType.Hp, -damage, 0);
+
+        if (result.currentValue <= 0)
+            Dead();
+
+
+        return result.previousValue - result.currentValue;
+    }
 
     public abstract void Dead();
 }

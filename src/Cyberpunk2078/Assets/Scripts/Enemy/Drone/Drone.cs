@@ -1,6 +1,6 @@
 ﻿using Pathfinding;
 using UnityEngine;
-using UnityEngine.Events;
+
 
 [RequireComponent(typeof(Seeker))]
 public class Drone : Enemy, IPatroller
@@ -25,6 +25,7 @@ public class Drone : Enemy, IPatroller
 
     private int animationIndex;
     private float aimDeviation = 0;
+
 
     public Event<Drone> dead = new Event<Drone>();
 
@@ -229,8 +230,11 @@ public class Drone : Enemy, IPatroller
     }
 
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+
+
         if (currentTarget)
         {
             if (animationIndex != 1)
