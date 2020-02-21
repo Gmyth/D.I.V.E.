@@ -134,7 +134,7 @@ public class GameProcessManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && GUIManager.Singleton.IsInViewport("PauseMenu") == false)
+        if (Input.GetKeyDown(KeyCode.Escape) && GUIManager.Singleton.IsInViewport("PauseMenu") == false && currentLevelIndex != -1)
         {
             //Camera.main.GetComponent<FadeCamera>().RedoFade();
             GUIManager.Singleton.Open("PauseMenu");

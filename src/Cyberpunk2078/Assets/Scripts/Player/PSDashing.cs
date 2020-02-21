@@ -198,6 +198,7 @@ public class PSDashing : PlayerState
 
         AudioManager.Singleton.PlayOnce("Dash");
 
+        Debug.LogError("Dashed activate");
 
         Apply = true;
         //Dash has been pressed, set all config first

@@ -570,6 +570,7 @@ GameObject:
   - component: {fileID: 7496893421412184465}
   - component: {fileID: 7496893421412184464}
   - component: {fileID: 5016561820968971543}
+  - component: {fileID: 3328873490677646761}
   m_Layer: 5
   m_Name: Options
   m_TagString: Untagged
@@ -680,6 +681,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &3328873490677646761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7496893421412184462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5bae88b0e31e224580efd124c57207f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpeedFactor: 2
 --- !u!1 &7496893421626863115
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,6 +706,7 @@ GameObject:
   - component: {fileID: 7496893421626863118}
   - component: {fileID: 7496893421626863117}
   - component: {fileID: 91684005992857314}
+  - component: {fileID: 4793636157834015001}
   m_Layer: 5
   m_Name: New Game
   m_TagString: Untagged
@@ -787,7 +802,7 @@ MonoBehaviour:
     m_HighlightedSprite: {fileID: 21300000, guid: d7d6dd92d0910a7458d5d921ab417648,
       type: 3}
     m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 21300000, guid: d7d6dd92d0910a7458d5d921ab417648, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -799,20 +814,22 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7496893421626863117}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &4793636157834015001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7496893421626863115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5bae88b0e31e224580efd124c57207f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpeedFactor: 2
 --- !u!1 &7496893421660604447
 GameObject:
   m_ObjectHideFlags: 0
@@ -825,6 +842,7 @@ GameObject:
   - component: {fileID: 7496893421660604514}
   - component: {fileID: 7496893421660604513}
   - component: {fileID: 7900664354117971522}
+  - component: {fileID: 8124352008815597517}
   m_Layer: 5
   m_Name: Load Game
   m_TagString: Untagged
@@ -935,6 +953,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &8124352008815597517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7496893421660604447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5bae88b0e31e224580efd124c57207f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpeedFactor: 2
 --- !u!1 &7496893421953105557
 GameObject:
   m_ObjectHideFlags: 0
@@ -947,6 +978,7 @@ GameObject:
   - component: {fileID: 7496893421953105560}
   - component: {fileID: 7496893421953105559}
   - component: {fileID: 8393505384407515704}
+  - component: {fileID: 8197301553562032798}
   m_Layer: 5
   m_Name: Quit
   m_TagString: Untagged
@@ -1057,6 +1089,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &8197301553562032798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7496893421953105557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5bae88b0e31e224580efd124c57207f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpeedFactor: 2
 --- !u!1 &7496893422285710068
 GameObject:
   m_ObjectHideFlags: 0
@@ -1154,6 +1199,7 @@ MonoBehaviour:
   LoadGame: {fileID: 7496893421660604447}
   Options: {fileID: 7496893421412184462}
   quit: {fileID: 7496893421953105557}
+  SpeedFactor: 2
 --- !u!1 &9158556759566212046
 GameObject:
   m_ObjectHideFlags: 0

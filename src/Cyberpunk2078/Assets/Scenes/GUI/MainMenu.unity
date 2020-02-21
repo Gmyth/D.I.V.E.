@@ -3005,35 +3005,5 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1414541705368686790, guid: b76153269bd3bd14fa0dc3caf4e37d47,
-        type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1414541704400261010, guid: b76153269bd3bd14fa0dc3caf4e37d47,
-        type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1414541704415353930, guid: b76153269bd3bd14fa0dc3caf4e37d47,
-        type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1414541705358365598, guid: b76153269bd3bd14fa0dc3caf4e37d47,
-        type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1414541705511004547, guid: b76153269bd3bd14fa0dc3caf4e37d47,
-        type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1414541706216874817, guid: b76153269bd3bd14fa0dc3caf4e37d47,
-        type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b76153269bd3bd14fa0dc3caf4e37d47, type: 3}

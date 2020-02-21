@@ -149,6 +149,9 @@ public class HitBox : MonoBehaviour
                 trail1.gameObject.SetActive(true);
 
                 CameraManager.Instance.Shaking(0.20f, 0.10f, true);
+
+
+                AudioManager.Singleton.PlayOnce("Hit");
             }
         }
     }

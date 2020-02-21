@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -44,6 +45,22 @@ public class GUIPauseMenu : GUIWindow
         No.GetComponent<Button>().onClick.AddListener(NoClicked);
     }
 
+    private void SetTMP(string label, string content)
+    {
+        var tmps = Panel.GetComponentsInChildren<TextMeshProUGUI>();
+        foreach(TextMeshProUGUI tmp in tmps)
+        {
+            if(tmp.gameObject.name == "TMP_label")
+            {
+                tmp.text = label;
+            }
+            else if(tmp.gameObject.name == "TMP_content")
+            {
+                tmp.text = content;
+            }
+        }
+    }
+
     private void DeactivePanel()
     {
         Yes.GetComponent<Button>().onClick.RemoveAllListeners();
@@ -54,14 +71,14 @@ public class GUIPauseMenu : GUIWindow
     private void LevelSelectionClicked()
     {
         ActivePanel();
-
+        SetTMP("Back to level selection", "Are you sure you want to quit the current game and return to the level selection?");
         currentEvent = "LevelSelection";
     }
 
     private void BK_MainMenuClicked()
     {
         ActivePanel();
-
+        SetTMP("Back to MainMenu", "Are you sure back to menu?");
         currentEvent = "MainMenu";
 
     }
@@ -69,7 +86,7 @@ public class GUIPauseMenu : GUIWindow
     private void QuitClicked()
     {
         ActivePanel();
-
+        SetTMP("Quit", "Do you want to quit the game?");
         currentEvent = "Quit";
     }
 
