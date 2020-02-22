@@ -9,12 +9,13 @@ public class LinearMovement : Movement
     public float spawnTime = 0;
 
     public bool isPersistent = true;
+
     private void OnEnable()
     {
         orientation = orientation.normalized;
         transform.right = orientation;
         transform.position = initialPosition;
-        
+
         if (spawnTime == 0)
             spawnTime = Time.time;
     }

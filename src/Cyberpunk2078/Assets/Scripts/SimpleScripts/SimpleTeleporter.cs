@@ -62,9 +62,11 @@ public class SimpleTeleporter : MonoBehaviour
 
             if (collider)
             {
+                
                 mask = GameObject.Find("HUD_Mask");
-                Vector3 pos = mask.transform.position;
-                Vector3 l_pos = mask.transform.localPosition;
+                var Canvas = GameObject.FindGameObjectWithTag("Canvas");
+                Vector3 pos = Canvas.transform.position;
+                Vector3 l_pos = new Vector3(2880, 0, 0);
                 mask.AddComponent<LinearMovement>().enabled = false;
                 LinearMovement lm = mask.GetComponent<LinearMovement>();
                 lm.speed = speed;
