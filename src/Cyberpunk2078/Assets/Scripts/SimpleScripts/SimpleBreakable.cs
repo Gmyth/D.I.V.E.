@@ -76,16 +76,16 @@ public class SimpleBreakable : MonoBehaviour
 
         if (triggerSlowMotion)
         {
-            
             TimeManager.Instance.startSlowMotion(1f,0.5f);
-            if (triggers.Length != 0)
+        }
+        
+        if (triggers.Length != 0)
+        {
+            foreach (var trigger in triggers)
             {
-                foreach (var trigger in triggers)
-                {
-                    trigger.Enable();
-                }
-                
+                trigger.Enable();
             }
+                
         }
     }
     

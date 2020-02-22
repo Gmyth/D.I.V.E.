@@ -11,8 +11,8 @@ public class MouseIndicator : MonoBehaviour
     private float deadZone = 0.2f;
     private Vector2 controllerDir;
     private Vector3 lastMousePos;
-    private bool useMouseKeyboard;
-    private bool useJoyStick;
+    public bool useMouseKeyboard;
+    public bool useJoyStick;
     private bool locked;
     [SerializeField] private Color correct;
     [SerializeField] private Color error;
