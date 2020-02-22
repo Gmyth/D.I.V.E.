@@ -165,6 +165,7 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         CameraManager.Instance.Idle();
         PlayerCharacter.Singleton.SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
         timelineManager_DeflectTutorial.PlayNextTimeline();
+        TimeManager.Instance.endSlowMotion(0f);
 
         PlayerCharacter.Singleton.transform.parent.GetComponentInChildren<MouseIndicator>().ResetColor();
     }
