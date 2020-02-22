@@ -26,5 +26,5 @@ MonoBehaviour:
   stopChargingOnTargetLoss: 0
   animation_charging: L2ShieldBoss_Charge
   state_onTargetLoss: 
-  jumpForce: 4000
+  jumpForce: 6500
   waitTime: 0
