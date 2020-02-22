@@ -188,10 +188,10 @@ public abstract class PlayerState : State
 
 
     // Function : Keyboard Input => Physics Velocity, And Friction Calculation
-    public void PhysicsInputHelper(float h, float maxSpeed  = 8,  float Acceleration  = 50)
+    public void PhysicsInputHelper(float h, float v, float maxSpeed  = 8,  float Acceleration  = 50)
     {
         float feverFactor = playerCharacter.InFever ? Player.CurrentPlayer.FeverFactor : 1;
-        var MaxFallY = 50f;
+        var MaxFallY = v < 0 ? 40f:20f;
         var SlopeY = 15f;
         var MaxX =  Player.CurrentPlayer.OnSlope? maxSpeed * Mathf.Cos(45f) : maxSpeed;
         var MaxY =  Player.CurrentPlayer.OnSlope? SlopeY * Mathf.Cos(45f) : MaxFallY;
@@ -207,10 +207,14 @@ public abstract class PlayerState : State
         if(Mathf.Abs(velocityPlaceHolder.y) > MaxY)
         {
             velocityPlaceHolder.y = MaxY * (velocityPlaceHolder.y/Mathf.Abs(velocityPlaceHolder.y));
+            
+        }else if(v < 0) {
+            
+            velocityPlaceHolder.y = -MaxY;
+            
         }
         
         rb2d.velocity = velocityPlaceHolder;
-
 //        // calculate speed on X axis
 //        if (Mathf.Abs(h) > 0.1f)
 //        {

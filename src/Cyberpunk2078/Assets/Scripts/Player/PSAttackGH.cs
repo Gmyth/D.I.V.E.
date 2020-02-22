@@ -44,9 +44,11 @@ public class PSAttackGH: PlayerState
         }
 
         float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("VerticalJoyStick") != 0 ? Input.GetAxis("VerticalJoyStick") : Input.GetAxis("Vertical");
+
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
-        PhysicsInputHelper(h);
+        PhysicsInputHelper(h,v);
 
         RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position, rb2d.velocity.normalized, 0.8f);
         if (hit1.collider != null && hit1.transform.CompareTag("Ground"))

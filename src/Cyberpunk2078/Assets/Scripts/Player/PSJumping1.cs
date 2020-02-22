@@ -54,7 +54,8 @@ public class PSJumping1 : PlayerState
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
         float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("VerticalJoyStick");
+        float v = Input.GetAxis("VerticalJoyStick") != 0 ? Input.GetAxis("VerticalJoyStick") : Input.GetAxis("Vertical");
+
         Vector2 normalizedInput = new Vector2(h, v).normalized;
         flip = h < 0;
         
@@ -67,13 +68,12 @@ public class PSJumping1 : PlayerState
         //Still support Horizontal update during jumping, delete following to kill Horizontal input
        
         if(previous.Name == "WallSliding"){
-            if (lastJumpSec + 0.3f < Time.time ) PhysicsInputHelper(h);
+            if (lastJumpSec + 0.3f < Time.time ) PhysicsInputHelper(h,v);
         }
         else
         {
-            if (Player.CurrentPlayer.LastBounceSec + 0.3f < Time.time) PhysicsInputHelper(h);
+            if (Player.CurrentPlayer.LastBounceSec + 0.3f < Time.time) PhysicsInputHelper(h,v);
             else SimplePhysicsInputHelper(h);
-
         }
 
                  

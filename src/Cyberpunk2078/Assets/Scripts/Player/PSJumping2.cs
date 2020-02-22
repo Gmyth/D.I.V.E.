@@ -32,9 +32,9 @@ public class PSJumping2 : PlayerState
         playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipX = flip;
         float Vy = playerCharacter.GetComponent<Rigidbody2D>().velocity.y;
         float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
-
+        float v = Input.GetAxis("VerticalJoyStick") != 0 ? Input.GetAxis("VerticalJoyStick") : Input.GetAxis("Vertical");
         //Still support Horizontal update during jumping, delete following to kill Horizzontal input
-        PhysicsInputHelper(h,speedFactor,accelerationFactor);
+        PhysicsInputHelper(h,v,speedFactor,accelerationFactor);
 
         bool ground = GetGroundType() == 1;
 
