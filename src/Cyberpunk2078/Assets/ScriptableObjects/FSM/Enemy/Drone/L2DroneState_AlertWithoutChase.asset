@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72629234212c32d43ab93cde8124faee, type: 3}
+  m_Name: L2DroneState_AlertWithoutChase
+  m_EditorClassIdentifier: 
+  stateName: Alert
+  waitTime: 2
+  animation: L2Drone_Alert
+  states_attacks:
+  - Firing
+  state_onTargetLoss: Patrolling
+  behaviorSelector:
+    n: 1
+    repeats: 1
+    weights: 320000000000000032000000
+  stayDuration: 0.5
+  chasingSpeed: 2.5
+  chasingDuration: 0.5
+  backingSpeed: 1
