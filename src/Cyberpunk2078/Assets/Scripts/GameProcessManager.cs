@@ -111,6 +111,11 @@ public class GameProcessManager : MonoBehaviour
         currentLevel = Instantiate(LevelDictionary[index]);
         LoadedLevel.Add(currentLevel);
 
+        foreach(GameObject obj in currentLevel.GetComponent<LevelInfo>().breakable)
+        {
+            obj.GetComponent<Explodable>().fragmentInEditor();
+        }
+
         return currentLevel;
     }
 
