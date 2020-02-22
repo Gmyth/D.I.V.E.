@@ -52,7 +52,7 @@ public class PSTutorial_Deflect : PlayerState
     public override void OnStateEnter(State previousState)
     {
         playerCharacter.isInTutorial = true;
-
+        TimeManager.Instance.ApplyBlackScreen();
         t = 0;
     }
 

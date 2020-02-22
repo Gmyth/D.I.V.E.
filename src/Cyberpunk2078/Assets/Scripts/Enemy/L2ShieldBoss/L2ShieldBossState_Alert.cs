@@ -20,6 +20,14 @@ public class L2ShieldBossState_Alert : ESAlert<L2ShieldBoss>
     [SerializeField] private BehaviorSelector farBehaviorSelector;
 
 
+    public override void OnStateEnter(State previousState)
+    {
+        enemy.currentTarget = PlayerCharacter.Singleton;
+
+
+        base.OnStateEnter(previousState);
+    }
+
     public override void OnStateQuit(State nextState)
     {
         base.OnStateQuit(nextState);

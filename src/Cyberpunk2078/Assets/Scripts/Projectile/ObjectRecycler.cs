@@ -30,6 +30,19 @@ public class ObjectRecycler : MonoBehaviour
         return recyclable;
     }
 
+    public Recyclable GetObject(int id, Vector3 position)
+    {
+        if (recycledObjects[id].Count > 0)
+            return recycledObjects[id].Pop();
+
+
+        Recyclable recyclable = Instantiate(prefabs[id], position, Quaternion.identity, transform.GetChild(id));
+        recyclable.id = id;
+
+
+        return recyclable;
+    }
+
     public T GetObject<T>(int id) where T : MonoBehaviour
     {
         if (recycledObjects[id].Count > 0)

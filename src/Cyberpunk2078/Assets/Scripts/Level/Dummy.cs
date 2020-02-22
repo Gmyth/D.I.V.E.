@@ -356,7 +356,7 @@ public abstract class Enemy : Dummy
     }
 
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         data = DataTableManager.singleton.GetEnemyData(typeID);
         rb2d = GetComponent<Rigidbody2D>();
@@ -367,11 +367,13 @@ public abstract class Enemy : Dummy
         statistics = new StatisticSystem(data.Attributes, statusModifiers);
         statistics[StatisticType.Hp] = statistics[StatisticType.MaxHp];
 
-        if (fsm)
-        {
-            fsm = fsm.Initialize(this);
-            fsm.Boot();
-        }
+
+        fsm = fsm.Initialize(this);
+    }
+
+    protected virtual void OnEnable()
+    {
+        fsm.Reboot();
     }
 
     protected virtual void Update()

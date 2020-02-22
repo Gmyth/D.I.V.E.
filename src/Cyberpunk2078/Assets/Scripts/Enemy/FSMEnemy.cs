@@ -212,7 +212,9 @@ public class FSMEnemy : FiniteStateMachine<EnemyState>
 
     public override void Reboot()
     {
-        ShutDown();
+        if (IsRunning)
+            ShutDown();
+
         Boot();
     }
 

@@ -18,12 +18,8 @@ public class EnemySpawner : MonoBehaviour
     {
         if (allowDuplicates || !enemy)
         {
-            enemy = ObjectRecycler.Singleton.GetObject(objectID);
-
-            if (spawnZone.Type == ZoneType.Universe)
-                enemy.transform.position = transform.position;
-            else
-                enemy.transform.position = spawnZone.GetRandomPosition();
+            enemy = ObjectRecycler.Singleton.GetObject(objectID, spawnZone.Type == ZoneType.Universe ? transform.position : spawnZone.GetRandomPosition());
+            enemy.gameObject.SetActive(true);
         }
     }
 

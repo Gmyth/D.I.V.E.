@@ -116,7 +116,6 @@ public class CameraManager : MonoBehaviour {
 		defaultSize = Camera.main.orthographicSize;
 		mainTarget = GameObject.FindGameObjectWithTag("Player");
 		targetList.Add(mainTarget);
-		
 		previousPosition = transform.position;
 		Initialize();
 	}
@@ -267,13 +266,13 @@ public class CameraManager : MonoBehaviour {
 			case CameraState.Focusing:
 				
 				// prevent over-chasing
-				if (usingPos && (focusPos - transform.position).sqrMagnitude > 1000) break;
-				else if (!usingPos && ((target.position - transform.position).sqrMagnitude > 1000)) break;
+				if (usingPos && (focusPos - transform.position).sqrMagnitude > 5000) break;
+				else if (!usingPos && ((target.position - transform.position).sqrMagnitude > 5000)) break;
 
 				Vector3 curFocusPos = usingPos? focusPos : target.position; 
 
-				posX = Mathf.SmoothDamp(transform.position.x,curFocusPos.x, ref focusVelocity.x, 0.05f);
-				posY = Mathf.SmoothDamp(transform.position.y,curFocusPos.y, ref focusVelocity.y, 0.05f);
+				posX = Mathf.SmoothDamp(transform.position.x,curFocusPos.x, ref focusVelocity.x, 0.1f);
+				posY = Mathf.SmoothDamp(transform.position.y,curFocusPos.y, ref focusVelocity.y, 0.1f);
 				transform.position = new Vector3(posX, posY, transform.position.z);
 				
 				if (targetIndicator && targetIndicator.changeSize)
@@ -376,8 +375,7 @@ public class CameraManager : MonoBehaviour {
 
 	private void updateParallaxConfig()
 	{
-		if (transform.position.x != previousPosition.x||
-		    transform.position.y != previousPosition.y)
+		if (transform.position.x != previousPosition.x)
 		{
 			if (onCameraTranslate != null)
 			{

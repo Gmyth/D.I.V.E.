@@ -21,7 +21,7 @@ MonoBehaviour:
   animation_attack: L2ShieldBoss_ThrowPreparation
   attackBackswing: 0.5
   animation_afterAttack: L2ShieldBoss_Throw
-  state_afterAttack: Alert
+  state_afterAttack: LaserLeap
   animation_waitting: L2ShieldBoss_Idle
   chargeSpeed: 15
-  extraStunTime: 1
+  extraStunTime: 3.5

@@ -15,7 +15,8 @@ public class L2ShieldBoss : Enemy
     [SerializeField] private float playerKnockbackOnHit = 20;
     [SerializeField] private float playerKnockbackOnHitFromBack = 15;
 
-    [Header("Anger")]
+    [Header("Rage")]
+    [SerializeField][Range(0, 1)] private float ragePercentage = 0.5f;
     [SerializeField] private float angerDecrease = 5f;
     [SerializeField] private float counterThreshhold = 20f;
 
@@ -136,6 +137,13 @@ public class L2ShieldBoss : Enemy
     }
 
 
+    public void InitiateDroneSpawning()
+    {
+        rightDroneSpawner.gameObject.SetActive(true);
+        leftDroneSpawner.gameObject.SetActive(true);
+    }
+
+
     public override float ApplyDamage(float rawDamage)
     {
         if (IsInvulnerable)
@@ -172,6 +180,10 @@ public class L2ShieldBoss : Enemy
             Dead();
 
 
+        if (result.currentValue <= ragePercentage * statistics[StatisticType.MaxHp])
+            fsm.CurrentStateName = "Rage";
+
+
         return result.previousValue - result.currentValue;
     }
 
@@ -206,12 +218,9 @@ public class L2ShieldBoss : Enemy
     }
 
 
-    protected override void Start()
+    protected override void Awake()
     {
-        currentTarget = PlayerCharacter.Singleton;
-
-
-        base.Start();
+        base.Awake();
 
 
         rb2d = GetComponent<Rigidbody2D>();

@@ -15,7 +15,10 @@ public class SimpleBreakable : MonoBehaviour
     [SerializeField] private float min = 1f;
 
     [SerializeField] private float max = 1.5f;
+    
+    [SerializeField] private bool triggerSlowMotion = false;
     // Start is called before the first frame update
+    [SerializeField] private TriggerObject[] triggers;
     void Start()
     {
         anim = gameObject.GetComponent<Animator>();
@@ -70,8 +73,27 @@ public class SimpleBreakable : MonoBehaviour
             frag.GetComponent<Rigidbody2D>().AddForce(force * (frag.transform.position - pos).normalized);
             Destroy(frag,Random.Range(min,max));
         }
+
+        if (triggerSlowMotion)
+        {
+            TimeManager.Instance.startSlowMotion(1f,0.5f);
+        }
         
+        if (triggers.Length != 0)
+        {
+            foreach (var trigger in triggers)
+            {
+                trigger.Enable();
+            }
+                
+        }
     }
+    
+    
+    
+    
+    
+    
 
     //private void OnTriggerEnter2D(Collider2D other)
     //{
