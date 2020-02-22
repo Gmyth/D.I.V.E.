@@ -9697,6 +9697,111 @@ PrefabInstance:
       propertyPath: m_GravityScale
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 8791086929859187451, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: bindingData.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8791086929859187451, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: bindingData.Array.data[0].buttonName
+      value: Up
+      objectReference: {fileID: 0}
+    - target: {fileID: 8791086929859187451, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: bindingData.Array.data[1].buttonName
+      value: Down
+      objectReference: {fileID: 0}
+    - target: {fileID: 8791086929859187451, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: bindingData.Array.data[2].buttonName
+      value: Left
+      objectReference: {fileID: 0}
+    - target: {fileID: 8791086929859187451, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: bindingData.Array.data[3].buttonName
+      value: Right
+      objectReference: {fileID: 0}
+    - target: {fileID: 8791086929859187451, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: bindingData.Array.data[0].keyboardButtonName
+      value: W
+      objectReference: {fileID: 0}
+    - target: {fileID: 8791086929859187451, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: bindingData.Array.data[1].keyboardButtonName
+      value: S
+      objectReference: {fileID: 0}
+    - target: {fileID: 8791086929859187451, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: bindingData.Array.data[2].keyboardButtonName
+      value: A
+      objectReference: {fileID: 0}
+    - target: {fileID: 8791086929859187451, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: bindingData.Array.data[3].keyboardButtonName
+      value: D
+      objectReference: {fileID: 0}
+    - target: {fileID: 8791086929859187451, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: bindingData.Array.data[4].buttonName
+      value: Attack1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8791086929859187451, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: bindingData.Array.data[4].keyboardButtonName
+      value: Left
+      objectReference: {fileID: 0}
+    - target: {fileID: 8791086929859187451, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: bindingData.Array.data[5].buttonName
+      value: Dash
+      objectReference: {fileID: 0}
+    - target: {fileID: 8791086929859187451, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: bindingData.Array.data[5].keyboardButtonName
+      value: Shift
+      objectReference: {fileID: 0}
+    - target: {fileID: 8791086929859187451, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: bindingData.Array.data[6].buttonName
+      value: LongDash
+      objectReference: {fileID: 0}
+    - target: {fileID: 8791086929859187451, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: bindingData.Array.data[6].keyboardButtonName
+      value: R
+      objectReference: {fileID: 0}
+    - target: {fileID: 8791086929859187451, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: bindingData.Array.data[7].buttonName
+      value: Jump
+      objectReference: {fileID: 0}
+    - target: {fileID: 8791086929859187451, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: bindingData.Array.data[7].keyboardButtonName
+      value: Space
+      objectReference: {fileID: 0}
+    - target: {fileID: 8791086929859187451, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: bindingData.Array.data[2].joystickButtonName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8791086929859187451, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: bindingData.Array.data[8].buttonName
+      value: Cancel
+      objectReference: {fileID: 0}
+    - target: {fileID: 8791086929859187451, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: bindingData.Array.data[8].keyboardButtonName
+      value: Esc
+      objectReference: {fileID: 0}
+    - target: {fileID: 8791086929859187451, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: bindingData.Array.data[8].joystickButtonName
+      value: Start
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30f904e572c0a79489e3033eaff79c6a, type: 3}
 --- !u!114 &1553442330 stripped

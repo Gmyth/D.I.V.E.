@@ -3,6 +3,40 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
+[System.Serializable]
+public class KeyBindingData
+{
+    [SerializeField] private string buttonName;
+    [SerializeField] private string keyboardButtonName;
+    [SerializeField] private string joystickButtonName;
+
+
+    public string ButtonName
+    {
+        get
+        {
+            return buttonName;
+        }
+    }
+
+    public string KeyboardButtonName
+    {
+        get
+        {
+            return keyboardButtonName;
+        }
+    }
+
+    public string JoystickButtonName
+    {
+        get
+        {
+            return joystickButtonName;
+        }
+    }
+}
+
+
 public class GUITutorial : MonoBehaviour
 {
     [SerializeField] private string keyboardIcons;
@@ -12,7 +46,10 @@ public class GUITutorial : MonoBehaviour
     [SerializeField] private Image plusIcon;
     [SerializeField] private Image rightIcon;
 
+    [Header("Key Binding")]
+    [SerializeField] private KeyBindingData[] bindingData;
 
+    private Dictionary<string, string[]> keyNames = new Dictionary<string, string[]>();
     private Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
 
 
@@ -26,6 +63,39 @@ public class GUITutorial : MonoBehaviour
             ShowKeyboardButton(buttonNames[0]);
         else
             ShowKeyboardButtonCombination(buttonNames[0], buttonNames[1]);
+    }
+
+    public void Show(string buttonName1, string buttonName2 = "")
+    {
+        InputType currentInputType = MouseIndicator.Singleton.CurrentInputType;
+
+
+        if (buttonName1 == "Directionals")
+        {
+            directionalIcons.SetActive(true);
+            leftIcon.gameObject.SetActive(false);
+        }
+        else
+        {
+            leftIcon.sprite = sprites[keyNames[buttonName1][(int)currentInputType]];
+
+            directionalIcons.SetActive(false);
+            leftIcon.gameObject.SetActive(true);
+        }
+
+
+        if (buttonName2 == "")
+        {
+            plusIcon.gameObject.SetActive(false);
+            rightIcon.gameObject.SetActive(false);
+        }
+        else
+        {
+            rightIcon.sprite = sprites[keyNames[buttonName2][(int)currentInputType]];
+
+            plusIcon.gameObject.SetActive(true);
+            rightIcon.gameObject.SetActive(true);
+        }
     }
 
     public void ShowKeyboardButton(string buttonName)
@@ -97,5 +167,8 @@ public class GUITutorial : MonoBehaviour
 
         foreach (Sprite joystickIcon in Resources.LoadAll<Sprite>(joystickIcons))
             sprites.Add(joystickIcon.name, joystickIcon);
+
+        foreach (KeyBindingData data in bindingData)
+            keyNames.Add(data.ButtonName, new string[2] { string.Format("Keyboard_Black_{0}_Up", data.KeyboardButtonName), string.Format("Xbox_One_Large_{0}_Up", data.JoystickButtonName) });
     }
 }
