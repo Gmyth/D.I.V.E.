@@ -405,7 +405,8 @@ public class PlayerCharacter : Dummy
         // TODO: delete later
         buttonTip = GameObject.Find("HealthButton");
     }
-    private void FixedUpdate()
+
+    private void Update()
     {
         if (InFever)
             ConsumeUltimateEnergy(statistics[StatisticType.FeverDecay] * Time.deltaTime);

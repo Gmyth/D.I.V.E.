@@ -64,14 +64,14 @@ public abstract class PlayerState : State
             if (margin && !grounded)
             {
 
-                //if (name == "Airborne")
-                //{
-                //   playerCharacter.transform.Translate(Vector2.up * (hitM.distance - DistanceToTheGround));
-                //}
-                //else
-                //{
-                //   playerCharacter.transform.Translate(Vector2.down* (hitM.distance - DistanceToTheGround));
-                //}
+                if (name == "Airborne")
+                {
+                   playerCharacter.transform.Translate(Vector2.up * (hitM.distance - DistanceToTheGround));
+                }
+                else
+                {
+                   playerCharacter.transform.Translate(Vector2.down* (hitM.distance - DistanceToTheGround));
+                }
             }
 
             player.ChainWallJumpReady = false;

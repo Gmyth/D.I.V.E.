@@ -33,7 +33,6 @@ public class SimpleLaser : MonoBehaviour
                 {
                     //Take damage
                     PlayerCharacter.Singleton.ApplyDamage(1);
-
                     //Respawn at last checkpoint
                     other.transform.position = RespawnPoint.position;
                 }
