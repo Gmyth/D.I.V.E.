@@ -113,7 +113,7 @@ public class GameProcessManager : MonoBehaviour
 
         foreach(GameObject obj in currentLevel.GetComponent<LevelInfo>().breakable)
         {
-            obj.GetComponent<SimpleBreakable>().GenerateFrags();
+            obj.GetComponent<Explodable>().fragmentInEditor();
         }
 
         return currentLevel;
