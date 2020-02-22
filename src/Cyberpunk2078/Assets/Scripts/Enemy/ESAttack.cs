@@ -100,7 +100,8 @@ public abstract class ESAttack<T> : EnemyState<T> where T : Enemy
 
     protected virtual void InitializeHitBox(HitBox hitBox)
     {
-        hitBox.LoadHitData(hitData);
+        if (hitDataID >= 0)
+            hitBox.LoadHitData(hitData);
     }
 
 

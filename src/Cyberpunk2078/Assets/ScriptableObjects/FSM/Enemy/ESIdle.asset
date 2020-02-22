@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: ESIdle
   m_EditorClassIdentifier: 
   stateName: Idle
+  enableDetection: 0

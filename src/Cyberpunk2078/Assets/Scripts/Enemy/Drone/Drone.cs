@@ -212,9 +212,9 @@ public class Drone : Enemy, IPatroller
     }
 
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
 
 
         Health = HealthCap;

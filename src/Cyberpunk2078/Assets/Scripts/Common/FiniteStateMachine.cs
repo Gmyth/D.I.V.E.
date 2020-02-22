@@ -21,6 +21,14 @@ public abstract class FiniteStateMachine<T> : ScriptableObject where T : State
         }
     }
 
+    public bool IsRunning
+    {
+        get
+        {
+            return currentStateName != "";
+        }
+    }
+
     public virtual string CurrentStateName
     {
         get
@@ -38,7 +46,7 @@ public abstract class FiniteStateMachine<T> : ScriptableObject where T : State
     {
         get
         {
-            return currentStateName == "" ? null : states[currentStateName];
+            return IsRunning ? states[currentStateName] : null;
         }
     }
 

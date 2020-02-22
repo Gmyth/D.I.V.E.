@@ -2,38 +2,29 @@
 
 
 [CreateAssetMenuAttribute(fileName = "ES_Timed", menuName = "Enemy State/Timed")]
-public class ESTimed : EnemyState
+public class ESTimed : ESTimed<Enemy>
+{
+}
+
+
+public class ESTimed<T> : EnemyState<T> where T : Enemy
 {
     [Header("Configuration")]
-    [SerializeField] [Min(0)] private float duration;
-    [SerializeField] private string animation;
+    [SerializeField] [Min(0)] protected float duration;
+    [SerializeField] protected string animation;
 
     [Header("Connected States")]
-    [SerializeField] private string nextState;
+    [SerializeField] protected string nextState;
 
-    protected Enemy enemy;
-    protected Animator animator;
+    protected float t_finish = 0;
 
-    private float t_finish = 0;
-
-
-    public override void Initialize(int index, Enemy enemy)
-    {
-        base.Initialize(index, enemy);
-
-
-        this.enemy = enemy;
-
-
-        animator = enemy.GetComponent<Animator>();
-    }
 
     public override void OnStateEnter(State previousState)
     {
         t_finish = 0;
 
 
-        animator.Play(animation);
+        enemyAnimator.Play(animation);
     }
 
 

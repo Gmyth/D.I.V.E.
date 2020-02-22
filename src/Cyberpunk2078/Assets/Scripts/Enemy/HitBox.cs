@@ -48,7 +48,7 @@ public class HitBox : MonoBehaviour
     [Header("")]
     [SerializeField] protected int[] effects;
 
-    [HideInInspector] public Hit hit;
+    public Hit hit;
 
     protected HitBoxGroup group;
     protected Dictionary<int, int> objectsHit;

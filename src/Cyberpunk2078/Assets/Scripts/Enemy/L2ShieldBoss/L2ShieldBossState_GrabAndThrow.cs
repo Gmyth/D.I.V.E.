@@ -22,9 +22,20 @@ public class L2ShieldBossState_GrabAndThrow : ESAttack<L2ShieldBoss>
         enemy.EnableHitBox(hitBox);
     }
 
+    public override void OnStateQuit(State nextState)
+    {
+        base.OnStateQuit(nextState);
+
+
+        enemy.IsInvulnerable = false;
+    }
+
 
     protected override string BeforeAttack()
     {
+        enemy.TurnImmediately();
+
+
         PlayerCharacter player = enemy.currentTarget;
         Vector3 d = player.transform.position - enemy.transform.position;
 
@@ -55,7 +66,7 @@ public class L2ShieldBossState_GrabAndThrow : ESAttack<L2ShieldBoss>
 
         if (t_phase == 0)
         {
-            enemy.Turn((enemyPosition.x < enemy.GuardZone.center.x ? enemy.RightThrowPoint : enemy.LeftThrowPoint) - enemyPosition);
+            enemy.TurnImmediately((enemyPosition.x < enemy.GuardZone.center.x ? enemy.RightThrowPoint : enemy.LeftThrowPoint) - enemyPosition);
 
 
             player.Knockback(Vector3.zero, 0, attackDuration + extraStunTime);
