@@ -6,6 +6,8 @@ public class L2ShieldBoss : Enemy
     [Header("Field")]
     [SerializeField] private Vector3 leftThrowPoint;
     [SerializeField] private Vector3 rightThrowPoint;
+    [SerializeField] private EnemySpawner leftDroneSpawner;
+    [SerializeField] private EnemySpawner rightDroneSpawner;
 
     [Header("On Hit")]
     [SerializeField] private float knockbackOnHit = 30;
@@ -38,6 +40,22 @@ public class L2ShieldBoss : Enemy
         get
         {
             return rightThrowPoint;
+        }
+    }
+
+    public EnemySpawner LeftDroneSpawner
+    {
+        get
+        {
+            return leftDroneSpawner;
+        }
+    }
+
+    public EnemySpawner RightDroneSpawner
+    {
+        get
+        {
+            return rightDroneSpawner;
         }
     }
 

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9cc72006fbb28c49bdd128234eeabbe, type: 3}
-  m_Name: FSM_DroneStationary
+  m_Name: FSM_DroneShieldBoss
   m_EditorClassIdentifier: 
   serializedStates:
-  - {fileID: 11400000, guid: babd18409ee90f443936bd03234dd449, type: 2}
+  - {fileID: 11400000, guid: 66da51f039689f04aab630f91e2b128c, type: 2}
   - {fileID: 11400000, guid: 4b6308ed7506236499d93cd6f26ca117, type: 2}
   - {fileID: 11400000, guid: d22d1ccab7118a542acb5977ad313a68, type: 2}
-  startingState: Idle
+  startingState: Reposition

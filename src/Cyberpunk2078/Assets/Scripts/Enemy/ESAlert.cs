@@ -12,18 +12,7 @@ public abstract class ESAlert<T> : EnemyState<T> where T : Enemy
     [SerializeField] protected string[] states_attacks;
     [SerializeField] protected string state_onTargetLoss = "";
 
-    protected Animator animator;
-
     protected float t_wait;
-
-
-    public override void Initialize(T enemy)
-    {
-        base.Initialize(enemy);
-
-
-        animator = enemy.GetComponent<Animator>();
-    }
 
 
     public override void OnStateEnter(State previousState)
@@ -35,7 +24,7 @@ public abstract class ESAlert<T> : EnemyState<T> where T : Enemy
 
 
         if (animation != "")
-            animator.Play(animation);
+            enemyAnimator.Play(animation);
     }
 
 

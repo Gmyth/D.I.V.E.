@@ -17,12 +17,12 @@ MonoBehaviour:
   animation: L2Drone_Alert
   states_attacks:
   - Firing
-  state_onTargetLoss: Patrolling
+  state_onTargetLoss: Alert
   behaviorSelector:
     n: 1
     repeats: 1
-    weights: 320000000000000032000000
-  stayDuration: 0.5
-  chasingSpeed: 2.5
-  chasingDuration: 0.5
-  backingSpeed: 1
+    weights: 64000000
+  stayDuration: 0
+  chasingSpeed: 0
+  chasingDuration: 0
+  backingSpeed: 0

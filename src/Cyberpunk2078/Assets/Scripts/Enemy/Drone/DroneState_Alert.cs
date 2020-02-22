@@ -10,27 +10,20 @@ public class DroneState_Alert : ESAlert<Drone>
     [SerializeField] private float chasingDuration = 0.5f;
     [SerializeField] private float backingSpeed = 1f;
 
-    private Rigidbody2D rigidbody;
-
-    private float t_wait;
     private float t_ready;
 
-
-    public override void Initialize(Drone enemy)
-    {
-        base.Initialize(enemy);
-
-
-        rigidbody = enemy.GetComponent<Rigidbody2D>();
-        animator = enemy.GetComponent<Animator>();
-    }
 
     public override string Update()
     {
         if ((t_wait += TimeManager.Instance.ScaledDeltaTime) >= waitTime)
         {
             if (!IsPlayerInSight(enemy.currentTarget, enemy[StatisticType.SightRange]))
-                return state_onTargetLoss;
+            {
+                enemy.currentTarget = FindAvailableTarget();
+
+                if (!enemy.currentTarget)
+                    return state_onTargetLoss;
+            }
 
 
             if (!enemy.GuardZone.Contains(enemy.currentTarget))
@@ -46,7 +39,7 @@ public class DroneState_Alert : ESAlert<Drone>
             {
                 Vector3 u = (Vector3)enemy.GuardZone.center - enemy.transform.position;
 
-                rigidbody.velocity = backingSpeed * ((-v.normalized + u.normalized) / 2).normalized;
+                enemyRigidbody.velocity = backingSpeed * ((-v.normalized + u.normalized) / 2).normalized;
             }
             else
             {
@@ -66,20 +59,20 @@ public class DroneState_Alert : ESAlert<Drone>
 
 
                             case 1: // Chase
-                                rigidbody.velocity = chasingSpeed * v.normalized;
+                                enemyRigidbody.velocity = chasingSpeed * v.normalized;
                                 t_ready = t + chasingDuration;
                                 break;
 
 
                             case 2: // Stay
-                                rigidbody.velocity = Vector2.zero;
+                                enemyRigidbody.velocity = Vector2.zero;
                                 t_ready = t + stayDuration;
                                 break;
                         }
                     }
                 }
                 else
-                    rigidbody.velocity = chasingSpeed * v.normalized;
+                    enemyRigidbody.velocity = chasingSpeed * v.normalized;
             }
 
 
@@ -99,7 +92,7 @@ public class DroneState_Alert : ESAlert<Drone>
         t_ready = 0;
 
 
-        animator.Play(Drone.animation_alert);
+        enemyAnimator.Play(Drone.animation_alert);
     }
 
     public override void OnStateQuit(State nextState)
@@ -107,6 +100,6 @@ public class DroneState_Alert : ESAlert<Drone>
         base.OnStateQuit(nextState);
 
 
-        rigidbody.velocity = Vector2.zero;
+        enemyRigidbody.velocity = Vector2.zero;
     }
 }

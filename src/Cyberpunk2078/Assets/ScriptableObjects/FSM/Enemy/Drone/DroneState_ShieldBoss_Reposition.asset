@@ -9,8 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b7862141c9c39f42a13380c194fc02c, type: 3}
-  m_Name: ESIdle
+  m_Script: {fileID: 11500000, guid: 70f46285b07a9c7478104939121c987a, type: 3}
+  m_Name: DroneState_ShieldBoss_Reposition
   m_EditorClassIdentifier: 
-  stateName: Idle
-  enableDetection: 0
+  stateName: Reposition
+  useRelativePosition: 1
+  targetPosition: {x: 0, y: -6}
+  speed: 2
+  stopDistance: 0.1
+  animation: L2Drone_Idle
+  nextState: Alert

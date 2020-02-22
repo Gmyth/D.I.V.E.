@@ -25,6 +25,6 @@ MonoBehaviour:
   chargeTime: 1
   stopChargingOnTargetLoss: 1
   animation_charging: L2Drone_Alert
-  state_onTargetLoss: Idle
+  state_onTargetLoss: Alert
   recoil: 0
   recoilDuration: 0

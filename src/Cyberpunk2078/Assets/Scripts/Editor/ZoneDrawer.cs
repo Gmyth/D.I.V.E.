@@ -30,15 +30,13 @@ public class ZoneDrawer : PropertyDrawer
         position.y += position.height;
 
 
-        EditorGUI.PropertyField(position, centerProperty, new GUIContent("Center"));
-
-
-        position.y += position.height;
-
-
         switch (typeProperty.enumValueIndex)
         {
             case (int)ZoneType.Rectangle:
+                EditorGUI.PropertyField(position, centerProperty, new GUIContent("Center"));
+
+                position.y += position.height;
+
                 EditorGUI.PropertyField(position, widthProperty, new GUIContent("Width"));
 
                 position.y += position.height;
@@ -52,6 +50,10 @@ public class ZoneDrawer : PropertyDrawer
 
 
             case (int)ZoneType.Circle:
+                EditorGUI.PropertyField(position, centerProperty, new GUIContent("Center"));
+
+                position.y += position.height;
+
                 EditorGUI.PropertyField(position, widthProperty, new GUIContent("Radius"));
                 break;
         }
@@ -69,6 +71,10 @@ public class ZoneDrawer : PropertyDrawer
 
         switch (typeProperty.enumValueIndex)
         {
+            case (int)ZoneType.Universe:
+                return 1 * heightPerLine;
+
+
             case (int)ZoneType.Circle:
                 return 3 * heightPerLine;
 
