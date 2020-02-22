@@ -23,6 +23,7 @@ public class GUIMenu : GUIWindow
         LoadGame.GetComponent<Button>().onClick.AddListener(() => ButtonClicked(LoadGame));
         Options.GetComponent<Button>().onClick.AddListener(() => ButtonClicked(Options));
         NewGame.GetComponent<Button>().onClick.AddListener(() => ButtonClicked(NewGame));
+        AudioManager.Singleton.PlayEvent("Title");
     }
 
     // Update is called once per frame
@@ -48,6 +49,7 @@ public class GUIMenu : GUIWindow
     void UI_NewGame()
     {
         GameProcessManager.Singleton.StartGame(1);
+        AudioManager.Singleton.StopEvent("Title");
     }
 
     void UI_LoadGame()
