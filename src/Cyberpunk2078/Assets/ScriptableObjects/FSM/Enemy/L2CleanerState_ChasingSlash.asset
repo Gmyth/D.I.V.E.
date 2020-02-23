@@ -13,8 +13,15 @@ MonoBehaviour:
   m_Name: L2CleanerState_ChasingSlash
   m_EditorClassIdentifier: 
   stateName: ChasingSlash
-  hitDataID: 0
+  attackPoint: 0
+  animation_beforeAttack: 
+  hitDataID: 10
   hitBox: -1
+  attackDuration: 0
+  animation_attack: 
+  attackBackswing: 0
+  animation_afterAttack: 
+  state_afterAttack: Alert
   chasingSpeed: 3
   attackRange: 2
   attackHeight: 6
@@ -23,4 +30,3 @@ MonoBehaviour:
   chasingAnimation: L2Cleaner_Alert
   attackAnimation: L2Cleaner_Melee
   state_onTargetLoss: Patrolling
-  state_afterAttack: Alert

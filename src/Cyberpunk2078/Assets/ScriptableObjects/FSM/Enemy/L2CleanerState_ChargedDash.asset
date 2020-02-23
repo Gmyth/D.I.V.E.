@@ -15,7 +15,7 @@ MonoBehaviour:
   stateName: ChargedDash
   attackPoint: 0
   animation_beforeAttack: 
-  hitDataID: 0
+  hitDataID: 11
   hitBox: 2
   attackDuration: 0
   animation_attack: 
@@ -27,7 +27,7 @@ MonoBehaviour:
   animation_charging: 
   state_onTargetLoss: Patrolling
   type: 1
-  dashSpeed: 20
+  dashSpeed: 18
   minDuration: 0.3
   maxDuration: 0
   stopDistance: 0.5

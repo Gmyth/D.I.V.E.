@@ -76,3 +76,24 @@ MonoBehaviour:
     damageDuration: 0.1
     knockback: 10
     knockbackDuration: 0.5
+  - id: 10
+    type: 0
+    damage: 1
+    damageRange: 0
+    damageDuration: 0
+    knockback: 8
+    knockbackDuration: 0.5
+  - id: 11
+    type: 0
+    damage: 1
+    damageRange: 0
+    damageDuration: 0
+    knockback: 12
+    knockbackDuration: 0.5
+  - id: 20
+    type: 16
+    damage: 1
+    damageRange: 0
+    damageDuration: 0
+    knockback: 5
+    knockbackDuration: 0.5

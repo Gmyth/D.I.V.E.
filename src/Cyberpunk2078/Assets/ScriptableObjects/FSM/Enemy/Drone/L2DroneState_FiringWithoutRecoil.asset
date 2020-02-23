@@ -15,7 +15,7 @@ MonoBehaviour:
   stateName: Firing
   attackPoint: 0
   animation_beforeAttack: 
-  hitDataID: -1
+  hitDataID: 20
   hitBox: -1
   attackDuration: 0
   animation_attack: 
