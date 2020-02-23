@@ -136,7 +136,7 @@ using UnityEngine.Events;
         if (serializedItems == null || serializedItems.Length < items.Count)
             serializedItems = new ItemRecord[items.Count];
 #else
-        serializedItems = new Item[items.Count];
+        serializedItems = new ItemRecord[items.Count];
 #endif
 
         int i = 0;

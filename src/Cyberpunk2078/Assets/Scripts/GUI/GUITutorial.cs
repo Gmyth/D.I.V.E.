@@ -73,8 +73,8 @@ public class GUITutorial : MonoBehaviour
 
     public void Show(string buttonName1, string buttonName2)
     {
-        Debug.Log(buttonName1);
-        Debug.Log(buttonName2);
+        //Debug.Log(buttonName1);
+        //Debug.Log(buttonName2);
         InputType currentInputType = MouseIndicator.Singleton.CurrentInputType;
 
 

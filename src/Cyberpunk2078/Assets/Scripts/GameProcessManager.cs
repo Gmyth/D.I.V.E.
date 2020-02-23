@@ -28,8 +28,6 @@ public class GameProcessManager : MonoBehaviour
         {
             Singleton = this;
 
-            PlayerHolder.SetActive(false);
-
             for(int i = 0; i < levels.Length; i++)
             {
                 int index = levels[i].GetComponent<LevelInfo>().LevelIndex;
@@ -45,6 +43,10 @@ public class GameProcessManager : MonoBehaviour
 
     private void Start()
     {
+        PlayerCharacter.Singleton.init();
+        PlayerHolder.SetActive(false);
+
+        
         GUIManager.Singleton.Open("MainMenu", this);
         //CameraManager.Instance.Release();
     }
@@ -78,7 +80,9 @@ public class GameProcessManager : MonoBehaviour
     {
         if (Player.CurrentPlayer == null)
             Player.CreatePlayer();
-
+        
+        InitHUD();
+        
         //generate level
         LoadLevel(levelIndex);
 
@@ -86,7 +90,7 @@ public class GameProcessManager : MonoBehaviour
         InitPlayer(currentLevel, true);
 
         InitCamera();
-        InitHUD();
+        
         CheckPointManager.Instance.Initialize();
 
 
@@ -106,7 +110,7 @@ public class GameProcessManager : MonoBehaviour
             if(ResetingStats == true)
             {
                 PlayerCharacter playerCharacter = PlayerHolder.GetComponentInChildren<PlayerCharacter>();
-                playerCharacter.init();
+                playerCharacter.ResetStatistics();
             }
         }
     }
@@ -206,7 +210,8 @@ public class GameProcessManager : MonoBehaviour
         PlayerHolder.GetComponentInChildren<GhostSprites>().KillSwitchEngage();
         ObjectRecycler.Singleton.RecycleAll();
 
-
+        
+        
         PlayerHolder.SetActive(false);
 
 

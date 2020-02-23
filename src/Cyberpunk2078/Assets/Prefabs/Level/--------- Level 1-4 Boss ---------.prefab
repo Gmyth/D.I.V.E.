@@ -144,6 +144,7 @@ MonoBehaviour:
   breakable:
   - {fileID: 7966425718858758553}
   DashEnabled: 0
+  boss: {fileID: 7966425719704721637}
 --- !u!1 &7637675880084217928
 GameObject:
   m_ObjectHideFlags: 0

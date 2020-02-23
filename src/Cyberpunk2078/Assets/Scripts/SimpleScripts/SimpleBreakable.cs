@@ -64,7 +64,10 @@ public class SimpleBreakable : MonoBehaviour
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            frags.Add(transform.GetChild(i).gameObject);
+            if (transform.GetChild(i).GetComponent<SimpleItem>())
+            {
+                frags.Add(transform.GetChild(i).gameObject);
+            }
         }
 
     }

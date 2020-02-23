@@ -24,7 +24,6 @@ public class L2ShieldBossState_Alert : ESAlert<L2ShieldBoss>
     {
         enemy.currentTarget = PlayerCharacter.Singleton;
 
-
         base.OnStateEnter(previousState);
     }
 

@@ -105,13 +105,12 @@ public class Player
 
     private void ClearTemporaryCollectibles(int levelID)
     {
-        UnityEngine.Debug.LogWarning("~~~~~");
         temporaryCollectibles.Clear();
     }
 
     private void RevokeTemporaryCollectibles(int levelID)
     {
-        UnityEngine.Debug.LogWarning("!!!!");
+       // UnityEngine.Debug.LogWarning("!!!!");
 
         foreach (KeyValuePair<int, uint> temporaryCollectible in temporaryCollectibles)
         {

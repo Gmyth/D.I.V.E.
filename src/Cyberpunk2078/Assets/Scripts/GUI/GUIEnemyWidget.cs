@@ -14,8 +14,13 @@ public class GUIEnemyWidget : GUIWidget
     
     public void Show(Enemy enemy)
     {
+        Show();
+        
+        this.enemy = enemy;
+        
+
         UpdateHp(enemy[StatisticType.Hp]);
-        UpdateHp(enemy[StatisticType.Fatigue]);
+        UpdateFatigue(enemy[StatisticType.Fatigue]);
         
         
         enemy.OnStatisticChange.AddListener(UpdateStatistic);

@@ -37,6 +37,7 @@ public class PlayerCharacter : Dummy
     {
         get
         {
+           // Debug.LogWarning(statistics);
             return statistics[statisticType];
         }
     }
@@ -390,7 +391,7 @@ public class PlayerCharacter : Dummy
     }
 
 
-    private void ResetStatistics()
+    public void ResetStatistics()
     {
         statistics[StatisticType.Hp] = statistics[StatisticType.MaxHp];
         statistics[StatisticType.Sp] = statistics[StatisticType.MaxSp];
@@ -407,17 +408,10 @@ public class PlayerCharacter : Dummy
         if (Singleton)
             Destroy(gameObject);
         else
-        {
             Singleton = this;
-            
-        }
-            
     }
 
-    private void Start()
-    {
-        //init();       
-    }
+    
     public void init()
     {
         player = Player.CurrentPlayer == null ? Player.CreatePlayer() : Player.CurrentPlayer;
