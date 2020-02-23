@@ -176,7 +176,7 @@ public class PSDashing : PlayerState
 
 
             playerCharacter.PowerDashReady = false;
-            playerCharacter.LastPowerDash = Time.time;
+            playerCharacter.LastPowerDash = Time.unscaledTime;
             TimeManager.Instance.StartFeverMotion();
             playerCharacter.Spark.SetActive(true);
             playerCharacter.Spark.GetComponent<Animator>().Play("Spark", -1, 0f);

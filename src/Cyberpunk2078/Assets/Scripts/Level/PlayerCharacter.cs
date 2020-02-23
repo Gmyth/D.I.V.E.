@@ -294,8 +294,9 @@ public class PlayerCharacter : Dummy
             return;
         }
 
-        
-        
+        //Debug.Log((Time.unscaledTime - LastPowerDash) /statistics[StatisticType.PDCoolDown]);
+        powerDashCoolDown.GetComponent<Slider>().value = Mathf.Max(0,Mathf.Min(1,(Time.unscaledTime - LastPowerDash) /statistics[StatisticType.PDCoolDown] ));
+
         if (!PowerDashReady)
         {
             if(LastPowerDash + statistics[StatisticType.PDCoolDown] < Time.unscaledTime)
@@ -308,7 +309,6 @@ public class PlayerCharacter : Dummy
                 buttonTip.SetActive(false);
             }
             
-            powerDashCoolDown.GetComponent<Slider>().value = Mathf.Max(1,(Time.unscaledTime - LastPowerDash) /statistics[StatisticType.PDCoolDown] );
         }
 
     }
