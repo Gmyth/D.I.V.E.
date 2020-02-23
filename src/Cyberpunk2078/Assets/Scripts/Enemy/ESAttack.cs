@@ -102,6 +102,8 @@ public abstract class ESAttack<T> : EnemyState<T> where T : Enemy
     {
         if (hitDataID >= 0)
             hitBox.LoadHitData(hitData);
+
+        hitBox.hit.source = enemy;
     }
 
 
