@@ -317,10 +317,10 @@ public class PlayerCharacter : Dummy
 
     public void UpdatePowerDashUI()
     {
-        if (!PowerDashUnlock)
+        if (!PowerDashUnlock && powerDashCoolDown != null)
         {
             powerDashCoolDown.GetComponent<Slider>().value = 0f;
-            buttonTip.SetActive(false);
+            buttonTip?.SetActive(false);
             return;
         }
 
@@ -453,9 +453,9 @@ public class PlayerCharacter : Dummy
         if (InFever)
             ConsumeUltimateEnergy(statistics[StatisticType.FeverDecay] * Time.deltaTime);
         
-        KillStreakDecay();
+       
         PowerDashCoolDown();
-
+        KillStreakDecay();
         fsm.Update();
     }
     

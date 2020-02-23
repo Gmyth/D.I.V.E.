@@ -90,6 +90,7 @@ public class GameProcessManager : MonoBehaviour
             
             PlayerHolder.transform.position = start_pos.transform.position;
             PlayerHolder.SetActive(true);
+            PlayerCharacter.Singleton.GetComponent<SimpleTimer>().GetTimer();
             
             if(ResetingStats == true)
             {
@@ -117,7 +118,6 @@ public class GameProcessManager : MonoBehaviour
         {
             obj.GetComponent<Explodable>().fragmentInEditor();
         }
-
 
         return currentLevel;
     }
