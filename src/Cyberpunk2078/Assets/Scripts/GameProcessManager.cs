@@ -58,6 +58,8 @@ public class GameProcessManager : MonoBehaviour
 
     public void StartGame(int index)
     {
+        AudioManager.Singleton.StopEvent("Title");
+
         if (GUIManager.Singleton.IsInViewport("MainMenu"))
             GUIManager.Singleton.Close("MainMenu");
         if (GUIManager.Singleton.IsInViewport("LevelSelection"))
@@ -116,6 +118,7 @@ public class GameProcessManager : MonoBehaviour
             obj.GetComponent<Explodable>().fragmentInEditor();
         }
 
+
         return currentLevel;
     }
 
@@ -137,7 +140,7 @@ public class GameProcessManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && GUIManager.Singleton.IsInViewport("PauseMenu") == false && currentLevelIndex != -1)
+        if (Input.GetKeyDown(KeyCode.Escape) && !GUIManager.Singleton.IsInViewport("PauseMenu") && !GUIManager.Singleton.IsInViewport("MainMenu") && !GUIManager.Singleton.IsInViewport("EndScreen") && currentLevelIndex != -1)
         {
             //Camera.main.GetComponent<FadeCamera>().RedoFade();
             GUIManager.Singleton.Open("PauseMenu");
@@ -167,6 +170,12 @@ public class GameProcessManager : MonoBehaviour
         Camera.main.GetComponent<FadeCamera>().RedoFade();
     }
 
+    public void MainMenu()
+    {
+        GUIManager.Singleton.Close("LevelSelection");
+        GUIManager.Singleton.Open("MainMenu");
+        Camera.main.GetComponent<FadeCamera>().RedoFade();
+    }
     private void ResetGame()
     {
         for (int i = 0; i < LoadedLevel.Count; i++)

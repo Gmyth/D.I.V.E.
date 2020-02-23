@@ -16,8 +16,8 @@ public class SimpleLocker : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        ConnectedDoor.AddLocker(this);
-        notification.SetActive(false);
+        ConnectedDoor?.AddLocker(this);
+        notification?.SetActive(false);
     }
 
     // Update is called once per frame

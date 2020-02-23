@@ -48,8 +48,7 @@ public class GUIMenu : GUIWindow
 
     void UI_NewGame()
     {
-        GameProcessManager.Singleton.StartGame(1);
-        AudioManager.Singleton.StopEvent("Title");
+        GameProcessManager.Singleton.StartGame(1);        
     }
 
     void UI_LoadGame()

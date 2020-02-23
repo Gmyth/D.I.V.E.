@@ -41,7 +41,7 @@ MonoBehaviour:
     attributes:
       serializedAttributes:
       - type: 768
-        value: 5
+        value: 2
       - type: 57344
         value: 30
       - type: 57345

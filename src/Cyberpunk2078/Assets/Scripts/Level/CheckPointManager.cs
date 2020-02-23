@@ -127,7 +127,10 @@ public class CheckPointManager : MonoBehaviour
 
         //Restore player position
         var player = PlayerCharacter.Singleton.gameObject;
-        player.transform.position = playerLastCheckPoint.position;
+
+        Vector3 position = playerLastCheckPoint.position;
+        position.z = 0;
+        player.transform.position = position;
         
 
         RestoreEnemy();

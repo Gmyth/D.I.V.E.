@@ -168,7 +168,7 @@ public class HitBox : MonoBehaviour
 
         if ((ignoreInvulnerbility || player.State.Name != "Dashing") && CheckHitObject(id))
         {
-            hit.source.OnAttack.Invoke(hit, other);
+            hit.source?.OnAttack.Invoke(hit, other);
             player.OnHit?.Invoke(hit, other);
 
 

@@ -24,6 +24,7 @@ public class L2ShieldBoss : Enemy
     [Header("References")]
     [SerializeField] private Transform handAnchor;
     [SerializeField] private Transform laser;
+    [SerializeField] private SimpleBreakable glass;
     public GameObject spark;
 
     private float anger = 0;
@@ -143,6 +144,7 @@ public class L2ShieldBoss : Enemy
     {
         rightDroneSpawner.gameObject.SetActive(true);
         leftDroneSpawner.gameObject.SetActive(true);
+        glass.DestroyBreakable(glass.transform.position + new Vector3(0, 2, 0));
     }
 
 
@@ -180,9 +182,7 @@ public class L2ShieldBoss : Enemy
 
         if (result.currentValue <= 0)
             Dead();
-
-
-        if (!inRage && result.currentValue <= ragePercentage * statistics[StatisticType.MaxHp])
+        else if (!inRage && result.currentValue <= ragePercentage * statistics[StatisticType.MaxHp])
         {
             inRage = true;
             fsm.CurrentStateName = "Rage";
@@ -193,7 +193,8 @@ public class L2ShieldBoss : Enemy
 
     public override void Dead()
     {
-        throw new System.NotImplementedException();
+        Destroy(gameObject);
+        GUIManager.Singleton.Open("EndScreen");
     }
 
     public float ApplyFatigue(float rawFatigue)
@@ -229,6 +230,12 @@ public class L2ShieldBoss : Enemy
 
         anger = 0;
         inRage = false;
+
+
+        rightDroneSpawner.Clear();
+        rightDroneSpawner.gameObject.SetActive(false);
+        leftDroneSpawner.Clear();
+        leftDroneSpawner.gameObject.SetActive(false);
     }
 
 

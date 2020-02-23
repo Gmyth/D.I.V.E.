@@ -55,7 +55,7 @@ public class Player
         float normalEnergyCap = 1, 
         float overloadEnergyCap = 1,
         float feverEnergyCap = 100, 
-        float feverDecayRate = 0, 
+        float feverDecayRate = 15, 
         float killStreakCap = 2,
         float killStreakDecay = 4,
         float powerDashCoolDown = 8

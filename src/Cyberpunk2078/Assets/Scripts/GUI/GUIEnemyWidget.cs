@@ -26,7 +26,7 @@ public class GUIEnemyWidget : GUIWidget
         base.Hide();
         
         
-        enemy.OnStatisticChange.RemoveListener(UpdateStatistic);
+        enemy?.OnStatisticChange.RemoveListener(UpdateStatistic);
     }
 
 

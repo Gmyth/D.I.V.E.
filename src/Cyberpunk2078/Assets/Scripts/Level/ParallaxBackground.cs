@@ -8,7 +8,7 @@ public class ParallaxBackground : MonoBehaviour
     public CameraManager parallaxCamera;
     List<ParallaxLayer> parallaxLayers = new List<ParallaxLayer>();
   
-    void Start()
+    void Awake()
     {
         if (parallaxCamera == null)
             parallaxCamera = Camera.main.GetComponent<CameraManager>();
@@ -17,7 +17,7 @@ public class ParallaxBackground : MonoBehaviour
         SetLayers();
     }
   
-    void SetLayers()
+    public void SetLayers()
     {
         parallaxLayers.Clear();
         for (int i = 0; i < transform.childCount; i++)

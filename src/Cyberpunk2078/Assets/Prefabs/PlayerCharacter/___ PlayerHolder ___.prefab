@@ -10182,13 +10182,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyboardIcons: Sprites/KeyIcon/KeyboardBlack
   joystickIcons: Sprites/KeyIcon/XboxOne
-  mouseLeftIcon: {fileID: 0}
-  mouseRightIcon: {fileID: 0}
+  mouseLeftIcon: {fileID: 21300000, guid: cf6f3372635d41841a6d1a0d639da920, type: 3}
+  mouseRightIcon: {fileID: 21300000, guid: 18553869c7d3e4147b797e85115ee034, type: 3}
   directionalIcons: {fileID: 9048313617144736061}
   leftIcon: {fileID: 265835813131470850}
   plusIcon: {fileID: 7319329913451568251}
   rightIcon: {fileID: 3770578892811502522}
-  bindingData: []
+  bindingData:
+  - buttonName: Up
+    keyboardButtonName: W
+    joystickButtonName: Up
+  - buttonName: Down
+    keyboardButtonName: S
+    joystickButtonName: Down
+  - buttonName: Left
+    keyboardButtonName: A
+    joystickButtonName: Left
+  - buttonName: Right
+    keyboardButtonName: D
+    joystickButtonName: Right
+  - buttonName: Attack
+    keyboardButtonName: MouseLeft
+    joystickButtonName: B
+  - buttonName: Jump
+    keyboardButtonName: Space
+    joystickButtonName: A
+  - buttonName: Dash
+    keyboardButtonName: Shift
+    joystickButtonName: RT
+  - buttonName: LongDash
+    keyboardButtonName: R
+    joystickButtonName: LT
 --- !u!1 &4531732680601799281
 GameObject:
   m_ObjectHideFlags: 0
@@ -10465,10 +10489,10 @@ MonoBehaviour:
   color: {r: 255, g: 255, b: 255, a: 100}
   ghostMaterial:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  ghostSpriteSortingOrder: 0
+  ghostSpriteSortingOrder: 1
   renderOnMotion: 1
   colorAlphaOverride: 1
-  alphaFluctuationOverride: 0.113
+  alphaFluctuationOverride: 0.207
   Occupied: 0
   alphaFluctuationDivisor: 15
 --- !u!96 &7457358081385485186
@@ -10667,6 +10691,7 @@ MonoBehaviour:
   currentDialogueID: -1
   PowerDash: 0
   PowerDashReady: 1
+  PowerDashUnlock: 0
   LastPowerDash: 0
   Gravity: 5
   DefaultGravity: 5

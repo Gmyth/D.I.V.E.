@@ -314,6 +314,33 @@ public class PlayerCharacter : Dummy
 
     }
 
+
+    public void UpdatePowerDashUI()
+    {
+        if (!PowerDashUnlock)
+        {
+            powerDashCoolDown.GetComponent<Slider>().value = 0f;
+            buttonTip.SetActive(false);
+            return;
+        }
+
+        powerDashCoolDown.GetComponent<Slider>().value = Mathf.Max(0, Mathf.Min(1, (Time.unscaledTime - LastPowerDash) / statistics[StatisticType.PDCoolDown]));
+
+        if (!PowerDashReady)
+        {
+            if (LastPowerDash + statistics[StatisticType.PDCoolDown] < Time.unscaledTime)
+            {
+                buttonTip.SetActive(true);
+            }
+            else
+            {
+                buttonTip.SetActive(false);
+            }
+
+        }
+
+    }
+
     public bool AddKillCount(float amount)
     {
         StatisticModificationResult result = statistics.Modify(StatisticType.KsCount, amount, 0, statistics[StatisticType.MaxKs]);
@@ -389,7 +416,7 @@ public class PlayerCharacter : Dummy
 
     private void Start()
     {
-        init();       
+        //init();       
     }
     public void init()
     {
@@ -412,13 +439,13 @@ public class PlayerCharacter : Dummy
         fsm.Boot();
 
 
-        GUIManager.Singleton.Open("HUD", this);
+        //GUIManager.Singleton.Open("HUD", this);
         //GUIManager.Singleton.Open("MainMenu", this);
         //StartDialogue(10102001);
 
         // TODO: delete later
-        buttonTip = GameObject.Find("HealthButton");
-        powerDashCoolDown = GameObject.Find("HealthEnergy");
+        if (buttonTip == null)buttonTip = GameObject.Find("HealthButton");
+        if (powerDashCoolDown == null) powerDashCoolDown = GameObject.Find("HealthEnergy");
     }
 
     private void Update()

@@ -1855,7 +1855,7 @@ MonoBehaviour:
   textArea: {fileID: 8746032026154521596}
   resourceInspector: {fileID: 2437511553349434903}
   dialogueWidget: {fileID: 1281485730146150178}
-  enemyWidget: {fileID: 0}
+  enemyWidget: {fileID: 93026884}
   feverBlinkColor: {r: 0.990566, g: 0.58952427, b: 0.4251958, a: 1}
   feverBlinkSpeed: 5
   textDuration: 5
