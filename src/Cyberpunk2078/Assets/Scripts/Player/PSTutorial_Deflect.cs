@@ -51,6 +51,7 @@ public class PSTutorial_Deflect : PlayerState
 
     public override void OnStateEnter(State previousState)
     {
+        SimpleTutorialManager.Instance.ShowAttackNotification();
         playerCharacter.isInTutorial = true;
         TimeManager.Instance.ApplyBlackScreen();
         t = 0;

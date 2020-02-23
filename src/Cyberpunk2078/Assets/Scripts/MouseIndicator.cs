@@ -61,8 +61,7 @@ public class MouseIndicator : MonoBehaviour
         else
             Singleton = this;
     }
-
-    private void Start()
+    
     public void Hide()
     {
         renderer.enabled = false;

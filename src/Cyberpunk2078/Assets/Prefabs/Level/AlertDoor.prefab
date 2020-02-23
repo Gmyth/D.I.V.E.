@@ -85,12 +85,12 @@ GameObject:
   - component: {fileID: 4270455268916417477}
   - component: {fileID: 4270455268916417530}
   m_Layer: 9
-  m_Name: AlertDoor-1
+  m_Name: AlertDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4270455268916417478
 Transform:
   m_ObjectHideFlags: 0
@@ -142,7 +142,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 792809535
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c84e799f2ec987341a1ae0df8f34b3f4, type: 3}
   m_Color: {r: 0.8962264, g: 0.19410668, b: 0.16487186, a: 1}
@@ -168,7 +168,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0000025629997, y: 0.0000017881393}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -179,7 +179,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.6596471, y: 3.009487}
   m_EdgeRadius: 0
 --- !u!114 &4270455268916417477
 MonoBehaviour:

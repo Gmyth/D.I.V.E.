@@ -135,7 +135,7 @@ public class CheckPointManager : MonoBehaviour
         }
 
        
-        PlayerCharacter.Singleton.GetFSM().CurrentStateName = "Idle";
+        PlayerCharacter.Singleton.GetFSM().Reboot();
 
 
         yield return null;
