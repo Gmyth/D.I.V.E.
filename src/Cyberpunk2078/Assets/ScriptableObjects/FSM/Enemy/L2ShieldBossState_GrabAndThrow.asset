@@ -24,4 +24,4 @@ MonoBehaviour:
   state_afterAttack: LaserLeap
   animation_waitting: L2ShieldBoss_Idle
   chargeSpeed: 15
-  extraStunTime: 3.5
+  extraStunTime: 1.2

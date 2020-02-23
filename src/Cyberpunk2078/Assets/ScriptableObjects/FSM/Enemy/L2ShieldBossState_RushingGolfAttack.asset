@@ -19,7 +19,7 @@ MonoBehaviour:
   hitBox: 4
   attackDuration: 0
   animation_attack: L2ShieldBoss_GolfAttack
-  attackBackswing: 0.6
+  attackBackswing: 0.8
   animation_afterAttack: 
   state_afterAttack: Alert
   rushForce: 1500

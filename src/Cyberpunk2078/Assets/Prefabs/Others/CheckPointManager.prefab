@@ -43,5 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abcb4d78086ab4e478f79bcfdf867430, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  savedEnemies: []
+  Enemies: []
   blackScreen: {fileID: 0}
   SpeedFactor: 1

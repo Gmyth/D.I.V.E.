@@ -56,7 +56,7 @@ public class GUIManager : MonoBehaviour
     /// <summary>
     /// The unique instance
     /// </summary>
-    public static GUIManager Singleton { get; private set; }
+    public static GUIManager Singleton { get; private set; } = null;
 
 
     private Stack<string> uiWindowStack = new Stack<string>();
@@ -116,7 +116,7 @@ public class GUIManager : MonoBehaviour
 
         GUIWindow uiWindow = Instantiate(ResourceUtility.GetGUIPrefab<GUIWindow>(name), transform, false);
 
-        uiWindow.transform.SetAsFirstSibling();
+        uiWindow.transform.SetAsLastSibling();
 
         uiWindowsOpened.Add(name, uiWindow);
 
@@ -197,7 +197,6 @@ public class GUIManager : MonoBehaviour
         {
             Singleton = this;
             
-            // TEMP: Reload the scene will have issue
             DontDestroyOnLoad(gameObject);
         }
         else if (Singleton != this)

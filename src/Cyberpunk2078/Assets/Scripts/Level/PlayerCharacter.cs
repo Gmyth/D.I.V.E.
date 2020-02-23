@@ -376,7 +376,7 @@ public class PlayerCharacter : Dummy
 
     private void Start()
     {
-        //init();       
+        init();       
     }
     public void init()
     {
@@ -399,7 +399,7 @@ public class PlayerCharacter : Dummy
         fsm.Boot();
 
 
-       // GUIManager.Singleton.Open("HUD", this);
+        GUIManager.Singleton.Open("HUD", this);
         //GUIManager.Singleton.Open("MainMenu", this);
         //StartDialogue(10102001);
 

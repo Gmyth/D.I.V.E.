@@ -15,7 +15,7 @@ MonoBehaviour:
   stateName: Reposition
   useRelativePosition: 1
   targetPosition: {x: 0, y: -6}
-  speed: 2
+  speed: 10
   stopDistance: 0.1
   animation: L2Drone_Idle
   nextState: Alert

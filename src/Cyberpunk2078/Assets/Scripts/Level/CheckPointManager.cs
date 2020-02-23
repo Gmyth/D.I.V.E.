@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using MyBox;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,12 +13,12 @@ public class CheckPointManager : MonoBehaviour
     /// <summary>
     /// Enemies needed to be reset and restore position
     /// </summary>
-    private List<GameObject> savedEnemies = new List<GameObject>();
+    public List<GameObject> savedEnemies = new List<GameObject>();
 
     /// <summary>
     /// Dummy reference
     /// </summary>
-    private List<GameObject> Enemies = new List<GameObject>();
+    public List<GameObject> Enemies = new List<GameObject>();
 
     /// <summary>
     /// //Objects needed to be restored
@@ -32,6 +33,8 @@ public class CheckPointManager : MonoBehaviour
     [SerializeField] private float SpeedFactor = 1;
 
     private Transform playerLastCheckPoint;
+
+    private CheckPointTrigger cpt;
 
     void Awake()
     {
@@ -50,28 +53,30 @@ public class CheckPointManager : MonoBehaviour
 
     }
 
-    public void Save(Transform _playertransform)
+    public void Save(Transform _playertransform, CheckPointTrigger checkPointTrigger)
     {
         playerLastCheckPoint = _playertransform;
 
         //Clear when reach new checkpoint
         savedEnemies.Clear();
         objects.Clear();
-        
+
         //save enemies position
-        for(int i = 0; i < Enemies.Count; i++)
+        for (int i = 0; i < Enemies.Count; i++)
         {
             //record position
             Enemies[i].GetComponent<Enemy>().lastCheckPointTransform = Enemies[i].gameObject.transform.position;
         }
+
+        cpt = checkPointTrigger;
     }
 
     public void Restore()
     {
         //AudioManager.Singleton.StopBus("Enemy");
-
-        PlayerCharacter.Singleton.GetFSM().CurrentStateName = "NoInput";
-
+        PlayerCharacter.Singleton.SpriteHolder.GetComponent<Animator>().Play("MainCharacter_Idle",0,0);
+        PlayerCharacter.Singleton.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        
         StartCoroutine(Restoring());
     
         //Restore Camera State
@@ -87,6 +92,8 @@ public class CheckPointManager : MonoBehaviour
             }
         }
         objects.Clear();
+
+        //cpt.enabled = true;
     }
 
     private void RestoreEnemy()
@@ -121,6 +128,7 @@ public class CheckPointManager : MonoBehaviour
         //Restore player position
         var player = PlayerCharacter.Singleton.gameObject;
         player.transform.position = playerLastCheckPoint.position;
+        
 
         RestoreEnemy();
 
@@ -135,8 +143,8 @@ public class CheckPointManager : MonoBehaviour
         }
 
        
-        PlayerCharacter.Singleton.GetFSM().CurrentStateName = "Idle";
-
+        PlayerCharacter.Singleton.GetFSM().Reboot();
+        
 
         yield return null;
     }

@@ -91,6 +91,8 @@ public abstract class Dummy : MonoBehaviour, IDamageable
     public HitEvent OnHit { get; private set; } = new HitEvent();
     public HitEvent OnAttack { get; private set; } = new HitEvent();
 
+    public EventOnStatisticChange OnStatisticChange => statistics.onStatisticChange;
+
     public bool IsInvulnerable
     {
         get
@@ -169,8 +171,8 @@ public abstract class Enemy : Dummy
     [SerializeField] protected HitBox[] hitBoxes;
 
     [Header("Turning")]
-    [SerializeField] private bool enableTurn = true;
-    [SerializeField] private float turnTime = 0;
+    [SerializeField] protected bool enableTurn = true;
+    [SerializeField] protected float turnTime = 0;
 
     [Header("Patrolling")]
     [SerializeField][Path(true)] protected Route patrolRoute;
@@ -288,7 +290,7 @@ public abstract class Enemy : Dummy
         TurnImmediately((Vector3)direction);
     }
 
-    public void TurnImmediately(Vector3 direction)
+    public virtual void TurnImmediately(Vector3 direction)
     {
         if (enableTurn)
         {
@@ -338,8 +340,14 @@ public abstract class Enemy : Dummy
     }
 
 
-    public void Reset()
+    public virtual void Reset()
     {
+        IsInvulnerable = false;
+        isEvading = false;
+        isTurning = false;
+        
+        statistics[StatisticType.Hp] = statistics[StatisticType.MaxHp];
+        
         fsm?.Reboot();
 
         DisableAllHitBoxes();

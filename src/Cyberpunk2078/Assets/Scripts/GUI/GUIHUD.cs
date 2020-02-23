@@ -13,6 +13,7 @@ public class GUIHUD : GUIWindow
     [SerializeField] private Text textArea;
     [SerializeField] private GameObject resourceInspector;
     [SerializeField] private GUIDialogueWidget dialogueWidget;
+    [SerializeField] private GUIEnemyWidget enemyWidget;
 
     [Header("Configuration")]
     [SerializeField] private Color feverBlinkColor = Color.yellow;
@@ -37,6 +38,10 @@ public class GUIHUD : GUIWindow
         UpdateHp(Mathf.FloorToInt(player[StatisticType.Hp]));
         UpdateSp(Mathf.FloorToInt(player[StatisticType.Sp] + player[StatisticType.Osp]));
         UpdateFever(Mathf.FloorToInt(player[StatisticType.UltimateEnergy]));
+        
+        
+        dialogueWidget.Hide();
+        enemyWidget.Hide();
 
 
         player.OnStatisticChange.AddListener(HandleStatisticChange);
@@ -77,6 +82,17 @@ public class GUIHUD : GUIWindow
     {
         resourceInspector.SetActive(true);
         dialogueWidget.Hide();
+    }
+
+
+    public void ShowEnemyWidget(Enemy enemy)
+    {
+        enemyWidget.Show(enemy);
+    }
+    
+    public void HideEnemyWidget()
+    {
+        enemyWidget.Hide();
     }
 
 
