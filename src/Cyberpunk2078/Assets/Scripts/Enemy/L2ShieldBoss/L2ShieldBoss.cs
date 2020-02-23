@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor.Rendering;
+using UnityEngine;
 
 
 public class L2ShieldBoss : Enemy
@@ -20,12 +21,13 @@ public class L2ShieldBoss : Enemy
     [SerializeField] private float angerDecrease = 5f;
     [SerializeField] private float counterThreshhold = 20f;
 
-    [Header("Hand")]
+    [Header("References")]
     [SerializeField] private Transform handAnchor;
-
+    [SerializeField] private Transform laser;
     public GameObject spark;
 
     private float anger = 0;
+    private bool inRage = false;
 
 
     public Vector3 LeftThrowPoint
@@ -180,9 +182,11 @@ public class L2ShieldBoss : Enemy
             Dead();
 
 
-        if (result.currentValue <= ragePercentage * statistics[StatisticType.MaxHp])
+        if (!inRage && result.currentValue <= ragePercentage * statistics[StatisticType.MaxHp])
+        {
+            inRage = true;
             fsm.CurrentStateName = "Rage";
-
+        }
 
         return result.previousValue - result.currentValue;
     }
@@ -215,6 +219,16 @@ public class L2ShieldBoss : Enemy
 
 
         return result.currentValue - result.previousValue;
+    }
+
+
+    public override void Reset()
+    {
+        base.Reset();
+
+
+        anger = 0;
+        inRage = false;
     }
 
 

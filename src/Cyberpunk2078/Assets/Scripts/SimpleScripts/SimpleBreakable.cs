@@ -30,7 +30,11 @@ public class SimpleBreakable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+//        if (Input.GetButtonDown("Dashing") && !triggered)
+//        {
+//            DestroyBreakable(transform.position - new Vector3(0,-2,0));
+//            triggered = true;
+//        }
     }
 
     public void DestroyBreakable(Vector3 pos)

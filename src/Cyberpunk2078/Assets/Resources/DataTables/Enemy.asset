@@ -59,3 +59,14 @@ MonoBehaviour:
         value: 1
       - type: 61968
         value: 1
+  - id: 68
+    name: Drone_Shieldboss
+    type: 1
+    attributes:
+      serializedAttributes:
+      - type: 768
+        value: 1
+      - type: 2560
+        value: 9999
+      - type: 61968
+        value: 100

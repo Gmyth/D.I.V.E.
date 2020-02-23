@@ -203,7 +203,7 @@ MonoBehaviour:
   isInvulnerable: 0
   isEvading: 0
   UnitTimeFactor: 1
-  typeID: 1
+  typeID: 68
   fsm: {fileID: 11400000, guid: 7facc99f2a7162b49ae6178d0a4723e8, type: 2}
   guardZone:
     type: 0
@@ -232,8 +232,8 @@ MonoBehaviour:
   nearRange: 0
   gun: {fileID: 6723594264980793574}
   thruster: {fileID: 6723594264934860152}
-  Health: 20
-  HealthCap: 20
+  Health: 1
+  HealthCap: 1
   isGunCharging: 0
 --- !u!114 &6723594264273000141
 MonoBehaviour:

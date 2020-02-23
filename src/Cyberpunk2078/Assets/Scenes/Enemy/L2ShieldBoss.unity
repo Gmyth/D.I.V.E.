@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -250,6 +250,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 2222602522128952545, guid: e5550ebe022f1ae4fb29822f0f26e18d,
+        type: 3}
+      propertyPath: orthographic size
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 2222602522128952093, guid: e5550ebe022f1ae4fb29822f0f26e18d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -309,11 +314,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TargetTexture
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2222602522128952545, guid: e5550ebe022f1ae4fb29822f0f26e18d,
-        type: 3}
-      propertyPath: orthographic size
-      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5550ebe022f1ae4fb29822f0f26e18d, type: 3}
@@ -703,31 +703,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5536892083822057094, guid: 5733dc6eae5d27a489f2eb603a81f9bb,
-        type: 3}
-      propertyPath: m_ApplyToSortingLayers.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5536892083822057094, guid: 5733dc6eae5d27a489f2eb603a81f9bb,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 0.972549
-      objectReference: {fileID: 0}
-    - target: {fileID: 5536892083822057094, guid: 5733dc6eae5d27a489f2eb603a81f9bb,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 0.39332843
-      objectReference: {fileID: 0}
-    - target: {fileID: 5536892083822057094, guid: 5733dc6eae5d27a489f2eb603a81f9bb,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 0.062745094
-      objectReference: {fileID: 0}
-    - target: {fileID: 5536892083822057094, guid: 5733dc6eae5d27a489f2eb603a81f9bb,
-        type: 3}
-      propertyPath: m_PointLightOuterRadius
-      value: 12.25
-      objectReference: {fileID: 0}
     - target: {fileID: 5536892084200399046, guid: 5733dc6eae5d27a489f2eb603a81f9bb,
         type: 3}
       propertyPath: m_RenderingLayerMask
@@ -767,6 +742,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: -1.207531
+      objectReference: {fileID: 0}
+    - target: {fileID: 5536892083822057094, guid: 5733dc6eae5d27a489f2eb603a81f9bb,
+        type: 3}
+      propertyPath: m_ApplyToSortingLayers.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5536892083822057094, guid: 5733dc6eae5d27a489f2eb603a81f9bb,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.972549
+      objectReference: {fileID: 0}
+    - target: {fileID: 5536892083822057094, guid: 5733dc6eae5d27a489f2eb603a81f9bb,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.39332843
+      objectReference: {fileID: 0}
+    - target: {fileID: 5536892083822057094, guid: 5733dc6eae5d27a489f2eb603a81f9bb,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.062745094
+      objectReference: {fileID: 0}
+    - target: {fileID: 5536892083822057094, guid: 5733dc6eae5d27a489f2eb603a81f9bb,
+        type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 12.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5733dc6eae5d27a489f2eb603a81f9bb, type: 3}
@@ -8181,12 +8181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abcb4d78086ab4e478f79bcfdf867430, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkPointPrefab: {fileID: 5739689934182920323, guid: fc1c7896a3cd79447b8476a58d343e83,
-    type: 3}
-  checkPointFolder: {fileID: 0}
-  killedEnemies: []
-  objects: []
   blackScreen: {fileID: 340942848}
+  SpeedFactor: 1
 --- !u!1001 &833011766
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8341,11 +8337,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1008376454}
     m_Modifications:
-    - target: {fileID: 5615943550480218031, guid: 4bfba627392d2f44e8b21033713c53b9,
-        type: 3}
-      propertyPath: m_Name
-      value: Ladder
-      objectReference: {fileID: 0}
     - target: {fileID: 5615943550480218030, guid: 4bfba627392d2f44e8b21033713c53b9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8410,6 +8401,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.x
       value: 0.21428572
+      objectReference: {fileID: 0}
+    - target: {fileID: 5615943550480218031, guid: 4bfba627392d2f44e8b21033713c53b9,
+        type: 3}
+      propertyPath: m_Name
+      value: Ladder
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bfba627392d2f44e8b21033713c53b9, type: 3}
@@ -8663,17 +8659,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5073190859914383830, guid: ce0b5aac6a3fc6245b4b4a3deeff14c3,
-        type: 3}
-      propertyPath: prefabs.Array.size
-      value: 21
-      objectReference: {fileID: 0}
-    - target: {fileID: 5073190859914383830, guid: ce0b5aac6a3fc6245b4b4a3deeff14c3,
-        type: 3}
-      propertyPath: prefabs.Array.data[20]
-      value: 
-      objectReference: {fileID: 2970406482287744646, guid: 4446356daa58ec845bf444ec49773766,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce0b5aac6a3fc6245b4b4a3deeff14c3, type: 3}
 --- !u!1 &1073911292
@@ -9692,11 +9677,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7457358081769736770, guid: 30f904e572c0a79489e3033eaff79c6a,
-        type: 3}
-      propertyPath: m_GravityScale
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 8791086929859187451, guid: 30f904e572c0a79489e3033eaff79c6a,
         type: 3}
       propertyPath: bindingData.Array.size
@@ -9801,6 +9781,11 @@ PrefabInstance:
         type: 3}
       propertyPath: bindingData.Array.data[8].joystickButtonName
       value: Start
+      objectReference: {fileID: 0}
+    - target: {fileID: 7457358081769736770, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: m_GravityScale
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30f904e572c0a79489e3033eaff79c6a, type: 3}
@@ -11417,12 +11402,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abcb4d78086ab4e478f79bcfdf867430, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkPointPrefab: {fileID: 5739689934182920323, guid: fc1c7896a3cd79447b8476a58d343e83,
-    type: 3}
-  checkPointFolder: {fileID: 0}
-  killedEnemies: []
-  objects: []
   blackScreen: {fileID: 1730989671}
+  SpeedFactor: 1
 --- !u!1 &2092127843
 GameObject:
   m_ObjectHideFlags: 0

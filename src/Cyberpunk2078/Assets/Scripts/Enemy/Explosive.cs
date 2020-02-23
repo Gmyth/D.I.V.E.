@@ -12,7 +12,8 @@ public class Explosive : Recyclable
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Explode();
+        if ((other.gameObject.layer & LayerMask.GetMask("Obstacle", "Platform", "Player", "PlayerHitBox")) != 0)
+            Explode();
     }
 
 
