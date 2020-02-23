@@ -40,4 +40,10 @@ public class Music : MonoBehaviour
             bS.StopAndClear(instance);
         }
     }
+
+    private void OnDestroy()
+    {
+        instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        instance.release();
+    }
 }
