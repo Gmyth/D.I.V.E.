@@ -166,7 +166,7 @@ public class PSDashing : PlayerState
         var inDashingDragFactor = playerCharacter.InKillStreak ? f_inDashingDragFactor:n_inDashingDragFactor;
         if (playerCharacter.PowerDash)
         {
-            if (!playerCharacter.PowerDashReady)
+            if (!playerCharacter.PowerDashReady || !playerCharacter.PowerDashUnlock )
             {
                 // Energy is not enough, Cancel dash
                 Apply = false;
@@ -176,7 +176,7 @@ public class PSDashing : PlayerState
 
 
             playerCharacter.PowerDashReady = false;
-            playerCharacter.LastPowerDash = Time.time;
+            playerCharacter.LastPowerDash = Time.unscaledTime;
             TimeManager.Instance.StartFeverMotion();
             playerCharacter.Spark.SetActive(true);
             playerCharacter.Spark.GetComponent<Animator>().Play("Spark", -1, 0f);

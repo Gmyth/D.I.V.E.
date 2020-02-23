@@ -30,7 +30,7 @@ public class LinearMovement : Movement
         transform.position += Time.deltaTime * TimeManager.Instance.TimeFactor * orientation * speed;
         if(isPersistent == false)
         {
-            if(Time.time - spawnTime > 8f)
+            if(Time.time - spawnTime > 3f)
             {
                 Destroy(this);
             }
