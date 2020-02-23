@@ -118,6 +118,7 @@ public class CameraManager : MonoBehaviour {
 		targetList.Add(mainTarget);
 		previousPosition = transform.position;
 		Initialize();
+		DontDestroyOnLoad(gameObject);
 	}
 
 
@@ -322,20 +323,22 @@ public class CameraManager : MonoBehaviour {
 				break;
 
             case CameraState.Reset:
-	            
-	            Vector2 origin = mainTarget.transform.position;
-	            posX = Mathf.SmoothDamp(transform.position.x, origin.x, ref velocity.x, 0.2f);
-	            posY = Mathf.SmoothDamp(transform.position.y, origin.y, ref velocity.y, 0.2f);
+				if (mainTarget != null)
+				{
+					Vector2 origin = mainTarget.transform.position;
+					posX = Mathf.SmoothDamp(transform.position.x, origin.x, ref velocity.x, 0.2f);
+					posY = Mathf.SmoothDamp(transform.position.y, origin.y, ref velocity.y, 0.2f);
 
-	            if (((Vector2) transform.position - origin).magnitude < 2)
-	            {
-		            currentState = CameraState.Idle;
-	            }
-	            
-	            transform.position = new Vector3(posX + offsetX + shakeX, posY + offsetY + shakeY, transform.position.z);
-                break;
-            
-            case CameraState.Release:
+					if (((Vector2)transform.position - origin).magnitude < 2)
+					{
+						currentState = CameraState.Idle;
+					}
+
+					transform.position = new Vector3(posX + offsetX + shakeX, posY + offsetY + shakeY, transform.position.z);
+
+				}
+				break;
+			case CameraState.Release:
                 break;
             
             
@@ -606,21 +609,25 @@ public class CameraManager : MonoBehaviour {
 		bool found = false;
 		foreach (var indicator in indicatorList)
 		{
-			if (indicator.inRange(pos))
+			if(indicator != null)
 			{
-
-				if (found && targetIndicator.influenceLevel > indicator.influenceLevel)
+				if (indicator.inRange(pos))
 				{
-					//found new indicator with higher priority 
 
-					targetIndicator = indicator;
-				}
-				else if (!found)
-				{
-					targetIndicator = indicator;
-					found = true;
+					if (found && targetIndicator.influenceLevel > indicator.influenceLevel)
+					{
+						//found new indicator with higher priority 
+
+						targetIndicator = indicator;
+					}
+					else if (!found)
+					{
+						targetIndicator = indicator;
+						found = true;
+					}
 				}
 			}
+			
 		}
 
 		return found?targetIndicator:null;

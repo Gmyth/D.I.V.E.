@@ -10,9 +10,6 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Singleton { get; private set; } = null;
 
-    [FMODUnity.EventRef] 
-    [SerializeField] private List<string> events;
-
     //dic to match acutal fmod string with sound string
     private Dictionary<string, string> dic;
 
@@ -41,8 +38,6 @@ public class AudioManager : MonoBehaviour
                 dic.Add(result, s);
             }
         }
-        
-
     }
 
     // Update is called once per frame
@@ -50,6 +45,13 @@ public class AudioManager : MonoBehaviour
     {
         
     }
+
+    public void SetParameter(string _event, string para, float value)
+    {
+        EventInstance ins = GetEventInstance(_event);
+        ins.setParameterValue(para, value);
+    }
+
     public EventInstance GetEventInstance(string _event)
     {
         if (dic.ContainsKey(_event))
@@ -77,6 +79,7 @@ public class AudioManager : MonoBehaviour
                 EventInstance ins = FMODUnity.RuntimeManager.CreateInstance(dic[_event]);
                 instanceDic.Add(_event, ins);
                 ins.start();
+                ins.release();
                 return true;
             }     
         }
@@ -85,6 +88,12 @@ public class AudioManager : MonoBehaviour
             Debug.LogError("[AudioManager] " + " Can't find " + _event);
             return false;
         }
+    }
+    public void StopBus(string busName)
+    {
+        Bus bus = FMODUnity.RuntimeManager.GetBus("bus:/" + busName);
+
+        bus.stopAllEvents(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 
     public void StopEvent(string _event)

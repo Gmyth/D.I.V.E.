@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   events:
   - event:/BGM/BGM
+  - event:/BGM/Title

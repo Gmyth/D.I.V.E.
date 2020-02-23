@@ -19,7 +19,7 @@ public abstract class PlayerState : State
     protected bool grounded;
     protected float lastGroundedSec;
 
-
+    int GroundedTimes = 0;
     public virtual void Initialize(int index, PlayerCharacter playerCharacter)
     {
         Index = index;
@@ -79,7 +79,11 @@ public abstract class PlayerState : State
 
             grounded = true;
 
-            AudioManager.Singleton.PlayEvent("JumpLand");
+            if(GroundedTimes != 0)
+            {              
+                AudioManager.Singleton.PlayEvent("JumpLand");
+            }
+                
             
             return 1;
         } 
@@ -94,6 +98,8 @@ public abstract class PlayerState : State
         //player.JumpForceGate = false;
 
         grounded = false;
+
+        GroundedTimes++;
         AudioManager.Singleton.StopEvent("JumpLand");
 
 
@@ -210,6 +216,7 @@ public abstract class PlayerState : State
         }
         
         rb2d.velocity = velocityPlaceHolder;
+        //Debug.Log("Y:"+rb2d.velocity.y);
 
 //        // calculate speed on X axis
 //        if (Mathf.Abs(h) > 0.1f)

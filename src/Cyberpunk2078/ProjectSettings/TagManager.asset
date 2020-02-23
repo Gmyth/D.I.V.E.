@@ -22,6 +22,7 @@ TagManager:
   - Obstacle
   - HealthBar
   - BombPickup
+  - Canvas
   layers:
   - Default
   - TransparentFX

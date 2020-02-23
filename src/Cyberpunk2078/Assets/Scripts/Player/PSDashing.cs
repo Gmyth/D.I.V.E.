@@ -198,7 +198,6 @@ public class PSDashing : PlayerState
 
         AudioManager.Singleton.PlayOnce("Dash");
 
-
         Apply = true;
         //Dash has been pressed, set all config first
         //After delay is over, dash perform

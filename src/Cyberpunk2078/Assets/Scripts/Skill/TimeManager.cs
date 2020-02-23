@@ -17,6 +17,9 @@ public class TimeManager : MonoBehaviour
     private bool triggered;
     public float TimeFactor = 1;
 
+    private float _PrirorTimeScale;
+    private float currentUnscaledDeltaTime;
+
     public float ScaledDeltaTime
     {
         get
@@ -24,7 +27,7 @@ public class TimeManager : MonoBehaviour
             return Time.deltaTime * TimeFactor;
         }
     }
-
+    
 
     private void Awake()
     {
@@ -126,5 +129,16 @@ public class TimeManager : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(delay);
         EndSlowMotionImmediately();
+    }
+
+    public void Pause()
+    {
+        _PrirorTimeScale = Time.timeScale;
+        Time.timeScale = 0f;
+    }
+
+    public void Resume()
+    {
+        Time.timeScale = _PrirorTimeScale;
     }
 }

@@ -142,7 +142,7 @@ public class PlayerCharacter : Dummy
 
 
         ObjectRecycler.Singleton.RecycleAll();
-        CheckPointManager.Instance?.RestoreCheckPoint();
+        CheckPointManager.Instance?.Restore();
     }
 
     public bool ActivateFever()
@@ -367,10 +367,18 @@ public class PlayerCharacter : Dummy
         if (Singleton)
             Destroy(gameObject);
         else
+        {
             Singleton = this;
+            
+        }
+            
     }
 
     private void Start()
+    {
+        //init();       
+    }
+    public void init()
     {
         player = Player.CurrentPlayer == null ? Player.CreatePlayer() : Player.CurrentPlayer;
 
@@ -387,10 +395,11 @@ public class PlayerCharacter : Dummy
 
 
         fsm = fsm.Initialize(this);
+
         fsm.Boot();
 
-        
-        GUIManager.Singleton.Open("HUD", this);
+
+        //GUIManager.Singleton.Open("HUD", this);
         //GUIManager.Singleton.Open("MainMenu", this);
         //StartDialogue(10102001);
 
