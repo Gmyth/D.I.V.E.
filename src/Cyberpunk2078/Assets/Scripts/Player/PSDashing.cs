@@ -104,7 +104,7 @@ public class PSDashing : PlayerState
                 var volY = rb2d.velocity.y * 0.1f;
                 rb2d.velocity = new Vector2(volX,volY);
             }
-            PhysicsInputHelper(h);
+            PhysicsInputHelper(h,v);
 
         } else if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime < Time.time)
         {
@@ -117,7 +117,7 @@ public class PSDashing : PlayerState
 
             // the dash has already ended
             // ok for move input
-            PhysicsInputHelper(h);
+            PhysicsInputHelper(h,v);
 
             //enable Collision
             playerCharacter.transform.right = Vector3.right;
@@ -147,7 +147,7 @@ public class PSDashing : PlayerState
 //            var volX = h * rb2d.velocity.x > 0?rb2d.velocity.x * 0.3f:0;
 //            var volY = rb2d.velocity.y > 0?rb2d.velocity.y * 0.2f : rb2d.velocity.y;
 //            rb2d.velocity = new Vector2(volX,volY);
-            PhysicsInputHelper(h);
+            PhysicsInputHelper(h,v);
 
             if (GetGroundType() == 0)
                 return "Airborne";
@@ -232,7 +232,8 @@ public class PSDashing : PlayerState
     {
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
-    
+        float v = Input.GetAxis("VerticalJoyStick") != 0 ? Input.GetAxis("VerticalJoyStick") : Input.GetAxis("Vertical");
+
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Dummy"),false);
         
         // reset drag & gravity
@@ -240,7 +241,7 @@ public class PSDashing : PlayerState
         rb2d.gravityScale = playerCharacter.DefaultGravity;
 
         // Listening to move input
-        PhysicsInputHelper(h);
+        PhysicsInputHelper(h,v);
         
         playerCharacter.Spark.SetActive(false);
         
