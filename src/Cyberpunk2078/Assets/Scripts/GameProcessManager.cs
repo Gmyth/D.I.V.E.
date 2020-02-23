@@ -7,6 +7,7 @@ public class GameProcessManager : MonoBehaviour
 {  
     public static GameProcessManager Singleton { get; private set; }
 
+
     [Header("References")]
     [SerializeField] private GameObject[] levels;
     [SerializeField] private GameObject PlayerHolder;
@@ -16,13 +17,11 @@ public class GameProcessManager : MonoBehaviour
     private GameObject currentLevel = null;
     private List<GameObject> LoadedLevel = new List<GameObject>();
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        GUIManager.Singleton.Open("MainMenu", this);
-        //CameraManager.Instance.Release();
-    }
-    
+
+    public Event<int> OnStartLevel { get; private set; } = new Event<int>();
+    public Event<int> OnQuitLevel { get; private set; } = new Event<int>();
+
+
     private void Awake()
     {
         if (!Singleton)
@@ -43,7 +42,13 @@ public class GameProcessManager : MonoBehaviour
         else if (Singleton != this)
             Destroy(gameObject);
     }
-    
+
+    private void Start()
+    {
+        GUIManager.Singleton.Open("MainMenu", this);
+        //CameraManager.Instance.Release();
+    }
+
 
     public void Quit()
     {
@@ -71,13 +76,19 @@ public class GameProcessManager : MonoBehaviour
 
     public IEnumerator LevelStart(int levelIndex)
     {
+        if (Player.CurrentPlayer == null)
+            Player.CreatePlayer();
+
         //generate level
         LoadLevel(levelIndex);
+
         //Configure player, camera, ui
         InitPlayer(currentLevel, true);
+
         InitCamera();
         InitHUD();
         CheckPointManager.Instance.Initialize();
+
 
         yield return null;
     }
@@ -117,6 +128,9 @@ public class GameProcessManager : MonoBehaviour
         {
             obj.GetComponent<Explodable>().fragmentInEditor();
         }
+
+
+        OnStartLevel.Invoke(index);
 
 
         return currentLevel;
@@ -176,6 +190,7 @@ public class GameProcessManager : MonoBehaviour
         GUIManager.Singleton.Open("MainMenu");
         Camera.main.GetComponent<FadeCamera>().RedoFade();
     }
+
     private void ResetGame()
     {
         for (int i = 0; i < LoadedLevel.Count; i++)
@@ -185,15 +200,19 @@ public class GameProcessManager : MonoBehaviour
 
         LoadedLevel.Clear();
 
-        currentLevelIndex = -1;
-
+        
         //Can do other stuff here
         PlayerHolder.GetComponentInChildren<GhostSprites>().KillSwitchEngage();
         ObjectRecycler.Singleton.RecycleAll();
 
 
-
         PlayerHolder.SetActive(false);
+
+
+        OnQuitLevel.Invoke(currentLevelIndex);
+
+        currentLevelIndex = -1;
+
 
         TimeManager.Instance.Resume();
     }
