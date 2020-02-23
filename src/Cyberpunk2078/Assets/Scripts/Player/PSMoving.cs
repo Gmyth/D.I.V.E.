@@ -132,8 +132,8 @@ public class PSMoving : PlayerState
     internal void Move(float axis)
     {
         int direction = axis > 0 ? 1 : -1;
-        if(!playerCharacter.InKillStreak) {PhysicsInputHelper(axis,n_speedFactor,n_accelerationFactor);}
-        else {PhysicsInputHelper(axis,f_speedFactor,f_accelerationFactor);}
+        if(!playerCharacter.InKillStreak) {PhysicsInputHelper(axis,0,n_speedFactor,n_accelerationFactor);}
+        else {PhysicsInputHelper(axis,0,f_speedFactor,f_accelerationFactor);}
     }
     
     void NormalizeSlope () {

@@ -34,6 +34,17 @@ public class SimpleEventTrigger : MonoBehaviour
     }
 
 
+    public void ShowButtonHint(string s)
+    {
+        GUITutorial.Singleton.Show(s);
+    }
+
+    public void HideButtonHint()
+    {
+        GUITutorial.Singleton.Hide();
+    }
+
+
     private IEnumerator InvokeEvents()
     {
         //CheckPointManager.Instance.RestoreObject(gameObject);

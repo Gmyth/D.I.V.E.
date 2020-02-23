@@ -10182,10 +10182,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyboardIcons: Sprites/KeyIcon/KeyboardBlack
   joystickIcons: Sprites/KeyIcon/XboxOne
+  mouseLeftIcon: {fileID: 0}
+  mouseRightIcon: {fileID: 0}
   directionalIcons: {fileID: 9048313617144736061}
   leftIcon: {fileID: 265835813131470850}
   plusIcon: {fileID: 7319329913451568251}
   rightIcon: {fileID: 3770578892811502522}
+  bindingData: []
 --- !u!1 &4531732680601799281
 GameObject:
   m_ObjectHideFlags: 0
@@ -10632,7 +10635,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 3
+  m_LinearDrag: 1
   m_AngularDrag: 0
   m_GravityScale: 5
   m_Material: {fileID: 0}
@@ -10884,8 +10887,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a8a7af26f6efad4baeff49f27eb8f76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useMouseKeyboard: 0
-  useJoyStick: 0
   correct: {r: 0.08566215, g: 0.7264151, b: 0.3484169, a: 1}
   error: {r: 0.8679245, g: 0.118725546, b: 0.118725546, a: 1}
 --- !u!1 &7457358083176784541

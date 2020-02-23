@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class CustomAnimator : MonoBehaviour
 {
-    [SerializeField] private Sprite[] sprites;
+    [SerializeField] private Sprite[] spritesForJoycon;
+    [SerializeField] private Sprite[] spritesForKeyboard;
     private float lastSpriteSec;
-    [SerializeField] private float SpriteReplaceInterval = 2.0f;
+    [SerializeField] private float SpriteReplaceInterval = 1.0f;
     public bool loop;
     private SpriteRenderer render;
-    private int index; 
+    private int index;
+    private Sprite[] sprites;
     // Start is called before the first frame update
     void OnEnable()
     {
@@ -29,7 +31,7 @@ public class CustomAnimator : MonoBehaviour
         //    Debug.LogWarning(index);
         //    if (index >= sprites.Length - 1 && loop) { index = 0;}
 
-        //    else if (index >= sprites.Length - 1 && !loop) { render.color = Color.clear; }
+        //    else if (index >= sprites.Length - 1 && !loop) { render.color = Color.clear;}
 
         //    else { index += 1; }
         //}
@@ -37,32 +39,35 @@ public class CustomAnimator : MonoBehaviour
     }
 
     public void Play(bool _loop = true) {
+
+        sprites = MouseIndicator.Singleton.CurrentInputType == InputType.Joystick ? spritesForJoycon :
+            spritesForKeyboard;
+        render.sprite = sprites[0];
         loop = _loop;
         index = 0;
         lastSpriteSec = Time.unscaledTime;
         render.color = Color.white;
-        StartCoroutine(playAnimation());
+        //StartCoroutine(playAnimation());
     }
 
-    private IEnumerator playAnimation() {
+    //private IEnumerator playAnimation() {
 
-        while (Time.unscaledTime - lastSpriteSec >= SpriteReplaceInterval)
-        {
-            Debug.LogWarning(Time.unscaledTime);
-            render.sprite = sprites[index];
-            lastSpriteSec += SpriteReplaceInterval;
-            Debug.LogWarning(index);
-            if (index >= sprites.Length - 1 && loop) { index = 0; }
+    //    while (Time.unscaledTime - lastSpriteSec >= SpriteReplaceInterval)
+    //    {
+    //        Debug.LogWarning(Time.unscaledTime);
+    //        render.sprite = sprites[index];
+    //        lastSpriteSec += SpriteReplaceInterval;
+    //        Debug.LogWarning(index);
+    //        if (index >= sprites.Length - 1 && loop) { index = 0; }
 
-            else if (index >= sprites.Length - 1 && !loop) { render.color = Color.clear; }
+    //        else if (index >= sprites.Length - 1 && !loop) { render.color = Color.clear; }
 
-            else { index += 1; }
+    //        else { index += 1; }
 
+    //        yield return null;
+    //    }
+    //    yield return null;
 
-            yield return null;
-        }
-        yield return null;
-
-    }
+    //}
 
 }

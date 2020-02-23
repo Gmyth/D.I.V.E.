@@ -58,7 +58,7 @@ public class Player
         float feverDecayRate = 0, 
         float killStreakCap = 2,
         float killStreakDecay = 4,
-        float powerDashCoolDown = 6
+        float powerDashCoolDown = 8
     )
     {
         inventory = new Inventory();
