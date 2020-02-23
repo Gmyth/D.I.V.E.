@@ -15,3 +15,7 @@ MonoBehaviour:
   events:
   - event:/BGM/BGM
   - event:/BGM/Title
+  - event:/BGM/Level1
+  - event:/BGM/Level2
+  - event:/BGM/Level4
+  - event:/BGM/BossBGM
