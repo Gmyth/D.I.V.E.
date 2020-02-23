@@ -41,6 +41,7 @@ public class SimpleBreakable : MonoBehaviour
     {
         if (!triggered)
         {
+            AudioManager.Singleton.PlayOnce("BreakWindow");
             if(anim)anim.Play("Glass",0,-1);
             triggered = true;
             //Play break animation
