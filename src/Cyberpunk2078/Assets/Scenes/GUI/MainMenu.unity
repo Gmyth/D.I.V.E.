@@ -3041,5 +3041,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1414541705397692692, guid: b76153269bd3bd14fa0dc3caf4e37d47,
+        type: 3}
+      propertyPath: m_Name
+      value: PowerDashCD
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b76153269bd3bd14fa0dc3caf4e37d47, type: 3}

@@ -49,11 +49,13 @@ public class PlayerCharacter : Dummy
     public bool InKillStreak { get; private set; } = false;
     
     public bool PowerDash = false;
-    public bool PowerDashReady = true;
+    public bool PowerDashReady = false;
+    public bool PowerDashUnlock = false;
     public float LastPowerDash;
     public float Gravity;
     
     private GameObject buttonTip;
+    private GameObject powerDashCoolDown;
     public bool InFever { get; private set; } = false;
     public bool MaxUltimateEnergy { get; private set; }
     //public PlayerCharacter(Player player)
@@ -254,7 +256,7 @@ public class PlayerCharacter : Dummy
             FeverVFX.SetActive(false);
             GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").DehighlightFeverBar();
             TimeManager.Instance.EndFeverMotion();
-
+            
             AudioManager.Singleton.StopEvent("FeverMode");
         }
         return true;
@@ -285,6 +287,15 @@ public class PlayerCharacter : Dummy
 
     public void PowerDashCoolDown()
     {
+        if (!PowerDashUnlock)
+        {
+            powerDashCoolDown.GetComponent<Slider>().value = 0f;
+            buttonTip.SetActive(false);
+            return;
+        }
+
+        
+        
         if (!PowerDashReady)
         {
             if(LastPowerDash + statistics[StatisticType.PDCoolDown] < Time.unscaledTime)
@@ -296,6 +307,8 @@ public class PlayerCharacter : Dummy
             {
                 buttonTip.SetActive(false);
             }
+            
+            powerDashCoolDown.GetComponent<Slider>().value = Mathf.Max(1,(Time.unscaledTime - LastPowerDash) /statistics[StatisticType.PDCoolDown] );
         }
 
     }
@@ -404,6 +417,7 @@ public class PlayerCharacter : Dummy
 
         // TODO: delete later
         buttonTip = GameObject.Find("HealthButton");
+        powerDashCoolDown = GameObject.Find("HealthEnergy");
     }
 
     private void Update()

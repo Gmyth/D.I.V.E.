@@ -166,7 +166,7 @@ public class PSDashing : PlayerState
         var inDashingDragFactor = playerCharacter.InKillStreak ? f_inDashingDragFactor:n_inDashingDragFactor;
         if (playerCharacter.PowerDash)
         {
-            if (!playerCharacter.PowerDashReady)
+            if (!playerCharacter.PowerDashReady || !playerCharacter.PowerDashUnlock )
             {
                 // Energy is not enough, Cancel dash
                 Apply = false;
