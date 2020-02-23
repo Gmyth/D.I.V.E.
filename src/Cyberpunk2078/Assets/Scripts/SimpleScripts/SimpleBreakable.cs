@@ -24,7 +24,7 @@ public class SimpleBreakable : MonoBehaviour
         anim = gameObject.GetComponent<Animator>();
         triggered = false;
         frags = new List<GameObject>();
-        //collectFrag();
+        collectFrag();
     }
 
     // Update is called once per frame
@@ -66,7 +66,6 @@ public class SimpleBreakable : MonoBehaviour
 
     private void explode(Vector3 pos)
     {
-        collectFrag();
         GetComponent<Explodable>().explode();
         foreach (var frag in frags)
         {
