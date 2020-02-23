@@ -143,7 +143,9 @@ public class L2ShieldBoss : Enemy
     {
         rightDroneSpawner.gameObject.SetActive(true);
         leftDroneSpawner.gameObject.SetActive(true);
-        glass.DestroyBreakable(glass.transform.position + new Vector3(0, 2, 0));
+
+        glass?.DestroyBreakable(glass.transform.position + new Vector3(0, 2, 0));
+        glass = null;
     }
 
 
