@@ -73,10 +73,8 @@ public class PSAirborne : PlayerState
         // temp code
 
 
-        int gt = GetGroundType();
-        Debug.LogWarning(gt);
         if (Vy <= 0)
-            switch (gt)
+            switch (GetGroundType())
             {
                 case 1:
                     return (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("HorizontalJoyStick") != 0) ? "Moving" : "Idle";

@@ -374,9 +374,9 @@ public abstract class Enemy : Dummy
 
         statistics = new StatisticSystem(data.Attributes, statusModifiers);
         statistics[StatisticType.Hp] = statistics[StatisticType.MaxHp];
-        Debug.LogWarning(statistics[StatisticType.Hp]);
+
         
-        if (fsm)
+        if (fsm) 
             fsm = fsm.Initialize(this);
     }
 

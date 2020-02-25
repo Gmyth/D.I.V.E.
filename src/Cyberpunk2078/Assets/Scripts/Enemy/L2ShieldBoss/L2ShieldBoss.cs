@@ -240,6 +240,16 @@ public class L2ShieldBoss : Enemy
     }
 
 
+    public override void TurnImmediately(Vector3 direction)
+    {
+        base.TurnImmediately(direction);
+
+
+        if (enableTurn)
+            laser.rotation = direction.x > 0 ? Quaternion.identity : Quaternion.Euler(0, 0, 180);
+    }
+
+
     protected override void Awake()
     {
         base.Awake();
