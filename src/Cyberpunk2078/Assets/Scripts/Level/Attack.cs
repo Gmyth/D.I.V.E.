@@ -30,7 +30,7 @@ public class Attack : MonoBehaviour
     {
         if (isFriendly)
         {
-            if (other.tag == "Dummy")
+            if (other.tag == "Enemy")
             {
                 CameraManager.Instance.Shaking(0.20f, 0.10f);
 

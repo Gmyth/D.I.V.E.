@@ -67,7 +67,7 @@ public class SimpleSpecialBlock : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Dummy")
+        if (other.gameObject.tag == "Enemy")
         {
             other.gameObject.GetComponent<Dummy>().Dead();
         }

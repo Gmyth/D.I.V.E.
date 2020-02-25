@@ -366,7 +366,6 @@ public abstract class Enemy : Dummy
 
     protected virtual void Awake()
     {
-        Debug.LogWarning(11111111);
         data = DataTableManager.singleton.GetEnemyData(typeID);
         rb2d = GetComponent<Rigidbody2D>();
         defaultDrag = rb2d.drag;
