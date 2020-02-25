@@ -47,6 +47,7 @@ public class HitBox : MonoBehaviour
 
     [Header("")]
     [SerializeField] protected int[] effects;
+    [SerializeField] protected bool disabledOnEnable = false;
 
     public Hit hit;
 
@@ -86,11 +87,16 @@ public class HitBox : MonoBehaviour
         numHitsRemaining = maxNumHits;
 
 
-        List<Collider2D> list = new List<Collider2D>();
-        int n = GetComponent<Collider2D>().OverlapCollider(new ContactFilter2D(), list);
+        if (disabledOnEnable)
+            GetComponent<Collider2D>().enabled = false;
+        else
+        {
+            List<Collider2D> list = new List<Collider2D>();
+            int n = GetComponent<Collider2D>().OverlapCollider(new ContactFilter2D(), list);
 
-        for (int i = 0; i < n; ++i)
-            OnTriggerEnter2D(list[i]);
+            for (int i = 0; i < n; ++i)
+                OnTriggerEnter2D(list[i]);
+        }
     }
 
     private void OnDisable()

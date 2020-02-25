@@ -40,7 +40,7 @@ public class playerTest : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Dummy")
+        if (other.tag == "Enemy")
         {
             Vector2 direction = other.transform.position - transform.position;
             direction = direction.normalized;

@@ -140,7 +140,7 @@ public class GrappleHook : Recyclable
             catchPos = transform.position;
             StartCoroutine(PullDelay());
            // PlayerCharacter.Singleton.GetFSM().CurrentStateIndex = 14;
-        }else if (other.tag == "Dummy")
+        }else if (other.tag == "Enemy")
         {
             currentState = grappleState.Pull;
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;

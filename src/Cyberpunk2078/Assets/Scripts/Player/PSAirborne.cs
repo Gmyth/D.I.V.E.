@@ -71,7 +71,7 @@ public class PSAirborne : PlayerState
             return "Dashing";
         }
         // temp code
-        
+
 
         if (Vy <= 0)
             switch (GetGroundType())

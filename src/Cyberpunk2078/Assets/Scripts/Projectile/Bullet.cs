@@ -76,7 +76,7 @@ public class Bullet : Recyclable
         }
         else if (isFriendly)
         {
-            if (other.tag == "Dummy")
+            if (other.tag == "Enemy")
             {
                 Dummy enemy = other.GetComponent<Dummy>();
 

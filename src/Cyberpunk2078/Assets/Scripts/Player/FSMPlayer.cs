@@ -87,9 +87,9 @@ public abstract class PlayerState : State
             
             return 1;
         } 
-        else if ((hitL.collider != null && hitL.transform.CompareTag("Dummy")) ||
-                 (hitR.collider != null && hitR.transform.CompareTag("Dummy")) ||
-                 (hitM.collider != null && hitM.transform.CompareTag("Dummy")))
+        else if ((hitL.collider != null && hitL.transform.CompareTag("Enemy")) ||
+                 (hitR.collider != null && hitR.transform.CompareTag("Enemy")) ||
+                 (hitM.collider != null && hitM.transform.CompareTag("Enemy")))
         {
             return 2;
         }
