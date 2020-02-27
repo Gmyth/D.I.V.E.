@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5403450617441623304}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 57726.45, y: 29205.21, z: -3037.8376}
+  m_LocalPosition: {x: 7, y: 5.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7966425719704721659}
@@ -22196,7 +22196,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7966425719916264788}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.2981033, y: 11.51, z: 0}
+  m_LocalPosition: {x: -2.2981033, y: 15.592958, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3877861390664105146}
@@ -22219,7 +22219,7 @@ MonoBehaviour:
   type: 2
   radius: 5
   width: 35.255188
-  length: 16.381027
+  length: 24.546944
   changeMoveSpeed: 1
   smoothTimeY: 0.5
   smoothTimeX: 0.5
@@ -22306,17 +22306,17 @@ PrefabInstance:
     - target: {fileID: 5343205244154792214, guid: ee8e0209b86f57e4ca4e3b75ae4c0c2f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -57719.45
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5343205244154792214, guid: ee8e0209b86f57e4ca4e3b75ae4c0c2f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -29199.71
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5343205244154792214, guid: ee8e0209b86f57e4ca4e3b75ae4c0c2f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3037.8376
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5343205244154792214, guid: ee8e0209b86f57e4ca4e3b75ae4c0c2f,
         type: 3}
@@ -22378,9 +22378,7 @@ PrefabInstance:
       propertyPath: disabledOnEnable
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4949092214545776762, guid: ee8e0209b86f57e4ca4e3b75ae4c0c2f, type: 3}
-    - {fileID: 2641516383775543790, guid: ee8e0209b86f57e4ca4e3b75ae4c0c2f, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee8e0209b86f57e4ca4e3b75ae4c0c2f, type: 3}
 --- !u!114 &7966425719704721637 stripped
 MonoBehaviour:
@@ -22407,11 +22405,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7966425719890662159}
     m_Modifications:
-    - target: {fileID: 4509732082015843831, guid: 94cad0d8cc43cd64c90368e958e4d262,
-        type: 3}
-      propertyPath: m_Name
-      value: BouncePlatform (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 4509732082015843827, guid: 94cad0d8cc43cd64c90368e958e4d262,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -22471,6 +22464,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.x
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4509732082015843831, guid: 94cad0d8cc43cd64c90368e958e4d262,
+        type: 3}
+      propertyPath: m_Name
+      value: BouncePlatform (2)
       objectReference: {fileID: 0}
     - target: {fileID: 6302873097635298247, guid: 94cad0d8cc43cd64c90368e958e4d262,
         type: 3}
@@ -22592,16 +22590,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7966425719890662159}
     m_Modifications:
-    - target: {fileID: 4509732082015843831, guid: 94cad0d8cc43cd64c90368e958e4d262,
-        type: 3}
-      propertyPath: m_Name
-      value: BouncePlatform (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4509732082015843831, guid: 94cad0d8cc43cd64c90368e958e4d262,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4509732082015843827, guid: 94cad0d8cc43cd64c90368e958e4d262,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -22667,6 +22655,16 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.43450007
       objectReference: {fileID: 0}
+    - target: {fileID: 4509732082015843831, guid: 94cad0d8cc43cd64c90368e958e4d262,
+        type: 3}
+      propertyPath: m_Name
+      value: BouncePlatform (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4509732082015843831, guid: 94cad0d8cc43cd64c90368e958e4d262,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6302873097635298247, guid: 94cad0d8cc43cd64c90368e958e4d262,
         type: 3}
       propertyPath: jumpForce
@@ -22727,16 +22725,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7966425719890662159}
     m_Modifications:
-    - target: {fileID: 7434759621027895529, guid: 9d0dd5dde69c40a42a7aafa4a818760d,
-        type: 3}
-      propertyPath: m_Name
-      value: ChargePoint (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7434759621027895529, guid: 9d0dd5dde69c40a42a7aafa4a818760d,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7434759621027895510, guid: 9d0dd5dde69c40a42a7aafa4a818760d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -22790,6 +22778,16 @@ PrefabInstance:
     - target: {fileID: 7434759621027895510, guid: 9d0dd5dde69c40a42a7aafa4a818760d,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7434759621027895529, guid: 9d0dd5dde69c40a42a7aafa4a818760d,
+        type: 3}
+      propertyPath: m_Name
+      value: ChargePoint (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7434759621027895529, guid: 9d0dd5dde69c40a42a7aafa4a818760d,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -22882,11 +22880,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7966425719890662159}
     m_Modifications:
-    - target: {fileID: 4509732082015843831, guid: 94cad0d8cc43cd64c90368e958e4d262,
-        type: 3}
-      propertyPath: m_Name
-      value: BouncePlatform (4)
-      objectReference: {fileID: 0}
     - target: {fileID: 4509732082015843827, guid: 94cad0d8cc43cd64c90368e958e4d262,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -22947,6 +22940,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4509732082015843831, guid: 94cad0d8cc43cd64c90368e958e4d262,
+        type: 3}
+      propertyPath: m_Name
+      value: BouncePlatform (4)
+      objectReference: {fileID: 0}
     - target: {fileID: 6302873097635298247, guid: 94cad0d8cc43cd64c90368e958e4d262,
         type: 3}
       propertyPath: jumpForce
@@ -22967,16 +22965,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7966425719890662159}
     m_Modifications:
-    - target: {fileID: 7434759621027895529, guid: 9d0dd5dde69c40a42a7aafa4a818760d,
-        type: 3}
-      propertyPath: m_Name
-      value: ChargePoint
-      objectReference: {fileID: 0}
-    - target: {fileID: 7434759621027895529, guid: 9d0dd5dde69c40a42a7aafa4a818760d,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7434759621027895510, guid: 9d0dd5dde69c40a42a7aafa4a818760d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -23030,6 +23018,16 @@ PrefabInstance:
     - target: {fileID: 7434759621027895510, guid: 9d0dd5dde69c40a42a7aafa4a818760d,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7434759621027895529, guid: 9d0dd5dde69c40a42a7aafa4a818760d,
+        type: 3}
+      propertyPath: m_Name
+      value: ChargePoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 7434759621027895529, guid: 9d0dd5dde69c40a42a7aafa4a818760d,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -23142,11 +23140,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7966425718167640650}
     m_Modifications:
-    - target: {fileID: 5536892084200399048, guid: 5733dc6eae5d27a489f2eb603a81f9bb,
-        type: 3}
-      propertyPath: m_Name
-      value: (Orange)Three-Hanged-Light
-      objectReference: {fileID: 0}
     - target: {fileID: 5536892084200399049, guid: 5733dc6eae5d27a489f2eb603a81f9bb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -23211,6 +23204,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.24363673
+      objectReference: {fileID: 0}
+    - target: {fileID: 5536892084200399048, guid: 5733dc6eae5d27a489f2eb603a81f9bb,
+        type: 3}
+      propertyPath: m_Name
+      value: (Orange)Three-Hanged-Light
       objectReference: {fileID: 0}
     - target: {fileID: 5536892083273574116, guid: 5733dc6eae5d27a489f2eb603a81f9bb,
         type: 3}
@@ -23282,11 +23280,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7966425719890662159}
     m_Modifications:
-    - target: {fileID: 4509732082015843831, guid: 94cad0d8cc43cd64c90368e958e4d262,
-        type: 3}
-      propertyPath: m_Name
-      value: BouncePlatform (3)
-      objectReference: {fileID: 0}
     - target: {fileID: 4509732082015843827, guid: 94cad0d8cc43cd64c90368e958e4d262,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -23346,6 +23339,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.x
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4509732082015843831, guid: 94cad0d8cc43cd64c90368e958e4d262,
+        type: 3}
+      propertyPath: m_Name
+      value: BouncePlatform (3)
       objectReference: {fileID: 0}
     - target: {fileID: 6302873097635298247, guid: 94cad0d8cc43cd64c90368e958e4d262,
         type: 3}
@@ -23542,16 +23540,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7966425719890662159}
     m_Modifications:
-    - target: {fileID: 4509732082015843831, guid: 94cad0d8cc43cd64c90368e958e4d262,
-        type: 3}
-      propertyPath: m_Name
-      value: BouncePlatform
-      objectReference: {fileID: 0}
-    - target: {fileID: 4509732082015843831, guid: 94cad0d8cc43cd64c90368e958e4d262,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4509732082015843827, guid: 94cad0d8cc43cd64c90368e958e4d262,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -23617,6 +23605,16 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.43450007
       objectReference: {fileID: 0}
+    - target: {fileID: 4509732082015843831, guid: 94cad0d8cc43cd64c90368e958e4d262,
+        type: 3}
+      propertyPath: m_Name
+      value: BouncePlatform
+      objectReference: {fileID: 0}
+    - target: {fileID: 4509732082015843831, guid: 94cad0d8cc43cd64c90368e958e4d262,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6302873097635298247, guid: 94cad0d8cc43cd64c90368e958e4d262,
         type: 3}
       propertyPath: jumpForce
@@ -23677,11 +23675,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7966425719890662159}
     m_Modifications:
-    - target: {fileID: 5615943550480218031, guid: 4bfba627392d2f44e8b21033713c53b9,
-        type: 3}
-      propertyPath: m_Name
-      value: Ladder
-      objectReference: {fileID: 0}
     - target: {fileID: 5615943550480218030, guid: 4bfba627392d2f44e8b21033713c53b9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -23746,6 +23739,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 12.105351
+      objectReference: {fileID: 0}
+    - target: {fileID: 5615943550480218031, guid: 4bfba627392d2f44e8b21033713c53b9,
+        type: 3}
+      propertyPath: m_Name
+      value: Ladder
       objectReference: {fileID: 0}
     - target: {fileID: 5615943550480218029, guid: 4bfba627392d2f44e8b21033713c53b9,
         type: 3}

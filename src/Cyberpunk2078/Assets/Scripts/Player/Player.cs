@@ -79,8 +79,11 @@ public class Player
         secondJumpReady = true;
 
 
-        GameProcessManager.Singleton.OnStartLevel.AddListener(ClearTemporaryCollectibles);
-        GameProcessManager.Singleton.OnQuitLevel.AddListener(RevokeTemporaryCollectibles);
+        if (GameProcessManager.Singleton)
+        {
+            GameProcessManager.Singleton.OnStartLevel.AddListener(ClearTemporaryCollectibles);
+            GameProcessManager.Singleton.OnQuitLevel.AddListener(RevokeTemporaryCollectibles);
+        }
     }
 
 

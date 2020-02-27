@@ -43,10 +43,6 @@ public class GameProcessManager : MonoBehaviour
 
     private void Start()
     {
-        PlayerCharacter.Singleton.init();
-        PlayerHolder.SetActive(false);
-
-        
         GUIManager.Singleton.Open("MainMenu", this);
         //CameraManager.Instance.Release();
     }
@@ -80,9 +76,11 @@ public class GameProcessManager : MonoBehaviour
     {
         if (Player.CurrentPlayer == null)
             Player.CreatePlayer();
-        
-        InitHUD();
-        
+
+
+        PlayerHolder.SetActive(true);
+
+
         //generate level
         LoadLevel(levelIndex);
 
@@ -104,7 +102,7 @@ public class GameProcessManager : MonoBehaviour
             var start_pos = currentLevel.GetComponent<LevelInfo>().StartPoint;
 
             PlayerHolder.transform.position = start_pos.transform.position;
-            PlayerHolder.SetActive(true);
+            
             PlayerCharacter.Singleton.GetComponent<SimpleTimer>().GetTimer();
 
             if(ResetingStats == true)
@@ -115,10 +113,6 @@ public class GameProcessManager : MonoBehaviour
         }
     }
 
-    public void InitHUD()
-    {
-        GUIManager.Singleton.Open("HUD", PlayerHolder.GetComponentInChildren<PlayerCharacter>());
-    }
 
     public GameObject LoadLevel(int index)
     {
@@ -166,6 +160,7 @@ public class GameProcessManager : MonoBehaviour
             GUIManager.Singleton.Close("HUD");
             PlayerHolder.GetComponentInChildren<MouseIndicator>().Hide();
             TimeManager.Instance.Pause();
+            PlayerCharacter.Singleton.GetFSM().CurrentStateName = "NoInput";
         }
     }
 
@@ -176,6 +171,7 @@ public class GameProcessManager : MonoBehaviour
         GUIManager.Singleton.Open("HUD", PlayerHolder.GetComponentInChildren<PlayerCharacter>());
         PlayerHolder.GetComponentInChildren<MouseIndicator>().Show();
         TimeManager.Instance.Resume();
+        PlayerCharacter.Singleton.GetFSM().CurrentStateName = "Idle";
     }
 
     public void BK_MainMenu()
@@ -246,6 +242,16 @@ public class GameProcessManager : MonoBehaviour
         if(currentLevelIndex != -1)
         {
             return currentLevel.GetComponent<LevelInfo>().DummyHolder;
+        }
+
+        return null;
+    }
+
+    public GameObject GetCurrentObjects()
+    {
+        if (currentLevelIndex != -1)
+        {
+            return currentLevel.GetComponent<LevelInfo>().ObjHolder;
         }
 
         return null;
