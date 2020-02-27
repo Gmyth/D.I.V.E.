@@ -19,10 +19,10 @@ MonoBehaviour:
   hitBox: -1
   attackDuration: 0
   animation_attack: L2ShieldBoss_Shockwave1
-  attackBackswing: 1
+  attackBackswing: 1.2
   animation_afterAttack: 
   state_afterAttack: Alert
-  chargeTime: 0.8
+  chargeTime: 0.6
   stopChargingOnTargetLoss: 0
   animation_charging: L2ShieldBoss_Charge2
   state_onTargetLoss: 
