@@ -298,12 +298,7 @@ public abstract class PlayerState : State
              Player.CurrentPlayer.triggerReady = true;
         }
         
-        if (Input.GetAxis("VerticalJoyStick") <= 0)
-        {
-            Player.CurrentPlayer.climbReady = true;
-        }
-        
-        if (Input.GetAxis("Vertical") <= 0)
+        if (Input.GetAxis("VerticalJoyStick") == 0 && Input.GetAxis("Vertical") == 0)
         {
             Player.CurrentPlayer.climbReady = true;
         }

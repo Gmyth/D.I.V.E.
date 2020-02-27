@@ -134,7 +134,7 @@ public class GameProcessManager : MonoBehaviour
             obj.GetComponent<Explodable>().fragmentInEditor();
         }
 
-
+       // PlayerHolder.GetComponentInChildren<MouseIndicator>().Show();
         OnStartLevel.Invoke(index);
 
 

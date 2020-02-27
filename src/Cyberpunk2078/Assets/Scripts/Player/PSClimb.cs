@@ -47,7 +47,6 @@ public class PSClimb : PlayerState
         {
             anim.speed = 0;
             rb2d.velocity = Vector2.zero;
-            
         }
         else if (v > 0)
         {
@@ -59,12 +58,13 @@ public class PSClimb : PlayerState
             anim.speed = 1;
             rb2d.velocity = new Vector2(0, playerCharacter.InKillStreak ? -f_climbSpeed * feverFactor:-climbSpeed * feverFactor);
         }
-
+        
         // climbBoundary = (minHeight, maxHeight)
         if (playerCharacter.transform.position.y < climbBoundary.x || playerCharacter.transform.position.y > climbBoundary.y)
         {
             anim.speed = 1;
             rb2d.gravityScale = playerCharacter.DefaultGravity;
+            Player.CurrentPlayer.climbReady = false;
             return "Idle";
         }
         
@@ -74,6 +74,7 @@ public class PSClimb : PlayerState
             if(v < 0){
                 anim.speed = 1;
                 rb2d.gravityScale = playerCharacter.DefaultGravity;
+                Player.CurrentPlayer.climbReady = false;
                 return "Idle";
             }
         }

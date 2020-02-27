@@ -48,7 +48,7 @@ public class PlayerCharacter : Dummy
     }
 
     public bool InKillStreak { get; private set; } = false;
-    
+    public bool ClimbBlock = false;
     public bool PowerDash = false;
     public bool PowerDashReady = false;
     public bool PowerDashUnlock = false;
