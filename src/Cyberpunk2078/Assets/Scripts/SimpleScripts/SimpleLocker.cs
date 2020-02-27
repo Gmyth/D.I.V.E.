@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SimpleLocker : MonoBehaviour
+public class SimpleLocker : Restorable
 {
 
     public SimpleLockedDoor ConnectedDoor;
@@ -45,6 +45,20 @@ public class SimpleLocker : MonoBehaviour
             okForTrigger = false;
             GetComponent<SpriteRenderer>().sprite = unlocked;
         }
+    }
+
+    public override void Save()
+    {
+        base.Save();
+
+        var currentSprite = GetComponent<SpriteRenderer>().sprite;
+
+
+    }
+
+    public override void Restore()
+    {
+        base.Restore();
     }
 
 }
