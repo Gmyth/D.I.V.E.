@@ -60,9 +60,7 @@ public class Bullet : Recyclable
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (numHitsRemaining <= 0)
-            Die();
-        else if (other.tag == "Ground")
+        if (other.tag == "Ground")
         {
             SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
             Hit.transform.right = transform.right;
@@ -72,7 +70,7 @@ public class Bullet : Recyclable
             Hit.gameObject.SetActive(true);
 
 
-            Die();
+            numHitsRemaining = 0;
         }
         else if (isFriendly)
         {
@@ -95,25 +93,10 @@ public class Bullet : Recyclable
                 SingleEffect hitFx = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
                 hitFx.transform.position = other.transform.position - (other.transform.position - transform.position) * 0.2f;
                 hitFx.transform.right = transform.right;
-                hitFx.transform.position = other.transform.position + (transform.position  - other.transform.position) * 0.5f;
+                hitFx.transform.position = other.transform.position + (transform.position - other.transform.position) * 0.5f;
                 hitFx.transform.localScale = Vector3.one;
 
                 hitFx.gameObject.SetActive(true);
-
-
-                Die();
-            }
-            else if (other.tag == "Ground")
-            {
-                SingleEffect Hit = ObjectRecycler.Singleton.GetObject<SingleEffect>(4);
-                Hit.transform.right = transform.right;
-                Hit.transform.position = transform.position;
-                Hit.transform.localScale = Vector3.one;
-
-                Hit.gameObject.SetActive(true);
-
-
-                Die();
             }
         }
         else if (other.tag == "Player")
@@ -141,9 +124,6 @@ public class Bullet : Recyclable
                 Hit.transform.position = other.transform.position + (transform.position - other.transform.position) * 0.5f;
                 Hit.transform.localScale = Vector3.one;
                 Hit.gameObject.SetActive(true);
-
-
-                Die();
             }
         }
         else if (other.tag == "PlayerHitBox")
@@ -153,7 +133,7 @@ public class Bullet : Recyclable
                 isFriendly = true;
                 GetComponent<LinearMovement>().initialPosition = transform.position;
                 GetComponent<LinearMovement>().speed *= 1.5f;
-               // GetComponent<LinearMovement>().orientation = (Quaternion.Euler(0, 0,  Random.Range(-15, 15)) * (GetComponent<LinearMovement>().orientation * -1)).normalized;
+                // GetComponent<LinearMovement>().orientation = (Quaternion.Euler(0, 0,  Random.Range(-15, 15)) * (GetComponent<LinearMovement>().orientation * -1)).normalized;
                 GetComponent<LinearMovement>().orientation = other.transform.right;
                 GetComponent<LinearMovement>().spawnTime = Time.time;
 
@@ -162,19 +142,19 @@ public class Bullet : Recyclable
                 //TimeManager.Instance.endSlowMotion();
                 CameraManager.Instance.Idle();
 
-                CameraManager.Instance.Shaking(0.5f,0.05f,true);
-                CameraManager.Instance.FocusTo(transform.position,0.02f);
+                CameraManager.Instance.Shaking(0.5f, 0.05f, true);
+                CameraManager.Instance.FocusTo(transform.position, 0.02f);
 
                 SingleEffect Hit1 = ObjectRecycler.Singleton.GetObject<SingleEffect>(12);
                 Hit1.transform.right = transform.right;
-                Hit1.transform.position = other.transform.position + (transform.position  - other.transform.position) * 0.3f;
+                Hit1.transform.position = other.transform.position + (transform.position - other.transform.position) * 0.3f;
 
                 Hit1.gameObject.SetActive(true);
 
                 AudioManager.Singleton.PlayOnce("DeflectBullet");
             }
-
         }
+
 
         if (numHitsRemaining <= 0)
             Die();
