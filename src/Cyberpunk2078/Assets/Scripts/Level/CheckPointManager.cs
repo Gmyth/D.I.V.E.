@@ -23,11 +23,13 @@ public class CheckPointManager : MonoBehaviour
     /// <summary>
     /// //Objects needed to be restored
     /// </summary>
-    private List<GameObject> objects = new List<GameObject>();
+    private List<GameObject> Objects = new List<GameObject>();
 
     /// <summary>
     /// Blackscreen Reference
     /// </summary>
+    /// 
+
     [SerializeField] private GameObject blackScreen;
 
     [SerializeField] private float SpeedFactor = 1;
@@ -43,7 +45,7 @@ public class CheckPointManager : MonoBehaviour
 
     public void Initialize()
     {
-        GameObject dummyHolder = GameProcessManager.Singleton.GetCurrentDummies();
+        GameObject dummyHolder = GameProcessManager.Singleton.GetCurrentDummies();      
         var dummies = dummyHolder.GetComponentsInChildren<Dummy>();
         Enemies.Clear();
         for (int i = 0; i < dummies.Length; i++)
@@ -51,6 +53,13 @@ public class CheckPointManager : MonoBehaviour
             Enemies.Add(dummies[i].gameObject);
         }
 
+        GameObject ObjHolder = GameProcessManager.Singleton.GetCurrentObjects();
+        Objects.Clear();
+        for(int i=0; i < ObjHolder.transform.childCount; i++)
+        {
+            var obj = ObjHolder.transform.GetChild(i).gameObject;
+            Objects.Add(obj);
+        }
     }
 
     public void Save(Transform _playertransform, CheckPointTrigger checkPointTrigger)
@@ -59,7 +68,7 @@ public class CheckPointManager : MonoBehaviour
 
         //Clear when reach new checkpoint
         savedEnemies.Clear();
-        objects.Clear();
+        Objects.Clear();
 
         //save enemies position
         for (int i = 0; i < Enemies.Count; i++)
@@ -68,7 +77,10 @@ public class CheckPointManager : MonoBehaviour
             Enemies[i].GetComponent<Enemy>().lastCheckPointTransform = Enemies[i].gameObject.transform.position;
         }
 
-        cpt = checkPointTrigger;
+        for(int i = 0; i < Objects.Count; i++)
+        {
+
+        }
     }
 
     public void Restore()
@@ -84,14 +96,14 @@ public class CheckPointManager : MonoBehaviour
         //TimeManager.Instance.endSlowMotion();
 
         //Restore objects
-        for(int i = 0; i < objects.Count; ++i)
+        for(int i = 0; i < Objects.Count; ++i)
         {
-            if (objects[i].GetComponent<SimpleEventTrigger>() != null)
+            if (Objects[i].GetComponent<SimpleEventTrigger>() != null)
             {
-                objects[i].GetComponent<SimpleEventTrigger>().gameObject.SetActive(true);
+                Objects[i].GetComponent<SimpleEventTrigger>().gameObject.SetActive(true);
             }
         }
-        objects.Clear();
+        Objects.Clear();
 
         //cpt.enabled = true;
     }
@@ -160,9 +172,9 @@ public class CheckPointManager : MonoBehaviour
 
     public void RestoreObject(GameObject obj)
     {
-        if (!objects.Contains(obj))
+        if (!Objects.Contains(obj))
         {
-            objects.Add(obj);
+            Objects.Add(obj);
         }           
     }
 }

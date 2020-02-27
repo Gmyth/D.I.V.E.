@@ -166,6 +166,7 @@ public class GameProcessManager : MonoBehaviour
             GUIManager.Singleton.Close("HUD");
             PlayerHolder.GetComponentInChildren<MouseIndicator>().Hide();
             TimeManager.Instance.Pause();
+            PlayerCharacter.Singleton.GetFSM().CurrentStateName = "NoInput";
         }
     }
 
@@ -176,6 +177,7 @@ public class GameProcessManager : MonoBehaviour
         GUIManager.Singleton.Open("HUD", PlayerHolder.GetComponentInChildren<PlayerCharacter>());
         PlayerHolder.GetComponentInChildren<MouseIndicator>().Show();
         TimeManager.Instance.Resume();
+        PlayerCharacter.Singleton.GetFSM().CurrentStateName = "Idle";
     }
 
     public void BK_MainMenu()
@@ -246,6 +248,16 @@ public class GameProcessManager : MonoBehaviour
         if(currentLevelIndex != -1)
         {
             return currentLevel.GetComponent<LevelInfo>().DummyHolder;
+        }
+
+        return null;
+    }
+
+    public GameObject GetCurrentObjects()
+    {
+        if (currentLevelIndex != -1)
+        {
+            return currentLevel.GetComponent<LevelInfo>().ObjHolder;
         }
 
         return null;
