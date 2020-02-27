@@ -20,13 +20,6 @@ public class L2ShieldBossState_Alert : ESAlert<L2ShieldBoss>
     [SerializeField] private BehaviorSelector farBehaviorSelector;
 
 
-    public override void OnStateEnter(State previousState)
-    {
-        enemy.currentTarget = PlayerCharacter.Singleton;
-
-        base.OnStateEnter(previousState);
-    }
-
     public override void OnStateQuit(State nextState)
     {
         base.OnStateQuit(nextState);
@@ -38,6 +31,9 @@ public class L2ShieldBossState_Alert : ESAlert<L2ShieldBoss>
 
     protected override string ChooseBehavior()
     {
+        enemy.currentTarget = PlayerCharacter.Singleton;
+
+
         Vector3 d = enemy.currentTarget.transform.position - enemy.transform.position;
 
         float distance = Mathf.Abs(d.x);
