@@ -13,6 +13,15 @@ public class SimpleLocker : Restorable
     private bool triggered = false;
 
     private bool okForTrigger = false;
+
+
+    /// ////////////////////////////////
+    private Sprite s_sprite;
+    private bool s_notification;
+    private bool s_triggered;
+    private bool s_okForTrigger;
+
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -49,16 +58,18 @@ public class SimpleLocker : Restorable
 
     public override void Save()
     {
-        base.Save();
-
-        var currentSprite = GetComponent<SpriteRenderer>().sprite;
-
-
+        s_notification = notification.activeInHierarchy;
+        s_sprite = GetComponent<SpriteRenderer>().sprite;
+        s_triggered = triggered;
+        s_okForTrigger = okForTrigger;
     }
 
     public override void Restore()
     {
-        base.Restore();
+        notification.SetActive(s_notification);
+        GetComponent<SpriteRenderer>().sprite = s_sprite;
+        triggered = s_triggered;
+        okForTrigger = s_okForTrigger;
     }
 
 }

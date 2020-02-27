@@ -79,7 +79,7 @@ public class CheckPointManager : MonoBehaviour
 
         for(int i = 0; i < Objects.Count; i++)
         {
-
+            Objects[i].GetComponent<Restorable>().Save();
         }
     }
 
@@ -98,12 +98,8 @@ public class CheckPointManager : MonoBehaviour
         //Restore objects
         for(int i = 0; i < Objects.Count; ++i)
         {
-            if (Objects[i].GetComponent<SimpleEventTrigger>() != null)
-            {
-                Objects[i].GetComponent<SimpleEventTrigger>().gameObject.SetActive(true);
-            }
+            Objects[i].GetComponent<Restorable>().Restore();
         }
-        Objects.Clear();
 
         //cpt.enabled = true;
     }
