@@ -7,6 +7,7 @@ public class LevelInfo: MonoBehaviour
     public GameObject StartPoint;
     public int LevelIndex;
     public GameObject DummyHolder;
+    public GameObject ObjHolder;
 
     public GameObject[] breakable;
 

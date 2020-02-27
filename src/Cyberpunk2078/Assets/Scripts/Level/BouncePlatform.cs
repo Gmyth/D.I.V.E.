@@ -8,7 +8,7 @@ public class BouncePlatform : MonoBehaviour
     public float jumpForce;
     private Rigidbody2D rb2d;
     private PlayerCharacter pc;
-    private float Threshold = 0.5f;
+    private float Threshold = 0.05f;
     public bool bounceReady = true;
     private float timer;
     [SerializeField] private GameObject BounceVFX;

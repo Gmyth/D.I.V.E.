@@ -22,12 +22,12 @@ MonoBehaviour:
   attackBackswing: 1
   animation_afterAttack: 
   state_afterAttack: Alert
-  chargeTime: 0.6
+  chargeTime: 0.8
   stopChargingOnTargetLoss: 0
   animation_charging: L2ShieldBoss_DashCharge
   state_onTargetLoss: 
   type: 2
-  dashSpeed: 30
+  dashSpeed: 35
   minDuration: 0.15
   maxDuration: 0
   stopDistance: 0

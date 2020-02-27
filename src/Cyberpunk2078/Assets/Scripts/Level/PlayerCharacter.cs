@@ -32,7 +32,6 @@ public class PlayerCharacter : Dummy
 
     public PlayerState State => fsm.CurrentState;
 
-
     public float this[StatisticType statisticType]
     {
         get
@@ -48,16 +47,16 @@ public class PlayerCharacter : Dummy
     }
 
     public bool InKillStreak { get; private set; } = false;
-    
+    public bool ClimbBlock = false;
     public bool PowerDash = false;
     public bool PowerDashReady = false;
     public bool PowerDashUnlock = false;
     public float LastPowerDash;
     public float Gravity;
     public float DefaultGravity = 3;
-    
-    private GameObject buttonTip;
-    private GameObject powerDashCoolDown;
+
+    [SerializeField] private GameObject buttonTip;
+    [SerializeField] private GameObject powerDashCoolDown;
     public bool InFever { get; private set; } = false;
     public bool MaxUltimateEnergy { get; private set; }
     //public PlayerCharacter(Player player)
@@ -403,15 +402,6 @@ public class PlayerCharacter : Dummy
     }
 
 
-    private void Awake()
-    {
-        if (Singleton)
-            Destroy(gameObject);
-        else
-            Singleton = this;
-    }
-
-    
     public void init()
     {
         player = Player.CurrentPlayer == null ? Player.CreatePlayer() : Player.CurrentPlayer;
@@ -432,14 +422,31 @@ public class PlayerCharacter : Dummy
 
         fsm.Boot();
 
-
-        //GUIManager.Singleton.Open("HUD", this);
         //GUIManager.Singleton.Open("MainMenu", this);
         //StartDialogue(10102001);
 
         // TODO: delete later
-        if (buttonTip == null)buttonTip = GameObject.Find("HealthButton");
+        if (buttonTip == null) buttonTip = GameObject.Find("HealthButton");
         if (powerDashCoolDown == null) powerDashCoolDown = GameObject.Find("HealthEnergy");
+    }
+
+
+    private void Awake()
+    {
+        if (Singleton)
+            Destroy(gameObject);
+        else
+        {
+            Singleton = this;
+
+
+            init();
+        }
+    }
+
+    private void OnEnable()
+    {
+        GUIManager.Singleton.Open("HUD", this);
     }
 
     private void Update()
@@ -450,6 +457,8 @@ public class PlayerCharacter : Dummy
        
         PowerDashCoolDown();
         KillStreakDecay();
+
+
         fsm.Update();
     }
     

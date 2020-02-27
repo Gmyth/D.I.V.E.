@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SimpleLockedDoor : MonoBehaviour
+public class SimpleLockedDoor : Restorable
 {
 
     public List<SimpleLocker> lockers;
@@ -13,10 +13,15 @@ public class SimpleLockedDoor : MonoBehaviour
     [SerializeField] private Sprite unlocked;
     
     [SerializeField] private Transform focus;
+
+    ////////////////////////////////////////////////////
+    private Sprite s_DotSprite;
+    private int s_lockerCount;
+    private bool[] s_collider;
     // Start is called before the first frame update
     void Awake()
     {
-        
+       
     }
 
     // Update is called once per frame
@@ -77,6 +82,28 @@ public class SimpleLockedDoor : MonoBehaviour
         
         CameraManager.Instance.Reset();
         
+    }
+
+    public override void Save()
+    {
+        s_DotSprite = dots[lockerCount].GetComponent<SpriteRenderer>().sprite;
+        s_lockerCount = lockerCount;
+        var colliders = GetComponentsInChildren<BoxCollider2D>();
+        for (int i=0; i < colliders.Length; i++)
+        {
+            s_collider[i] = colliders[i].enabled;
+        }
+    }
+
+    public override void Restore()
+    {
+        dots[lockerCount].GetComponent<SpriteRenderer>().sprite = s_DotSprite;
+        lockerCount = s_lockerCount;
+        var colliders = GetComponentsInChildren<BoxCollider2D>();
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            colliders[i].enabled = s_collider[i];
+        }
     }
 
 }

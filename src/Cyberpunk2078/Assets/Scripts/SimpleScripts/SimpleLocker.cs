@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SimpleLocker : MonoBehaviour
+public class SimpleLocker : Restorable
 {
 
     public SimpleLockedDoor ConnectedDoor;
@@ -13,6 +13,15 @@ public class SimpleLocker : MonoBehaviour
     private bool triggered = false;
 
     private bool okForTrigger = false;
+
+
+    /// ////////////////////////////////
+    private Sprite s_sprite;
+    private bool s_notification;
+    private bool s_triggered;
+    private bool s_okForTrigger;
+
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -27,10 +36,12 @@ public class SimpleLocker : MonoBehaviour
         {
             okForTrigger = true;
             notification.SetActive(true);
+            GetComponent<SpriteRenderer>().color = Color.white;
         }else if (!condition)
         {
             okForTrigger = true;
             notification.SetActive(true);
+            GetComponent<SpriteRenderer>().color = Color.white;
         }
 
     }
@@ -45,6 +56,22 @@ public class SimpleLocker : MonoBehaviour
             okForTrigger = false;
             GetComponent<SpriteRenderer>().sprite = unlocked;
         }
+    }
+
+    public override void Save()
+    {
+        s_notification = notification.activeInHierarchy;
+        s_sprite = GetComponent<SpriteRenderer>().sprite;
+        s_triggered = triggered;
+        s_okForTrigger = okForTrigger;
+    }
+
+    public override void Restore()
+    {
+        notification.SetActive(s_notification);
+        GetComponent<SpriteRenderer>().sprite = s_sprite;
+        triggered = s_triggered;
+        okForTrigger = s_okForTrigger;
     }
 
 }

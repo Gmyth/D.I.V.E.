@@ -63,7 +63,7 @@ public class PSGrapplePull : PlayerState
         if (Input.GetAxis("Vertical") > 0 || normalizedInput.y > 0.7f)
         {
             // up is pressed
-            if (isCloseTo("Ladder") != Direction.None) return "Climbing";
+            if (isCloseTo("Ladder") != Direction.None  && Player.CurrentPlayer.climbReady) return "Climbing";
         }
 
         var dir = isCloseTo("Ground");

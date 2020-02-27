@@ -75,4 +75,5 @@ crashlytics-build.properties
 /src/Cyberpunk2078/Assets/Xlsx/Tab(client)
 /src/Cyberpunk2078/fmod_editor.log
 /src/Cyberpunk2078/Assets/FMODStudioCache.asset
-src/Cyberpunk2078/Assets/StreamingAssets/build_info
+/src/Cyberpunk2078/Assets/StreamingAssets/build_info
+/src/Cyberpunk2078/Assets/StreamingAssets/build_info.meta
