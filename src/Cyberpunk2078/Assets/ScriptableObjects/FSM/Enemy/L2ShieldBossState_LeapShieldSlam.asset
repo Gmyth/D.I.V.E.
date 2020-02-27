@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: L2ShieldBossState_LeapShieldSlam
   m_EditorClassIdentifier: 
   stateName: LeapShieldSlam
-  attackPoint: 1
+  attackPoint: 0.8
   animation_beforeAttack: L2ShieldBoss_Jump
   hitDataID: 6712
   hitBox: 0

@@ -30,16 +30,18 @@ MonoBehaviour:
     repeats: 0
     weights:
     - data: ChasingShieldSlam
-      weight: 100
+      weight: 80
+    - data: LaserLeap
+      weight: 20
   nearRange: 6
   nearBehaviorSelector:
     n: 1
     repeats: 0
     weights:
     - data: ChasingShieldSlam
-      weight: 50
+      weight: 30
     - data: RushingGolfAttack
-      weight: 50
+      weight: 60
     - data: ChargedDash
       weight: 10
   midRange: 15
@@ -48,13 +50,15 @@ MonoBehaviour:
     repeats: 0
     weights:
     - data: ChasingShieldSlam
-      weight: 30
+      weight: 10
     - data: Shockwave
       weight: 30
     - data: GrenadeThrow
       weight: 10
     - data: ChargedDash
-      weight: 20
+      weight: 25
+    - data: LeapShieldSlam
+      weight: 25
   farBehaviorSelector:
     n: 1
     repeats: 0
@@ -62,10 +66,10 @@ MonoBehaviour:
     - data: ChasingShieldSlam
       weight: 10
     - data: ChargedDash
-      weight: 25
+      weight: 10
     - data: LeapShieldSlam
       weight: 30
     - data: GrenadeThrow
       weight: 45
     - data: DiveBomb
-      weight: 40
+      weight: 45

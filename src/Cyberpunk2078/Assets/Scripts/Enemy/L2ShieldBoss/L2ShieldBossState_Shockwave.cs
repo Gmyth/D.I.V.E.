@@ -30,7 +30,7 @@ public class L2ShieldBossState_Shockwave : ESChargedAttack<L2ShieldBoss>
 
         t_attack += TimeManager.Instance.ScaledDeltaTime;
 
-        if (t_attack >= attackDuration)
+        if (t_attack >= attackBackswing)
             return state_afterAttack;
 
 
