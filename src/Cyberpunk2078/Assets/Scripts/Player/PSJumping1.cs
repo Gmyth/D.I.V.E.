@@ -93,7 +93,7 @@ public class PSJumping1 : PlayerState
         if (Input.GetAxis("Vertical") > 0 || normalizedInput.y > 0.7f)
         {
                 // up is pressed
-                if(isCloseTo("Ladder") != Direction.None) return "Climbing";
+                if(isCloseTo("Ladder") != Direction.None && Player.CurrentPlayer.climbReady) return "Climbing";
         }
 
         if (!ground && Vy < 0)
@@ -127,7 +127,7 @@ public class PSJumping1 : PlayerState
             return "Attack1";
         }
 
-        if (Input.GetButtonDown("Jump") && isCloseTo("Ground") != Direction.None)
+        if (Input.GetButtonDown("Jump") && isCloseTo("Ground") != Direction.None && h != 0)
         {
             performWallJump();
         }

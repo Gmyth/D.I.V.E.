@@ -36,10 +36,12 @@ public class SimpleLocker : Restorable
         {
             okForTrigger = true;
             notification.SetActive(true);
+            GetComponent<SpriteRenderer>().color = Color.white;
         }else if (!condition)
         {
             okForTrigger = true;
             notification.SetActive(true);
+            GetComponent<SpriteRenderer>().color = Color.white;
         }
 
     }
