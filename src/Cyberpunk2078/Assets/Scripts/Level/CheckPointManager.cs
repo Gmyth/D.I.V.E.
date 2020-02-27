@@ -53,13 +53,13 @@ public class CheckPointManager : MonoBehaviour
             Enemies.Add(dummies[i].gameObject);
         }
 
-        GameObject ObjHolder = GameProcessManager.Singleton.GetCurrentObjects();
-        Objects.Clear();
-        for(int i=0; i < ObjHolder.transform.childCount; i++)
-        {
-            var obj = ObjHolder.transform.GetChild(i).gameObject;
-            Objects.Add(obj);
-        }
+        //GameObject ObjHolder = GameProcessManager.Singleton.GetCurrentObjects();
+        //Objects.Clear();
+        //for(int i=0; i < ObjHolder.transform.childCount; i++)
+        //{
+        //    var obj = ObjHolder.transform.GetChild(i).gameObject;
+        //    Objects.Add(obj);
+        //}
     }
 
     public void Save(Transform _playertransform, CheckPointTrigger checkPointTrigger)
