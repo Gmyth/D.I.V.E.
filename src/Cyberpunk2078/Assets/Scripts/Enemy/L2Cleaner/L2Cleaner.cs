@@ -23,7 +23,7 @@ public class L2Cleaner : Enemy, IPatroller
         }
         
         gameObject.SetActive(false);
-        CheckPointManager.Instance?.Dead(gameObject);
+        CheckPointManager.Instance?.RegisterEnemey(gameObject);
 
         AudioManager.Singleton.PlayOnce("KillRobot");
     }

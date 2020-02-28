@@ -8,16 +8,19 @@ public class SimpleLockedDoor : Restorable
     public List<SimpleLocker> lockers;
     public int lockerCount = 0;
 
-    [SerializeField] private List<GameObject> dots;
+    [SerializeField] public List<GameObject> dots;
 
     [SerializeField] private Sprite unlocked;
     
     [SerializeField] private Transform focus;
 
+    private bool isPlayed = false;
+
     ////////////////////////////////////////////////////
     private Sprite s_DotSprite;
     private int s_lockerCount;
-    private bool[] s_collider;
+    private List<bool> s_collider = new List<bool>();
+    private bool s_isPlayed;
     // Start is called before the first frame update
     void Awake()
     {
@@ -74,7 +77,9 @@ public class SimpleLockedDoor : Restorable
         CameraManager.Instance.FocusTo(focus.position);
         yield return new WaitForSeconds(1f);
         dots[lockerCount].GetComponent<SpriteRenderer>().sprite = unlocked;
+        GetComponent<Animator>().speed = 1;
         GetComponent<Animator>().Play("DoorOpen",-1,0);
+        isPlayed = true;
         yield return new WaitForSeconds(0.5f);
         PlayerCharacter.Singleton.GetFSM().CurrentStateName = "Idle";
        
@@ -86,24 +91,47 @@ public class SimpleLockedDoor : Restorable
 
     public override void Save()
     {
-        s_DotSprite = dots[lockerCount].GetComponent<SpriteRenderer>().sprite;
+        for(int i=0; i < dots.Count; i++)
+        {
+            s_DotSprite = dots[i].GetComponent<SpriteRenderer>().sprite;
+        }
+        
         s_lockerCount = lockerCount;
         var colliders = GetComponentsInChildren<BoxCollider2D>();
+        s_collider.Clear();
         for (int i=0; i < colliders.Length; i++)
         {
-            s_collider[i] = colliders[i].enabled;
+            s_collider.Add(colliders[i]);
         }
+        s_isPlayed = isPlayed;
     }
 
     public override void Restore()
     {
-        dots[lockerCount].GetComponent<SpriteRenderer>().sprite = s_DotSprite;
+        for (int i = 0; i < dots.Count; i++)
+        {
+            dots[i].GetComponent<SpriteRenderer>().sprite = s_DotSprite;
+        }
         lockerCount = s_lockerCount;
         var colliders = GetComponentsInChildren<BoxCollider2D>();
         for (int i = 0; i < colliders.Length; i++)
         {
             colliders[i].enabled = s_collider[i];
         }
+        var animator = GetComponent<Animator>();
+        if (s_isPlayed)
+        {
+            animator.Play("DoorOpen", -1, 1);
+        }
+        else
+        {
+            animator.speed = 0;
+            animator.Play("DoorOpen", -1, 0);
+        }
     }
 
+    public void RegisterObj()
+    {
+        CheckPointManager.Instance.RegisterObj(gameObject);
+    }
 }

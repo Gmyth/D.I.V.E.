@@ -162,6 +162,10 @@ public class GameProcessManager : MonoBehaviour
             TimeManager.Instance.Pause();
             PlayerCharacter.Singleton.GetFSM().CurrentStateName = "NoInput";
         }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            PlayerCharacter.Singleton.Dead();
+        }
     }
 
     public void ResumeGame()

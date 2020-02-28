@@ -55,6 +55,8 @@ public class SimpleLocker : Restorable
             triggered = true;
             okForTrigger = false;
             GetComponent<SpriteRenderer>().sprite = unlocked;
+            CheckPointManager.Instance.RegisterObj(gameObject);
+            ConnectedDoor.RegisterObj();
         }
     }
 
@@ -63,7 +65,7 @@ public class SimpleLocker : Restorable
         s_notification = notification.activeInHierarchy;
         s_sprite = GetComponent<SpriteRenderer>().sprite;
         s_triggered = triggered;
-        s_okForTrigger = okForTrigger;
+        s_okForTrigger = okForTrigger;       
     }
 
     public override void Restore()
