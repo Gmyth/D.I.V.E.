@@ -27,6 +27,8 @@ public class GUIHUD : GUIWindow
     private Coroutine textCoroutine = null;
     private Coroutine feverCoroutine = null;
 
+    [HideInInspector]
+    public bool isInDialogue = false;
 
     public override void OnOpen(params object[] args)
     {
@@ -74,10 +76,12 @@ public class GUIHUD : GUIWindow
     {
         resourceInspector.SetActive(false);
         dialogueWidget.Show(dialogue, HideDialogue);
+
     }
 
     public void ShowDialogue(DialogueData dialogue, params Action[] callbacks)
     {
+        isInDialogue = true;
         Action[] newCallbacks = new Action[callbacks.Length + 1];
         callbacks.CopyTo(newCallbacks, 0);
         newCallbacks[callbacks.Length] = HideDialogue;
@@ -91,6 +95,7 @@ public class GUIHUD : GUIWindow
     {
         resourceInspector.SetActive(true);
         dialogueWidget.Hide();
+        isInDialogue = false;
     }
 
 

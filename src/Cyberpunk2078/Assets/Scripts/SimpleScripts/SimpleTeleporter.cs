@@ -38,7 +38,7 @@ public class SimpleTeleporter : MonoBehaviour
 
                 GameObject nextLevel = GameProcessManager.Singleton.LoadLevel(TargetLevelIndex);
 
-                GameProcessManager.Singleton.InitPlayer(nextLevel);
+                GameProcessManager.Singleton.InitPlayer(nextLevel, false);
 
                 GameProcessManager.Singleton.DestroyLevel(transform.parent.gameObject);
 
