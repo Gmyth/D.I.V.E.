@@ -104,7 +104,7 @@ public class GameProcessManager : MonoBehaviour
 
             PlayerHolder.transform.position = start_pos.transform.position;
             
-            PlayerCharacter.Singleton.GetComponent<SimpleTimer>().GetTimer();
+            //PlayerCharacter.Singleton.GetComponent<SimpleTimer>().GetTimer();
 
             if(ResetingStats == true)
             {
@@ -118,6 +118,8 @@ public class GameProcessManager : MonoBehaviour
             //Ensure dash energy
             Player.CurrentPlayer.energyLocked = false;
             Player.CurrentPlayer.overloadEnergyLocked = false;
+
+            
         }
     }
 
@@ -275,5 +277,57 @@ public class GameProcessManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    public IEnumerator LoadingScreen(int TargetLevelIndex, GameObject gameObject)
+    {
+        Camera.main.GetComponent<FadeCamera>().RedoFade();
+
+        GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").gameObject.SetActive(false);
+
+        GUIManager.Singleton.Open("Loading");
+
+        
+
+        yield return null;
+
+        float duration = 1f;
+        float normalizedTime = 0;
+
+        while(normalizedTime < 1f)
+        {
+            normalizedTime += Time.deltaTime / duration;
+            yield return null;
+        }
+
+        GameObject nextLevel = LoadLevel(TargetLevelIndex);
+
+        InitPlayer(nextLevel, false);
+
+        DestroyLevel(gameObject);
+
+        InitCamera();
+
+        CheckPointManager.Instance.Initialize();
+
+        //Init timer
+        SimpleTimer timer = PlayerCharacter.Singleton.GetComponent<SimpleTimer>();
+        timer.GetTimer();
+
+        Camera.main.GetComponent<FadeCamera>().RedoFade();
+
+        GUIManager.Singleton.GetGUIWindow<GUILoading>("Loading").LevelInfoAnimation();
+
+        yield return new WaitForSeconds(2f);
+
+        Debug.LogError("DSWADAWD");
+        GUIManager.Singleton.Close("Loading");
+
+        GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").gameObject.SetActive(true);
+    }
+
+    public LevelInfo GetLevelInfo()
+    {
+        return currentLevel.GetComponent<LevelInfo>();
     }
 }

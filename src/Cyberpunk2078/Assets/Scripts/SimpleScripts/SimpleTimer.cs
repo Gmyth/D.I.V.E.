@@ -8,9 +8,6 @@ using UnityEngine.UI;
 public class SimpleTimer : MonoBehaviour
 {
 
-    public GameObject startPoint;
-    public GameObject endPoint;
-
     public Text timerText;
 
     public float totalTime;
@@ -60,8 +57,6 @@ public class SimpleTimer : MonoBehaviour
     {
         timerText.GetComponent<RectTransform>().localPosition = defaultPos;
         timerText.GetComponent<RectTransform>().localScale = defaultScale;
-        startPoint = GameObject.Find("StartTimer");
-        endPoint = GameObject.Find("EndTimer");
         totalTime = 0;
         minute = (int)(totalTime / 60);
         second = (int)(totalTime);
@@ -71,19 +66,19 @@ public class SimpleTimer : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.Equals(startPoint))
+        if (other.CompareTag("StartTimer"))
         {
             other.gameObject.SetActive(false);
             totalTime = 0;
             isCounting = true;
         }
     
-        if (other.gameObject.Equals(endPoint))
+        if (other.CompareTag("EndTimer"))
         {
             // ended;
             timerText.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0); 
             timerText.GetComponent<RectTransform>().localScale = new Vector2(3f, 3f);
-            endPoint.SetActive(false);
+            other.gameObject.SetActive(false);
             isCounting = false;
         }
     }

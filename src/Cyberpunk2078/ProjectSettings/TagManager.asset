@@ -23,6 +23,8 @@ TagManager:
   - HealthBar
   - BombPickup
   - Canvas
+  - StartTimer
+  - EndTimer
   layers:
   - Default
   - TransparentFX
