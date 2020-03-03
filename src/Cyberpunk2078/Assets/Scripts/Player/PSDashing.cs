@@ -274,7 +274,8 @@ public class PSDashing : PlayerState
         playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipX = false;
 
         // Play Animation
-        anim.Play("MainCharacter_Dashing", -1, 0f);
+        if (playerCharacter.PowerDash) anim.Play("MainCharacter_PowerDash", -1, 0f);
+        else anim.Play("MainCharacter_Dashing", -1, 0f);
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         var mouse = GameObject.FindObjectOfType<MouseIndicator>();
 
@@ -284,13 +285,13 @@ public class PSDashing : PlayerState
         Vector3 direction = mouse.GetDirectionCorrection(GroundNormal());
 
 
-        var attack = ObjectRecycler.Singleton.GetObject<SingleEffect>(6);
+        var attack = ObjectRecycler.Singleton.GetObject<SingleEffect>(playerCharacter.PowerDash?22:6);
         attack.GetComponentInChildren<HitBox>().hit.source = playerCharacter;
         attack.setTarget(playerCharacter.transform);
         attack.transform.position = playerCharacter.transform.position + direction * 0.5f;
         attack.transform.parent = playerCharacter.transform;
         attack.transform.right = direction;
-        attack.transform.localScale = new Vector3(4,4,1);
+        //attack.transform.localScale = new Vector3(4,4,1);
         attack.gameObject.SetActive(true);
         
 
