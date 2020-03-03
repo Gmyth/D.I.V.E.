@@ -300,6 +300,10 @@ public class GameProcessManager : MonoBehaviour
             yield return null;
         }
 
+        GUIManager.Singleton.GetGUIWindow<GUILoading>("Loading").LevelInfoAnimation();
+
+        yield return new WaitForSeconds(2f);
+
         GameObject nextLevel = LoadLevel(TargetLevelIndex);
 
         InitPlayer(nextLevel, false);
@@ -316,9 +320,8 @@ public class GameProcessManager : MonoBehaviour
 
         Camera.main.GetComponent<FadeCamera>().RedoFade();
 
-        GUIManager.Singleton.GetGUIWindow<GUILoading>("Loading").LevelInfoAnimation();
-
-        yield return new WaitForSeconds(2f);
+     
+       
 
         Debug.LogError("DSWADAWD");
         GUIManager.Singleton.Close("Loading");
