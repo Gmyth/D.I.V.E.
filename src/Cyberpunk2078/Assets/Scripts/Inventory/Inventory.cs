@@ -2,27 +2,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 
-[Serializable] public struct Item
-{
-    public int id;
-    public uint num;
 
-    public Item(KeyValuePair<int, uint> pair)
-    {
-        id = pair.Key;
-        num = pair.Value;
-    }
-}
 
 
 [Serializable] public class Inventory : IAttributeCollection, ISerializationCallbackReceiver
 {
-    [SerializeField] private Item[] serializedItems;
+    [Serializable]
+    public struct ItemRecord
+    {
+        public int id;
+        public uint num;
+
+        public ItemRecord(KeyValuePair<int, uint> pair)
+        {
+            id = pair.Key;
+            num = pair.Value;
+        }
+    }
+
+
+    public class EventOnItemChange : UnityEvent<int, uint, uint>
+    {
+    }
+
+
+    [SerializeField] private ItemRecord[] serializedItems;
     private Dictionary<int, uint> items;
     private AttributeSet sumAttributes;
 
+    public EventOnItemChange OnItemChange = new EventOnItemChange();
+
+    public EventOnAttributeChange OnAttributeChange => sumAttributes.OnAttributeChange;
 
     public uint this[int id]
     {
@@ -33,8 +46,6 @@ using UnityEngine;
     }
 
     public float this[AttributeType type] => sumAttributes[type];
-
-    public EventOnAttributeChange OnAttributeChange => sumAttributes.OnAttributeChange;
 
 
     public Inventory()
@@ -52,12 +63,24 @@ using UnityEngine;
     /// <returns> The number of items which were actually added </returns>
     public uint AddItem(int id, uint num = 1)
     {
-        if (items.ContainsKey(id))
-            items[id] += num;
-        else
-            items.Add(id, num);
+        if (num != 0)
+        {
+            uint previousValue = 0;
 
-        sumAttributes.Modify(DataTableManager.singleton.GetItemData(id).Attributes, (int)num);
+            if (items.ContainsKey(id))
+            {
+                previousValue = items[id];
+                items[id] += num;
+            }
+            else
+                items.Add(id, num);
+
+
+            OnItemChange.Invoke(id, items[id], previousValue);
+
+
+            sumAttributes.Modify(DataTableManager.singleton.GetItemData(id).Attributes, (int)num);
+        }
 
         return num;
     }
@@ -111,14 +134,14 @@ using UnityEngine;
     {
 #if UNITY_EDITOR
         if (serializedItems == null || serializedItems.Length < items.Count)
-            serializedItems = new Item[items.Count];
+            serializedItems = new ItemRecord[items.Count];
 #else
-        serializedItems = new Item[items.Count];
+        serializedItems = new ItemRecord[items.Count];
 #endif
 
         int i = 0;
         foreach (KeyValuePair<int, uint> item in items)
-            serializedItems[i++] = new Item(item);
+            serializedItems[i++] = new ItemRecord(item);
     }
 
     void ISerializationCallbackReceiver.OnAfterDeserialize()
@@ -127,7 +150,7 @@ using UnityEngine;
         {
             items.Clear();
 
-            foreach (Item item in serializedItems)
+            foreach (ItemRecord item in serializedItems)
                 if (!items.ContainsKey(item.id))
                     items.Add(item.id, item.num);
 

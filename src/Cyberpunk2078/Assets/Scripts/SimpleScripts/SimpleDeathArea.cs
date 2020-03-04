@@ -5,7 +5,7 @@ using UnityEngine;
 public class SimpleDeathArea : MonoBehaviour
 {
 
-    public Transform RespawnPoint;
+    //public Transform RespawnPoint;
 
     public Color GizmoColor = Color.red;
     
@@ -30,10 +30,10 @@ public class SimpleDeathArea : MonoBehaviour
             if (playerCharacter[StatisticType.Hp] > 0)
             {
                 //Take damage
-                PlayerCharacter.Singleton.ApplyDamage(1);
+                PlayerCharacter.Singleton.ApplyDamage(100);
 
                 //Respawn at last checkpoint
-                other.transform.position = RespawnPoint.position;
+                //other.transform.position = RespawnPoint.position;
             }
             else
             {
@@ -47,7 +47,7 @@ public class SimpleDeathArea : MonoBehaviour
     {
         Gizmos.color = GizmoColor;
         Gizmos.DrawCube(transform.position, transform.localScale);
-        Gizmos.DrawCube(RespawnPoint.position, new Vector3(1, 2, 1));
+        //Gizmos.DrawCube(RespawnPoint.position, new Vector3(1, 2, 1));
     }
 
 }

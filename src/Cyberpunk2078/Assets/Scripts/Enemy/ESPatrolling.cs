@@ -331,7 +331,7 @@ public abstract class ESPatrolling<T> : EnemyState<T> where T : Enemy, IPatrolle
         indexLastPatrolPoint = indexTargetPatrolPoint;
 
 
-        seeker.CancelCurrentPathRequest();
+        seeker?.CancelCurrentPathRequest();
     }
 
 

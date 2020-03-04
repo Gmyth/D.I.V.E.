@@ -3,25 +3,6 @@
 
 public class L2Cleaner : Enemy, IPatroller
 {
-//    [Header("Patrolling")]
-//    [SerializeField] private Vector3[] patrolPoints;
-//    public RangedWeaponConfiguration patrolFiringConfiguration;
-
-
-    public override float ApplyDamage(float rawDamage)
-    {
-        float damage = rawDamage;
-
-
-        statistics[StatisticType.Hp] -= damage;
-
-        if (statistics[StatisticType.Hp] <= 0)
-            Dead();
-
-
-        return damage;
-    }
-
     public override void Dead()
     {
         var Boom = ObjectRecycler.Singleton.GetObject<SingleEffect>(3);
@@ -42,7 +23,7 @@ public class L2Cleaner : Enemy, IPatroller
         }
         
         gameObject.SetActive(false);
-        CheckPointManager.Instance?.Dead(gameObject);
+        CheckPointManager.Instance?.RegisterEnemey(gameObject);
 
         AudioManager.Singleton.PlayOnce("KillRobot");
     }

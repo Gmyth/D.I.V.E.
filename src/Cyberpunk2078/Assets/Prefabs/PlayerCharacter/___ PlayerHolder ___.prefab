@@ -139,7 +139,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -639007339
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c98c7e11bd527a24e9261314579eb1d7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4970,7 +4970,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -705609843
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
@@ -5032,7 +5032,7 @@ TrailRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -705609843
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Time: 2
   m_Parameters:
@@ -5170,7 +5170,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -705609843
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
@@ -10182,10 +10182,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyboardIcons: Sprites/KeyIcon/KeyboardBlack
   joystickIcons: Sprites/KeyIcon/XboxOne
+  mouseLeftIcon: {fileID: 21300000, guid: cf6f3372635d41841a6d1a0d639da920, type: 3}
+  mouseRightIcon: {fileID: 21300000, guid: 18553869c7d3e4147b797e85115ee034, type: 3}
   directionalIcons: {fileID: 9048313617144736061}
   leftIcon: {fileID: 265835813131470850}
   plusIcon: {fileID: 7319329913451568251}
   rightIcon: {fileID: 3770578892811502522}
+  bindingData:
+  - buttonName: Up
+    keyboardButtonName: W
+    joystickButtonName: Up
+  - buttonName: Down
+    keyboardButtonName: S
+    joystickButtonName: Down
+  - buttonName: Left
+    keyboardButtonName: A
+    joystickButtonName: Left
+  - buttonName: Right
+    keyboardButtonName: D
+    joystickButtonName: Right
+  - buttonName: Attack
+    keyboardButtonName: MouseLeft
+    joystickButtonName: B
+  - buttonName: Jump
+    keyboardButtonName: Space
+    joystickButtonName: A
+  - buttonName: Dash
+    keyboardButtonName: Shift
+    joystickButtonName: RT
+  - buttonName: LongDash
+    keyboardButtonName: R
+    joystickButtonName: LT
 --- !u!1 &4531732680601799281
 GameObject:
   m_ObjectHideFlags: 0
@@ -10394,7 +10421,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: da579c810b784ed4eaa4ead5712c9e06, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10413,7 +10440,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1909596859
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: c032f9d5d07000a4eb2af126e4c66d35, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -10460,11 +10487,12 @@ MonoBehaviour:
   trailSize: 13
   spacing: 0
   color: {r: 255, g: 255, b: 255, a: 100}
-  ghostMaterial: []
-  ghostSpriteSortingOrder: 0
+  ghostMaterial:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  ghostSpriteSortingOrder: 1
   renderOnMotion: 1
   colorAlphaOverride: 1
-  alphaFluctuationOverride: 0.113
+  alphaFluctuationOverride: 0.207
   Occupied: 0
   alphaFluctuationDivisor: 15
 --- !u!96 &7457358081385485186
@@ -10504,7 +10532,7 @@ TrailRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -705609843
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Time: 0.6
   m_Parameters:
@@ -10631,7 +10659,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 3
+  m_LinearDrag: 1
   m_AngularDrag: 0
   m_GravityScale: 5
   m_Material: {fileID: 0}
@@ -10663,8 +10691,10 @@ MonoBehaviour:
   currentDialogueID: -1
   PowerDash: 0
   PowerDashReady: 1
+  PowerDashUnlock: 0
   LastPowerDash: 0
   Gravity: 5
+  DefaultGravity: 5
 --- !u!70 &7457358081769736768
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -10825,7 +10855,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -812174707
-  m_SortingLayer: 8
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 01f8abab650e36f40a4b39149c60a1c9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -15612,7 +15642,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -705609843
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0

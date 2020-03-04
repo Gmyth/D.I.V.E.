@@ -3,14 +3,17 @@ using UnityEngine;
 using UnityEngine.Events;
 
 
-public class SimpleEventTrigger : MonoBehaviour
+public class SimpleEventTrigger : Restorable
 {
     public UnityEvent[] triggeredEvents;
     public Color GizmoColor = Color.white;
 
     private bool isPaused = false;
 
+    private bool isInvoked = false;
 
+
+    private bool s_isInvoked;
     public void PrintHUDText(string str)
     {
         GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").ShowText(str);
@@ -34,20 +37,36 @@ public class SimpleEventTrigger : MonoBehaviour
     }
 
 
+    public void ShowButtonHint(string s)
+    {
+        GUITutorial.Singleton.Show(s);
+    }
+
+    public void HideButtonHint()
+    {
+        GUITutorial.Singleton.Hide();
+    }
+
+
     private IEnumerator InvokeEvents()
     {
         //CheckPointManager.Instance.RestoreObject(gameObject);
 
-        for (int i = 0; i < triggeredEvents.Length; ++i)
+        if(isInvoked == false)
         {
-            triggeredEvents[i].Invoke();
+            for (int i = 0; i < triggeredEvents.Length; ++i)
+            {
+                triggeredEvents[i].Invoke();
 
-            while (isPaused)
-                yield return null;
+                while (isPaused)
+                    yield return null;
+            }
         }
+        
 
-
-        gameObject.SetActive(false);
+        isInvoked = true;
+        CheckPointManager.Instance.RegisterObj(gameObject);
+        //gameObject.SetActive(false);
     }
 
 
@@ -62,5 +81,16 @@ public class SimpleEventTrigger : MonoBehaviour
     {
         Gizmos.color = GizmoColor;
         Gizmos.DrawCube(transform.position, transform.localScale);
+    }
+
+    public override void Save()
+    {
+        s_isInvoked = isInvoked;
+    }
+
+    public override void Restore()
+    {
+        isInvoked = s_isInvoked;
+        
     }
 }

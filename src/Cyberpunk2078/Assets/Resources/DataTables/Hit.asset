@@ -25,5 +25,75 @@ MonoBehaviour:
     damage: 0
     damageRange: 0
     damageDuration: 0
+    knockback: 22
+    knockbackDuration: 1
+  - id: 6710
+    type: 0
+    damage: 1
+    damageRange: 0
+    damageDuration: 0
+    knockback: 16
+    knockbackDuration: 0.5
+  - id: 6711
+    type: 0
+    damage: 1
+    damageRange: 0
+    damageDuration: 0
+    knockback: 30
+    knockbackDuration: 1.2
+  - id: 6712
+    type: 0
+    damage: 1
+    damageRange: 0
+    damageDuration: 0
+    knockback: 18
+    knockbackDuration: 0.8
+  - id: 6713
+    type: 0
+    damage: 1
+    damageRange: 0
+    damageDuration: 0
+    knockback: 12
+    knockbackDuration: 0.8
+  - id: 6714
+    type: 0
+    damage: 1
+    damageRange: 0
+    damageDuration: 0
+    knockback: 8
+    knockbackDuration: 0.8
+  - id: 6715
+    type: 0
+    damage: 1
+    damageRange: 0
+    damageDuration: 0
+    knockback: 6
+    knockbackDuration: 0.5
+  - id: 6716
+    type: 32
+    damage: 1
+    damageRange: 3.5
+    damageDuration: 0.1
+    knockback: 10
+    knockbackDuration: 0.5
+  - id: 10
+    type: 0
+    damage: 1
+    damageRange: 0
+    damageDuration: 0
+    knockback: 8
+    knockbackDuration: 0.5
+  - id: 11
+    type: 0
+    damage: 1
+    damageRange: 0
+    damageDuration: 0
+    knockback: 12
+    knockbackDuration: 0.5
+  - id: 20
+    type: 16
+    damage: 1
+    damageRange: 0
+    damageDuration: 0
     knockback: 5
     knockbackDuration: 0.5

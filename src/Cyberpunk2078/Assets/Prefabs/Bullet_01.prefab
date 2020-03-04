@@ -68,7 +68,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1909596859
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: cdad913004631cc4a9d442b2e34a1ce5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -173,7 +173,7 @@ TrailRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -705609843
-  m_SortingLayer: 4
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Time: 1
   m_Parameters:
@@ -295,6 +295,7 @@ MonoBehaviour:
   orientation: {x: 0, y: 0, z: 0}
   initialPosition: {x: 0, y: 0, z: 0}
   spawnTime: 0
+  isPersistent: 1
 --- !u!114 &114593199792259714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,11 +315,11 @@ MonoBehaviour:
   numHits: 1
   rawDamage: 1
   hit:
-    type: 0
-    damage: 0
+    type: 16
+    damage: 1
     damageRange: 0
-    knockback: 0
-    knockbackDuration: 0
+    knockback: 5
+    knockbackDuration: 0.5
     source: {fileID: 0}
     bullet: {fileID: 0}
   hitEstimationTimeInterval: 0.02

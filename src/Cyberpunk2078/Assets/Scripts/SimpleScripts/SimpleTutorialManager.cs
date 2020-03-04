@@ -24,7 +24,9 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
                 case TutorialState.TeachDash:
                     //IntroduceNormalEnergy();
                     Time.timeScale = 0;
-                    UI_DashKey.SetActive(true);
+
+                    if (MouseIndicator.Singleton.CurrentInputType == InputType.Joystick) UI_DashKey_Joy.SetActive(true);
+                    else UI_DashKey_Keyboard.SetActive(true);
                     break;
 
                 case TutorialState.TeachDoubleDash:
@@ -48,7 +50,11 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
     [SerializeField] private GameObject c2;
     [SerializeField] private GameObject c3;
     [SerializeField] private GameObject c4;
-    public GameObject UI_DashKey;
+    [SerializeField] private GameObject UI_DashKey_Joy;
+    [SerializeField] private GameObject UI_DashKey_Keyboard;
+
+    [SerializeField] private GameObject UI_AttackKey_Joy;
+    [SerializeField] private GameObject UI_AttackKey_Keyboard;
     public GameObject UI_BlackMask;
 
     public GameObject UI_TeachDash_DirectionMask;
@@ -97,6 +103,12 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         PlayerCharacter.Singleton.ConsumeEnergy(1);
     }
 
+    public void ShowAttackNotification() {
+
+        if (MouseIndicator.Singleton.CurrentInputType == InputType.Joystick) UI_AttackKey_Joy.SetActive(true);
+        else UI_AttackKey_Keyboard.SetActive(true);
+    }
+
     private TimelineManager timelineManager_DashTutorial;
     public Drone DashTutorial_Drone;
     [SerializeField] private Transform shootPoint_DashTutorial;
@@ -105,12 +117,12 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         timelineManager_DashTutorial = timelineManager;
 
         //Change button sprite according to the controller
-        //UI_DashKey.GetComponent<SpriteRenderer>().sprite = ;
+        
         CameraManager.Instance.FocusTo(PlayerCharacter.Singleton.transform, 99999f);
         CameraManager.Instance.FlashIn(6f, 0.05f, 999999f, 0.01f);
         PlayerCharacter.Singleton.SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
-        TimeManager.Instance.startSlowMotion(999999f, 0f, 0.001f);
-        
+        TimeManager.Instance.startSlowMotion(-1f, 0f, 0.65f,0.15f);
+        TimeManager.Instance.ApplyBlackScreen();
 
 
         Player.CurrentPlayer.energyLocked = false;
@@ -121,7 +133,8 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
 
         DashTutorial_Drone.Fire(shootPoint_DashTutorial.position, false);
 
-        StartCoroutine(ShowGameObjectAfterDelay(1.0f, UI_DashKey));
+        StartCoroutine(ShowGameObjectAfterDelay(1.0f, MouseIndicator.Singleton.CurrentInputType == InputType.Joystick ? UI_DashKey_Joy :
+            UI_DashKey_Keyboard));
     }
 
 
@@ -130,8 +143,10 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         CameraManager.Instance.Idle();
         PlayerCharacter.Singleton.SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
         timelineManager_DashTutorial.PlayNextTimeline();
-        //Time.fixedDeltaTime = 1 * 0.02f;
         TimeManager.Instance.endSlowMotion(0f);
+
+        if (MouseIndicator.Singleton.CurrentInputType == InputType.Joystick) UI_DashKey_Joy.SetActive(false);
+        else UI_DashKey_Keyboard.SetActive(false);
 
         PlayerCharacter.Singleton.transform.parent.GetComponentInChildren<MouseIndicator>().ResetColor();
     }
@@ -166,6 +181,10 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         CameraManager.Instance.Idle();
         PlayerCharacter.Singleton.SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
         timelineManager_DeflectTutorial.PlayNextTimeline();
+        TimeManager.Instance.endSlowMotion(0f);
+
+        if (MouseIndicator.Singleton.CurrentInputType == InputType.Joystick) UI_AttackKey_Joy.SetActive(false);
+        else UI_AttackKey_Keyboard.SetActive(false);
 
         PlayerCharacter.Singleton.transform.parent.GetComponentInChildren<MouseIndicator>().ResetColor();
     }

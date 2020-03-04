@@ -8,16 +8,18 @@ public class ParallaxBackground : MonoBehaviour
     public CameraManager parallaxCamera;
     List<ParallaxLayer> parallaxLayers = new List<ParallaxLayer>();
   
-    void Start()
+    void Awake()
     {
         if (parallaxCamera == null)
             parallaxCamera = Camera.main.GetComponent<CameraManager>();
-        if (parallaxCamera != null)
+        else
             parallaxCamera.onCameraTranslate += Move;
+
+
         SetLayers();
     }
   
-    void SetLayers()
+    public void SetLayers()
     {
         parallaxLayers.Clear();
         for (int i = 0; i < transform.childCount; i++)
@@ -36,8 +38,14 @@ public class ParallaxBackground : MonoBehaviour
     {
         foreach (ParallaxLayer layer in parallaxLayers)
         {
-            layer.Move(delta);
+            layer?.Move(delta);
         }
+    }
+
+
+    private void OnDestroy()
+    {
+        parallaxCamera.onCameraTranslate -= Move;
     }
 }
 

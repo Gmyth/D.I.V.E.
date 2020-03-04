@@ -22,6 +22,9 @@ TagManager:
   - Obstacle
   - HealthBar
   - BombPickup
+  - Canvas
+  - StartTimer
+  - EndTimer
   layers:
   - Default
   - TransparentFX
@@ -67,6 +70,9 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: BackGroundLight
+    uniqueID: 4172406605
     locked: 0
   - name: Ground
     uniqueID: 334935833

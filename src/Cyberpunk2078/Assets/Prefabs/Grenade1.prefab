@@ -153,5 +153,5 @@ MonoBehaviour:
   lifeSpan: 0
   enableTimeScale: 1
   source: {fileID: 0}
-  hitDataID: 0
-  explosionObjectID: 18
+  hitDataID: 6716
+  explosionObjectID: 19

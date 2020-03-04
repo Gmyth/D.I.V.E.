@@ -8,7 +8,7 @@ public class BouncePlatform : MonoBehaviour
     public float jumpForce;
     private Rigidbody2D rb2d;
     private PlayerCharacter pc;
-    private float Threshold = 0.5f;
+    private float Threshold = 0.05f;
     public bool bounceReady = true;
     private float timer;
     [SerializeField] private GameObject BounceVFX;
@@ -71,7 +71,7 @@ public class BouncePlatform : MonoBehaviour
 
                 // kill any Y-axis speed
                 rb2d.velocity = Vector2.zero;
-                rb2d.gravityScale = pc.Gravity;
+                rb2d.gravityScale = pc.DefaultGravity;
                 //Debug.Log("Direction:"+ gameObject.transform.up);
                // Debug.Log(LogUtility.MakeLogStringFormat("Bounce Platform",
                 //    "Force:" + gameObject.transform.up * jumpForce * 50));

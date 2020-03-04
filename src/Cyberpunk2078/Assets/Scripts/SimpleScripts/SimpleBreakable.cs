@@ -4,7 +4,7 @@ using System.Linq;
 using MyBox;
 using UnityEngine;
 
-public class SimpleBreakable : MonoBehaviour
+public class SimpleBreakable : Restorable
 {
     private Animator anim;
 
@@ -19,25 +19,47 @@ public class SimpleBreakable : MonoBehaviour
     [SerializeField] private bool triggerSlowMotion = false;
     // Start is called before the first frame update
     [SerializeField] private TriggerObject[] triggers;
+
+    private SpriteRenderer m_spriteRenderer;
+    private BoxCollider2D m_collider;
+    private Animator m_animator;
+    /////////////////////////////////////////////////
+    private bool s_renderer;
+    private bool s_collider;
+    private bool s_triggered;
+    private bool s_animator;
+    private SpriteRenderer s_spriteRenderer;
     void Start()
     {
-        anim = gameObject.GetComponent<Animator>();
         triggered = false;
         frags = new List<GameObject>();
         collectFrag();
+        m_spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        m_collider = gameObject.GetComponent<BoxCollider2D>();
+        m_animator = gameObject?.GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+//        if (Input.GetButtonDown("Dashing") && !triggered)
+//        {
+//            DestroyBreakable(transform.position - new Vector3(0,-2,0));
+//            triggered = true;
+//        }
     }
 
     public void DestroyBreakable(Vector3 pos)
     {
         if (!triggered)
         {
-            if(anim)anim.Play("Glass",0,-1);
+            CheckPointManager.Instance.RegisterObj(gameObject);
+            AudioManager.Singleton.PlayOnce("BreakWindow");
+            if (m_animator)
+            {
+                m_animator.speed = 1;
+                m_animator.Play("Glass", -1, 0);
+            }
             triggered = true;
             //Play break animation
             CameraManager.Instance.Shaking(0.1f,0.1f,true);
@@ -47,19 +69,22 @@ public class SimpleBreakable : MonoBehaviour
 
     }
     
-    private void Disable()
-    {
-        gameObject.SetActive(false);
-        triggered = false;
-        GetComponent<BoxCollider2D>().enabled = true;
-    }
+    //private void Disable()
+    //{
+    //    gameObject.SetActive(false);
+    //    triggered = false;
+    //    GetComponent<BoxCollider2D>().enabled = true;
+    //}
 
 
     private void collectFrag()
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            frags.Add(transform.GetChild(i).gameObject);
+            if (transform.GetChild(i).GetComponent<SimpleItem>())
+            {
+                frags.Add(transform.GetChild(i).gameObject);
+            }
         }
 
     }
@@ -76,24 +101,56 @@ public class SimpleBreakable : MonoBehaviour
 
         if (triggerSlowMotion)
         {
-            
             TimeManager.Instance.startSlowMotion(1f,0.5f);
-            if (triggers.Length != 0)
+        }
+        
+        if (triggers.Length != 0)
+        {
+            foreach (var trigger in triggers)
             {
-                foreach (var trigger in triggers)
-                {
-                    trigger.Enable();
-                }
-                
+                trigger.Enable();
             }
+                
         }
     }
-    
-    
-    
-    
-    
-    
+
+    public override void Save()
+    {
+        s_renderer = m_spriteRenderer.enabled;
+        s_spriteRenderer = m_spriteRenderer;
+        s_collider = m_collider.enabled;
+        s_triggered = triggered;
+        if(m_animator != null)
+            s_animator = m_animator.enabled;
+        
+    }
+    public override void Restore()
+    {
+        m_spriteRenderer.enabled = s_renderer;
+        m_spriteRenderer = s_spriteRenderer;
+        m_collider.enabled = s_collider;
+
+        if (s_triggered == false && triggered == true)
+        {
+            //restore fragments
+            GetComponent<Explodable>().fragmentInEditor();
+        }
+        frags = new List<GameObject>();
+        collectFrag();
+        triggered = s_triggered;
+
+        if (m_animator != null)
+        {
+            m_animator.enabled = s_animator;
+            m_animator.speed = 0;
+            m_animator.Play("Glass", -1, 0);
+        }
+            
+    }
+
+
+
+
 
     //private void OnTriggerEnter2D(Collider2D other)
     //{

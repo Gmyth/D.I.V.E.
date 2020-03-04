@@ -13,14 +13,18 @@ MonoBehaviour:
   m_Name: L2DroneState_Firing
   m_EditorClassIdentifier: 
   stateName: Firing
-  motionID: -1
-  damage: 1
-  knockback: 0
+  attackPoint: 0
+  animation_beforeAttack: 
+  hitDataID: 20
   hitBox: -1
+  attackDuration: 0
+  animation_attack: 
+  attackBackswing: 0
+  animation_afterAttack: 
+  state_afterAttack: Alert
   chargeTime: 1
   stopChargingOnTargetLoss: 1
   animation_charging: L2Drone_Alert
-  state_afterAttack: Alert
   state_onTargetLoss: Patrolling
   recoil: 5
   recoilDuration: 0.2

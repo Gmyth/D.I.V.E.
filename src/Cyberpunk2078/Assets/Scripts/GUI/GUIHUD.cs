@@ -13,6 +13,8 @@ public class GUIHUD : GUIWindow
     [SerializeField] private Text textArea;
     [SerializeField] private GameObject resourceInspector;
     [SerializeField] private GUIDialogueWidget dialogueWidget;
+    [SerializeField] private GUIItemWidget itemWidget;
+    [SerializeField] private GUIEnemyWidget enemyWidget;
 
     [Header("Configuration")]
     [SerializeField] private Color feverBlinkColor = Color.yellow;
@@ -20,31 +22,45 @@ public class GUIHUD : GUIWindow
     [SerializeField] private float textDuration = 5;
     [SerializeField] private float textSpeed = 0.02f;
 
-    private PlayerCharacter player;
+    private PlayerCharacter playerCharacter;
 
     private Coroutine textCoroutine = null;
     private Coroutine feverCoroutine = null;
 
+    [HideInInspector]
+    public bool isInDialogue = false;
 
     public override void OnOpen(params object[] args)
     {
-        player = (PlayerCharacter)args[0];
+        dialogueWidget.Hide();
+        enemyWidget.Hide();
 
 
-        UpdateMaxHp(Mathf.FloorToInt(player[StatisticType.MaxHp]));
-        UpdateMaxSp(Mathf.FloorToInt(player[StatisticType.MaxSp] + player[StatisticType.MaxOsp]));
-
-        UpdateHp(Mathf.FloorToInt(player[StatisticType.Hp]));
-        UpdateSp(Mathf.FloorToInt(player[StatisticType.Sp] + player[StatisticType.Osp]));
-        UpdateFever(Mathf.FloorToInt(player[StatisticType.UltimateEnergy]));
+        playerCharacter = (PlayerCharacter)args[0];
+        Player player = Player.CurrentPlayer;
 
 
-        player.OnStatisticChange.AddListener(HandleStatisticChange);
+        UpdateMaxHp(Mathf.FloorToInt(playerCharacter[StatisticType.MaxHp]));
+        UpdateMaxSp(Mathf.FloorToInt(playerCharacter[StatisticType.MaxSp] + playerCharacter[StatisticType.MaxOsp]));
+
+        UpdateHp(Mathf.FloorToInt(playerCharacter[StatisticType.Hp]));
+        UpdateSp(Mathf.FloorToInt(playerCharacter[StatisticType.Sp] + playerCharacter[StatisticType.Osp]));
+        UpdateFever(Mathf.FloorToInt(playerCharacter[StatisticType.UltimateEnergy]));
+
+
+        itemWidget.Refresh(player.inventory[0]);
+
+
+        playerCharacter.OnStatisticChange.AddListener(HandleStatisticChange);
+
+        player.inventory.OnItemChange.AddListener(UpdateItem);
     }
 
     public override void OnClose()
     {
-        player.OnStatisticChange.RemoveListener(HandleStatisticChange);
+        playerCharacter.OnStatisticChange.RemoveListener(HandleStatisticChange);
+
+        Player.CurrentPlayer.inventory.OnItemChange.RemoveListener(UpdateItem);
     }
 
 
@@ -60,10 +76,12 @@ public class GUIHUD : GUIWindow
     {
         resourceInspector.SetActive(false);
         dialogueWidget.Show(dialogue, HideDialogue);
+
     }
 
     public void ShowDialogue(DialogueData dialogue, params Action[] callbacks)
     {
+        isInDialogue = true;
         Action[] newCallbacks = new Action[callbacks.Length + 1];
         callbacks.CopyTo(newCallbacks, 0);
         newCallbacks[callbacks.Length] = HideDialogue;
@@ -77,6 +95,18 @@ public class GUIHUD : GUIWindow
     {
         resourceInspector.SetActive(true);
         dialogueWidget.Hide();
+        isInDialogue = false;
+    }
+
+
+    public void ShowEnemyWidget(Enemy enemy)
+    {
+        enemyWidget.Show(enemy);
+    }
+    
+    public void HideEnemyWidget()
+    {
+        enemyWidget.Hide();
     }
 
 
@@ -101,7 +131,7 @@ public class GUIHUD : GUIWindow
 
     private void UpdateHp(int value)
     {
-        hpBar.fillAmount = Mathf.Lerp(0.5f, 1, value / player[StatisticType.MaxHp]);
+        hpBar.fillAmount = Mathf.Lerp(0.5f, 1, value / playerCharacter[StatisticType.MaxHp]);
     }
 
     private void UpdateMaxHp(int value)
@@ -111,7 +141,7 @@ public class GUIHUD : GUIWindow
 
     private void UpdateSp(int value)
     {
-        spBar.fillAmount = Mathf.Lerp(0.5f, 1, value / (player[StatisticType.MaxSp] + player[StatisticType.MaxOsp]));
+        spBar.fillAmount = Mathf.Lerp(0.5f, 1, value / (playerCharacter[StatisticType.MaxSp] + playerCharacter[StatisticType.MaxOsp]));
     }
 
     private void UpdateMaxSp(int value)
@@ -121,7 +151,14 @@ public class GUIHUD : GUIWindow
 
     private void UpdateFever(int value)
     {
-        feverBar.fillAmount = Mathf.Lerp(0.5f, 1, value / player[StatisticType.MaxUltimateEnergy]);
+        feverBar.fillAmount = Mathf.Lerp(0.5f, 1, value / playerCharacter[StatisticType.MaxUltimateEnergy]);
+    }
+
+
+    private void UpdateItem(int id, uint currentValue, uint previousValue)
+    {
+        if (id == 0)
+            itemWidget.Refresh(currentValue);
     }
 
 
@@ -135,22 +172,22 @@ public class GUIHUD : GUIWindow
 
 
             case StatisticType.Sp:
-                UpdateSp(Mathf.RoundToInt(currentValue + player[StatisticType.Osp]));
+                UpdateSp(Mathf.RoundToInt(currentValue + playerCharacter[StatisticType.Osp]));
                 break;
 
 
             case StatisticType.Osp:
-                UpdateSp(Mathf.RoundToInt(currentValue + player[StatisticType.Sp]));
+                UpdateSp(Mathf.RoundToInt(currentValue + playerCharacter[StatisticType.Sp]));
                 break;
 
 
             case StatisticType.MaxSp:
-                UpdateMaxSp(Mathf.FloorToInt(currentValue + player[StatisticType.MaxOsp]));
+                UpdateMaxSp(Mathf.FloorToInt(currentValue + playerCharacter[StatisticType.MaxOsp]));
                 break;
 
 
             case StatisticType.MaxOsp:
-                UpdateMaxSp(Mathf.FloorToInt(currentValue + player[StatisticType.MaxSp]));
+                UpdateMaxSp(Mathf.FloorToInt(currentValue + playerCharacter[StatisticType.MaxSp]));
                 break;
 
 

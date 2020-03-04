@@ -4,6 +4,7 @@
 [CreateAssetMenuAttribute(fileName = "ES_Reposition", menuName = "Enemy State/Reposition")]
 public class ESReposition : EnemyState
 {
+    [Header("")]
     [SerializeField] protected bool useRelativePosition = false;
     [SerializeField] protected Vector2 targetPosition;
     [SerializeField] protected float speed;
@@ -14,6 +15,8 @@ public class ESReposition : EnemyState
     protected Enemy enemy;
     protected Rigidbody2D rigidbody;
     protected Animator animator;
+
+    private Vector2 destination;
 
 
     public override void Initialize(int index, Enemy enemy)
@@ -30,6 +33,9 @@ public class ESReposition : EnemyState
 
     public override void OnStateEnter(State previousState)
     {
+        destination = useRelativePosition ? (Vector2)enemy.transform.position + targetPosition : targetPosition;
+
+
         animator.Play(animation);
     }
 
@@ -40,7 +46,7 @@ public class ESReposition : EnemyState
 
     public override string Update()
     {
-        Vector2 d = targetPosition - (Vector2)enemy.transform.position;
+        Vector2 d = destination - (Vector2)enemy.transform.position;
 
 
         bool hasArrived = false;

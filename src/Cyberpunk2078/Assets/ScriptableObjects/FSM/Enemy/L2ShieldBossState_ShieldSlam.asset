@@ -15,10 +15,10 @@ MonoBehaviour:
   stateName: ShieldSlam
   attackPoint: 0
   animation_beforeAttack: 
-  hitDataID: 0
+  hitDataID: 6710
   hitBox: 0
   attackDuration: 0
   animation_attack: L2ShieldBoss_QuickShieldSlam
-  attackBackswing: 0.5
+  attackBackswing: 0
   animation_afterAttack: 
   state_afterAttack: Alert

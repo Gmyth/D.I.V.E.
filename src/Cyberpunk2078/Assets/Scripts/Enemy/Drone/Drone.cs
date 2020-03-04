@@ -1,6 +1,6 @@
 ﻿using Pathfinding;
 using UnityEngine;
-using UnityEngine.Events;
+
 
 [RequireComponent(typeof(Seeker))]
 public class Drone : Enemy, IPatroller
@@ -25,6 +25,7 @@ public class Drone : Enemy, IPatroller
 
     private int animationIndex;
     private float aimDeviation = 0;
+
 
     public Event<Drone> dead = new Event<Drone>();
 
@@ -203,7 +204,7 @@ public class Drone : Enemy, IPatroller
         //gameObject.GetComponent<SpriteRenderer>().color = Color.clear;
         gameObject.SetActive(false);
         //Destroy(gameObject, 0.5f);
-        CheckPointManager.Instance.Dead(gameObject);
+        CheckPointManager.Instance.RegisterEnemey(gameObject);
         dead.Invoke(this);
 
         AudioManager.Singleton.PlayOnce("KillDrone");
@@ -211,9 +212,9 @@ public class Drone : Enemy, IPatroller
     }
 
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
 
 
         Health = HealthCap;
@@ -229,8 +230,11 @@ public class Drone : Enemy, IPatroller
     }
 
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+
+
         if (currentTarget)
         {
             if (animationIndex != 1)

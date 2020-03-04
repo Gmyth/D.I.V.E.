@@ -94,7 +94,7 @@ public class PSWallSliding: PlayerState
             playerCharacter.groundDust.GetComponent<ParticleSystem>().gravityModifier = 0;
             playerCharacter.groundDust.GetComponent<ParticleSystem>().Stop();
 
-            rigidbody.gravityScale = playerCharacter.Gravity;
+            rigidbody.gravityScale = playerCharacter.DefaultGravity;
 
             anim.Play("MainCharacter_Airborne", -1, 0f);
             AudioManager.Singleton.PlayEvent("WallSlide");
@@ -115,8 +115,7 @@ public class PSWallSliding: PlayerState
         if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("VerticalJoyStick") > 0.7f)
         {
             // up is pressed
-            if(isCloseTo("Ladder") != Direction.None)
-                return "Climbing";
+            if(isCloseTo("Ladder") != Direction.None && Player.CurrentPlayer.climbReady) return "Climbing";
         }
         
         // perform Dashing
@@ -164,7 +163,7 @@ public class PSWallSliding: PlayerState
         playerCharacter.groundDust.GetComponent<ParticleSystem>().gravityModifier = 0;
         playerCharacter.groundDust.GetComponent<ParticleSystem>().Stop();
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-        rb2d.gravityScale = playerCharacter.Gravity;
+        rb2d.gravityScale = playerCharacter.DefaultGravity;
         onWall = false;
 
         AudioManager.Singleton.StopEvent("WallSlide");

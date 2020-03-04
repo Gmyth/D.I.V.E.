@@ -637,7 +637,7 @@ public class CameraManager : MonoBehaviour {
 
 
 	//release the added target after x seconds
-	private IEnumerator  releaseDelay(GameObject item, float delay)
+	private IEnumerator releaseDelay(GameObject item, float delay)
 	{
 		yield return  new WaitForSeconds(delay);
 		targetList.Remove(item);

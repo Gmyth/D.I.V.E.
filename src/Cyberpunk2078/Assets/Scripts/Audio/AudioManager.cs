@@ -45,6 +45,13 @@ public class AudioManager : MonoBehaviour
     {
         
     }
+
+    public void SetParameter(string _event, string para, float value)
+    {
+        EventInstance ins = GetEventInstance(_event);
+        ins.setParameterValue(para, value);
+    }
+
     public EventInstance GetEventInstance(string _event)
     {
         if (dic.ContainsKey(_event))
@@ -72,6 +79,7 @@ public class AudioManager : MonoBehaviour
                 EventInstance ins = FMODUnity.RuntimeManager.CreateInstance(dic[_event]);
                 instanceDic.Add(_event, ins);
                 ins.start();
+                ins.release();
                 return true;
             }     
         }

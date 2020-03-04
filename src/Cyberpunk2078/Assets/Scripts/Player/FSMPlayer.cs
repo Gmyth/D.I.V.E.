@@ -19,7 +19,7 @@ public abstract class PlayerState : State
     protected bool grounded;
     protected float lastGroundedSec;
 
-
+    int GroundedTimes = 0;
     public virtual void Initialize(int index, PlayerCharacter playerCharacter)
     {
         Index = index;
@@ -64,14 +64,14 @@ public abstract class PlayerState : State
             if (margin && !grounded)
             {
 
-                //if (name == "Airborne")
-                //{
-                //   playerCharacter.transform.Translate(Vector2.up * (hitM.distance - DistanceToTheGround));
-                //}
-                //else
-                //{
-                //   playerCharacter.transform.Translate(Vector2.down* (hitM.distance - DistanceToTheGround));
-                //}
+                if (name == "Airborne")
+                {
+                   playerCharacter.transform.Translate(Vector2.up * (hitM.distance - DistanceToTheGround));
+                }
+                else
+                {
+                   playerCharacter.transform.Translate(Vector2.down* (hitM.distance - DistanceToTheGround));
+                }
             }
 
             player.ChainWallJumpReady = false;
@@ -79,13 +79,17 @@ public abstract class PlayerState : State
 
             grounded = true;
 
-            AudioManager.Singleton.PlayEvent("JumpLand");
+            if(GroundedTimes != 0)
+            {              
+                AudioManager.Singleton.PlayEvent("JumpLand");
+            }
+                
             
             return 1;
         } 
-        else if ((hitL.collider != null && hitL.transform.CompareTag("Dummy")) ||
-                 (hitR.collider != null && hitR.transform.CompareTag("Dummy")) ||
-                 (hitM.collider != null && hitM.transform.CompareTag("Dummy")))
+        else if ((hitL.collider != null && hitL.transform.CompareTag("Enemy")) ||
+                 (hitR.collider != null && hitR.transform.CompareTag("Enemy")) ||
+                 (hitM.collider != null && hitM.transform.CompareTag("Enemy")))
         {
             return 2;
         }
@@ -94,6 +98,8 @@ public abstract class PlayerState : State
         //player.JumpForceGate = false;
 
         grounded = false;
+
+        GroundedTimes++;
         AudioManager.Singleton.StopEvent("JumpLand");
 
 
@@ -188,10 +194,11 @@ public abstract class PlayerState : State
 
 
     // Function : Keyboard Input => Physics Velocity, And Friction Calculation
-    public void PhysicsInputHelper(float h, float maxSpeed  = 8,  float Acceleration  = 50)
+    public void PhysicsInputHelper(float h, float v, float maxSpeed  = 8,  float Acceleration  = 50)
     {
         float feverFactor = playerCharacter.InFever ? Player.CurrentPlayer.FeverFactor : 1;
-        var MaxFallY = 50f;
+        //var MaxFallY = v < 0 ? 40f:20f;
+        var MaxFallY = 30f;
         var SlopeY = 15f;
         var MaxX =  Player.CurrentPlayer.OnSlope? maxSpeed * Mathf.Cos(45f) : maxSpeed;
         var MaxY =  Player.CurrentPlayer.OnSlope? SlopeY * Mathf.Cos(45f) : MaxFallY;
@@ -207,7 +214,14 @@ public abstract class PlayerState : State
         if(Mathf.Abs(velocityPlaceHolder.y) > MaxY)
         {
             velocityPlaceHolder.y = MaxY * (velocityPlaceHolder.y/Mathf.Abs(velocityPlaceHolder.y));
+            
         }
+        
+        //else if(v < 0) {
+            
+        //    velocityPlaceHolder.y = -MaxY;
+            
+        //}
         
         rb2d.velocity = velocityPlaceHolder;
         //Debug.Log("Y:"+rb2d.velocity.y);
@@ -283,12 +297,7 @@ public abstract class PlayerState : State
              Player.CurrentPlayer.triggerReady = true;
         }
         
-        if (Input.GetAxis("VerticalJoyStick") <= 0)
-        {
-            Player.CurrentPlayer.climbReady = true;
-        }
-        
-        if (Input.GetAxis("Vertical") <= 0)
+        if (Input.GetAxis("VerticalJoyStick") == 0 && Input.GetAxis("Vertical") == 0)
         {
             Player.CurrentPlayer.climbReady = true;
         }

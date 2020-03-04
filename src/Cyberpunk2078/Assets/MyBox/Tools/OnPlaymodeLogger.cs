@@ -14,7 +14,7 @@ namespace Plugins.MyBox.Tools
 			var instance = GetOrCreateInstance();
 			instance.Logs = instance.Logs.Append(log).ToArray();
 			EditorUtility.SetDirty(instance);
-			Debug.Log(instance.Logs.Length);
+			//Debug.Log(instance.Logs.Length);
 		}
 		
 		[SerializeField]

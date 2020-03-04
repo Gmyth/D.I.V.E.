@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class GUIMenu : GUIWindow
@@ -9,13 +11,19 @@ public class GUIMenu : GUIWindow
     public GameObject LoadGame;
     public GameObject Options;
     public GameObject quit;
+
+    public float SpeedFactor = 1;
+
+    private UnityAction Action;
+
     // Start is called before the first frame update
     void Start()
     {
-        quit.GetComponent<Button>().onClick.AddListener(QuitClicked);
-        LoadGame.GetComponent<Button>().onClick.AddListener(LoadGameClicked);
-        Options.GetComponent<Button>().onClick.AddListener(OptionsClicked);
-        NewGame.GetComponent<Button>().onClick.AddListener(NewGameClicked);
+        quit.GetComponent<Button>().onClick.AddListener(()=> ButtonClicked(quit));
+        LoadGame.GetComponent<Button>().onClick.AddListener(() => ButtonClicked(LoadGame));
+        Options.GetComponent<Button>().onClick.AddListener(() => ButtonClicked(Options));
+        NewGame.GetComponent<Button>().onClick.AddListener(() => ButtonClicked(NewGame));
+        AudioManager.Singleton.PlayEvent("Title");
     }
 
     // Update is called once per frame
@@ -24,27 +32,62 @@ public class GUIMenu : GUIWindow
         
     }
 
+    private void ButtonClicked(GameObject obj)
+    {    
+        if (obj.name == "New Game")
+            Action += UI_NewGame;
+        else if (obj.name == "Load Game")
+            Action += UI_LoadGame;
+        else if (obj.name == "Options")
+            Action += UI_Options;
+        else if (obj.name == "Quit")
+            Action += UI_Quit;
 
-    private void QuitClicked()
-    {
-        GameProcessManager.Singleton.Quit();
+        StartCoroutine(Animation());       
     }
 
-    private void NewGameClicked()
+    void UI_NewGame()
     {
-       // Camera.main.GetComponent<FadeCamera>().RedoFade();
-
-        GameProcessManager.Singleton.StartGame(1);
+        GameProcessManager.Singleton.StartGame(1);        
     }
 
-    private void LoadGameClicked()
+    void UI_LoadGame()
     {
         GameProcessManager.Singleton.OpenLevelSelection();       
     }
 
-    private void OptionsClicked()
+    void UI_Options()
     {
 
-      
+    }
+    void UI_Quit()
+    {
+        GameProcessManager.Singleton.Quit();
+    }
+    private IEnumerator Animation()
+    {
+        //Black Screen Fade in
+        //float a = 0;
+        //while (a < 1)
+        //{
+        //    a += (Time.deltaTime * SpeedFactor);
+        //    image.color = new Color(0, 0, 0, a);
+        //    yield return null;
+        //}
+
+        //while (a > 0)
+        //{
+        //    a -= (Time.deltaTime * SpeedFactor);
+        //    image.color = new Color(0, 0, 0, a);
+        //    yield return null;
+        //}
+
+        EventSystem.current.SetSelectedGameObject(null);
+
+        yield return new WaitForSeconds(0.05f);
+
+        Action.Invoke();
+
+        yield return null;
     }
 }

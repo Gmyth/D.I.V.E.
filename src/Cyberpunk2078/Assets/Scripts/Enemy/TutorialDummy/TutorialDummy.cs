@@ -44,14 +44,13 @@ public class TutorialDummy : Enemy
         //gameObject.GetComponent<SpriteRenderer>().color = Color.clear;
         gameObject.SetActive(false);
         //Destroy(gameObject, 0.5f);
-        CheckPointManager.Instance.Dead(gameObject);
+        CheckPointManager.Instance.RegisterEnemey(gameObject);
     }
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
 
         Health = HealthCap;
     }
-
 }

@@ -2,8 +2,19 @@
 using UnityEngine;
 //using UnityScript.Steps;
 
+
+public enum InputType : int
+{
+    MouseAndKeyboard = 0,
+    Joystick = 1,
+}
+
+
 public class MouseIndicator : MonoBehaviour
 {
+    public static MouseIndicator Singleton { get; private set; }
+
+
     // Start is called before the first frame 
     private GameObject player;
     private List<Vector2> directionRef;
@@ -11,8 +22,6 @@ public class MouseIndicator : MonoBehaviour
     private float deadZone = 0.2f;
     private Vector2 controllerDir;
     private Vector3 lastMousePos;
-    private bool useMouseKeyboard;
-    private bool useJoyStick;
     private bool locked;
     [SerializeField] private Color correct;
     [SerializeField] private Color error;
@@ -20,6 +29,39 @@ public class MouseIndicator : MonoBehaviour
     private Vector3 defaultScale;
     private SpriteRenderer renderer;
 
+
+    private InputType currentInputType;
+
+
+    public Event2<InputType> OnInputTypeChange { get; private set; } = new Event2<InputType>();
+
+    public InputType CurrentInputType
+    {
+        get
+        {
+            return currentInputType;
+        }
+        private set
+        {
+            if (value != currentInputType)
+            {
+                InputType previousValue = currentInputType;
+
+                currentInputType = value;
+                OnInputTypeChange.Invoke(value, previousValue);
+            }
+        }
+    }
+
+
+    private void Awake()
+    {
+        if (Singleton)
+            Destroy(gameObject);
+        else
+            Singleton = this;
+    }
+    
     public void Hide()
     {
         renderer.enabled = false;
@@ -39,7 +81,7 @@ public class MouseIndicator : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (locked) return;
         
@@ -48,18 +90,16 @@ public class MouseIndicator : MonoBehaviour
         if (Mathf.Abs(Input.GetAxis("HorizontalJoyStick")) > 0 || Mathf.Abs(Input.GetAxis("VerticalJoyStick")) > 0)
         {
             controllerDir = new Vector3(Input.GetAxis("HorizontalJoyStick"),Input.GetAxis("VerticalJoyStick")).normalized;
-            useMouseKeyboard = false;
-            useJoyStick = true;
-        }else if (Input.mousePosition != lastMousePos)
+            CurrentInputType = InputType.Joystick;
+        }
+        else if (Input.mousePosition != lastMousePos)
         {
-            //mouse moved
-            useMouseKeyboard = true;
-            useJoyStick = false;
+            CurrentInputType = InputType.MouseAndKeyboard;
         }
 
         lastMousePos = mousePosInScreen;
 
-        if (useJoyStick)
+        if (CurrentInputType == InputType.Joystick)
         {
             //use indicator for controller
 
@@ -69,7 +109,7 @@ public class MouseIndicator : MonoBehaviour
             Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             transform.rotation = rotation;
         }
-        else if(useMouseKeyboard)
+        else if(CurrentInputType == InputType.MouseAndKeyboard)
         {
             mousePosInScreen.z = 10; // select distance = 10 units from the camera
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(mousePosInScreen);

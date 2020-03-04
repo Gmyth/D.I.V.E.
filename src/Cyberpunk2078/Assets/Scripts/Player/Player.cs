@@ -1,5 +1,5 @@
 ﻿//using System.Collections;
-//using System.Collections.Generic;
+using System.Collections.Generic;
 //using System.Runtime.Remoting.Messaging;
 //using UnityEngine;
 //using UnityEngine.UI;
@@ -39,6 +39,9 @@ public class Player
     public float knockBackDuration;
 
     public float FeverFactor = 1.3f;
+
+    private List<KeyValuePair<int, uint>> temporaryCollectibles = new List<KeyValuePair<int, uint>>();
+    private HashSet<uint> achievements = new HashSet<uint>();
     
 
     public float this[AttributeType type]
@@ -55,10 +58,10 @@ public class Player
         float normalEnergyCap = 1, 
         float overloadEnergyCap = 1,
         float feverEnergyCap = 100, 
-        float feverDecayRate = 0, 
+        float feverDecayRate = 15, 
         float killStreakCap = 2,
         float killStreakDecay = 4,
-        float powerDashCoolDown = 6
+        float powerDashCoolDown = 8
     )
     {
         inventory = new Inventory();
@@ -74,5 +77,51 @@ public class Player
         energyLocked = false;
         overloadEnergyLocked = false;
         secondJumpReady = true;
+
+
+        if (GameProcessManager.Singleton)
+        {
+            GameProcessManager.Singleton.OnStartLevel.AddListener(ClearTemporaryCollectibles);
+            GameProcessManager.Singleton.OnQuitLevel.AddListener(RevokeTemporaryCollectibles);
+        }
+    }
+
+
+    public void AddCollectibleItem(int itemID, uint achievementID)
+    {
+        inventory.AddItem(itemID);
+        AddAchievement(achievementID);
+        temporaryCollectibles.Add(new KeyValuePair<int, uint>(itemID, achievementID));
+    }
+
+
+    public void AddAchievement(uint id)
+    {
+        achievements.Add(id);
+    }
+
+    public bool HasAchievement(uint id)
+    {
+        return achievements.Contains(id);
+    }
+
+
+    private void ClearTemporaryCollectibles(int levelID)
+    {
+        temporaryCollectibles.Clear();
+    }
+
+    private void RevokeTemporaryCollectibles(int levelID)
+    {
+       // UnityEngine.Debug.LogWarning("!!!!");
+
+        foreach (KeyValuePair<int, uint> temporaryCollectible in temporaryCollectibles)
+        {
+            inventory.RemoveItem(temporaryCollectible.Key);
+            achievements.Remove(temporaryCollectible.Value);
+        }
+
+
+        ClearTemporaryCollectibles(levelID);
     }
 }

@@ -10,11 +10,14 @@ public class Recyclable : MonoBehaviour
     public bool enableTimeScale = true;
 
 
-    protected void Die()
+    public void Die()
     {
-        StopAllCoroutines();
+        if (gameObject.activeSelf)
+        {
+            StopAllCoroutines();
 
-        ObjectRecycler.Singleton.Recycle(this);
+            ObjectRecycler.Singleton.Recycle(this);
+        }
     }
 
 

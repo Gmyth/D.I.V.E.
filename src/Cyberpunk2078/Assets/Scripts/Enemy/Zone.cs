@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum ZoneType
 {
+    Universe,
     Rectangle,
     Circle,
 }
@@ -87,19 +88,26 @@ public enum ZoneType
 
     public bool Contains(Vector3 position)
     {
-        if (w <= 0 || h <= 0)
-            return true;
-
-
         switch (type)
         {
+            case ZoneType.Universe:
+                return true;
+
+
             case ZoneType.Rectangle:
+                if (w <= 0 || h <= 0)
+                    return false;
+
                 return Mathf.Abs(position.x - center.x) <= (w / 2f) && Mathf.Abs(position.y - center.y) <= (h / 2f);
 
 
             case ZoneType.Circle:
+                if (Radius <= 0)
+                    return false;
+
                 return Vector2.Distance(center, position) <= Radius;
         }
+
 
         return false;
     }
@@ -107,5 +115,22 @@ public enum ZoneType
     public bool Contains(Dummy dummy)
     {
         return Contains(dummy.transform.position);
+    }
+
+
+    public Vector3 GetRandomPosition()
+    {
+        switch (type)
+        {
+            case ZoneType.Rectangle:
+                return center + new Vector2(UnityEngine.Random.Range(0, w) - w / 2, UnityEngine.Random.Range(0, h) - h / 2);
+
+
+            case ZoneType.Circle:
+                return center + new Vector2(UnityEngine.Random.Range(-1, 1), UnityEngine.Random.Range(-1, 1)).normalized * UnityEngine.Random.Range(0, Radius);
+        }
+
+
+        return Vector3.zero;
     }
 }

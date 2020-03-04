@@ -22,8 +22,20 @@ public class L2ShieldBossState_GrabAndThrow : ESAttack<L2ShieldBoss>
         enemy.EnableHitBox(hitBox);
     }
 
+    public override void OnStateQuit(State nextState)
+    {
+        base.OnStateQuit(nextState);
+
+
+        enemy.IsInvulnerable = false;
+    }
+
+
     protected override string BeforeAttack()
     {
+        enemy.TurnImmediately();
+
+
         PlayerCharacter player = enemy.currentTarget;
         Vector3 d = player.transform.position - enemy.transform.position;
 
@@ -32,13 +44,13 @@ public class L2ShieldBossState_GrabAndThrow : ESAttack<L2ShieldBoss>
         {
             enemyAnimator.Play(animation_waitting);
 
-            enemyRigidBody.velocity = Vector2.zero;
+            enemyRigidbody.velocity = Vector2.zero;
         }
         else
         {
             enemyAnimator.Play(animation_beforeAttack);
 
-            enemyRigidBody.velocity = chargeSpeed * (d.x > 0 ? Vector2.right : Vector2.left);
+            enemyRigidbody.velocity = chargeSpeed * (d.x > 0 ? Vector2.right : Vector2.left);
         }
 
 
@@ -48,20 +60,21 @@ public class L2ShieldBossState_GrabAndThrow : ESAttack<L2ShieldBoss>
     protected override string Attack()
     {
         PlayerCharacter player = enemy.currentTarget;
-
         Vector3 enemyPosition = enemy.transform.position;
+        Rigidbody2D playerRigidbody = player.GetComponent<Rigidbody2D>();
 
 
         if (t_phase == 0)
         {
-            enemy.Turn((enemyPosition.x < enemy.GuardZone.center.x ? enemy.RightThrowPoint : enemy.LeftThrowPoint) - enemyPosition);
+            enemy.TurnImmediately((enemyPosition.x < enemy.GuardZone.center.x ? enemy.RightThrowPoint : enemy.LeftThrowPoint) - enemyPosition);
 
 
             player.Knockback(Vector3.zero, 0, attackDuration + extraStunTime);
 
             player.transform.parent.parent = enemy.HandAnchor;
             player.transform.parent.localPosition = Vector3.zero;
-            player.GetComponent<Rigidbody2D>().isKinematic = true;
+
+            playerRigidbody.gravityScale = 0;
 
 
             enemyAnimator.Play(animation_attack);
@@ -70,13 +83,9 @@ public class L2ShieldBossState_GrabAndThrow : ESAttack<L2ShieldBoss>
 
         if (t_phase >= attackDuration)
         {
-            player.GetComponent<Rigidbody2D>().isKinematic = false;
-
             player.transform.parent.parent = null;
 
-
-            Rigidbody2D playerRigidbody = player.GetComponent<Rigidbody2D>();
-
+            playerRigidbody.gravityScale = player.DefaultGravity;
             playerRigidbody.velocity = MathUtility.GetInitialVelocityForParabolaMovement(player.transform.position, enemyPosition.x < enemy.GuardZone.center.x ? enemy.RightThrowPoint : enemy.LeftThrowPoint, attackPoint, -Physics2D.gravity.y * playerRigidbody.gravityScale);
 
 
@@ -101,7 +110,7 @@ public class L2ShieldBossState_GrabAndThrow : ESAttack<L2ShieldBoss>
                 t_phase = 0;
 
 
-                enemyRigidBody.velocity = Vector2.zero;
+                enemyRigidbody.velocity = Vector2.zero;
 
                 enemy.OnAttack.RemoveListener(Grab);
 

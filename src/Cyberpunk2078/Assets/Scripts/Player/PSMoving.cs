@@ -49,7 +49,7 @@ public class PSMoving : PlayerState
         if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("VerticalJoyStick") > 0.7f)
         {
             // up is pressed
-            if(isCloseTo("Ladder") != Direction.None) return "Climbing";
+            if(isCloseTo("Ladder") != Direction.None  && Player.CurrentPlayer.climbReady) return "Climbing";
         }
         
 
@@ -132,8 +132,8 @@ public class PSMoving : PlayerState
     internal void Move(float axis)
     {
         int direction = axis > 0 ? 1 : -1;
-        if(!playerCharacter.InKillStreak) {PhysicsInputHelper(axis,n_speedFactor,n_accelerationFactor);}
-        else {PhysicsInputHelper(axis,f_speedFactor,f_accelerationFactor);}
+        if(!playerCharacter.InKillStreak) {PhysicsInputHelper(axis,0,n_speedFactor,n_accelerationFactor);}
+        else {PhysicsInputHelper(axis,0,f_speedFactor,f_accelerationFactor);}
     }
     
     void NormalizeSlope () {

@@ -12,13 +12,15 @@ public class Music : MonoBehaviour
     private FMOD.Studio.EventInstance instance;
     private BeatSystem bS;
 
+    public string clip;
+
     void Start()
     {
         bS = GetComponent<BeatSystem>();
 
-        if (AudioManager.Singleton.PlayEvent("BGM"))
+        if (AudioManager.Singleton.PlayEvent(clip))
         {
-            instance = AudioManager.Singleton.GetEventInstance("BGM");
+            instance = AudioManager.Singleton.GetEventInstance(clip);
         }
        
         bS.AssignBeatEvent(instance);
@@ -37,5 +39,11 @@ public class Music : MonoBehaviour
         {
             bS.StopAndClear(instance);
         }
+    }
+
+    private void OnDestroy()
+    {
+        instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        instance.release();
     }
 }

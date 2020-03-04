@@ -2,7 +2,12 @@
 
 
 [CreateAssetMenuAttribute(fileName = "ES_Chasing", menuName = "Enemy State/Chasing")]
-public class ESChasing : EnemyState
+public class ESChasing : ESChasing<Enemy>
+{
+}
+
+
+public class ESChasing<T> : EnemyState<T> where T : Enemy
 {
     [Header("Configuration")]
     [SerializeField] [Min(0)] private float speed;
@@ -13,10 +18,6 @@ public class ESChasing : EnemyState
     [Header("Connected States")]
     [SerializeField] private string state_onTargetLoss = "";
     [SerializeField] private string state_onStop = "";
-
-    protected Enemy enemy;
-    protected Rigidbody2D rigidbody;
-    protected Animator animator;
 
     private bool isChasing = false;
 
@@ -38,14 +39,14 @@ public class ESChasing : EnemyState
                 if (value)
                 {
                     if (animation_chasing != "")
-                        animator.Play(animation_chasing);
+                        enemyAnimator.Play(animation_chasing);
 
                     StartChasing();
                 }
                 else
                 {
                     if (animation_idle != "")
-                        animator.Play(animation_idle);
+                        enemyAnimator.Play(animation_idle);
 
                     StopChasing();
                 }
@@ -54,21 +55,9 @@ public class ESChasing : EnemyState
     }
 
 
-    public override void Initialize(int index, Enemy enemy)
-    {
-        base.Initialize(index, enemy);
-
-
-        this.enemy = enemy;
-
-
-        rigidbody = enemy.GetComponent<Rigidbody2D>();
-        animator = enemy.GetComponent<Animator>();
-    }
-
     public override void OnStateEnter(State previousState)
     {
-        animator.Play(animation_chasing);
+        enemyAnimator.Play(animation_chasing);
 
 
         isChasing = false;
@@ -130,9 +119,9 @@ public class ESChasing : EnemyState
 
 
         if (enemy.IsTurning)
-            rigidbody.velocity = Vector2.zero;
+            enemyRigidbody.velocity = Vector2.zero;
         else
-            rigidbody.velocity = d * speed * TimeManager.Instance.TimeFactor * enemy.UnitTimeFactor;
+            enemyRigidbody.velocity = d * speed * TimeManager.Instance.TimeFactor * enemy.UnitTimeFactor;
 
 
         return "";
@@ -141,13 +130,13 @@ public class ESChasing : EnemyState
     protected virtual void StopChasing()
     {
         if (enemy.Data.Type == EnemyType.Floating)
-            rigidbody.velocity = Vector2.zero;
+            enemyRigidbody.velocity = Vector2.zero;
         else
         {
-            Vector2 v = rigidbody.velocity;
+            Vector2 v = enemyRigidbody.velocity;
             v.x = 0;
 
-            rigidbody.velocity = v;
+            enemyRigidbody.velocity = v;
         }
     }
 }

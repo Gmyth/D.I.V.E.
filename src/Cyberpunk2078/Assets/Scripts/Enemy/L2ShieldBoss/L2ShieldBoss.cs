@@ -6,6 +6,8 @@ public class L2ShieldBoss : Enemy
     [Header("Field")]
     [SerializeField] private Vector3 leftThrowPoint;
     [SerializeField] private Vector3 rightThrowPoint;
+    [SerializeField] private EnemySpawner leftDroneSpawner;
+    [SerializeField] private EnemySpawner rightDroneSpawner;
 
     [Header("On Hit")]
     [SerializeField] private float knockbackOnHit = 30;
@@ -13,16 +15,19 @@ public class L2ShieldBoss : Enemy
     [SerializeField] private float playerKnockbackOnHit = 20;
     [SerializeField] private float playerKnockbackOnHitFromBack = 15;
 
-    [Header("Anger")]
+    [Header("Rage")]
+    [SerializeField][Range(0, 1)] private float ragePercentage = 0.5f;
     [SerializeField] private float angerDecrease = 5f;
     [SerializeField] private float counterThreshhold = 20f;
 
-    [Header("Hand")]
+    [Header("References")]
     [SerializeField] private Transform handAnchor;
-
+    [SerializeField] private Transform laser;
+    [SerializeField] private SimpleBreakable glass;
     public GameObject spark;
 
     private float anger = 0;
+    private bool inRage = false;
 
 
     public Vector3 LeftThrowPoint
@@ -38,6 +43,22 @@ public class L2ShieldBoss : Enemy
         get
         {
             return rightThrowPoint;
+        }
+    }
+
+    public EnemySpawner LeftDroneSpawner
+    {
+        get
+        {
+            return leftDroneSpawner;
+        }
+    }
+
+    public EnemySpawner RightDroneSpawner
+    {
+        get
+        {
+            return rightDroneSpawner;
         }
     }
 
@@ -118,6 +139,16 @@ public class L2ShieldBoss : Enemy
     }
 
 
+    public void InitiateDroneSpawning()
+    {
+        rightDroneSpawner.gameObject.SetActive(true);
+        leftDroneSpawner.gameObject.SetActive(true);
+
+        glass?.DestroyBreakable(glass.transform.position + new Vector3(0, 2, 0));
+        glass = null;
+    }
+
+
     public override float ApplyDamage(float rawDamage)
     {
         if (IsInvulnerable)
@@ -152,14 +183,19 @@ public class L2ShieldBoss : Enemy
 
         if (result.currentValue <= 0)
             Dead();
-
+        else if (!inRage && result.currentValue <= ragePercentage * statistics[StatisticType.MaxHp])
+        {
+            inRage = true;
+            fsm.CurrentStateName = "Rage";
+        }
 
         return result.previousValue - result.currentValue;
     }
 
     public override void Dead()
     {
-        throw new System.NotImplementedException();
+        Destroy(gameObject);
+        GUIManager.Singleton.Open("EndScreen");
     }
 
     public float ApplyFatigue(float rawFatigue)
@@ -188,12 +224,35 @@ public class L2ShieldBoss : Enemy
     }
 
 
-    protected override void Start()
+    public override void Reset()
     {
-        currentTarget = PlayerCharacter.Singleton;
+        base.Reset();
 
 
-        base.Start();
+        anger = 0;
+        inRage = false;
+
+
+        rightDroneSpawner.Clear();
+        rightDroneSpawner.gameObject.SetActive(false);
+        leftDroneSpawner.Clear();
+        leftDroneSpawner.gameObject.SetActive(false);
+    }
+
+
+    public override void TurnImmediately(Vector3 direction)
+    {
+        base.TurnImmediately(direction);
+
+
+        if (enableTurn)
+            laser.rotation = direction.x > 0 ? Quaternion.identity : Quaternion.Euler(0, 0, 180);
+    }
+
+
+    protected override void Awake()
+    {
+        base.Awake();
 
 
         rb2d = GetComponent<Rigidbody2D>();

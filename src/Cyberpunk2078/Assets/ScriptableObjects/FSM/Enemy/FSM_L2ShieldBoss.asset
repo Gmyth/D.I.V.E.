@@ -32,4 +32,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1893fb22565d431419aea748e2f330cc, type: 2}
   - {fileID: 11400000, guid: 98255bdf167ef284c8151399515f1270, type: 2}
   - {fileID: 11400000, guid: 9ddda6cab03d5694984abbf623546744, type: 2}
-  startingState: DiveBomb
+  - {fileID: 11400000, guid: 8068a1289d2d656449b7b72fd8e52d84, type: 2}
+  - {fileID: 11400000, guid: dfab765f430abe24cb7d70b25a505288, type: 2}
+  - {fileID: 11400000, guid: bc41cbd0ebc63554e9a18faae341e5ee, type: 2}
+  - {fileID: 11400000, guid: 29d59fdc54f5e6548a8cfcdb37832791, type: 2}
+  startingState: Leap

@@ -29,71 +29,79 @@ public class SimpleTeleporter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(mask != null)
-        {
-            if (mask.GetComponent<RectTransform>().localPosition.x <= 0f)
-            {
+        //if(mask != null)
+        //{
+        //    if (mask.GetComponent<RectTransform>().localPosition.x <= 0f)
+        //    {
 
-                capc.isTrigger = true;
+        //        capc.isTrigger = true;
 
-                GameObject nextLevel = GameProcessManager.Singleton.LoadLevel(TargetLevelIndex);
+        //        GameObject nextLevel = GameProcessManager.Singleton.LoadLevel(TargetLevelIndex);
 
-                GameProcessManager.Singleton.InitPlayer(nextLevel);
+        //        GameProcessManager.Singleton.InitPlayer(nextLevel, false);
 
-                GameProcessManager.Singleton.DestroyLevel(transform.parent.gameObject);
+        //        GameProcessManager.Singleton.DestroyLevel(transform.parent.gameObject);
 
-                GameProcessManager.Singleton.InitCamera();
+        //        GameProcessManager.Singleton.InitCamera();
 
-                CheckPointManager.Instance.Initialize();
+        //        CheckPointManager.Instance.Initialize();
 
-                capc.isTrigger = false;
-            }
-        }
+        //        capc.isTrigger = false;
+        //    }
+        //}
         
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player") {
-
-
-
             CapsuleCollider2D collider = other.GetComponent<CapsuleCollider2D>();
 
             if (collider)
             {
-                mask = GameObject.Find("HUD_Mask");
-                Vector3 pos = mask.transform.position;
-                Vector3 l_pos = mask.transform.localPosition;
-                mask.AddComponent<LinearMovement>().enabled = false;
-                LinearMovement lm = mask.GetComponent<LinearMovement>();
-                lm.speed = speed;
-                lm.isPersistent = false;
+                StartCoroutine(GameProcessManager.Singleton.LoadingScreen(TargetLevelIndex, transform.parent.gameObject));
 
-                if (direction == MovingDirection.R2L)
-                {                  
-                    lm.orientation = Vector3.left;
-
-                    lm.initialPosition = pos;                       
-                    
-                }
-                else
-                {
-                    lm.orientation = Vector3.right;
-
-                    mask.transform.localPosition = new Vector3(l_pos.x - 5760, l_pos.y, l_pos.z);
-
-                    lm.initialPosition = mask.transform.position;
-                }
-
-                lm.enabled = true;
                 
 
-                AudioManager.Singleton.PlayOnce("Scene_trans");
 
-                capc = collider;
 
-                c = other;
+
+                //GameObject nextLevel = GameProcessManager.Singleton.LoadLevel(TargetLevelIndex);
+                //mask = GameObject.Find("HUD_Mask");
+                //var Canvas = GameObject.FindGameObjectWithTag("Canvas");
+                //Vector3 pos = Canvas.transform.position;
+                //Vector3 l_pos = new Vector3(2880, 0, 0);
+                //mask.AddComponent<LinearMovement>().enabled = false;
+                //LinearMovement lm = mask.GetComponent<LinearMovement>();
+                //lm.speed = speed;
+                //lm.isPersistent = false;
+
+                //if (direction == MovingDirection.R2L)
+                //{                  
+                //    lm.orientation = Vector3.left;
+
+                //    lm.initialPosition = pos;                       
+
+                //}
+                //else
+                //{
+                //    lm.orientation = Vector3.right;
+
+                //    mask.transform.localPosition = new Vector3(l_pos.x - 5760, l_pos.y, l_pos.z);
+
+                //    lm.initialPosition = mask.transform.position;
+                //}
+
+                //lm.enabled = true;
+
+
+                //AudioManager.Singleton.PlayOnce("Scene_trans");
+
+                //capc = collider;
+
+                //c = other;
+
+                //collider.isTrigger = false;
             }
 
             //gameObject.SetActive(false);

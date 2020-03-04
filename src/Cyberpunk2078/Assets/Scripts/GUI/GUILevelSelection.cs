@@ -9,6 +9,8 @@ public class GUILevelSelection : GUIWindow
 {
     [Header("Reference")]
     public GameObject[] UI_levelReference;
+
+    public GameObject MainMenu;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +21,8 @@ public class GUILevelSelection : GUIWindow
             else
                 throw new ArgumentNullException();
         }
+
+        MainMenu.GetComponentInChildren<Button>().onClick.AddListener(MainMenuClicked);
     }
 
     // Update is called once per frame
@@ -30,5 +34,10 @@ public class GUILevelSelection : GUIWindow
     private void LevelSelectionClicked(int i)
     {       
         GameProcessManager.Singleton.StartGame(i);
+    }
+
+    private void MainMenuClicked()
+    {
+        GameProcessManager.Singleton.MainMenu();
     }
 }

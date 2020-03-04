@@ -13,12 +13,18 @@ MonoBehaviour:
   m_Name: L2ShieldBossState_DiveBomb
   m_EditorClassIdentifier: 
   stateName: DiveBomb
+  attackPoint: 0
+  animation_beforeAttack: 
   hitDataID: 0
   hitBox: -1
-  chargeTime: 3
+  attackDuration: 0
+  animation_attack: 
+  attackBackswing: 1.8
+  animation_afterAttack: 
+  state_afterAttack: Alert
+  chargeTime: 0.2
   stopChargingOnTargetLoss: 0
   animation_charging: L2ShieldBoss_Charge
-  state_afterAttack: Alert
   state_onTargetLoss: 
-  jumpForce: 2500
-  waitTime: 0.5
+  jumpForce: 8500
+  waitTime: 0

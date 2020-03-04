@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using MyBox;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,26 +13,32 @@ public class CheckPointManager : MonoBehaviour
     /// <summary>
     /// Enemies needed to be reset and restore position
     /// </summary>
-    private List<GameObject> savedEnemies = new List<GameObject>();
+    public List<GameObject> savedEnemies = new List<GameObject>();
 
     /// <summary>
     /// Dummy reference
     /// </summary>
-    private List<GameObject> Enemies = new List<GameObject>();
+    public List<GameObject> Enemies = new List<GameObject>();
 
     /// <summary>
     /// //Objects needed to be restored
     /// </summary>
-    private List<GameObject> objects = new List<GameObject>();
+    public List<GameObject> savedObjects = new List<GameObject>();
 
     /// <summary>
     /// Blackscreen Reference
     /// </summary>
+    /// 
+
+    public List<Restorable> Restorables = new List<Restorable>();
+
     [SerializeField] private GameObject blackScreen;
 
     [SerializeField] private float SpeedFactor = 1;
 
     private Transform playerLastCheckPoint;
+
+    private CheckPointTrigger cpt;
 
     void Awake()
     {
@@ -40,7 +47,7 @@ public class CheckPointManager : MonoBehaviour
 
     public void Initialize()
     {
-        GameObject dummyHolder = GameProcessManager.Singleton.GetCurrentDummies();
+        GameObject dummyHolder = GameProcessManager.Singleton.GetCurrentDummies();      
         var dummies = dummyHolder.GetComponentsInChildren<Dummy>();
         Enemies.Clear();
         for (int i = 0; i < dummies.Length; i++)
@@ -48,45 +55,66 @@ public class CheckPointManager : MonoBehaviour
             Enemies.Add(dummies[i].gameObject);
         }
 
+        GameObject ObjHolder = GameProcessManager.Singleton.GetCurrentObjects();
+        for (int i = 0; i < ObjHolder.transform.childCount; i++)
+        {
+            var obj = ObjHolder.transform.GetChild(i).gameObject;
+            var components = obj.GetComponentsInChildren<Restorable>();
+            for(int j=0; j < components.Length; j++)
+            {
+                Restorables.Add(components[j]);
+            }
+                
+        }
     }
 
-    public void Save(Transform _playertransform)
+    public void Save(Transform _playertransform, CheckPointTrigger checkPointTrigger)
     {
         playerLastCheckPoint = _playertransform;
 
         //Clear when reach new checkpoint
         savedEnemies.Clear();
-        objects.Clear();
-        
+        savedObjects.Clear();
+
         //save enemies position
-        for(int i = 0; i < Enemies.Count; i++)
+        for (int i = 0; i < Enemies.Count; i++)
         {
             //record position
             Enemies[i].GetComponent<Enemy>().lastCheckPointTransform = Enemies[i].gameObject.transform.position;
+        }
+
+        for(int i = 0; i < Restorables.Count; i++)
+        {
+            if(Restorables[i] != null)
+                Restorables[i].Save();
         }
     }
 
     public void Restore()
     {
         //AudioManager.Singleton.StopBus("Enemy");
-
-        PlayerCharacter.Singleton.GetFSM().CurrentStateName = "NoInput";
-
+        PlayerCharacter.Singleton.SpriteHolder.GetComponent<Animator>().Play("MainCharacter_Idle",0,0);
+        PlayerCharacter.Singleton.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        
         StartCoroutine(Restoring());
     
         //Restore Camera State
         CameraManager.Instance.Idle();
         //TimeManager.Instance.endSlowMotion();
 
+        
+
+        //cpt.enabled = true;
+    }
+    private void RestoreObjects()
+    {
         //Restore objects
-        for(int i = 0; i < objects.Count; ++i)
+        for (int i = 0; i < savedObjects.Count; ++i)
         {
-            if (objects[i].GetComponent<SimpleEventTrigger>() != null)
-            {
-                objects[i].GetComponent<SimpleEventTrigger>().gameObject.SetActive(true);
-            }
+            savedObjects[i].GetComponent<Restorable>().Restore();
+            
         }
-        objects.Clear();
+        savedObjects.Clear();
     }
 
     private void RestoreEnemy()
@@ -104,6 +132,7 @@ public class CheckPointManager : MonoBehaviour
             Enemies[i].transform.position = lastPos;
             Enemies[i].GetComponent<Enemy>().Reset();
         }
+        savedEnemies.Clear();
     }
 
     IEnumerator Restoring()
@@ -120,11 +149,15 @@ public class CheckPointManager : MonoBehaviour
 
         //Restore player position
         var player = PlayerCharacter.Singleton.gameObject;
-        player.transform.position = playerLastCheckPoint.position;
+
+        Vector3 position = playerLastCheckPoint.position;
+        position.z = 0;
+        player.transform.position = position;
+        
 
         RestoreEnemy();
+        RestoreObjects();
 
-        
 
         //Black Screen Fade out
         while (a > 0)
@@ -135,23 +168,21 @@ public class CheckPointManager : MonoBehaviour
         }
 
        
-        PlayerCharacter.Singleton.GetFSM().CurrentStateName = "Idle";
-
+        PlayerCharacter.Singleton.GetFSM().Reboot();
+        
 
         yield return null;
     }
 
-    public void Dead(GameObject obj)
+    public void RegisterEnemey(GameObject obj)
     {
         if(!savedEnemies.Contains(obj))
             savedEnemies.Add(obj);
     }
 
-    public void RestoreObject(GameObject obj)
+    public void RegisterObj(GameObject obj)
     {
-        if (!objects.Contains(obj))
-        {
-            objects.Add(obj);
-        }           
+        if(!savedObjects.Contains(obj))
+            savedObjects.Add(obj);
     }
 }

@@ -91,6 +91,8 @@ public abstract class Dummy : MonoBehaviour, IDamageable
     public HitEvent OnHit { get; private set; } = new HitEvent();
     public HitEvent OnAttack { get; private set; } = new HitEvent();
 
+    public EventOnStatisticChange OnStatisticChange => statistics.onStatisticChange;
+
     public bool IsInvulnerable
     {
         get
@@ -141,7 +143,19 @@ public abstract class Dummy : MonoBehaviour, IDamageable
     }
 
 
-    public abstract float ApplyDamage(float rawDamage);
+    public virtual float ApplyDamage(float rawDamage)
+    {
+        float damage = rawDamage;
+
+
+        StatisticModificationResult result = statistics.Modify(StatisticType.Hp, -damage, 0);
+
+        if (result.currentValue <= 0)
+            Dead();
+
+
+        return result.previousValue - result.currentValue;
+    }
 
     public abstract void Dead();
 }
@@ -155,7 +169,10 @@ public abstract class Enemy : Dummy
     [SerializeField] protected FSMEnemy fsm;
     [SerializeField] protected Zone guardZone;
     [SerializeField] protected HitBox[] hitBoxes;
-    [SerializeField] private float turnTime = 0;
+
+    [Header("Turning")]
+    [SerializeField] protected bool enableTurn = true;
+    [SerializeField] protected float turnTime = 0;
 
     [Header("Patrolling")]
     [SerializeField][Path(true)] protected Route patrolRoute;
@@ -243,19 +260,22 @@ public abstract class Enemy : Dummy
 
     public virtual void Turn(Vector3 direction)
     {
-        if (turnTime <= 0)
-            TurnImmediately(direction);
-        else
+        if (enableTurn)
         {
-            bool isInSameDirection = direction.x * transform.localScale.x > 0;
-
-            if (isInSameDirection)
-                StopTurning();
-            else if (!isTurning)
+            if (turnTime <= 0)
+                TurnImmediately(direction);
+            else
             {
-                turnDirection = direction;
-                isTurning = true;
-                t_turn = turnTime;
+                bool isInSameDirection = direction.x * transform.localScale.x > 0;
+
+                if (isInSameDirection)
+                    StopTurning();
+                else if (!isTurning)
+                {
+                    turnDirection = direction;
+                    isTurning = true;
+                    t_turn = turnTime;
+                }
             }
         }
     }
@@ -270,12 +290,15 @@ public abstract class Enemy : Dummy
         TurnImmediately((Vector3)direction);
     }
 
-    public void TurnImmediately(Vector3 direction)
+    public virtual void TurnImmediately(Vector3 direction)
     {
-        StopTurning();
+        if (enableTurn)
+        {
+            StopTurning();
 
 
-        GameUtility.Turn(this, direction);
+            GameUtility.Turn(this, direction);
+        }
     }
 
     public void StopTurning()
@@ -317,15 +340,31 @@ public abstract class Enemy : Dummy
     }
 
 
-    public void Reset()
+    public virtual void Reset()
     {
+        IsInvulnerable = false;
+        isEvading = false;
+        isTurning = false;
+        
+        statistics[StatisticType.Hp] = statistics[StatisticType.MaxHp];
+        
         fsm?.Reboot();
 
         DisableAllHitBoxes();
     }
 
 
-    protected virtual void Start()
+    public override void Dead()
+    {
+        PlayerCharacter.Singleton.AddOverLoadEnergy(data.Attributes[AttributeType.OspReward_c0]);
+        PlayerCharacter.Singleton.AddKillCount(1);
+
+
+        gameObject.SetActive(false);
+    }
+
+
+    protected virtual void Awake()
     {
         data = DataTableManager.singleton.GetEnemyData(typeID);
         rb2d = GetComponent<Rigidbody2D>();
@@ -336,11 +375,15 @@ public abstract class Enemy : Dummy
         statistics = new StatisticSystem(data.Attributes, statusModifiers);
         statistics[StatisticType.Hp] = statistics[StatisticType.MaxHp];
 
-        if (fsm)
-        {
+        
+        if (fsm) 
             fsm = fsm.Initialize(this);
-            fsm.Boot();
-        }
+    }
+
+    protected virtual void OnEnable()
+    {
+        if (fsm)
+            fsm.Reboot();
     }
 
     protected virtual void Update()

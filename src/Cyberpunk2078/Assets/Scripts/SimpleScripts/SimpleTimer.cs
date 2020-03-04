@@ -8,9 +8,6 @@ using UnityEngine.UI;
 public class SimpleTimer : MonoBehaviour
 {
 
-    public GameObject startPoint;
-    public GameObject endPoint;
-
     public Text timerText;
 
     public float totalTime;
@@ -18,16 +15,16 @@ public class SimpleTimer : MonoBehaviour
     private int second;
     private int millisecond;
     private GameObject restartInfo;
-
+    private Vector3 defaultPos;
+    private Vector3 defaultScale;
     [SerializeField] private bool isCounting;
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        //StartCoroutine(StartTimer());
-        restartInfo = GameObject.Find("RestartInfo");
-        restartInfo.SetActive(false);
+        defaultPos = timerText.GetComponent<RectTransform>().localPosition;
+        defaultScale = timerText.GetComponent<RectTransform>().localScale;
     }
 
     // Update is called once per frame
@@ -40,11 +37,7 @@ public class SimpleTimer : MonoBehaviour
             millisecond = (int)(Math.Round((totalTime - (int)totalTime), 2) * 100);
             timerText.text = string.Format("{0:d2}:{1:d2}.{2:d2}", minute, second, millisecond);
         }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
+        
     }
 
     private IEnumerator StartTimer()
@@ -60,21 +53,31 @@ public class SimpleTimer : MonoBehaviour
         }
     }
 
+    public void GetTimer()
+    {
+        timerText.GetComponent<RectTransform>().localPosition = defaultPos;
+        timerText.GetComponent<RectTransform>().localScale = defaultScale;
+        totalTime = 0;
+        minute = (int)(totalTime / 60);
+        second = (int)(totalTime);
+        millisecond = (int)(totalTime % 1.0f * 1000);
+        timerText.text = string.Format("{0:d2}:{1:d2}.{2:d3}", minute, second, millisecond);
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.Equals(startPoint))
+        if (other.CompareTag("StartTimer"))
         {
             other.gameObject.SetActive(false);
             totalTime = 0;
             isCounting = true;
         }
-
-        if (other.gameObject.Equals(endPoint))
+    
+        if (other.CompareTag("EndTimer"))
         {
             // ended;
-            timerText.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
+            timerText.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0); 
             timerText.GetComponent<RectTransform>().localScale = new Vector2(3f, 3f);
-            restartInfo.SetActive(true);
             other.gameObject.SetActive(false);
             isCounting = false;
         }

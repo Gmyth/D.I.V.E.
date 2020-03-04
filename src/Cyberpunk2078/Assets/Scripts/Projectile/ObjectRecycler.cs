@@ -19,12 +19,31 @@ public class ObjectRecycler : MonoBehaviour
 
     public Recyclable GetObject(int id)
     {
+        return GetObject(id, Vector3.zero);
+    }
+
+    public Recyclable GetObject(int id, Vector3 position)
+    {
+        Recyclable recyclable;
+
         if (recycledObjects[id].Count > 0)
-            return recycledObjects[id].Pop();
+        {
+            recyclable = recycledObjects[id].Pop();
 
+            Debug.Log(LogUtility.MakeLogStringFormat(GetType().Name, "Used {0}.", recyclable.gameObject.name));
+        }
+        else
+        {
+            Transform root = transform.GetChild(id);
 
-        Recyclable recyclable = Instantiate(prefabs[id], transform);
-        recyclable.id = id;
+            recyclable = Instantiate(prefabs[id], position, Quaternion.identity, root);
+            recyclable.id = id;
+
+            recyclable.gameObject.name += root.childCount;
+            recyclable.gameObject.SetActive(false);
+
+            Debug.Log(LogUtility.MakeLogStringFormat(GetType().Name, "Created {0}.", recyclable.gameObject.name));
+        }
 
 
         return recyclable;
@@ -32,21 +51,9 @@ public class ObjectRecycler : MonoBehaviour
 
     public T GetObject<T>(int id) where T : MonoBehaviour
     {
-        if (recycledObjects[id].Count > 0)
-            return recycledObjects[id].Pop().GetComponent<T>();
-
-
-        T obj = Instantiate(prefabs[id].GetComponent<T>(), recyclePosition, Quaternion.identity, transform.GetChild(id));
-
-        if (obj)
-        {
-            obj.GetComponent<Recyclable>().id = id;
-            obj.gameObject.SetActive(false);
-        }
-
-
-        return obj;
+        return GetObject(id).GetComponent<T>();
     }
+
 
     public SingleEffect GetSingleEffect(int id, Vector3 position)
     {
@@ -95,10 +102,16 @@ public class ObjectRecycler : MonoBehaviour
             recyclable.gameObject.SetActive(false);
             recyclable.transform.localPosition = recyclePosition;
 
+            Debug.Log(LogUtility.MakeLogStringFormat(GetType().Name, "Recycled {0}.", recyclable.gameObject.name));
+
             recycledObjects[recyclable.id].Push(recyclable);
         }
         else
+        {
             Destroy(recyclable.gameObject);
+
+            Debug.Log(LogUtility.MakeLogStringFormat(GetType().Name, "Destroyed {0}.", recyclable.gameObject.name));
+        }
     }
 
     public void RecycleAll()

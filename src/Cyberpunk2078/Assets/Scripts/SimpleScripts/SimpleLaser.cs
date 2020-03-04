@@ -5,7 +5,7 @@ using UnityEngine;
 public class SimpleLaser : MonoBehaviour
 {
 
-    public Transform RespawnPoint;
+    //public Transform RespawnPoint;
 
     public Color GizmoColor = Color.red;
 
@@ -32,10 +32,9 @@ public class SimpleLaser : MonoBehaviour
                 if (PlayerCharacter.Singleton[StatisticType.Hp] > 0)
                 {
                     //Take damage
-                    PlayerCharacter.Singleton.ApplyDamage(1);
-
+                    PlayerCharacter.Singleton.ApplyDamage(100);
                     //Respawn at last checkpoint
-                    other.transform.position = RespawnPoint.position;
+                    //other.transform.position = RespawnPoint.position;
                 }
                 else
                 {

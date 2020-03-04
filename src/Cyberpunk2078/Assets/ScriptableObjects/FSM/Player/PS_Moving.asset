@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PS_Moving
   m_EditorClassIdentifier: 
   stateName: Moving
-  n_speedFactor: 9
+  n_speedFactor: 8.5
   n_accelerationFactor: 50
-  f_speedFactor: 10
+  f_speedFactor: 8.75
   f_accelerationFactor: 50

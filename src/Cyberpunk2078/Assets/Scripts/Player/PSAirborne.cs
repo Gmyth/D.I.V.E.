@@ -18,11 +18,12 @@ public class PSAirborne : PlayerState
         var jumpTolerance = playerCharacter.InKillStreak ? f_jumpTolerance : n_jumpTolerance;
 
         float h = Input.GetAxis("HorizontalJoyStick") != 0 ? Input.GetAxis("HorizontalJoyStick") : Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("VerticalJoyStick");
+        float v = Input.GetAxis("VerticalJoyStick") != 0 ? Input.GetAxis("VerticalJoyStick") : Input.GetAxis("Vertical");
+
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         float Vy = rb2d.velocity.y;
         Vector2 normalizedInput = new Vector2(h, v).normalized;
-        if(Player.CurrentPlayer.LastBounceSec + 0.5f < Time.time) PhysicsInputHelper(h);
+        if(Player.CurrentPlayer.LastBounceSec + 0.5f < Time.time) PhysicsInputHelper(h,v);
         
         if (Input.GetButtonDown("Ultimate"))
         {
@@ -40,8 +41,7 @@ public class PSAirborne : PlayerState
         if (Input.GetAxis("Vertical") > 0 || normalizedInput.y > 0.7f)
         {
             // up is pressed
-            if (isCloseTo("Ladder") != Direction.None)
-                return "Climbing";
+            if (isCloseTo("Ladder") != Direction.None && Player.CurrentPlayer.climbReady) return "Climbing";
         }
 
         var dir = isCloseTo("Ground");
@@ -70,7 +70,7 @@ public class PSAirborne : PlayerState
             return "Dashing";
         }
         // temp code
-        
+
 
         if (Vy <= 0)
             switch (GetGroundType())
@@ -123,7 +123,7 @@ public class PSAirborne : PlayerState
         previous = previousState;
 
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-        rb2d.gravityScale = playerCharacter.Gravity;
+        rb2d.gravityScale = playerCharacter.DefaultGravity;
 
         anim.Play("MainCharacter_Airborne", -1, 0f);
     }
