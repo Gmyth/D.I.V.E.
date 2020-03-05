@@ -104,7 +104,6 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
     }
 
     public void ShowAttackNotification() {
-
         if (MouseIndicator.Singleton.CurrentInputType == InputType.Joystick) UI_AttackKey_Joy.SetActive(true);
         else UI_AttackKey_Keyboard.SetActive(true);
     }
@@ -121,7 +120,7 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         CameraManager.Instance.FocusTo(PlayerCharacter.Singleton.transform, 99999f);
         CameraManager.Instance.FlashIn(6f, 0.05f, 999999f, 0.01f);
         PlayerCharacter.Singleton.SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
-        TimeManager.Instance.startSlowMotion(-1f, 0f, 0.65f,0.15f);
+        TimeManager.Instance.startSlowMotion(-1f, 0f, 1.05f,0.15f);
         TimeManager.Instance.ApplyBlackScreen();
 
 

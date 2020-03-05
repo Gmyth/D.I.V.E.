@@ -45,7 +45,7 @@ public class PSDashing : PlayerState
         if (playerCharacter.PowerDash)
         {
             dashDelayTime = 0.3f;
-            dashReleaseTime *= 2.15f;
+            dashReleaseTime *= 1.3f;
         }
         
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
@@ -317,7 +317,7 @@ public class PSDashing : PlayerState
 
         if (playerCharacter.PowerDash)
         {
-            rb2d.AddForce(direction * dashForce * 200f * 1.2f);
+            rb2d.AddForce(direction * dashForce * 200f * 1.8f);
         }
         else
         {
@@ -325,7 +325,6 @@ public class PSDashing : PlayerState
         }
 
         //Camera Tricks
-
         CameraManager.Instance.Shaking(0.1f,0.10f);
     }
 }

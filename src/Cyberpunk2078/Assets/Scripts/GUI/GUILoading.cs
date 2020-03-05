@@ -40,8 +40,13 @@ public class GUILoading : GUIWindow
     public void LevelInfoAnimation(int index)
     {
         //LevelInfo info = GameProcessManager.Singleton.GetLevelInfo();
-        int chapter = (index / 3) + 1;
-        int level = index % 3;
+        int chapter = (index % 3 == 0) ? (index / 3) : (index / 3) + 1;
+        int level = index - 3 * (chapter-1);
+        if (index == 5)
+        {
+            tmp_levelinfo.GetComponent<TextMeshProUGUI>().text = "LEVEL 1-4";
+            return;
+        }
 
         tmp_levelinfo.GetComponent<TextMeshProUGUI>().text = "Level " + chapter + "-" + level;
 
