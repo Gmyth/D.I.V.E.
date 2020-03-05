@@ -12,6 +12,8 @@ using UnityEngine;
         Bullet = 0x10,
 
         AOE = 0x20,
+
+        Dash = 0x30
     }
 
 
@@ -57,6 +59,8 @@ public class HitBox : MonoBehaviour
 
     protected Coroutine bulletTimeCorotine = null;
 
+    
+    //temporary
 
     public virtual void LoadHitData(HitData data)
     {
@@ -181,7 +185,16 @@ public class HitBox : MonoBehaviour
             if (hit.knockback > 0)
                 player.KnockbackHorizontal(hit.source.transform.position, hit.knockback, 0.5f);
 
-
+            if (hit.type == Hit.Type.Dash)
+                AudioManager.Singleton.PlayOnce("Hit_by_dash");
+            else if (hit.type == Hit.Type.Melee)
+                AudioManager.Singleton.PlayOnce("Hit_by_sword");
+            else if (hit.type == Hit.Type.Bullet)
+            {
+                AudioManager.Singleton.PlayOnce("Hit_by_laser");
+                //Debug.LogError("hit");
+            }
+            
             player.ApplyDamage(hit.damage);
 
 

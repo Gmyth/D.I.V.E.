@@ -105,6 +105,7 @@ public class Bullet : Recyclable
 
             if (player.State.Index != 6)
             {
+                AudioManager.Singleton.PlayOnce("Hit_by_laser");
                 //Not in dash, deal damage
                 player.ApplyDamage(rawDamage);
 

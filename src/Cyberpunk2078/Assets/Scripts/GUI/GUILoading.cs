@@ -37,11 +37,11 @@ public class GUILoading : GUIWindow
         StopAllCoroutines();
     }
 
-    public void LevelInfoAnimation()
+    public void LevelInfoAnimation(int index)
     {
-        LevelInfo info = GameProcessManager.Singleton.GetLevelInfo();
-        int chapter = (info.LevelIndex / 3) + 1;
-        int level = info.LevelIndex % 3;
+        //LevelInfo info = GameProcessManager.Singleton.GetLevelInfo();
+        int chapter = (index / 3) + 1;
+        int level = index % 3;
 
         tmp_levelinfo.GetComponent<TextMeshProUGUI>().text = "Level " + chapter + "-" + level;
 

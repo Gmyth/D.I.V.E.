@@ -156,6 +156,7 @@ public class CheckPointManager : MonoBehaviour
         
 
         RestoreEnemy();
+        ObjectRecycler.Singleton.RecycleAll();
         RestoreObjects();
 
 

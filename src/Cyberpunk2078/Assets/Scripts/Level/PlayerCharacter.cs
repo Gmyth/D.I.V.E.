@@ -105,17 +105,25 @@ public class PlayerCharacter : Dummy
         if (rawDamage <= 0)
             return 0;
 
+        AudioManager.Singleton.PlayOnce("Hurt");
 
         StatisticModificationResult result = statistics.Modify(StatisticType.Hp, -rawDamage, 0);
 
         if (result.currentValue <= 0)
+        {
+            AudioManager.Singleton.PlayOnce("Player_dead");
             Dead();
+        }
         else if (result.currentValue <= 1f)
         {
             AudioManager.Singleton.PlayEvent("LowHealth");
         }
+        else
+        {
+            
+        }
 
-        AudioManager.Singleton.PlayOnce("Hurt");
+        
 
         return result.previousValue - result.currentValue;
     }
@@ -138,6 +146,7 @@ public class PlayerCharacter : Dummy
 
     public override void Dead()
     {
+        
         fsm.CurrentStateName = "NoInput";
 
         ResetStatistics();

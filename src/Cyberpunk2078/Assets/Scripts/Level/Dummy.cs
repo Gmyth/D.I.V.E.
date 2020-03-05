@@ -186,6 +186,7 @@ public abstract class Enemy : Dummy
     protected bool isTurning = false;
 
     public Vector3 lastCheckPointTransform;
+    public bool isDashing = false;
     
     //Physics related --- Slow motion implementation
     protected Rigidbody2D rb2d;

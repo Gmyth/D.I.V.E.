@@ -33,6 +33,7 @@ public class SimpleCollectible : MonoBehaviour
         
         if (other.tag == "Player")
         {
+            AudioManager.Singleton.PlayOnce("Pick_cassette");
             Collect();
             gameObject.SetActive(false);
         }
@@ -42,6 +43,7 @@ public class SimpleCollectible : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
+            AudioManager.Singleton.PlayOnce("Pick_cassette");
             Collect();
             gameObject.SetActive(false);
         }

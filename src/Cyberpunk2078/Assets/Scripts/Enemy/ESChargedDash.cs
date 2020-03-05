@@ -70,6 +70,7 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
 
         if (hitBox >= 0)
             enemy.DisableHitBox(hitBox);
+
     }
 
 
@@ -92,7 +93,10 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
             enemy.OnEnableHitBox.AddListener(InitializeHitBox);
 
             if (hitBox >= 0)
+            {
                 enemy.EnableHitBox(hitBox);
+            }
+                
 
             enemy.OnEnableHitBox.RemoveListener(InitializeHitBox);
 
@@ -100,6 +104,7 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
             animator.Play(animation_dash);
 
             AudioManager.Singleton.PlayOnce("RobotDash");
+
         }
         else if (!bStop)
         {

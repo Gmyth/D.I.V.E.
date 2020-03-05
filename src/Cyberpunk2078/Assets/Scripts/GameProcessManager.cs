@@ -300,7 +300,7 @@ public class GameProcessManager : MonoBehaviour
             yield return null;
         }
 
-        GUIManager.Singleton.GetGUIWindow<GUILoading>("Loading").LevelInfoAnimation();
+        GUIManager.Singleton.GetGUIWindow<GUILoading>("Loading").LevelInfoAnimation(TargetLevelIndex);
 
         yield return new WaitForSeconds(2f);
 
