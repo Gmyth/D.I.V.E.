@@ -178,7 +178,7 @@ public abstract class Enemy : Dummy
     [SerializeField][Path(true)] protected Route patrolRoute;
     [SerializeField] protected RangedWeaponConfiguration patrolFiringConfiguration;
     
-    [HideInInspector] public AttributeSet statusModifiers = new AttributeSet();
+    public AttributeSet statusModifiers = new AttributeSet();
 
     [HideInInspector] public PlayerCharacter currentTarget;
     private int numEnabledHitBoxes = 0;

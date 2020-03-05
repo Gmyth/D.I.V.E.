@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 409367503}
   - component: {fileID: 409367502}
   - component: {fileID: 409367501}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8515c9730a1463742b5f58450f8c8b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RespawnPoint: {fileID: 1863856371}
   GizmoColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1863856370
 GameObject:
