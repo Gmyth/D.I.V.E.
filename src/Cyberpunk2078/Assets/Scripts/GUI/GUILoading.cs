@@ -51,6 +51,5 @@ public class GUILoading : GUIWindow
         tmp_levelinfo.GetComponent<TextMeshProUGUI>().text = "Level " + chapter + "-" + level;
 
         tmp_levelinfo.SetActive(true);
-      
     }
 }

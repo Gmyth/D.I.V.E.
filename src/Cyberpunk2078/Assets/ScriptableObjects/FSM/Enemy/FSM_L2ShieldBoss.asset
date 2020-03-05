@@ -36,4 +36,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dfab765f430abe24cb7d70b25a505288, type: 2}
   - {fileID: 11400000, guid: bc41cbd0ebc63554e9a18faae341e5ee, type: 2}
   - {fileID: 11400000, guid: 29d59fdc54f5e6548a8cfcdb37832791, type: 2}
-  startingState: Leap
+  startingState: Alert

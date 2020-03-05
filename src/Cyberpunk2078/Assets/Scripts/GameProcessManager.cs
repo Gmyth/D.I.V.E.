@@ -283,7 +283,7 @@ public class GameProcessManager : MonoBehaviour
     {
         Camera.main.GetComponent<FadeCamera>().RedoFade();
 
-        GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").gameObject.SetActive(false);
+        GUIManager.Singleton.Close("HUD");
 
         GUIManager.Singleton.Open("Loading");
 
@@ -326,7 +326,7 @@ public class GameProcessManager : MonoBehaviour
         Debug.LogError("DSWADAWD");
         GUIManager.Singleton.Close("Loading");
 
-        GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").gameObject.SetActive(true);
+        GUIManager.Singleton.Open("HUD", PlayerCharacter.Singleton);
     }
 
     public LevelInfo GetLevelInfo()
