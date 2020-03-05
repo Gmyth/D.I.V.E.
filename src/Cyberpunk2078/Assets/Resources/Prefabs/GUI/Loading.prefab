@@ -305,6 +305,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tmp_loading: {fileID: 8415998742822784450}
   tmp_levelinfo: {fileID: 5266915584877425158}
+  levelEntry: {fileID: 11400000, guid: 420b925687cfcaf42bc806a8321c42e1, type: 2}
 --- !u!1 &8415998742822784450
 GameObject:
   m_ObjectHideFlags: 0

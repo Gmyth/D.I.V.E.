@@ -133,6 +133,7 @@ public class GameProcessManager : MonoBehaviour
         currentLevel = Instantiate(LevelDictionary[index]);
         LoadedLevel.Add(currentLevel);
 
+
         foreach(GameObject obj in currentLevel.GetComponent<LevelInfo>().breakable)
         {
             obj.GetComponent<Explodable>().fragmentInEditor();
@@ -323,7 +324,7 @@ public class GameProcessManager : MonoBehaviour
      
        
 
-        Debug.LogError("DSWADAWD");
+        //Debug.LogError("DSWADAWD");
         GUIManager.Singleton.Close("Loading");
 
         GUIManager.Singleton.Open("HUD", PlayerCharacter.Singleton);
