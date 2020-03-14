@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 539eaf74dd63d9d469214fce7532d6de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
+  speed: 25
   orientation: {x: 1, y: 0, z: 0}
   initialPosition: {x: 0, y: 0, z: 0}
   spawnTime: 0
@@ -159,7 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe89cc77c65cf9c48927595fc1db375e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitDataID: -1
+  hitDataID: 6714
   isFriendly: 0
   ignoreInvulnerbility: 0
   maxNumHits: 2147483647

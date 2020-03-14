@@ -972,6 +972,11 @@ PrefabInstance:
       propertyPath: timerText
       value: 
       objectReference: {fileID: 5580370675080881891}
+    - target: {fileID: 7457358081769736770, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: m_LinearDrag
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30f904e572c0a79489e3033eaff79c6a, type: 3}
 --- !u!1001 &5580370675080881890

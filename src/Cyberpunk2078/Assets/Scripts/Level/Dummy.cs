@@ -369,6 +369,7 @@ public abstract class Enemy : Dummy
     {
         data = DataTableManager.singleton.GetEnemyData(typeID);
         rb2d = GetComponent<Rigidbody2D>();
+
         defaultDrag = rb2d.drag;
         defaultMass = rb2d.mass;
 

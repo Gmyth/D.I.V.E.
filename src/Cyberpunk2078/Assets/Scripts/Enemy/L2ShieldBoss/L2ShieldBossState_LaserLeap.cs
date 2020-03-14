@@ -13,4 +13,13 @@ public class L2ShieldBossState_LaserLeap : ESTimed<L2ShieldBoss>
 
         enemyRigidbody.velocity = MathUtility.GetInitialVelocityForParabolaMovement(enemyPosition, enemyPosition.x < enemy.GuardZone.center.x ? enemy.LeftThrowPoint : enemy.RightThrowPoint, duration, enemyRigidbody.gravityScale * -Physics2D.gravity.y);
     }
+
+
+    public override void OnStateQuit(State nextState)
+    {
+        base.OnStateQuit(nextState);
+
+
+        enemyRigidbody.velocity = Vector2.zero;
+    }
 }

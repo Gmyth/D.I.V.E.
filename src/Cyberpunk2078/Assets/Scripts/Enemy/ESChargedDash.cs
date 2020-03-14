@@ -171,13 +171,7 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
         t_dashEnd += TimeManager.Instance.ScaledDeltaTime;
 
         if (t_dashEnd >= dashEndTime)
-        {
-            rigidbody.drag = 0;
-            rigidbody.velocity = Vector2.zero;
-
-
             return "Alert";
-        }
 
 
         return "";
