@@ -204,7 +204,8 @@ public class PSDashing : PlayerState
 
 
         // Add Ghost trail
-        if(!playerCharacter.InKillStreak) playerCharacter.SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
+        playerCharacter.SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
+        
         lastDashSecond = Time.time;
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
 
@@ -253,6 +254,11 @@ public class PSDashing : PlayerState
 
         // reset sprite flip
         playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipY = false;
+        playerCharacter.SpriteHolder.localScale = Vector3.one;
+        
+        
+        playerCharacter.groundDust.transform.localPosition = Vector3.zero;
+        playerCharacter.groundDust.GetComponent<ParticleSystem>().Stop();
 
         // Kill Trail
         if(!playerCharacter.InKillStreak) playerCharacter.SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
@@ -294,7 +300,9 @@ public class PSDashing : PlayerState
         //attack.transform.localScale = new Vector3(4,4,1);
         attack.gameObject.SetActive(true);
         
-
+        playerCharacter.groundDust.transform.localPosition = new Vector3(0,-0.5f,0);
+        playerCharacter.groundDust.GetComponent<ParticleSystem>().Play();
+        
         var Dust = ObjectRecycler.Singleton.GetObject<SingleEffect>(9);
         Dust.transform.position = playerCharacter.transform.position +  direction * 0.5f;
         //Dust.setTarget(playerCharacter.transform);
@@ -323,8 +331,9 @@ public class PSDashing : PlayerState
         {
             rb2d.AddForce(direction * dashForce * 200f * 1);
         }
-
+        playerCharacter.SpriteHolder.localScale = new Vector3(2f,0.5f,1f);
         //Camera Tricks
         CameraManager.Instance.Shaking(0.1f,0.10f);
+        CameraManager.Instance.Follow(0.2f);
     }
 }

@@ -125,6 +125,9 @@ public class HitBox : MonoBehaviour
             else if (other.tag == "Platform" && other.GetComponent<SimpleBreakable>())
                 OnHitBreakable(other);
         }
+        else if (other.tag == "Ground")
+            OnHitGround(other);
+        
         else if (other.tag == "Player")
             OnHitPlayer(other);
     }
@@ -157,10 +160,16 @@ public class HitBox : MonoBehaviour
                 trail1.transform.localScale = new Vector3(7, 1, 1);
                 trail1.target = other.transform;
                 trail1.gameObject.SetActive(true);
+                
+//                var spark = ObjectRecycler.Singleton.GetObject<SingleEffect>(23);
+//                spark.transform.position = other.transform.position;
+//                spark.transform.right = transform.right;
+//                spark.transform.localScale = Vector3.one;
+//                spark.target = other.transform;
+//                spark.gameObject.SetActive(true);
 
                 CameraManager.Instance.Shaking(0.20f, 0.10f, true);
-
-
+                
                 AudioManager.Singleton.PlayOnce("Hit");
             }
         }
@@ -170,6 +179,11 @@ public class HitBox : MonoBehaviour
     {
         other.GetComponent<SimpleBreakable>().DestroyBreakable(other.transform.position);
     }
+    
+    protected virtual void OnHitGround(Collider2D other)
+    {
+        
+    }    
 
     protected virtual void OnHitPlayer(Collider2D other)
     {
