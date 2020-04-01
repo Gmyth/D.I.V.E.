@@ -27,4 +27,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5f45b4b93089b8c42a357e3323d9f375, type: 2}
   - {fileID: 11400000, guid: 774e44cca19d2074189840161f8a5d42, type: 2}
   - {fileID: 11400000, guid: 6b58f3841b044174f9dd0082b43465a8, type: 2}
+  - {fileID: 11400000, guid: 264999da6c3a1b4419d8e72f76ce8b59, type: 2}
   startingState: Idle

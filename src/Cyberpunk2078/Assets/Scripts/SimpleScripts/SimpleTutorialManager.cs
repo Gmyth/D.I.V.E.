@@ -55,6 +55,10 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
 
     [SerializeField] private GameObject UI_AttackKey_Joy;
     [SerializeField] private GameObject UI_AttackKey_Keyboard;
+
+    [SerializeField] private GameObject UI_PowerDashKey_Joy;
+    [SerializeField] private GameObject UI_PowerDashKey_Keyboard;
+
     public GameObject UI_BlackMask;
 
     public GameObject UI_TeachDash_DirectionMask;
@@ -109,6 +113,9 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         else UI_AttackKey_Keyboard.SetActive(true);
     }
 
+    /// <summary> ------------------------------------------------------------------------------------------------
+    /// Tutorial: Dash
+    /// </summary>
     private TimelineManager timelineManager_DashTutorial;
     public Drone DashTutorial_Drone;
     [SerializeField] private Transform shootPoint_DashTutorial;
@@ -157,6 +164,9 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         //PlayerCharacter.Singleton.AddOverLoadEnergy(1);
     }
 
+    /// <summary> ------------------------------------------------------------------------------------------------
+    /// Tutorial: Deflect
+    /// </summary>
     private TimelineManager timelineManager_DeflectTutorial;
     public Bullet DeflectTutorial_Bullet;
     public GameObject DeflectTutorial_Jack;
@@ -185,6 +195,33 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
 
         if (MouseIndicator.Singleton.CurrentInputType == InputType.Joystick) UI_AttackKey_Joy.SetActive(false);
         else UI_AttackKey_Keyboard.SetActive(false);
+
+        PlayerCharacter.Singleton.transform.parent.GetComponentInChildren<MouseIndicator>().ResetColor();
+    }
+    
+    /// <summary> ------------------------------------------------------------------------------------------------
+    /// Tutorial: Power Dash
+    /// </summary>
+    private TimelineManager timelineManager_PowerDashTutorial;
+    public void IntroducePowerDash(TimelineManager timelineManager)
+    {
+        timelineManager_PowerDashTutorial = timelineManager;
+
+        timelineManager_PowerDashTutorial.PlayTimelineInIndex(0);
+
+        PlayerCharacter.Singleton.GetFSM().CurrentStateName = "InTutorial_PowerDash";
+
+        StartCoroutine(ShowGameObjectAfterDelay(3.5f, null));
+    }
+
+    public void AfterPowerDashTutorial()
+    {
+        CameraManager.Instance.Idle();
+        PlayerCharacter.Singleton.SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
+        TimeManager.Instance.endSlowMotion(0f);
+
+        if (MouseIndicator.Singleton.CurrentInputType == InputType.Joystick) UI_PowerDashKey_Joy.SetActive(false);
+        else UI_PowerDashKey_Keyboard.SetActive(false);
 
         PlayerCharacter.Singleton.transform.parent.GetComponentInChildren<MouseIndicator>().ResetColor();
     }
