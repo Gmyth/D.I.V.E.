@@ -211,17 +211,17 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
 
         PlayerCharacter.Singleton.GetFSM().CurrentStateName = "InTutorial_PowerDash";
 
-        StartCoroutine(ShowGameObjectAfterDelay(3.5f, null));
+        StartCoroutine(ShowGUIButtonAfterDelay(3.5f, "Up"));
     }
 
     public void AfterPowerDashTutorial()
     {
         CameraManager.Instance.Idle();
         PlayerCharacter.Singleton.SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
-        TimeManager.Instance.endSlowMotion(0f);
+        //TimeManager.Instance.endSlowMotion(0f);
 
-        if (MouseIndicator.Singleton.CurrentInputType == InputType.Joystick) UI_PowerDashKey_Joy.SetActive(false);
-        else UI_PowerDashKey_Keyboard.SetActive(false);
+        GUITutorial.Singleton.Hide();
+
 
         PlayerCharacter.Singleton.transform.parent.GetComponentInChildren<MouseIndicator>().ResetColor();
     }
@@ -233,6 +233,15 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         targetObject?.SetActive(true);
 
         yield return new WaitForSecondsRealtime(1.0f);
+        PlayerCharacter.Singleton.isInTutorial = false;
+    }
+
+    private IEnumerator ShowGUIButtonAfterDelay(float delayTime, string buttonName)
+    {
+        yield return new WaitForSecondsRealtime(delayTime);
+        GUITutorial.Singleton.Show(buttonName);
+
+        yield return new WaitForSecondsRealtime(0.5f);
         PlayerCharacter.Singleton.isInTutorial = false;
     }
 
