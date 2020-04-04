@@ -7,9 +7,10 @@ using UnityEngine.UI;
 public class GUIHUD : GUIWindow
 {
     [Header("References")]
-    [SerializeField] private Image hpBar;
-    [SerializeField] private Image spBar;
-    [SerializeField] private Image feverBar;
+    [SerializeField] private Transform hpGrid;
+    [SerializeField] private Transform spGrid;
+    [SerializeField] private GUIBar feverBar;
+    [SerializeField] private GUIBar powerDashBar;
     [SerializeField] private Text textArea;
     [SerializeField] private GameObject resourceInspector;
     [SerializeField] private GUIDialogueWidget dialogueWidget;
@@ -38,12 +39,12 @@ public class GUIHUD : GUIWindow
         Player player = Player.CurrentPlayer;
 
 
-        UpdateMaxHp(Mathf.FloorToInt(playerCharacter[StatisticType.MaxHp]));
-        UpdateMaxSp(Mathf.FloorToInt(playerCharacter[StatisticType.MaxSp] + playerCharacter[StatisticType.MaxOsp]));
+        //UpdateMaxHp(Mathf.RoundToInt(playerCharacter[StatisticType.MaxHp]));
+        //UpdateMaxSp(Mathf.RoundToInt(playerCharacter[StatisticType.MaxSp] + playerCharacter[StatisticType.MaxOsp]));
 
-        UpdateHp(Mathf.FloorToInt(playerCharacter[StatisticType.Hp]));
-        UpdateSp(Mathf.FloorToInt(playerCharacter[StatisticType.Sp] + playerCharacter[StatisticType.Osp]));
-        UpdateFever(Mathf.FloorToInt(playerCharacter[StatisticType.UltimateEnergy]));
+        UpdateHp(Mathf.RoundToInt(playerCharacter[StatisticType.Hp]));
+        UpdateSp(Mathf.RoundToInt(playerCharacter[StatisticType.Sp]), Mathf.RoundToInt(playerCharacter[StatisticType.Osp]));
+        UpdateFever(Mathf.RoundToInt(playerCharacter[StatisticType.UltimateEnergy]));
 
 
         itemWidget.Refresh(player.inventory[0]);
@@ -119,34 +120,40 @@ public class GUIHUD : GUIWindow
         {
             StopCoroutine(feverCoroutine);
 
-            feverBar.color = Color.white;
+            feverBar.Color = Color.white;
         }
+    }
+
+    
+    public void UpdatePowerDashCooldown(float value)
+    {
+        powerDashBar.Value = value;
     }
 
 
     private void UpdateHp(int value)
     {
-        hpBar.fillAmount = Mathf.Lerp(0.5f, 1, value / playerCharacter[StatisticType.MaxHp]);
+        for (int i = 0; i < hpGrid.childCount; ++i)
+            hpGrid.GetChild(i).gameObject.SetActive(i <= value);
     }
 
     private void UpdateMaxHp(int value)
     {
-        hpBar.material.SetInt("_NumStride", Mathf.FloorToInt(value));
     }
 
-    private void UpdateSp(int value)
+    private void UpdateSp(int sp, int osp)
     {
-        spBar.fillAmount = Mathf.Lerp(0.5f, 1, value / (playerCharacter[StatisticType.MaxSp] + playerCharacter[StatisticType.MaxOsp]));
+        spGrid.GetChild(0).gameObject.SetActive(sp > 0);
+        spGrid.GetChild(1).gameObject.SetActive(osp > 0);
     }
 
     private void UpdateMaxSp(int value)
     {
-        spBar.material.SetInt("_NumStride", Mathf.FloorToInt(value));
     }
 
     private void UpdateFever(int value)
     {
-        feverBar.fillAmount = Mathf.Lerp(0.5f, 1, value / playerCharacter[StatisticType.MaxUltimateEnergy]);
+        feverBar.Value = Mathf.Lerp(0.5f, 1, value / playerCharacter[StatisticType.MaxUltimateEnergy]);
     }
 
 
@@ -167,12 +174,12 @@ public class GUIHUD : GUIWindow
 
 
             case StatisticType.Sp:
-                UpdateSp(Mathf.RoundToInt(currentValue + playerCharacter[StatisticType.Osp]));
+                UpdateSp(Mathf.RoundToInt(currentValue), Mathf.RoundToInt(playerCharacter[StatisticType.Osp]));
                 break;
 
 
             case StatisticType.Osp:
-                UpdateSp(Mathf.RoundToInt(currentValue + playerCharacter[StatisticType.Sp]));
+                UpdateSp(Mathf.RoundToInt(playerCharacter[StatisticType.Sp]), Mathf.RoundToInt(currentValue));
                 break;
 
 
@@ -202,7 +209,7 @@ public class GUIHUD : GUIWindow
 
         while (true)
         {
-            feverBar.color = Color.Lerp(Color.white, feverBlinkColor, (Mathf.Sin(feverBlinkSpeed * (Time.time - t)) + 1) / 2);
+            feverBar.Color = Color.Lerp(Color.white, feverBlinkColor, (Mathf.Sin(feverBlinkSpeed * (Time.time - t)) + 1) / 2);
 
             yield return null;
         }
