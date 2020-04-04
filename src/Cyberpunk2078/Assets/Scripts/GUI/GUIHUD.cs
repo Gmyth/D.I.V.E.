@@ -153,7 +153,7 @@ public class GUIHUD : GUIWindow
 
     private void UpdateFever(int value)
     {
-        feverBar.Value = Mathf.Lerp(0.5f, 1, value / playerCharacter[StatisticType.MaxUltimateEnergy]);
+        feverBar.Value = value / playerCharacter[StatisticType.MaxUltimateEnergy];
     }
 
 
