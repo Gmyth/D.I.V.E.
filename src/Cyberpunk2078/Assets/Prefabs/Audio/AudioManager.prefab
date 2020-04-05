@@ -43,33 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 672d085f36e44f744b4b7f6fb56b67df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  events:
-  - event:/Player/PlayerDash/Dash
-  - event:/Enemy/Cleaner/KillRobot
-  - event:/Enemy/Drone/KillDrone
-  - snapshot:/FeverMode
-  - event:/Player/Fever
-  - event:/Enemy/Drone/LaserBullet
-  - event:/Player/Footsteps
-  - event:/Player/DeflectBullet
-  - event:/Player/PlayerSwing/Swing
-  - event:/Player/Heal
-  - event:/Player/Jump
-  - event:/Player/JumpPad
-  - snapshot:/SlowMotion
-  - event:/Player/Hurt
-  - event:/Player/EnergyCharge
-  - event:/Player/EnergyFull
-  - event:/Player/LowHealth
-  - event:/Player/WallSlide
-  - event:/Enemy/Cleaner/RobotDash
-  - event:/Enemy/EnemyAlert
-  - event:/Player/JumpLand
-  - event:/Enemy/Cleaner/RobotDashCharge
-  - event:/Enemy/Cleaner/RobotAttack
-  - event:/Player/KillStreak
-  - event:/BGM/BGM
-  - event:/Enemy/Drone/LaserCharge
   AudioData:
   - {fileID: 11400000, guid: bea8d70f331fb324ea1051db75ea325e, type: 2}
   - {fileID: 11400000, guid: 6ce049cc5f875d94a8b7f8e3864604da, type: 2}
@@ -79,3 +52,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9f8bd3a4303f4434fb112804c9d0037a, type: 2}
   - {fileID: 11400000, guid: 06bba6652ba149141b3855bac1042d07, type: 2}
   - {fileID: 11400000, guid: b924900b072a42c48bac138130f7a7cb, type: 2}
+  - {fileID: 11400000, guid: c4d6ddde653cf8a448a41e825324099a, type: 2}

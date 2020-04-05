@@ -10,7 +10,7 @@ public abstract class ESChargedAttack<T> : ESAttack<T> where T : Enemy
     [SerializeField] protected string state_onTargetLoss = "";
 
     protected float t_chargeFinish;
-
+    public bool isBoss;
 
     public override void Initialize(T enemy)
     {

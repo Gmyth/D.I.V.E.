@@ -29,6 +29,7 @@ public class Explosive : Recyclable
 
         CameraManager.Instance.Shaking(0.2f, 0.2f);
 
+        AudioManager.Singleton.PlayOnce("Grenade_explosion");
 
         Die();
     }

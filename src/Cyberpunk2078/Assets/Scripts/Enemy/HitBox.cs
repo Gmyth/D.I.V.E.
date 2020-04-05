@@ -169,8 +169,17 @@ public class HitBox : MonoBehaviour
 //                spark.gameObject.SetActive(true);
 
                 CameraManager.Instance.Shaking(0.20f, 0.10f, true);
+
+                Debug.LogError("id is:" + enemy.Data.Id);
+                if(enemy.Data.Id == 67)
+                {
+                    AudioManager.Singleton.PlayOnce("Boss_Hit");
+                }
+                else
+                {
+                    AudioManager.Singleton.PlayOnce("Hit");
+                }
                 
-                AudioManager.Singleton.PlayOnce("Hit");
             }
         }
     }

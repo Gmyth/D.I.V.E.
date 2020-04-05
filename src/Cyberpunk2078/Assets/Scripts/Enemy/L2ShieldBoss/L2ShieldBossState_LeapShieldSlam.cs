@@ -35,8 +35,12 @@ public class L2ShieldBossState_LeapShieldSlam : ESAttack<L2ShieldBoss>
     protected override string BeforeAttack()
     {
         if (t_phase == 0)
+        {
             animator.Play(animation_charge);
-        
+
+            AudioManager.Singleton.PlayOnce("Boss_jumpvoice");
+        }
+            
 
         if (t_charge >= leapChargeTime)
         {
@@ -49,6 +53,7 @@ public class L2ShieldBossState_LeapShieldSlam : ESAttack<L2ShieldBoss>
 
 
                 animator.Play(animation_beforeAttack);
+                
             }
             else if (t_leap >= attackPoint)
             {
@@ -74,6 +79,7 @@ public class L2ShieldBossState_LeapShieldSlam : ESAttack<L2ShieldBoss>
 
         rigidbody.velocity = v;
 
+        AudioManager.Singleton.PlayOnce("Boss_swing");
 
         return base.Attack();
     }

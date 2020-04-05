@@ -1096,11 +1096,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1414541704474522893, guid: b76153269bd3bd14fa0dc3caf4e37d47,
-        type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 1159890512}
     - target: {fileID: 1414541705139394032, guid: b76153269bd3bd14fa0dc3caf4e37d47,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -1111,6 +1106,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1414541704474522893, guid: b76153269bd3bd14fa0dc3caf4e37d47,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1159890512}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b76153269bd3bd14fa0dc3caf4e37d47, type: 3}
 --- !u!114 &5580370675080881891 stripped

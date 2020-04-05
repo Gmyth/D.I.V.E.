@@ -14,9 +14,10 @@ public class L2ShieldBossState_Throw : ESAttack<L2ShieldBoss>
 
 
         enemy.DisableHitBox(2);
+
         enemy.Throw(projectileObjectID);
 
-
+        AudioManager.Singleton.PlayOnce("Boss_toss");
         return "";
     }
 }
