@@ -38,14 +38,19 @@ public abstract class ESChasingAttack<T> : ESAttack<T> where T : Enemy
                 if (value)
                 {
                     if (chasingAnimation != "")
+                    {
                         animator.Play(chasingAnimation);
-
+                        AudioManager.Singleton.PlayEvent("Boss_walk");
+                    }
                     StartChasing();
                 }
                 else
                 {
                     if (idleAnimation != "")
+                    {
                         animator.Play(idleAnimation);
+                        AudioManager.Singleton.StopEvent("Boss_walk");
+                    }
 
                     StopChasing();
                 }

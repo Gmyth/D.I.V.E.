@@ -110,7 +110,7 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
             //Debug.LogError("Enmey id is:" + enemy.Data.Id);
             if (enemy.Data.Id == 67)
             {
-                Debug.LogError("Enter Boss_dash");
+                //Debug.LogError("Enter Boss_dash");
                 AudioManager.Singleton.PlayOnce("Boss_dash");
             }
             else

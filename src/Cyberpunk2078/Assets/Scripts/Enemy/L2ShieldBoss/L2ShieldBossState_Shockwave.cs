@@ -29,6 +29,8 @@ public class L2ShieldBossState_Shockwave : ESChargedAttack<L2ShieldBoss>
         {
             enemy.EmitShockwave();
             animator.Play(animation_attack);
+
+            AudioManager.Singleton.PlayOnce("Boss_attackwave");
         }
 
 

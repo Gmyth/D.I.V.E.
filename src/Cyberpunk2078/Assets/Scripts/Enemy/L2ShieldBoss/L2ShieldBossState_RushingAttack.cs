@@ -31,6 +31,7 @@ public class L2ShieldBossState_RushingAttack : ESAttack<L2ShieldBoss>
     {
         rigidbody.AddForce(rushForce * (enemy.transform.localScale.x > 0 ? Vector2.right : Vector2.left));
 
+        AudioManager.Singleton.PlayOnce("Boss_swing");
 
         return base.Attack();
     }

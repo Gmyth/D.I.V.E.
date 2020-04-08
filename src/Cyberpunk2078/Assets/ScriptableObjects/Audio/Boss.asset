@@ -20,3 +20,7 @@ MonoBehaviour:
   - event:/Enemy/Boss/Boss_dash
   - event:/Enemy/Boss/Boss_block
   - event:/Enemy/Boss/Boss_Hit
+  - event:/Enemy/Boss/Boss_laserbeam
+  - event:/Enemy/Boss/Boss_walk
+  - event:/Enemy/Boss/Boss_run
+  - event:/Enemy/Boss/Boss_attackwave
