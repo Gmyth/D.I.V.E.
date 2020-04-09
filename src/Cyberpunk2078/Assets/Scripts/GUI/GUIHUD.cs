@@ -134,7 +134,7 @@ public class GUIHUD : GUIWindow
     private void UpdateHp(int value)
     {
         for (int i = 0; i < hpGrid.childCount; ++i)
-            hpGrid.GetChild(i).gameObject.SetActive(i <= value);
+            hpGrid.GetChild(i).GetComponent<Animator>().SetBool("isActive", i <= value);
     }
 
     private void UpdateMaxHp(int value)
@@ -143,8 +143,8 @@ public class GUIHUD : GUIWindow
 
     private void UpdateSp(int sp, int osp)
     {
-        spGrid.GetChild(0).gameObject.SetActive(sp > 0);
-        spGrid.GetChild(1).gameObject.SetActive(osp > 0);
+        spGrid.GetChild(0).GetComponent<Animator>().SetBool("isActive", sp > 0);
+        spGrid.GetChild(1).GetComponent<Animator>().SetBool("isActive", osp > 0);
     }
 
     private void UpdateMaxSp(int value)
