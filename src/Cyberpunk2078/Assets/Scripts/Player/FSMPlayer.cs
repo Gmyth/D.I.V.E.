@@ -179,11 +179,14 @@ public abstract class PlayerState : State
     protected void Fire()
     {
         LinearMovement bullet = ObjectRecycler.Singleton.GetObject<LinearMovement>(0);
-        bullet.speed = 20;
+        bullet.speed = 25;
         bullet.initialPosition = playerCharacter.transform.position;
         bullet.orientation = playerCharacter.transform.parent.GetComponentInChildren<MouseIndicator>().GetAttackDirection();
         
         bullet.GetComponent<Bullet>().isFriendly = true;
+        bullet.GetComponent<Bullet>().Bounce = true;
+        bullet.GetComponent<Bullet>().bounceRatio = 1.5f;
+        bullet.GetComponent<Bullet>().maxBounceTimes = 3;
         bullet.transform.right = bullet.orientation;
 
         bullet.gameObject.SetActive(true);
@@ -301,6 +304,7 @@ public abstract class PlayerState : State
         {
             Player.CurrentPlayer.climbReady = true;
         }
+        
     }
 }
 

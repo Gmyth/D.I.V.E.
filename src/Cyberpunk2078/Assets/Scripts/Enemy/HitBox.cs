@@ -122,11 +122,13 @@ public class HitBox : MonoBehaviour
         {
             if (other.tag == "Enemy")
                 OnHitEnemy(other);
+            
+            else if (other.tag == "Ground")
+                OnHitGround(other);
+            
             else if (other.tag == "Platform" && other.GetComponent<SimpleBreakable>())
                 OnHitBreakable(other);
         }
-        else if (other.tag == "Ground")
-            OnHitGround(other);
         
         else if (other.tag == "Player")
             OnHitPlayer(other);
@@ -161,12 +163,12 @@ public class HitBox : MonoBehaviour
                 trail1.target = other.transform;
                 trail1.gameObject.SetActive(true);
                 
-//                var spark = ObjectRecycler.Singleton.GetObject<SingleEffect>(23);
-//                spark.transform.position = other.transform.position;
-//                spark.transform.right = transform.right;
-//                spark.transform.localScale = Vector3.one;
-//                spark.target = other.transform;
-//                spark.gameObject.SetActive(true);
+                var spark = ObjectRecycler.Singleton.GetObject<SingleEffect>(23);
+                spark.transform.position = other.transform.position;
+                spark.transform.right = transform.right;
+                spark.transform.localScale = Vector3.one;
+                spark.target = other.transform;
+                spark.gameObject.SetActive(true);
 
                 CameraManager.Instance.Shaking(0.20f, 0.10f, true);
                 
@@ -182,7 +184,21 @@ public class HitBox : MonoBehaviour
     
     protected virtual void OnHitGround(Collider2D other)
     {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 3.5f);
+        if (hit.collider != null) 
+        {
+            var bSpark = ObjectRecycler.Singleton.GetObject<SingleEffect>(24);
+            bSpark.transform.position = hit.point;
+            bSpark.transform.right = transform.right;
+            bSpark.gameObject.SetActive(true);
         
+            var spark = ObjectRecycler.Singleton.GetObject<SingleEffect>(23);
+            spark.transform.position = hit.point;
+            spark.transform.right = -transform.right;
+            spark.transform.localScale = Vector3.one;
+            spark.gameObject.SetActive(true);
+        }
+      
     }    
 
     protected virtual void OnHitPlayer(Collider2D other)
