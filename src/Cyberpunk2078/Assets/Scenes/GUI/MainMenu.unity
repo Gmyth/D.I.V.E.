@@ -368,6 +368,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5580370675080881890}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &567906989 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1414541704577564731, guid: b76153269bd3bd14fa0dc3caf4e37d47,
+    type: 3}
+  m_PrefabInstance: {fileID: 5580370675080881890}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &652517356
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,6 +493,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa80a7dc53093ad4facc91ec1de5d20c, type: 3}
+--- !u!1 &852445409 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1414541706495626369, guid: b76153269bd3bd14fa0dc3caf4e37d47,
+    type: 3}
+  m_PrefabInstance: {fileID: 5580370675080881890}
+  m_PrefabAsset: {fileID: 0}
 --- !u!20 &1159890512 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 2222602522128952545, guid: e5550ebe022f1ae4fb29822f0f26e18d,
@@ -1316,6 +1328,16 @@ PrefabInstance:
       propertyPath: m_Parameters.widthMultiplier
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 7457358081769736769, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: buttonTip
+      value: 
+      objectReference: {fileID: 567906989}
+    - target: {fileID: 7457358081769736769, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: powerDashCoolDown
+      value: 
+      objectReference: {fileID: 852445409}
     - target: {fileID: 2297519402833546977, guid: 30f904e572c0a79489e3033eaff79c6a,
         type: 3}
       propertyPath: m_IsActive

@@ -482,6 +482,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa80a7dc53093ad4facc91ec1de5d20c, type: 3}
+--- !u!1 &865187307 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1414541706495626369, guid: b76153269bd3bd14fa0dc3caf4e37d47,
+    type: 3}
+  m_PrefabInstance: {fileID: 5580370675080881890}
+  m_PrefabAsset: {fileID: 0}
 --- !u!20 &1159890512 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 2222602522128952545, guid: e5550ebe022f1ae4fb29822f0f26e18d,
@@ -806,6 +812,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce0b5aac6a3fc6245b4b4a3deeff14c3, type: 3}
+--- !u!1 &2003832764 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1414541704577564731, guid: b76153269bd3bd14fa0dc3caf4e37d47,
+    type: 3}
+  m_PrefabInstance: {fileID: 5580370675080881890}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2139235791
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -961,6 +973,16 @@ PrefabInstance:
       propertyPath: timerText
       value: 
       objectReference: {fileID: 5580370675080881891}
+    - target: {fileID: 7457358081769736769, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: buttonTip
+      value: 
+      objectReference: {fileID: 2003832764}
+    - target: {fileID: 7457358081769736769, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: powerDashCoolDown
+      value: 
+      objectReference: {fileID: 865187307}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30f904e572c0a79489e3033eaff79c6a, type: 3}
 --- !u!1001 &5580370675080881890

@@ -161,7 +161,7 @@ public class PSDashing : PlayerState
                 return;
             }
 
-
+            anim.Play("MainCharacter_Airborne", -1, 0f);
             playerCharacter.PowerDashReady = false;
             playerCharacter.LastPowerDash = Time.unscaledTime;
             TimeManager.Instance.StartFeverMotion();

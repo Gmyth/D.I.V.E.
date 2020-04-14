@@ -36,7 +36,7 @@ public class SimpleLaser : MonoBehaviour
                     Vector3 KnockBackDir = transform.rotation.z != 0 ? new Vector3((other.transform.position - transform.position).normalized.x,0,0):
                             new Vector3(0,(other.transform.position - transform.position).normalized.y,0);
 
-                    PlayerCharacter.Singleton.Knockback(KnockBackDir,10f,0.3f);
+                    PlayerCharacter.Singleton.Knockback(KnockBackDir,20f,0.3f);
                     
                     
                     
