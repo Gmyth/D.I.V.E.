@@ -31,6 +31,7 @@ public class Bullet : Recyclable
         hunchTriggered = false;
         numHitsRemaining = numHits;
         bounceCounter = 0;
+        GetComponent<TrailRenderer>().Clear();
     }
 
 
@@ -161,6 +162,8 @@ public class Bullet : Recyclable
                 //GetComponent<LinearMovement>().speed *= 1.5f;
                 GetComponent<LinearMovement>().orientation = GetComponent<LinearMovement>().orientation * -1;
                 GetComponent<LinearMovement>().spawnTime = Time.time;
+                
+                GetComponent<TrailRenderer>().Clear();
                 
                 var spark = ObjectRecycler.Singleton.GetObject<SingleEffect>(23);
                 spark.transform.position = transform.position;

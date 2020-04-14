@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -10,10 +11,12 @@ public class PlayerCharacter : Dummy
 
 
     [SerializeField] private FSMPlayer fsm;
-
+    public float invulnerableDuration = 0.5f;
+    private float lastHit;
     public Transform SpriteHolder;
     public GameObject groundDust;
     public GameObject FeverVFX;
+    public GameObject OverloadVFX;
     public GameObject Spark;
     //public GUITutorial tutorial;
    
@@ -23,7 +26,7 @@ public class PlayerCharacter : Dummy
     private float lastKillStreakDecaySecond;
     private Player player;
     private new Rigidbody2D rigidbody;
-
+        
     public int currentDialogueID = -1;
     public Action[] currentDialogueCallbacks = null;
 
@@ -100,7 +103,11 @@ public class PlayerCharacter : Dummy
     public override float ApplyDamage(float rawDamage)
     {
         Debug.Log(LogUtility.MakeLogStringFormat(name, "Take {0} damage.", rawDamage));
-
+        if (lastHit + invulnerableDuration > Time.time)
+        {
+            // still invulnerable
+            return 0;
+        }
 
         if (rawDamage <= 0)
             return 0;
@@ -118,14 +125,27 @@ public class PlayerCharacter : Dummy
         {
             AudioManager.Singleton.PlayEvent("LowHealth");
         }
-        else
-        {
-            
-        }
 
+        lastHit = Time.time;
+        StartCoroutine(Blink());
         
-
+        
         return result.previousValue - result.currentValue;
+    }
+
+    private IEnumerator Blink()
+    {
+        int Counter = 0;
+        while (lastHit + invulnerableDuration > Time.time)
+        {
+            SpriteHolder.GetComponent<SpriteRenderer>().color = Counter % 2 == 0 ? Color.grey : Color.white;
+            Counter++;
+            yield return new WaitForSeconds(0.1f);
+        }
+        
+        SpriteHolder.GetComponent<SpriteRenderer>().color = Color.white;
+        yield return null;
+        yield return null;
     }
 
     public float Heal(float rawHeal)
@@ -199,7 +219,7 @@ public class PlayerCharacter : Dummy
 
             statistics.Modify(StatisticType.Osp, amount, 0, maxSp);
 
-
+            OverloadVFX.SetActive(true);
             return true;
         }
         else
@@ -229,7 +249,7 @@ public class PlayerCharacter : Dummy
         if (value >= 1)
         {
             result = statistics.Modify(StatisticType.Osp, -value, 0, statistics[StatisticType.MaxOsp]);
-
+            OverloadVFX.SetActive(false);
             usedEnergy += result.previousValue - result.currentValue;
         }
         
@@ -322,7 +342,7 @@ public class PlayerCharacter : Dummy
         }
 
     }
-
+        
 
     public void UpdatePowerDashUI()
     {
