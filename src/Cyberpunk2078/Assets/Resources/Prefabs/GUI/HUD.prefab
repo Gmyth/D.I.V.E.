@@ -3667,6 +3667,7 @@ MonoBehaviour:
   feverBlinkSpeed: 5
   textDuration: 5
   textSpeed: 0.02
+  enableAnimation: 1
 --- !u!1 &7261081756252794844
 GameObject:
   m_ObjectHideFlags: 0

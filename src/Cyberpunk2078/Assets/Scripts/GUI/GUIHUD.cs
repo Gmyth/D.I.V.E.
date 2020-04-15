@@ -22,17 +22,17 @@ public class GUIHUD : GUIWindow
     [SerializeField] private float feverBlinkSpeed = 5;
     [SerializeField] private float textDuration = 5;
     [SerializeField] private float textSpeed = 0.02f;
+    [SerializeField] private bool enableAnimation = true;
 
     private PlayerCharacter playerCharacter;
 
     private Coroutine textCoroutine = null;
     private Coroutine feverCoroutine = null;
 
-    [HideInInspector]
-    public bool isInDialogue = false;
 
     public override void OnOpen(params object[] args)
     {
+        resourceInspector.SetActive(true);
         dialogueWidget.Hide();
         enemyWidget.Hide();
 
@@ -77,12 +77,10 @@ public class GUIHUD : GUIWindow
     {
         resourceInspector.SetActive(false);
         dialogueWidget.Show(dialogue, HideDialogue);
-
     }
 
     public void ShowDialogue(DialogueData dialogue, params Action[] callbacks)
     {
-        isInDialogue = true;
         Action[] newCallbacks = new Action[callbacks.Length + 1];
         callbacks.CopyTo(newCallbacks, 0);
         newCallbacks[callbacks.Length] = HideDialogue;
@@ -96,7 +94,11 @@ public class GUIHUD : GUIWindow
     {
         resourceInspector.SetActive(true);
         dialogueWidget.Hide();
-        isInDialogue = false;
+
+
+        UpdateHp(Mathf.RoundToInt(playerCharacter[StatisticType.Hp]));
+        UpdateSp(Mathf.RoundToInt(playerCharacter[StatisticType.Sp]), Mathf.RoundToInt(playerCharacter[StatisticType.Osp]));
+        UpdateFever(Mathf.RoundToInt(playerCharacter[StatisticType.UltimateEnergy]));
     }
 
 
@@ -136,20 +138,30 @@ public class GUIHUD : GUIWindow
     }
 
 
-    private void UpdateHp(int value)
+    private void UpdateHp(int value, bool animation = true)
     {
         for (int i = 0; i < hpGrid.childCount; ++i)
-            hpGrid.GetChild(i).GetComponent<Animator>().SetBool("isActive", i <= value);
+            hpGrid.GetChild(i).GetComponent<Animator>().SetBool("isActive", i < value);
+
+        if (!enableAnimation || !animation)
+            for (int i = 0; i < hpGrid.childCount; ++i)
+                hpGrid.GetChild(i).GetComponent<Animator>().Play("Start");
     }
 
     private void UpdateMaxHp(int value)
     {
     }
 
-    private void UpdateSp(int sp, int osp)
+    private void UpdateSp(int sp, int osp, bool animation = true)
     {
         spGrid.GetChild(0).GetComponent<Animator>().SetBool("isActive", sp > 0);
         spGrid.GetChild(1).GetComponent<Animator>().SetBool("isActive", osp > 0);
+
+        if (!enableAnimation || !animation)
+        {
+            spGrid.GetChild(0).GetComponent<Animator>().Play("Start");
+            spGrid.GetChild(1).GetComponent<Animator>().Play("Start");
+        }
     }
 
     private void UpdateMaxSp(int value)
