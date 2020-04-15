@@ -210,7 +210,15 @@ public class HitBox : MonoBehaviour
             if (hit.type == Hit.Type.Dash)
                 AudioManager.Singleton.PlayOnce("Hit_by_dash");
             else if (hit.type == Hit.Type.Melee)
-                AudioManager.Singleton.PlayOnce("Hit_by_sword");
+            {
+                
+                if(hit.source.GetComponent<L2ShieldBoss>() != null)
+                {
+                    AudioManager.Singleton.PlayOnce("Hit_by_shield");
+                }
+                else
+                    AudioManager.Singleton.PlayOnce("Hit_by_sword");
+            }
             else if (hit.type == Hit.Type.Bullet)
             {
                 AudioManager.Singleton.PlayOnce("Hit_by_laser");
