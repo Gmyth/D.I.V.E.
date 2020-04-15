@@ -186,6 +186,7 @@ public abstract class Enemy : Dummy
     protected bool isTurning = false;
 
     public Vector3 lastCheckPointTransform;
+    public bool isDashing = false;
     
     //Physics related --- Slow motion implementation
     protected Rigidbody2D rb2d;
@@ -368,6 +369,7 @@ public abstract class Enemy : Dummy
     {
         data = DataTableManager.singleton.GetEnemyData(typeID);
         rb2d = GetComponent<Rigidbody2D>();
+
         defaultDrag = rb2d.drag;
         defaultMass = rb2d.mass;
 

@@ -30,6 +30,15 @@ public class GUIHUD : GUIWindow
     private Coroutine feverCoroutine = null;
 
 
+    public bool IsInDialogue
+    {
+        get
+        {
+            return dialogueWidget.gameObject.activeSelf;
+        }
+    }
+
+
     public override void OnOpen(params object[] args)
     {
         resourceInspector.SetActive(true);

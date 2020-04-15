@@ -123,7 +123,7 @@ public class PSAirborne : PlayerState
         previous = previousState;
 
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-        rb2d.gravityScale = playerCharacter.DefaultGravity;
+        //rb2d.gravityScale = playerCharacter.Gravity;
 
         anim.Play("MainCharacter_Airborne", -1, 0f);
     }

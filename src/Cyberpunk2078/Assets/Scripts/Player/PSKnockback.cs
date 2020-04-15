@@ -32,8 +32,7 @@ public class PSKnockback : PlayerState
 
         for (; t_duration >= t_blink; t_blink += BlinkInterval)
             playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().color = (counter++ & 1) == 0 ? Color.white : Color.grey;
-
-
+        
         return Name;
     }
 
@@ -47,7 +46,7 @@ public class PSKnockback : PlayerState
         t_duration = 0;
         t_blink = BlinkInterval;
         counter = 0;
-
+        rigidbody.gravityScale = 3f;
         rigidbody.drag = 0;
 
 
@@ -58,7 +57,7 @@ public class PSKnockback : PlayerState
     {
         rigidbody.drag = defaultDrag;
 
-
+        rigidbody.gravityScale = playerCharacter.Gravity;
         playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().color = Color.white;
     }
 }

@@ -30,3 +30,7 @@ MonoBehaviour:
   - event:/Player/PlayerSwing/Swing
   - event:/Player/Negative_dash
   - event:/Player/Hit
+  - event:/Player/Player_dead
+  - event:/Player/Hit_by_sword
+  - event:/Player/Hit_by_dash
+  - event:/Player/Hit_by_laser

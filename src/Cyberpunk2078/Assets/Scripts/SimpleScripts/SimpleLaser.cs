@@ -32,7 +32,14 @@ public class SimpleLaser : MonoBehaviour
                 if (PlayerCharacter.Singleton[StatisticType.Hp] > 0)
                 {
                     //Take damage
-                    PlayerCharacter.Singleton.ApplyDamage(100);
+                    PlayerCharacter.Singleton.ApplyDamage(1);
+                    Vector3 KnockBackDir = transform.rotation.z != 0 ? new Vector3((other.transform.position - transform.position).normalized.x,0,0):
+                            new Vector3(0,(other.transform.position - transform.position).normalized.y,0);
+
+                    PlayerCharacter.Singleton.Knockback(KnockBackDir,20f,0.3f);
+                    
+                    
+                    
                     //Respawn at last checkpoint
                     //other.transform.position = RespawnPoint.position;
                 }

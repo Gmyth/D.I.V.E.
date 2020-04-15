@@ -23,6 +23,12 @@ public class Recyclable : MonoBehaviour
 
     protected virtual void OnEnable()
     {
+        if (GetComponent<ParticleSystem>())
+        {
+            GetComponent<ParticleSystem>().Simulate(0.0f, true, true);
+            GetComponent<ParticleSystem>().Clear();
+            GetComponent<ParticleSystem>().Play(true);
+        }
         if (lifeSpan > 0)
             StartCoroutine(RecycleAfter(lifeSpan));
     }
