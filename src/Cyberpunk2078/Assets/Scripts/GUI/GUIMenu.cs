@@ -9,19 +9,20 @@ public class GUIMenu : GUIWindow
 {
     public GameObject NewGame;
     public GameObject LoadGame;
-    public GameObject Options;
+    public GameObject TutorialButton;
     public GameObject quit;
+    public GameObject Tutorial;
 
     public float SpeedFactor = 1;
 
     private UnityAction Action;
-
+    private bool InTutorial = false;
     // Start is called before the first frame update
     void Start()
     {
         quit.GetComponent<Button>().onClick.AddListener(()=> ButtonClicked(quit));
         LoadGame.GetComponent<Button>().onClick.AddListener(() => ButtonClicked(LoadGame));
-        Options.GetComponent<Button>().onClick.AddListener(() => ButtonClicked(Options));
+        TutorialButton.GetComponent<Button>().onClick.AddListener(() => ButtonClicked(TutorialButton));
         NewGame.GetComponent<Button>().onClick.AddListener(() => ButtonClicked(NewGame));
         AudioManager.Singleton.PlayEvent("Title");
     }
@@ -29,7 +30,13 @@ public class GUIMenu : GUIWindow
     // Update is called once per frame
     void Update()
     {
-        
+        if(InTutorial == true)
+        {
+            if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+            {
+                Tutorial.SetActive(false);
+            }
+        }
     }
 
     private void ButtonClicked(GameObject obj)
@@ -38,7 +45,7 @@ public class GUIMenu : GUIWindow
             Action += UI_NewGame;
         else if (obj.name == "Load Game")
             Action += UI_LoadGame;
-        else if (obj.name == "Options")
+        else if (obj.name == "Tutorial")
             Action += UI_Options;
         else if (obj.name == "Quit")
             Action += UI_Quit;
@@ -58,7 +65,8 @@ public class GUIMenu : GUIWindow
 
     void UI_Options()
     {
-
+        InTutorial = true;
+        Tutorial.SetActive(true);
     }
     void UI_Quit()
     {

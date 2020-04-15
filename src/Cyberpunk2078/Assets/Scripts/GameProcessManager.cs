@@ -260,6 +260,20 @@ public class GameProcessManager : MonoBehaviour
         GUIManager.Singleton.Open("LevelSelection");
     }
 
+    public void OpenTutorial()
+    {
+        //Camera.main.GetComponent<FadeCamera>().RedoFade();
+        //if (GUIManager.Singleton.IsInViewport("PauseMenu"))
+        //    GUIManager.Singleton.Close("PauseMenu");
+
+        //if (GUIManager.Singleton.IsInViewport("MainMenu"))
+        //    GUIManager.Singleton.Close("MainMenu");
+
+        //GUIManager.Singleton.Close("HUD");
+
+
+    }
+
     public GameObject GetCurrentDummies()
     {
         if(currentLevelIndex != -1)

@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82d422f10bece034c826ac2d010a5568, type: 3}
   m_Name: Levels
   m_EditorClassIdentifier: 
-  Levels:
-  - id: 1
-    name: Awakening
-  - id: 2
-    name: Hotzone
-  - id: 3
-    name: Chasing
-  - id: 4
-    name: Boss
+  SerializedEntries:
+  - id: 0
+    name: 
+  - id: 0
+    name: 
+  - id: 0
+    name: 
+  - id: 0
+    name: 
