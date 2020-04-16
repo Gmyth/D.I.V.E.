@@ -129,9 +129,13 @@ public class CheckPointManager : MonoBehaviour
         //Restore all enemies position
         for (int i = 0; i < Enemies.Count; i++)
         {
-            var lastPos = Enemies[i].GetComponent<Enemy>().lastCheckPointTransform;
-            Enemies[i].transform.position = lastPos;
-            Enemies[i].GetComponent<Enemy>().Reset();
+            if(Enemies[i].GetComponent<Enemy>() != null)
+            {
+                var lastPos = Enemies[i].GetComponent<Enemy>().lastCheckPointTransform;
+                Enemies[i].transform.position = lastPos;
+                Enemies[i].GetComponent<Enemy>().Reset();
+            }
+            
         }
         savedEnemies.Clear();
     }

@@ -31,7 +31,7 @@ public class PSTutorial_PowerDash : PlayerState
         Vector2 idealDirection = PlayerCharacter.Singleton.transform.right.normalized;
         if (PlayerCharacter.Singleton.transform.parent.GetComponentInChildren<MouseIndicator>().DirectionNotification(idealDirection, 15f))
         {
-            if (Input.GetKeyDown(KeyCode.R) && !playerCharacter.isInTutorial)
+            if (Input.GetButtonDown("Special1") && !playerCharacter.isInTutorial)
             {
                 Player.CurrentPlayer.triggerReady = false;
                 PlayerCharacter.Singleton.PowerDash = true;
