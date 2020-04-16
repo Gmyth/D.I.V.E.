@@ -201,29 +201,29 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
     /// <summary> ------------------------------------------------------------------------------------------------
     /// Tutorial: Power Dash
     /// </summary>
-    private TimelineManager timelineManager_PowerDashTutorial;
-    public void IntroducePowerDash(TimelineManager timelineManager)
-    {
-        timelineManager_PowerDashTutorial = timelineManager;
+    //private TimelineManager timelineManager_PowerDashTutorial;
+    //public void IntroducePowerDash(TimelineManager timelineManager)
+    //{
+    //    timelineManager_PowerDashTutorial = timelineManager;
 
-        timelineManager_PowerDashTutorial.PlayTimelineInIndex(0);
+    //    timelineManager_PowerDashTutorial.PlayTimelineInIndex(0);
 
-        PlayerCharacter.Singleton.GetFSM().CurrentStateName = "InTutorial_PowerDash";
+    //    PlayerCharacter.Singleton.GetFSM().CurrentStateName = "InTutorial_PowerDash";
 
-        StartCoroutine(ShowGUIButtonAfterDelay(3.5f, "Up"));
-    }
+    //    StartCoroutine(ShowGUIButtonAfterDelay(3.5f, "LongDash"));
+    //}
 
-    public void AfterPowerDashTutorial()
-    {
-        CameraManager.Instance.Idle();
-        PlayerCharacter.Singleton.SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
-        //TimeManager.Instance.endSlowMotion(0f);
+    //public void AfterPowerDashTutorial()
+    //{
+    //    CameraManager.Instance.Idle();
+    //    PlayerCharacter.Singleton.SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
+    //    //TimeManager.Instance.endSlowMotion(0f);
 
-        GUITutorial.Singleton.Hide();
+    //    GUITutorial.Singleton.Hide();
 
 
-        PlayerCharacter.Singleton.transform.parent.GetComponentInChildren<MouseIndicator>().ResetColor();
-    }
+    //    PlayerCharacter.Singleton.transform.parent.GetComponentInChildren<MouseIndicator>().ResetColor();
+    //}
 
 
     private IEnumerator ShowGameObjectAfterDelay(float delayTime, GameObject targetObject)
@@ -235,13 +235,13 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         PlayerCharacter.Singleton.isInTutorial = false;
     }
 
-    private IEnumerator ShowGUIButtonAfterDelay(float delayTime, string buttonName)
-    {
-        yield return new WaitForSecondsRealtime(delayTime);
-        GUITutorial.Singleton.Show(buttonName);
+    //private IEnumerator ShowGUIButtonAfterDelay(float delayTime, string buttonName)
+    //{
+    //    yield return new WaitForSecondsRealtime(delayTime);
+    //    GUITutorial.Singleton.Show(buttonName);
 
-        yield return new WaitForSecondsRealtime(0.5f);
-        PlayerCharacter.Singleton.isInTutorial = false;
-    }
+    //    yield return new WaitForSecondsRealtime(0.5f);
+    //    PlayerCharacter.Singleton.isInTutorial = false;
+    //}
 
 }
