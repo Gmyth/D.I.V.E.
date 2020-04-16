@@ -133,6 +133,7 @@ public class CameraManager : MonoBehaviour {
 	public void ChangeTarget(GameObject focusPoint)
 	{
 		mainTarget = focusPoint;
+		currentState = CameraState.Idle;
 		targetList.Clear();
 		targetList.Add(focusPoint);
 	}
@@ -155,15 +156,16 @@ public class CameraManager : MonoBehaviour {
 
 	void LateUpdate()
 	{
-		
-		
+		if (!mainTarget) return;
 		float shakeX = 0;
 		float shakeY = 0;
+
 		if (shake)
 		{
 			shakeX = Random.Range(-1f, 1f) * shakeMagnitude;
 			shakeY = Random.Range(-1f, 1f) * shakeMagnitude;
 		}
+
 		var camera = GetComponentInChildren<Camera>();
 		var targetIndicator = findClosestIndicator();
 		switch (currentState)
