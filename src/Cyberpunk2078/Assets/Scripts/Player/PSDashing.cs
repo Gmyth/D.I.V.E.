@@ -45,7 +45,7 @@ public class PSDashing : PlayerState
         if (playerCharacter.PowerDash)
         {
             dashDelayTime = 0.3f;
-            dashReleaseTime *= 2.15f;
+            dashReleaseTime *= 1.3f;
         }
         
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
@@ -125,21 +125,8 @@ public class PSDashing : PlayerState
         }
 
         //prevent ground-hitting shifting
-        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,1.5f);
-        if (hit1.collider != null)
-        {
-            if(hit1.transform.CompareTag("Ground")){
-                if( Mathf.Abs(hit1.normal.x) > 0f)rb2d.velocity = new Vector2(rb2d.velocity.x * 0.4f, 0 );
-                if( Mathf.Abs(hit1.normal.y) > 0f)rb2d.velocity =  new Vector2(0, rb2d.velocity.y * 0.8f);
-            }
-            else if(hit1.transform.CompareTag("Platform") && rb2d.velocity.normalized.y < 0)
-            {
-                //upper ward
-                if( Mathf.Abs(hit1.normal.x) > 0f)rb2d.velocity = new Vector2(rb2d.velocity.x * 0.4f, 0 );
-                if( Mathf.Abs(hit1.normal.y) > 0f)rb2d.velocity =  new Vector2(0, rb2d.velocity.y * 0.8f);
-            }
-        }
-
+        bounceCheck();
+        GetGroundType();
 
         // Player is grounded and dash has finished
         if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime  < Time.time)
@@ -204,7 +191,8 @@ public class PSDashing : PlayerState
 
 
         // Add Ghost trail
-        if(!playerCharacter.InKillStreak) playerCharacter.SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
+        playerCharacter.SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
+        
         lastDashSecond = Time.time;
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
 
@@ -253,11 +241,47 @@ public class PSDashing : PlayerState
 
         // reset sprite flip
         playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipY = false;
+        playerCharacter.SpriteHolder.localScale = Vector3.one;
+        
+        
+        playerCharacter.groundDust.transform.localPosition = Vector3.zero;
+        playerCharacter.groundDust.GetComponent<ParticleSystem>().Stop();
 
         // Kill Trail
         if(!playerCharacter.InKillStreak) playerCharacter.SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
 
         if (playerCharacter.PowerDash) playerCharacter.PowerDash = false;
+    }
+
+    private void bounceCheck()
+    {
+        var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
+        
+        //prevent ground-hitting shifting
+        var direction = rb2d.velocity.normalized;
+        RaycastHit2D hitM = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,1.5f);
+        RaycastHit2D hitL = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(1.0f,0,0),rb2d.velocity.normalized,1.5f);
+        RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-1.0f,0,0),rb2d.velocity.normalized,1.5f);
+        if (hitM.collider != null)
+        {
+
+            if(hitM.transform.CompareTag("Ground")){
+                if( Mathf.Abs(hitM.normal.x) > 0f)rb2d.velocity = new Vector2(rb2d.velocity.x * 0.4f, 0 );
+                if( Mathf.Abs(hitM.normal.y) > 0f)rb2d.velocity =  new Vector2(0, rb2d.velocity.y * 0.8f);
+                    
+                // end dash
+                lastDashSecond = 0f;
+            }
+            else if(hitM.transform.CompareTag("Platform") && rb2d.velocity.normalized.y < 0)
+            {
+                //upper ward
+                if( Mathf.Abs(hitM.normal.x) > 0f)rb2d.velocity = new Vector2(rb2d.velocity.x * 0.4f, 0 );
+                if( Mathf.Abs(hitM.normal.y) > 0f)rb2d.velocity =  new Vector2(0, rb2d.velocity.y * 0.8f);
+                    
+                // end dash
+                lastDashSecond = 0f;
+            }
+        }
     }
 
     private void forceApply()
@@ -294,7 +318,9 @@ public class PSDashing : PlayerState
         //attack.transform.localScale = new Vector3(4,4,1);
         attack.gameObject.SetActive(true);
         
-
+        playerCharacter.groundDust.transform.localPosition = new Vector3(0,-0.5f,0);
+        playerCharacter.groundDust.GetComponent<ParticleSystem>().Play();
+        
         var Dust = ObjectRecycler.Singleton.GetObject<SingleEffect>(9);
         Dust.transform.position = playerCharacter.transform.position +  direction * 0.5f;
         //Dust.setTarget(playerCharacter.transform);
@@ -317,15 +343,15 @@ public class PSDashing : PlayerState
 
         if (playerCharacter.PowerDash)
         {
-            rb2d.AddForce(direction * dashForce * 200f * 1.2f);
+            rb2d.AddForce(direction * dashForce * 200f * 1.8f);
         }
         else
         {
             rb2d.AddForce(direction * dashForce * 200f * 1);
         }
-
+        playerCharacter.SpriteHolder.localScale = new Vector3(2f,0.5f,1f);
         //Camera Tricks
-
         CameraManager.Instance.Shaking(0.1f,0.10f);
+        CameraManager.Instance.Follow(0.2f);
     }
 }

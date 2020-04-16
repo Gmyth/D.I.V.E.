@@ -71,6 +71,7 @@ public class TimeManager : MonoBehaviour
     
     private IEnumerator slowMotion(float delta, float targetScale,float duration,float endDuration)
     {
+        if (targetScale == 0) Time.timeScale = 0.5f; // lower start
         var times = (int)(duration / delta);
         var deltaScale = (Time.timeScale - targetScale)/times;
         if (duration == 0) Time.timeScale = targetScale;

@@ -84,7 +84,7 @@ MonoBehaviour:
     knockback: 8
     knockbackDuration: 0.5
   - id: 11
-    type: 0
+    type: 48
     damage: 1
     damageRange: 0
     damageDuration: 0

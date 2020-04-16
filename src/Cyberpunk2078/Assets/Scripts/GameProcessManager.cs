@@ -16,6 +16,7 @@ public class GameProcessManager : MonoBehaviour
     private int currentLevelIndex = -1;
     private GameObject currentLevel = null;
     private List<GameObject> LoadedLevel = new List<GameObject>();
+    private StatisticSystem statistics;
 
 
     public Event<int> OnStartLevel { get; private set; } = new Event<int>();
@@ -103,13 +104,22 @@ public class GameProcessManager : MonoBehaviour
 
             PlayerHolder.transform.position = start_pos.transform.position;
             
-            PlayerCharacter.Singleton.GetComponent<SimpleTimer>().GetTimer();
+            //PlayerCharacter.Singleton.GetComponent<SimpleTimer>().GetTimer();
 
             if(ResetingStats == true)
             {
                 PlayerCharacter playerCharacter = PlayerHolder.GetComponentInChildren<PlayerCharacter>();
                 playerCharacter.ResetStatistics();
             }
+
+            //Ensure FSM works from start
+            PlayerCharacter.Singleton.GetFSM().Reboot();
+
+            //Ensure dash energy
+            Player.CurrentPlayer.energyLocked = false;
+            Player.CurrentPlayer.overloadEnergyLocked = false;
+
+            
         }
     }
 
@@ -122,6 +132,7 @@ public class GameProcessManager : MonoBehaviour
         currentLevelIndex = index;
         currentLevel = Instantiate(LevelDictionary[index]);
         LoadedLevel.Add(currentLevel);
+
 
         foreach(GameObject obj in currentLevel.GetComponent<LevelInfo>().breakable)
         {
@@ -155,12 +166,16 @@ public class GameProcessManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !GUIManager.Singleton.IsInViewport("PauseMenu") && !GUIManager.Singleton.IsInViewport("MainMenu") && !GUIManager.Singleton.IsInViewport("EndScreen") && currentLevelIndex != -1)
         {
+            AudioManager.Singleton.StopBus("UI");
             //Camera.main.GetComponent<FadeCamera>().RedoFade();
             GUIManager.Singleton.Open("PauseMenu");
-            GUIManager.Singleton.Close("HUD");
+            GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").gameObject.SetActive(false);
             PlayerHolder.GetComponentInChildren<MouseIndicator>().Hide();
             TimeManager.Instance.Pause();
-            PlayerCharacter.Singleton.GetFSM().CurrentStateName = "NoInput";
+
+            if(!GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").IsInDialogue)
+                PlayerCharacter.Singleton.GetFSM().CurrentStateName = "NoInput";
+            
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
@@ -172,10 +187,12 @@ public class GameProcessManager : MonoBehaviour
     {
 
         GUIManager.Singleton.Close("PauseMenu");
-        GUIManager.Singleton.Open("HUD", PlayerHolder.GetComponentInChildren<PlayerCharacter>());
+        GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").gameObject.SetActive(true);
         PlayerHolder.GetComponentInChildren<MouseIndicator>().Show();
         TimeManager.Instance.Resume();
-        PlayerCharacter.Singleton.GetFSM().CurrentStateName = "Idle";
+
+        if(!GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").IsInDialogue)
+            PlayerCharacter.Singleton.GetFSM().Reboot();
     }
 
     public void BK_MainMenu()
@@ -210,8 +227,8 @@ public class GameProcessManager : MonoBehaviour
         PlayerHolder.GetComponentInChildren<GhostSprites>().KillSwitchEngage();
         ObjectRecycler.Singleton.RecycleAll();
 
-        
-        
+        PlayerHolder.GetComponentInChildren<MouseIndicator>().Show();
+
         PlayerHolder.SetActive(false);
 
 
@@ -232,6 +249,8 @@ public class GameProcessManager : MonoBehaviour
 
         if(GUIManager.Singleton.IsInViewport("MainMenu"))
             GUIManager.Singleton.Close("MainMenu");
+
+        GUIManager.Singleton.Close("HUD");
 
         if (LoadedLevel.Count != 0)
         {
@@ -259,5 +278,60 @@ public class GameProcessManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    public IEnumerator LoadingScreen(int TargetLevelIndex, GameObject gameObject)
+    {
+        Camera.main.GetComponent<FadeCamera>().RedoFade();
+
+        GUIManager.Singleton.Close("HUD");
+
+        GUIManager.Singleton.Open("Loading");
+
+        
+
+        yield return null;
+
+        float duration = 1f;
+        float normalizedTime = 0;
+
+        while(normalizedTime < 1f)
+        {
+            normalizedTime += Time.deltaTime / duration;
+            yield return null;
+        }
+
+        GUIManager.Singleton.GetGUIWindow<GUILoading>("Loading").LevelInfoAnimation(TargetLevelIndex);
+
+        yield return new WaitForSeconds(2f);
+
+        GameObject nextLevel = LoadLevel(TargetLevelIndex);
+
+        InitPlayer(nextLevel, false);
+
+        DestroyLevel(gameObject);
+
+        InitCamera();
+
+        CheckPointManager.Instance.Initialize();
+
+        //Init timer
+        SimpleTimer timer = PlayerCharacter.Singleton.GetComponent<SimpleTimer>();
+        timer.GetTimer();
+
+        Camera.main.GetComponent<FadeCamera>().RedoFade();
+
+     
+       
+
+        //Debug.LogError("DSWADAWD");
+        GUIManager.Singleton.Close("Loading");
+
+        GUIManager.Singleton.Open("HUD", PlayerCharacter.Singleton);
+    }
+
+    public LevelInfo GetLevelInfo()
+    {
+        return currentLevel.GetComponent<LevelInfo>();
     }
 }

@@ -31,7 +31,7 @@ MonoBehaviour:
     weights:
     - data: ChasingShieldSlam
       weight: 80
-    - data: LaserLeap
+    - data: Leap
       weight: 20
   nearRange: 6
   nearBehaviorSelector:

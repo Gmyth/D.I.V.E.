@@ -25,15 +25,17 @@ public class SimpleChargePoint : MonoBehaviour
     public void OnEnergyCharge() 
     {
         PlayerCharacter.Singleton.AddOverLoadEnergy(1);
+        GetComponent<SpriteRenderer>().color = Color.gray;
         OnDrain();
     }
 
     public void OnDrain()
     {
         isReady = false;
-        GetComponent<SpriteRenderer>().color = Color.black;
 
+        GetComponent<Animator>().Play("ChargePointActive",0,0);
         StartCoroutine(Recover());
+        GetComponentInChildren<ParticleSystem>().Play();
     }
 
 
@@ -62,8 +64,10 @@ public class SimpleChargePoint : MonoBehaviour
 
     private IEnumerator Recover()
     {
+        GetComponentInChildren<ParticleSystem>().Stop();
         yield return new WaitForSeconds(RecoverTime);
         isReady = true;
         GetComponent<SpriteRenderer>().color = chargedColor;
+        GetComponent<Animator>().Play("ChargePointMuted",0,0);
     }
 }
