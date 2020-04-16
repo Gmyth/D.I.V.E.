@@ -29,15 +29,15 @@ public class PSClimb : PlayerState
             playerCharacter.ActivateFever();
         }
         
-        if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
+        if (Input.GetButtonDown("Dashing") || (Input.GetAxis("RightTrigger") > 0 && Player.CurrentPlayer.RightTriggerReady))
         {
-            Player.CurrentPlayer.triggerReady = false;
+            Player.CurrentPlayer.RightTriggerReady = false;
             return "Dashing";
         }
         
-        if (Input.GetButtonDown("Special1"))
+        if (Input.GetButtonDown("Special1") || (Input.GetAxis("LeftTrigger") > 0 && Player.CurrentPlayer.LeftTriggerReady))
         {
-            Player.CurrentPlayer.triggerReady = false;
+            Player.CurrentPlayer.LeftTriggerReady = false;
             PlayerCharacter.Singleton.PowerDash = true;
             return "Dashing";
         }

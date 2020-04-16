@@ -17,7 +17,7 @@ public class InLevelTutorialCall : MonoBehaviour
 
     public void Call_PowerDashIntroduce(TimelineManager timelineManager)
     {
-        SimpleTutorialManager.Instance.IntroducePowerDash(timelineManager);
+        PowerDashTutorial.Instance.IntroducePowerDash(timelineManager);
     }
 
 }

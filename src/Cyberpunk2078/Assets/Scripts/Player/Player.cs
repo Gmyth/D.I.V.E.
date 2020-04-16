@@ -34,8 +34,8 @@ public class Player
     public bool energyLocked;
     public bool overloadEnergyLocked;
 
-    public bool triggerReady;
-    
+    public bool RightTriggerReady;
+    public bool LeftTriggerReady;
     public float knockBackDuration;
 
     public float FeverFactor = 1.3f;
