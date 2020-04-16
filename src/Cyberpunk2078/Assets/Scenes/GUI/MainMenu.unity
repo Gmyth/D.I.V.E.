@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1034,6 +1034,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2522931708320373758, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7457358083262120160, guid: 30f904e572c0a79489e3033eaff79c6a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1099,25 +1104,15 @@ PrefabInstance:
       propertyPath: timerText
       value: 
       objectReference: {fileID: 5580370675080881891}
-    - target: {fileID: 7457358081769736769, guid: 30f904e572c0a79489e3033eaff79c6a,
-        type: 3}
-      propertyPath: buttonTip
-      value: 
-      objectReference: {fileID: 567906989}
-    - target: {fileID: 7457358081769736769, guid: 30f904e572c0a79489e3033eaff79c6a,
-        type: 3}
-      propertyPath: powerDashCoolDown
-      value: 
-      objectReference: {fileID: 852445409}
-    - target: {fileID: 1134819434, guid: 30f904e572c0a79489e3033eaff79c6a, type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 7457358081769736770, guid: 30f904e572c0a79489e3033eaff79c6a,
         type: 3}
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 6200000, guid: 09b4b2e17b49c8e4581924a561cb3c13, type: 2}
+    - target: {fileID: 1134819434, guid: 30f904e572c0a79489e3033eaff79c6a, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7457358081385485189, guid: 30f904e572c0a79489e3033eaff79c6a,
         type: 3}
       propertyPath: m_Color.r
@@ -1142,16 +1137,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2522931708320373758, guid: 30f904e572c0a79489e3033eaff79c6a,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2297519402833546977, guid: 30f904e572c0a79489e3033eaff79c6a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 505072223605581701, guid: 30f904e572c0a79489e3033eaff79c6a,
         type: 3}
@@ -1338,6 +1323,21 @@ PrefabInstance:
       propertyPath: m_Parameters.widthMultiplier
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 7457358081769736769, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: buttonTip
+      value: 
+      objectReference: {fileID: 567906989}
+    - target: {fileID: 7457358081769736769, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: powerDashCoolDown
+      value: 
+      objectReference: {fileID: 852445409}
+    - target: {fileID: 2297519402833546977, guid: 30f904e572c0a79489e3033eaff79c6a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30f904e572c0a79489e3033eaff79c6a, type: 3}
 --- !u!1001 &5580370675080881890
@@ -1351,6 +1351,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1414541704577564731, guid: b76153269bd3bd14fa0dc3caf4e37d47,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1414541704474522882, guid: b76153269bd3bd14fa0dc3caf4e37d47,
         type: 3}
@@ -1457,21 +1462,31 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1414541705139394032, guid: b76153269bd3bd14fa0dc3caf4e37d47,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1414541705139394032, guid: b76153269bd3bd14fa0dc3caf4e37d47,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1414541704474522893, guid: b76153269bd3bd14fa0dc3caf4e37d47,
         type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1159890512}
+    - target: {fileID: 1414541705139394032, guid: b76153269bd3bd14fa0dc3caf4e37d47,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1414541705139394032, guid: b76153269bd3bd14fa0dc3caf4e37d47,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1414541704830648828, guid: b76153269bd3bd14fa0dc3caf4e37d47,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 409
+      objectReference: {fileID: 0}
+    - target: {fileID: 1414541705397692692, guid: b76153269bd3bd14fa0dc3caf4e37d47,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b76153269bd3bd14fa0dc3caf4e37d47, type: 3}
 --- !u!114 &5580370675080881891 stripped

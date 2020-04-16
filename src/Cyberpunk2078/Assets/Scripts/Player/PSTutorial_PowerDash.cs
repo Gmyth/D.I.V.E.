@@ -31,9 +31,9 @@ public class PSTutorial_PowerDash : PlayerState
         Vector2 idealDirection = PlayerCharacter.Singleton.transform.right.normalized;
         if (PlayerCharacter.Singleton.transform.parent.GetComponentInChildren<MouseIndicator>().DirectionNotification(idealDirection, 15f))
         {
-            if (Input.GetButtonDown("Special1") && !playerCharacter.isInTutorial)
+            if (Input.GetButtonDown("Special1") || (Input.GetAxis("LeftTrigger") > 0 && Player.CurrentPlayer.LeftTriggerReady))
             {
-                Player.CurrentPlayer.triggerReady = false;
+                Player.CurrentPlayer.LeftTriggerReady = false;
                 PlayerCharacter.Singleton.PowerDash = true;
                 return "Dashing";
             }

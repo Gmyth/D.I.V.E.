@@ -295,9 +295,14 @@ public abstract class PlayerState : State
     public void EarlyUpdate()
     {
 
-        if (Input.GetAxis("Trigger") <= 0)
+        if (Input.GetAxis("RightTrigger") <= 0)
         {
-             Player.CurrentPlayer.triggerReady = true;
+             Player.CurrentPlayer.RightTriggerReady = true;
+        }
+        
+        if (Input.GetAxis("LeftTrigger") <= 0)
+        {
+            Player.CurrentPlayer.LeftTriggerReady = true;
         }
         
         if (Input.GetAxis("VerticalJoyStick") == 0 && Input.GetAxis("Vertical") == 0)
