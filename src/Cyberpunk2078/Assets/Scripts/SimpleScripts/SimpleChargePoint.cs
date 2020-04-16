@@ -22,9 +22,10 @@ public class SimpleChargePoint : MonoBehaviour
         
     }
 
-    public void OnEnergyCharge() 
+    public void OnEnergyCharge(bool Overload = false)
     {
-        PlayerCharacter.Singleton.AddOverLoadEnergy(1);
+        if (Overload) PlayerCharacter.Singleton.AddOverLoadEnergy(1);
+        else PlayerCharacter.Singleton.AddNormalEnergy(1);
         GetComponent<SpriteRenderer>().color = Color.gray;
         OnDrain();
     }
@@ -48,16 +49,21 @@ public class SimpleChargePoint : MonoBehaviour
             if (other.tag == "Player")
             {
                 PlayerCharacter playerCharacter = PlayerCharacter.Singleton;
-
-                if (playerCharacter[StatisticType.Osp] <= 0)
-                    OnEnergyCharge();
+                if (playerCharacter[StatisticType.Sp] <= 0)
+                    OnEnergyCharge(false);
+                
+                else if (playerCharacter[StatisticType.Osp] <= 0)
+                    OnEnergyCharge(true);
             }
             else if (other.tag == "PlayerHitBox")
             {
                 PlayerCharacter playerCharacter = PlayerCharacter.Singleton;
 
-                if (playerCharacter[StatisticType.Osp] <= 0)
-                    OnEnergyCharge();
+                if (playerCharacter[StatisticType.Sp] <= 0)
+                    OnEnergyCharge(false);
+                
+                else if (playerCharacter[StatisticType.Osp] <= 0)
+                    OnEnergyCharge(true);
             }
         }
     }

@@ -140,6 +140,14 @@ public class GUIHUD : GUIWindow
     public void UpdatePowerDashCooldown(float value)
     {
         powerDashBar.Value = value;
+        if (value == 1)
+        {
+            powerDashBar.Color = Color.magenta;
+        }
+        else
+        {
+            powerDashBar.Color = Color.white;
+        }
     }
 
 

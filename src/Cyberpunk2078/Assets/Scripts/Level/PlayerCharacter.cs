@@ -57,9 +57,7 @@ public class PlayerCharacter : Dummy
     public float LastPowerDash;
     public float Gravity;
     public float DefaultGravity = 3;
-
-    [SerializeField] private GameObject buttonTip;
-    [SerializeField] private GameObject powerDashCoolDown;
+    
     public bool InFever { get; private set; } = false;
     public bool MaxUltimateEnergy { get; private set; }
     //public PlayerCharacter(Player player)
@@ -319,56 +317,22 @@ public class PlayerCharacter : Dummy
     {
         if (!PowerDashUnlock)
         {
-            powerDashCoolDown.GetComponent<Slider>().value = 0f;
-            buttonTip.SetActive(false);
+            GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").UpdatePowerDashCooldown(0f);
             return;
         }
 
-        //Debug.Log((Time.unscaledTime - LastPowerDash) /statistics[StatisticType.PDCoolDown]);
-        powerDashCoolDown.GetComponent<Slider>().value = Mathf.Max(0,Mathf.Min(1,(Time.unscaledTime - LastPowerDash) /statistics[StatisticType.PDCoolDown] ));
-
+        GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").UpdatePowerDashCooldown(Mathf.Max(0, Mathf.Min(1, (Time.unscaledTime - LastPowerDash) / statistics[StatisticType.PDCoolDown])));
+        
         if (!PowerDashReady)
         {
             if(LastPowerDash + statistics[StatisticType.PDCoolDown] < Time.unscaledTime)
             {
                 PowerDashReady = true;
-                buttonTip.SetActive(true);
             }
-            else
-            {
-                buttonTip.SetActive(false);
-            }
-            
         }
 
     }
-        
-
-    public void UpdatePowerDashUI()
-    {
-        if (!PowerDashUnlock && powerDashCoolDown != null)
-        {
-            powerDashCoolDown.GetComponent<Slider>().value = 0f;
-            buttonTip?.SetActive(false);
-            return;
-        }
-
-        powerDashCoolDown.GetComponent<Slider>().value = Mathf.Max(0, Mathf.Min(1, (Time.unscaledTime - LastPowerDash) / statistics[StatisticType.PDCoolDown]));
-
-        if (!PowerDashReady)
-        {
-            if (LastPowerDash + statistics[StatisticType.PDCoolDown] < Time.unscaledTime)
-            {
-                buttonTip.SetActive(true);
-            }
-            else
-            {
-                buttonTip.SetActive(false);
-            }
-
-        }
-
-    }
+    
 
     public bool AddKillCount(float amount)
     {
@@ -452,10 +416,7 @@ public class PlayerCharacter : Dummy
 
         //GUIManager.Singleton.Open("MainMenu", this);
         //StartDialogue(10102001);
-
-        // TODO: delete later
-        if (buttonTip == null) buttonTip = GameObject.Find("HealthButton");
-        if (powerDashCoolDown == null) powerDashCoolDown = GameObject.Find("HealthEnergy");
+        
     }
 
 
