@@ -815,7 +815,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 987a467495df9d942b56b1b51381d095, type: 3}
   m_Name: FMODEventPlayable
   m_EditorClassIdentifier: 
-  eventLength: 0
+  eventLength: 1.36
   eventName: event:/Interactive/LogOut
   stopType: 0
   parameters: []

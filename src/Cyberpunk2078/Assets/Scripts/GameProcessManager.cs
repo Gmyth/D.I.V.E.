@@ -173,7 +173,7 @@ public class GameProcessManager : MonoBehaviour
             PlayerHolder.GetComponentInChildren<MouseIndicator>().Hide();
             TimeManager.Instance.Pause();
 
-            if(!GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").isInDialogue)
+            if(!GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").IsInDialogue)
                 PlayerCharacter.Singleton.GetFSM().CurrentStateName = "NoInput";
             
         }
@@ -191,7 +191,7 @@ public class GameProcessManager : MonoBehaviour
         PlayerHolder.GetComponentInChildren<MouseIndicator>().Show();
         TimeManager.Instance.Resume();
 
-        if(!GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").isInDialogue)
+        if(!GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").IsInDialogue)
             PlayerCharacter.Singleton.GetFSM().Reboot();
     }
 

@@ -11,18 +11,18 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da1912fa620d08248a90011b84e6ebff, type: 3}
   m_Name: PS_Dashing
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   stateName: Dashing
-  n_dashForce: 15
+  n_dashForce: 13
   n_dashDelayTime: 0.005
   n_dashReleaseTime: 0.1
-  n_dashReleaseDelayTime: 0.02
+  n_dashReleaseDelayTime: 0.01
   n_inDashingDragFactor: 0
   n_JumpListenerInterval: 0.1
   f_dashForce: 17
   f_dashDelayTime: 0.005
   f_dashReleaseTime: 0.08
-  f_dashReleaseDelayTime: 0.02
+  f_dashReleaseDelayTime: 0.01
   f_inDashingDragFactor: 0
   f_JumpListenerInterval: 0.12
   EnergyConsume: 1

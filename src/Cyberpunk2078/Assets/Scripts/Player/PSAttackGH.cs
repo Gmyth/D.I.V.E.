@@ -143,10 +143,14 @@ public class PSAttackGH: PlayerState
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         t0 = Time.time;
         var mouse = GameObject.FindObjectOfType<MouseIndicator>();
-        
+        if (rb2d.velocity.y < 0)
+        {
+            rb2d.velocity = new Vector2(rb2d.velocity.x,0f);
+            rb2d.AddForce(Vector2.up * 200f);
+        }
         //get Mouse direction
         
-        Vector3 direction = mouse.GetDirectionCorrection(GroundNormal());
+        Vector3 direction = mouse.GetAttackDirection();
 
 
         var attack = Instantiate(SplashFX);

@@ -125,21 +125,8 @@ public class PSDashing : PlayerState
         }
 
         //prevent ground-hitting shifting
-        RaycastHit2D hit1 = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,1.5f);
-        if (hit1.collider != null)
-        {
-            if(hit1.transform.CompareTag("Ground")){
-                if( Mathf.Abs(hit1.normal.x) > 0f)rb2d.velocity = new Vector2(rb2d.velocity.x * 0.4f, 0 );
-                if( Mathf.Abs(hit1.normal.y) > 0f)rb2d.velocity =  new Vector2(0, rb2d.velocity.y * 0.8f);
-            }
-            else if(hit1.transform.CompareTag("Platform") && rb2d.velocity.normalized.y < 0)
-            {
-                //upper ward
-                if( Mathf.Abs(hit1.normal.x) > 0f)rb2d.velocity = new Vector2(rb2d.velocity.x * 0.4f, 0 );
-                if( Mathf.Abs(hit1.normal.y) > 0f)rb2d.velocity =  new Vector2(0, rb2d.velocity.y * 0.8f);
-            }
-        }
-
+        bounceCheck();
+        GetGroundType();
 
         // Player is grounded and dash has finished
         if (lastDashSecond + dashReleaseTime + dashDelayTime + dashReleaseDelayTime  < Time.time)
@@ -174,7 +161,7 @@ public class PSDashing : PlayerState
                 return;
             }
 
-
+            anim.Play("MainCharacter_Airborne", -1, 0f);
             playerCharacter.PowerDashReady = false;
             playerCharacter.LastPowerDash = Time.unscaledTime;
             TimeManager.Instance.StartFeverMotion();
@@ -264,6 +251,37 @@ public class PSDashing : PlayerState
         if(!playerCharacter.InKillStreak) playerCharacter.SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
 
         if (playerCharacter.PowerDash) playerCharacter.PowerDash = false;
+    }
+
+    private void bounceCheck()
+    {
+        var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
+        
+        //prevent ground-hitting shifting
+        var direction = rb2d.velocity.normalized;
+        RaycastHit2D hitM = Physics2D.Raycast(playerCharacter.transform.position,rb2d.velocity.normalized,1.5f);
+        RaycastHit2D hitL = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(1.0f,0,0),rb2d.velocity.normalized,1.5f);
+        RaycastHit2D hitR = Physics2D.Raycast(playerCharacter.transform.position + new Vector3(-1.0f,0,0),rb2d.velocity.normalized,1.5f);
+        if (hitM.collider != null)
+        {
+
+            if(hitM.transform.CompareTag("Ground")){
+                if( Mathf.Abs(hitM.normal.x) > 0f)rb2d.velocity = new Vector2(rb2d.velocity.x * 0.4f, 0 );
+                if( Mathf.Abs(hitM.normal.y) > 0f)rb2d.velocity =  new Vector2(0, rb2d.velocity.y * 0.8f);
+                    
+                // end dash
+                lastDashSecond = 0f;
+            }
+            else if(hitM.transform.CompareTag("Platform") && rb2d.velocity.normalized.y < 0)
+            {
+                //upper ward
+                if( Mathf.Abs(hitM.normal.x) > 0f)rb2d.velocity = new Vector2(rb2d.velocity.x * 0.4f, 0 );
+                if( Mathf.Abs(hitM.normal.y) > 0f)rb2d.velocity =  new Vector2(0, rb2d.velocity.y * 0.8f);
+                    
+                // end dash
+                lastDashSecond = 0f;
+            }
+        }
     }
 
     private void forceApply()
