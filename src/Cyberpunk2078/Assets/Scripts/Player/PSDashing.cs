@@ -163,6 +163,7 @@ public class PSDashing : PlayerState
 
             anim.Play("MainCharacter_Airborne", -1, 0f);
             playerCharacter.PowerDashReady = false;
+            AudioManager.Singleton.PlayOnce("Power_dash");
             playerCharacter.LastPowerDash = Time.unscaledTime;
             TimeManager.Instance.StartFeverMotion();
             playerCharacter.Spark.SetActive(true);
@@ -181,9 +182,11 @@ public class PSDashing : PlayerState
                 AudioManager.Singleton.PlayOnce("Negative_dash");
                 return;
             }
+
+            AudioManager.Singleton.PlayOnce("Dash");
         }
 
-        AudioManager.Singleton.PlayOnce("Dash");
+            
 
         Apply = true;
         //Dash has been pressed, set all config first

@@ -34,3 +34,5 @@ MonoBehaviour:
   - event:/Player/Hit_by_sword
   - event:/Player/Hit_by_dash
   - event:/Player/Hit_by_laser
+  - event:/Player/Traverse_down
+  - event:/Player/Power_dash

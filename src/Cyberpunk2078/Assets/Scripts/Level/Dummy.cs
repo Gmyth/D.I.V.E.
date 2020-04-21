@@ -198,7 +198,12 @@ public abstract class Enemy : Dummy
 
 
     public Event<HitBox> OnEnableHitBox { get; } = new Event<HitBox>();
-    
+
+    public int GetTypeID()
+    {
+        return typeID;
+    }
+
     public float this[StatisticType type]
     {
         get
@@ -418,4 +423,6 @@ public abstract class Enemy : Dummy
 
         fsm?.Update();
     }
+
+
 }

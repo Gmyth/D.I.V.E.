@@ -36,6 +36,7 @@ public class PlatformEffector : MonoBehaviour
                 if (waitTime <= 0)
                 {
                     effector.rotationalOffset = 180;
+                    AudioManager.Singleton.PlayEvent("Traverse_down");
                     PlayerCharacter.Singleton.GetComponent<Rigidbody2D>().gravityScale = 3;
                     waitTime = initialWaitTime;
                 }
@@ -58,6 +59,7 @@ public class PlatformEffector : MonoBehaviour
                 if (waitTime <= 0)
                 {
                     effector.rotationalOffset = 180;
+                    AudioManager.Singleton.PlayEvent("Traverse_down");
                     PlayerCharacter.Singleton.GetComponent<Rigidbody2D>().gravityScale = 3;
                     waitTime = initialWaitTime;
                 }
@@ -82,6 +84,7 @@ public class PlatformEffector : MonoBehaviour
         if (collision.name == "PlatformDetector")
         {
             occupied = false;
+            AudioManager.Singleton.StopEvent("Traverse_down");
             effector.rotationalOffset = 0;
         }
     }

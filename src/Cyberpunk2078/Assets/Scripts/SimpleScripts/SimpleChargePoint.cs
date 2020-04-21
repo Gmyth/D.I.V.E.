@@ -37,6 +37,8 @@ public class SimpleChargePoint : MonoBehaviour
         GetComponent<Animator>().Play("ChargePointActive",0,0);
         StartCoroutine(Recover());
         GetComponentInChildren<ParticleSystem>().Play();
+
+        AudioManager.Singleton.PlayOnce("Charge_point");
     }
 
 
