@@ -302,7 +302,7 @@ public class GameProcessManager : MonoBehaviour
 
         GUIManager.Singleton.Open("Loading");
 
-        
+        AudioManager.Singleton.PlayOnce("Scene_trans");
 
         yield return null;
 
