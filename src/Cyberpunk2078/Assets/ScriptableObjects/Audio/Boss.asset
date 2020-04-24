@@ -25,3 +25,4 @@ MonoBehaviour:
   - event:/Enemy/Boss/Boss_run
   - event:/Enemy/Boss/Boss_attackwave
   - event:/Player/Hit_by_shield
+  - event:/Enemy/Boss/Boss_jump

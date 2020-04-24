@@ -42,6 +42,9 @@ public abstract class ESChargedAttack<T> : ESAttack<T> where T : Enemy
 
 
         animator.Play(animation_charging);
+
+        if(enemy.GetTypeID() == 67)
+            AudioManager.Singleton.PlayOnce("Boss_jumpvoice");
     }
 
 

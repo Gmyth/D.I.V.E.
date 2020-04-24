@@ -38,7 +38,11 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
 
         }
         else
-            AudioManager.Singleton.PlayOnce("RobotDashCharge");
+        {
+            if(Random.Range(1,11) >= 2)
+                AudioManager.Singleton.PlayOnce("RobotDashCharge");
+        }
+            
 
         enemy.OnAttack.AddListener(Stop);
 
