@@ -1,7 +1,5 @@
 # D.I.V.E. - Hyperspeed Action Platformer #
 
-----------
-
 **Haoyu Guo, Zheyu Zhang, Yiyan Wang, Jiayi Jiang**
 
 ## High Concept ##
