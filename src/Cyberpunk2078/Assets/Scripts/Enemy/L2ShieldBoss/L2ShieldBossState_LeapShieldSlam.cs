@@ -38,7 +38,7 @@ public class L2ShieldBossState_LeapShieldSlam : ESAttack<L2ShieldBoss>
         {
             animator.Play(animation_charge);
 
-            AudioManager.Singleton.PlayOnce("Boss_jumpvoice");
+           
         }
             
 
@@ -50,7 +50,7 @@ public class L2ShieldBossState_LeapShieldSlam : ESAttack<L2ShieldBoss>
                 Vector3 enemyPosition = enemy.transform.position;
 
                 rigidbody.velocity = MathUtility.GetInitialVelocityForParabolaMovement(enemyPosition, playerPosition + new Vector3(Mathf.Sign((enemyPosition - playerPosition).x) * 2, 0, 0), attackPoint, -Physics2D.gravity.y * rigidbody.gravityScale);
-
+                AudioManager.Singleton.PlayOnce("Boss_jumpvoice");
 
                 animator.Play(animation_beforeAttack);
                 

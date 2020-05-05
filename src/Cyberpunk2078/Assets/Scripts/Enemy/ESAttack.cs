@@ -113,6 +113,9 @@ public abstract class ESAttack<T> : EnemyState<T> where T : Enemy
         {
             if (animation_beforeAttack != "")
             {
+                if(animation_beforeAttack == "L2ShieldBoss_Jump")
+                    AudioManager.Singleton.PlayOnce("Boss_jump");
+
                 animator.Play(animation_beforeAttack);
             }
         }

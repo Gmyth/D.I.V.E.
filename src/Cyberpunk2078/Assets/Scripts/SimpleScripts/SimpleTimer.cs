@@ -18,7 +18,7 @@ public class SimpleTimer : MonoBehaviour
     private Vector3 defaultPos;
     private Vector3 defaultScale;
     [SerializeField] private bool isCounting;
-
+    private bool triggered = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -62,6 +62,7 @@ public class SimpleTimer : MonoBehaviour
         second = (int)(totalTime);
         millisecond = (int)(totalTime % 1.0f * 1000);
         timerText.text = string.Format("{0:d2}:{1:d2}.{2:d3}", minute, second, millisecond);
+        triggered = false;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -81,6 +82,25 @@ public class SimpleTimer : MonoBehaviour
             other.gameObject.SetActive(false);
             isCounting = false;
         }
+        
+        if (other.CompareTag("Quit") && !triggered)
+        {
+            // ended;
+            triggered = true;
+            StartCoroutine(endScreen());
+        }
+        
+    }
+    
+    
+    private IEnumerator endScreen()
+    {
+        TimeManager.Instance.ApplyBlackScreenFadeIn(1,true);
+        MouseIndicator.Singleton.Hide();
+        GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").gameObject.SetActive(false);
+        yield return  new WaitForSeconds(3f);
+        TimeManager.Instance.EndBlackScreen(true);
+        StartCoroutine(GameProcessManager.Singleton.LoadingScreen(5, transform.parent.gameObject));
     }
 
 }

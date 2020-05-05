@@ -163,6 +163,7 @@ public class PSDashing : PlayerState
 
             anim.Play("MainCharacter_Airborne", -1, 0f);
             playerCharacter.PowerDashReady = false;
+            AudioManager.Singleton.PlayOnce("Power_dash");
             playerCharacter.LastPowerDash = Time.unscaledTime;
             TimeManager.Instance.StartFeverMotion();
             playerCharacter.Spark.SetActive(true);
@@ -181,9 +182,11 @@ public class PSDashing : PlayerState
                 AudioManager.Singleton.PlayOnce("Negative_dash");
                 return;
             }
+
+            AudioManager.Singleton.PlayOnce("Dash");
         }
 
-        AudioManager.Singleton.PlayOnce("Dash");
+            
 
         Apply = true;
         //Dash has been pressed, set all config first
@@ -334,10 +337,10 @@ public class PSDashing : PlayerState
 
         //set correct Y flip based on mouse direction
         if (direction.x < 0 && direction.y != 0) playerCharacter.SpriteHolder.GetComponent<SpriteRenderer>().flipY = true;
+        direction.z = 0;
 
 
-
-        //Apply force to character
+            //Apply force to character
        // playerCharacter.GetComponent<CapsuleCollider2D>().isTrigger = true;
         playerCharacter.SpriteHolder.right = direction;
 
@@ -349,7 +352,7 @@ public class PSDashing : PlayerState
         {
             rb2d.AddForce(direction * dashForce * 200f * 1);
         }
-        playerCharacter.SpriteHolder.localScale = new Vector3(2f,0.5f,1f);
+        //playerCharacter.SpriteHolder.localScale = new Vector3(1f,1f,1f);
         //Camera Tricks
         CameraManager.Instance.Shaking(0.1f,0.10f);
         CameraManager.Instance.Follow(0.2f);

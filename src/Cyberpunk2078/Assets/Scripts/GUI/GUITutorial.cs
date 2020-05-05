@@ -138,7 +138,7 @@ public class GUITutorial : MonoBehaviour
 
 
             foreach (KeyBindingData data in bindingData)
-                keyNames.Add(data.ButtonName, new string[2] { string.Format("Keyboard_Black_{0}_Down", data.KeyboardButtonName), string.Format("Xbox_One_Large_{0}_Down", data.JoystickButtonName) });
+                keyNames.Add(data.ButtonName, new string[2] { string.Format("Keyboard_Black_{0}_Up", data.KeyboardButtonName), string.Format("Xbox_One_Large_{0}_Down", data.JoystickButtonName) });
         }
     }
 }

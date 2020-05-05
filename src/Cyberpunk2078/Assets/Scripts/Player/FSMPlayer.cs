@@ -18,6 +18,7 @@ public abstract class PlayerState : State
     protected bool flip;
     protected bool grounded;
     protected float lastGroundedSec;
+    
 
     int GroundedTimes = 0;
     public virtual void Initialize(int index, PlayerCharacter playerCharacter)
@@ -418,6 +419,8 @@ public class FSMPlayer : FiniteStateMachine<PlayerState>
 
     public void Update()
     {
+        if (Time.timeScale == 0 && currentStateName != "InTutorial_Dash") return;
+        
         if (currentStateName != "")
         {
             CurrentState.EarlyUpdate();

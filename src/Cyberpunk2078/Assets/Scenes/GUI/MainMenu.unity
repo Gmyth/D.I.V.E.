@@ -282,6 +282,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &201831319 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 569306904, guid: e5550ebe022f1ae4fb29822f0f26e18d,
+    type: 3}
+  m_PrefabInstance: {fileID: 2139235791}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &268701697
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -354,6 +360,16 @@ PrefabInstance:
       propertyPath: slowMotionFactor
       value: 0.4
       objectReference: {fileID: 0}
+    - target: {fileID: 1469798647982481033, guid: de56402796138ce478703dea60675240,
+        type: 3}
+      propertyPath: BM_ForeGround
+      value: 
+      objectReference: {fileID: 751238018}
+    - target: {fileID: 1469798647982481033, guid: de56402796138ce478703dea60675240,
+        type: 3}
+      propertyPath: BM_Ground
+      value: 
+      objectReference: {fileID: 201831319}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de56402796138ce478703dea60675240, type: 3}
 --- !u!1 &483858971 stripped
@@ -493,6 +509,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa80a7dc53093ad4facc91ec1de5d20c, type: 3}
+--- !u!212 &751238018 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 415552167, guid: e5550ebe022f1ae4fb29822f0f26e18d,
+    type: 3}
+  m_PrefabInstance: {fileID: 2139235791}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &852445409 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1414541706495626369, guid: b76153269bd3bd14fa0dc3caf4e37d47,
@@ -956,10 +978,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 415552167, guid: e5550ebe022f1ae4fb29822f0f26e18d, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -639007339
+      objectReference: {fileID: 0}
+    - target: {fileID: 415552167, guid: e5550ebe022f1ae4fb29822f0f26e18d, type: 3}
+      propertyPath: m_SortingLayer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 415552167, guid: e5550ebe022f1ae4fb29822f0f26e18d, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2222602522128952093, guid: e5550ebe022f1ae4fb29822f0f26e18d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -57
+      value: -55
       objectReference: {fileID: 0}
     - target: {fileID: 2222602522128952093, guid: e5550ebe022f1ae4fb29822f0f26e18d,
         type: 3}
@@ -1053,11 +1087,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 415552165, guid: e5550ebe022f1ae4fb29822f0f26e18d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 415552165, guid: e5550ebe022f1ae4fb29822f0f26e18d, type: 3}
+      propertyPath: m_Name
+      value: BM_ForeGround
+      objectReference: {fileID: 0}
+    - target: {fileID: 569306902, guid: e5550ebe022f1ae4fb29822f0f26e18d, type: 3}
+      propertyPath: m_Name
+      value: BM_Ground
       objectReference: {fileID: 0}
     - target: {fileID: 853461888, guid: e5550ebe022f1ae4fb29822f0f26e18d, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3389652546010268199, guid: e5550ebe022f1ae4fb29822f0f26e18d,
+        type: 3}
+      propertyPath: m_Name
+      value: BM_Interactive
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5550ebe022f1ae4fb29822f0f26e18d, type: 3}

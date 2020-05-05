@@ -15,6 +15,7 @@ public class SimpleHealthPotion : MonoBehaviour
             isUsed = true;
             PlayerCharacter.Singleton.Heal(1);
             GetComponent<Animator>().Play("HeartConsume",0,0);
+            AudioManager.Singleton.PlayOnce("Health_potion");
             GetComponentInChildren<ParticleSystem>().Play();
 
         }

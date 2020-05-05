@@ -59,7 +59,9 @@ public class PSTutorial_PowerDash : PlayerState
         sprite.enabled = true;
 
         rb2d.gravityScale = PlayerCharacter.Singleton.DefaultGravity;
-        PowerDashTutorial.Instance.AfterPowerDashTutorial();
+       
+
+        if (Time.timeScale != 0 && playerCharacter.isActiveAndEnabled )PowerDashTutorial.Instance.AfterPowerDashTutorial();
     }
 
 }

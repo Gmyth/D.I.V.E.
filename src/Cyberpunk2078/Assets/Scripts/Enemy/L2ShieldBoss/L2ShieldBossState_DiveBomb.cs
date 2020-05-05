@@ -71,6 +71,7 @@ public class L2ShieldBossState_DiveBomb : ESChargedAttack<L2ShieldBoss>
                 rigidbody.AddForce(Vector2.up * jumpForce);
                 animator.Play("L2ShieldBoss_DiveBomb");
                 ++state;
+                AudioManager.Singleton.PlayOnce("Boss_jump");
                 break;
 
 

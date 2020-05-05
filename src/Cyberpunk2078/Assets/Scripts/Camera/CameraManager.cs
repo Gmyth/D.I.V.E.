@@ -124,9 +124,12 @@ public class CameraManager : MonoBehaviour {
 
     public void ResetTarget()
     {
-	    mainTarget = GameObject.FindObjectOfType<PlayerCharacter>().gameObject;
-		targetList.Clear();
-	    targetList.Add(mainTarget);
+	    if (FindObjectOfType<PlayerCharacter>())
+	    {
+		    mainTarget = FindObjectOfType<PlayerCharacter>().gameObject;
+		    targetList.Clear();
+		    targetList.Add(mainTarget);
+	    }
     }
 	
 	//change the target, clear current list and add the target to new one
@@ -154,7 +157,7 @@ public class CameraManager : MonoBehaviour {
 		indicatorList = FindObjectsOfType<CameraIndicator>().ToList();
 	}
 
-	void LateUpdate()
+	void FixedUpdate()
 	{
 		if (!mainTarget) return;
 		float shakeX = 0;

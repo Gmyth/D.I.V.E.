@@ -119,7 +119,6 @@ public class GameProcessManager : MonoBehaviour
             Player.CurrentPlayer.energyLocked = false;
             Player.CurrentPlayer.overloadEnergyLocked = false;
 
-            
         }
     }
 
@@ -173,8 +172,8 @@ public class GameProcessManager : MonoBehaviour
             PlayerHolder.GetComponentInChildren<MouseIndicator>().Hide();
             TimeManager.Instance.Pause();
 
-            if(!GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").IsInDialogue)
-                PlayerCharacter.Singleton.GetFSM().CurrentStateName = "NoInput";
+//            if(!GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").IsInDialogue)
+//                PlayerCharacter.Singleton.GetFSM().CurrentStateName = "NoInput";
             
         }
         if (Input.GetKeyDown(KeyCode.P))
@@ -191,8 +190,8 @@ public class GameProcessManager : MonoBehaviour
         PlayerHolder.GetComponentInChildren<MouseIndicator>().Show();
         TimeManager.Instance.Resume();
 
-        if(!GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").IsInDialogue)
-            PlayerCharacter.Singleton.GetFSM().Reboot();
+//        if(!GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").IsInDialogue)
+//            PlayerCharacter.Singleton.GetFSM().Reboot();
     }
 
     public void BK_MainMenu()
@@ -229,6 +228,8 @@ public class GameProcessManager : MonoBehaviour
         
         SimpleTimer timer = PlayerCharacter.Singleton.GetComponent<SimpleTimer>();
         timer.GetTimer();
+        
+        PlayerCharacter.Singleton.GetFSM().Reboot();
         
         PlayerHolder.GetComponentInChildren<MouseIndicator>().Show();
 
@@ -305,7 +306,7 @@ public class GameProcessManager : MonoBehaviour
 
         GUIManager.Singleton.Open("Loading");
 
-        
+        AudioManager.Singleton.PlayOnce("Scene_trans");
 
         yield return null;
 

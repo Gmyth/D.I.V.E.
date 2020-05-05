@@ -54,6 +54,7 @@ public class SimpleBreakable : Restorable
         if (!triggered)
         {
             CheckPointManager.Instance.RegisterObj(gameObject);
+            Debug.LogWarning("Break");
             AudioManager.Singleton.PlayOnce("BreakWindow");
             if (m_animator)
             {

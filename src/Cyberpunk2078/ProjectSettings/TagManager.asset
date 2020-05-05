@@ -25,6 +25,7 @@ TagManager:
   - Canvas
   - StartTimer
   - EndTimer
+  - Quit
   layers:
   - Default
   - TransparentFX

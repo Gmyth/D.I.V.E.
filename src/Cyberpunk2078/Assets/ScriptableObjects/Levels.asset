@@ -13,11 +13,15 @@ MonoBehaviour:
   m_Name: Levels
   m_EditorClassIdentifier: 
   SerializedEntries:
-  - id: 0
-    name: 
-  - id: 0
-    name: 
-  - id: 0
-    name: 
-  - id: 0
-    name: 
+  - id: 1
+    name: Stage 1 - Beginning
+  - id: 2
+    name: Stage 2 - E-Ghost
+  - id: 3
+    name: Stage 3 - Ray
+  - id: 5
+    name: Stage 5 - Break-in
+  - id: 6
+    name: Stage 4 - The Lab
+  - id: 7
+    name: Lab 2
