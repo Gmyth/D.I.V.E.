@@ -85,6 +85,7 @@ public class GUITutorial : MonoBehaviour
         }
         else
         {
+            Debug.LogWarning(buttonName1);
             leftIcon.sprite = sprites[keyNames[buttonName1][(int)currentInputType]];
             leftIcon.SetNativeSize();
 
@@ -133,8 +134,8 @@ public class GUITutorial : MonoBehaviour
             foreach (Sprite joystickIcon in Resources.LoadAll<Sprite>(joystickIcons))
                 sprites.Add(joystickIcon.name, joystickIcon);
 
-            sprites.Add("Keyboard_Black_MouseLeft_Down", mouseLeftIcon);
-            sprites.Add("Keyboard_Black_MouseRight_Down", mouseRightIcon);
+            sprites.Add("Keyboard_Black_MouseLeft_Up", mouseLeftIcon);
+            sprites.Add("Keyboard_Black_MouseRight_Up", mouseRightIcon);
 
 
             foreach (KeyBindingData data in bindingData)
