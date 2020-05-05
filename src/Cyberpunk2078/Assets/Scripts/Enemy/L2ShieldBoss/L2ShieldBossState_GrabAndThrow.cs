@@ -35,6 +35,7 @@ public class L2ShieldBossState_GrabAndThrow : ESAttack<L2ShieldBoss>
     {
         enemy.TurnImmediately();
 
+        AudioManager.Singleton.PlayEvent("Boss_run");
 
         PlayerCharacter player = enemy.currentTarget;
         Vector3 d = player.transform.position - enemy.transform.position;
@@ -44,7 +45,7 @@ public class L2ShieldBossState_GrabAndThrow : ESAttack<L2ShieldBoss>
         {
             enemyAnimator.Play(animation_waitting);
 
-            enemyRigidbody.velocity = Vector2.zero;
+            enemyRigidbody.velocity = Vector2.zero;           
         }
         else
         {
@@ -59,6 +60,8 @@ public class L2ShieldBossState_GrabAndThrow : ESAttack<L2ShieldBoss>
 
     protected override string Attack()
     {
+        AudioManager.Singleton.StopEvent("Boss_run");
+
         PlayerCharacter player = enemy.currentTarget;
         Vector3 enemyPosition = enemy.transform.position;
         Rigidbody2D playerRigidbody = player.GetComponent<Rigidbody2D>();

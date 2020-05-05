@@ -16,15 +16,21 @@ public class L2ShieldBossState_Shockwave : ESChargedAttack<L2ShieldBoss>
 
 
         enemy.StopTurning();
+
+        
     }
 
 
     protected override string Attack(float currentTime)
     {
+        
+
         if (t_attack == 0)
         {
             enemy.EmitShockwave();
             animator.Play(animation_attack);
+
+            AudioManager.Singleton.PlayOnce("Boss_attackwave");
         }
 
 

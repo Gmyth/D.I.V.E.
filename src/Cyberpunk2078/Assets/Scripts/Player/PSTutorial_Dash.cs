@@ -21,9 +21,9 @@ public class PSTutorial_Dash : PlayerState
         Vector2 idealDirection = (SimpleTutorialManager.Instance.DashTutorial_Drone.transform.position - PlayerCharacter.Singleton.transform.position).normalized;
             if (PlayerCharacter.Singleton.transform.parent.GetComponentInChildren<MouseIndicator>().DirectionNotification(idealDirection, 15f))
         {
-            if ((Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady)) && !playerCharacter.isInTutorial)
+            if (Input.GetButtonDown("Dashing") || (Input.GetAxis("RightTrigger") > 0 && Player.CurrentPlayer.RightTriggerReady))
             {
-                Player.CurrentPlayer.triggerReady = false;
+                Player.CurrentPlayer.RightTriggerReady = false;
                 return "Dashing";
             }
         }
@@ -52,7 +52,7 @@ public class PSTutorial_Dash : PlayerState
         //rb2d.simulated = true;
         //rb2d.gravityScale = 3;
         //rb2d.drag = 1;
-        TimeManager.Instance.endSlowMotion();
+        TimeManager.Instance.endSlowMotion(0,true);
         SimpleTutorialManager.Instance.AfterDashTutorial();
     }
 }

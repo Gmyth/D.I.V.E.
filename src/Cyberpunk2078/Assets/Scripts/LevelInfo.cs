@@ -18,7 +18,7 @@ public class LevelInfo: MonoBehaviour
     {
         PlayerCharacter.Singleton.PowerDashReady = DashEnabled;
         PlayerCharacter.Singleton.PowerDashUnlock = DashEnabled;
-        PlayerCharacter.Singleton.UpdatePowerDashUI();
+        PlayerCharacter.Singleton.PowerDashCoolDown();
         
         
         if (boss)

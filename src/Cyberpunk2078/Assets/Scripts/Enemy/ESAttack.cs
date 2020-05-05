@@ -112,7 +112,12 @@ public abstract class ESAttack<T> : EnemyState<T> where T : Enemy
         if (t_phase == 0)
         {
             if (animation_beforeAttack != "")
+            {
+                if(animation_beforeAttack == "L2ShieldBoss_Jump")
+                    AudioManager.Singleton.PlayOnce("Boss_jump");
+
                 animator.Play(animation_beforeAttack);
+            }
         }
 
         if (t_phase >= attackPoint)
@@ -128,6 +133,7 @@ public abstract class ESAttack<T> : EnemyState<T> where T : Enemy
 
     protected virtual string Attack()
     {
+        
         if (t_phase == 0)
         {
             enemy.OnEnableHitBox.AddListener(InitializeHitBox);
@@ -137,7 +143,10 @@ public abstract class ESAttack<T> : EnemyState<T> where T : Enemy
 
 
             if (animation_attack != "")
+            {
                 animator.Play(animation_attack);
+                //AudioManager.Singleton.StopEvent("Boss_run");
+            }
         }
 
         if (t_phase >= attackDuration)

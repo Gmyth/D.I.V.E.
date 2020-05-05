@@ -18,6 +18,7 @@ public abstract class PlayerState : State
     protected bool flip;
     protected bool grounded;
     protected float lastGroundedSec;
+    
 
     int GroundedTimes = 0;
     public virtual void Initialize(int index, PlayerCharacter playerCharacter)
@@ -179,11 +180,14 @@ public abstract class PlayerState : State
     protected void Fire()
     {
         LinearMovement bullet = ObjectRecycler.Singleton.GetObject<LinearMovement>(0);
-        bullet.speed = 20;
+        bullet.speed = 25;
         bullet.initialPosition = playerCharacter.transform.position;
         bullet.orientation = playerCharacter.transform.parent.GetComponentInChildren<MouseIndicator>().GetAttackDirection();
         
         bullet.GetComponent<Bullet>().isFriendly = true;
+        bullet.GetComponent<Bullet>().Bounce = true;
+        bullet.GetComponent<Bullet>().bounceRatio = 1.5f;
+        bullet.GetComponent<Bullet>().maxBounceTimes = 3;
         bullet.transform.right = bullet.orientation;
 
         bullet.gameObject.SetActive(true);
@@ -225,7 +229,6 @@ public abstract class PlayerState : State
         
         rb2d.velocity = velocityPlaceHolder;
         //Debug.Log("Y:"+rb2d.velocity.y);
-
 //        // calculate speed on X axis
 //        if (Mathf.Abs(h) > 0.1f)
 //        {
@@ -293,15 +296,21 @@ public abstract class PlayerState : State
     public void EarlyUpdate()
     {
 
-        if (Input.GetAxis("Trigger") <= 0)
+        if (Input.GetAxis("RightTrigger") <= 0)
         {
-             Player.CurrentPlayer.triggerReady = true;
+             Player.CurrentPlayer.RightTriggerReady = true;
+        }
+        
+        if (Input.GetAxis("LeftTrigger") <= 0)
+        {
+            Player.CurrentPlayer.LeftTriggerReady = true;
         }
         
         if (Input.GetAxis("VerticalJoyStick") == 0 && Input.GetAxis("Vertical") == 0)
         {
             Player.CurrentPlayer.climbReady = true;
         }
+        
     }
 }
 
@@ -410,6 +419,8 @@ public class FSMPlayer : FiniteStateMachine<PlayerState>
 
     public void Update()
     {
+        if (Time.timeScale == 0 && currentStateName != "InTutorial_Dash") return;
+        
         if (currentStateName != "")
         {
             CurrentState.EarlyUpdate();

@@ -50,10 +50,13 @@ public class L2ShieldBossState_ShieldSlamPreparation : EnemyState<L2ShieldBoss>
     public override string Update()
     {
         if (attack)
+        {
             return "ShieldSlam";
-        
-        
-        t_motion += TimeManager.Instance.ScaledDeltaTime;
+            AudioManager.Singleton.PlayOnce("Boss_swing");
+        }
+
+
+            t_motion += TimeManager.Instance.ScaledDeltaTime;
 
 
         if (t_motion >= minDuration)

@@ -55,6 +55,10 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
 
     [SerializeField] private GameObject UI_AttackKey_Joy;
     [SerializeField] private GameObject UI_AttackKey_Keyboard;
+
+    [SerializeField] private GameObject UI_PowerDashKey_Joy;
+    [SerializeField] private GameObject UI_PowerDashKey_Keyboard;
+
     public GameObject UI_BlackMask;
 
     public GameObject UI_TeachDash_DirectionMask;
@@ -104,11 +108,13 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
     }
 
     public void ShowAttackNotification() {
-
         if (MouseIndicator.Singleton.CurrentInputType == InputType.Joystick) UI_AttackKey_Joy.SetActive(true);
         else UI_AttackKey_Keyboard.SetActive(true);
     }
 
+    /// <summary> ------------------------------------------------------------------------------------------------
+    /// Tutorial: Dash
+    /// </summary>
     private TimelineManager timelineManager_DashTutorial;
     public Drone DashTutorial_Drone;
     [SerializeField] private Transform shootPoint_DashTutorial;
@@ -121,7 +127,7 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         CameraManager.Instance.FocusTo(PlayerCharacter.Singleton.transform, 99999f);
         CameraManager.Instance.FlashIn(6f, 0.05f, 999999f, 0.01f);
         PlayerCharacter.Singleton.SpriteHolder.GetComponent<GhostSprites>().Occupied = true;
-        TimeManager.Instance.startSlowMotion(-1f, 0f, 0.65f,0.15f);
+        TimeManager.Instance.startSlowMotion(-1f, 0f, 1.05f,0.15f);
         TimeManager.Instance.ApplyBlackScreen();
 
 
@@ -157,6 +163,9 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         //PlayerCharacter.Singleton.AddOverLoadEnergy(1);
     }
 
+    /// <summary> ------------------------------------------------------------------------------------------------
+    /// Tutorial: Deflect
+    /// </summary>
     private TimelineManager timelineManager_DeflectTutorial;
     public Bullet DeflectTutorial_Bullet;
     public GameObject DeflectTutorial_Jack;
@@ -188,6 +197,33 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
 
         PlayerCharacter.Singleton.transform.parent.GetComponentInChildren<MouseIndicator>().ResetColor();
     }
+    
+    /// <summary> ------------------------------------------------------------------------------------------------
+    /// Tutorial: Power Dash
+    /// </summary>
+    //private TimelineManager timelineManager_PowerDashTutorial;
+    //public void IntroducePowerDash(TimelineManager timelineManager)
+    //{
+    //    timelineManager_PowerDashTutorial = timelineManager;
+
+    //    timelineManager_PowerDashTutorial.PlayTimelineInIndex(0);
+
+    //    PlayerCharacter.Singleton.GetFSM().CurrentStateName = "InTutorial_PowerDash";
+
+    //    StartCoroutine(ShowGUIButtonAfterDelay(3.5f, "LongDash"));
+    //}
+
+    //public void AfterPowerDashTutorial()
+    //{
+    //    CameraManager.Instance.Idle();
+    //    PlayerCharacter.Singleton.SpriteHolder.GetComponent<GhostSprites>().Occupied = false;
+    //    //TimeManager.Instance.endSlowMotion(0f);
+
+    //    GUITutorial.Singleton.Hide();
+
+
+    //    PlayerCharacter.Singleton.transform.parent.GetComponentInChildren<MouseIndicator>().ResetColor();
+    //}
 
 
     private IEnumerator ShowGameObjectAfterDelay(float delayTime, GameObject targetObject)
@@ -198,5 +234,14 @@ public class SimpleTutorialManager : Singleton<SimpleTutorialManager>
         yield return new WaitForSecondsRealtime(1.0f);
         PlayerCharacter.Singleton.isInTutorial = false;
     }
+
+    //private IEnumerator ShowGUIButtonAfterDelay(float delayTime, string buttonName)
+    //{
+    //    yield return new WaitForSecondsRealtime(delayTime);
+    //    GUITutorial.Singleton.Show(buttonName);
+
+    //    yield return new WaitForSecondsRealtime(0.5f);
+    //    PlayerCharacter.Singleton.isInTutorial = false;
+    //}
 
 }

@@ -22,18 +22,23 @@ public class SimpleChargePoint : MonoBehaviour
         
     }
 
-    public void OnEnergyCharge() 
+    public void OnEnergyCharge(bool Overload = false)
     {
-        PlayerCharacter.Singleton.AddOverLoadEnergy(1);
+        if (Overload) PlayerCharacter.Singleton.AddOverLoadEnergy(1);
+        else PlayerCharacter.Singleton.AddNormalEnergy(1);
+        GetComponent<SpriteRenderer>().color = Color.gray;
         OnDrain();
     }
 
     public void OnDrain()
     {
         isReady = false;
-        GetComponent<SpriteRenderer>().color = Color.black;
 
+        GetComponent<Animator>().Play("ChargePointActive",0,0);
         StartCoroutine(Recover());
+        GetComponentInChildren<ParticleSystem>().Play();
+
+        AudioManager.Singleton.PlayOnce("Charge_point");
     }
 
 
@@ -46,24 +51,31 @@ public class SimpleChargePoint : MonoBehaviour
             if (other.tag == "Player")
             {
                 PlayerCharacter playerCharacter = PlayerCharacter.Singleton;
-
-                if (playerCharacter[StatisticType.Osp] <= 0)
-                    OnEnergyCharge();
+                if (playerCharacter[StatisticType.Sp] <= 0)
+                    OnEnergyCharge(false);
+                
+                else if (playerCharacter[StatisticType.Osp] <= 0)
+                    OnEnergyCharge(true);
             }
             else if (other.tag == "PlayerHitBox")
             {
                 PlayerCharacter playerCharacter = PlayerCharacter.Singleton;
 
-                if (playerCharacter[StatisticType.Osp] <= 0)
-                    OnEnergyCharge();
+                if (playerCharacter[StatisticType.Sp] <= 0)
+                    OnEnergyCharge(false);
+                
+                else if (playerCharacter[StatisticType.Osp] <= 0)
+                    OnEnergyCharge(true);
             }
         }
     }
 
     private IEnumerator Recover()
     {
+        GetComponentInChildren<ParticleSystem>().Stop();
         yield return new WaitForSeconds(RecoverTime);
         isReady = true;
         GetComponent<SpriteRenderer>().color = chargedColor;
+        GetComponent<Animator>().Play("ChargePointMuted",0,0);
     }
 }

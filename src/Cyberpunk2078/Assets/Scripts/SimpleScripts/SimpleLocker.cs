@@ -55,6 +55,7 @@ public class SimpleLocker : Restorable
             triggered = true;
             okForTrigger = false;
             GetComponent<SpriteRenderer>().sprite = unlocked;
+            AudioManager.Singleton.PlayOnce("Door_indicator_ok");
             CheckPointManager.Instance.RegisterObj(gameObject);
             ConnectedDoor.RegisterObj();
         }

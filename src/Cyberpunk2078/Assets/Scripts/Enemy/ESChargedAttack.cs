@@ -10,7 +10,7 @@ public abstract class ESChargedAttack<T> : ESAttack<T> where T : Enemy
     [SerializeField] protected string state_onTargetLoss = "";
 
     protected float t_chargeFinish;
-
+    public bool isBoss;
 
     public override void Initialize(T enemy)
     {
@@ -42,6 +42,9 @@ public abstract class ESChargedAttack<T> : ESAttack<T> where T : Enemy
 
 
         animator.Play(animation_charging);
+
+        if(enemy.GetTypeID() == 67)
+            AudioManager.Singleton.PlayOnce("Boss_jumpvoice");
     }
 
 

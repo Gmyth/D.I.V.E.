@@ -48,6 +48,8 @@ public class L2ShieldBossState_DiveBomb : ESChargedAttack<L2ShieldBoss>
 
         CameraManager.Instance.ChangeTarget(enemy.gameObject);
         CameraManager.Instance.Follow();
+
+        
     }
 
     public override void OnStateQuit(global::State previousState)
@@ -69,6 +71,7 @@ public class L2ShieldBossState_DiveBomb : ESChargedAttack<L2ShieldBoss>
                 rigidbody.AddForce(Vector2.up * jumpForce);
                 animator.Play("L2ShieldBoss_DiveBomb");
                 ++state;
+                AudioManager.Singleton.PlayOnce("Boss_jump");
                 break;
 
 
@@ -84,6 +87,7 @@ public class L2ShieldBossState_DiveBomb : ESChargedAttack<L2ShieldBoss>
             case State.Falling:
                 if (enemy.IsOnGround())
                 {
+                    AudioManager.Singleton.PlayOnce("Boss_attackwave");
                     //PlayerCharacter playerCharacter = PlayerCharacter.Singleton;
 
                     //if (playerCharacter.IsOnGround(0.12f, -0.7f, 0.6f))

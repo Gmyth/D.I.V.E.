@@ -17,3 +17,9 @@ MonoBehaviour:
   - event:/Interactive/BreakWindow
   - event:/Interactive/LogOut
   - event:/Interactive/Scene_trans
+  - event:/Interactive/Pick_cassette
+  - event:/Interactive/Door_indicator_ok
+  - event:/Interactive/Door_indicator_ok_phase2
+  - event:/Interactive/Door_open
+  - event:/Interactive/Charge_point
+  - event:/Interactive/Health_potion

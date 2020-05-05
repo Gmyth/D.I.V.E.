@@ -25,6 +25,7 @@ public class ESTimed<T> : EnemyState<T> where T : Enemy
 
 
         enemyAnimator.Play(animation);
+        AudioManager.Singleton.PlayOnce("Boss_jump");
     }
 
 

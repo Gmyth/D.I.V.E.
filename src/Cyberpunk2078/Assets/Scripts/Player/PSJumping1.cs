@@ -100,6 +100,7 @@ public class PSJumping1 : PlayerState
         {
             return "Airborne";
         }
+        
         else if (previous.Name != "WallSliding")
         {
             if (Input.GetButton("Jump"))
@@ -108,6 +109,10 @@ public class PSJumping1 : PlayerState
                 if (timer > 0)
                 {
                     rb2d.AddForce(playerCharacter.transform.up * jumpForce * 30 * Time.deltaTime * jumpIncreaser);
+                }
+                else
+                {
+                    rb2d.gravityScale = playerCharacter.Gravity - 2;
                 }
             }
         }
@@ -145,15 +150,15 @@ public class PSJumping1 : PlayerState
                
         //}
         
-        if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
+        if (Input.GetButtonDown("Dashing") || (Input.GetAxis("RightTrigger") > 0 && Player.CurrentPlayer.RightTriggerReady))
         {
-            Player.CurrentPlayer.triggerReady = false;
+            Player.CurrentPlayer.RightTriggerReady = false;
             return "Dashing";
         }
         
-        if (Input.GetButtonDown("Special1"))
+        if (Input.GetButtonDown("Special1") || (Input.GetAxis("LeftTrigger") > 0 && Player.CurrentPlayer.LeftTriggerReady))
         {
-            Player.CurrentPlayer.triggerReady = false;
+            Player.CurrentPlayer.LeftTriggerReady = false;
             PlayerCharacter.Singleton.PowerDash = true;
             return "Dashing";
         }
@@ -214,6 +219,7 @@ public class PSJumping1 : PlayerState
         playerCharacter.groundDust.transform.localPosition = Vector3.zero;
         playerCharacter.groundDust.GetComponent<ParticleSystem>().Stop();
         Player.CurrentPlayer.JumpForceGate = false;
+        Player.CurrentPlayer.ChainWallJumpReady = false;
     }
 
     private void performWallJump()

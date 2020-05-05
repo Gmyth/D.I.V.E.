@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 
 [RequireComponent(typeof(Collider2D), typeof(Rigidbody2D))]
@@ -10,8 +11,14 @@ public class Bullet : Recyclable
     public Hit hit;
 
     [SerializeField] private float hitEstimationTimeInterval = 0.02f;
-
     [SerializeField] private bool disableHunch;
+    
+    [Header("Bounce Config")]
+    public bool Bounce = true;
+    private int bounceCounter = 0;
+    public float bounceRatio;
+    public int maxBounceTimes;
+    
     private float lastHitEstimation;
     private bool hunchTriggered;
 
@@ -23,6 +30,8 @@ public class Bullet : Recyclable
         base.OnEnable();
         hunchTriggered = false;
         numHitsRemaining = numHits;
+        bounceCounter = 0;
+        GetComponent<TrailRenderer>().Clear();
     }
 
 
@@ -57,6 +66,24 @@ public class Bullet : Recyclable
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (Bounce)
+        {
+            if (bounceCounter > 3)
+            {
+                numHitsRemaining = 0;
+                return;
+            }
+                
+            GetComponent<LinearMovement>().initialPosition = transform.position;
+            GetComponent<LinearMovement>().speed *= bounceRatio;
+            GetComponent<LinearMovement>().orientation = Vector3.Reflect(GetComponent<LinearMovement>().orientation,other.contacts[0].normal);
+            GetComponent<LinearMovement>().spawnTime = Time.time;
+            bounceCounter++;
+            transform.right = GetComponent<LinearMovement>().orientation;
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -69,8 +96,7 @@ public class Bullet : Recyclable
 
             Hit.gameObject.SetActive(true);
 
-
-            numHitsRemaining = 0;
+            if (!Bounce || bounceCounter > maxBounceTimes) numHitsRemaining = 0;
         }
         else if (isFriendly)
         {
@@ -105,6 +131,7 @@ public class Bullet : Recyclable
 
             if (player.State.Index != 6)
             {
+                AudioManager.Singleton.PlayOnce("Hit_by_laser");
                 //Not in dash, deal damage
                 player.ApplyDamage(rawDamage);
 
@@ -132,16 +159,23 @@ public class Bullet : Recyclable
             {
                 isFriendly = true;
                 GetComponent<LinearMovement>().initialPosition = transform.position;
-                GetComponent<LinearMovement>().speed *= 1.5f;
-                // GetComponent<LinearMovement>().orientation = (Quaternion.Euler(0, 0,  Random.Range(-15, 15)) * (GetComponent<LinearMovement>().orientation * -1)).normalized;
-                GetComponent<LinearMovement>().orientation = other.transform.right;
+                //GetComponent<LinearMovement>().speed *= 1.5f;
+                GetComponent<LinearMovement>().orientation = GetComponent<LinearMovement>().orientation * -1;
                 GetComponent<LinearMovement>().spawnTime = Time.time;
-
+                
+                GetComponent<TrailRenderer>().Clear();
+                
+                var spark = ObjectRecycler.Singleton.GetObject<SingleEffect>(23);
+                spark.transform.position = transform.position;
+                spark.transform.right = transform.right;
+                spark.transform.localScale = Vector3.one;
+                spark.gameObject.SetActive(true);
+                
                 transform.right = GetComponent<LinearMovement>().orientation;
 
                 //TimeManager.Instance.endSlowMotion();
                 CameraManager.Instance.Idle();
-
+                TimeManager.Instance.startSlowMotion(0.8f);
                 CameraManager.Instance.Shaking(0.5f, 0.05f, true);
                 CameraManager.Instance.FocusTo(transform.position, 0.02f);
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -10,10 +11,12 @@ public class PlayerCharacter : Dummy
 
 
     [SerializeField] private FSMPlayer fsm;
-
+    public float invulnerableDuration = 0.5f;
+    private float lastHit;
     public Transform SpriteHolder;
     public GameObject groundDust;
     public GameObject FeverVFX;
+    public GameObject OverloadVFX;
     public GameObject Spark;
     //public GUITutorial tutorial;
    
@@ -23,7 +26,7 @@ public class PlayerCharacter : Dummy
     private float lastKillStreakDecaySecond;
     private Player player;
     private new Rigidbody2D rigidbody;
-
+        
     public int currentDialogueID = -1;
     public Action[] currentDialogueCallbacks = null;
 
@@ -54,9 +57,7 @@ public class PlayerCharacter : Dummy
     public float LastPowerDash;
     public float Gravity;
     public float DefaultGravity = 3;
-
-    [SerializeField] private GameObject buttonTip;
-    [SerializeField] private GameObject powerDashCoolDown;
+    
     public bool InFever { get; private set; } = false;
     public bool MaxUltimateEnergy { get; private set; }
     //public PlayerCharacter(Player player)
@@ -100,24 +101,49 @@ public class PlayerCharacter : Dummy
     public override float ApplyDamage(float rawDamage)
     {
         Debug.Log(LogUtility.MakeLogStringFormat(name, "Take {0} damage.", rawDamage));
-
+        if (lastHit + invulnerableDuration > Time.time)
+        {
+            // still invulnerable
+            return 0;
+        }
 
         if (rawDamage <= 0)
             return 0;
 
+        AudioManager.Singleton.PlayOnce("Hurt");
 
         StatisticModificationResult result = statistics.Modify(StatisticType.Hp, -rawDamage, 0);
 
         if (result.currentValue <= 0)
+        {
+            AudioManager.Singleton.PlayOnce("Player_dead");
             Dead();
+        }
         else if (result.currentValue <= 1f)
         {
             AudioManager.Singleton.PlayEvent("LowHealth");
         }
 
-        AudioManager.Singleton.PlayOnce("Hurt");
-
+        lastHit = Time.time;
+        StartCoroutine(Blink());
+        
+        
         return result.previousValue - result.currentValue;
+    }
+
+    private IEnumerator Blink()
+    {
+        int Counter = 0;
+        while (lastHit + invulnerableDuration > Time.time)
+        {
+            SpriteHolder.GetComponent<SpriteRenderer>().color = Counter % 2 == 0 ? Color.grey : Color.white;
+            Counter++;
+            yield return new WaitForSeconds(0.1f);
+        }
+        
+        SpriteHolder.GetComponent<SpriteRenderer>().color = Color.white;
+        yield return null;
+        yield return null;
     }
 
     public float Heal(float rawHeal)
@@ -138,6 +164,7 @@ public class PlayerCharacter : Dummy
 
     public override void Dead()
     {
+        
         fsm.CurrentStateName = "NoInput";
 
         ResetStatistics();
@@ -190,7 +217,7 @@ public class PlayerCharacter : Dummy
 
             statistics.Modify(StatisticType.Osp, amount, 0, maxSp);
 
-
+            OverloadVFX.SetActive(true);
             return true;
         }
         else
@@ -220,7 +247,7 @@ public class PlayerCharacter : Dummy
         if (value >= 1)
         {
             result = statistics.Modify(StatisticType.Osp, -value, 0, statistics[StatisticType.MaxOsp]);
-
+            OverloadVFX.SetActive(false);
             usedEnergy += result.previousValue - result.currentValue;
         }
         
@@ -290,56 +317,22 @@ public class PlayerCharacter : Dummy
     {
         if (!PowerDashUnlock)
         {
-            powerDashCoolDown.GetComponent<Slider>().value = 0f;
-            buttonTip.SetActive(false);
+            GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").UpdatePowerDashCooldown(0f);
             return;
         }
 
-        //Debug.Log((Time.unscaledTime - LastPowerDash) /statistics[StatisticType.PDCoolDown]);
-        powerDashCoolDown.GetComponent<Slider>().value = Mathf.Max(0,Mathf.Min(1,(Time.unscaledTime - LastPowerDash) /statistics[StatisticType.PDCoolDown] ));
-
+        GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").UpdatePowerDashCooldown(Mathf.Max(0, Mathf.Min(1, (Time.unscaledTime - LastPowerDash) / statistics[StatisticType.PDCoolDown])));
+        
         if (!PowerDashReady)
         {
             if(LastPowerDash + statistics[StatisticType.PDCoolDown] < Time.unscaledTime)
             {
                 PowerDashReady = true;
-                buttonTip.SetActive(true);
             }
-            else
-            {
-                buttonTip.SetActive(false);
-            }
-            
         }
 
     }
-
-
-    public void UpdatePowerDashUI()
-    {
-        if (!PowerDashUnlock && powerDashCoolDown != null)
-        {
-            powerDashCoolDown.GetComponent<Slider>().value = 0f;
-            buttonTip?.SetActive(false);
-            return;
-        }
-
-        powerDashCoolDown.GetComponent<Slider>().value = Mathf.Max(0, Mathf.Min(1, (Time.unscaledTime - LastPowerDash) / statistics[StatisticType.PDCoolDown]));
-
-        if (!PowerDashReady)
-        {
-            if (LastPowerDash + statistics[StatisticType.PDCoolDown] < Time.unscaledTime)
-            {
-                buttonTip.SetActive(true);
-            }
-            else
-            {
-                buttonTip.SetActive(false);
-            }
-
-        }
-
-    }
+    
 
     public bool AddKillCount(float amount)
     {
@@ -419,15 +412,11 @@ public class PlayerCharacter : Dummy
 
 
         fsm = fsm.Initialize(this);
-
         fsm.Boot();
 
         //GUIManager.Singleton.Open("MainMenu", this);
         //StartDialogue(10102001);
-
-        // TODO: delete later
-        if (buttonTip == null) buttonTip = GameObject.Find("HealthButton");
-        if (powerDashCoolDown == null) powerDashCoolDown = GameObject.Find("HealthEnergy");
+        
     }
 
 

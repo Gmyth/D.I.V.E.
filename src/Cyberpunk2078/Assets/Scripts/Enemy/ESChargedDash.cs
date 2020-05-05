@@ -33,8 +33,16 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
     public override void OnStateEnter(State previousState)
     {
         base.OnStateEnter(previousState);
+        if (enemy.Data.Id == 67)
+        {
 
-        AudioManager.Singleton.PlayOnce("RobotDashCharge");
+        }
+        else
+        {
+            if(Random.Range(1,11) >= 2)
+                AudioManager.Singleton.PlayOnce("RobotDashCharge");
+        }
+            
 
         enemy.OnAttack.AddListener(Stop);
 
@@ -70,6 +78,7 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
 
         if (hitBox >= 0)
             enemy.DisableHitBox(hitBox);
+
     }
 
 
@@ -92,14 +101,25 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
             enemy.OnEnableHitBox.AddListener(InitializeHitBox);
 
             if (hitBox >= 0)
+            {
                 enemy.EnableHitBox(hitBox);
+            }
+                
 
             enemy.OnEnableHitBox.RemoveListener(InitializeHitBox);
 
 
             animator.Play(animation_dash);
 
-            AudioManager.Singleton.PlayOnce("RobotDash");
+            //Debug.LogError("Enmey id is:" + enemy.Data.Id);
+            if (enemy.Data.Id == 67)
+            {
+                //Debug.LogError("Enter Boss_dash");
+                AudioManager.Singleton.PlayOnce("Boss_dash");
+            }
+            else
+                AudioManager.Singleton.PlayOnce("RobotDash");
+
         }
         else if (!bStop)
         {
@@ -166,13 +186,7 @@ public abstract class ESChargedDash<T> : ESChargedAttack<T> where T : Enemy
         t_dashEnd += TimeManager.Instance.ScaledDeltaTime;
 
         if (t_dashEnd >= dashEndTime)
-        {
-            rigidbody.drag = 0;
-            rigidbody.velocity = Vector2.zero;
-
-
             return "Alert";
-        }
 
 
         return "";

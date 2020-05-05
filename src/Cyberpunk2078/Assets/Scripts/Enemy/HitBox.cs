@@ -12,6 +12,8 @@ using UnityEngine;
         Bullet = 0x10,
 
         AOE = 0x20,
+
+        Dash = 0x30
     }
 
 
@@ -57,6 +59,8 @@ public class HitBox : MonoBehaviour
 
     protected Coroutine bulletTimeCorotine = null;
 
+    
+    //temporary
 
     public virtual void LoadHitData(HitData data)
     {
@@ -118,9 +122,14 @@ public class HitBox : MonoBehaviour
         {
             if (other.tag == "Enemy")
                 OnHitEnemy(other);
+            
+            else if (other.tag == "Ground")
+                OnHitGround(other);
+            
             else if (other.tag == "Platform" && other.GetComponent<SimpleBreakable>())
                 OnHitBreakable(other);
         }
+        
         else if (other.tag == "Player")
             OnHitPlayer(other);
     }
@@ -153,11 +162,25 @@ public class HitBox : MonoBehaviour
                 trail1.transform.localScale = new Vector3(7, 1, 1);
                 trail1.target = other.transform;
                 trail1.gameObject.SetActive(true);
+                
+                var spark = ObjectRecycler.Singleton.GetObject<SingleEffect>(23);
+                spark.transform.position = other.transform.position;
+                spark.transform.right = transform.right;
+                spark.transform.localScale = Vector3.one;
+                spark.target = other.transform;
+                spark.gameObject.SetActive(true);
 
                 CameraManager.Instance.Shaking(0.20f, 0.10f, true);
 
-
-                AudioManager.Singleton.PlayOnce("Hit");
+                if(enemy.Data.Id == 67)
+                {
+                    AudioManager.Singleton.PlayOnce("Boss_Hit");
+                }
+                else
+                {
+                    AudioManager.Singleton.PlayOnce("Hit");
+                }
+                
             }
         }
     }
@@ -166,6 +189,25 @@ public class HitBox : MonoBehaviour
     {
         other.GetComponent<SimpleBreakable>().DestroyBreakable(other.transform.position);
     }
+    
+    protected virtual void OnHitGround(Collider2D other)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 3.5f);
+        if (hit.collider != null) 
+        {
+            var bSpark = ObjectRecycler.Singleton.GetObject<SingleEffect>(24);
+            bSpark.transform.position = hit.point;
+            bSpark.transform.right = transform.right;
+            bSpark.gameObject.SetActive(true);
+        
+            var spark = ObjectRecycler.Singleton.GetObject<SingleEffect>(23);
+            spark.transform.position = hit.point;
+            spark.transform.right = -transform.right;
+            spark.transform.localScale = Vector3.one;
+            spark.gameObject.SetActive(true);
+        }
+      
+    }    
 
     protected virtual void OnHitPlayer(Collider2D other)
     {
@@ -181,7 +223,24 @@ public class HitBox : MonoBehaviour
             if (hit.knockback > 0)
                 player.KnockbackHorizontal(hit.source.transform.position, hit.knockback, 0.5f);
 
-
+            if (hit.type == Hit.Type.Dash)
+                AudioManager.Singleton.PlayOnce("Hit_by_dash");
+            else if (hit.type == Hit.Type.Melee)
+            {
+                
+                if(hit.source.GetComponent<L2ShieldBoss>() != null)
+                {
+                    AudioManager.Singleton.PlayOnce("Hit_by_shield");
+                }
+                else
+                    AudioManager.Singleton.PlayOnce("Hit_by_sword");
+            }
+            else if (hit.type == Hit.Type.Bullet)
+            {
+                AudioManager.Singleton.PlayOnce("Hit_by_laser");
+                //Debug.LogError("hit");
+            }
+            
             player.ApplyDamage(hit.damage);
 
 

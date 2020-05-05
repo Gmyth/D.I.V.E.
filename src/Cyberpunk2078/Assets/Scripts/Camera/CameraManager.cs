@@ -124,15 +124,19 @@ public class CameraManager : MonoBehaviour {
 
     public void ResetTarget()
     {
-	    mainTarget = GameObject.FindObjectOfType<PlayerCharacter>().gameObject;
-		targetList.Clear();
-	    targetList.Add(mainTarget);
+	    if (FindObjectOfType<PlayerCharacter>())
+	    {
+		    mainTarget = FindObjectOfType<PlayerCharacter>().gameObject;
+		    targetList.Clear();
+		    targetList.Add(mainTarget);
+	    }
     }
 	
 	//change the target, clear current list and add the target to new one
 	public void ChangeTarget(GameObject focusPoint)
 	{
 		mainTarget = focusPoint;
+		currentState = CameraState.Idle;
 		targetList.Clear();
 		targetList.Add(focusPoint);
 	}
@@ -153,17 +157,18 @@ public class CameraManager : MonoBehaviour {
 		indicatorList = FindObjectsOfType<CameraIndicator>().ToList();
 	}
 
-	void LateUpdate()
+	void FixedUpdate()
 	{
-		
-		
+		if (!mainTarget) return;
 		float shakeX = 0;
 		float shakeY = 0;
+
 		if (shake)
 		{
 			shakeX = Random.Range(-1f, 1f) * shakeMagnitude;
 			shakeY = Random.Range(-1f, 1f) * shakeMagnitude;
 		}
+
 		var camera = GetComponentInChildren<Camera>();
 		var targetIndicator = findClosestIndicator();
 		switch (currentState)
@@ -272,8 +277,8 @@ public class CameraManager : MonoBehaviour {
 
 				Vector3 curFocusPos = usingPos? focusPos : target.position; 
 
-				posX = Mathf.SmoothDamp(transform.position.x,curFocusPos.x, ref focusVelocity.x, 0.1f);
-				posY = Mathf.SmoothDamp(transform.position.y,curFocusPos.y, ref focusVelocity.y, 0.1f);
+				posX = Mathf.SmoothDamp(transform.position.x,curFocusPos.x, ref focusVelocity.x, 0.02f);
+				posY = Mathf.SmoothDamp(transform.position.y,curFocusPos.y, ref focusVelocity.y, 0.02f);
 				transform.position = new Vector3(posX, posY, transform.position.z);
 				
 				if (targetIndicator && targetIndicator.changeSize)

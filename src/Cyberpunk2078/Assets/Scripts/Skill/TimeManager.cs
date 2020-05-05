@@ -9,7 +9,8 @@ public class TimeManager : MonoBehaviour
     [SerializeField]private float targetFXAlpha;
 
     private float velocity;
-    private SpriteRenderer blackScreen;
+    [SerializeField] private SpriteRenderer BM_Ground;
+    [SerializeField] private SpriteRenderer BM_ForeGround;
     private float startTime;
     private float endTime;
     private float targetScale;
@@ -19,6 +20,8 @@ public class TimeManager : MonoBehaviour
 
     private float _PrirorTimeScale;
     private float currentUnscaledDeltaTime;
+
+    private bool paused = false;
 
     public float ScaledDeltaTime
     {
@@ -31,8 +34,11 @@ public class TimeManager : MonoBehaviour
 
     private void Awake()
     {
+        QualitySettings.vSyncCount = 0;  // VSync must be disabled
+        Application.targetFrameRate = 60;
+        
         Instance = this;
-        blackScreen = Camera.main.GetComponentInChildren<SpriteRenderer>();
+        //blackScreenUnderPlayer = Camera.main.GetComponentInChildren<SpriteRenderer>();
         Time.timeScale = 1;
         Time.fixedDeltaTime = Time.timeScale / 60f;
     }
@@ -49,28 +55,37 @@ public class TimeManager : MonoBehaviour
         StartCoroutine(slowMotion(delta, targetScale, finishTime, duration));
     }
 
-    public void ApplyBlackScreenFadeIn()
+    public void ApplyBlackScreenFadeIn(float _alpha = -1, bool isForeGround = false)
     {
-        StartCoroutine(blackMask());
+        float alpha = _alpha > 0 ? _alpha : targetFXAlpha;
+        var render = isForeGround ? BM_ForeGround : BM_Ground;
+        StartCoroutine(blackMask(alpha,render));
+    }
+    
+    public void EndBlackScreen(bool isForeGround = false)
+    {
+        var render = isForeGround ? BM_ForeGround : BM_Ground;
+        render.color =new Color(BM_Ground.color.r,BM_Ground.color.g,BM_Ground.color.b, 0f);
     }
     
     public void ApplyBlackScreen()
     {
-        blackScreen.color = new Color(blackScreen.color.r, blackScreen.color.g, blackScreen.color.b, targetFXAlpha);
+        BM_Ground.color = new Color(BM_Ground.color.r, BM_Ground.color.g, BM_Ground.color.b, targetFXAlpha);
     }
     
-    private IEnumerator blackMask()
+    private IEnumerator blackMask(float alpha, SpriteRenderer renderer)
     {
-        while (blackScreen.color.a < targetFXAlpha)
+        while (renderer.color.a < alpha)
         {
-            float current = blackScreen.color.a;
-            blackScreen.color =new Color(blackScreen.color.r,blackScreen.color.g,blackScreen.color.b, Mathf.SmoothDamp(current, targetFXAlpha, ref velocity, 0.1f));
+            float current = renderer.color.a;
+            renderer.color =new Color(renderer.color.r,renderer.color.g,renderer.color.b, Mathf.SmoothDamp(current, alpha, ref velocity, 0.1f));
             yield return null;
         }
     } 
     
     private IEnumerator slowMotion(float delta, float targetScale,float duration,float endDuration)
     {
+        if (targetScale == 0) Time.timeScale = 0.5f; // lower start
         var times = (int)(duration / delta);
         var deltaScale = (Time.timeScale - targetScale)/times;
         if (duration == 0) Time.timeScale = targetScale;
@@ -86,9 +101,10 @@ public class TimeManager : MonoBehaviour
         }
     }    
 
-    public void endSlowMotion(float delay = 0f)
+    public void endSlowMotion(float delay = 0f, bool rageQuit = false)
     {
-        blackScreen.color = new Color(blackScreen.color.r, blackScreen.color.g, blackScreen.color.b, 0f);
+        if (!rageQuit && Time.timeScale == 0) return;
+        BM_Ground.color = new Color(BM_Ground.color.r, BM_Ground.color.g, BM_Ground.color.b, 0f);
         if (delay == 0)
             EndSlowMotionImmediately();
         else
@@ -110,7 +126,7 @@ public class TimeManager : MonoBehaviour
     public void EndFeverMotion()
     {
         TimeFactor = 1f;
-        blackScreen.color =new Color(blackScreen.color.r,blackScreen.color.g,blackScreen.color.b, 0f);
+        BM_Ground.color =new Color(BM_Ground.color.r,BM_Ground.color.g,BM_Ground.color.b, 0f);
     }
 
     private IEnumerator applyBlackScreen()
@@ -118,11 +134,15 @@ public class TimeManager : MonoBehaviour
 
         while (TimeFactor!= 1f)
         {
-            float current = blackScreen.color.a;
+            float current = BM_Ground.color.a;
             yield return new WaitForSecondsRealtime(0.01f);
-            blackScreen.color =new Color(blackScreen.color.r,blackScreen.color.g,blackScreen.color.b, Mathf.SmoothDamp(current, targetFXAlpha, ref velocity, 0.1f));
+            BM_Ground.color =new Color(BM_Ground.color.r,BM_Ground.color.g,BM_Ground.color.b, Mathf.SmoothDamp(current, targetFXAlpha, ref velocity, 0.1f));
             yield return null;
         }
+        
+        BM_Ground.color =new Color(BM_Ground.color.r,BM_Ground.color.g,BM_Ground.color.b, 0f);
+        
+        yield return null;
     }
 
     private IEnumerator endSlowMotionDelay(float delay)
@@ -133,12 +153,20 @@ public class TimeManager : MonoBehaviour
 
     public void Pause()
     {
+        
         _PrirorTimeScale = Time.timeScale;
         Time.timeScale = 0f;
+        paused = true;
     }
 
     public void Resume()
     {
-        Time.timeScale = _PrirorTimeScale;
+      
+        if (paused == true)
+        {
+            Time.timeScale = _PrirorTimeScale;
+            paused = false;
+        }
+        
     }
 }

@@ -19,7 +19,8 @@ public class SimpleLockedDoor : Restorable
     ////////////////////////////////////////////////////
     private Sprite s_DotSprite;
     private int s_lockerCount;
-    private List<bool> s_collider = new List<bool>();
+    
+    public List<bool> s_collider = new List<bool>();
     private bool s_isPlayed;
     // Start is called before the first frame update
     void Awake()
@@ -77,8 +78,10 @@ public class SimpleLockedDoor : Restorable
         CameraManager.Instance.FocusTo(focus.position);
         yield return new WaitForSeconds(1f);
         dots[lockerCount].GetComponent<SpriteRenderer>().sprite = unlocked;
+        AudioManager.Singleton.PlayOnce("Door_indicator_ok_phase2");
         GetComponent<Animator>().speed = 1;
         GetComponent<Animator>().Play("DoorOpen",-1,0);
+        AudioManager.Singleton.PlayOnce("Door_open");
         isPlayed = true;
         yield return new WaitForSeconds(0.5f);
         PlayerCharacter.Singleton.GetFSM().CurrentStateName = "Idle";

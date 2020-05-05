@@ -49,7 +49,7 @@ public class Explodable : MonoBehaviour
         {
             gameObject.GetComponent<SpriteRenderer>().enabled = false;
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
-            gameObject.GetComponent<Animator>().enabled = false;
+            if(gameObject.GetComponent<Animator>())gameObject.GetComponent<Animator>().enabled = false;
         }
     }
     /// <summary>

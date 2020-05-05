@@ -85,23 +85,22 @@ public class PSAttackGH: PlayerState
         if (Time.time - t0 > actionTime)
         {
             // ok for dashing 
-            if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
+            if (Input.GetButtonDown("Dashing") || (Input.GetAxis("RightTrigger") > 0 && Player.CurrentPlayer.RightTriggerReady))
             {
-                Player.CurrentPlayer.triggerReady = false;
+                Player.CurrentPlayer.RightTriggerReady = false;
+                return "Dashing";
+            }
+        
+            if (Input.GetButtonDown("Special1") || (Input.GetAxis("LeftTrigger") > 0 && Player.CurrentPlayer.LeftTriggerReady))
+            {
+                Player.CurrentPlayer.LeftTriggerReady = false;
+                PlayerCharacter.Singleton.PowerDash = true;
                 return "Dashing";
             }
             else if (Input.GetButtonDown("Jump") && grounded)
             {
                 return "Jumping";
             }
-            // temp code
-            else if (Input.GetButtonDown("Special1"))
-            {
-                Player.CurrentPlayer.triggerReady = false;
-                PlayerCharacter.Singleton.PowerDash = true;
-                return "Dashing";
-            }
-            // temp code
                 
         }
         
@@ -143,10 +142,14 @@ public class PSAttackGH: PlayerState
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
         t0 = Time.time;
         var mouse = GameObject.FindObjectOfType<MouseIndicator>();
-        
+        if (rb2d.velocity.y < 0)
+        {
+            rb2d.velocity = new Vector2(rb2d.velocity.x,0f);
+            rb2d.AddForce(Vector2.up * 200f);
+        }
         //get Mouse direction
         
-        Vector3 direction = mouse.GetDirectionCorrection(GroundNormal());
+        Vector3 direction = mouse.GetAttackDirection();
 
 
         var attack = Instantiate(SplashFX);

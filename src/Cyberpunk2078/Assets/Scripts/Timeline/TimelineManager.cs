@@ -85,6 +85,11 @@ public class TimelineManager : MonoBehaviour
         }
     }
 
+    public PlayableDirector GetCurrentPlayableDirector()
+    {
+        return timelines[currentIndex];
+    }
+
     public void PauseTimeline() 
     {
         timelines[currentIndex].Pause();

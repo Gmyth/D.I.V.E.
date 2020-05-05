@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2196e49fc2eb8e47850fb98be374aad, type: 3}
+  m_Name: Boss
+  m_EditorClassIdentifier: 
+  events:
+  - event:/Enemy/Boss/Boss_toss
+  - event:/Enemy/Boss/Grenade_explosion
+  - event:/Enemy/Boss/Boss_swing
+  - event:/Enemy/Boss/Boss_jumpvoice
+  - event:/Enemy/Boss/Boss_dash
+  - event:/Enemy/Boss/Boss_block
+  - event:/Enemy/Boss/Boss_Hit
+  - event:/Enemy/Boss/Boss_laserbeam
+  - event:/Enemy/Boss/Boss_walk
+  - event:/Enemy/Boss/Boss_run
+  - event:/Enemy/Boss/Boss_attackwave
+  - event:/Player/Hit_by_shield
+  - event:/Enemy/Boss/Boss_jump

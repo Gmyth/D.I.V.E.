@@ -9,13 +9,20 @@ public class CollectibleItem : Item
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")
+        {
             Collect();
+            AudioManager.Singleton.PlayOnce("Pick_cassette");
+        }
+            
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag == "Player")
+        {
             Collect();
+            AudioManager.Singleton.PlayOnce("Pick_cassette");
+        }
     }
 
 

@@ -56,16 +56,17 @@ public class CheckPointManager : MonoBehaviour
         }
 
         GameObject ObjHolder = GameProcessManager.Singleton.GetCurrentObjects();
-        for (int i = 0; i < ObjHolder.transform.childCount; i++)
-        {
-            var obj = ObjHolder.transform.GetChild(i).gameObject;
-            var components = obj.GetComponentsInChildren<Restorable>();
-            for(int j=0; j < components.Length; j++)
+
+        if (ObjHolder)
+            for (int i = 0; i < ObjHolder.transform.childCount; i++)
             {
-                Restorables.Add(components[j]);
+                var obj = ObjHolder.transform.GetChild(i).gameObject;
+                var components = obj.GetComponentsInChildren<Restorable>();
+                for(int j=0; j < components.Length; j++)
+                {
+                    Restorables.Add(components[j]);
+                }
             }
-                
-        }
     }
 
     public void Save(Transform _playertransform, CheckPointTrigger checkPointTrigger)
@@ -128,9 +129,13 @@ public class CheckPointManager : MonoBehaviour
         //Restore all enemies position
         for (int i = 0; i < Enemies.Count; i++)
         {
-            var lastPos = Enemies[i].GetComponent<Enemy>().lastCheckPointTransform;
-            Enemies[i].transform.position = lastPos;
-            Enemies[i].GetComponent<Enemy>().Reset();
+            if(Enemies[i].GetComponent<Enemy>() != null)
+            {
+                var lastPos = Enemies[i].GetComponent<Enemy>().lastCheckPointTransform;
+                Enemies[i].transform.position = lastPos;
+                Enemies[i].GetComponent<Enemy>().Reset();
+            }
+            
         }
         savedEnemies.Clear();
     }
@@ -156,6 +161,7 @@ public class CheckPointManager : MonoBehaviour
         
 
         RestoreEnemy();
+        ObjectRecycler.Singleton.RecycleAll();
         RestoreObjects();
 
 

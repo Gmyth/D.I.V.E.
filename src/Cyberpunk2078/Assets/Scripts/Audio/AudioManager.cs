@@ -96,15 +96,18 @@ public class AudioManager : MonoBehaviour
         bus.stopAllEvents(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 
-    public void StopEvent(string _event)
+    public void StopEvent(string _event, bool fade = true)
     {
         if (dic.ContainsKey(_event))
         {
             if (instanceDic.ContainsKey(_event))
             {
                 instanceDic[_event].release();
-                instanceDic[_event].stop(ALLOWFADEOUT);
-                
+                if(fade == true)
+                    instanceDic[_event].stop(ALLOWFADEOUT);
+                else
+                    instanceDic[_event].stop(IMMEDIATE);
+
                 instanceDic.Remove(_event);
             }
             else

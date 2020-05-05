@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using MyBox;
 using UnityEngine;
 
 public class SimpleHealthPotion : MonoBehaviour
@@ -13,9 +14,17 @@ public class SimpleHealthPotion : MonoBehaviour
         {
             isUsed = true;
             PlayerCharacter.Singleton.Heal(1);
+            GetComponent<Animator>().Play("HeartConsume",0,0);
+            AudioManager.Singleton.PlayOnce("Health_potion");
+            GetComponentInChildren<ParticleSystem>().Play();
 
-            gameObject.SetActive(false);
         }
     }
 
+    private void TriggerDestroy()
+    {
+        GetComponent<SpriteRenderer>().color = Color.gray;
+        GetComponentInChildren<ParticleSystem>().Stop();
+       //gameObject.SetActive(false);
+    }
 }

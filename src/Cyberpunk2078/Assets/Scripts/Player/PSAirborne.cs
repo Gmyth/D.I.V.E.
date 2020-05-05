@@ -56,16 +56,15 @@ public class PSAirborne : PlayerState
         }
 
 
-        if (Input.GetButtonDown("Dashing") || (Input.GetAxis("Trigger") > 0 && Player.CurrentPlayer.triggerReady))
+        if (Input.GetButtonDown("Dashing") || (Input.GetAxis("RightTrigger") > 0 && Player.CurrentPlayer.RightTriggerReady))
         {
-            Player.CurrentPlayer.triggerReady = false;
+            Player.CurrentPlayer.RightTriggerReady = false;
             return "Dashing";
         }
         
-        // temp code
-        if (Input.GetButtonDown("Special1"))
+        if (Input.GetButtonDown("Special1") || (Input.GetAxis("LeftTrigger") > 0 && Player.CurrentPlayer.LeftTriggerReady))
         {
-            Player.CurrentPlayer.triggerReady = false;
+            Player.CurrentPlayer.LeftTriggerReady = false;
             PlayerCharacter.Singleton.PowerDash = true;
             return "Dashing";
         }
@@ -123,7 +122,7 @@ public class PSAirborne : PlayerState
         previous = previousState;
 
         var rb2d = playerCharacter.GetComponent<Rigidbody2D>();
-        rb2d.gravityScale = playerCharacter.DefaultGravity;
+        //rb2d.gravityScale = playerCharacter.Gravity;
 
         anim.Play("MainCharacter_Airborne", -1, 0f);
     }

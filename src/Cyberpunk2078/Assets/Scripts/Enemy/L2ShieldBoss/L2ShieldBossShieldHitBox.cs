@@ -19,6 +19,8 @@ public class L2ShieldBossShieldHitBox : ShieldHitBox
 
         if (Vector3.Angle(shieldBoss.transform.localScale.x * shieldBoss.transform.right, player.transform.position - shieldBoss.transform.position) < 90)
         {
+            AudioManager.Singleton.PlayOnce("Boss_block");
+
             shieldBoss.OnAttack.Invoke(hit, other);
             player.OnHit?.Invoke(hit, other);
 

@@ -62,10 +62,7 @@ public class SimpleTeleporter : MonoBehaviour
                 StartCoroutine(GameProcessManager.Singleton.LoadingScreen(TargetLevelIndex, transform.parent.gameObject));
 
                 
-
-
-
-
+                
                 //GameObject nextLevel = GameProcessManager.Singleton.LoadLevel(TargetLevelIndex);
                 //mask = GameObject.Find("HUD_Mask");
                 //var Canvas = GameObject.FindGameObjectWithTag("Canvas");
