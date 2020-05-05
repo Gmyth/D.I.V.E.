@@ -19,7 +19,8 @@ public class SimpleLockedDoor : Restorable
     ////////////////////////////////////////////////////
     private Sprite s_DotSprite;
     private int s_lockerCount;
-    private List<bool> s_collider = new List<bool>();
+    
+    public List<bool> s_collider = new List<bool>();
     private bool s_isPlayed;
     // Start is called before the first frame update
     void Awake()

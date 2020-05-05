@@ -226,7 +226,10 @@ public class GameProcessManager : MonoBehaviour
         //Can do other stuff here
         PlayerHolder.GetComponentInChildren<GhostSprites>().KillSwitchEngage();
         ObjectRecycler.Singleton.RecycleAll();
-
+        
+        SimpleTimer timer = PlayerCharacter.Singleton.GetComponent<SimpleTimer>();
+        timer.GetTimer();
+        
         PlayerHolder.GetComponentInChildren<MouseIndicator>().Show();
 
         PlayerHolder.SetActive(false);

@@ -31,6 +31,9 @@ public class TimeManager : MonoBehaviour
 
     private void Awake()
     {
+        QualitySettings.vSyncCount = 0;  // VSync must be disabled
+        Application.targetFrameRate = 60;
+        
         Instance = this;
         blackScreen = Camera.main.GetComponentInChildren<SpriteRenderer>();
         Time.timeScale = 1;
@@ -124,6 +127,10 @@ public class TimeManager : MonoBehaviour
             blackScreen.color =new Color(blackScreen.color.r,blackScreen.color.g,blackScreen.color.b, Mathf.SmoothDamp(current, targetFXAlpha, ref velocity, 0.1f));
             yield return null;
         }
+        
+        blackScreen.color =new Color(blackScreen.color.r,blackScreen.color.g,blackScreen.color.b, 0f);
+        
+        yield return null;
     }
 
     private IEnumerator endSlowMotionDelay(float delay)

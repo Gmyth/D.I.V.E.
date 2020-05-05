@@ -54,7 +54,6 @@ public class PSDashing : PlayerState
         float v = Input.GetAxis("VerticalJoyStick") != 0 ? Input.GetAxis("VerticalJoyStick") : Input.GetAxis("Vertical");
         if (Input.GetButtonDown("Ultimate"))
         {
-            //TODO add another ultimate
             playerCharacter.ActivateFever();
         }
         
@@ -153,6 +152,7 @@ public class PSDashing : PlayerState
         var inDashingDragFactor = playerCharacter.InKillStreak ? f_inDashingDragFactor:n_inDashingDragFactor;
         if (playerCharacter.PowerDash)
         {
+            // power dash
             if (!playerCharacter.PowerDashReady || !playerCharacter.PowerDashUnlock )
             {
                 // Energy is not enough, Cancel dash
