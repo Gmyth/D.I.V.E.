@@ -143,7 +143,6 @@ public class PlayerCharacter : Dummy
         
         SpriteHolder.GetComponent<SpriteRenderer>().color = Color.white;
         yield return null;
-        yield return null;
     }
 
     public float Heal(float rawHeal)
@@ -321,7 +320,7 @@ public class PlayerCharacter : Dummy
             return;
         }
 
-        GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").UpdatePowerDashCooldown(Mathf.Max(0, Mathf.Min(1, (Time.unscaledTime - LastPowerDash) / statistics[StatisticType.PDCoolDown])));
+        if(GUIManager.Singleton.IsInViewport("HUD"))GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").UpdatePowerDashCooldown(Mathf.Max(0, Mathf.Min(1, (Time.unscaledTime - LastPowerDash) / statistics[StatisticType.PDCoolDown])));
         
         if (!PowerDashReady)
         {
@@ -392,6 +391,7 @@ public class PlayerCharacter : Dummy
         statistics[StatisticType.KsCount] = 0;
         statistics[StatisticType.KsDecay] = 5;
         statistics[StatisticType.MaxKs] = 2;
+        statistics[StatisticType.PDCoolDown] = 8;
     }
 
 
@@ -407,10 +407,12 @@ public class PlayerCharacter : Dummy
 
         OnStatisticChange = statistics.onStatisticChange;
 
-
+        SpriteHolder.GetComponent<SpriteRenderer>().color = Color.white;
+        
         rigidbody = GetComponent<Rigidbody2D>();
 
-
+        TimeManager.Instance.endSlowMotion();
+        
         fsm = fsm.Initialize(this);
         fsm.Boot();
 

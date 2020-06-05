@@ -59,7 +59,7 @@ public class PowerDashTutorial : Singleton<PowerDashTutorial>
         //tutorialSpriteGO?.SetActive(false);
         CameraManager.Instance.Reset();
 
-        StartCoroutine(ShowGUIButtonAfterDelay(0.1f, "LongDash"));
+        StartCoroutine(ShowGUIButtonAfterDelay(0f, "LongDash"));
     }
 
     private IEnumerator ShowPlayerSpriteAfterDelay(float delayTime)

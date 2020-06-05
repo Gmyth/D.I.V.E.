@@ -72,7 +72,7 @@ public class PSJumping1 : PlayerState
         }
         else
         {
-            if (Player.CurrentPlayer.LastBounceSec + 0.3f < Time.time) PhysicsInputHelper(h,v);
+            if (Player.CurrentPlayer.LastBounceSec + 0.5f < Time.time) PhysicsInputHelper(h,v);
             else SimplePhysicsInputHelper(h);
         }
 

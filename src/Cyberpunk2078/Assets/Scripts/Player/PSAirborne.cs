@@ -46,7 +46,7 @@ public class PSAirborne : PlayerState
 
         var dir = isCloseTo("Ground");
 
-        if (dir != Direction.None && Mathf.Abs(h) > 0 && Vy < 0)
+        if (dir != Direction.None)
             return "WallSliding";
 
 

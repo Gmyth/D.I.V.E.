@@ -174,12 +174,12 @@ public class GameProcessManager : MonoBehaviour
 
 //            if(!GUIManager.Singleton.GetGUIWindow<GUIHUD>("HUD").IsInDialogue)
 //                PlayerCharacter.Singleton.GetFSM().CurrentStateName = "NoInput";
-            
         }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            PlayerCharacter.Singleton.Dead();
-        }
+        
+//        if (Input.GetKeyDown(KeyCode.P))
+//        {
+//            PlayerCharacter.Singleton.Dead();
+//        }
     }
 
     public void ResumeGame()
@@ -274,7 +274,6 @@ public class GameProcessManager : MonoBehaviour
         //    GUIManager.Singleton.Close("MainMenu");
 
         //GUIManager.Singleton.Close("HUD");
-
 
     }
 
