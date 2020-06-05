@@ -61,6 +61,7 @@ public class SimpleTimer : MonoBehaviour
         minute = (int)(totalTime / 60);
         second = (int)(totalTime);
         millisecond = (int)(totalTime % 1.0f * 1000);
+        isCounting = false;
         timerText.text = string.Format("{0:d2}:{1:d2}.{2:d3}", minute, second, millisecond);
         triggered = false;
     }

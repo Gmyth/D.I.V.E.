@@ -48,6 +48,11 @@ public class CheckPointManager : MonoBehaviour
     public void Initialize()
     {
         GameObject dummyHolder = GameProcessManager.Singleton.GetCurrentDummies();      
+        
+        Image image = blackScreen.GetComponent<Image>();
+        //Black Screen Fade in
+        image.color = new Color(0, 0, 0, 0);
+        
         var dummies = dummyHolder.GetComponentsInChildren<Dummy>();
         Enemies.Clear();
         for (int i = 0; i < dummies.Length; i++)
